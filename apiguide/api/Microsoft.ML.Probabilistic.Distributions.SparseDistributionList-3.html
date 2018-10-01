@@ -1,0 +1,1519 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SparseDistributionList&lt;TDist, TDomain, TThis&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SparseDistributionList&lt;TDist, TDomain, TThis&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3" class="text-break">Class SparseDistributionList&lt;TDist, TDomain, TThis&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Abstract base class for a homogeneous sparse list of distributions. The class supports
+an approximation tolerance which allows elements close to the common value to be
+automatically reset to the common value. The list implements the
+interfaces which allow these distributions to participate in message passing.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;TDist&gt;</div>
+    <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html">ApproximateSparseList</a>&lt;TDist&gt;</div>
+    <div class="level3"><span class="xref">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</span></div>
+      <div class="level4"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBernoulliList.html">SparseBernoulliList</a></div>
+      <div class="level4"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBetaList.html">SparseBetaList</a></div>
+      <div class="level4"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGammaList.html">SparseGammaList</a></div>
+      <div class="level4"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGaussianList.html">SparseGaussianList</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDist&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable</a>&lt;TDist&gt;</div>
+    <div><span class="xref">IEnumerable</span>&lt;TDist&gt;</div>
+    <div><span class="xref">IList</span>&lt;TDist&gt;</div>
+    <div><span class="xref">IList</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDomain&gt;&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDomain&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDomain&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDomain&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;TThis, TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;TThis, TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_DefaultTolerance">ApproximateSparseList&lt;TDist&gt;.DefaultTolerance</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_Tolerance">ApproximateSparseList&lt;TDist&gt;.Tolerance</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_Item_System_Int32_">ApproximateSparseList&lt;TDist&gt;.Item[Int32]</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetTo_Microsoft_ML_Probabilistic_Collections_ApproximateSparseList__0__">ApproximateSparseList&lt;TDist&gt;.SetTo(ApproximateSparseList&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetTo_IList__0___0_">ApproximateSparseList&lt;TDist&gt;.SetTo(IList&lt;TDist&gt;, TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_Equals_System_Object_">ApproximateSparseList&lt;TDist&gt;.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_GetHashCode">ApproximateSparseList&lt;TDist&gt;.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_SparseList___0__Func___0__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunction&lt;T2&gt;(SparseList&lt;T2&gt;, Func&lt;T2, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__Func___0__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunction&lt;T2&gt;(ISparseEnumerable&lt;T2&gt;, Func&lt;T2, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunction__1_IEnumerable___0__Func___0__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunction&lt;T2&gt;(IEnumerable&lt;T2&gt;, Func&lt;T2, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunction__2_Microsoft_ML_Probabilistic_Collections_SparseList___0__Microsoft_ML_Probabilistic_Collections_SparseList___1__Func___0___1__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunction&lt;T1, T2&gt;(SparseList&lt;T1&gt;, SparseList&lt;T2&gt;, Func&lt;T1, T2, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunction__2_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__Func___0___1__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunction&lt;T1, T2&gt;(ISparseEnumerable&lt;T1&gt;, ISparseEnumerable&lt;T2&gt;, Func&lt;T1, T2, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunction__2_IEnumerable___0__IEnumerable___1__Func___0___1__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunction&lt;T1, T2&gt;(IEnumerable&lt;T1&gt;, IEnumerable&lt;T2&gt;, Func&lt;T1, T2, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunction__3_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___2__Func___0___1___2__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunction&lt;T1, T2, T3&gt;(ISparseEnumerable&lt;T1&gt;, ISparseEnumerable&lt;T2&gt;, ISparseEnumerable&lt;T3&gt;, Func&lt;T1, T2, T3, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunction__3_IEnumerable___0__IEnumerable___1__IEnumerable___2__Func___0___1___2__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunction&lt;T1, T2, T3&gt;(IEnumerable&lt;T1&gt;, IEnumerable&lt;T2&gt;, IEnumerable&lt;T3&gt;, Func&lt;T1, T2, T3, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunction__4_Microsoft_ML_Probabilistic_Collections_ISparseList___0__Microsoft_ML_Probabilistic_Collections_ISparseList___1__Microsoft_ML_Probabilistic_Collections_ISparseList___2__Microsoft_ML_Probabilistic_Collections_ISparseList___3__Func___0___1___2___3__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunction&lt;T1, T2, T3, T4&gt;(ISparseList&lt;T1&gt;, ISparseList&lt;T2&gt;, ISparseList&lt;T3&gt;, ISparseList&lt;T4&gt;, Func&lt;T1, T2, T3, T4, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunction__4_IEnumerable___0__IEnumerable___1__IEnumerable___2__IEnumerable___3__Func___0___1___2___3__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunction&lt;T1, T2, T3, T4&gt;(IEnumerable&lt;T1&gt;, IEnumerable&lt;T2&gt;, IEnumerable&lt;T3&gt;, IEnumerable&lt;T4&gt;, Func&lt;T1, T2, T3, T4, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ApproximateSparseList-1.html#Microsoft_ML_Probabilistic_Collections_ApproximateSparseList_1_SetToFunctionInPlace__1_Microsoft_ML_Probabilistic_Collections_SparseList___0__Func__0___0__0__">ApproximateSparseList&lt;TDist&gt;.SetToFunctionInPlace&lt;T1&gt;(SparseList&lt;T1&gt;, Func&lt;TDist, T1, TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Sparsity">SparseList&lt;TDist&gt;.Sparsity</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_SparseValues">SparseList&lt;TDist&gt;.SparseValues</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_CommonValue">SparseList&lt;TDist&gt;.CommonValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Count">SparseList&lt;TDist&gt;.Count</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_SparseCount">SparseList&lt;TDist&gt;.SparseCount</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Copy_IList__0__">SparseList&lt;TDist&gt;.Copy(IList&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_GetSparseIndex_System_Int32_">SparseList&lt;TDist&gt;.GetSparseIndex(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_HasCommonElements">SparseList&lt;TDist&gt;.HasCommonElements</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_GetFirstCommonIndex">SparseList&lt;TDist&gt;.GetFirstCommonIndex()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_GetEnumerator">SparseList&lt;TDist&gt;.GetEnumerator()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_SetAllElementsTo__0_">SparseList&lt;TDist&gt;.SetAllElementsTo(TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_IList__0__">SparseList&lt;TDist&gt;.SetTo(IList&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_CheckCompatible__1_IList___0__System_String_">SparseList&lt;TDist&gt;.CheckCompatible&lt;T2&gt;(IList&lt;T2&gt;, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_Microsoft_ML_Probabilistic_Collections_SparseList__0__">SparseList&lt;TDist&gt;.SetTo(SparseList&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_IEnumerable__0__">SparseList&lt;TDist&gt;.SetTo(IEnumerable&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_EqualsAll__0_">SparseList&lt;TDist&gt;.EqualsAll(TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_All_Converter__0_System_Boolean__">SparseList&lt;TDist&gt;.All(Converter&lt;TDist, Boolean&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Any_Converter__0_System_Boolean__">SparseList&lt;TDist&gt;.Any(Converter&lt;TDist, Boolean&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_IndexOfAll_Converter__0_System_Boolean__">SparseList&lt;TDist&gt;.IndexOfAll(Converter&lt;TDist, Boolean&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__1___0_Func___0__0___0__">SparseList&lt;TDist&gt;.Reduce&lt;TRes&gt;(TRes, Func&lt;TRes, TDist, TRes&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__1___0_Func___0__0___0__Func___0__0_System_Int32___0__">SparseList&lt;TDist&gt;.Reduce&lt;TRes&gt;(TRes, Func&lt;TRes, TDist, TRes&gt;, Func&lt;TRes, TDist, Int32, TRes&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__2___0_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__Func___0__0___1___0__Func___0__0___1_System_Int32___0__">SparseList&lt;TDist&gt;.Reduce&lt;TRes, T1&gt;(TRes, ISparseEnumerable&lt;T1&gt;, Func&lt;TRes, TDist, T1, TRes&gt;, Func&lt;TRes, TDist, T1, Int32, TRes&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__3___0_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___2__Func___0__0___1___2___0__Func___0__0___1___2_System_Int32___0__">SparseList&lt;TDist&gt;.Reduce&lt;TRes, T1, T2&gt;(TRes, ISparseEnumerable&lt;T1&gt;, ISparseEnumerable&lt;T2&gt;, Func&lt;TRes, TDist, T1, T2, TRes&gt;, Func&lt;TRes, TDist, T1, T2, Int32, TRes&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__2___0_IEnumerable___1__Func___0__0___1___0__">SparseList&lt;TDist&gt;.Reduce&lt;TRes, T2&gt;(TRes, IEnumerable&lt;T2&gt;, Func&lt;TRes, TDist, T2, TRes&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__3___0_IList___1__IList___2__Func___0__0___1___2___0__">SparseList&lt;TDist&gt;.Reduce&lt;TRes, T1, T2&gt;(TRes, IList&lt;T1&gt;, IList&lt;T2&gt;, Func&lt;TRes, TDist, T1, T2, TRes&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Contains__0_">SparseList&lt;TDist&gt;.Contains(TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_IndexOf__0_">SparseList&lt;TDist&gt;.IndexOf(TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_IsReadOnly">SparseList&lt;TDist&gt;.IsReadOnly</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_CopyTo__0___System_Int32_">SparseList&lt;TDist&gt;.CopyTo(TDist[], Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Insert_System_Int32__0_">SparseList&lt;TDist&gt;.Insert(Int32, TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_RemoveAt_System_Int32_">SparseList&lt;TDist&gt;.RemoveAt(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Add__0_">SparseList&lt;TDist&gt;.Add(TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Clear">SparseList&lt;TDist&gt;.Clear()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_Remove__0_">SparseList&lt;TDist&gt;.Remove(TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_ToArray__1_IList___0__">SparseList&lt;TDist&gt;.ToArray&lt;T2&gt;(IList&lt;T2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_ToString">SparseList&lt;TDist&gt;.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_ToString_System_String_">SparseList&lt;TDist&gt;.ToString(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_ToArray">SparseList&lt;TDist&gt;.ToArray()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_ToList">SparseList&lt;TDist&gt;.ToList()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html#Microsoft_ML_Probabilistic_Collections_SparseList_1_GetSparseEnumerator">SparseList&lt;TDist&gt;.GetSparseEnumerator()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class SparseDistributionList&lt;TDist, TDomain, TThis&gt; : ApproximateSparseList&lt;TDist&gt;, ISparseList&lt;TDist&gt;, ISparseEnumerable&lt;TDist&gt;, IEnumerable&lt;TDist&gt;, IList&lt;TDist&gt;, IList, IDistribution&lt;ISparseList&lt;TDomain&gt;&gt;, ICloneable, HasPoint&lt;ISparseList&lt;TDomain&gt;&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;ISparseList&lt;TDomain&gt;&gt;, Sampleable&lt;ISparseList&lt;TDomain&gt;&gt;, SettableTo&lt;TThis&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, SettableToPower&lt;TThis&gt;, SettableToRatio&lt;TThis&gt;, SettableToRatio&lt;TThis, TThis&gt;, SettableToWeightedSum&lt;TThis&gt;, CanGetLogAverageOf&lt;TThis&gt;, CanGetLogAverageOfPower&lt;TThis&gt;, CanGetAverageLog&lt;TThis&gt;, CanGetMean&lt;ISparseList&lt;double&gt;&gt;, CanGetVariance&lt;ISparseList&lt;double&gt;&gt; where TDist : struct, SettableToUniform, Diffable, Sampleable&lt;TDomain&gt;, SettableToProduct&lt;TDist&gt;, SettableToRatio&lt;TDist&gt;, SettableToPower&lt;TDist&gt;, SettableToWeightedSum&lt;TDist&gt;, CanGetLogAverageOf&lt;TDist&gt;, CanGetAverageLog&lt;TDist&gt;, CanGetLogAverageOfPower&lt;TDist&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, IDistribution&lt;TDomain&gt; where TThis : SparseDistributionList&lt;TDist, TDomain, TThis&gt;, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The distribution type for the elements of the sparse list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDomain</span></td>
+        <td><p>The domain type for the distribution elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TThis</span></td>
+        <td><p>The type of a specialized class derived from this class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Dimension_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Dimension*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Dimension" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Dimension">Dimension</h4>
+  <div class="markdown level1 summary"><p>Gets the dimension of the sparse distribution list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Dimension { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the instance is a point mass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if all elements of the list are point masses, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the instance as a point mass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ISparseList&lt;TDomain&gt; Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDomain&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Clones this <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList-3.html">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>The clone returned as an <see cref="!:System.Object"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Constant_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Constant*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Constant_System_Int32__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Constant(System.Int32,`0)">Constant(Int32, TDist)</h4>
+  <div class="markdown level1 summary"><p>Returns a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList-3.html">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</a> class
+with the specified number of elements all of which are set to the specified value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Constant(int size, TDist commonValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The size of the list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">commonValue</span></td>
+        <td><p>The common value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Constant_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Constant*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Constant_System_Int32__0_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Constant(System.Int32,`0,System.Double)">Constant(Int32, TDist, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList-3.html">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</a> class with the specified number of elements
+all of which are set to the specified value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Constant(int size, TDist commonValue, double tolerance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The size of the list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">commonValue</span></td>
+        <td><p>The common value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>The tolerance for the approximation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The new instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSize_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSize*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSize_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSize(System.Int32)">FromSize(Int32)</h4>
+  <div class="markdown level1 summary"><p>Returns a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList-3.html">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</a> class
+with the specified number of elements all of which are set to uniform.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromSize(int size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The size of the list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The new instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSize_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSize*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSize_System_Int32_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSize(System.Int32,System.Double)">FromSize(Int32, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList-3.html">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</a> class
+with the specified number of elements all of which are set to uniform.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromSize(int size, double tolerance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The size of the list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>The tolerance for the approximation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The new instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSparseList_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSparseList*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSparseList_Microsoft_ML_Probabilistic_Collections_ISparseList__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSparseList(Microsoft.ML.Probabilistic.Collections.ISparseList{`0})">FromSparseList(ISparseList&lt;TDist&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList-3.html">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</a> class from a sparse list of distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromSparseList(ISparseList&lt;TDist&gt; distributions)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDist&gt;</td>
+        <td><span class="parametername">distributions</span></td>
+        <td><p>The sparse list of distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The new instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSparseList_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSparseList*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSparseList_Microsoft_ML_Probabilistic_Collections_ISparseList__0__System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSparseList(Microsoft.ML.Probabilistic.Collections.ISparseList{`0},System.Double)">FromSparseList(ISparseList&lt;TDist&gt;, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList-3.html">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</a> class from a sparse list of distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromSparseList(ISparseList&lt;TDist&gt; distributions, double tolerance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDist&gt;</td>
+        <td><span class="parametername">distributions</span></td>
+        <td><p>The sparse list of distributions.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>The tolerance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The new instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSparseValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSparseValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSparseValues_System_Int32__0_List_Microsoft_ML_Probabilistic_Collections_ValueAtIndex__0___" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSparseValues(System.Int32,`0,List{Microsoft.ML.Probabilistic.Collections.ValueAtIndex{`0}})">FromSparseValues(Int32, TDist, List&lt;ValueAtIndex&lt;TDist&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList-3.html">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</a> class
+of a given length and assigns all elements the given value,
+except for the specified list of sparse values. This list is stored internally as is
+so MUST be sorted by index and must not be modified externally after being passed in.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromSparseValues(int size, TDist commonValue, List&lt;ValueAtIndex&lt;TDist&gt;&gt; sortedSparseValues)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The size of the list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">commonValue</span></td>
+        <td><p>The common value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ValueAtIndex-1.html">ValueAtIndex</a>&lt;TDist&gt;&gt;</td>
+        <td><span class="parametername">sortedSparseValues</span></td>
+        <td><p>The sorted list of non-common values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The new instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSparseValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSparseValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_FromSparseValues_System_Int32__0_List_Microsoft_ML_Probabilistic_Collections_ValueAtIndex__0___System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.FromSparseValues(System.Int32,`0,List{Microsoft.ML.Probabilistic.Collections.ValueAtIndex{`0}},System.Double)">FromSparseValues(Int32, TDist, List&lt;ValueAtIndex&lt;TDist&gt;&gt;, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList-3.html">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</a> class of a given length
+and assigns all elements the given value, except for the specified list of sparse values.
+This list is stored internally as is, so MUST be sorted by index and must not be modified
+externally after being passed in.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromSparseValues(int size, TDist commonValue, List&lt;ValueAtIndex&lt;TDist&gt;&gt; sortedSparseValues, double tolerance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The size of the list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">commonValue</span></td>
+        <td><p>The common value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ValueAtIndex-1.html">ValueAtIndex</a>&lt;TDist&gt;&gt;</td>
+        <td><span class="parametername">sortedSparseValues</span></td>
+        <td><p>The sorted list of non-common values.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>The tolerance for the approximation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The new instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetAverageLog__2_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetAverageLog(`2)">GetAverageLog(TThis)</h4>
+  <div class="markdown level1 summary"><p>Returns the expected logarithm of that sparse distribution list under this sparse distribution list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(TThis that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The other distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The expected logarithm of the other distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetLogAverageOf__2_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetLogAverageOf(`2)">GetLogAverageOf(TThis)</h4>
+  <div class="markdown level1 summary"><p>Returns the log probability that this distribution and another draw the same sample.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(TThis that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The other distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log probability that this distribution and another draw the same sample.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetLogAverageOfPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetLogAverageOfPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetLogAverageOfPower__2_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetLogAverageOfPower(`2,System.Double)">GetLogAverageOfPower(TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the log of the integral of the product of this sparse distribution list and another sparse distribution list raised to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOfPower(TThis that, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The other distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td><p>The exponent.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log average of the power of the second distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetLogProb_Microsoft_ML_Probabilistic_Collections_ISparseList__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetLogProb(Microsoft.ML.Probabilistic.Collections.ISparseList{`1})">GetLogProb(ISparseList&lt;TDomain&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the log of the density function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(ISparseList&lt;TDomain&gt; value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDomain&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The point at which to evaluate the density.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log probability of the given value&gt;.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetMean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetMean" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetMean">GetMean()</h4>
+  <div class="markdown level1 summary"><p>Gets the mean as a sparse list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ISparseList&lt;double&gt; GetMean()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The mean of this distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_GetVariance" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.GetVariance">GetVariance()</h4>
+  <div class="markdown level1 summary"><p>Gets the variance as a sparse list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ISparseList&lt;double&gt; GetVariance()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The variance of this distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Asks whether this sparse distribution list is uniform.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if all elements of the list are uniform, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>Returns the maximum difference between the parameters of this sparse distribution list
+and another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object thatd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">thatd</span></td>
+        <td><p>The other sparse distribution list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The maximum difference.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_MaxDiff_System_Object__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>a.MaxDiff(b) == b.MaxDiff(a)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>Samples from this sparse distribution list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ISparseList&lt;TDomain&gt; Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDomain&gt;</td>
+        <td><p>A sample from this distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Sample_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method is inefficient in that the result will be dense even though the return type is sparse.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Sample_Microsoft_ML_Probabilistic_Collections_ISparseList__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.Sample(Microsoft.ML.Probabilistic.Collections.ISparseList{`1})">Sample(ISparseList&lt;TDomain&gt;)</h4>
+  <div class="markdown level1 summary"><p>Samples from this sparse distribution list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ISparseList&lt;TDomain&gt; Sample(ISparseList&lt;TDomain&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDomain&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Where to put the result.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;TDomain&gt;</td>
+        <td><p>A sample from this distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_Sample_Microsoft_ML_Probabilistic_Collections_ISparseList__1___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method is inefficient in that the result will be dense even though the return type is sparse.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetTo__2_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetTo(`2)">SetTo(TThis)</h4>
+  <div class="markdown level1 summary"><p>Sets this sparse distribution list to another sparse distribution list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(TThis value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The other sparse distribution list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetToPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetToPower__2_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetToPower(`2,System.Double)">SetToPower(TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets this sparse distribution list to the power of another sparse distribution list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPower(TThis value, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td><p>The exponent.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetToProduct__2__2_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetToProduct(`2,`2)">SetToProduct(TThis, TThis)</h4>
+  <div class="markdown level1 summary"><p>Sets this sparse distribution list to the product of two other sparse distribution lists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(TThis a, TThis b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Left hand side.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Right hand side.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetToRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetToRatio__2__2_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetToRatio(`2,`2,System.Boolean)">SetToRatio(TThis, TThis, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Sets this sparse distribution list to the ratio of two other sparse Gaussian lists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRatio(TThis numerator, TThis denominator, bool forceProper = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>The numerator.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>The denominator.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>Whether to force the result to be proper.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetToSum_System_Double__2_System_Double__2_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetToSum(System.Double,`2,System.Double,`2)">SetToSum(Double, TThis, Double, TThis)</h4>
+  <div class="markdown level1 summary"><p>Creates a sparse distribution list to the weighted sums of the elements of two other sparse distribution lists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, TThis value1, double weight2, TThis value2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>The first weight.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">value1</span></td>
+        <td><p>The first sparse distribution list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>The second weight.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">value2</span></td>
+        <td><p>The second sparse distribution list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseDistributionList_3_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList`3.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets this sparse distribution list to be a uniform distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">IEnumerable&lt;&gt;</span>
+  </div>
+  <div>
+      <span class="xref">IList&lt;&gt;</span>
+  </div>
+  <div>
+      <span class="xref">IList</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean&lt;MeanType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance&lt;VarType&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

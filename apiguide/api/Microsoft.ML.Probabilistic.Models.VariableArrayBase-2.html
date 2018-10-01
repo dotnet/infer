@@ -1,0 +1,1526 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class VariableArrayBase&lt;TItem, TArray&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class VariableArrayBase&lt;TItem, TArray&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2" class="text-break">Class VariableArrayBase&lt;TItem, TArray&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a jagged variable array of arbitrary rank</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html">Variable</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;TArray&gt;</div>
+    <div class="level3"><span class="xref">VariableArrayBase&lt;TItem, TArray&gt;</span></div>
+      <div class="level4"><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-2.html">VariableArray&lt;TItem, TArray&gt;</a></div>
+      <div class="level4"><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray2D-2.html">VariableArray2D&lt;TItem, TArray&gt;</a></div>
+      <div class="level4"><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray3D-2.html">VariableArray3D&lt;TItem, TArray&gt;</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Models.CanGetContainers.html">CanGetContainers</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression-1.html">IModelExpression</a>&lt;TArray&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;TArray&gt;&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Models.HasItemVariables.html">HasItemVariables</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Models.IVariableArray.html">IVariableArray</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Models.IVariable.html">IVariable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Models.HasObservedValue.html">HasObservedValue</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Models.IVariableJaggedArray.html">IVariableJaggedArray</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_isReadOnly">Variable&lt;TArray&gt;.isReadOnly</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_IsReadOnly">Variable&lt;TArray&gt;.IsReadOnly</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_observedValue">Variable&lt;TArray&gt;.observedValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Microsoft_ML_Probabilistic_Models_HasObservedValue_ObservedValue">Variable&lt;TArray&gt;.HasObservedValue.ObservedValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_ObservedValue">Variable&lt;TArray&gt;.ObservedValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_ClearObservedValue">Variable&lt;TArray&gt;.ClearObservedValue()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Clone">Variable&lt;TArray&gt;.Clone()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_SetTo_Microsoft_ML_Probabilistic_Models_Variable__0__">Variable&lt;TArray&gt;.SetTo(Variable&lt;TArray&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_declaration">Variable&lt;TArray&gt;.declaration</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Name">Variable&lt;TArray&gt;.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Microsoft_ML_Probabilistic_Models_IModelExpression_Name">Variable&lt;TArray&gt;.IModelExpression.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Named_System_String_">Variable&lt;TArray&gt;.Named(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Attrib_Microsoft_ML_Probabilistic_Compiler_ICompilerAttribute_">Variable&lt;TArray&gt;.Attrib(ICompilerAttribute)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Attrib_Microsoft_ML_Probabilistic_QueryType_">Variable&lt;TArray&gt;.Attrib(QueryType)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_InitialiseTo__1___0_">Variable&lt;TArray&gt;.InitialiseTo&lt;TDist&gt;(TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_InitialiseTo__1_Microsoft_ML_Probabilistic_Models_Variable___0__">Variable&lt;TArray&gt;.InitialiseTo&lt;TDist&gt;(Variable&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_InitialiseTo__1_Microsoft_ML_Probabilistic_Models_IModelExpression___0__">Variable&lt;TArray&gt;.InitialiseTo&lt;TDist&gt;(IModelExpression&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_InitialiseBackwardTo__1___0_">Variable&lt;TArray&gt;.InitialiseBackwardTo&lt;TDist&gt;(TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_InitialiseBackwardTo__1_Microsoft_ML_Probabilistic_Models_Variable___0__">Variable&lt;TArray&gt;.InitialiseBackwardTo&lt;TDist&gt;(Variable&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_InitialiseBackwardTo__1_Microsoft_ML_Probabilistic_Models_IModelExpression___0__">Variable&lt;TArray&gt;.InitialiseBackwardTo&lt;TDist&gt;(IModelExpression&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_SetMarginalPrototype__1_Microsoft_ML_Probabilistic_Models_IModelExpression___0__">Variable&lt;TArray&gt;.SetMarginalPrototype&lt;TDist&gt;(IModelExpression&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_ForEach_Microsoft_ML_Probabilistic_Models_Range_">Variable&lt;TArray&gt;.ForEach(Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_ForEach_Microsoft_ML_Probabilistic_Models_Range___">Variable&lt;TArray&gt;.ForEach(Range[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Array_Microsoft_ML_Probabilistic_Models_Range_">Variable&lt;TArray&gt;.Array(Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Random__1_Microsoft_ML_Probabilistic_Models_Variable___0__">Variable&lt;TArray&gt;.Random&lt;TDist&gt;(Variable&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor_Func__0__">Variable&lt;TArray&gt;.Factor(Func&lt;TArray&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__1_Func___0__0__Microsoft_ML_Probabilistic_Models_Variable___0__">Variable&lt;TArray&gt;.Factor&lt;T1&gt;(Func&lt;T1, TArray&gt;, Variable&lt;T1&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__1_Func___0__0____0_">Variable&lt;TArray&gt;.Factor&lt;T1&gt;(Func&lt;T1, TArray&gt;, T1)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__2_Func___0___1__0__Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___1__">Variable&lt;TArray&gt;.Factor&lt;T1, T2&gt;(Func&lt;T1, T2, TArray&gt;, Variable&lt;T1&gt;, Variable&lt;T2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__2_Microsoft_ML_Probabilistic_Models_FuncOut___0___1__0__Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___1__">Variable&lt;TArray&gt;.Factor&lt;T1, T2&gt;(FuncOut&lt;T1, T2, TArray&gt;, Variable&lt;T1&gt;, Variable&lt;T2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__2_Func___0___1__0____0_Microsoft_ML_Probabilistic_Models_Variable___1__">Variable&lt;TArray&gt;.Factor&lt;T1, T2&gt;(Func&lt;T1, T2, TArray&gt;, T1, Variable&lt;T2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__2_Func___0___1__0__Microsoft_ML_Probabilistic_Models_Variable___0____1_">Variable&lt;TArray&gt;.Factor&lt;T1, T2&gt;(Func&lt;T1, T2, TArray&gt;, Variable&lt;T1&gt;, T2)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__2_Func___0___1__0____0___1_">Variable&lt;TArray&gt;.Factor&lt;T1, T2&gt;(Func&lt;T1, T2, TArray&gt;, T1, T2)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__3_Func___0___1___2__0__Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___1__Microsoft_ML_Probabilistic_Models_Variable___2__">Variable&lt;TArray&gt;.Factor&lt;T1, T2, T3&gt;(Func&lt;T1, T2, T3, TArray&gt;, Variable&lt;T1&gt;, Variable&lt;T2&gt;, Variable&lt;T3&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__3_Func___0___1___2__0____0_Microsoft_ML_Probabilistic_Models_Variable___1__Microsoft_ML_Probabilistic_Models_Variable___2__">Variable&lt;TArray&gt;.Factor&lt;T1, T2, T3&gt;(Func&lt;T1, T2, T3, TArray&gt;, T1, Variable&lt;T2&gt;, Variable&lt;T3&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__3_Func___0___1___2__0____0___1_Microsoft_ML_Probabilistic_Models_Variable___2__">Variable&lt;TArray&gt;.Factor&lt;T1, T2, T3&gt;(Func&lt;T1, T2, T3, TArray&gt;, T1, T2, Variable&lt;T3&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__3_Func___0___1___2__0____0_Microsoft_ML_Probabilistic_Models_Variable___1____2_">Variable&lt;TArray&gt;.Factor&lt;T1, T2, T3&gt;(Func&lt;T1, T2, T3, TArray&gt;, T1, Variable&lt;T2&gt;, T3)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__3_Func___0___1___2__0__Microsoft_ML_Probabilistic_Models_Variable___0____1_Microsoft_ML_Probabilistic_Models_Variable___2__">Variable&lt;TArray&gt;.Factor&lt;T1, T2, T3&gt;(Func&lt;T1, T2, T3, TArray&gt;, Variable&lt;T1&gt;, T2, Variable&lt;T3&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__3_Func___0___1___2__0__Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___1____2_">Variable&lt;TArray&gt;.Factor&lt;T1, T2, T3&gt;(Func&lt;T1, T2, T3, TArray&gt;, Variable&lt;T1&gt;, Variable&lt;T2&gt;, T3)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__3_Func___0___1___2__0__Microsoft_ML_Probabilistic_Models_Variable___0____1___2_">Variable&lt;TArray&gt;.Factor&lt;T1, T2, T3&gt;(Func&lt;T1, T2, T3, TArray&gt;, Variable&lt;T1&gt;, T2, T3)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__3_Func___0___1___2__0____0___1___2_">Variable&lt;TArray&gt;.Factor&lt;T1, T2, T3&gt;(Func&lt;T1, T2, T3, TArray&gt;, T1, T2, T3)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_Factor__4_Func___0___1___2___3__0__Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___1__Microsoft_ML_Probabilistic_Models_Variable___2__Microsoft_ML_Probabilistic_Models_Variable___3__">Variable&lt;TArray&gt;.Factor&lt;T1, T2, T3, T4&gt;(Func&lt;T1, T2, T3, T4, TArray&gt;, Variable&lt;T1&gt;, Variable&lt;T2&gt;, Variable&lt;T3&gt;, Variable&lt;T4&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_FactorUntyped_MethodInfo_Microsoft_ML_Probabilistic_Models_Variable___">Variable&lt;TArray&gt;.FactorUntyped(MethodInfo, Variable[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_OperatorUntyped_Microsoft_ML_Probabilistic_Models_Variable_Operator_MethodInfo_Microsoft_ML_Probabilistic_Models_Variable___">Variable&lt;TArray&gt;.OperatorUntyped(Variable.Operator, MethodInfo, Variable[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_GreaterThan_Microsoft_ML_Probabilistic_Models_Variable__0__Microsoft_ML_Probabilistic_Models_Variable__0__">Variable&lt;TArray&gt;.GreaterThan(Variable&lt;TArray&gt;, Variable&lt;TArray&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html#Microsoft_ML_Probabilistic_Models_Variable_1_GreaterThanOrEqual_Microsoft_ML_Probabilistic_Models_Variable__0__Microsoft_ML_Probabilistic_Models_Variable__0__">Variable&lt;TArray&gt;.GreaterThanOrEqual(Variable&lt;TArray&gt;, Variable&lt;TArray&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_NameInGeneratedCode">Variable.NameInGeneratedCode</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ToString">Variable.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Definition">Variable.Definition</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IsDefined">Variable.IsDefined</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IsDefinedInContext_List_Microsoft_ML_Probabilistic_Models_ConditionBlock__">Variable.IsDefinedInContext(List&lt;ConditionBlock&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IsPrefixOf__1_IList___0__IList___0__">Variable.IsPrefixOf&lt;T&gt;(IList&lt;T&gt;, IList&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ShorterIsPrefixOfLonger__1_IList___0__IList___0__">Variable.ShorterIsPrefixOfLonger&lt;T&gt;(IList&lt;T&gt;, IList&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_HasAnyItemDefined_IList_Microsoft_ML_Probabilistic_Models_ConditionBlock__">Variable.HasAnyItemDefined(IList&lt;ConditionBlock&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_HasDefinedItem_IList_Microsoft_ML_Probabilistic_Models_ConditionBlock__List_List_Microsoft_ML_Probabilistic_Models_IModelExpression___System_Int32_">Variable.HasDefinedItem(IList&lt;ConditionBlock&gt;, List&lt;List&lt;IModelExpression&gt;&gt;, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_MayOverlap_IList_Microsoft_ML_Probabilistic_Models_IModelExpression__IList_Microsoft_ML_Probabilistic_Models_IModelExpression__">Variable.MayOverlap(IList&lt;IModelExpression&gt;, IList&lt;IModelExpression&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IsConstantScalar_Microsoft_ML_Probabilistic_Models_IModelExpression_">Variable.IsConstantScalar(IModelExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_isObserved">Variable.isObserved</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IsObserved">Variable.IsObserved</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetDomainType">Variable.GetDomainType()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetExpression">Variable.GetExpression()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_attributes">Variable.attributes</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_AddAttribute_Microsoft_ML_Probabilistic_Compiler_ICompilerAttribute_">Variable.AddAttribute(ICompilerAttribute)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_AddAttribute_Microsoft_ML_Probabilistic_QueryType_">Variable.AddAttribute(QueryType)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_AddAttributes_Microsoft_ML_Probabilistic_Compiler_ICompilerAttribute___">Variable.AddAttributes(ICompilerAttribute[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_AddAttributes_IEnumerable_Microsoft_ML_Probabilistic_Compiler_ICompilerAttribute__">Variable.AddAttributes(IEnumerable&lt;ICompilerAttribute&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_AddDefinitionAttribute_Microsoft_ML_Probabilistic_Compiler_ICompilerAttribute_">Variable.AddDefinitionAttribute(ICompilerAttribute)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetValueRange">Variable.GetValueRange()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetValueRange_System_Boolean_">Variable.GetValueRange(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_SetValueRange_Microsoft_ML_Probabilistic_Models_Range_">Variable.SetValueRange(Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_SetSparsity_Microsoft_ML_Probabilistic_Math_Sparsity_">Variable.SetSparsity(Sparsity)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetAttributes__1">Variable.GetAttributes&lt;AttributeType&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_RemoveAllAttributes__1">Variable.RemoveAllAttributes&lt;AttributeType&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_HasAttribute__1">Variable.HasAttribute&lt;AttributeType&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetFirstAttribute__1">Variable.GetFirstAttribute&lt;AttributeType&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetContainers__1">Variable.GetContainers&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_array">Variable.array</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ArrayVariable">Variable.ArrayVariable</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IsArrayElement">Variable.IsArrayElement</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetItemExpression">Variable.GetItemExpression()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_loopRange">Variable.loopRange</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IsLoopIndex">Variable.IsLoopIndex</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1___0_">Variable.Constant&lt;T&gt;(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1___0___">Variable.Constant&lt;T&gt;(T[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1___0___Microsoft_ML_Probabilistic_Models_Range_">Variable.Constant&lt;T&gt;(T[], Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1___0_0__0___">Variable.Constant&lt;T&gt;(T[,])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1___0_0__0___Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Constant&lt;T&gt;(T[,], Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1___0_____Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Constant&lt;T&gt;(T[][], Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1___0_0__0_____Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Constant&lt;T&gt;(T[,][], Range, Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1___0_______Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Constant&lt;T&gt;(T[][][], Range, Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1_IList___0__">Variable.Constant&lt;T&gt;(IList&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1_IList___0__Microsoft_ML_Probabilistic_Models_Range_">Variable.Constant&lt;T&gt;(IList&lt;T&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constant__1_IList_IList___0___Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Constant&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1___0_">Variable.Observed&lt;T&gt;(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1___0___">Variable.Observed&lt;T&gt;(T[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1___0_0__0___">Variable.Observed&lt;T&gt;(T[,])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1___0___Microsoft_ML_Probabilistic_Models_Range_">Variable.Observed&lt;T&gt;(T[], Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1___0_____Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Observed&lt;T&gt;(T[][], Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1___0_______Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Observed&lt;T&gt;(T[][][], Range, Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1___0_________Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Observed&lt;T&gt;(T[][][][], Range, Range, Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1___0_0__0___Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Observed&lt;T&gt;(T[,], Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1_IList___0__">Variable.Observed&lt;T&gt;(IList&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1_IList___0__Microsoft_ML_Probabilistic_Models_Range_">Variable.Observed&lt;T&gt;(IList&lt;T&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Observed__1_IList_IList___0___Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Observed&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Random__1_Microsoft_ML_Probabilistic_Distributions_IDistribution___0__">Variable.Random&lt;T&gt;(IDistribution&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Random__2_Microsoft_ML_Probabilistic_Models_Variable___1__">Variable.Random&lt;T, TDist&gt;(Variable&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_New__1">Variable.New&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Repeat_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Repeat(Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Array__1_Microsoft_ML_Probabilistic_Models_Range_">Variable.Array&lt;T&gt;(Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IList__1_Microsoft_ML_Probabilistic_Models_Range_">Variable.IList&lt;T&gt;(Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ISparseList__1_Microsoft_ML_Probabilistic_Models_Range_">Variable.ISparseList&lt;T&gt;(Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IArray__1_Microsoft_ML_Probabilistic_Models_Range_">Variable.IArray&lt;T&gt;(Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Array__1_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Array&lt;T&gt;(Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IArray__1_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.IArray&lt;T&gt;(Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Array__1_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Array&lt;T&gt;(Range, Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Array__1_IList_Microsoft_ML_Probabilistic_Models_Range__">Variable.Array&lt;T&gt;(IList&lt;Range&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Array__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_Range_">Variable.Array&lt;T&gt;(VariableArray&lt;T&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IList__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_Range_">Variable.IList&lt;T&gt;(VariableArray&lt;T&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IArray__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_Range_">Variable.IArray&lt;T&gt;(VariableArray&lt;T&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Array__1_Microsoft_ML_Probabilistic_Models_VariableArray2D___0__Microsoft_ML_Probabilistic_Models_Range_">Variable.Array&lt;T&gt;(VariableArray2D&lt;T&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IArray__1_Microsoft_ML_Probabilistic_Models_VariableArray2D___0__Microsoft_ML_Probabilistic_Models_Range_">Variable.IArray&lt;T&gt;(VariableArray2D&lt;T&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Array__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Array&lt;T&gt;(VariableArray&lt;T&gt;, Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IArray__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.IArray&lt;T&gt;(VariableArray&lt;T&gt;, Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Array__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_">Variable.Array&lt;T&gt;(VariableArray&lt;T&gt;, Range, Range, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Array__2_Microsoft_ML_Probabilistic_Models_VariableArray___0___1__Microsoft_ML_Probabilistic_Models_Range_">Variable.Array&lt;TItem, TArray&gt;(VariableArray&lt;TItem, TArray&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IList__2_Microsoft_ML_Probabilistic_Models_VariableArray___0___1__Microsoft_ML_Probabilistic_Models_Range_">Variable.IList&lt;TItem, TArray&gt;(VariableArray&lt;TItem, TArray&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IArray__2_Microsoft_ML_Probabilistic_Models_VariableArray___0___1__Microsoft_ML_Probabilistic_Models_Range_">Variable.IArray&lt;TItem, TArray&gt;(VariableArray&lt;TItem, TArray&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Array__2___0_Microsoft_ML_Probabilistic_Models_Range_">Variable.Array&lt;TItem, TArray&gt;(TItem, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constrain__1_Action___0__Microsoft_ML_Probabilistic_Models_Variable___0__">Variable.Constrain&lt;T&gt;(Action&lt;T&gt;, Variable&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constrain__2_Action___0___1__Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___1__">Variable.Constrain&lt;T1, T2&gt;(Action&lt;T1, T2&gt;, Variable&lt;T1&gt;, Variable&lt;T2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constrain__3_Action___0___1___2__Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___1__Microsoft_ML_Probabilistic_Models_Variable___2__">Variable.Constrain&lt;T1, T2, T3&gt;(Action&lt;T1, T2, T3&gt;, Variable&lt;T1&gt;, Variable&lt;T2&gt;, Variable&lt;T3&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Constrain__4_Action___0___1___2___3__Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___1__Microsoft_ML_Probabilistic_Models_Variable___2__Microsoft_ML_Probabilistic_Models_Variable___3__">Variable.Constrain&lt;T1, T2, T3, T4&gt;(Action&lt;T1, T2, T3, T4&gt;, Variable&lt;T1&gt;, Variable&lt;T2&gt;, Variable&lt;T3&gt;, Variable&lt;T4&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainInternal_MethodInfo_Microsoft_ML_Probabilistic_Models_Variable___">Variable.ConstrainInternal(MethodInfo, Variable[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GaussianFromMeanAndPrecision_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.GaussianFromMeanAndPrecision(Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GaussianFromMeanAndPrecision_System_Double_System_Double_">Variable.GaussianFromMeanAndPrecision(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GaussianFromMeanAndVariance_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.GaussianFromMeanAndVariance(Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GaussianFromMeanAndVariance_Microsoft_ML_Probabilistic_Models_Variable_System_Double__System_Double_">Variable.GaussianFromMeanAndVariance(Variable&lt;Double&gt;, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GaussianFromMeanAndVariance_System_Double_System_Double_">Variable.GaussianFromMeanAndVariance(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_TruncatedGaussian_System_Double_System_Double_System_Double_System_Double_">Variable.TruncatedGaussian(Double, Double, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_TruncatedGammaFromShapeAndRate_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.TruncatedGammaFromShapeAndRate(Variable&lt;Double&gt;, Variable&lt;Double&gt;, Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GaussianListFromMeanAndPrecision_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___">Variable.GaussianListFromMeanAndPrecision(Variable&lt;ISparseList&lt;Double&gt;&gt;, Variable&lt;ISparseList&lt;Double&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GaussianListFromMeanAndPrecision_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___">Variable.GaussianListFromMeanAndPrecision(ISparseList&lt;Double&gt;, Variable&lt;ISparseList&lt;Double&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GaussianListFromMeanAndPrecision_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__">Variable.GaussianListFromMeanAndPrecision(Variable&lt;ISparseList&lt;Double&gt;&gt;, ISparseList&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GaussianListFromMeanAndPrecision_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__">Variable.GaussianListFromMeanAndPrecision(ISparseList&lt;Double&gt;, ISparseList&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_VectorGaussianFromMeanAndPrecision_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__">Variable.VectorGaussianFromMeanAndPrecision(Variable&lt;Vector&gt;, Variable&lt;PositiveDefiniteMatrix&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_VectorGaussianFromMeanAndPrecision_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_">Variable.VectorGaussianFromMeanAndPrecision(Vector, PositiveDefiniteMatrix)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_VectorGaussianFromMeanAndVariance_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_">Variable.VectorGaussianFromMeanAndVariance(Vector, PositiveDefiniteMatrix)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_VectorGaussianFromMeanAndVariance_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_">Variable.VectorGaussianFromMeanAndVariance(Variable&lt;Vector&gt;, PositiveDefiniteMatrix)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_VectorGaussianFromMeanAndVariance_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__">Variable.VectorGaussianFromMeanAndVariance(Variable&lt;Vector&gt;, Variable&lt;PositiveDefiniteMatrix&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GammaFromShapeAndScale_System_Double_System_Double_">Variable.GammaFromShapeAndScale(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GammaFromShapeAndScale_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.GammaFromShapeAndScale(Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GammaFromShapeAndRate_System_Double_System_Double_">Variable.GammaFromShapeAndRate(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GammaFromShapeAndRate_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.GammaFromShapeAndRate(Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GammaFromMeanAndVariance_System_Double_System_Double_">Variable.GammaFromMeanAndVariance(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GammaFromMeanAndVariance_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.GammaFromMeanAndVariance(Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_WishartFromShapeAndScale_System_Double_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_">Variable.WishartFromShapeAndScale(Double, PositiveDefiniteMatrix)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_WishartFromShapeAndScale_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__">Variable.WishartFromShapeAndScale(Variable&lt;Double&gt;, Variable&lt;PositiveDefiniteMatrix&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_WishartFromShapeAndRate_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__">Variable.WishartFromShapeAndRate(Variable&lt;Double&gt;, Variable&lt;PositiveDefiniteMatrix&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Bernoulli_System_Double_">Variable.Bernoulli(Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Bernoulli_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Bernoulli(Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_BernoulliList_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___">Variable.BernoulliList(Variable&lt;ISparseList&lt;Double&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_BernoulliList_Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_Variable_System_Boolean__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___">Variable.BernoulliList(VariableArray&lt;Variable&lt;Boolean&gt;, ISparseList&lt;Double&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_BernoulliList_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__">Variable.BernoulliList(ISparseList&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_BernoulliIntegerSubset_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___">Variable.BernoulliIntegerSubset(Variable&lt;ISparseList&lt;Double&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_BernoulliIntegerSubset_Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___">Variable.BernoulliIntegerSubset(VariableArray&lt;Variable&lt;Double&gt;, ISparseList&lt;Double&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_BernoulliIntegerSubset_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__">Variable.BernoulliIntegerSubset(ISparseList&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_BernoulliFromLogOdds_System_Double_">Variable.BernoulliFromLogOdds(Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_BernoulliFromLogOdds_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.BernoulliFromLogOdds(Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Discrete_System_Double___">Variable.Discrete(Double[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Discrete_Microsoft_ML_Probabilistic_Models_Range_System_Double___">Variable.Discrete(Range, Double[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Discrete_Microsoft_ML_Probabilistic_Math_Vector_">Variable.Discrete(Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Discrete_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Math_Vector_">Variable.Discrete(Range, Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DiscreteUniform_System_Int32_">Variable.DiscreteUniform(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DiscreteUniform_Microsoft_ML_Probabilistic_Models_Range_">Variable.DiscreteUniform(Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DiscreteUniform_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.DiscreteUniform(Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DiscreteUniform_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.DiscreteUniform(Range, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Discrete_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.Discrete(Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Discrete_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.Discrete(Range, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_EnumDiscrete__1_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.EnumDiscrete&lt;TEnum&gt;(Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_EnumDiscrete__1_System_Double___">Variable.EnumDiscrete&lt;TEnum&gt;(Double[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_EnumDiscrete__1_Microsoft_ML_Probabilistic_Models_Range_System_Double___">Variable.EnumDiscrete&lt;TEnum&gt;(Range, Double[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_EnumDiscrete__1_Microsoft_ML_Probabilistic_Math_Vector_">Variable.EnumDiscrete&lt;TEnum&gt;(Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_EnumDiscrete__1_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Math_Vector_">Variable.EnumDiscrete&lt;TEnum&gt;(Range, Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_EnumUniform__1">Variable.EnumUniform&lt;TEnum&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_EnumUniform__1_Microsoft_ML_Probabilistic_Models_Range_">Variable.EnumUniform&lt;TEnum&gt;(Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_EnumToInt__1_Microsoft_ML_Probabilistic_Models_Variable___0__">Variable.EnumToInt&lt;TEnum&gt;(Variable&lt;TEnum&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DiscreteFromLogProbs_Microsoft_ML_Probabilistic_Models_VariableArray_System_Double__">Variable.DiscreteFromLogProbs(VariableArray&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_BetaFromMeanAndVariance_System_Double_System_Double_">Variable.BetaFromMeanAndVariance(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_BetaFromMeanAndVariance_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.BetaFromMeanAndVariance(Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Beta_System_Double_System_Double_">Variable.Beta(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Beta_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Beta(Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DirichletUniform_System_Int32_">Variable.DirichletUniform(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DirichletUniform_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.DirichletUniform(Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DirichletUniform_Microsoft_ML_Probabilistic_Models_Range_">Variable.DirichletUniform(Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DirichletSymmetric_System_Int32_System_Double_">Variable.DirichletSymmetric(Int32, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DirichletSymmetric_System_Int32_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.DirichletSymmetric(Int32, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_DirichletSymmetric_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.DirichletSymmetric(Range, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Dirichlet_System_Double___">Variable.Dirichlet(Double[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Dirichlet_Microsoft_ML_Probabilistic_Models_Range_System_Double___">Variable.Dirichlet(Range, Double[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Dirichlet_Microsoft_ML_Probabilistic_Math_Vector_">Variable.Dirichlet(Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Dirichlet_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.Dirichlet(Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Dirichlet_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Math_Vector_">Variable.Dirichlet(Range, Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Dirichlet_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.Dirichlet(Range, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Double_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.Double(Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Double_Microsoft_ML_Probabilistic_Models_IModelExpression_System_Int32__">Variable.Double(IModelExpression&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Double_Microsoft_ML_Probabilistic_Models_Variable_System_Boolean__">Variable.Double(Variable&lt;Boolean&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Poisson_System_Double_">Variable.Poisson(Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Poisson_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Poisson(Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Binomial_System_Int32_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Binomial(Int32, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Binomial_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Binomial(Variable&lt;Int32&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_MultinomialList_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.MultinomialList(Variable&lt;Int32&gt;, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Multinomial_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.Multinomial(Variable&lt;Int32&gt;, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Multinomial_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Math_Vector_">Variable.Multinomial(Variable&lt;Int32&gt;, Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Multinomial_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.Multinomial(Range, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_FunctionEvaluate_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Distributions_IFunction__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.FunctionEvaluate(Variable&lt;IFunction&gt;, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IsPositive_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.IsPositive(Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IsBetween_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.IsBetween(Variable&lt;Double&gt;, Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_InnerProduct_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.InnerProduct(Variable&lt;Vector&gt;, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_InnerProduct_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_DenseVector__">Variable.InnerProduct(Variable&lt;Vector&gt;, Variable&lt;DenseVector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_InnerProduct_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_DenseVector__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.InnerProduct(Variable&lt;DenseVector&gt;, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_InnerProduct_Microsoft_ML_Probabilistic_Models_VariableArray_System_Double__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.InnerProduct(VariableArray&lt;Double&gt;, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_InnerProduct_Microsoft_ML_Probabilistic_Models_VariableArray_System_Double__Microsoft_ML_Probabilistic_Models_VariableArray_System_Double__">Variable.InnerProduct(VariableArray&lt;Double&gt;, VariableArray&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_SumWhere_Microsoft_ML_Probabilistic_Models_VariableArray_System_Boolean__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.SumWhere(VariableArray&lt;Boolean&gt;, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_SumWhere_Microsoft_ML_Probabilistic_Models_VariableArray_System_Boolean__Microsoft_ML_Probabilistic_Models_VariableArray_System_Double__">Variable.SumWhere(VariableArray&lt;Boolean&gt;, VariableArray&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Matrix_Microsoft_ML_Probabilistic_Models_Variable_System_Double_0__0____">Variable.Matrix(Variable&lt;Double[,]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_MatrixTimesVector_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Matrix__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.MatrixTimesVector(Variable&lt;Matrix&gt;, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_MatrixTimesVector_Microsoft_ML_Probabilistic_Models_Variable_System_Double_0__0____Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.MatrixTimesVector(Variable&lt;Double[,]&gt;, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_MatrixTimesScalar_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.MatrixTimesScalar(Variable&lt;PositiveDefiniteMatrix&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_VectorTimesScalar_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.VectorTimesScalar(Variable&lt;Vector&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_MatrixMultiply_Microsoft_ML_Probabilistic_Models_VariableArray2D_System_Double__Microsoft_ML_Probabilistic_Models_VariableArray2D_System_Double__">Variable.MatrixMultiply(VariableArray2D&lt;Double&gt;, VariableArray2D&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Sum_Microsoft_ML_Probabilistic_Models_Variable_System_Int32____">Variable.Sum(Variable&lt;Int32[]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Sum_Microsoft_ML_Probabilistic_Models_Variable_IList_System_Double___">Variable.Sum(Variable&lt;IList&lt;Double&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Sum_Microsoft_ML_Probabilistic_Models_Variable_System_Double____">Variable.Sum(Variable&lt;Double[]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Sum_Expanded_Microsoft_ML_Probabilistic_Models_VariableArray_System_Double__">Variable.Sum_Expanded(VariableArray&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Sum_Microsoft_ML_Probabilistic_Models_Variable_IList_Microsoft_ML_Probabilistic_Math_Vector___">Variable.Sum(Variable&lt;IList&lt;Vector&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Sum_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector____">Variable.Sum(Variable&lt;Vector[]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Max_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Max(Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Min_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Min(Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Min_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.Min(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Exp_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Exp(Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Log_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Log(Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Logistic_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Logistic(Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Softmax_Microsoft_ML_Probabilistic_Models_VariableArray_System_Double__">Variable.Softmax(VariableArray&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Softmax_Microsoft_ML_Probabilistic_Models_Variable_IList_System_Double___">Variable.Softmax(Variable&lt;IList&lt;Double&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Softmax_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.Softmax(Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Softmax_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___">Variable.Softmax(Variable&lt;ISparseList&lt;Double&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ProductExp_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.ProductExp(Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Rotate_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Rotate(Variable&lt;Double&gt;, Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_AllTrue_Microsoft_ML_Probabilistic_Models_Variable_IList_System_Boolean___">Variable.AllTrue(Variable&lt;IList&lt;Boolean&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_AllTrue_Microsoft_ML_Probabilistic_Models_Variable_System_Boolean____">Variable.AllTrue(Variable&lt;Boolean[]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CountTrue_Microsoft_ML_Probabilistic_Models_Variable_System_Boolean____">Variable.CountTrue(Variable&lt;Boolean[]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Concat_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.Concat(Variable&lt;Vector&gt;, Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Vector_Microsoft_ML_Probabilistic_Models_Variable_System_Double____">Variable.Vector(Variable&lt;Double[]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ArrayFromVector_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Models_Range_">Variable.ArrayFromVector(Variable&lt;Vector&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Split__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_VariableArray___0___">Variable.Split&lt;T&gt;(VariableArray&lt;T&gt;, Range, Range, VariableArray&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Split__2_Microsoft_ML_Probabilistic_Models_VariableArray___0___1____Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_VariableArray___0___1_____">Variable.Split&lt;TItem, T&gt;(VariableArray&lt;TItem, T[]&gt;, Range, Range, VariableArray&lt;TItem, T[]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Subvector_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.Subvector(Variable&lt;Vector&gt;, Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetItem_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.GetItem(Variable&lt;Vector&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Copy__1_Microsoft_ML_Probabilistic_Models_Variable___0__">Variable.Copy&lt;T&gt;(Variable&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Copy__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__">Variable.Copy&lt;T&gt;(VariableArray&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Copy__1_Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray___0____0______">Variable.Copy&lt;T&gt;(VariableArray&lt;VariableArray&lt;T&gt;, T[][]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Copy__2_Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray___0___1____1____">Variable.Copy&lt;TItem, T&gt;(VariableArray&lt;VariableArray&lt;TItem, T&gt;, T[]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_SequentialCopy__1_Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___0___">Variable.SequentialCopy&lt;T&gt;(Variable&lt;T&gt;, Variable&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_SequentialCopy__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray___0___">Variable.SequentialCopy&lt;T&gt;(VariableArray&lt;T&gt;, VariableArray&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_SequentialCopy__1_Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray___0____0______Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray___0____0_______">Variable.SequentialCopy&lt;T&gt;(VariableArray&lt;VariableArray&lt;T&gt;, T[][]&gt;, VariableArray&lt;VariableArray&lt;T&gt;, T[][]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Cut__1_Microsoft_ML_Probabilistic_Models_Variable___0__">Variable.Cut&lt;T&gt;(Variable&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Cut__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__">Variable.Cut&lt;T&gt;(VariableArray&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Cut__1_Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray___0____0______">Variable.Cut&lt;T&gt;(VariableArray&lt;VariableArray&lt;T&gt;, T[][]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Replicate__1_Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Range_">Variable.Replicate&lt;T&gt;(Variable&lt;T&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Replicate__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_Range_">Variable.Replicate&lt;T&gt;(VariableArray&lt;T&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Replicate__1_Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray___0____0______Microsoft_ML_Probabilistic_Models_Range_">Variable.Replicate&lt;T&gt;(VariableArray&lt;VariableArray&lt;T&gt;, T[][]&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Replicate__2_Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray___0___1____1____Microsoft_ML_Probabilistic_Models_Range_">Variable.Replicate&lt;TItem, T&gt;(VariableArray&lt;VariableArray&lt;TItem, T&gt;, T[]&gt;, Range)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_Variable___0____Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">Variable.Subarray&lt;T&gt;(Variable&lt;T[]&gt;, VariableArray&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_Variable_IList___0___Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">Variable.Subarray&lt;T&gt;(Variable&lt;IList&lt;T&gt;&gt;, VariableArray&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">Variable.Subarray&lt;T&gt;(VariableArray&lt;T&gt;, VariableArray&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Subarray2__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__Microsoft_ML_Probabilistic_Models_VariableArray___0__">Variable.Subarray2&lt;T&gt;(VariableArray&lt;T&gt;, VariableArray&lt;Int32&gt;, VariableArray&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Subarray__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__IList_System_Int32___">Variable.Subarray&lt;T&gt;(VariableArray&lt;T&gt;, VariableArray&lt;Variable&lt;Int32&gt;, IList&lt;Int32&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_SplitSubarray__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__System_Int32______">Variable.SplitSubarray&lt;T&gt;(VariableArray&lt;T&gt;, VariableArray&lt;VariableArray&lt;Int32&gt;, Int32[][]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_SplitSubarray__2_Microsoft_ML_Probabilistic_Models_VariableArray___0___1____Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__System_Int32______">Variable.SplitSubarray&lt;TItem, T&gt;(VariableArray&lt;TItem, T[]&gt;, VariableArray&lt;VariableArray&lt;Int32&gt;, Int32[][]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_JaggedSubarray__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray_Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__System_Int32______">Variable.JaggedSubarray&lt;T&gt;(VariableArray&lt;T&gt;, VariableArray&lt;VariableArray&lt;Int32&gt;, Int32[][]&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Subarray__2_Microsoft_ML_Probabilistic_Models_VariableArray___0___1____Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">Variable.Subarray&lt;TItem, T&gt;(VariableArray&lt;TItem, T[]&gt;, VariableArray&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetItems__1_Microsoft_ML_Probabilistic_Models_Variable___0____Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">Variable.GetItems&lt;T&gt;(Variable&lt;T[]&gt;, VariableArray&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetItems__1_Microsoft_ML_Probabilistic_Models_Variable_IList___0___Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">Variable.GetItems&lt;T&gt;(Variable&lt;IList&lt;T&gt;&gt;, VariableArray&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetItems__1_Microsoft_ML_Probabilistic_Models_VariableArray___0__Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">Variable.GetItems&lt;T&gt;(VariableArray&lt;T&gt;, VariableArray&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetItems__2_Microsoft_ML_Probabilistic_Models_VariableArray___0___1____Microsoft_ML_Probabilistic_Models_VariableArray_System_Int32__">Variable.GetItems&lt;TItem, T&gt;(VariableArray&lt;TItem, T[]&gt;, VariableArray&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Char_Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Math_Vector__">Variable.Char(Variable&lt;Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CharUniform">Variable.CharUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CharLower">Variable.CharLower()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CharUpper">Variable.CharUpper()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CharLetter">Variable.CharLetter()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CharDigit">Variable.CharDigit()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CharLetterOrDigit">Variable.CharLetterOrDigit()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CharWord">Variable.CharWord()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CharNonWord">Variable.CharNonWord()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CharWhitespace">Variable.CharWhitespace()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringUniform">Variable.StringUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringLower">Variable.StringLower()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringLower_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.StringLower(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringUpper">Variable.StringUpper()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringUpper_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.StringUpper(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringLetters">Variable.StringLetters()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringLetters_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.StringLetters(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringDigits">Variable.StringDigits()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringDigits_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.StringDigits(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringLettersOrDigits">Variable.StringLettersOrDigits()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringLettersOrDigits_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.StringLettersOrDigits(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringWhitespace">Variable.StringWhitespace()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringWhitespace_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.StringWhitespace(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringWord">Variable.StringWord()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringWord_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.StringWord(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringNonWord">Variable.StringNonWord()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringNonWord_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.StringNonWord(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringCapitalized">Variable.StringCapitalized()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringCapitalized_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.StringCapitalized(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringOfLength_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.StringOfLength(Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringOfLength_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Distributions_DiscreteChar__">Variable.StringOfLength(Variable&lt;Int32&gt;, Variable&lt;DiscreteChar&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_String_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.String(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_String_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_Microsoft_ML_Probabilistic_Distributions_DiscreteChar__">Variable.String(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;, Variable&lt;DiscreteChar&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringFromArray_Microsoft_ML_Probabilistic_Models_VariableArray_System_Char__">Variable.StringFromArray(VariableArray&lt;Char&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Substring_Microsoft_ML_Probabilistic_Models_Variable_System_String__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.Substring(Variable&lt;String&gt;, Variable&lt;Int32&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringFormat_Microsoft_ML_Probabilistic_Models_Variable_System_String__Microsoft_ML_Probabilistic_Models_Variable_System_String____">Variable.StringFormat(Variable&lt;String&gt;, Variable&lt;String&gt;[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_StringFormat_Microsoft_ML_Probabilistic_Models_Variable_System_String__Microsoft_ML_Probabilistic_Models_VariableArray_System_String__">Variable.StringFormat(Variable&lt;String&gt;, VariableArray&lt;String&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_GetItem_Microsoft_ML_Probabilistic_Models_Variable_System_String__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.GetItem(Variable&lt;String&gt;, Variable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainTrue_Microsoft_ML_Probabilistic_Models_Variable_System_Boolean__">Variable.ConstrainTrue(Variable&lt;Boolean&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainFalse_Microsoft_ML_Probabilistic_Models_Variable_System_Boolean__">Variable.ConstrainFalse(Variable&lt;Boolean&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainPositive_Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.ConstrainPositive(Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainBetween_Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.ConstrainBetween(Variable&lt;Double&gt;, Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainEqual__1_Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___0__">Variable.ConstrainEqual&lt;T&gt;(Variable&lt;T&gt;, Variable&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainEqual__1___0_Microsoft_ML_Probabilistic_Models_Variable___0__">Variable.ConstrainEqual&lt;T&gt;(T, Variable&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainEqual__1_Microsoft_ML_Probabilistic_Models_Variable___0____0_">Variable.ConstrainEqual&lt;T&gt;(Variable&lt;T&gt;, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainEqualRandom__2_Microsoft_ML_Probabilistic_Models_Variable___0__Microsoft_ML_Probabilistic_Models_Variable___1__">Variable.ConstrainEqualRandom&lt;T, TDist&gt;(Variable&lt;T&gt;, Variable&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainEqualRandom__2___0_Microsoft_ML_Probabilistic_Models_Variable___1__">Variable.ConstrainEqualRandom&lt;T, TDist&gt;(T, Variable&lt;TDist&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_ConstrainEqualRandom__2_Microsoft_ML_Probabilistic_Models_Variable___0____1_">Variable.ConstrainEqualRandom&lt;T, TDist&gt;(Variable&lt;T&gt;, TDist)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Potts_Microsoft_ML_Probabilistic_Models_Variable_System_Boolean__Microsoft_ML_Probabilistic_Models_Variable_System_Boolean__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Potts(Variable&lt;Boolean&gt;, Variable&lt;Boolean&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Potts_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Potts(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Linear_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.Linear(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_LinearTrunc_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Int32__Microsoft_ML_Probabilistic_Models_Variable_System_Double__Microsoft_ML_Probabilistic_Models_Variable_System_Double__">Variable.LinearTrunc(Variable&lt;Int32&gt;, Variable&lt;Int32&gt;, Variable&lt;Double&gt;, Variable&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_operatorFactorRegistry">Variable.operatorFactorRegistry</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_RegisterOperatorFactor_Microsoft_ML_Probabilistic_Models_Variable_Operator_Delegate_">Variable.RegisterOperatorFactor(Variable.Operator, Delegate)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_LookupOperatorFactor_Microsoft_ML_Probabilistic_Models_Variable_Operator_Type___">Variable.LookupOperatorFactor(Variable.Operator, Type[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_If_Microsoft_ML_Probabilistic_Models_Variable_System_Boolean__">Variable.If(Variable&lt;Boolean&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_IfNot_Microsoft_ML_Probabilistic_Models_Variable_System_Boolean__">Variable.IfNot(Variable&lt;Boolean&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Case_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__System_Int32_">Variable.Case(Variable&lt;Int32&gt;, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_CloseAllBlocks">Variable.CloseAllBlocks()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_Switch_Microsoft_ML_Probabilistic_Models_Variable_System_Int32__">Variable.Switch(Variable&lt;Int32&gt;)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Models.html">Microsoft.ML.Probabilistic.Models</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class VariableArrayBase&lt;TItem, TArray&gt; : Variable&lt;TArray&gt;, CanGetContainers, IModelExpression&lt;TArray&gt;, SettableTo&lt;Variable&lt;TArray&gt;&gt;, ICloneable, HasItemVariables, IVariableArray, IVariable, IModelExpression, HasObservedValue, IVariableJaggedArray where TItem : Variable, ICloneable, SettableTo&lt;TItem&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The item variable type.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TArray</span></td>
+        <td><p>The domain type of the array.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>TItem is either a VariableArray&lt;T&gt; or another VariableArray&lt;,&gt;</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2__ctor_" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2__ctor_Microsoft_ML_Probabilistic_Models_VariableArrayBase__0__1__" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.#ctor(Microsoft.ML.Probabilistic.Models.VariableArrayBase{`0,`1})">VariableArrayBase(VariableArrayBase&lt;TItem, TArray&gt;)</h4>
+  <div class="markdown level1 summary"><p>Copy constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected VariableArrayBase(VariableArrayBase&lt;TItem, TArray&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArrayBase-2.html">VariableArrayBase</a>&lt;TItem, TArray&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_itemPrototype" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.itemPrototype">itemPrototype</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected TItem itemPrototype</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TItem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Item_" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Item_Microsoft_ML_Probabilistic_Models_IModelExpression___" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Item(Microsoft.ML.Probabilistic.Models.IModelExpression[])">Item[IModelExpression[]]</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected TItem this[params IModelExpression[] index] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a>[]</td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TItem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Item_" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Item_Microsoft_ML_Probabilistic_Models_Range___" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Item(Microsoft.ML.Probabilistic.Models.Range[])">Item[Range[]]</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected TItem this[params Range[] index] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a>[]</td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TItem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Ranges_" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Ranges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Ranges" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Ranges">Ranges</h4>
+  <div class="markdown level1 summary"><p>List of ranges associated with the array</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IList&lt;Range&gt; Ranges { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_SetTo_" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_SetTo_Microsoft_ML_Probabilistic_Models_VariableArrayBase__0__1__" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.SetTo(Microsoft.ML.Probabilistic.Models.VariableArrayBase{`0,`1})">SetTo(VariableArrayBase&lt;TItem, TArray&gt;)</h4>
+  <div class="markdown level1 summary"><p>Set the variable array to the given value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(VariableArrayBase&lt;TItem, TArray&gt; that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArrayBase-2.html">VariableArrayBase</a>&lt;TItem, TArray&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Microsoft_ML_Probabilistic_Models_HasItemVariables_GetItemsUntyped_" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Microsoft#ML#Probabilistic#Models#HasItemVariables#GetItemsUntyped*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Microsoft_ML_Probabilistic_Models_HasItemVariables_GetItemsUntyped" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Microsoft#ML#Probabilistic#Models#HasItemVariables#GetItemsUntyped">HasItemVariables.GetItemsUntyped()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Dictionary&lt;IList&lt;IModelExpression&gt;, IVariable&gt; HasItemVariables.GetItemsUntyped()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a>&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Models.IVariable.html">IVariable</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Microsoft_ML_Probabilistic_Models_IVariableArray_ReplaceRanges_" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Microsoft#ML#Probabilistic#Models#IVariableArray#ReplaceRanges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Microsoft_ML_Probabilistic_Models_IVariableArray_ReplaceRanges_Dictionary_Microsoft_ML_Probabilistic_Models_Range_Microsoft_ML_Probabilistic_Models_Range__Dictionary_Microsoft_ML_Probabilistic_Models_IModelExpression_Microsoft_ML_Probabilistic_Models_IModelExpression__System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Microsoft#ML#Probabilistic#Models#IVariableArray#ReplaceRanges(Dictionary{Microsoft.ML.Probabilistic.Models.Range,Microsoft.ML.Probabilistic.Models.Range},Dictionary{Microsoft.ML.Probabilistic.Models.IModelExpression,Microsoft.ML.Probabilistic.Models.IModelExpression},System.Boolean)">IVariableArray.ReplaceRanges(Dictionary&lt;Range, Range&gt;, Dictionary&lt;IModelExpression, IModelExpression&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IVariableArray IVariableArray.ReplaceRanges(Dictionary&lt;Range, Range&gt; rangeReplacements, Dictionary&lt;IModelExpression, IModelExpression&gt; expressionReplacements, bool deepCopy)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a>&gt;</td>
+        <td><span class="parametername">rangeReplacements</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a>&gt;</td>
+        <td><span class="parametername">expressionReplacements</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">deepCopy</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.IVariableArray.html">IVariableArray</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Microsoft_ML_Probabilistic_Models_IVariableJaggedArray_ItemPrototype_" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Microsoft#ML#Probabilistic#Models#IVariableJaggedArray#ItemPrototype*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_VariableArrayBase_2_Microsoft_ML_Probabilistic_Models_IVariableJaggedArray_ItemPrototype" data-uid="Microsoft.ML.Probabilistic.Models.VariableArrayBase`2.Microsoft#ML#Probabilistic#Models#IVariableJaggedArray#ItemPrototype">IVariableJaggedArray.ItemPrototype</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IVariable IVariableJaggedArray.ItemPrototype { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.IVariable.html">IVariable</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.CanGetContainers.html">CanGetContainers</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression-1.html">IModelExpression&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.HasItemVariables.html">HasItemVariables</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.IVariableArray.html">IVariableArray</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.IVariable.html">IVariable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.IModelExpression.html">IModelExpression</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.HasObservedValue.html">HasObservedValue</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.IVariableJaggedArray.html">IVariableJaggedArray</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

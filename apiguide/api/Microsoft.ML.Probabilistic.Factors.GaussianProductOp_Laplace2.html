@@ -1,0 +1,588 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GaussianProductOp_Laplace2
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GaussianProductOp_Laplace2
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2" class="text-break">Class GaussianProductOp_Laplace2
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Product_System_Double_System_Double_">Product(Double, Double)</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpBase.html">GaussianProductOpBase</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html">GaussianProductOpEvidenceBase</a></div>
+    <div class="level3"><span class="xref">GaussianProductOp_Laplace2</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_">GaussianProductOpEvidenceBase.LogAverageFactor(Gaussian, Gaussian, Double, Gaussian)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_">GaussianProductOpEvidenceBase.LogAverageFactor(Gaussian, Double, Gaussian, Gaussian)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogAverageFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianProductOpEvidenceBase.LogAverageFactor(Double, Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogAverageFactor_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_">GaussianProductOpEvidenceBase.LogAverageFactor(Double, Double, Gaussian)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogAverageFactor_System_Double_System_Double_System_Double_">GaussianProductOpEvidenceBase.LogAverageFactor(Double, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogEvidenceRatio_System_Double_System_Double_System_Double_">GaussianProductOpEvidenceBase.LogEvidenceRatio(Double, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_System_Double_">GaussianProductOpEvidenceBase.LogAverageFactor(Gaussian, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianProductOpEvidenceBase.LogEvidenceRatio(Gaussian, Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_">GaussianProductOpEvidenceBase.LogEvidenceRatio(Gaussian, Double, Gaussian)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_System_Double_">GaussianProductOpEvidenceBase.LogEvidenceRatio(Gaussian, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogEvidenceRatio_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianProductOpEvidenceBase.LogEvidenceRatio(Double, Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpEvidenceBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpEvidenceBase_LogEvidenceRatio_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_">GaussianProductOpEvidenceBase.LogEvidenceRatio(Double, Double, Gaussian)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpBase_ProductAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_">GaussianProductOpBase.ProductAverageConditional(Double, Gaussian)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpBase_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianProductOpBase.ProductAverageConditional(Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpBase_ProductAverageConditional_System_Double_System_Double_">GaussianProductOpBase.ProductAverageConditional(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpBase_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianProductOpBase.AAverageConditional(Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpBase_AAverageConditional_System_Double_System_Double_">GaussianProductOpBase.AAverageConditional(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpBase_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianProductOpBase.BAverageConditional(Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpBase_BAverageConditional_System_Double_System_Double_">GaussianProductOpBase.BAverageConditional(Double, Double)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class GaussianProductOp_Laplace2 : GaussianProductOpEvidenceBase</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This class allows EP to process the product factor using Laplace's method.</p>
+</div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_modified" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.modified">modified</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool modified</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_offDiagonal" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.offDiagonal">offDiagonal</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool offDiagonal</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">AAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian AAverageConditional(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">to_A</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">BAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian BAverageConditional(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">to_B</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">LogAverageFactor(Gaussian, Gaussian, Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">to_A</span></td>
+        <td><p>Previous outgoing message to <code>A</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(product,a,b) p(product,a,b) factor(product,a,b))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">LogEvidenceRatio(Gaussian, Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Gaussian Product, Gaussian A, Gaussian B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(product,a,b) p(product,a,b) factor(product,a,b) / sum_product p(product) messageTo(product))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.ProductAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_Laplace2_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_Laplace2.ProductAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">ProductAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian ProductAverageConditional(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_A, Gaussian to_B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">to_A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">to_B</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

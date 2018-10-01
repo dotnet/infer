@@ -1,0 +1,527 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ArraySizeTracingTransform
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ArraySizeTracingTransform
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Compiler.Transforms.ArraySizeTracingTransform">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Compiler_Transforms_ArraySizeTracingTransform" data-uid="Microsoft.ML.Probabilistic.Compiler.Transforms.ArraySizeTracingTransform" class="text-break">Class ArraySizeTracingTransform
+  </h1>
+  <div class="markdown level0 summary"><p>Adds statements that print the size of each message array.  During inference, these array sizes will appear on the console.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html">ShallowCopyTransform</a></div>
+    <div class="level2"><span class="xref">ArraySizeTracingTransform</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ICodeTransform.html">ICodeTransform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.IExpressionTransform.html">IExpressionTransform</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ShallowCopy">ShallowCopyTransform.ShallowCopy</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_context">ShallowCopyTransform.context</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_Context">ShallowCopyTransform.Context</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_Builder">ShallowCopyTransform.Builder</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_Recognizer">ShallowCopyTransform.Recognizer</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_Initialise">ShallowCopyTransform.Initialise()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_Transform_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_">ShallowCopyTransform.Transform(ITypeDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertType_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_">ShallowCopyTransform.ConvertType(ITypeDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertTypeProperties_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_">ShallowCopyTransform.ConvertTypeProperties(ITypeDeclaration, ITypeDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertBaseType_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeReference_">ShallowCopyTransform.ConvertBaseType(ITypeReference)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertInterface_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeReference_">ShallowCopyTransform.ConvertInterface(ITypeReference)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertNestedTypes_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_">ShallowCopyTransform.ConvertNestedTypes(ITypeDeclaration, ITypeDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertMethods_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_">ShallowCopyTransform.ConvertMethods(ITypeDeclaration, ITypeDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertMethod_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMethodDeclaration_">ShallowCopyTransform.ConvertMethod(IMethodDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertEvents_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_">ShallowCopyTransform.ConvertEvents(ITypeDeclaration, ITypeDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertEvent_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_IEventDeclaration_">ShallowCopyTransform.ConvertEvent(ITypeDeclaration, IEventDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertFields_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_">ShallowCopyTransform.ConvertFields(ITypeDeclaration, ITypeDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertField_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_IFieldDeclaration_">ShallowCopyTransform.ConvertField(ITypeDeclaration, IFieldDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertProperties_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_">ShallowCopyTransform.ConvertProperties(ITypeDeclaration, ITypeDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertProperty_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_IPropertyDeclaration_System_Boolean_">ShallowCopyTransform.ConvertProperty(ITypeDeclaration, IPropertyDeclaration, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_DoConvertConstructor_Microsoft_ML_Probabilistic_Compiler_CodeModel_IConstructorDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_IConstructorDeclaration_">ShallowCopyTransform.DoConvertConstructor(IConstructorDeclaration, IConstructorDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_DoConvertMethod_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMethodDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMethodDeclaration_">ShallowCopyTransform.DoConvertMethod(IMethodDeclaration, IMethodDeclaration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_CheckIdentifier_System_String_">ShallowCopyTransform.CheckIdentifier(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_DoConvertMethodBody_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement__IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement__">ShallowCopyTransform.DoConvertMethodBody(IList&lt;IStatement&gt;, IList&lt;IStatement&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertMethodParameter_Microsoft_ML_Probabilistic_Compiler_CodeModel_IParameterDeclaration_System_Int32_">ShallowCopyTransform.ConvertMethodParameter(IParameterDeclaration, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertBlock_Microsoft_ML_Probabilistic_Compiler_CodeModel_IBlockStatement_">ShallowCopyTransform.ConvertBlock(IBlockStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_RegisterUnchangedStatements_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement__">ShallowCopyTransform.RegisterUnchangedStatements(IEnumerable&lt;IStatement&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_RegisterUnchangedStatement_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_">ShallowCopyTransform.RegisterUnchangedStatement(IStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_beforeStack">ShallowCopyTransform.beforeStack</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_afterStack">ShallowCopyTransform.afterStack</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_OpenOutputBlock_ICollection_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement__">ShallowCopyTransform.OpenOutputBlock(ICollection&lt;IStatement&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_FinishConvertStatement">ShallowCopyTransform.FinishConvertStatement()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_CloseOutputBlock">ShallowCopyTransform.CloseOutputBlock()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertStatements_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement__IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement__">ShallowCopyTransform.ConvertStatements(IList&lt;IStatement&gt;, IEnumerable&lt;IStatement&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertStatement_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_">ShallowCopyTransform.ConvertStatement(IStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_DoConvertStatement_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_">ShallowCopyTransform.DoConvertStatement(IStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertThrow_Microsoft_ML_Probabilistic_Compiler_CodeModel_IThrowExceptionStatement_">ShallowCopyTransform.ConvertThrow(IThrowExceptionStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertBreak_Microsoft_ML_Probabilistic_Compiler_CodeModel_IBreakStatement_">ShallowCopyTransform.ConvertBreak(IBreakStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertSwitch_Microsoft_ML_Probabilistic_Compiler_CodeModel_ISwitchStatement_">ShallowCopyTransform.ConvertSwitch(ISwitchStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertSwitchCase_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_ISwitchCase__Microsoft_ML_Probabilistic_Compiler_CodeModel_ISwitchCase_">ShallowCopyTransform.ConvertSwitchCase(IList&lt;ISwitchCase&gt;, ISwitchCase)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertUsing_Microsoft_ML_Probabilistic_Compiler_CodeModel_IUsingStatement_">ShallowCopyTransform.ConvertUsing(IUsingStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertWhile_Microsoft_ML_Probabilistic_Compiler_CodeModel_IWhileStatement_">ShallowCopyTransform.ConvertWhile(IWhileStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertForEach_Microsoft_ML_Probabilistic_Compiler_CodeModel_IForEachStatement_">ShallowCopyTransform.ConvertForEach(IForEachStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertExpression_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_">ShallowCopyTransform.ConvertExpression(IExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_DoConvertExpression_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_">ShallowCopyTransform.DoConvertExpression(IExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertBlockAlreadyOpen_Microsoft_ML_Probabilistic_Compiler_CodeModel_IBlockStatement_">ShallowCopyTransform.ConvertBlockAlreadyOpen(IBlockStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertCondition_Microsoft_ML_Probabilistic_Compiler_CodeModel_IConditionStatement_">ShallowCopyTransform.ConvertCondition(IConditionStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertExpressionStatement_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpressionStatement_">ShallowCopyTransform.ConvertExpressionStatement(IExpressionStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertRepeat_Microsoft_ML_Probabilistic_Compiler_CodeModel_IRepeatStatement_">ShallowCopyTransform.ConvertRepeat(IRepeatStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertReturnStatement_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMethodReturnStatement_">ShallowCopyTransform.ConvertReturnStatement(IMethodReturnStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertComment_Microsoft_ML_Probabilistic_Compiler_CodeModel_ICommentStatement_">ShallowCopyTransform.ConvertComment(ICommentStatement)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertDelegateInvoke_Microsoft_ML_Probabilistic_Compiler_CodeModel_IDelegateInvokeExpression_">ShallowCopyTransform.ConvertDelegateInvoke(IDelegateInvokeExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertAnonymousMethodExpression_Microsoft_ML_Probabilistic_Compiler_CodeModel_IAnonymousMethodExpression_">ShallowCopyTransform.ConvertAnonymousMethodExpression(IAnonymousMethodExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertDefaultExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IDefaultExpression_">ShallowCopyTransform.ConvertDefaultExpr(IDefaultExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertAddressOut_Microsoft_ML_Probabilistic_Compiler_CodeModel_IAddressOutExpression_">ShallowCopyTransform.ConvertAddressOut(IAddressOutExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertAddressDereference_Microsoft_ML_Probabilistic_Compiler_CodeModel_IAddressDereferenceExpression_">ShallowCopyTransform.ConvertAddressDereference(IAddressDereferenceExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertPropertyIndexerExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IPropertyIndexerExpression_">ShallowCopyTransform.ConvertPropertyIndexerExpr(IPropertyIndexerExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertBaseRef_Microsoft_ML_Probabilistic_Compiler_CodeModel_IBaseReferenceExpression_">ShallowCopyTransform.ConvertBaseRef(IBaseReferenceExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertCastExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_ICastExpression_">ShallowCopyTransform.ConvertCastExpr(ICastExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertCheckedExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_ICheckedExpression_">ShallowCopyTransform.ConvertCheckedExpr(ICheckedExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertConditionExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IConditionExpression_">ShallowCopyTransform.ConvertConditionExpr(IConditionExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertBlockExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IBlockExpression_">ShallowCopyTransform.ConvertBlockExpr(IBlockExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertTypeRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeReferenceExpression_">ShallowCopyTransform.ConvertTypeRefExpr(ITypeReferenceExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertTypeReference_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeReference_">ShallowCopyTransform.ConvertTypeReference(ITypeReference)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertFieldRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IFieldReferenceExpression_">ShallowCopyTransform.ConvertFieldRefExpr(IFieldReferenceExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertPropertyRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IPropertyReferenceExpression_">ShallowCopyTransform.ConvertPropertyRefExpr(IPropertyReferenceExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertEventRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IEventReferenceExpression_">ShallowCopyTransform.ConvertEventRefExpr(IEventReferenceExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertVariableDeclExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclarationExpression_">ShallowCopyTransform.ConvertVariableDeclExpr(IVariableDeclarationExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertVariableRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableReferenceExpression_">ShallowCopyTransform.ConvertVariableRefExpr(IVariableReferenceExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertArrayCreate_Microsoft_ML_Probabilistic_Compiler_CodeModel_IArrayCreateExpression_">ShallowCopyTransform.ConvertArrayCreate(IArrayCreateExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertArgumentRef_Microsoft_ML_Probabilistic_Compiler_CodeModel_IArgumentReferenceExpression_">ShallowCopyTransform.ConvertArgumentRef(IArgumentReferenceExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertObjectCreate_Microsoft_ML_Probabilistic_Compiler_CodeModel_IObjectCreateExpression_">ShallowCopyTransform.ConvertObjectCreate(IObjectCreateExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertArrayIndexer_Microsoft_ML_Probabilistic_Compiler_CodeModel_IArrayIndexerExpression_">ShallowCopyTransform.ConvertArrayIndexer(IArrayIndexerExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertUnary_Microsoft_ML_Probabilistic_Compiler_CodeModel_IUnaryExpression_">ShallowCopyTransform.ConvertUnary(IUnaryExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertBinary_Microsoft_ML_Probabilistic_Compiler_CodeModel_IBinaryExpression_">ShallowCopyTransform.ConvertBinary(IBinaryExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertLiteral_Microsoft_ML_Probabilistic_Compiler_CodeModel_ILiteralExpression_">ShallowCopyTransform.ConvertLiteral(ILiteralExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertThis_Microsoft_ML_Probabilistic_Compiler_CodeModel_IThisReferenceExpression_">ShallowCopyTransform.ConvertThis(IThisReferenceExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertAssign_Microsoft_ML_Probabilistic_Compiler_CodeModel_IAssignExpression_">ShallowCopyTransform.ConvertAssign(IAssignExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertCollection_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__">ShallowCopyTransform.ConvertCollection(IList&lt;IExpression&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertMethodInvoke_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMethodInvokeExpression_">ShallowCopyTransform.ConvertMethodInvoke(IMethodInvokeExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertMethodRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMethodReferenceExpression_">ShallowCopyTransform.ConvertMethodRefExpr(IMethodReferenceExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertTypeOfExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeOfExpression_">ShallowCopyTransform.ConvertTypeOfExpr(ITypeOfExpression)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertMethodReference_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMethodReference_">ShallowCopyTransform.ConvertMethodReference(IMethodReference)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertCollection_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__">ShallowCopyTransform.ConvertCollection(IList&lt;IExpression&gt;, IList&lt;IExpression&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertMethodInstanceReference_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMethodReference_">ShallowCopyTransform.ConvertMethodInstanceReference(IMethodReference)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_Warning_System_String_">ShallowCopyTransform.Warning(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_Error_System_String_">ShallowCopyTransform.Error(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_Warning_System_String_Exception_">ShallowCopyTransform.Warning(String, Exception)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_Error_System_String_Exception_">ShallowCopyTransform.Error(String, Exception)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.html">Microsoft.ML.Probabilistic.Compiler.Transforms</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Transforms_ArraySizeTracingTransform_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ArraySizeTracingTransform : ShallowCopyTransform, ICodeTransform, IExpressionTransform</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Transforms_ArraySizeTracingTransform_Name_" data-uid="Microsoft.ML.Probabilistic.Compiler.Transforms.ArraySizeTracingTransform.Name*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Transforms_ArraySizeTracingTransform_Name" data-uid="Microsoft.ML.Probabilistic.Compiler.Transforms.ArraySizeTracingTransform.Name">Name</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string Name { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_Name">ShallowCopyTransform.Name</a></div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Transforms_ArraySizeTracingTransform_ConvertFor_" data-uid="Microsoft.ML.Probabilistic.Compiler.Transforms.ArraySizeTracingTransform.ConvertFor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Transforms_ArraySizeTracingTransform_ConvertFor_Microsoft_ML_Probabilistic_Compiler_CodeModel_IForStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.Transforms.ArraySizeTracingTransform.ConvertFor(Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement)">ConvertFor(IForStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override IStatement ConvertFor(IForStatement ifs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement.html">IForStatement</a></td>
+        <td><span class="parametername">ifs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertFor_Microsoft_ML_Probabilistic_Compiler_CodeModel_IForStatement_">ShallowCopyTransform.ConvertFor(IForStatement)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Transforms_ArraySizeTracingTransform_ConvertVariableDecl_" data-uid="Microsoft.ML.Probabilistic.Compiler.Transforms.ArraySizeTracingTransform.ConvertVariableDecl*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Transforms_ArraySizeTracingTransform_ConvertVariableDecl_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.Transforms.ArraySizeTracingTransform.ConvertVariableDecl(Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration)">ConvertVariableDecl(IVariableDeclaration)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override IVariableDeclaration ConvertVariableDecl(IVariableDeclaration ivd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a></td>
+        <td><span class="parametername">ivd</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html#Microsoft_ML_Probabilistic_Compiler_Transforms_ShallowCopyTransform_ConvertVariableDecl_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration_">ShallowCopyTransform.ConvertVariableDecl(IVariableDeclaration)</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ICodeTransform.html">ICodeTransform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.IExpressionTransform.html">IExpressionTransform</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

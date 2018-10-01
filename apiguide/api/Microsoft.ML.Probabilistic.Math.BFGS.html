@@ -1,0 +1,910 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class BFGS
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class BFGS
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Math.BFGS">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Math_BFGS" data-uid="Microsoft.ML.Probabilistic.Math.BFGS" class="text-break">Class BFGS
+  </h1>
+  <div class="markdown level0 summary"><p>This implementation of BFGS is based on Algorithm 6.1 from
+Nocedal and Wright (Second edition, 2006).</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">BFGS</span></div>
+      <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Math.LBFGS.html">LBFGS</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Math.html">Microsoft.ML.Probabilistic.Math</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Math_BFGS_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class BFGS : object</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS__ctor_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS__ctor" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.#ctor">BFGS()</h4>
+  <div class="markdown level1 summary"><p>BFGS constructor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BFGS()</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_cancel" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.cancel">cancel</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool cancel</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_convergenceCriteria" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.convergenceCriteria">convergenceCriteria</h4>
+  <div class="markdown level1 summary"><p>Convergence criteria:</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BFGS.ConvergenceCriteria convergenceCriteria</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.ConvergenceCriteria.html">BFGS.ConvergenceCriteria</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_currentDeriv" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.currentDeriv">currentDeriv</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Vector currentDeriv</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_currentObj" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.currentObj">currentObj</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double currentObj</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_currentX" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.currentX">currentX</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Vector currentX</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_debug" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.debug">debug</h4>
+  <div class="markdown level1 summary"><p>Whether to output debug info</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool debug</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_dimension" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.dimension">dimension</h4>
+  <div class="markdown level1 summary"><p>Following fields are set up by the main run
+routine, and are used to provide the 1-D function that
+the line search needs</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected int dimension</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_epsilon" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.epsilon">epsilon</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double epsilon</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_feval" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.feval">feval</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected FunctionEval feval</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.FunctionEval.html">FunctionEval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_initialStep" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.initialStep">initialStep</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double initialStep</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_iter" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.iter">iter</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected int iter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_lineSearch" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.lineSearch">lineSearch</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LineSearch lineSearch</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.LineSearch.html">LineSearch</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_maxIterations" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.maxIterations">maxIterations</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected int maxIterations</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_searchDir" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.searchDir">searchDir</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Vector searchDir</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_stepMax" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.stepMax">stepMax</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double stepMax</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_Cancel_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.Cancel*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_Cancel" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.Cancel">Cancel</h4>
+  <div class="markdown level1 summary"><p>Cancel</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Cancel { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_Epsilon_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.Epsilon*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_Epsilon" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.Epsilon">Epsilon</h4>
+  <div class="markdown level1 summary"><p>Convergence tolerance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Epsilon { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_InitialStep_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.InitialStep*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_InitialStep" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.InitialStep">InitialStep</h4>
+  <div class="markdown level1 summary"><p>Initial step</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double InitialStep { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_IterationsPerformed_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.IterationsPerformed*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_IterationsPerformed" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.IterationsPerformed">IterationsPerformed</h4>
+  <div class="markdown level1 summary"><p>Number of iterations performed to reach convergence (or failure)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int IterationsPerformed { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_linesearchDebug_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.linesearchDebug*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_linesearchDebug" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.linesearchDebug">linesearchDebug</h4>
+  <div class="markdown level1 summary"><p>Whether to debug the line search</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool linesearchDebug { set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_MaximumIterations_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.MaximumIterations*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_MaximumIterations" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.MaximumIterations">MaximumIterations</h4>
+  <div class="markdown level1 summary"><p>Maximum number of iterations</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaximumIterations { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_MaximumStep_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.MaximumStep*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_MaximumStep" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.MaximumStep">MaximumStep</h4>
+  <div class="markdown level1 summary"><p>Maximum step</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaximumStep { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_LSEval_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.LSEval*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_LSEval_System_Double_System_Boolean_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.LSEval(System.Double,System.Boolean,System.Double@)">LSEval(Double, Boolean, out Double)</h4>
+  <div class="markdown level1 summary"><p>This is the 1-D function that the line search sees.
+The Run function will set up the necessary fields</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual double LSEval(double step, bool calcDeriv, out double deriv)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">step</span></td>
+        <td><p>step</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">calcDeriv</span></td>
+        <td><p>flag to calculate derivative</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">deriv</span></td>
+        <td><p>the derivative</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_RaiseIterationEvent_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.RaiseIterationEvent*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_RaiseIterationEvent_System_Int32_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.RaiseIterationEvent(System.Int32,System.Double,System.Double)">RaiseIterationEvent(Int32, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Safely invoke the iteration event</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void RaiseIterationEvent(int iteration, double objVal, double rmsDeriv)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">iteration</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">objVal</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">rmsDeriv</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_Run_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.Run*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_Run_Microsoft_ML_Probabilistic_Math_Vector_System_Double_Microsoft_ML_Probabilistic_Math_FunctionEval_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.Run(Microsoft.ML.Probabilistic.Math.Vector,System.Double,Microsoft.ML.Probabilistic.Math.FunctionEval)">Run(Vector, Double, FunctionEval)</h4>
+  <div class="markdown level1 summary"><p>Run an unconstrained minimization using BFGS</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Vector Run(Vector x0, double normOfFirstStep, FunctionEval func)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x0</span></td>
+        <td><p>Starting step</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">normOfFirstStep</span></td>
+        <td><p>Norm of first step</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.FunctionEval.html">FunctionEval</a></td>
+        <td><span class="parametername">func</span></td>
+        <td><p>Multivariate function and derivative evaluator</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>The local minimum point</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_SetWolfeConstants_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.SetWolfeConstants*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_SetWolfeConstants_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.SetWolfeConstants(System.Double,System.Double)">SetWolfeConstants(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Set Wolfe conditions</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWolfeConstants(double c1, double c2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">c1</span></td>
+        <td><p>Sufficient decrease condition</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">c2</span></td>
+        <td><p>Curvature condition</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_BFGS_TryLineSearch_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.TryLineSearch*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_TryLineSearch_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.TryLineSearch(System.Double,System.Double,System.Double)">TryLineSearch(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Line search</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double TryLineSearch(double s0, double smax, double currentGrad)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">s0</span></td>
+        <td><p>Initial step</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">smax</span></td>
+        <td><p>Maximum step</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">currentGrad</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Math_BFGS_OnIteration" data-uid="Microsoft.ML.Probabilistic.Math.BFGS.OnIteration">OnIteration</h4>
+  <div class="markdown level1 summary"><p>Event triggered at each iteration</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event IterationEventHandler OnIteration</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.IterationEventHandler.html">IterationEventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

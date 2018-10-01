@@ -1,0 +1,1299 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct WrappedGaussian
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct WrappedGaussian
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian" class="text-break">Struct WrappedGaussian
+  </h1>
+  <div class="markdown level0 summary"><p>A Gaussian distribution on a periodic domain, such as angles between 0 and 2*pi.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct WrappedGaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;double&gt;, SettableTo&lt;WrappedGaussian&gt;, SettableToProduct&lt;WrappedGaussian&gt;, SettableToProduct&lt;WrappedGaussian, WrappedGaussian&gt;, SettableToRatio&lt;WrappedGaussian&gt;, SettableToRatio&lt;WrappedGaussian, WrappedGaussian&gt;, SettableToWeightedSum&lt;WrappedGaussian&gt;, SettableToPower&lt;WrappedGaussian&gt;, Sampleable&lt;double&gt;, CanGetLogAverageOf&lt;WrappedGaussian&gt;, CanGetLogAverageOfPower&lt;WrappedGaussian&gt;, CanGetAverageLog&lt;WrappedGaussian&gt;</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The distribution is represented by a unwrapped Gaussian and a period length L.
+To get the wrapped density, the unwrapped density is summed over all shifts by L, i.e.
+p(x) = sum_k N(x + Lk; m, v)  over all integers k
+The wrapped density is automatically normalized over the range [0,L) because it
+simply moves the probability mass that was previously distributed over the real line
+to all lie in the interval [0,L).</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__ctor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.#ctor(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">WrappedGaussian(Gaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Create a WrappedGaussian distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WrappedGaussian(Gaussian unwrapped, double period)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">unwrapped</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">period</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__ctor_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.#ctor(System.Double,System.Double,System.Double)">WrappedGaussian(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Create a WrappedGaussian distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WrappedGaussian(double unwrappedMean, double unwrappedVariance, double period = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">unwrappedMean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">unwrappedVariance</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">period</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Gaussian" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Gaussian">Gaussian</h4>
+  <div class="markdown level1 summary"><p>The unwrapped Gaussian, with mean in [0,L)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Gaussian Gaussian</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Period" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Period">Period</h4>
+  <div class="markdown level1 summary"><p>The period length, greater than zero</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Period</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>True if the distribution is a point mass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Set this distribution to a point mass, or get its location</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Make a deep copy of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>True if this distribution has the same parameters as that</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">GetAverageLog(WrappedGaussian)</h4>
+  <div class="markdown level1 summary"><p>Get the average logarithm of that distribution under this distribution, i.e. int this(x) log( that(x) ) dx</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(WrappedGaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is approximate.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>A hash of the distribution parameter values</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">GetLogAverageOf(WrappedGaussian)</h4>
+  <div class="markdown level1 summary"><p>Get the logarithm of the average value of that distribution under this distribution, i.e. log(int this(x) that(x) dx)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(WrappedGaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetLogAverageOfPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetLogAverageOfPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetLogAverageOfPower_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetLogAverageOfPower(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,System.Double)">GetLogAverageOfPower(WrappedGaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Get the integral of this distribution times another distribution raised to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOfPower(WrappedGaussian that, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetLogProb_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetLogProb(System.Double)">GetLogProb(Double)</h4>
+  <div class="markdown level1 summary"><p>Get the log probability density at value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(double value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>True if the distribution is uniform</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>The maximum difference between the parameters of this distribution and that</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object thatd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">thatd</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Mod_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Mod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Mod_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Mod(System.Double)">Mod(Double)</h4>
+  <div class="markdown level1 summary"><p>Return x modulo the period</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Mod(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Mod_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Mod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Mod_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Mod(System.Double,System.Double)">Mod(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Return x modulo the period</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Mod(double x, double period)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">period</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Normalize_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Normalize*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Normalize" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Normalize">Normalize()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Normalize()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_PointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.PointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_PointMass_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.PointMass(System.Double,System.Double)">PointMass(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Create a WrappedGaussian distribution with all mass on a single point</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static WrappedGaussian PointMass(double point, double period = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">point</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">period</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>Sample from the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Sample_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Sample(System.Double)">Sample(Double)</h4>
+  <div class="markdown level1 summary"><p>Sample from the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Sample(double result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Ignored</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetTo_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetTo(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">SetTo(WrappedGaussian)</h4>
+  <div class="markdown level1 summary"><p>Set this distribution equal to value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(WrappedGaussian value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetToPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToPower_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetToPower(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,System.Double)">SetToPower(WrappedGaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Set this equal to (dist)^exponent</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPower(WrappedGaussian dist, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToProduct_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetToProduct(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">SetToProduct(WrappedGaussian, WrappedGaussian)</h4>
+  <div class="markdown level1 summary"><p>Set this distribution equal to the approximate product of a and b</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(WrappedGaussian a, WrappedGaussian b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToProduct_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Since WrappedGaussians are not closed under multiplication, the result is approximate.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetToRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToRatio_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetToRatio(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,System.Boolean)">SetToRatio(WrappedGaussian, WrappedGaussian, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Set this equal to numerator/denominator</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRatio(WrappedGaussian numerator, WrappedGaussian denominator, bool forceProper = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToSum_System_Double_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetToSum(System.Double,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,System.Double,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">SetToSum(Double, WrappedGaussian, Double, WrappedGaussian)</h4>
+  <div class="markdown level1 summary"><p>Set the parameters to match the moments of a mixture distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, WrappedGaussian value1, double weight2, WrappedGaussian value2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>The first weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">value1</span></td>
+        <td><p>The first distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>The second weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">value2</span></td>
+        <td><p>The second distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"><p>Set the distribution to uniform, keeping the same period</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>A human-readable string containing the parameters of the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Uniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Uniform_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Uniform(System.Double)">Uniform(Double)</h4>
+  <div class="markdown level1 summary"><p>Create a uniform WrappedGaussian distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static WrappedGaussian Uniform(double period = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">period</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_op_Equality_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.op_Equality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_op_Equality_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.op_Equality(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">Equality(WrappedGaussian, WrappedGaussian)</h4>
+  <div class="markdown level1 summary"><p>Equals operator</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(WrappedGaussian a, WrappedGaussian b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_op_Inequality_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.op_Inequality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_op_Inequality_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.op_Inequality(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">Inequality(WrappedGaussian, WrappedGaussian)</h4>
+  <div class="markdown level1 summary"><p>Not equals operator</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(WrappedGaussian a, WrappedGaussian b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_op_Multiply_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.op_Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_op_Multiply_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.op_Multiply(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian,Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">Multiply(WrappedGaussian, WrappedGaussian)</h4>
+  <div class="markdown level1 summary"><p>Creates a new WrappedGaussian which is the product of two other WrappedGaussians</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static WrappedGaussian operator *(WrappedGaussian a, WrappedGaussian b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First WrappedGaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second WrappedGaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></td>
+        <td><p>Result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

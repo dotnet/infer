@@ -1,0 +1,521 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Microsoft.ML.Probabilistic.Distributions
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Microsoft.ML.Probabilistic.Distributions
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions">
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions" data-uid="Microsoft.ML.Probabilistic.Distributions" class="text-break">Namespace Microsoft.ML.Probabilistic.Distributions
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.AccumulateIntoCollection-1.html">AccumulateIntoCollection&lt;T&gt;</a></h4>
+      <section><p>An Accumulator that adds each element to a collection.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.AccumulatorList-1.html">AccumulatorList&lt;T&gt;</a></h4>
+      <section><p>Wraps a list of accumulators, adding each sample to all of them.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Array2DEstimator-3.html">Array2DEstimator&lt;ItemEstimator, DistributionArray, Distribution&gt;</a></h4>
+      <section><p>Estimator for a 2-D DistributionArray type, where the samples are distributions</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Array2DEstimator-4.html">Array2DEstimator&lt;ItemEstimator, DistributionArray, Distribution, Sample&gt;</a></h4>
+      <section><p>Estimator for a 2-D DistributionArray type.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ArrayEstimator.html">ArrayEstimator</a></h4>
+      <section><p>Useful static methods relating to array estimators</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ArrayEstimator-1.html">ArrayEstimator&lt;T&gt;</a></h4>
+      <section><p>Static class which implements useful functions on estimator arrays.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ArrayEstimator-3.html">ArrayEstimator&lt;ItemEstimator, DistributionArray, Distribution&gt;</a></h4>
+      <section><p>Estimator for a DistributionArray type where the sample type is a distribution</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ArrayEstimator-4.html">ArrayEstimator&lt;ItemEstimator, DistributionArray, Distribution, Sample&gt;</a></h4>
+      <section><p>Estimator for a DistributionArray type.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.BernoulliEstimator.html">BernoulliEstimator</a></h4>
+      <section><p>Estimates a Bernoulli distribution from samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.BernoulliIntegerSubset.html">BernoulliIntegerSubset</a></h4>
+      <section><p>Represents a sparse list of Bernoulli distributions considered as a distribution over a variable-sized list of
+integers, which are the indices of elements in the boolean list with value 'true'.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.BetaEstimator.html">BetaEstimator</a></h4>
+      <section><p>Estimates a Beta distribution from samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.BurnInAccumulator-1.html">BurnInAccumulator&lt;T&gt;</a></h4>
+      <section><p>Wraps an accumulator, discarding the first BurnIn samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CollectionElementMappingInfo.html">CollectionElementMappingInfo</a></h4>
+      <section><p>Element mapping information for the product of collection distributions</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ConditionalList-1.html">ConditionalList&lt;TDist&gt;</a></h4>
+      <section><p>Conditional List</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ConstantFunction.html">ConstantFunction</a></h4>
+      <section><p>Class implementing the constant function. Used as a domain prototype
+for distributions over functions</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></h4>
+      <section><p>A Dirichlet distribution on probability vectors.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DirichletEstimator.html">DirichletEstimator</a></h4>
+      <section><p>Estimates a Dirichlet distribution from samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></h4>
+      <section><p>An arbitrary distribution over integers [0,D-1].</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></h4>
+      <section><p>Represents a distribution over characters.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum&lt;TEnum&gt;</a></h4>
+      <section><p>A discrete distribution over the values of an enum.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEstimator.html">DiscreteEstimator</a></h4>
+      <section><p>Estimates a discrete distribution from samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Distribution.html">Distribution</a></h4>
+      <section><p>Static class which implements useful functions on distributions.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Distribution-1.html">Distribution&lt;T&gt;</a></h4>
+      <section><p>Static class which implements useful functions on distributions.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray-1.html">DistributionArray&lt;T&gt;</a></h4>
+      <section><p>A distribution over an array, where each element is independent and has distribution type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code></p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray-2.html">DistributionArray&lt;T, DomainType&gt;</a></h4>
+      <section><p>A distribution over an array of type <code data-dev-comment-type="typeparamref" class="typeparamref">DomainType</code>, where each element is independent and has distribution of type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code></p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-1.html">DistributionArray2D&lt;T&gt;</a></h4>
+      <section><p>A distribution over a 2D array, where each element is independent and has distribution type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code></p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-2.html">DistributionArray2D&lt;T, DomainType&gt;</a></h4>
+      <section><p>A distribution over an array of type <code data-dev-comment-type="typeparamref" class="typeparamref">DomainType</code>, where each element is independent and has distribution of type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code></p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray&lt;T, DomainType&gt;</a></h4>
+      <section><p>A distribution over an array of type <code data-dev-comment-type="typeparamref" class="typeparamref">DomainType</code>, where each element is independent and has distribution of type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code>, all stored in a file.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray&lt;T, DomainType&gt;</a></h4>
+      <section><p>A distribution over an array of type <code data-dev-comment-type="typeparamref" class="typeparamref">DomainType</code>, where each element is independent and has distribution of type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code></p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray2D-2.html">DistributionRefArray2D&lt;T, DomainType&gt;</a></h4>
+      <section><p>A distribution over a 2D array of type <code data-dev-comment-type="typeparamref" class="typeparamref">DomainType</code>, where each element is independent and has distribution of type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code></p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray&lt;T, DomainType&gt;</a></h4>
+      <section><p>A distribution over an array of type <code data-dev-comment-type="typeparamref" class="typeparamref">DomainType</code>, where each element is independent and has distribution of type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code></p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D&lt;T, DomainType&gt;</a></h4>
+      <section><p>A distribution over a 2D array of type <code data-dev-comment-type="typeparamref" class="typeparamref">DomainType</code>, where each element is independent and has distribution of type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code></p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.EstimatorFactory.html">EstimatorFactory</a></h4>
+      <section><p>Estimator factor. Given a distribution instance, create a compatible estimator instance</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaEstimator.html">GammaEstimator</a></h4>
+      <section><p>Estimates a Gamma distribution from samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GaussianEstimator.html">GaussianEstimator</a></h4>
+      <section><p>Estimates a Gaussian distribution from samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.html">GaussianProcess</a></h4>
+      <section><p>A base class for Gaussian process distributions</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html">GenericDiscreteBase&lt;T, TThis&gt;</a></h4>
+      <section><p>A generic base class for discrete distributions over a type T.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal-2.html">GibbsMarginal&lt;TDist, T&gt;</a></h4>
+      <section><p>Gibbs marginal - wraps underlying estimator, provides burn-in and thinning,
+and maintains thinned samples and conditionals</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ImproperDistributionException.html">ImproperDistributionException</a></h4>
+      <section><p>Exception thrown when a distribution is improper and its expectations need to be computed.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.InnerQuantiles.html">InnerQuantiles</a></h4>
+      <section><p>Represents a distribution using the quantiles at probabilities (1,...,n)/(n+1)</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.LinearSpline.html">LinearSpline</a></h4>
+      <section><p>Very simple 1-D linear spline class which implements IFunction.
+Assumes knots at regular positions - given by a start and increment.
+The vector of knot values defines how many knots.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ListDistribution-2.html">ListDistribution&lt;TElement, TElementDistribution&gt;</a></h4>
+      <section><p>Represents a distribution over List&lt;T&gt; that use a weighted finite state automaton as the underlying weight function.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ListDistribution-3.html">ListDistribution&lt;TList, TElement, TElementDistribution&gt;</a></h4>
+      <section><p>Represents a distribution over lists that use a weighted finite state automaton as the underlying weight function.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ListDistribution-4.html">ListDistribution&lt;TList, TElement, TElementDistribution, TThis&gt;</a></h4>
+      <section><p>A base class for distributions over lists that use a weighted finite state automaton as the underlying weight function.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Mixture-3.html">Mixture&lt;TDist, TDomain, TThis&gt;</a></h4>
+      <section><p>A mixture of distributions of the same type</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.MixtureEstimator-1.html">MixtureEstimator&lt;TDist&gt;</a></h4>
+      <section><p>An estimator which is a mixture of distributions of the same type</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.OuterQuantiles.html">OuterQuantiles</a></h4>
+      <section><p>Represents a distribution using the quantiles at probabilities (0,...,n-1)/(n-1)</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.PointMass-1.html">PointMass&lt;T&gt;</a></h4>
+      <section><p>A point mass, which is the 'distribution' you get for an observed variable.
+All the probability mass is at the point given by observed value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.PoissonEstimator.html">PoissonEstimator</a></h4>
+      <section><p>Estimates a Poisson distribution from samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.QuantileEstimator.html">QuantileEstimator</a></h4>
+      <section><p>Subsamples data to provide accurate estimation of quantiles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Rank1Pot.html">Rank1Pot</a></h4>
+      <section><p>Rank 1 potential for a sparse GP. This low rank parameterisation
+is used for messages flowing from a SparseGP evaluation factor to
+a function variable.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SampleList-1.html">SampleList&lt;T&gt;</a></h4>
+      <section><p>Sample List</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html">SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt;</a></h4>
+      <section><p>A base class for implementations of distributions over sequences.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistributionFormats.html">SequenceDistributionFormats</a></h4>
+      <section><p>A collection of sequence distribution formats.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBernoulliList.html">SparseBernoulliList</a></h4>
+      <section><p>Represents a sparse list of Bernoulli distributions, optimized for the case where many share
+the same parameter value. The class supports
+an approximation tolerance which allows elements close to the common value to be
+automatically reset to the common value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBetaList.html">SparseBetaList</a></h4>
+      <section><p>Represents a sparse list of Beta distributions, optimized for the case where many share
+the same parameter value. The class supports
+an approximation tolerance which allows elements close to the common value to be
+automatically reset to the common value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseDistributionList-3.html">SparseDistributionList&lt;TDist, TDomain, TThis&gt;</a></h4>
+      <section><p>Abstract base class for a homogeneous sparse list of distributions. The class supports
+an approximation tolerance which allows elements close to the common value to be
+automatically reset to the common value. The list implements the
+interfaces which allow these distributions to participate in message passing.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGammaList.html">SparseGammaList</a></h4>
+      <section><p>Represents a sparse list of Gamma distributions, optimized for the case where many share
+the same parameter value. The class supports
+an approximation tolerance which allows elements close to the common value to be
+automatically reset to the common value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGaussianList.html">SparseGaussianList</a></h4>
+      <section><p>Represents a sparse list of Gaussian distributions, optimized for the case where many share
+the same parameter value. The class supports
+an approximation tolerance which allows elements close to the common value to be
+automatically reset to the common value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></h4>
+      <section><p>A Gaussian Process distribution over functions, represented by a GP prior times a set of regression likelihoods on basis points.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGPFixed.html">SparseGPFixed</a></h4>
+      <section><p>This class maintains all the fixed parameters for a sparse GP</p>
+<ul>
+<li>i.e. parameters which the inference does not change.
+All SparseGP messages can refer to a single SparseGPFixed
+class, and cloning of SparseGP instances will just copy the
+reference</li>
+</ul>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></h4>
+      <section><p>Represents a distribution over strings that uses a weighted finite state automaton as the underlying weight function.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussianEstimator.html">TruncatedGaussianEstimator</a></h4>
+      <section><p>Estimates a TruncatedGaussian distribution from samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></h4>
+      <section><p>Represents a discrete distribution in the log domain without explicit normalization.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></h4>
+      <section><p>Represents a multivariate Gaussian distribution.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianEstimator.html">VectorGaussianEstimator</a></h4>
+      <section><p>Estimates a Gaussian distribution from samples.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></h4>
+      <section><p>Represents a multivariate Gaussian distribution.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></h4>
+      <section><p>A Wishart distribution on positive definite matrices.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WishartEstimator.html">WishartEstimator</a></h4>
+      <section><p>Estimates a Wishart distribution from samples.</p>
+</section>
+    <h3 id="structs">Structs
+  </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></h4>
+      <section><p>Represents a distribution on a binary variable.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></h4>
+      <section><p>A Beta distribution over the interval [0,1].</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Binomial.html">Binomial</a></h4>
+      <section><p>Binomial distribution over the integers [0,n]</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.html">ConjugateDirichlet</a></h4>
+      <section><p>Represents the distribution proportion to x^{Shape-1} exp(-Rate<em>x) / B(x,D)^K
+where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharRange.html">DiscreteChar.CharRange</a></h4>
+      <section><p>Represents a range of characters, with an associated probability.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></h4>
+      <section><p>A Gamma distribution on positive reals.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></h4>
+      <section><p>The distribution of a Gamma variable raised to a power.  The Weibull distribution is a special case.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></h4>
+      <section><p>Represents a one-dimensional Gaussian distribution.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian.html">NonconjugateGaussian</a></h4>
+      <section><p>Nonconjugate Gaussian messages for VMP. The mean has a Gaussian distribution and the variance a Gamma distribution.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Pareto.html">Pareto</a></h4>
+      <section><p>A Pareto distribution over the real numbers from lowerBound to infinity.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Poisson.html">Poisson</a></h4>
+      <section><p>A Poisson distribution over the integers [0,infinity).</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a></h4>
+      <section><p>A distribution over real numbers between an upper and lower bound.  If LowerBound=0 and UpperBound=Inf, it reduces to an ordinary Gamma distribution.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a></h4>
+      <section><p>A distribution over real numbers between an upper and lower bound.  If both bounds are infinite, it reduces to an ordinary Gaussian distribution.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a></h4>
+      <section><p>A Gaussian distribution on a periodic domain, such as angles between 0 and 2*pi.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator&lt;T&gt;</a></h4>
+      <section><p>Indicates support for adding an item to a distribution estimator</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport&lt;T&gt;</a></h4>
+      <section><p>Whether the distribution supports enumeration over the support - i.e. enumeration
+over the domain values with non-zero mass.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a></h4>
+      <section><p>Whether the distribution supports the expected logarithm of one instance under another</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a></h4>
+      <section><p>Whether the distribution can compute the expectation of another distribution's value.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a></h4>
+      <section><p>Whether the distribution can compute the expectation of another distribution raised to a power.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></h4>
+      <section><p>Whether the distribution can compute its normalizer.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a></h4>
+      <section><p>Whether the distribution supports evaluation of its density</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProbPrep-2.html">CanGetLogProbPrep&lt;DistributionType, T&gt;</a></h4>
+      <section><p>Whether the distribution supports preallocation of a workspace for density evaluation</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean&lt;MeanType&gt;</a></h4>
+      <section><p>Whether the distribution supports retrieval of a mean value</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVariance-2.html">CanGetMeanAndVariance&lt;MeanType, VarType&gt;</a></h4>
+      <section><p>Whether the distribution supports the joint getting of mean and variance
+where the mean and variance are reference types</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVarianceOut-2.html">CanGetMeanAndVarianceOut&lt;MeanType, VarType&gt;</a></h4>
+      <section><p>Whether the distribution supports the joint getting of mean and variance
+where the mean and variance are returned as 'out' argiments</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a></h4>
+      <section><p>Whether the distribution supports retrieval of the most probable value</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile.html">CanGetQuantile</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance&lt;VarType&gt;</a></h4>
+      <section><p>Whether the distribution supports retrieval of a variance value</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSamplePrep-2.html">CanSamplePrep&lt;DistributionType, T&gt;</a></h4>
+      <section><p>Whether the distribution supports preallocation of a workspace for sampling</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMean-1.html">CanSetMean&lt;MeanType&gt;</a></h4>
+      <section><p>Whether the distribution supports setting of its mean value</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMeanAndVariance-2.html">CanSetMeanAndVariance&lt;MeanType, VarType&gt;</a></h4>
+      <section><p>Whether the distribution supports the joint setting of mean and variance</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Estimator-1.html">Estimator&lt;T&gt;</a></h4>
+      <section><p>Indicates support for retrieving an estimated distribution</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a></h4>
+      <section><p>Whether the distribution supports being a point mass</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ICollectionDistribution.html">ICollectionDistribution</a></h4>
+      <section><p>Interface to allow untyped access to collection distribution</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ICollectionDistribution-2.html">ICollectionDistribution&lt;TElement, TElementDist&gt;</a></h4>
+      <section><p>Collection distribution interface</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a></h4>
+      <section><p>Distribution interface</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></h4>
+      <section><p>Function interface - used for distributions over a function domain</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IGaussianProcess.html">IGaussianProcess</a></h4>
+      <section><p>Basic GP interface</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IsDistributionWrapper.html">IsDistributionWrapper</a></h4>
+      <section><p>Marker interface for classes which wrap distributions</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a></h4>
+      <section><p>Whether the distribution supports sampling</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform&lt;TDist&gt;</a></h4>
+      <section><p>Whether the distribution can be set to be uniform over the support of another distribution.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></h4>
+      <section><p>Whether the distribution can be set to uniform</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.ApproximationMethod.html">ConjugateDirichlet.ApproximationMethod</a></h4>
+      <section><p>Approximation method to use for non-analytic expectations.
+Asymptotic: use expectations under the approximating Gamma distribution
+GaussHermiteQuadrature: Use Gauss-Hermite quadrature with 32 quadrature points
+ClenshawCurtisQuadrature: Use Clenshaw Curtis quadrature with an adaptive number of quadrature points</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharClasses.html">DiscreteChar.CharClasses</a></h4>
+      <section></section>
+    <h3 id="delegates">Delegates
+  </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CreateEstimatorMethod.html">CreateEstimatorMethod</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Evaluator-2.html">Evaluator&lt;DistributionType, T&gt;</a></h4>
+      <section><p>Delegate type for evaluating log densities. This is used for distributions such as
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a> which have a large memory footprint. If a distribution
+supports <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProbPrep-2.html">CanGetLogProbPrep&lt;DistributionType, T&gt;</a>, then it can return a delegate of this type
+to do evaluations without recreating a workspace each time.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampler-1.html">Sampler&lt;T&gt;</a></h4>
+      <section><p>Delegate type for sampling</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampler-2.html">Sampler&lt;DistributionType, T&gt;</a></h4>
+      <section><p>Delegate type for sampling a distribution. This is used for distributions such as
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a> which have a large memory footprint. If a distribution
+supports <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSamplePrep-2.html">CanSamplePrep&lt;DistributionType, T&gt;</a>, then it can return a delegate of this type
+to do successive sampling without recreating a workspace each time.</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

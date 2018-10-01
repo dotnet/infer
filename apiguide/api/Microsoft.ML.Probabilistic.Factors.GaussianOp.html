@@ -1,0 +1,3191 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GaussianOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GaussianOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_GaussianOp" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp" class="text-break">Class GaussianOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html#Microsoft_ML_Probabilistic_Distributions_Gaussian_Sample_System_Double_System_Double_">Sample(Double, Double)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Gaussian_System_Double_System_Double_">Gaussian(Double, Double)</a></li></ul>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html">GaussianOpBase</a></div>
+    <div class="level2"><span class="xref">GaussianOp</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_SampleAverageConditional_System_Double_System_Double_">GaussianOpBase.SampleAverageConditional(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_MeanAverageConditional_System_Double_System_Double_">GaussianOpBase.MeanAverageConditional(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_PrecisionAverageConditional_System_Double_System_Double_">GaussianOpBase.PrecisionAverageConditional(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianOpBase.SampleAverageConditional(Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_MeanAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianOpBase.MeanAverageConditional(Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogAverageFactor_System_Double_System_Double_System_Double_">GaussianOpBase.LogAverageFactor(Double, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianOpBase.LogAverageFactor(Gaussian, Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_System_Double_">GaussianOpBase.LogAverageFactor(Gaussian, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogAverageFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianOpBase.LogAverageFactor(Double, Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogAverageFactor_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_">GaussianOpBase.LogAverageFactor(Double, Double, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_TPdfLn_System_Double_System_Double_System_Double_">GaussianOpBase.TPdfLn(Double, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogEvidenceRatio_System_Double_System_Double_System_Double_">GaussianOpBase.LogEvidenceRatio(Double, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianOpBase.LogEvidenceRatio(Gaussian, Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_System_Double_">GaussianOpBase.LogEvidenceRatio(Gaussian, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogEvidenceRatio_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_">GaussianOpBase.LogEvidenceRatio(Double, Gaussian, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogEvidenceRatio_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_">GaussianOpBase.LogEvidenceRatio(Double, Double, Gamma)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class GaussianOp : GaussianOpBase</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_ForceProper" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.ForceProper">ForceProper</h4>
+  <div class="markdown level1 summary"><p>Static flag to force a proper distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool ForceProper</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_modified" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.modified">modified</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool modified</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_QuadratureNodeCount" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.QuadratureNodeCount">QuadratureNodeCount</h4>
+  <div class="markdown level1 summary"><p>Number of quadrature nodes to use for computing the messages.
+Reduce this number to save time in exchange for less accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int QuadratureNodeCount</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">AverageLogFactor(Gaussian, Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Gaussian sample, Gaussian mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(sample,mean,precision) p(sample,mean,precision) log(factor(sample,mean,precision))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">AverageLogFactor(Gaussian, Gaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Gaussian sample, Gaussian mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(sample,mean) p(sample,mean) log(factor(sample,mean,precision))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma)">AverageLogFactor(Gaussian, Double, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Gaussian sample, double mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(sample,precision) p(sample,precision) log(factor(sample,mean,precision))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double,System.Double)">AverageLogFactor(Gaussian, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Gaussian sample, double mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(sample) p(sample) log(factor(sample,mean,precision))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">AverageLogFactor(Double, Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(double sample, Gaussian mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(mean,precision) p(mean,precision) log(factor(sample,mean,precision))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">AverageLogFactor(Double, Gaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(double sample, Gaussian mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(mean) p(mean) log(factor(sample,mean,precision))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor(System.Double,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma)">AverageLogFactor(Double, Double, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(double sample, double mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(precision) p(precision) log(factor(sample,mean,precision))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.AverageLogFactor(System.Double,System.Double,System.Double)">AverageLogFactor(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(double sample, double mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_AverageLogFactor_System_Double_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sample,mean,precision))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_GammaFromAlphaBeta_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.GammaFromAlphaBeta*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_GammaFromAlphaBeta_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.GammaFromAlphaBeta(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double,System.Double,System.Boolean)">GammaFromAlphaBeta(Gamma, Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Gamma message computed directly from prior and expected derivatives of factor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma GammaFromAlphaBeta(Gamma prior, double alpha, double beta, bool forceProper)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">prior</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">alpha</span></td>
+        <td><p>Exf'/Ef = -b dlogZ/db</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">beta</span></td>
+        <td><p>(Exf' + Ex^2f'')/Ef - alpha^2 = -b dalpha/db</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_GaussianFromAlphaBeta_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.GaussianFromAlphaBeta*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_GaussianFromAlphaBeta_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.GaussianFromAlphaBeta(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double,System.Double,System.Boolean)">GaussianFromAlphaBeta(Gaussian, Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Compute an EP message</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian GaussianFromAlphaBeta(Gaussian prior, double alpha, double beta, bool forceProper)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">prior</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">alpha</span></td>
+        <td><p>dlogZ/dm0</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">beta</span></td>
+        <td><p>ddlogZ/dm0^2</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogAverageFactor(Gaussian, Gaussian, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Gaussian sample, Gaussian mean, Gamma precision, Gamma to_precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_precision</span></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample,mean,precision) p(sample,mean,precision) factor(sample,mean,precision))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogAverageFactor(Gaussian, Double, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Gaussian sample, double mean, Gamma precision, Gamma to_precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_precision</span></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample,precision) p(sample,precision) factor(sample,mean,precision))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogAverageFactor(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogAverageFactor(Double, Gaussian, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(double sample, Gaussian mean, Gamma precision, Gamma to_precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_precision</span></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(mean,precision) p(mean,precision) factor(sample,mean,precision))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_slow_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogAverageFactor_slow*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogAverageFactor_slow_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogAverageFactor_slow(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogAverageFactor_slow(Gaussian, Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor_slow(Gaussian sample, Gaussian mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogEvidenceRatio(Gaussian, Gaussian, Gamma, Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Gaussian sample, Gaussian mean, Gamma precision, Gaussian to_sample, Gamma to_precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">to_sample</span></td>
+        <td><p>Outgoing message to <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_precision</span></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample,mean,precision) p(sample,mean,precision) factor(sample,mean,precision) / sum_sample p(sample) messageTo(sample))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogEvidenceRatio(Gaussian, Double, Gamma, Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Gaussian sample, double mean, Gamma precision, Gaussian to_sample, Gamma to_precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">to_sample</span></td>
+        <td><p>Outgoing message to <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_precision</span></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample,precision) p(sample,precision) factor(sample,mean,precision) / sum_sample p(sample) messageTo(sample))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogEvidenceRatio_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogEvidenceRatio(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogEvidenceRatio(Double, Gaussian, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(double sample, Gaussian mean, Gamma precision, Gamma to_precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_precision</span></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogEvidenceRatio_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(mean,precision) p(mean,precision) factor(sample,mean,precision))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogFactorValue_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogFactorValue*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogFactorValue_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.LogFactorValue(System.Double,System.Double,System.Double)">LogFactorValue(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for Gibbs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogFactorValue(double sample, double mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's value at the given arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_LogFactorValue_System_Double_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">MeanAverageConditional(Gaussian, Gaussian, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>mean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian MeanAverageConditional(Gaussian sample, Gaussian mean, Gamma precision, Gamma to_precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_precision</span></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing EP message to the <code>mean</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>mean</code> as the random arguments are varied. The formula is <code>proj[p(mean) sum_(sample,precision) p(sample,precision) factor(sample,mean,precision)]/p(mean)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageConditional(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">MeanAverageConditional(Double, Gaussian, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>mean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian MeanAverageConditional(double sample, Gaussian mean, Gamma precision, Gamma to_precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_precision</span></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing EP message to the <code>mean</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>mean</code> as the random arguments are varied. The formula is <code>proj[p(mean) sum_(precision) p(precision) factor(sample,mean,precision)]/p(mean)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageConditional(System.Double,System.Double,Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian)">MeanAverageConditional(Double, Double, TruncatedGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>mean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TruncatedGaussian MeanAverageConditional(double sample, double precision, TruncatedGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>mean</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_slow_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageConditional_slow*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageConditional_slow_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageConditional_slow(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">MeanAverageConditional_slow(Gaussian, Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian MeanAverageConditional_slow(Gaussian sample, Gaussian mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">MeanAverageLogarithm(Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>mean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian MeanAverageLogarithm(Gaussian sample, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>mean</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>mean</code>. The formula is <code>exp(sum_(sample,precision) p(sample,precision) log(factor(sample,mean,precision)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">MeanAverageLogarithm(Gaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>mean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian MeanAverageLogarithm(Gaussian sample, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>mean</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>mean</code>. The formula is <code>exp(sum_(sample) p(sample) log(factor(sample,mean,precision)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageLogarithm(System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma)">MeanAverageLogarithm(Double, Gamma)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>mean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian MeanAverageLogarithm(double sample, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>mean</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>mean</code>. The formula is <code>exp(sum_(precision) p(precision) log(factor(sample,mean,precision)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.MeanAverageLogarithm(System.Double,System.Double)">MeanAverageLogarithm(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>mean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian MeanAverageLogarithm(double sample, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>mean</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_MeanAverageLogarithm_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>mean</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">PrecisionAverageConditional(Gaussian, Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>precision</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma PrecisionAverageConditional(Gaussian sample, Gaussian mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing EP message to the <code>precision</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>precision</code> as the random arguments are varied. The formula is <code>proj[p(precision) sum_(sample,mean) p(sample,mean) factor(sample,mean,precision)]/p(precision)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageConditional_Point_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageConditional_Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageConditional_Point_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageConditional_Point(System.Double,System.Double,System.Double)">PrecisionAverageConditional_Point(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma PrecisionAverageConditional_Point(double ym, double yv, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ym</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">yv</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageConditional_slow_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageConditional_slow*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageConditional_slow_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageConditional_slow(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">PrecisionAverageConditional_slow(Gaussian, Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma PrecisionAverageConditional_slow(Gaussian sample, Gaussian mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">PrecisionAverageLogarithm(Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>precision</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma PrecisionAverageLogarithm(Gaussian sample, Gaussian mean)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing VMP message to the <code>precision</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>precision</code>. The formula is <code>exp(sum_(sample,mean) p(sample,mean) log(factor(sample,mean,precision)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">PrecisionAverageLogarithm(Gaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>precision</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma PrecisionAverageLogarithm(Gaussian sample, double mean)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing VMP message to the <code>precision</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>precision</code>. The formula is <code>exp(sum_(sample) p(sample) log(factor(sample,mean,precision)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageLogarithm(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian)">PrecisionAverageLogarithm(Double, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>precision</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma PrecisionAverageLogarithm(double sample, Gaussian mean)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing VMP message to the <code>precision</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>precision</code>. The formula is <code>exp(sum_(mean) p(mean) log(factor(sample,mean,precision)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.PrecisionAverageLogarithm(System.Double,System.Double)">PrecisionAverageLogarithm(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>precision</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma PrecisionAverageLogarithm(double sample, double mean)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing VMP message to the <code>precision</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PrecisionAverageLogarithm_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>precision</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_QuadratureNodesAndWeights_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.QuadratureNodesAndWeights*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_QuadratureNodesAndWeights_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double___System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.QuadratureNodesAndWeights(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double[],System.Double[])">QuadratureNodesAndWeights(Gamma, Double[], Double[])</h4>
+  <div class="markdown level1 summary"><p>Quadrature nodes for Gamma expectations</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void QuadratureNodesAndWeights(Gamma precision, double[] nodes, double[] logWeights)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>'precision' message</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">nodes</span></td>
+        <td><p>Place to put the nodes</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">logWeights</span></td>
+        <td><p>Place to put the log-weights</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">SampleAverageConditional(Gaussian, Gaussian, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SampleAverageConditional(Gaussian sample, Gaussian mean, Gamma precision, Gamma to_precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_precision</span></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing EP message to the <code>sample</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>sample</code> as the random arguments are varied. The formula is <code>proj[p(sample) sum_(mean,precision) p(mean,precision) factor(sample,mean,precision)]/p(sample)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">SampleAverageConditional(Gaussian, Double, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SampleAverageConditional(Gaussian sample, double mean, Gamma precision, Gamma to_precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_precision</span></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing EP message to the <code>sample</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>sample</code> as the random arguments are varied. The formula is <code>proj[p(sample) sum_(precision) p(precision) factor(sample,mean,precision)]/p(sample)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageConditional(System.Double,System.Double,Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian)">SampleAverageConditional(Double, Double, TruncatedGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TruncatedGaussian SampleAverageConditional(double mean, double precision, TruncatedGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>sample</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_slow_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageConditional_slow*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditional_slow_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageConditional_slow(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">SampleAverageConditional_slow(Gaussian, Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SampleAverageConditional_slow(Gaussian sample, Gaussian mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditionalInit" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageConditionalInit">SampleAverageConditionalInit()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SampleAverageConditionalInit()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageConditionalInit_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gamma)">SampleAverageLogarithm(Gaussian, Gamma)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SampleAverageLogarithm(Gaussian mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>sample</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>sample</code>. The formula is <code>exp(sum_(mean,precision) p(mean,precision) log(factor(sample,mean,precision)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">SampleAverageLogarithm(Gaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SampleAverageLogarithm(Gaussian mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>sample</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>sample</code>. The formula is <code>exp(sum_(mean) p(mean) log(factor(sample,mean,precision)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageLogarithm(System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma)">SampleAverageLogarithm(Double, Gamma)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SampleAverageLogarithm(double mean, Gamma precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>sample</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>sample</code>. The formula is <code>exp(sum_(precision) p(precision) log(factor(sample,mean,precision)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp.SampleAverageLogarithm(System.Double,System.Double)">SampleAverageLogarithm(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SampleAverageLogarithm(double mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Constant value for <code>mean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Constant value for <code>precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>sample</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_SampleAverageLogarithm_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>sample</code> conditioned on the given values.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,830 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SharedVariable&lt;DomainType&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SharedVariable&lt;DomainType&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1" class="text-break">Class SharedVariable&lt;DomainType&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Abstract base class for shared variables. Shared variables allow a model to be split
+into submodels in which variables are shared. Each submodel can have many copies.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">SharedVariable&lt;DomainType&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Models.ISharedVariable.html">ISharedVariable</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Models.html">Microsoft.ML.Probabilistic.Models</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class SharedVariable&lt;DomainType&gt; : object, ISharedVariable</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">DomainType</span></td>
+        <td><p>Domian type of the variable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>A typical use of this is for large data sets where the likelihood parts of the
+model cannot all fit in memory. The solution is to divide the data into chunks (or 'batches'), and specify
+a single submodel which includes the likelihood factors and variables for one chunk, along
+with the shared parameters; the number of copies of the submodel is set to the number
+of chunks. In a related pattern, there are one or more additional submodels for defining
+the parameter variables.</p>
+</div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Name" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Name of the shared variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_IsEvidenceVariable_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.IsEvidenceVariable*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_IsEvidenceVariable" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.IsEvidenceVariable">IsEvidenceVariable</h4>
+  <div class="markdown level1 summary"><p>Marks this shared variable as one that calculates evidence</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsEvidenceVariable { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_GetCopyFor_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.GetCopyFor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_GetCopyFor_Microsoft_ML_Probabilistic_Models_Model_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.GetCopyFor(Microsoft.ML.Probabilistic.Models.Model)">GetCopyFor(Model)</h4>
+  <div class="markdown level1 summary"><p>Gets a copy of the variable for the specified model.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract Variable&lt;DomainType&gt; GetCopyFor(Model model)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Model.html">Model</a></td>
+        <td><span class="parametername">model</span></td>
+        <td><p>Model id.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;DomainType&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_GetEvidenceCorrection_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.GetEvidenceCorrection*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_GetEvidenceCorrection" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.GetEvidenceCorrection">GetEvidenceCorrection()</h4>
+  <div class="markdown level1 summary"><p>Gets the evidence correction for this shared variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract double GetEvidenceCorrection()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_InferOutput_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.InferOutput*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_InferOutput_Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Microsoft_ML_Probabilistic_Models_Model_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.InferOutput(Microsoft.ML.Probabilistic.IGeneratedAlgorithm,Microsoft.ML.Probabilistic.Models.Model,System.Int32)">InferOutput(IGeneratedAlgorithm, Model, Int32)</h4>
+  <div class="markdown level1 summary"><p>Infer the shared variable's output message for the given model and batch number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void InferOutput(IGeneratedAlgorithm ca, Model modelNumber, int batchNumber)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td><span class="parametername">ca</span></td>
+        <td><p>The compiled algorithm.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Model.html">Model</a></td>
+        <td><span class="parametername">modelNumber</span></td>
+        <td><p>The model id.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">batchNumber</span></td>
+        <td><p>The batch number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_InferOutput_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.InferOutput*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_InferOutput_Microsoft_ML_Probabilistic_Models_InferenceEngine_Microsoft_ML_Probabilistic_Models_Model_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.InferOutput(Microsoft.ML.Probabilistic.Models.InferenceEngine,Microsoft.ML.Probabilistic.Models.Model,System.Int32)">InferOutput(InferenceEngine, Model, Int32)</h4>
+  <div class="markdown level1 summary"><p>Infer the shared variable's output message for the given model and batch number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void InferOutput(InferenceEngine engine, Model modelNumber, int batchNumber)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.InferenceEngine.html">InferenceEngine</a></td>
+        <td><span class="parametername">engine</span></td>
+        <td><p>The inference engine.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Model.html">Model</a></td>
+        <td><span class="parametername">modelNumber</span></td>
+        <td><p>The model id.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">batchNumber</span></td>
+        <td><p>The batch number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Marginal_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Marginal__1" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Marginal``1">Marginal&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"><p>Get the marginal distribution for the shared variable, converted to type T.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract T Marginal&lt;T&gt;()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The desired type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Named_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Named*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Named_System_String_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Named(System.String)">Named(String)</h4>
+  <div class="markdown level1 summary"><p>Inline method for naming a shared variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SharedVariable&lt;DomainType&gt; Named(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.SharedVariable-1.html">SharedVariable</a>&lt;DomainType&gt;</td>
+        <td><p>this</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Random_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Random*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Random__1___0_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Random``1(``0,System.Boolean)">Random&lt;DistributionType&gt;(DistributionType, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Creates a shared random variable with the specified prior distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SharedVariable&lt;DomainType&gt; Random&lt;DistributionType&gt;(DistributionType prior, bool divideMessages = true)
+    where DistributionType : IDistribution&lt;DomainType&gt;, Sampleable&lt;DomainType&gt;, SettableToProduct&lt;DistributionType&gt;, ICloneable, SettableToUniform, SettableTo&lt;DistributionType&gt;, SettableToRatio&lt;DistributionType&gt;, CanGetLogAverageOf&lt;DistributionType&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DistributionType</span></td>
+        <td><span class="parametername">prior</span></td>
+        <td><p>Prior</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">divideMessages</span></td>
+        <td><p>Use division (the faster default) for calculating messages to batches</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.SharedVariable-1.html">SharedVariable</a>&lt;DomainType&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">DistributionType</span></td>
+        <td><p>Distribution type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Random_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Random*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Random__1_Microsoft_ML_Probabilistic_Models_Range___0_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Random``1(Microsoft.ML.Probabilistic.Models.Range,``0,System.Boolean)">Random&lt;DistributionArrayType&gt;(Range, DistributionArrayType, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Creates a 1D array of shared random variables of size given by the specified range.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SharedVariableArray&lt;DomainType&gt; Random&lt;DistributionArrayType&gt;(Range range, DistributionArrayType prior, bool divideMessages = true)
+    where DistributionArrayType : IDistribution&lt;DomainType[]&gt;, Sampleable&lt;DomainType[]&gt;, SettableToProduct&lt;DistributionArrayType&gt;, ICloneable, SettableToUniform, SettableTo&lt;DistributionArrayType&gt;, SettableToRatio&lt;DistributionArrayType&gt;, CanGetLogAverageOf&lt;DistributionArrayType&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a></td>
+        <td><span class="parametername">range</span></td>
+        <td><p>Range.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DistributionArrayType</span></td>
+        <td><span class="parametername">prior</span></td>
+        <td><p>A distribution over an array, to use as the prior.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">divideMessages</span></td>
+        <td><p>Use division (the faster default) for calculating messages to batches</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.SharedVariableArray-1.html">SharedVariableArray</a>&lt;DomainType&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">DistributionArrayType</span></td>
+        <td><p>The type of the supplied prior</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Random_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Random*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Random__1_Microsoft_ML_Probabilistic_Models_VariableArray__0__Microsoft_ML_Probabilistic_Models_Range___0_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Random``1(Microsoft.ML.Probabilistic.Models.VariableArray{`0},Microsoft.ML.Probabilistic.Models.Range,``0,System.Boolean)">Random&lt;DistributionArrayType&gt;(VariableArray&lt;DomainType&gt;, Range, DistributionArrayType, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Creates a 1D jagged array of shared random variables.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ISharedVariableArray&lt;VariableArray&lt;DomainType&gt;, DomainType[][]&gt; Random&lt;DistributionArrayType&gt;(VariableArray&lt;DomainType&gt; itemPrototype, Range range, DistributionArrayType prior, bool divideMessages = true)
+    where DistributionArrayType : IDistribution&lt;DomainType[][]&gt;, Sampleable&lt;DomainType[][]&gt;, SettableToProduct&lt;DistributionArrayType&gt;, ICloneable, SettableToUniform, SettableTo&lt;DistributionArrayType&gt;, SettableToRatio&lt;DistributionArrayType&gt;, CanGetLogAverageOf&lt;DistributionArrayType&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-1.html">VariableArray</a>&lt;DomainType&gt;</td>
+        <td><span class="parametername">itemPrototype</span></td>
+        <td><p>A fresh variable object representing an array element.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a></td>
+        <td><span class="parametername">range</span></td>
+        <td><p>Outer range.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DistributionArrayType</span></td>
+        <td><span class="parametername">prior</span></td>
+        <td><p>Prior for the array.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">divideMessages</span></td>
+        <td><p>Use division (the faster default) for calculating messages to batches</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.ISharedVariableArray-2.html">ISharedVariableArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Models.VariableArray-1.html">VariableArray</a>&lt;DomainType&gt;, DomainType[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">DistributionArrayType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Random_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Random*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_Random__2___0_Microsoft_ML_Probabilistic_Models_Range___1_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.Random``2(``0,Microsoft.ML.Probabilistic.Models.Range,``1,System.Boolean)">Random&lt;ItemType, DistributionArrayType&gt;(ItemType, Range, DistributionArrayType, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Creates a generic jagged array of shared random variables.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ISharedVariableArray&lt;ItemType, DomainType&gt; Random&lt;ItemType, DistributionArrayType&gt;(ItemType itemPrototype, Range range, DistributionArrayType prior, bool divideMessages = true)
+    where ItemType : Variable, SettableTo&lt;ItemType&gt;, ICloneable where DistributionArrayType : IDistribution&lt;DomainType&gt;, Sampleable&lt;DomainType&gt;, SettableToProduct&lt;DistributionArrayType&gt;, ICloneable, SettableToUniform, SettableTo&lt;DistributionArrayType&gt;, SettableToRatio&lt;DistributionArrayType&gt;, CanGetLogAverageOf&lt;DistributionArrayType&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ItemType</span></td>
+        <td><span class="parametername">itemPrototype</span></td>
+        <td><p>A fresh variable object representing an array element.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Range.html">Range</a></td>
+        <td><span class="parametername">range</span></td>
+        <td><p>Outer range</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DistributionArrayType</span></td>
+        <td><span class="parametername">prior</span></td>
+        <td><p>Prior for the array.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">divideMessages</span></td>
+        <td><p>Use division (the faster default) for calculating messages to batches</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.ISharedVariableArray-2.html">ISharedVariableArray</a>&lt;ItemType, DomainType&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">ItemType</span></td>
+        <td><p>Item type</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">DistributionArrayType</span></td>
+        <td><p>Distribution array type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_SetDefinitionTo_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.SetDefinitionTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_SetDefinitionTo_Microsoft_ML_Probabilistic_Models_Model_Microsoft_ML_Probabilistic_Models_Variable__0__" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.SetDefinitionTo(Microsoft.ML.Probabilistic.Models.Model,Microsoft.ML.Probabilistic.Models.Variable{`0})">SetDefinitionTo(Model, Variable&lt;DomainType&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets the definition of the shared variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void SetDefinitionTo(Model model, Variable&lt;DomainType&gt; definition)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Model.html">Model</a></td>
+        <td><span class="parametername">model</span></td>
+        <td><p>Model id.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Variable-1.html">Variable</a>&lt;DomainType&gt;</td>
+        <td><span class="parametername">definition</span></td>
+        <td><p>Defining variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_SetDefinitionTo_Microsoft_ML_Probabilistic_Models_Model_Microsoft_ML_Probabilistic_Models_Variable__0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Use this method if the model is defining the shared variable rather than
+using one defined in this or another model.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_SetInput_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.SetInput*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_SetInput_Microsoft_ML_Probabilistic_Models_Model_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.SetInput(Microsoft.ML.Probabilistic.Models.Model,System.Int32)">SetInput(Model, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets the shared variable's inbox for a given model and batch.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void SetInput(Model modelNumber, int batchNumber)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Model.html">Model</a></td>
+        <td><span class="parametername">modelNumber</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">batchNumber</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_ToString_" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Models_SharedVariable_1_ToString" data-uid="Microsoft.ML.Probabilistic.Models.SharedVariable`1.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>ToString override.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Models.ISharedVariable.html">ISharedVariable</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

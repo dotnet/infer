@@ -1,0 +1,563 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ARD
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ARD
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD" class="text-break">Class ARD
+  </h1>
+  <div class="markdown level0 summary"><p>Automatic Relevance Determination Kernel</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html">KernelFunction</a></div>
+    <div class="level2"><span class="xref">ARD</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.html">IKernelFunctionWithParams</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunction.html">IKernelFunction</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_thetaNames">KernelFunction.thetaNames</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_thetaValues">KernelFunction.thetaValues</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_thetaName2Index">KernelFunction.thetaName2Index</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_HyperNames">KernelFunction.HyperNames</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_EvaluateX1X2_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">KernelFunction.EvaluateX1X2(Vector, Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_EvaluateX1X2_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__">KernelFunction.EvaluateX1X2(Vector, Vector, Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_EvaluateX_Microsoft_ML_Probabilistic_Math_Vector_">KernelFunction.EvaluateX(Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_EvaluateX_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__">KernelFunction.EvaluateX(Vector, Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Item_System_String_">KernelFunction.Item[String]</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_NameToIndex_System_String_">KernelFunction.NameToIndex(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_IndexToName_System_Int32_">KernelFunction.IndexToName(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_ThetaCount">KernelFunction.ThetaCount</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Write_StreamWriter_">KernelFunction.Write(StreamWriter)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Cholesky_Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunction_Dictionary_System_Int32_Microsoft_ML_Probabilistic_Math_Vector__">KernelFunction.Cholesky(IKernelFunction, Dictionary&lt;Int32, Vector&gt;)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.html">Microsoft.ML.Probabilistic.Distributions.Kernels</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ARD : KernelFunction, IKernelFunctionWithParams, IKernelFunction</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD__ctor" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.#ctor">ARD()</h4>
+  <div class="markdown level1 summary"><p>Default constructor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ARD()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD__ctor_System_Double___System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.#ctor(System.Double[],System.Double)">ARD(Double[], Double)</h4>
+  <div class="markdown level1 summary"><p>Constructs an ARD kernel from a vector of log lengths, and a log signal variance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ARD(double[] logLengths, double logSigVar)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">logLengths</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logSigVar</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_Item_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_Item_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.Item(System.Int32)">Item[Int32]</h4>
+  <div class="markdown level1 summary"><p>Sets or gets a log hyper-parameter by index</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double this[int index] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Item_System_Int32_">KernelFunction.Item[Int32]</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_LogLengths_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.LogLengths*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_LogLengths" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.LogLengths">LogLengths</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double[] LogLengths { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_LogSigVar_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.LogSigVar*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_LogSigVar" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.LogSigVar">LogSigVar</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double LogSigVar { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_TypeVersion_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.TypeVersion*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_TypeVersion" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.TypeVersion">TypeVersion</h4>
+  <div class="markdown level1 summary"><p>The static version for the derived class</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int TypeVersion { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_TypeVersion">KernelFunction.TypeVersion</a></div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_EvaluateX_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.EvaluateX*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_EvaluateX_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.EvaluateX(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector@,Microsoft.ML.Probabilistic.Math.Vector@)">EvaluateX(Vector, ref Vector, ref Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the kernel for a single vector (which is used for both slots)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double EvaluateX(Vector x, ref Vector xDeriv, ref Vector logThetaDeriv)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">xDeriv</span></td>
+        <td><p>Derivative of the kernel value with respect to x</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">logThetaDeriv</span></td>
+        <td><p>Derivative of the kernel value with respect to the log hyper-parameters</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_EvaluateX_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Math_Vector__">KernelFunction.EvaluateX(Vector, ref Vector, ref Vector)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_EvaluateX1X2_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.EvaluateX1X2*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_EvaluateX1X2_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.EvaluateX1X2(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector@,Microsoft.ML.Probabilistic.Math.Vector@)">EvaluateX1X2(Vector, Vector, ref Vector, ref Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the kernel for a pair of vectors</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double EvaluateX1X2(Vector x1, Vector x2, ref Vector x1Deriv, ref Vector logThetaDeriv)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x1</span></td>
+        <td><p>First vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x2</span></td>
+        <td><p>Second vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x1Deriv</span></td>
+        <td><p>Derivative of the kernel value with respect to x1 input vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">logThetaDeriv</span></td>
+        <td><p>Derivative of the kernel value with respect to the log hyper-parameters</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_EvaluateX1X2_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Math_Vector__">KernelFunction.EvaluateX1X2(Vector, Vector, ref Vector, ref Vector)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_InitialiseFromData_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.InitialiseFromData*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_InitialiseFromData_IList_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.InitialiseFromData(IList{Microsoft.ML.Probabilistic.Math.Vector},Microsoft.ML.Probabilistic.Math.Vector)">InitialiseFromData(IList&lt;Vector&gt;, Vector)</h4>
+  <div class="markdown level1 summary"><p>Initialises the parameters from data</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InitialiseFromData(IList&lt;Vector&gt; X, Vector y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">X</span></td>
+        <td><p>X data - initialises lengths</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>y data - initialises signal standard deviation</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_Read_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.Read*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_Read_StreamReader_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.Read(StreamReader)">Read(StreamReader)</h4>
+  <div class="markdown level1 summary"><p>Reads the parameters in from a stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Read(StreamReader sr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">StreamReader</span></td>
+        <td><span class="parametername">sr</span></td>
+        <td><p>Stream reader</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Read_StreamReader_">KernelFunction.Read(StreamReader)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_SetupParams_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.SetupParams*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_ARD_SetupParams_System_Double___System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.ARD.SetupParams(System.Double[],System.Double)">SetupParams(Double[], Double)</h4>
+  <div class="markdown level1 summary"><p>Sets up names and values of parameters</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetupParams(double[] logLengths, double logSigVar)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">logLengths</span></td>
+        <td><p>Log of the lengths</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logSigVar</span></td>
+        <td><p>Log of the signal variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.html">IKernelFunctionWithParams</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunction.html">IKernelFunction</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

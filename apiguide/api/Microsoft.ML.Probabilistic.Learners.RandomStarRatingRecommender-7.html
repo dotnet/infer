@@ -1,0 +1,1053 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class RandomStarRatingRecommender&lt;TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, TFeatureValues&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class RandomStarRatingRecommender&lt;TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, TFeatureValues&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7" class="text-break">Class RandomStarRatingRecommender&lt;TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, TFeatureValues&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a star rating recommender system which generates predictions purely by random guessing.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">RandomStarRatingRecommender&lt;TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, TFeatureValues&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html">IRecommender</a>&lt;TInstanceSource, TUser, TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">System.Collections.Generic.IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TFeatureSource&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Learners.ILearner.html">ILearner</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class RandomStarRatingRecommender&lt;TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, TFeatureValues&gt; : object, IRecommender&lt;TInstanceSource, TUser, TItem, int, System.Collections.Generic.IDictionary&lt;int, double&gt;, TFeatureSource&gt;, ILearner</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDataRating</span></td>
+        <td><p>The type of a rating in data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureValues</span></td>
+        <td><p>The type of the feature values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7__ctor_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7__ctor_Microsoft_ML_Probabilistic_Learners_Mappings_IStarRatingRecommenderMapping__0__1__2__3__4__5__6__" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.#ctor(Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping{`0,`1,`2,`3,`4,`5,`6})">RandomStarRatingRecommender(IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, TFeatureValues&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the
+<a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html">RandomStarRatingRecommender&lt;TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, TFeatureValues&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RandomStarRatingRecommender(IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, TFeatureValues&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping-7.html">IStarRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TDataRating, TFeatureSource, TFeatureValues&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used to access the data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Capabilities_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Capabilities*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Capabilities" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Capabilities">Capabilities</h4>
+  <div class="markdown level1 summary"><p>Gets the capabilities of the recommender.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IRecommenderCapabilities Capabilities { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.html">IRecommenderCapabilities</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.ItemSubset*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.ItemSubset">ItemSubset</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the subset of the items used for related item prediction and item recommendation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TItem&gt; ItemSubset { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TItem&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Settings_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Settings*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Settings" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Settings">Settings</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the settings (not supported).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ISettings Settings { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.ISettings.html">ISettings</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_UserSubset_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.UserSubset*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_UserSubset" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.UserSubset">UserSubset</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the subset of the users used for related user prediction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TUser&gt; UserSubset { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TUser&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedItems_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.GetRelatedItems*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedItems__3_System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.GetRelatedItems(`3,System.Int32,`5)">GetRelatedItems(TItem, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Returns a list of items related to <code data-dev-comment-type="paramref" class="paramref">item</code> by randomly permuting the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset">ItemSubset</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TItem&gt; GetRelatedItems(TItem item, int relatedItemCount, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TItem</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>The item for which related items should be found.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">relatedItemCount</span></td>
+        <td><p>Maximum number of related items to return.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the items.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TItem&gt;</td>
+        <td><p>The list of related items.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedItems__3_System_Int32__5__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset">ItemSubset</a> will be returned.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedItems_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.GetRelatedItems*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedItems_IEnumerable__3__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.GetRelatedItems(IEnumerable{`3},System.Int32,`5)">GetRelatedItems(IEnumerable&lt;TItem&gt;, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Returns a list of related items to each item in <code data-dev-comment-type="paramref" class="paramref">items</code> by randomly permuting the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset">ItemSubset</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;TItem, IEnumerable&lt;TItem&gt;&gt; GetRelatedItems(IEnumerable&lt;TItem&gt; items, int relatedItemCount, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TItem&gt;</td>
+        <td><span class="parametername">items</span></td>
+        <td><p>The list of items for which related items should be found.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">relatedItemCount</span></td>
+        <td><p>Maximum number of related items to return for every item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the specified items.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TItem, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><p>The list of related items for each item from <code data-dev-comment-type="paramref" class="paramref">items</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedItems_IEnumerable__3__System_Int32__5__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset">ItemSubset</a> will be returned.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedUsers_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.GetRelatedUsers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedUsers__2_System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.GetRelatedUsers(`2,System.Int32,`5)">GetRelatedUsers(TUser, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Returns a list of users related to <code data-dev-comment-type="paramref" class="paramref">user</code> by randomly permuting the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_UserSubset">UserSubset</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TUser&gt; GetRelatedUsers(TUser user, int relatedUserCount, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TUser</span></td>
+        <td><span class="parametername">user</span></td>
+        <td><p>The user for which related users should be found.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">relatedUserCount</span></td>
+        <td><p>Maximum number of related users to return.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the users.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TUser&gt;</td>
+        <td><p>The list of related users.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedUsers__2_System_Int32__5__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Only users specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_UserSubset">UserSubset</a> will be returned.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedUsers_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.GetRelatedUsers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedUsers_IEnumerable__2__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.GetRelatedUsers(IEnumerable{`2},System.Int32,`5)">GetRelatedUsers(IEnumerable&lt;TUser&gt;, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Returns a list of related users to each user in <code data-dev-comment-type="paramref" class="paramref">users</code> by randomly permuting the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_UserSubset">UserSubset</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;TUser, IEnumerable&lt;TUser&gt;&gt; GetRelatedUsers(IEnumerable&lt;TUser&gt; users, int relatedUserCount, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TUser&gt;</td>
+        <td><span class="parametername">users</span></td>
+        <td><p>The list of users for which related users should be found.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">relatedUserCount</span></td>
+        <td><p>Maximum number of related users to return for every user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the specified users.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TUser&gt;&gt;</td>
+        <td><p>The list of related users for each user from <code data-dev-comment-type="paramref" class="paramref">users</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_GetRelatedUsers_IEnumerable__2__System_Int32__5__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Only users specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_UserSubset">UserSubset</a> will be returned.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Predict_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Predict*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Predict__0__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Predict(`0,`5)">Predict(TInstanceSource, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Predicts ratings for the specified instances by random guessing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;TUser, IDictionary&lt;TItem, int&gt;&gt; Predict(TInstanceSource instanceSource, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The instances to predict ratings for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the specified instances.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IDictionary</span>&lt;TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><p>The predicted ratings.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Predict_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Predict*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Predict__2__3__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Predict(`2,`3,`5)">Predict(TUser, TItem, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Predicts rating for a given user and item by random guessing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Predict(TUser user, TItem item, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TUser</span></td>
+        <td><span class="parametername">user</span></td>
+        <td><p>The user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TItem</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>The item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the specified user and item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The predicted rating.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_PredictDistribution_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.PredictDistribution*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_PredictDistribution__0__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.PredictDistribution(`0,`5)">PredictDistribution(TInstanceSource, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Predicts rating distributions for the specified instances by returning the uniform
+distribution over the possible rating values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;TUser, IDictionary&lt;TItem, System.Collections.Generic.IDictionary&lt;int, double&gt;&gt;&gt; PredictDistribution(TInstanceSource instanceSource, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The instances to predict ratings for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the specified instances.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IDictionary</span>&lt;TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">System.Collections.Generic.IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;&gt;</td>
+        <td><p>The distributions of the predicted ratings.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_PredictDistribution_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.PredictDistribution*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_PredictDistribution__2__3__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.PredictDistribution(`2,`3,`5)">PredictDistribution(TUser, TItem, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Predicts the distribution of a rating for a given user and item by returning a random distribution over ratings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public System.Collections.Generic.IDictionary&lt;int, double&gt; PredictDistribution(TUser user, TItem item, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TUser</span></td>
+        <td><span class="parametername">user</span></td>
+        <td><p>The user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TItem</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>The item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the given user and item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">System.Collections.Generic.IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The distribution of the rating.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Recommend_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Recommend*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Recommend__2_System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Recommend(`2,System.Int32,`5)">Recommend(TUser, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Recommends items to a given user by randomly permuting the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset">ItemSubset</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TItem&gt; Recommend(TUser user, int recommendationCount, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TUser</span></td>
+        <td><span class="parametername">user</span></td>
+        <td><p>The user to recommend items to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">recommendationCount</span></td>
+        <td><p>Maximum number of items to recommend.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the specified user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TItem&gt;</td>
+        <td><p>The list of recommended items.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Recommend__2_System_Int32__5__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset">ItemSubset</a> can be recommended.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Recommend_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Recommend*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Recommend_IEnumerable__2__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Recommend(IEnumerable{`2},System.Int32,`5)">Recommend(IEnumerable&lt;TUser&gt;, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Recommends items to a given list of users by randomly permuting the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset">ItemSubset</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;TUser, IEnumerable&lt;TItem&gt;&gt; Recommend(IEnumerable&lt;TUser&gt; users, int recommendationCount, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TUser&gt;</td>
+        <td><span class="parametername">users</span></td>
+        <td><p>The list of users to recommend items to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">recommendationCount</span></td>
+        <td><p>Maximum number of items to recommend to a single user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the specified users.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><p>The list of recommended items for every user from <code data-dev-comment-type="paramref" class="paramref">users</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Recommend_IEnumerable__2__System_Int32__5__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset">ItemSubset</a> can be recommended.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_RecommendDistribution_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.RecommendDistribution*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_RecommendDistribution__2_System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.RecommendDistribution(`2,System.Int32,`5)">RecommendDistribution(TUser, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Recommend items with their rating distributions to a specified user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Tuple&lt;TItem, System.Collections.Generic.IDictionary&lt;int, double&gt;&gt;&gt; RecommendDistribution(TUser user, int recommendationCount, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TUser</span></td>
+        <td><span class="parametername">user</span></td>
+        <td><p>The user to recommend items to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">recommendationCount</span></td>
+        <td><p>Maximum number of items to recommend.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the specified user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Tuple</span>&lt;TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">System.Collections.Generic.IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;&gt;</td>
+        <td><p>The list of recommended items and their rating distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_RecommendDistribution__2_System_Int32__5__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset">ItemSubset</a> can be recommended.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_RecommendDistribution_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.RecommendDistribution*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_RecommendDistribution_IEnumerable__2__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.RecommendDistribution(IEnumerable{`2},System.Int32,`5)">RecommendDistribution(IEnumerable&lt;TUser&gt;, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Recommends items with their rating distributions to a specified list of users.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;TUser, IEnumerable&lt;Tuple&lt;TItem, System.Collections.Generic.IDictionary&lt;int, double&gt;&gt;&gt;&gt; RecommendDistribution(IEnumerable&lt;TUser&gt; users, int recommendationCount, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TUser&gt;</td>
+        <td><span class="parametername">users</span></td>
+        <td><p>The list of users to recommend items to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">recommendationCount</span></td>
+        <td><p>Maximum number of items to recommend to a single user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the specified users.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;<span class="xref">Tuple</span>&lt;TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">System.Collections.Generic.IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;&gt;&gt;</td>
+        <td><p>The list of recommended items and their rating distributions for every user from <code data-dev-comment-type="paramref" class="paramref">users</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_RecommendDistribution_IEnumerable__2__System_Int32__5__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender-7.html#Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_ItemSubset">ItemSubset</a> can be recommended.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Train_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Train*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Train__0__5_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Train(`0,`5)">Train(TInstanceSource, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Trains the recommender on the specified instances. For the random recommender it results in just
+retrieving the rating info, as well as the list of items and users from the training set.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Train(TInstanceSource instanceSource, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of instances to train on.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features for the specified instances.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Microsoft_ML_Probabilistic_Learners_ILearner_Capabilities_" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Microsoft#ML#Probabilistic#Learners#ILearner#Capabilities*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RandomStarRatingRecommender_7_Microsoft_ML_Probabilistic_Learners_ILearner_Capabilities" data-uid="Microsoft.ML.Probabilistic.Learners.RandomStarRatingRecommender`7.Microsoft#ML#Probabilistic#Learners#ILearner#Capabilities">ILearner.Capabilities</h4>
+  <div class="markdown level1 summary"><p>Gets the capabilities of the learner. These are any properties of the learner that
+are not captured by the type signature of the most specific learner interface below.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ICapabilities ILearner.Capabilities { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICapabilities.html">ICapabilities</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html">IRecommender&lt;TInstanceSource, TUser, TItem, TRating, TRatingDistribution, TFeatureSource&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ILearner.html">ILearner</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1015 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class RecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating, TPredictedRating, TPredictedRatingDist&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class RecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating, TPredictedRating, TPredictedRatingDist&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6" class="text-break">Class RecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating, TPredictedRating, TPredictedRatingDist&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Evaluates a recommender system.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">RecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating, TPredictedRating, TPredictedRatingDist&gt;</span></div>
+      <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Learners.StarRatingRecommenderEvaluator-4.html">StarRatingRecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating&gt;</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class RecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating, TPredictedRating, TPredictedRatingDist&gt; : object</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TGroundTruthRating</span></td>
+        <td><p>The type of a rating in a test dataset.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TPredictedRating</span></td>
+        <td><p>The type of a rating predicted by a recommender system.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TPredictedRatingDist</span></td>
+        <td><p>The type of a distribution over ratings predicted by a recommender system.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6__ctor_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6__ctor_Microsoft_ML_Probabilistic_Learners_Mappings_IRecommenderEvaluatorMapping__0__1__2__3__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.#ctor(Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderEvaluatorMapping{`0,`1,`2,`3})">RecommenderEvaluator(IRecommenderEvaluatorMapping&lt;TInstanceSource, TUser, TItem, TGroundTruthRating&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the
+<a class="xref" href="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator-6.html">RecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating, TPredictedRating, TPredictedRatingDist&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RecommenderEvaluator(IRecommenderEvaluatorMapping&lt;TInstanceSource, TUser, TItem, TGroundTruthRating&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderEvaluatorMapping-4.html">IRecommenderEvaluatorMapping</a>&lt;TInstanceSource, TUser, TItem, TGroundTruthRating&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_FindRelatedItemsRatedBySameUsers_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.FindRelatedItemsRatedBySameUsers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_FindRelatedItemsRatedBySameUsers__1_Microsoft_ML_Probabilistic_Learners_IRecommender__0__1__2__4__5___0___0_System_Int32_System_Int32_System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.FindRelatedItemsRatedBySameUsers``1(Microsoft.ML.Probabilistic.Learners.IRecommender{`0,`1,`2,`4,`5,``0},`0,System.Int32,System.Int32,System.Int32,``0)">FindRelatedItemsRatedBySameUsers&lt;TFeatureSource&gt;(IRecommender&lt;TInstanceSource, TUser, TItem, TPredictedRating, TPredictedRatingDist, TFeatureSource&gt;, TInstanceSource, Int32, Int32, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Finds related items for every item in a given instance source.
+The subset of items which will be returned as related for a particular item is restricted:
+it is guaranteed that all the related items have been rated by at least <code data-dev-comment-type="paramref" class="paramref">minCommonRatingCount</code> users in common with the query item
+in the dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;TItem, IEnumerable&lt;TItem&gt;&gt; FindRelatedItemsRatedBySameUsers&lt;TFeatureSource&gt;(IRecommender&lt;TInstanceSource, TUser, TItem, TPredictedRating, TPredictedRatingDist, TFeatureSource&gt; recommender, TInstanceSource instanceSource, int maxRelatedItemCount, int minCommonRatingCount, int minRelatedItemPoolSize, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html">IRecommender</a>&lt;TInstanceSource, TUser, TItem, TPredictedRating, TPredictedRatingDist, TFeatureSource&gt;</td>
+        <td><span class="parametername">recommender</span></td>
+        <td><p>The recommendation engine.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The instance source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxRelatedItemCount</span></td>
+        <td><p>Maximum number of related items to return.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minCommonRatingCount</span></td>
+        <td><p>Minimum number of users that the query item and the related item should have been rated by in common.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minRelatedItemPoolSize</span></td>
+        <td><p>If an item has less than <code data-dev-comment-type="paramref" class="paramref">minRelatedItemPoolSize</code> possible related items,
+it will be skipped.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TItem, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><p>The list of related items for every item in <code data-dev-comment-type="paramref" class="paramref">instanceSource</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source used by the recommendation engine.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_FindRelatedUsersWhoRatedSameItems_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.FindRelatedUsersWhoRatedSameItems*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_FindRelatedUsersWhoRatedSameItems__1_Microsoft_ML_Probabilistic_Learners_IRecommender__0__1__2__4__5___0___0_System_Int32_System_Int32_System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.FindRelatedUsersWhoRatedSameItems``1(Microsoft.ML.Probabilistic.Learners.IRecommender{`0,`1,`2,`4,`5,``0},`0,System.Int32,System.Int32,System.Int32,``0)">FindRelatedUsersWhoRatedSameItems&lt;TFeatureSource&gt;(IRecommender&lt;TInstanceSource, TUser, TItem, TPredictedRating, TPredictedRatingDist, TFeatureSource&gt;, TInstanceSource, Int32, Int32, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Finds related users for every user in a instance source.
+The subset of users who will be returned as related for a particular user is restricted:
+it is guaranteed that all the related users have rated at least <code data-dev-comment-type="paramref" class="paramref">minCommonRatingCount</code> items in common with the query user
+in the dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;TUser, IEnumerable&lt;TUser&gt;&gt; FindRelatedUsersWhoRatedSameItems&lt;TFeatureSource&gt;(IRecommender&lt;TInstanceSource, TUser, TItem, TPredictedRating, TPredictedRatingDist, TFeatureSource&gt; recommender, TInstanceSource instanceSource, int maxRelatedUserCount, int minCommonRatingCount, int minRelatedUserPoolSize, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html">IRecommender</a>&lt;TInstanceSource, TUser, TItem, TPredictedRating, TPredictedRatingDist, TFeatureSource&gt;</td>
+        <td><span class="parametername">recommender</span></td>
+        <td><p>The recommendation engine.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The instance source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxRelatedUserCount</span></td>
+        <td><p>Maximum number of related users to return.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minCommonRatingCount</span></td>
+        <td><p>Minimum number of items that the query user and the related user should have rated in common.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minRelatedUserPoolSize</span></td>
+        <td><p>If a user has less than <code data-dev-comment-type="paramref" class="paramref">minRelatedUserPoolSize</code> possible related users,
+it will be skipped.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TUser&gt;&gt;</td>
+        <td><p>The list of related users for every user in <code data-dev-comment-type="paramref" class="paramref">instanceSource</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source used by the recommendation engine.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_ItemRecommendationMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.ItemRecommendationMetric*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_ItemRecommendationMetric__0_IDictionary__1_IEnumerable__2___Func_IEnumerable_System_Double__IEnumerable_System_Double__System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.ItemRecommendationMetric(`0,IDictionary{`1,IEnumerable{`2}},Func{IEnumerable{System.Double},IEnumerable{System.Double},System.Double},Func{`3,System.Double})">ItemRecommendationMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TItem&gt;&gt;, Func&lt;IEnumerable&lt;Double&gt;, IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes the average across users of a given ranking metric for recommendation. Uses ratings to compute gains.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double ItemRecommendationMetric(TInstanceSource instanceSource, IDictionary&lt;TUser, IEnumerable&lt;TItem&gt;&gt; predictions, Func&lt;IEnumerable&lt;double&gt;, IEnumerable&lt;double&gt;, double&gt; metric, Func&lt;TGroundTruthRating, double&gt; ratingConverter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of the instances providing the ground truth.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><span class="parametername">predictions</span></td>
+        <td><p>A mapping from a user to a list of recommended items.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">metric</span></td>
+        <td><p>The ranking metric.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">ratingConverter</span></td>
+        <td><p>The function used to convert ratings to gains. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The computed average of the given ranking metric for recommendation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_ItemRecommendationMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.ItemRecommendationMetric*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_ItemRecommendationMetric__0_IDictionary__1_IEnumerable__2___Func_IEnumerable_System_Double__System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.ItemRecommendationMetric(`0,IDictionary{`1,IEnumerable{`2}},Func{IEnumerable{System.Double},System.Double},Func{`3,System.Double})">ItemRecommendationMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TItem&gt;&gt;, Func&lt;IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes the average across users of a given ranking metric for recommendation. Uses ratings to compute gains.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double ItemRecommendationMetric(TInstanceSource instanceSource, IDictionary&lt;TUser, IEnumerable&lt;TItem&gt;&gt; predictions, Func&lt;IEnumerable&lt;double&gt;, double&gt; metric, Func&lt;TGroundTruthRating, double&gt; ratingConverter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of the instances providing the ground truth.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><span class="parametername">predictions</span></td>
+        <td><p>A mapping from a user to a list of recommended items.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">metric</span></td>
+        <td><p>The ranking metric.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">ratingConverter</span></td>
+        <td><p>The function used to convert ratings to gains. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The computed average of the given ranking metric for recommendation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RatingPredictionMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RatingPredictionMetric*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RatingPredictionMetric__0_IDictionary__1_IDictionary__2__4___Func__3__4_System_Double__Microsoft_ML_Probabilistic_Learners_RecommenderMetricAggregationMethod_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RatingPredictionMetric(`0,IDictionary{`1,IDictionary{`2,`4}},Func{`3,`4,System.Double},Microsoft.ML.Probabilistic.Learners.RecommenderMetricAggregationMethod)">RatingPredictionMetric(TInstanceSource, IDictionary&lt;TUser, IDictionary&lt;TItem, TPredictedRating&gt;&gt;, Func&lt;TGroundTruthRating, TPredictedRating, Double&gt;, RecommenderMetricAggregationMethod)</h4>
+  <div class="markdown level1 summary"><p>Computes the average of a given data domain rating prediction metric by iterating firstly per-item and then per-user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double RatingPredictionMetric(TInstanceSource instanceSource, IDictionary&lt;TUser, IDictionary&lt;TItem, TPredictedRating&gt;&gt; predictions, Func&lt;TGroundTruthRating, TPredictedRating, double&gt; metric, RecommenderMetricAggregationMethod aggregationMethod = RecommenderMetricAggregationMethod.Default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of the instances providing the ground truth.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IDictionary</span>&lt;TItem, TPredictedRating&gt;&gt;</td>
+        <td><span class="parametername">predictions</span></td>
+        <td><p>A sparse users-by-items matrix of predicted rating distributions.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TGroundTruthRating, TPredictedRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">metric</span></td>
+        <td><p>The data domain rating prediction metric to average.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.RecommenderMetricAggregationMethod.html">RecommenderMetricAggregationMethod</a></td>
+        <td><span class="parametername">aggregationMethod</span></td>
+        <td><p>A method specifying how metrics are aggregated over the whole dataset.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The computed average of the given rating prediction metric.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RatingPredictionMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RatingPredictionMetric*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RatingPredictionMetric__0_IDictionary__1_IDictionary__2__5___Func__3__5_System_Double__Microsoft_ML_Probabilistic_Learners_RecommenderMetricAggregationMethod_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RatingPredictionMetric(`0,IDictionary{`1,IDictionary{`2,`5}},Func{`3,`5,System.Double},Microsoft.ML.Probabilistic.Learners.RecommenderMetricAggregationMethod)">RatingPredictionMetric(TInstanceSource, IDictionary&lt;TUser, IDictionary&lt;TItem, TPredictedRatingDist&gt;&gt;, Func&lt;TGroundTruthRating, TPredictedRatingDist, Double&gt;, RecommenderMetricAggregationMethod)</h4>
+  <div class="markdown level1 summary"><p>Computes the average of a given data domain rating prediction metric by iterating firstly per-item and then per-user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double RatingPredictionMetric(TInstanceSource instanceSource, IDictionary&lt;TUser, IDictionary&lt;TItem, TPredictedRatingDist&gt;&gt; predictions, Func&lt;TGroundTruthRating, TPredictedRatingDist, double&gt; metric, RecommenderMetricAggregationMethod aggregationMethod = RecommenderMetricAggregationMethod.Default)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of the instances providing the ground truth.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IDictionary</span>&lt;TItem, TPredictedRatingDist&gt;&gt;</td>
+        <td><span class="parametername">predictions</span></td>
+        <td><p>A sparse users-by-items matrix of predicted rating distributions.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TGroundTruthRating, TPredictedRatingDist, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">metric</span></td>
+        <td><p>The data domain rating prediction metric to average.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.RecommenderMetricAggregationMethod.html">RecommenderMetricAggregationMethod</a></td>
+        <td><span class="parametername">aggregationMethod</span></td>
+        <td><p>A method specifying how metrics are aggregated over the whole dataset.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The computed average of the given rating prediction metric.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RecommendRatedItems_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RecommendRatedItems*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RecommendRatedItems__1_Microsoft_ML_Probabilistic_Learners_IRecommender__0__1__2__4__5___0___0_System_Int32_System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RecommendRatedItems``1(Microsoft.ML.Probabilistic.Learners.IRecommender{`0,`1,`2,`4,`5,``0},`0,System.Int32,System.Int32,``0)">RecommendRatedItems&lt;TFeatureSource&gt;(IRecommender&lt;TInstanceSource, TUser, TItem, TPredictedRating, TPredictedRatingDist, TFeatureSource&gt;, TInstanceSource, Int32, Int32, TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>For each user in a given instance source recommends items from the set of items rated by the user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;TUser, IEnumerable&lt;TItem&gt;&gt; RecommendRatedItems&lt;TFeatureSource&gt;(IRecommender&lt;TInstanceSource, TUser, TItem, TPredictedRating, TPredictedRatingDist, TFeatureSource&gt; recommender, TInstanceSource instanceSource, int maxRecommendedItemCount, int minRecommendationPoolSize, TFeatureSource featureSource = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html">IRecommender</a>&lt;TInstanceSource, TUser, TItem, TPredictedRating, TPredictedRatingDist, TFeatureSource&gt;</td>
+        <td><span class="parametername">recommender</span></td>
+        <td><p>The recommendation engine.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The instance source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxRecommendedItemCount</span></td>
+        <td><p>Maximum number of items to recommend to a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minRecommendationPoolSize</span></td>
+        <td><p>If a user has less than <code data-dev-comment-type="paramref" class="paramref">minRecommendationPoolSize</code> possible items to recommend,
+it will be skipped.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of features.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><p>The list of recommended items for every user in <code data-dev-comment-type="paramref" class="paramref">instanceSource</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source used by the recommendation engine.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedItemsMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedItemsMetric*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedItemsMetric__0_IDictionary__2_IEnumerable__2___System_Int32_Func_IEnumerable_System_Double__IEnumerable_System_Double__System_Double__Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedItemsMetric(`0,IDictionary{`2,IEnumerable{`2}},System.Int32,Func{IEnumerable{System.Double},IEnumerable{System.Double},System.Double},Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},Func{`3,System.Double})">RelatedItemsMetric(TInstanceSource, IDictionary&lt;TItem, IEnumerable&lt;TItem&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes the average of a given ranking metric over a set of ordered sequences of items.
+Gain for ranking is defined as the rating similarity between the items in the list and the query item.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double RelatedItemsMetric(TInstanceSource instanceSource, IDictionary&lt;TItem, IEnumerable&lt;TItem&gt;&gt; predictions, int minCommonRatingCount, Func&lt;IEnumerable&lt;double&gt;, IEnumerable&lt;double&gt;, double&gt; rankingMetric, Func&lt;Vector, Vector, double&gt; ratingSimilarityFunc, Func&lt;TGroundTruthRating, double&gt; ratingConverter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of the instances providing the ground truth.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TItem, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><span class="parametername">predictions</span></td>
+        <td><p>A mapping from an item to a list of predicted related items.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minCommonRatingCount</span></td>
+        <td><p>The minimum number of common ratings two items must have in order to be considered for evaluation.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">rankingMetric</span></td>
+        <td><p>The ranking metric.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">ratingSimilarityFunc</span></td>
+        <td><p>A method which computes the similarity between two rating vectors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">ratingConverter</span></td>
+        <td><p>The function applied to ratings before computing similarity. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The computed average of the given ranking metric.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedItemsMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedItemsMetric*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedItemsMetric__0_IDictionary__2_IEnumerable__2___System_Int32_Func_IEnumerable_System_Double__System_Double__Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedItemsMetric(`0,IDictionary{`2,IEnumerable{`2}},System.Int32,Func{IEnumerable{System.Double},System.Double},Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},Func{`3,System.Double})">RelatedItemsMetric(TInstanceSource, IDictionary&lt;TItem, IEnumerable&lt;TItem&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes the average of a given ranking metric over a set of ordered sequences of items.
+Gain for ranking is defined as the rating similarity between the items in the list and the query item.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double RelatedItemsMetric(TInstanceSource instanceSource, IDictionary&lt;TItem, IEnumerable&lt;TItem&gt;&gt; predictions, int minCommonRatingCount, Func&lt;IEnumerable&lt;double&gt;, double&gt; rankingMetric, Func&lt;Vector, Vector, double&gt; ratingSimilarityFunc, Func&lt;TGroundTruthRating, double&gt; ratingConverter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of the instances providing the ground truth.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TItem, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><span class="parametername">predictions</span></td>
+        <td><p>A mapping from an item to a list of predicted related items.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minCommonRatingCount</span></td>
+        <td><p>The minimum number of common ratings two items must have in order to be considered for evaluation.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">rankingMetric</span></td>
+        <td><p>The ranking metric.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">ratingSimilarityFunc</span></td>
+        <td><p>A method which computes the similarity between two rating vectors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">ratingConverter</span></td>
+        <td><p>The function applied to ratings before computing similarity. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The computed average of the given ranking metric.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedUsersMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedUsersMetric*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedUsersMetric__0_IDictionary__1_IEnumerable__1___System_Int32_Func_IEnumerable_System_Double__IEnumerable_System_Double__System_Double__Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedUsersMetric(`0,IDictionary{`1,IEnumerable{`1}},System.Int32,Func{IEnumerable{System.Double},IEnumerable{System.Double},System.Double},Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},Func{`3,System.Double})">RelatedUsersMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TUser&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes the average of a given ranking metric over a set of ordered sequences of users.
+Gain for ranking is defined as the rating similarity between the users in the list and the query user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double RelatedUsersMetric(TInstanceSource instanceSource, IDictionary&lt;TUser, IEnumerable&lt;TUser&gt;&gt; predictions, int minCommonRatingCount, Func&lt;IEnumerable&lt;double&gt;, IEnumerable&lt;double&gt;, double&gt; rankingMetric, Func&lt;Vector, Vector, double&gt; ratingSimilarityFunc, Func&lt;TGroundTruthRating, double&gt; ratingConverter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of the instances providing the ground truth.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TUser&gt;&gt;</td>
+        <td><span class="parametername">predictions</span></td>
+        <td><p>A mapping from a user to a list of predicted related users.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minCommonRatingCount</span></td>
+        <td><p>The minimum number of common ratings two users must have in order to be considered for evaluation.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">rankingMetric</span></td>
+        <td><p>The ranking metric.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">ratingSimilarityFunc</span></td>
+        <td><p>A method which computes the similarity between two rating vectors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">ratingConverter</span></td>
+        <td><p>The function applied to ratings before computing similarity. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The computed average of the given ranking metric.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedUsersMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedUsersMetric*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedUsersMetric__0_IDictionary__1_IEnumerable__1___System_Int32_Func_IEnumerable_System_Double__System_Double__Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedUsersMetric(`0,IDictionary{`1,IEnumerable{`1}},System.Int32,Func{IEnumerable{System.Double},System.Double},Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},Func{`3,System.Double})">RelatedUsersMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TUser&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes the average of a given ranking metric over a set of ordered sequences of users.
+Gain for ranking is defined as the rating similarity between the users in the list and the query user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double RelatedUsersMetric(TInstanceSource instanceSource, IDictionary&lt;TUser, IEnumerable&lt;TUser&gt;&gt; predictions, int minCommonRatingCount, Func&lt;IEnumerable&lt;double&gt;, double&gt; rankingMetric, Func&lt;Vector, Vector, double&gt; ratingSimilarityFunc, Func&lt;TGroundTruthRating, double&gt; ratingConverter = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of the instances providing the ground truth.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TUser&gt;&gt;</td>
+        <td><span class="parametername">predictions</span></td>
+        <td><p>A mapping from a user to a list of predicted related users.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minCommonRatingCount</span></td>
+        <td><p>The minimum number of common ratings two users must have in order to be considered for evaluation.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">rankingMetric</span></td>
+        <td><p>The ranking metric.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">ratingSimilarityFunc</span></td>
+        <td><p>A method which computes the similarity between two rating vectors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">ratingConverter</span></td>
+        <td><p>The function applied to ratings before computing similarity. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The computed average of the given ranking metric.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,675 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class CasesOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class CasesOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_CasesOp" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp" class="text-break">Class CasesOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Gate.html#Microsoft_ML_Probabilistic_Factors_Gate_Cases_System_Boolean_">Cases(Boolean)</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">CasesOp</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CasesOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class CasesOp : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_CasesOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_CasesOp_AverageLogFactor_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli__Microsoft_ML_Probabilistic_Distributions_Bernoulli_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.AverageLogFactor(IList{Microsoft.ML.Probabilistic.Distributions.Bernoulli},Microsoft.ML.Probabilistic.Distributions.Bernoulli)">AverageLogFactor(IList&lt;Bernoulli&gt;, Bernoulli)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(IList&lt;Bernoulli&gt; cases, Bernoulli b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>&gt;</td>
+        <td><span class="parametername">cases</span></td>
+        <td><p>Incoming message from <code>cases</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CasesOp_AverageLogFactor_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli__Microsoft_ML_Probabilistic_Distributions_Bernoulli__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">cases</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_CasesOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_CasesOp_BAverageConditional_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli__" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.BAverageConditional(IList{Microsoft.ML.Probabilistic.Distributions.Bernoulli})">BAverageConditional(IList&lt;Bernoulli&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli BAverageConditional(IList&lt;Bernoulli&gt; cases)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>&gt;</td>
+        <td><span class="parametername">cases</span></td>
+        <td><p>Incoming message from <code>cases</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p>The outgoing EP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CasesOp_BAverageConditional_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(cases) p(cases) factor(cases,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">cases</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_CasesOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_CasesOp_BAverageLogarithm_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli__" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.BAverageLogarithm(IList{Microsoft.ML.Probabilistic.Distributions.Bernoulli})">BAverageLogarithm(IList&lt;Bernoulli&gt;)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli BAverageLogarithm(IList&lt;Bernoulli&gt; cases)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>&gt;</td>
+        <td><span class="parametername">cases</span></td>
+        <td><p>Incoming message from <code>cases</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CasesOp_BAverageLogarithm_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> with <code>cases</code> integrated out. The formula is <code>sum_cases p(cases) factor(cases,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">cases</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.CasesAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Bernoulli___0_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.CasesAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.Bernoulli,``0)">CasesAverageConditional&lt;BernoulliList&gt;(Bernoulli, BernoulliList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>cases</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static BernoulliList CasesAverageConditional&lt;BernoulliList&gt;(Bernoulli b, BernoulliList result)
+    where BernoulliList : IList&lt;Bernoulli&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">BernoulliList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BernoulliList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">BernoulliList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Bernoulli___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>cases</code> as the random arguments are varied. The formula is <code>proj[p(cases) sum_(b) p(b) factor(cases,b)]/p(cases)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.CasesAverageConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageConditionalInit" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.CasesAverageConditionalInit">CasesAverageConditionalInit()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray&lt;Bernoulli, bool&gt; CasesAverageConditionalInit()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageConditionalInit_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.CasesAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Bernoulli___0_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.CasesAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Bernoulli,``0)">CasesAverageLogarithm&lt;BernoulliList&gt;(Bernoulli, BernoulliList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>cases</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static BernoulliList CasesAverageLogarithm&lt;BernoulliList&gt;(Bernoulli b, BernoulliList result)
+    where BernoulliList : IList&lt;Bernoulli&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">BernoulliList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BernoulliList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">BernoulliList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Bernoulli___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>cases</code> as the random arguments are varied. The formula is <code>proj[sum_(b) p(b) factor(cases,b)]</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.CasesAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageLogarithmInit" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.CasesAverageLogarithmInit">CasesAverageLogarithmInit()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray&lt;Bernoulli, bool&gt; CasesAverageLogarithmInit()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesAverageLogarithmInit_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesDeriv_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.CasesDeriv*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_CasesOp_CasesDeriv__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.CasesDeriv``1(``0)">CasesDeriv&lt;DistributionType&gt;(DistributionType)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionType CasesDeriv&lt;DistributionType&gt;(DistributionType result)
+    where DistributionType : SettableToUniform</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DistributionType</span></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DistributionType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">DistributionType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_CasesOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_CasesOp_LogEvidenceRatio_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli__Microsoft_ML_Probabilistic_Distributions_Bernoulli_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.LogEvidenceRatio(IList{Microsoft.ML.Probabilistic.Distributions.Bernoulli},Microsoft.ML.Probabilistic.Distributions.Bernoulli)">LogEvidenceRatio(IList&lt;Bernoulli&gt;, Bernoulli)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(IList&lt;Bernoulli&gt; cases, Bernoulli b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>&gt;</td>
+        <td><span class="parametername">cases</span></td>
+        <td><p>Incoming message from <code>cases</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CasesOp_LogEvidenceRatio_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli__Microsoft_ML_Probabilistic_Distributions_Bernoulli__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(cases,b) p(cases,b) factor(cases,b) / sum_cases p(cases) messageTo(cases))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_CasesOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_CasesOp_LogEvidenceRatio_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli__System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Factors.CasesOp.LogEvidenceRatio(IList{Microsoft.ML.Probabilistic.Distributions.Bernoulli},System.Boolean)">LogEvidenceRatio(IList&lt;Bernoulli&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(IList&lt;Bernoulli&gt; cases, bool b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>&gt;</td>
+        <td><span class="parametername">cases</span></td>
+        <td><p>Incoming message from <code>cases</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_CasesOp_LogEvidenceRatio_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli__System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(cases) p(cases) factor(cases,b) / sum_cases p(cases) messageTo(cases))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

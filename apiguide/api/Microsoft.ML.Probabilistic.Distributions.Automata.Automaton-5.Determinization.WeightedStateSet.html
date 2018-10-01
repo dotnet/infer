@@ -1,0 +1,464 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedStateSet
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedStateSet
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet" class="text-break">Class Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedStateSet
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a state of the resulting automaton in the power set construction.
+It is essentially a set of (stateId, weight) pairs of the source automaton, where each state id is unique.
+Supports a quick lookup of the weight by state id.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedStateSet</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class WeightedStateSet : IEnumerable&lt;KeyValuePair&lt;int, Weight&gt;&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet__ctor" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.#ctor">WeightedStateSet()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Determinization.WeightedStateSet.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedStateSet</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WeightedStateSet()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet__ctor_IEnumerable_KeyValuePair_System_Int32_Microsoft_ML_Probabilistic_Distributions_Automata_Weight___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.#ctor(IEnumerable{KeyValuePair{System.Int32,Microsoft.ML.Probabilistic.Distributions.Automata.Weight}})">WeightedStateSet(IEnumerable&lt;KeyValuePair&lt;Int32, Weight&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Determinization.WeightedStateSet.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedStateSet</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WeightedStateSet(IEnumerable&lt;KeyValuePair&lt;int, Weight&gt;&gt; stateIdToWeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">KeyValuePair</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a>&gt;&gt;</td>
+        <td><span class="parametername">stateIdToWeight</span></td>
+        <td><p>A collection of (stateId, weight) pairs.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_Item_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_Item_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.Item(System.Int32)">Item[Int32]</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the weight for a given state id.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Weight this[int stateId] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stateId</span></td>
+        <td><p>The state id.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a></td>
+        <td><p>The weight.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_Add_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.Add*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_Add_System_Int32_Microsoft_ML_Probabilistic_Distributions_Automata_Weight_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.Add(System.Int32,Microsoft.ML.Probabilistic.Distributions.Automata.Weight)">Add(Int32, Weight)</h4>
+  <div class="markdown level1 summary"><p>Adds a given state id and a weight to the set.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Add(int stateId, Weight weight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stateId</span></td>
+        <td><p>The state id.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a></td>
+        <td><span class="parametername">weight</span></td>
+        <td><p>The weight.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_ContainsState_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.ContainsState*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_ContainsState_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.ContainsState(System.Int32)">ContainsState(Int32)</h4>
+  <div class="markdown level1 summary"><p>Checks whether the state with a given id is present in the set.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ContainsState(int stateId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stateId</span></td>
+        <td><p>The state id,</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the given state id was present in the set,
+<span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Checks whether this object is equal to a given one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>The object to compare this object with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the objects are equal,
+<span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_GetEnumerator_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.GetEnumerator*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_GetEnumerator" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.GetEnumerator">GetEnumerator()</h4>
+  <div class="markdown level1 summary"><p>Gets the enumerator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;KeyValuePair&lt;int, Weight&gt;&gt; GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;<span class="xref">KeyValuePair</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a>&gt;&gt;</td>
+        <td><p>The enumerator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Computes the hash code of this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The computed hash code.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns a string representation of the instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string representation of the instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_TryGetWeight_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.TryGetWeight*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Determinization_WeightedStateSet_TryGetWeight_System_Int32_Microsoft_ML_Probabilistic_Distributions_Automata_Weight__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Determinization.WeightedStateSet.TryGetWeight(System.Int32,Microsoft.ML.Probabilistic.Distributions.Automata.Weight@)">TryGetWeight(Int32, out Weight)</h4>
+  <div class="markdown level1 summary"><p>Attempts to retrieve the weight corresponding to a given state id from the set.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetWeight(int stateId, out Weight weight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stateId</span></td>
+        <td><p>The state id.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a></td>
+        <td><span class="parametername">weight</span></td>
+        <td><p>When the method returns, contains the retrieved weight.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the given state id was present in the set,
+<span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

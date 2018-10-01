@@ -1,0 +1,494 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface ICodeTransformContext
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface ICodeTransformContext
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext" class="text-break">Interface ICodeTransformContext
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.html">Microsoft.ML.Probabilistic.Compiler</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface ICodeTransformContext</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_Depth_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.Depth*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_Depth" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.Depth">Depth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int Depth { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_InputAttributes_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.InputAttributes*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_InputAttributes" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.InputAttributes">InputAttributes</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">AttributeRegistry&lt;object, ICompilerAttribute&gt; InputAttributes { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.AttributeRegistry-2.html">AttributeRegistry</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ICompilerAttribute.html">ICompilerAttribute</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_OutputAttributes_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.OutputAttributes*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_OutputAttributes" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.OutputAttributes">OutputAttributes</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">AttributeRegistry&lt;object, ICompilerAttribute&gt; OutputAttributes { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.AttributeRegistry-2.html">AttributeRegistry</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ICompilerAttribute.html">ICompilerAttribute</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_Results_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.Results*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_Results" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.Results">Results</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TransformResults Results { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.TransformResults.html">TransformResults</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_TypesToTransform_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.TypesToTransform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_TypesToTransform" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.TypesToTransform">TypesToTransform</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">List&lt;ITypeDeclaration&gt; TypesToTransform { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration.html">ITypeDeclaration</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_CloseExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.CloseExpression*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_CloseExpression_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.CloseExpression(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">CloseExpression(IExpression)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CloseExpression(IExpression iexpr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">iexpr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_CloseMember_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.CloseMember*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_CloseMember_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMemberDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.CloseMember(Microsoft.ML.Probabilistic.Compiler.CodeModel.IMemberDeclaration)">CloseMember(IMemberDeclaration)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CloseMember(IMemberDeclaration imd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMemberDeclaration.html">IMemberDeclaration</a></td>
+        <td><span class="parametername">imd</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_CloseStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.CloseStatement*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_CloseStatement_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.CloseStatement(Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement)">CloseStatement(IStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CloseStatement(IStatement istmt)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td><span class="parametername">istmt</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_CloseType_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.CloseType*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_CloseType_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.CloseType(Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration)">CloseType(ITypeDeclaration)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CloseType(ITypeDeclaration itd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration.html">ITypeDeclaration</a></td>
+        <td><span class="parametername">itd</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_Error_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.Error*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_Error_System_String_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.Error(System.String)">Error(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Error(string msg)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">msg</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_OpenExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.OpenExpression*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_OpenExpression_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.OpenExpression(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">OpenExpression(IExpression)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void OpenExpression(IExpression iexpr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">iexpr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_OpenMember_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.OpenMember*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_OpenMember_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMemberDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.OpenMember(Microsoft.ML.Probabilistic.Compiler.CodeModel.IMemberDeclaration)">OpenMember(IMemberDeclaration)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void OpenMember(IMemberDeclaration imd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMemberDeclaration.html">IMemberDeclaration</a></td>
+        <td><span class="parametername">imd</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_OpenStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.OpenStatement*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_OpenStatement_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.OpenStatement(Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement)">OpenStatement(IStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void OpenStatement(IStatement istmt)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td><span class="parametername">istmt</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_OpenType_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.OpenType*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_OpenType_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.OpenType(Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration)">OpenType(ITypeDeclaration)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void OpenType(ITypeDeclaration itd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration.html">ITypeDeclaration</a></td>
+        <td><span class="parametername">itd</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_Warning_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.Warning*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ICodeTransformContext_Warning_System_String_" data-uid="Microsoft.ML.Probabilistic.Compiler.ICodeTransformContext.Warning(System.String)">Warning(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Warning(string msg)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">msg</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

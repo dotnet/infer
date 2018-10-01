@@ -1,0 +1,1626 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class FastSumOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class FastSumOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_FastSumOp" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp" class="text-break">Class FastSumOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_IList_System_Double__">Sum(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">FastSumOp</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class FastSumOp : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian___Microsoft_ML_Probabilistic_Distributions_Gaussian___" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian[],Microsoft.ML.Probabilistic.Distributions.Gaussian[])">ArrayAverageConditional(Gaussian, Gaussian, Gaussian[], Gaussian[])</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>array</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian[] ArrayAverageConditional(Gaussian sum, Gaussian to_sum, Gaussian[] array, Gaussian[] result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Incoming message from <code>sum</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">to_sum</span></td>
+        <td><p>Outgoing message to <code>sum</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>[]</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>[]</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>[]</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian___Microsoft_ML_Probabilistic_Distributions_Gaussian____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>array</code> as the random arguments are varied. The formula is <code>proj[p(array) sum_(sum) p(sum) factor(sum,array)]/p(array)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageConditional&lt;GaussianList&gt;(Gaussian, Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>array</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GaussianList ArrayAverageConditional&lt;GaussianList&gt;(Gaussian sum, Gaussian to_sum, IList&lt;Gaussian&gt; array, GaussianList result)
+    where GaussianList : IList&lt;Gaussian&gt;, SettableToUniform</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Incoming message from <code>sum</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">to_sum</span></td>
+        <td><p>Outgoing message to <code>sum</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">GaussianList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>array</code> as the random arguments are varied. The formula is <code>proj[p(array) sum_(sum) p(sum) factor(sum,array)]/p(array)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageConditional__1_System_Double_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageConditional``1(System.Double,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageConditional&lt;GaussianList&gt;(Double, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>array</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GaussianList ArrayAverageConditional&lt;GaussianList&gt;(double sum, IList&lt;Gaussian&gt; array, GaussianList result)
+    where GaussianList : IList&lt;Gaussian&gt;, SettableToUniform</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Constant value for <code>sum</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">GaussianList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageConditional__1_System_Double_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>array</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageLogarithm&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>array</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GaussianList ArrayAverageLogarithm&lt;GaussianList&gt;(Gaussian sum, IList&lt;Gaussian&gt; array, GaussianList to_array)
+    where GaussianList : IList&lt;Gaussian&gt;, ICloneable</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Incoming message from <code>sum</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><span class="parametername">to_array</span></td>
+        <td><p>Previous outgoing message to <code>array</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><p>The outgoing VMP message to the <code>array</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">GaussianList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>array</code> with <code>sum</code> integrated out. The formula is <code>sum_sum p(sum) factor(sum,array)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">array</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm__1_System_Double_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm``1(System.Double,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageLogarithm&lt;GaussianList&gt;(Double, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>array</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GaussianList ArrayAverageLogarithm&lt;GaussianList&gt;(double sum, IList&lt;Gaussian&gt; array, GaussianList result)
+    where GaussianList : IList&lt;Gaussian&gt;, ICloneable</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Constant value for <code>sum</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">GaussianList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm__1_System_Double_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>array</code> conditioned on the given values.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">array</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm1_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm1*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm1__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm1``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageLogarithm1&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to 'array'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GaussianList ArrayAverageLogarithm1&lt;GaussianList&gt;(Gaussian sum, IList&lt;Gaussian&gt; array, GaussianList to_array)
+    where GaussianList : IList&lt;Gaussian&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Incoming message from 'sum'. Must be a proper distribution.  If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from 'array'.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><span class="parametername">to_array</span></td>
+        <td><p>Previous outgoing message to 'array'.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><p>The outgoing VMP message to the 'array' argument</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">GaussianList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm1__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+    The outgoing message is the factor viewed as a function of &apos;array&apos; with &apos;sum&apos; integrated out.
+    The formula is <code>sum_sum p(sum) factor(sum,array)</code>.
+</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm2_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm2*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm2__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm2``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageLogarithm2&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to 'array'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GaussianList ArrayAverageLogarithm2&lt;GaussianList&gt;(Gaussian sum, IList&lt;Gaussian&gt; array, GaussianList to_array)
+    where GaussianList : IList&lt;Gaussian&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Incoming message from 'sum'. Must be a proper distribution.  If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from 'array'.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><span class="parametername">to_array</span></td>
+        <td><p>Previous outgoing message to 'array'.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><p>The outgoing VMP message to the 'array' argument</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">GaussianList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm2__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+    The outgoing message is the factor viewed as a function of &apos;array&apos; with &apos;sum&apos; integrated out.
+    The formula is <code>sum_sum p(sum) factor(sum,array)</code>.
+</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm3_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm3*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm3__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm3``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageLogarithm3&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GaussianList ArrayAverageLogarithm3&lt;GaussianList&gt;(Gaussian sum, IList&lt;Gaussian&gt; array, GaussianList to_array)
+    where GaussianList : IList&lt;Gaussian&gt;, ICloneable</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><span class="parametername">to_array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">GaussianList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm4_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm4*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm4__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm4``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageLogarithm4&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GaussianList ArrayAverageLogarithm4&lt;GaussianList&gt;(Gaussian sum, IList&lt;Gaussian&gt; array, GaussianList to_array)
+    where GaussianList : IList&lt;Gaussian&gt;, ICloneable</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><span class="parametername">to_array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">GaussianList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm5_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm5*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm5__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm5``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageLogarithm5&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GaussianList ArrayAverageLogarithm5&lt;GaussianList&gt;(Gaussian sum, IList&lt;Gaussian&gt; array, GaussianList result)
+    where GaussianList : IList&lt;Gaussian&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">GaussianList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm6_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm6*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm6__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm6``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageLogarithm6&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GaussianList ArrayAverageLogarithm6&lt;GaussianList&gt;(Gaussian sum, IList&lt;Gaussian&gt; array, IList&lt;Gaussian&gt; array_deriv, GaussianList to_array)
+    where GaussianList : IList&lt;Gaussian&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array_deriv</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td><span class="parametername">to_array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">GaussianList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">GaussianList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm7_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm7*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_ArrayAverageLogarithm7_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.ArrayAverageLogarithm7(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Int32)">ArrayAverageLogarithm7(Gaussian, IList&lt;Gaussian&gt;, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian ArrayAverageLogarithm7(Gaussian sum, IList&lt;Gaussian&gt; array, int resultIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">resultIndex</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.AverageLogFactor">AverageLogFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sum,array))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_AverageLogFactor_System_Double_IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.AverageLogFactor(System.Double,IList{System.Double})">AverageLogFactor(Double, IList&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(double sum, IList&lt;double&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Constant value for <code>sum</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Constant value for <code>array</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_AverageLogFactor_System_Double_IList_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sum,array))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">LogAverageFactor(Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Gaussian sum, Gaussian to_sum)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Incoming message from <code>sum</code>. Must be a proper distribution. If uniform, the result will be uniform. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">to_sum</span></td>
+        <td><p>Outgoing message to <code>sum</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sum) p(sum) factor(sum,array))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sum</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogAverageFactor_System_Double_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogAverageFactor(System.Double,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogAverageFactor(Double, IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(double sum, IList&lt;Gaussian&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Constant value for <code>sum</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogAverageFactor_System_Double_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(array) p(array) factor(sum,array))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogAverageFactor_System_Double_IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogAverageFactor(System.Double,IList{System.Double})">LogAverageFactor(Double, IList&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(double sum, IList&lt;double&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Constant value for <code>sum</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Constant value for <code>array</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogAverageFactor_System_Double_IList_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sum,array))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Gaussian)">LogEvidenceRatio(Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Gaussian sum)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Incoming message from <code>sum</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sum) p(sum) factor(sum,array) / sum_sum p(sum) messageTo(sum))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogEvidenceRatio_System_Double_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogEvidenceRatio(System.Double,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogEvidenceRatio(Double, IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(double sum, IList&lt;Gaussian&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Constant value for <code>sum</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogEvidenceRatio_System_Double_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(array) p(array) factor(sum,array))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogEvidenceRatio_System_Double_IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.LogEvidenceRatio(System.Double,IList{System.Double})">LogEvidenceRatio(Double, IList&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(double sum, IList&lt;double&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>Constant value for <code>sum</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Constant value for <code>array</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_LogEvidenceRatio_System_Double_IList_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sum,array))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_SumAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.SumAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_SumAverageConditional_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.SumAverageConditional(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">SumAverageConditional(IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>sum</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SumAverageConditional(IList&lt;Gaussian&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing EP message to the <code>sum</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_SumAverageConditional_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>sum</code> as the random arguments are varied. The formula is <code>proj[p(sum) sum_(array) p(array) factor(sum,array)]/p(sum)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_SumAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.SumAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_SumAverageLogarithm_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.SumAverageLogarithm(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">SumAverageLogarithm(IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>sum</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SumAverageLogarithm(IList&lt;Gaussian&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>sum</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_SumAverageLogarithm_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>sum</code> as the random arguments are varied. The formula is <code>proj[sum_(array) p(array) factor(sum,array)]</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_FastSumOp_SumDeriv_" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.SumDeriv*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_FastSumOp_SumDeriv_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.FastSumOp.SumDeriv(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">SumDeriv(Gaussian, IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian SumDeriv(Gaussian sum, IList&lt;Gaussian&gt; array, IList&lt;Gaussian&gt; to_array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">to_array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

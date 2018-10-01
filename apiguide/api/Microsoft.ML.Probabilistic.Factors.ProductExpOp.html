@@ -1,0 +1,796 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ProductExpOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ProductExpOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp" class="text-break">Class ProductExpOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_ProductExp_System_Double_System_Double_">ProductExp(Double, Double)</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">ProductExpOp</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class ProductExpOp : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">AAverageLogarithm(Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian AAverageLogarithm(Gaussian ProductExp, Gaussian B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">ProductExp</span></td>
+        <td><p>Incoming message from <code>productExp</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>a</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>a</code>. Because the factor is deterministic, <code>productExp</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(b) p(b) log(sum_productExp p(productExp) factor(productExp,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">ProductExp</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_AAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.AAverageLogarithm(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian)">AAverageLogarithm(Double, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian AAverageLogarithm(double ProductExp, Gaussian B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ProductExp</span></td>
+        <td><p>Constant value for <code>productExp</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>a</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_AAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>a</code>. The formula is <code>exp(sum_(b) p(b) log(factor(productExp,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">BAverageLogarithm(Gaussian, Gaussian, Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian BAverageLogarithm(Gaussian ProductExp, Gaussian A, Gaussian B, Gaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">ProductExp</span></td>
+        <td><p>Incoming message from <code>productExp</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>b</code>. Because the factor is deterministic, <code>productExp</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(a) p(a) log(sum_productExp p(productExp) factor(productExp,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">ProductExp</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_NonconjugateGaussian_Microsoft_ML_Probabilistic_Distributions_NonconjugateGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian,Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian)">BAverageLogarithm(Gaussian, Gaussian, Gaussian, NonconjugateGaussian, NonconjugateGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static NonconjugateGaussian BAverageLogarithm(Gaussian ProductExp, Gaussian A, Gaussian B, NonconjugateGaussian to_B, NonconjugateGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">ProductExp</span></td>
+        <td><p>Incoming message from <code>productExp</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian.html">NonconjugateGaussian</a></td>
+        <td><span class="parametername">to_B</span></td>
+        <td><p>Previous outgoing message to <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian.html">NonconjugateGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian.html">NonconjugateGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_NonconjugateGaussian_Microsoft_ML_Probabilistic_Distributions_NonconjugateGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>b</code>. Because the factor is deterministic, <code>productExp</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(a) p(a) log(sum_productExp p(productExp) factor(productExp,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">ProductExp</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_NonconjugateGaussian_Microsoft_ML_Probabilistic_Distributions_NonconjugateGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian,Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian)">BAverageLogarithm(Gaussian, Double, Gaussian, NonconjugateGaussian, NonconjugateGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static NonconjugateGaussian BAverageLogarithm(Gaussian ProductExp, double A, Gaussian B, NonconjugateGaussian to_B, NonconjugateGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">ProductExp</span></td>
+        <td><p>Incoming message from <code>productExp</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian.html">NonconjugateGaussian</a></td>
+        <td><span class="parametername">to_B</span></td>
+        <td><p>Previous outgoing message to <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian.html">NonconjugateGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian.html">NonconjugateGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_NonconjugateGaussian_Microsoft_ML_Probabilistic_Distributions_NonconjugateGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> with <code>productExp</code> integrated out. The formula is <code>sum_productExp p(productExp) factor(productExp,a,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">ProductExp</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.BAverageLogarithm(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian)">BAverageLogarithm(Double, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static NonconjugateGaussian BAverageLogarithm(double ProductExp, Gaussian A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ProductExp</span></td>
+        <td><p>Constant value for <code>productExp</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.NonconjugateGaussian.html">NonconjugateGaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>b</code>. The formula is <code>exp(sum_(a) p(a) log(factor(productExp,a,b)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.BAverageLogarithm(System.Double,System.Double)">BAverageLogarithm(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma BAverageLogarithm(double ProductExp, double A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ProductExp</span></td>
+        <td><p>Constant value for <code>productExp</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_BAverageLogarithm_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_ProductExpAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.ProductExpAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_ProductExpAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.ProductExpAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">ProductExpAverageLogarithm(Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>productExp</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian ProductExpAverageLogarithm(Gaussian A, Gaussian B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>productExp</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_ProductExpAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>productExp</code> as the random arguments are varied. The formula is <code>proj[sum_(a,b) p(a,b) factor(productExp,a,b)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_ProductExpAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.ProductExpAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_ProductExpAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductExpOp.ProductExpAverageLogarithm(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian)">ProductExpAverageLogarithm(Double, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>productExp</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian ProductExpAverageLogarithm(double A, Gaussian B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>The outgoing VMP message to the <code>productExp</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductExpOp_ProductExpAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>productExp</code> as the random arguments are varied. The formula is <code>proj[sum_(b) p(b) factor(productExp,a,b)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

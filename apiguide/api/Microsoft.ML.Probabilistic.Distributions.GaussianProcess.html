@@ -1,0 +1,681 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GaussianProcess
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GaussianProcess
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess" class="text-break">Class GaussianProcess
+  </h1>
+  <div class="markdown level0 summary"><p>A base class for Gaussian process distributions</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">GaussianProcess</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IGaussianProcess.html">IGaussianProcess</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a>&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class GaussianProcess : object, IGaussianProcess, Sampleable&lt;IFunction&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess__ctor_Microsoft_ML_Probabilistic_Distributions_IFunction_Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunction_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.#ctor(Microsoft.ML.Probabilistic.Distributions.IFunction,Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunction)">GaussianProcess(IFunction, IKernelFunction)</h4>
+  <div class="markdown level1 summary"><p>Constructor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GaussianProcess(IFunction mean, IKernelFunction kernel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean function</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunction.html">IKernelFunction</a></td>
+        <td><span class="parametername">kernel</span></td>
+        <td><p>Kernel function</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_kernel" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.kernel">kernel</h4>
+  <div class="markdown level1 summary"><p>Covariance function</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IKernelFunction kernel</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunction.html">IKernelFunction</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_mean" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.mean">mean</h4>
+  <div class="markdown level1 summary"><p>Mean function</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IFunction mean</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Covariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Covariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Covariance_IList_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Covariance(IList{Microsoft.ML.Probabilistic.Math.Vector})">Covariance(IList&lt;Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Predictive coariance at a given list of points</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PositiveDefiniteMatrix Covariance(IList&lt;Vector&gt; XList)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">XList</span></td>
+        <td><p>List of inputs</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><p>Predictive covariance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Covariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Covariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Covariance_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Covariance(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector)">Covariance(Vector, Vector)</h4>
+  <div class="markdown level1 summary"><p>Predictive covariance at a given pair of points</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Covariance(Vector x, Vector y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">y</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Joint_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Joint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Joint_IList_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Joint(IList{Microsoft.ML.Probabilistic.Math.Vector})">Joint(IList&lt;Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Predictive distribution at a given list of points</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VectorGaussian Joint(IList&lt;Vector&gt; XList)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">XList</span></td>
+        <td><p>List of inputs</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>Predictive distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Marginal_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Marginal_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Marginal(Microsoft.ML.Probabilistic.Math.Vector)">Marginal(Vector)</h4>
+  <div class="markdown level1 summary"><p>Predictive distribution at a given point</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Gaussian Marginal(Vector X)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">X</span></td>
+        <td><p>Input</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>Predictive distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Mean_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Mean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Mean_IList_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Mean(IList{Microsoft.ML.Probabilistic.Math.Vector})">Mean(IList&lt;Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Mean at a given list of points</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector Mean(IList&lt;Vector&gt; XList)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">XList</span></td>
+        <td><p>List of inputs</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>Predictive mean vector</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Mean_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Mean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Mean_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Mean(Microsoft.ML.Probabilistic.Math.Vector)">Mean(Vector)</h4>
+  <div class="markdown level1 summary"><p>Mean at a given point</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Mean(Vector X)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">X</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>This base class just returns the mean function</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IFunction Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Sample_Microsoft_ML_Probabilistic_Distributions_IFunction_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Sample(Microsoft.ML.Probabilistic.Distributions.IFunction)">Sample(IFunction)</h4>
+  <div class="markdown level1 summary"><p>This base class just returns the mean function</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IFunction Sample(IFunction result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Variance_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Variance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GaussianProcess_Variance_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.GaussianProcess.Variance(Microsoft.ML.Probabilistic.Math.Vector)">Variance(Vector)</h4>
+  <div class="markdown level1 summary"><p>Predictive Variance at a given point</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Variance(Vector X)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">X</span></td>
+        <td><p>Input</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Predictive variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IGaussianProcess.html">IGaussianProcess</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

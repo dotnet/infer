@@ -1,0 +1,1275 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SubvectorOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SubvectorOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp" class="text-break">Class SubvectorOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Subvector_Microsoft_ML_Probabilistic_Math_Vector_System_Int32_System_Int32_">Subvector(Vector, Int32, Int32)</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">SubvectorOp</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class SubvectorOp : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.AverageLogFactor">AverageLogFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(subvector,source,startIndex,count))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_AverageLogFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.AverageLogFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Int32)">AverageLogFactor(Vector, Vector, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Vector subvector, Vector source, int startIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Constant value for <code>subvector</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Constant value for <code>source</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_AverageLogFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(subvector,source,startIndex,count))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">LogAverageFactor(VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(VectorGaussian subvector, VectorGaussian to_subvector)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Incoming message from <code>subvector</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">to_subvector</span></td>
+        <td><p>Outgoing message to <code>subvector</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(subvector) p(subvector) factor(subvector,source,startIndex,count))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogAverageFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,System.Int32)">LogAverageFactor(Vector, Vector, PositiveDefiniteMatrix, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Vector subvector, Vector SourceMean, PositiveDefiniteMatrix SourceVariance, int startIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Constant value for <code>subvector</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">SourceMean</span></td>
+        <td><p>Buffer <code>SourceMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">SourceVariance</span></td>
+        <td><p>Buffer <code>SourceVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(subvector,source,startIndex,count))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogAverageFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Int32)">LogAverageFactor(Vector, Vector, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Vector subvector, Vector source, int startIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Constant value for <code>subvector</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Constant value for <code>source</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(subvector,source,startIndex,count))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">LogEvidenceRatio(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(VectorGaussian subvector)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Incoming message from <code>subvector</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(subvector) p(subvector) factor(subvector,source,startIndex,count) / sum_subvector p(subvector) messageTo(subvector))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,System.Int32)">LogEvidenceRatio(Vector, Vector, PositiveDefiniteMatrix, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Vector subvector, Vector SourceMean, PositiveDefiniteMatrix SourceVariance, int startIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Constant value for <code>subvector</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">SourceMean</span></td>
+        <td><p>Buffer <code>SourceMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">SourceVariance</span></td>
+        <td><p>Buffer <code>SourceVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(subvector,source,startIndex,count))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Int32)">LogEvidenceRatio(Vector, Vector, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Vector subvector, Vector source, int startIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Constant value for <code>subvector</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Constant value for <code>source</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(subvector,source,startIndex,count))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,System.Int32,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SourceAverageConditional(VectorGaussian, Int32, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>source</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SourceAverageConditional(VectorGaussian subvector, int startIndex, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Incoming message from <code>subvector</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>source</code> as the random arguments are varied. The formula is <code>proj[p(source) sum_(subvector) p(subvector) factor(subvector,source,startIndex,count)]/p(source)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">subvector</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceAverageConditional(Microsoft.ML.Probabilistic.Math.Vector,System.Int32,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SourceAverageConditional(Vector, Int32, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>source</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SourceAverageConditional(Vector subvector, int startIndex, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Constant value for <code>subvector</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>source</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,System.Int32,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SourceAverageLogarithm(VectorGaussian, Int32, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>source</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SourceAverageLogarithm(VectorGaussian subvector, int startIndex, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Incoming message from <code>subvector</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>source</code> with <code>subvector</code> integrated out. The formula is <code>sum_subvector p(subvector) factor(subvector,source,startIndex,count)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">subvector</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceAverageLogarithm(Microsoft.ML.Probabilistic.Math.Vector,System.Int32,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SourceAverageLogarithm(Vector, Int32, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>source</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SourceAverageLogarithm(Vector subvector, int startIndex, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">subvector</span></td>
+        <td><p>Constant value for <code>subvector</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>source</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceMean_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceMean_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceMean(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Math.Vector)">SourceMean(VectorGaussian, PositiveDefiniteMatrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>SourceMean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector SourceMean(VectorGaussian Source, PositiveDefiniteMatrix SourceVariance, Vector result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">Source</span></td>
+        <td><p>Incoming message from <code>source</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">SourceVariance</span></td>
+        <td><p>Buffer <code>SourceVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceMean_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Source</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceMeanInit_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceMeanInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceMeanInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceMeanInit(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SourceMeanInit(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Initialize the buffer <code>SourceMean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector SourceMeanInit(VectorGaussian Source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">Source</span></td>
+        <td><p>Incoming message from <code>source</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>Initial value of buffer <code>SourceMean</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceMeanInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceVariance_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceVariance_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceVariance(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">SourceVariance(VectorGaussian, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>SourceVariance</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PositiveDefiniteMatrix SourceVariance(VectorGaussian Source, PositiveDefiniteMatrix result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">Source</span></td>
+        <td><p>Incoming message from <code>source</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceVariance_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Source</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceVarianceInit_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceVarianceInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceVarianceInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SourceVarianceInit(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SourceVarianceInit(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Initialize the buffer <code>SourceVariance</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PositiveDefiniteMatrix SourceVarianceInit(VectorGaussian Source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">Source</span></td>
+        <td><p>Incoming message from <code>source</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><p>Initial value of buffer <code>SourceVariance</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SourceVarianceInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SubvectorAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SubvectorAverageConditional(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,System.Int32,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SubvectorAverageConditional(Vector, PositiveDefiniteMatrix, Int32, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>subvector</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SubvectorAverageConditional(Vector SourceMean, PositiveDefiniteMatrix SourceVariance, int startIndex, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">SourceMean</span></td>
+        <td><p>Buffer <code>SourceMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">SourceVariance</span></td>
+        <td><p>Buffer <code>SourceVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>subvector</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SubvectorAverageConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageConditionalInit_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SubvectorAverageConditionalInit(System.Int32)">SubvectorAverageConditionalInit(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SubvectorAverageConditionalInit(int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>Constant value for <code>count</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageConditionalInit_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SubvectorAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SubvectorAverageLogarithm(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,System.Int32,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SubvectorAverageLogarithm(Vector, PositiveDefiniteMatrix, Int32, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>subvector</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SubvectorAverageLogarithm(Vector SourceMean, PositiveDefiniteMatrix SourceVariance, int startIndex, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">SourceMean</span></td>
+        <td><p>Buffer <code>SourceMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">SourceVariance</span></td>
+        <td><p>Buffer <code>SourceVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>Constant value for <code>startIndex</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>subvector</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SubvectorAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageLogarithmInit_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.SubvectorOp.SubvectorAverageLogarithmInit(System.Int32)">SubvectorAverageLogarithmInit(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SubvectorAverageLogarithmInit(int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>Constant value for <code>count</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SubvectorOp_SubvectorAverageLogarithmInit_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

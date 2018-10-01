@@ -1,0 +1,1265 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Binding
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Binding
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding" class="text-break">Class Binding
+  </h1>
+  <div class="markdown level0 summary"><p>Represents the type parameters and argument conversions needed to invoke a method.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Binding</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.html">Microsoft.ML.Probabilistic.Compiler.Reflection</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class Binding : object</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+    Given a generic method definition and a list of arguments, a Binding represents the 
+    additional information needed to invoke the method with those arguments.  Specifically,
+    it stores a list of type parameters (possibly empty if the method is not generic) and
+    a list of conversions, one for each argument.  Note that Bindings are not unique, e.g.
+    a type parameter might be instantiated in several different ways, yet still compatible
+    with the given arguments.  Each of these choices is a different Binding.
+</p><p>
+This class allows you to find the Binding which is &apos;best&apos; in the sense of being the most
+specific.  The &lt; operator can be used to compare the specificity of Bindings.
+</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding__ctor_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding__ctor_MethodBase_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.#ctor(MethodBase)">Binding(MethodBase)</h4>
+  <div class="markdown level1 summary"><p>Creare an empty Binding to a given method.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Binding(MethodBase method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">MethodBase</span></td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding__ctor_MethodBase__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The conversions are all set to null.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding__ctor_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding__ctor_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.#ctor(Microsoft.ML.Probabilistic.Compiler.Reflection.Binding)">Binding(Binding)</h4>
+  <div class="markdown level1 summary"><p>Copy constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Binding(Binding info)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">info</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_Conversions" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.Conversions">Conversions</h4>
+  <div class="markdown level1 summary"><p>The conversion inferred for each method parameter position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Conversion[] Conversions</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Conversion.html">Conversion</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_Types" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.Types">Types</h4>
+  <div class="markdown level1 summary"><p>The type inferred for each type parameter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;Type, Type&gt; Types</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;<span class="xref">Type</span>, <span class="xref">Type</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_Types_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>All entries are non-null.  A missing entry indicates an unconstrained parameter.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ApplyTypeConstraints_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ApplyTypeConstraints*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ApplyTypeConstraints_MethodBase_IEnumerator_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding__IList_Exception__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ApplyTypeConstraints(MethodBase,IEnumerator{Microsoft.ML.Probabilistic.Compiler.Reflection.Binding},IList{Exception})">ApplyTypeConstraints(MethodBase, IEnumerator&lt;Binding&gt;, IList&lt;Exception&gt;)</h4>
+  <div class="markdown level1 summary"><p>Filter a stream of bindings via type constraints.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerator&lt;Binding&gt; ApplyTypeConstraints(MethodBase method, IEnumerator&lt;Binding&gt; iter, IList&lt;Exception&gt; errors)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">MethodBase</span></td>
+        <td><span class="parametername">method</span></td>
+        <td><p>A generic method which may have type constraints.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a>&gt;</td>
+        <td><span class="parametername">iter</span></td>
+        <td><p>A stream of Bindings.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">Exception</span>&gt;</td>
+        <td><span class="parametername">errors</span></td>
+        <td><p>A list which collects binding errors.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a>&gt;</td>
+        <td><p>A substream of Bindings which all satisfy the type constraints.
+Type parameters which were previously unknown may be filled in by the type constraints, possibly
+in multiple ways.  Thus a single Binding from <code data-dev-comment-type="paramref" class="paramref">iter</code> with an unknown type parameter
+may expand into many new Bindings, differing only in the instantiation of that parameter.
+Known type parameters are left unchanged.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ApplyTypeConstraints_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ApplyTypeConstraints*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ApplyTypeConstraints_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_IList_Exception__ICollection_Type__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ApplyTypeConstraints(Microsoft.ML.Probabilistic.Compiler.Reflection.Binding,IList{Exception},ICollection{Type})">ApplyTypeConstraints(Binding, IList&lt;Exception&gt;, ICollection&lt;Type&gt;)</h4>
+  <div class="markdown level1 summary"><p>Expand a binding via type constraints.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerator&lt;Binding&gt; ApplyTypeConstraints(Binding binding, IList&lt;Exception&gt; errors, ICollection&lt;Type&gt; doneParams = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">binding</span></td>
+        <td><p>The binding to expand</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">Exception</span>&gt;</td>
+        <td><span class="parametername">errors</span></td>
+        <td><p>A list which collects binding errors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;<span class="xref">Type</span>&gt;</td>
+        <td><span class="parametername">doneParams</span></td>
+        <td><p>The set of parameters already processed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a>&gt;</td>
+        <td><p>A stream of Bindings which satisfy the constraints on typeParams[pos] and above.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ApplyTypeConstraints_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ApplyTypeConstraints*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ApplyTypeConstraints_Type_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_IList_Exception__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ApplyTypeConstraints(Type,Microsoft.ML.Probabilistic.Compiler.Reflection.Binding,IList{Exception})">ApplyTypeConstraints(Type, Binding, IList&lt;Exception&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerator&lt;Binding&gt; ApplyTypeConstraints(Type typeParam, Binding binding, IList&lt;Exception&gt; errors)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">typeParam</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">binding</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">Exception</span>&gt;</td>
+        <td><span class="parametername">errors</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ApplyTypeConstraints_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ApplyTypeConstraints*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ApplyTypeConstraints_Type_Type___Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_IList_Exception__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ApplyTypeConstraints(Type,Type[],Microsoft.ML.Probabilistic.Compiler.Reflection.Binding,IList{Exception},System.Int32)">ApplyTypeConstraints(Type, Type[], Binding, IList&lt;Exception&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Expand a binding via type constraints.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerator&lt;Binding&gt; ApplyTypeConstraints(Type actual, Type[] constraints, Binding binding, IList&lt;Exception&gt; errors, int start)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">actual</span></td>
+        <td><p>The type that needs to satisfy the constraints.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span>[]</td>
+        <td><span class="parametername">constraints</span></td>
+        <td><p>The constraints on the type parameter at binding.Types[pos].</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">binding</span></td>
+        <td><p>Any binding.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">Exception</span>&gt;</td>
+        <td><span class="parametername">errors</span></td>
+        <td><p>A list which collects binding errors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The index of the first constraint to process.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a>&gt;</td>
+        <td><p>A stream of Bindings which satisfy constraints[start] and higher.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_Bind_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.Bind*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_Bind_MethodBase_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.Bind(MethodBase)">Bind(MethodBase)</h4>
+  <div class="markdown level1 summary"><p>Specialize a method on the inferred type parameters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MethodBase Bind(MethodBase method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">MethodBase</span></td>
+        <td><span class="parametername">method</span></td>
+        <td><p>A non-null generic or non-generic method.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">MethodBase</span></td>
+        <td><p>A method with all type parameters of that method filled in.  Type parameters of an enclosing type will not be filled in.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_Bind_MethodBase__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Unknown type parameters are replaced with System.Object.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_Bind_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.Bind*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_Bind_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.Bind(Type)">Bind(Type)</h4>
+  <div class="markdown level1 summary"><p>Fill in some type parameters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Type Bind(Type type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>A type which may have generic parameters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><p>A type with possibly fewer generic parameters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ConvertAll_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ConvertAll*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ConvertAll_System_Object___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ConvertAll(System.Object[])">ConvertAll(Object[])</h4>
+  <div class="markdown level1 summary"><p>Apply the conversions to a set of arguments.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ConvertAll(object[] args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">args</span></td>
+        <td><p>An array of length Conversions.Length.  Modified to contain the converted values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ForEachTypeParameter_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ForEachTypeParameter*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ForEachTypeParameter_Type_Action_Type__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ForEachTypeParameter(Type,Action{Type})">ForEachTypeParameter(Type, Action&lt;Type&gt;)</h4>
+  <div class="markdown level1 summary"><p>Perform an action for each type parameter inside a type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void ForEachTypeParameter(Type type, Action&lt;Type&gt; action)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<span class="xref">Type</span>&gt;</td>
+        <td><span class="parametername">action</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_GetBestBinding_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.GetBestBinding*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_GetBestBinding_MethodBase_Type___Microsoft_ML_Probabilistic_Compiler_Reflection_ConversionOptions_Exception__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.GetBestBinding(MethodBase,Type[],Microsoft.ML.Probabilistic.Compiler.Reflection.ConversionOptions,Exception@)">GetBestBinding(MethodBase, Type[], ConversionOptions, out Exception)</h4>
+  <div class="markdown level1 summary"><p>Find the most specific Binding for a generic method.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Binding GetBestBinding(MethodBase method, Type[] actuals, ConversionOptions conversionOptions, out Exception exception)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">MethodBase</span></td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span>[]</td>
+        <td><span class="parametername">actuals</span></td>
+        <td><p>Types from which to infer type parameters.  actuals.Length == number of method parameters.  actuals[i] may be null to allow any type, or typeof(Nullable) to mean &quot;any nullable type&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.ConversionOptions.html">ConversionOptions</a></td>
+        <td><span class="parametername">conversionOptions</span></td>
+        <td><p>Specifies which conversions are allowed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Exception</span></td>
+        <td><span class="parametername">exception</span></td>
+        <td><p>Exception created on failure</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><p>null if binding fails.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_InferGenericParameters_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.InferGenericParameters*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_InferGenericParameters_MethodBase_Type___Microsoft_ML_Probabilistic_Compiler_Reflection_ConversionOptions_IList_Exception__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.InferGenericParameters(MethodBase,Type[],Microsoft.ML.Probabilistic.Compiler.Reflection.ConversionOptions,IList{Exception})">InferGenericParameters(MethodBase, Type[], ConversionOptions, IList&lt;Exception&gt;)</h4>
+  <div class="markdown level1 summary"><p>Infer type parameters for a method call.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerator&lt;Binding&gt; InferGenericParameters(MethodBase method, Type[] actuals, ConversionOptions conversionOptions, IList&lt;Exception&gt; errors)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">MethodBase</span></td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span>[]</td>
+        <td><span class="parametername">actuals</span></td>
+        <td><p>Types from which to infer type parameters.  actuals.Length == number of method parameters.  actuals[i] may be null to allow any type, or typeof(Nullable) to mean &quot;any nullable type&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.ConversionOptions.html">ConversionOptions</a></td>
+        <td><span class="parametername">conversionOptions</span></td>
+        <td><p>Specifies which conversions are allowed</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">Exception</span>&gt;</td>
+        <td><span class="parametername">errors</span></td>
+        <td><p>A list which collects binding errors.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a>&gt;</td>
+        <td><p>An iterator which yields all possible bindings.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_InferGenericParameters_MethodBase_Type___Microsoft_ML_Probabilistic_Compiler_Reflection_ConversionOptions_IList_Exception___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Because it considers all possible bindings for each argument, this function can
+infer type parameters in cases where the C# 2.0 specification (sec 20.6.4) cannot.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_InferGenericParameters_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.InferGenericParameters*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_InferGenericParameters_Type_Type_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_IList_Exception__System_Int32_System_Boolean_Microsoft_ML_Probabilistic_Compiler_Reflection_ConversionOptions_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.InferGenericParameters(Type,Type,Microsoft.ML.Probabilistic.Compiler.Reflection.Binding,IList{Exception},System.Int32,System.Boolean,Microsoft.ML.Probabilistic.Compiler.Reflection.ConversionOptions)">InferGenericParameters(Type, Type, Binding, IList&lt;Exception&gt;, Int32, Boolean, ConversionOptions)</h4>
+  <div class="markdown level1 summary"><p>Infer type parameter bindings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerator&lt;Binding&gt; InferGenericParameters(Type formal, Type actual, Binding binding, IList&lt;Exception&gt; errors, int position, bool allowSubtype, ConversionOptions conversionOptions)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">formal</span></td>
+        <td><p>The type with parameters to infer.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">actual</span></td>
+        <td><p>A type from which to infer parameters.  May be null to allow any type, or typeof(Nullable) to mean &quot;any nullable type&quot;.  May itself contain type parameters.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">binding</span></td>
+        <td><p>Known bindings, which are taken as fixed.  Conversions[position] must be null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">Exception</span>&gt;</td>
+        <td><span class="parametername">errors</span></td>
+        <td><p>A list which collects binding errors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>If formal corresponds to a method parameter type, this is the index of the method parameter.  Otherwise it is -1 and no conversions are allowed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">allowSubtype</span></td>
+        <td><p>If true, actual can be a subtype of formal (implicit subtype conversions are allowed).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.ConversionOptions.html">ConversionOptions</a></td>
+        <td><span class="parametername">conversionOptions</span></td>
+        <td><p>Specifies which conversions are allowed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a>&gt;</td>
+        <td><p>A stream of all possible bindings which match formal to actual,
+including conversions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_InferGenericParameters_Type_Type_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_IList_Exception__System_Int32_System_Boolean_Microsoft_ML_Probabilistic_Compiler_Reflection_ConversionOptions__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Each element of the stream is the same object as <code data-dev-comment-type="paramref" class="paramref">binding</code>, but modified to (possibly) 
+    include more bindings.  <code data-dev-comment-type="paramref" class="paramref">binding</code> is returned to its original state at the end of the stream.
+</p><p>
+If <code data-dev-comment-type="paramref" class="paramref">formal</code> has no type parameters, then at most one Binding is returned.
+</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_InferGenericParameters_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.InferGenericParameters*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_InferGenericParameters_Type___Type___Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_IList_Exception__System_Int32_System_Int32_System_Boolean_Func_System_Int32_System_Boolean__Microsoft_ML_Probabilistic_Compiler_Reflection_ConversionOptions_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.InferGenericParameters(Type[],Type[],Microsoft.ML.Probabilistic.Compiler.Reflection.Binding,IList{Exception},System.Int32,System.Int32,System.Boolean,Func{System.Int32,System.Boolean},Microsoft.ML.Probabilistic.Compiler.Reflection.ConversionOptions)">InferGenericParameters(Type[], Type[], Binding, IList&lt;Exception&gt;, Int32, Int32, Boolean, Func&lt;Int32, Boolean&gt;, ConversionOptions)</h4>
+  <div class="markdown level1 summary"><p>Infer remaining type parameters for a method call or generic type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerator&lt;Binding&gt; InferGenericParameters(Type[] formals, Type[] actuals, Binding binding, IList&lt;Exception&gt; errors, int start, int position, bool isMethodCall, Func&lt;int, bool&gt; allowSubtype, ConversionOptions conversionOptions)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span>[]</td>
+        <td><span class="parametername">formals</span></td>
+        <td><p>Types with parameters to infer.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span>[]</td>
+        <td><span class="parametername">actuals</span></td>
+        <td><p>The corresponding types from which to infer parameters.  actuals.Length == formals.Length.  actuals[i] may be null to allow any type, or typeof(Nullable) to mean &quot;any nullable type&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">binding</span></td>
+        <td><p>The partial binding inferred from actuals[i &lt; start].
+Will be mutated and returned as elements of the stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">Exception</span>&gt;</td>
+        <td><span class="parametername">errors</span></td>
+        <td><p>A list which collects binding errors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The index into the formals array to begin processing.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>The index into binding.Conversions to place the conversion.  If -1, only null conversions are allowed.  Ignored if isMethodCall is true.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isMethodCall</span></td>
+        <td><p>True if formals correspond to method parameters.  position is always taken equal to start.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">allowSubtype</span></td>
+        <td><p>True if implicit subtype conversions are allowed for type i.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.ConversionOptions.html">ConversionOptions</a></td>
+        <td><span class="parametername">conversionOptions</span></td>
+        <td><p>Specifies which conversions are allowed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a>&gt;</td>
+        <td><p>A stream of all possible bindings which match formals[i] to actuals[i], for all i &gt;= start, including conversions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_InferGenericParameters_Type___Type___Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_IList_Exception__System_Int32_System_Int32_System_Boolean_Func_System_Int32_System_Boolean__Microsoft_ML_Probabilistic_Compiler_Reflection_ConversionOptions__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Each element of the stream is the same object as <code data-dev-comment-type="paramref" class="paramref">binding</code>, but modified to (possibly)
+include more bindings.  <code data-dev-comment-type="paramref" class="paramref">binding</code> is returned to its original state at the end of the stream.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_IntersectTypes_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.IntersectTypes*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_IntersectTypes_Type_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.IntersectTypes(Type,Type)">IntersectTypes(Type, Type)</h4>
+  <div class="markdown level1 summary"><p>Get a type which is the most specific of the input types.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Type IntersectTypes(Type t1, Type t2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">t1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">t2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_PositionString_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.PositionString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_PositionString_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.PositionString(System.Int32)">PositionString(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected static string PositionString(int position)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">position</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ReplaceTypeParameters_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ReplaceTypeParameters*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ReplaceTypeParameters_Type_IDictionary_Type_Type__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ReplaceTypeParameters(Type,IDictionary{Type,Type})">ReplaceTypeParameters(Type, IDictionary&lt;Type, Type&gt;)</h4>
+  <div class="markdown level1 summary"><p>Replace type parameters in a generic type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Type ReplaceTypeParameters(Type type, IDictionary&lt;Type, Type&gt; typeMap)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>A type which may have generic parameters.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;<span class="xref">Type</span>, <span class="xref">Type</span>&gt;</td>
+        <td><span class="parametername">typeMap</span></td>
+        <td><p>A dictionary for mapping types</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><p>A type with possibly fewer generic parameters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_SetTo_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_SetTo_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.SetTo(Microsoft.ML.Probabilistic.Compiler.Reflection.Binding)">SetTo(Binding)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(Binding info)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">info</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ToString_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_ToString" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_TypesAssignableFrom_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.TypesAssignableFrom*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_TypesAssignableFrom_Type_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.TypesAssignableFrom(Type,System.Boolean)">TypesAssignableFrom(Type, Boolean)</h4>
+  <div class="markdown level1 summary"><p>All base classes and interfaces of a given type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;Type&gt; TypesAssignableFrom(Type type, bool includeIList = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>Any non-null type.  May be a type parameter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">includeIList</span></td>
+        <td><p>If true, include IList when <code data-dev-comment-type="paramref" class="paramref">type</code> is an array.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Type</span>&gt;</td>
+        <td><p>All base classes and interfaces of <code data-dev-comment-type="paramref" class="paramref">type</code>, most specific types first.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_op_GreaterThan_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.op_GreaterThan*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_op_GreaterThan_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.op_GreaterThan(Microsoft.ML.Probabilistic.Compiler.Reflection.Binding,Microsoft.ML.Probabilistic.Compiler.Reflection.Binding)">GreaterThan(Binding, Binding)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator&gt;(Binding a, Binding b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_op_LessThan_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.op_LessThan*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_op_LessThan_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.op_LessThan(Microsoft.ML.Probabilistic.Compiler.Reflection.Binding,Microsoft.ML.Probabilistic.Compiler.Reflection.Binding)">LessThan(Binding, Binding)</h4>
+  <div class="markdown level1 summary"><p>True if A is more specific than B.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator &lt;(Binding a, Binding b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.Binding.html">Binding</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if A is more specific than B.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

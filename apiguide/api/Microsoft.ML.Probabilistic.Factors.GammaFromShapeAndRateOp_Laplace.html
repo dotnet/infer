@@ -1,0 +1,649 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GammaFromShapeAndRateOp_Laplace
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GammaFromShapeAndRateOp_Laplace
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace" class="text-break">Class GammaFromShapeAndRateOp_Laplace
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GammaFromShapeAndRate_System_Double_System_Double_">GammaFromShapeAndRate(Double, Double)</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html">GammaFromShapeAndRateOpBase</a></div>
+    <div class="level2"><span class="xref">GammaFromShapeAndRateOp_Laplace</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogAverageFactor_System_Double_System_Double_System_Double_">GammaFromShapeAndRateOpBase.LogAverageFactor(Double, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogEvidenceRatio_System_Double_System_Double_System_Double_">GammaFromShapeAndRateOpBase.LogEvidenceRatio(Double, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.LogAverageFactor(Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_System_Double_">GammaFromShapeAndRateOpBase.LogEvidenceRatio(Gamma, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogAverageFactor_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.LogAverageFactor(Double, Double, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogEvidenceRatio_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.LogEvidenceRatio(Double, Double, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_SampleAverageConditional_System_Double_System_Double_">GammaFromShapeAndRateOpBase.SampleAverageConditional(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_RateAverageConditional_System_Double_System_Double_">GammaFromShapeAndRateOpBase.RateAverageConditional(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_System_Double_">GammaFromShapeAndRateOpBase.LogAverageFactor(Gamma, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.LogAverageFactor(Gamma, Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_">GammaFromShapeAndRateOpBase.LogAverageFactor(Gamma, Gamma, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogAverageFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.LogAverageFactor(Double, Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_LogAverageFactor_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_">GammaFromShapeAndRateOpBase.LogAverageFactor(Double, Gamma, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.SampleAverageConditional(Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_SampleAverageConditionalInit">GammaFromShapeAndRateOpBase.SampleAverageConditionalInit()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_">GammaFromShapeAndRateOpBase.SampleAverageConditional(Gamma, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_RateAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.RateAverageConditional(Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_ShapeAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.ShapeAverageConditional(Gamma, Gamma, Double, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_ShapeAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.ShapeAverageConditional(Double, Gamma, Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_ShapeAverageConditional_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.ShapeAverageConditional(Double, Gamma, Double, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_ShapeAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.ShapeAverageConditional(Gamma, Gamma, Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_AverageLogFactor_System_Double_System_Double_System_Double_">GammaFromShapeAndRateOpBase.AverageLogFactor(Double, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.AverageLogFactor(Gamma, Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_System_Double_">GammaFromShapeAndRateOpBase.AverageLogFactor(Gamma, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_SampleAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.SampleAverageLogarithm(Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_SampleAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_">GammaFromShapeAndRateOpBase.SampleAverageLogarithm(Gamma, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_SampleAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.SampleAverageLogarithm(Double, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_SampleAverageLogarithm_System_Double_System_Double_">GammaFromShapeAndRateOpBase.SampleAverageLogarithm(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_RateAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.RateAverageLogarithm(Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_RateAverageLogarithm_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.RateAverageLogarithm(Double, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_RateAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_">GammaFromShapeAndRateOpBase.RateAverageLogarithm(Gamma, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_RateAverageLogarithm_System_Double_System_Double_">GammaFromShapeAndRateOpBase.RateAverageLogarithm(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_ShapeAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.ShapeAverageLogarithm(Gamma, Gamma, Gamma, Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_CalculateDerivatives_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.CalculateDerivatives(Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_CalculateDerivativesTrapezoid_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.CalculateDerivativesTrapezoid(Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_CalculateDerivativesNaive_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.CalculateDerivativesNaive(Gamma)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOpBase.html#Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_ELogGamma_Microsoft_ML_Probabilistic_Distributions_Gamma_">GammaFromShapeAndRateOpBase.ELogGamma(Gamma)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class GammaFromShapeAndRateOp_Laplace : GammaFromShapeAndRateOpBase</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogAverageFactor(Gamma, Double, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Gamma sample, double shape, Gamma rate, Gamma q)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">shape</span></td>
+        <td><p>Constant value for <code>shape</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td><p>Incoming message from <code>rate</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">q</span></td>
+        <td><p>Buffer <code>q</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample,rate) p(sample,rate) factor(sample,shape,rate))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogEvidenceRatio(Gamma, Double, Gamma, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Gamma sample, double shape, Gamma rate, Gamma to_sample, Gamma q)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">shape</span></td>
+        <td><p>Constant value for <code>shape</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td><p>Incoming message from <code>rate</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_sample</span></td>
+        <td><p>Previous outgoing message to <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">q</span></td>
+        <td><p>Buffer <code>q</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample,rate) p(sample,rate) factor(sample,shape,rate) / sum_sample p(sample) messageTo(sample))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_Q_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.Q*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_Q_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.Q(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma)">Q(Gamma, Double, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>Q</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma Q(Gamma sample, double shape, Gamma rate)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">shape</span></td>
+        <td><p>Constant value for <code>shape</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td><p>Incoming message from <code>rate</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>New value of buffer <code>Q</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_Q_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">rate</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_QInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.QInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_QInit" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.QInit">QInit()</h4>
+  <div class="markdown level1 summary"><p>Initialize the buffer <code>Q</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma QInit()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>Initial value of buffer <code>Q</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_QInit_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_RateAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.RateAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_RateAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.RateAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">RateAverageConditional(Gamma, Double, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>rate</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma RateAverageConditional(Gamma sample, double shape, Gamma rate, Gamma q)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">shape</span></td>
+        <td><p>Constant value for <code>shape</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td><p>Incoming message from <code>rate</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">q</span></td>
+        <td><p>Buffer <code>q</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing EP message to the <code>rate</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_RateAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>rate</code> as the random arguments are varied. The formula is <code>proj[p(rate) sum_(sample) p(sample) factor(sample,shape,rate)]/p(rate)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">rate</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_SampleAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.SampleAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.SampleAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">SampleAverageConditional(Gamma, Double, Gamma, Gamma)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma SampleAverageConditional(Gamma sample, double shape, Gamma rate, Gamma q)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">shape</span></td>
+        <td><p>Constant value for <code>shape</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td><p>Incoming message from <code>rate</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">q</span></td>
+        <td><p>Buffer <code>q</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing EP message to the <code>sample</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOp_Laplace_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>sample</code> as the random arguments are varied. The formula is <code>proj[p(sample) sum_(rate) p(rate) factor(sample,shape,rate)]/p(sample)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">rate</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

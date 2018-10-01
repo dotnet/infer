@@ -1,0 +1,79 @@
+/* Licensed to the .NET Foundation under one or more agreements.
+   The .NET Foundation licenses this file to you under the MIT license.
+   See the LICENSE file in the project root for more information. */
+
+body {
+  font-size: 15px;
+}
+
+.container {
+  width: 100%;
+}
+.sidetoc {
+  width: 280px;
+}
+.sidefilter {
+  width: 280px;
+}
+.article.grid-right {
+  margin-left: 290px;
+}
+.toc .level1 > li {
+  font-weight: normal;
+}
+@media only screen and (max-width: 768px) {
+.article.grid-right {
+    margin-left: 0;
+}
+.sidetoc {
+  width: 100%;
+}
+.sidefilter {
+  width: 100%;
+}
+.article {
+    margin-top: 30px !important;
+}
+.article {
+    margin-top: 120px;
+    margin-bottom: 115px;
+}
+}
+a.navbar-brand {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}
+@media (min-width: 992px) {
+  .sidetoc {
+    width: 280px;
+  }
+  .sidefilter {
+    width: 280px;
+  }
+  .article.grid-right {
+    margin-left: 290px;
+  }
+}
+@media (min-width: 1200px) {
+  .sidetoc {
+    width: 350px;
+  }
+  .sidefilter {
+    width: 350px;
+  }
+  .article.grid-right {
+    margin-left: 360px;
+  }
+}
+@media (min-width: 1200px) {
+  .sidetoc {
+    width: 450px;
+  }
+  .sidefilter {
+    width: 450px;
+  }
+  .article.grid-right {
+    margin-left: 460px;
+  }
+}

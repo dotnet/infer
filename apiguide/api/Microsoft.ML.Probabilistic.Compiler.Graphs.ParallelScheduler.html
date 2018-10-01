@@ -1,0 +1,1049 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ParallelScheduler
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ParallelScheduler
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler" class="text-break">Class ParallelScheduler
+  </h1>
+  <div class="markdown level0 summary"><p>Constructs a schedule for multiprocessor execution given a task graph.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">ParallelScheduler</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Graphs.html">Microsoft.ML.Probabilistic.Compiler.Graphs</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ParallelScheduler : object</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_BuildTreeImbalanceThreshold" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.BuildTreeImbalanceThreshold">BuildTreeImbalanceThreshold</h4>
+  <div class="markdown level1 summary"><p>Lower values speed up scheduling but create more stages.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int BuildTreeImbalanceThreshold</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_FillIdleSlots" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.FillIdleSlots">FillIdleSlots</h4>
+  <div class="markdown level1 summary"><p>If true, each stage is pruned until the remaining nodes have no idle slots when sorted by height.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool FillIdleSlots</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_LoggingAction" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.LoggingAction">LoggingAction</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Action&lt;string&gt; LoggingAction</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_PruningImbalanceThreshold" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.PruningImbalanceThreshold">PruningImbalanceThreshold</h4>
+  <div class="markdown level1 summary"><p>Must be non-negative.  Larger values lead to fewer stages.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int PruningImbalanceThreshold</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_AddEdge_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.AddEdge*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_AddEdge_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.AddEdge(System.Int32,System.Int32)">AddEdge(Int32, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int AddEdge(int source, int target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ContainsEdge_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ContainsEdge*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ContainsEdge_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ContainsEdge(System.Int32,System.Int32)">ContainsEdge(Int32, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ContainsEdge(int source, int target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">target</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ConvertToSchedulePerProcess_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ConvertToSchedulePerProcess*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ConvertToSchedulePerProcess_System_Int32_______" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ConvertToSchedulePerProcess(System.Int32[][][])">ConvertToSchedulePerProcess(Int32[][][])</h4>
+  <div class="markdown level1 summary"><p>Renumbers the nodes in a schedule to be process-local.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int[][][] ConvertToSchedulePerProcess(int[][][] schedulePerThread)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td><span class="parametername">schedulePerThread</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ConvertToSchedulePerProcess_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ConvertToSchedulePerProcess*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ConvertToSchedulePerProcess_System_Int32_______Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_NodeLocation___List_System_Int32_______List_System_Int32_______" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ConvertToSchedulePerProcess(System.Int32[][][],Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.NodeLocation[],List{System.Int32}[][]@,List{System.Int32}[][]@)">ConvertToSchedulePerProcess(Int32[][][], ParallelScheduler.NodeLocation[], out List&lt;Int32&gt;[][], out List&lt;Int32&gt;[][])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void ConvertToSchedulePerProcess(int[][][] schedulePerThread, ParallelScheduler.NodeLocation[] locations, out List&lt;int&gt;[][] nodeIndicesToSend, out List&lt;int&gt;[][] nodeIndicesToReceive)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td><span class="parametername">schedulePerThread</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.NodeLocation.html">ParallelScheduler.NodeLocation</a>[]</td>
+        <td><span class="parametername">locations</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[][]</td>
+        <td><span class="parametername">nodeIndicesToSend</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[][]</td>
+        <td><span class="parametername">nodeIndicesToReceive</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ConvertToSchedulePerThread_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ConvertToSchedulePerThread*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ConvertToSchedulePerThread_IReadOnlyList_IReadOnlyList_IReadOnlyList_System_Int32____System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ConvertToSchedulePerThread(IReadOnlyList{IReadOnlyList{IReadOnlyList{System.Int32}}},System.Int32)">ConvertToSchedulePerThread(IReadOnlyList&lt;IReadOnlyList&lt;IReadOnlyList&lt;Int32&gt;&gt;&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Convert [stage][block][item] into [thread][stage][item]</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int[][][] ConvertToSchedulePerThread(IReadOnlyList&lt;IReadOnlyList&lt;IReadOnlyList&lt;int&gt;&gt;&gt; schedule, int threadCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">IReadOnlyList</span>&lt;<span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
+        <td><span class="parametername">schedule</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">threadCount</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ConvertToSchedulePerThreadFast_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ConvertToSchedulePerThreadFast*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ConvertToSchedulePerThreadFast_IReadOnlyList_IReadOnlyList_IReadOnlyList_System_Int32____System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ConvertToSchedulePerThreadFast(IReadOnlyList{IReadOnlyList{IReadOnlyList{System.Int32}}},System.Int32)">ConvertToSchedulePerThreadFast(IReadOnlyList&lt;IReadOnlyList&lt;IReadOnlyList&lt;Int32&gt;&gt;&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Convert [stage][block][item] into [thread][block][item]</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int[][][] ConvertToSchedulePerThreadFast(IReadOnlyList&lt;IReadOnlyList&lt;IReadOnlyList&lt;int&gt;&gt;&gt; schedule, int threadCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">IReadOnlyList</span>&lt;<span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
+        <td><span class="parametername">schedule</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">threadCount</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_CreateGraph_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.CreateGraph*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_CreateGraph_IReadOnlyList_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.CreateGraph(IReadOnlyList{System.Int32[]})">CreateGraph(IReadOnlyList&lt;Int32[]&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CreateGraph(IReadOnlyList&lt;int[]&gt; variablesUsedByNode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]&gt;</td>
+        <td><span class="parametername">variablesUsedByNode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetDistributedCommunicationInfos_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetDistributedCommunicationInfos*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetDistributedCommunicationInfos_System_Int32_______" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetDistributedCommunicationInfos(System.Int32[][][])">GetDistributedCommunicationInfos(Int32[][][])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributedCommunicationInfo[] GetDistributedCommunicationInfos(int[][][] schedulePerProcess)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td><span class="parametername">schedulePerProcess</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Graphs.DistributedCommunicationInfo.html">DistributedCommunicationInfo</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetDistributedCommunicationInfos_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetDistributedCommunicationInfos*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetDistributedCommunicationInfos_System_Int32_______IReadOnlyList_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetDistributedCommunicationInfos(System.Int32[][][],IReadOnlyList{System.Int32[]})">GetDistributedCommunicationInfos(Int32[][][], IReadOnlyList&lt;Int32[]&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributedCommunicationInfo[] GetDistributedCommunicationInfos(int[][][] schedulePerProcess, IReadOnlyList&lt;int[]&gt; variablesUsedByNode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td><span class="parametername">schedulePerProcess</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]&gt;</td>
+        <td><span class="parametername">variablesUsedByNode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Graphs.DistributedCommunicationInfo.html">DistributedCommunicationInfo</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetDistributedCommunicationInfos_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetDistributedCommunicationInfos*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetDistributedCommunicationInfos_System_Int32_______IReadOnlyList_System_Int32____Dictionary_System_Int32_System_Int32_____" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetDistributedCommunicationInfos(System.Int32[][][],IReadOnlyList{System.Int32[]},Dictionary{System.Int32,System.Int32}[]@)">GetDistributedCommunicationInfos(Int32[][][], IReadOnlyList&lt;Int32[]&gt;, out Dictionary&lt;Int32, Int32&gt;[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributedCommunicationInfo[] GetDistributedCommunicationInfos(int[][][] schedulePerProcess, IReadOnlyList&lt;int[]&gt; variablesUsedByNode, out Dictionary&lt;int, int&gt;[] processLocalIndexOfArrayIndexForProcess)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td><span class="parametername">schedulePerProcess</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]&gt;</td>
+        <td><span class="parametername">variablesUsedByNode</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[]</td>
+        <td><span class="parametername">processLocalIndexOfArrayIndexForProcess</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Graphs.DistributedCommunicationInfo.html">DistributedCommunicationInfo</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetHeights_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetHeights*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetHeights" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetHeights">GetHeights()</h4>
+  <div class="markdown level1 summary"><p>Get an array where array[node] is the height of a node in the dependency graph.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int[] GetHeights()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetMedianMinBlockSize_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetMedianMinBlockSize*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetMedianMinBlockSize_System_Int32_______" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetMedianMinBlockSize(System.Int32[][][])">GetMedianMinBlockSize(Int32[][][])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GetMedianMinBlockSize(int[][][] schedulePerThread)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td><span class="parametername">schedulePerThread</span></td>
+        <td><p>[process][stageIndex][indexInBlock]</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetMedianMinBlockSize_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetMedianMinBlockSize*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetMedianMinBlockSize_System_Int32_________System_Double__" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetMedianMinBlockSize(System.Int32[][][][],System.Double@)">GetMedianMinBlockSize(Int32[][][][], out Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GetMedianMinBlockSize(int[][][][] schedulePerThreadInProcess, out double medianThreadStages)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][][]</td>
+        <td><span class="parametername">schedulePerThreadInProcess</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">medianThreadStages</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetSchedulePerThreadInProcess_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetSchedulePerThreadInProcess*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetSchedulePerThreadInProcess_System_Int32_____IReadOnlyList_System_Int32____System_Int32_Action_System_String__" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetSchedulePerThreadInProcess(System.Int32[][],IReadOnlyList{System.Int32[]},System.Int32,Action{System.String})">GetSchedulePerThreadInProcess(Int32[][], IReadOnlyList&lt;Int32[]&gt;, Int32, Action&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int[][][][] GetSchedulePerThreadInProcess(int[][] scheduleForProcess, IReadOnlyList&lt;int[]&gt; variablesUsedByNodeInProcess, int numThreads, Action&lt;string&gt; loggingAction = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][]</td>
+        <td><span class="parametername">scheduleForProcess</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]&gt;</td>
+        <td><span class="parametername">variablesUsedByNodeInProcess</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">numThreads</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="parametername">loggingAction</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetScheduleWithBarriers_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetScheduleWithBarriers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetScheduleWithBarriers_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetScheduleWithBarriers(System.Int32)">GetScheduleWithBarriers(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;List&lt;List&lt;int&gt;&gt;&gt; GetScheduleWithBarriers(int degreeOfParallelism)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">degreeOfParallelism</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">List</span>&lt;<span class="xref">List</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetScheduleWithBarriers1_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetScheduleWithBarriers1*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_GetScheduleWithBarriers1_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.GetScheduleWithBarriers1(System.Int32)">GetScheduleWithBarriers1(Int32)</h4>
+  <div class="markdown level1 summary"><p>Get a schedule where all blocks have size 1</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;List&lt;List&lt;int&gt;&gt;&gt; GetScheduleWithBarriers1(int degreeOfParallelism)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">degreeOfParallelism</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">List</span>&lt;<span class="xref">List</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
+        <td><p>[stage][block][item]</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_NewNode_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.NewNode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_NewNode" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.NewNode">NewNode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int NewNode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ScheduleHasConflict_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ScheduleHasConflict*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_ScheduleHasConflict_System_Int32_______IReadOnlyList_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.ScheduleHasConflict(System.Int32[][][],IReadOnlyList{System.Int32[]})">ScheduleHasConflict(Int32[][][], IReadOnlyList&lt;Int32[]&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool ScheduleHasConflict(int[][][] schedulePerThread, IReadOnlyList&lt;int[]&gt; variablesUsedByNode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td><span class="parametername">schedulePerThread</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]&gt;</td>
+        <td><span class="parametername">variablesUsedByNode</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_WriteSchedule_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.WriteSchedule*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_WriteSchedule_IEnumerable_IEnumerable_IReadOnlyCollection_System_Int32____System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.WriteSchedule(IEnumerable{IEnumerable{IReadOnlyCollection{System.Int32}}},System.Boolean)">WriteSchedule(IEnumerable&lt;IEnumerable&lt;IReadOnlyCollection&lt;Int32&gt;&gt;&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void WriteSchedule(IEnumerable&lt;IEnumerable&lt;IReadOnlyCollection&lt;int&gt;&gt;&gt; schedule, bool blockCounts = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IEnumerable</span>&lt;<span class="xref">IReadOnlyCollection</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
+        <td><span class="parametername">schedule</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">blockCounts</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_WriteStage_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.WriteStage*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_WriteStage_IEnumerable_IReadOnlyCollection_System_Int32___System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.WriteStage(IEnumerable{IReadOnlyCollection{System.Int32}},System.Boolean)">WriteStage(IEnumerable&lt;IReadOnlyCollection&lt;Int32&gt;&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void WriteStage(IEnumerable&lt;IReadOnlyCollection&lt;int&gt;&gt; stage, bool blockCounts = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IReadOnlyCollection</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><span class="parametername">stage</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">blockCounts</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_WriteThreadSchedule_" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.WriteThreadSchedule*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Graphs_ParallelScheduler_WriteThreadSchedule_System_Int32_______" data-uid="Microsoft.ML.Probabilistic.Compiler.Graphs.ParallelScheduler.WriteThreadSchedule(System.Int32[][][])">WriteThreadSchedule(Int32[][][])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void WriteThreadSchedule(int[][][] blocksOfThread)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][][]</td>
+        <td><span class="parametername">blocksOfThread</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

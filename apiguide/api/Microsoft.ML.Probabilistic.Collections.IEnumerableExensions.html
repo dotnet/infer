@@ -1,0 +1,520 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class IEnumerableExensions
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class IEnumerableExensions
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions" class="text-break">Class IEnumerableExensions
+  </h1>
+  <div class="markdown level0 summary"><p>Provides extension methods for IEnumerable that support sparse collections.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">IEnumerableExensions</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Collections.html">Microsoft.ML.Probabilistic.Collections</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class IEnumerableExensions : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableReduce_" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.EnumerableReduce*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableReduce__2_IEnumerable___0____1_Func___1___0___1__Func___1___0_System_Int32___1__" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.EnumerableReduce``2(IEnumerable{``0},``1,Func{``1,``0,``1},Func{``1,``0,System.Int32,``1})">EnumerableReduce&lt;T, TRes&gt;(IEnumerable&lt;T&gt;, TRes, Func&lt;TRes, T, TRes&gt;, Func&lt;TRes, T, Int32, TRes&gt;)</h4>
+  <div class="markdown level1 summary"><p>Reduces across an enumerable, supporting sparse enumerables</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TRes EnumerableReduce&lt;T, TRes&gt;(this IEnumerable&lt;T&gt; source, TRes initial, Func&lt;TRes, T, TRes&gt; fun, Func&lt;TRes, T, int, TRes&gt; repeatedFun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>This collection</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TRes</span></td>
+        <td><span class="parametername">initial</span></td>
+        <td><p>Initial value for reduction</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TRes, T, TRes&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>The function</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TRes, T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, TRes&gt;</td>
+        <td><span class="parametername">repeatedFun</span></td>
+        <td><p>The function when the same value enters the reduction several times.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TRes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of this collection</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRes</span></td>
+        <td><p>Type of result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableSum_" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.EnumerableSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableSum__1_IEnumerable___0__Func___0_System_Double__" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.EnumerableSum``1(IEnumerable{``0},Func{``0,System.Double})">EnumerableSum&lt;T&gt;(IEnumerable&lt;T&gt;, Func&lt;T, Double&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double EnumerableSum&lt;T&gt;(this IEnumerable&lt;T&gt; source, Func&lt;T, double&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip_" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.ListZip*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__3_IList___0__IEnumerable___1__Func___0___1___2__" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.ListZip``3(IList{``0},IEnumerable{``1},Func{``0,``1,``2})">ListZip&lt;TFirst, TSecond, TResult&gt;(IList&lt;TFirst&gt;, IEnumerable&lt;TSecond&gt;, Func&lt;TFirst, TSecond, TResult&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IList&lt;TResult&gt; ListZip&lt;TFirst, TSecond, TResult&gt;(this IList&lt;TFirst&gt; first, IEnumerable&lt;TSecond&gt; second, Func&lt;TFirst, TSecond, TResult&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TFirst&gt;</td>
+        <td><span class="parametername">first</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TSecond&gt;</td>
+        <td><span class="parametername">second</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TFirst, TSecond, TResult&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TResult&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TFirst</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSecond</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResult</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip_" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.ListZip*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__4_IList___0__IEnumerable___1__IEnumerable___2__Func___0___1___2___3__" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.ListZip``4(IList{``0},IEnumerable{``1},IEnumerable{``2},Func{``0,``1,``2,``3})">ListZip&lt;TFirst, TSecond, TThird, TResult&gt;(IList&lt;TFirst&gt;, IEnumerable&lt;TSecond&gt;, IEnumerable&lt;TThird&gt;, Func&lt;TFirst, TSecond, TThird, TResult&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IList&lt;TResult&gt; ListZip&lt;TFirst, TSecond, TThird, TResult&gt;(this IList&lt;TFirst&gt; first, IEnumerable&lt;TSecond&gt; second, IEnumerable&lt;TThird&gt; third, Func&lt;TFirst, TSecond, TThird, TResult&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TFirst&gt;</td>
+        <td><span class="parametername">first</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TSecond&gt;</td>
+        <td><span class="parametername">second</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TThird&gt;</td>
+        <td><span class="parametername">third</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TFirst, TSecond, TThird, TResult&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TResult&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TFirst</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSecond</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TThird</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResult</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip_" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.ListZip*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__5_IList___0__IList___1__IList___2__IList___3__Func___0___1___2___3___4__" data-uid="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.ListZip``5(IList{``0},IList{``1},IList{``2},IList{``3},Func{``0,``1,``2,``3,``4})">ListZip&lt;TFirst, TSecond, TThird, TFourth, TResult&gt;(IList&lt;TFirst&gt;, IList&lt;TSecond&gt;, IList&lt;TThird&gt;, IList&lt;TFourth&gt;, Func&lt;TFirst, TSecond, TThird, TFourth, TResult&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IList&lt;TResult&gt; ListZip&lt;TFirst, TSecond, TThird, TFourth, TResult&gt;(this IList&lt;TFirst&gt; first, IList&lt;TSecond&gt; second, IList&lt;TThird&gt; third, IList&lt;TFourth&gt; fourth, Func&lt;TFirst, TSecond, TThird, TFourth, TResult&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TFirst&gt;</td>
+        <td><span class="parametername">first</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TSecond&gt;</td>
+        <td><span class="parametername">second</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TThird&gt;</td>
+        <td><span class="parametername">third</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TFourth&gt;</td>
+        <td><span class="parametername">fourth</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TFirst, TSecond, TThird, TFourth, TResult&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TResult&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TFirst</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSecond</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TThird</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFourth</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResult</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

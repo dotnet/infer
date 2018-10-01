@@ -1,0 +1,505 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DiscreteEnum&lt;TEnum&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DiscreteEnum&lt;TEnum&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum`1">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum`1" class="text-break">Class DiscreteEnum&lt;TEnum&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>A discrete distribution over the values of an enum.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html">GenericDiscreteBase</a>&lt;TEnum, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div class="level2"><span class="xref">DiscreteEnum&lt;TEnum&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;TEnum&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;TEnum&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;TEnum&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSumExact-1.html">SettableToWeightedSumExact</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum</a>&lt;TEnum&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;TEnum&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_disc">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.disc</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Dimension">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.Dimension</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Uniform">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.Uniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromDiscrete_Microsoft_ML_Probabilistic_Distributions_Discrete_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.FromDiscrete(Discrete)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromProbs_System_Double___">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.FromProbs(Double[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromVector_Microsoft_ML_Probabilistic_Math_Vector_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.FromVector(Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRange__0__0_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.UniformInRange(TEnum, TEnum)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRanges__0___">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.UniformInRanges(TEnum[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRanges_IEnumerable__0__">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.UniformInRanges(IEnumerable&lt;TEnum&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformOver__0___">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.UniformOver(TEnum[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformOver_IEnumerable__0__">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.UniformOver(IEnumerable&lt;TEnum&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_PointMass__0_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.PointMass(TEnum)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogProb__0_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.GetLogProb(TEnum)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Item__0_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.Item[TEnum]</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetWorkspace">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.GetWorkspace()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetInternalDiscrete">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.GetInternalDiscrete()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetProbs">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.GetProbs()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogProbs">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.GetLogProbs()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetMode">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.GetMode()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetProbs_Microsoft_ML_Probabilistic_Math_Vector_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.SetProbs(Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Clone">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.Clone()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Point">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.Point</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IsPointMass">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.IsPointMass</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IsUniform">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.IsUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToUniform">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.SetToUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IsPartialUniform">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.IsPartialUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToPartialUniform">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.SetToPartialUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToPartialUniformOf__1_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.SetToPartialUniformOf(DiscreteEnum&lt;TEnum&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_MaxDiff_System_Object_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.MaxDiff(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ConvertFromInt_System_Int32_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.ConvertFromInt(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ConvertToInt__0_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.ConvertToInt(TEnum)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString__0_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.ToString(TEnum)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Microsoft_ML_Probabilistic_Distributions_CanGetLogProb_T__GetLogProb__0_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.CanGetLogProb&lt;TEnum&gt;.GetLogProb(TEnum)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetTo__1_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.SetTo(DiscreteEnum&lt;TEnum&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToProduct__1__1_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.SetToProduct(DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToRatio__1__1_System_Boolean_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.SetToRatio(DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToPower__1_System_Double_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.SetToPower(DiscreteEnum&lt;TEnum&gt;, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToSum_System_Double__1_System_Double__1_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.SetToSum(Double, DiscreteEnum&lt;TEnum&gt;, Double, DiscreteEnum&lt;TEnum&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogAverageOf__1_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.GetLogAverageOf(DiscreteEnum&lt;TEnum&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogAverageOfPower__1_System_Double_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.GetLogAverageOfPower(DiscreteEnum&lt;TEnum&gt;, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetAverageLog__1_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.GetAverageLog(DiscreteEnum&lt;TEnum&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ValueRange">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.ValueRange</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IndexRange">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.IndexRange</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString_System_String_System_String_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.ToString(String, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString_System_String_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.ToString(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Sample">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.Sample()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Sample__0_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.Sample(TEnum)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Equals_System_Object_">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetHashCode">GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;.GetHashCode()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DiscreteEnum&lt;TEnum&gt; : GenericDiscreteBase&lt;TEnum, DiscreteEnum&lt;TEnum&gt;&gt;, IDistribution&lt;TEnum&gt;, ICloneable, HasPoint&lt;TEnum&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;TEnum&gt;, SettableTo&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToProduct&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToProduct&lt;DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;&gt;, SettableToRatio&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToRatio&lt;DiscreteEnum&lt;TEnum&gt;, DiscreteEnum&lt;TEnum&gt;&gt;, SettableToPower&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToWeightedSumExact&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToWeightedSum&lt;DiscreteEnum&lt;TEnum&gt;&gt;, SettableToPartialUniform&lt;DiscreteEnum&lt;TEnum&gt;&gt;, CanGetLogAverageOf&lt;DiscreteEnum&lt;TEnum&gt;&gt;, CanGetLogAverageOfPower&lt;DiscreteEnum&lt;TEnum&gt;&gt;, CanGetAverageLog&lt;DiscreteEnum&lt;TEnum&gt;&gt;, Sampleable&lt;TEnum&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TEnum</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum`1.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1__ctor" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum`1.#ctor">DiscreteEnum()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over the enum values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DiscreteEnum()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum`1.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1__ctor_System_Double___" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum`1.#ctor(System.Double[])">DiscreteEnum(Double[])</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution over the enum values using the specified probs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DiscreteEnum(params double[] probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">probs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1_ConvertFromInt_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum`1.ConvertFromInt*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1_ConvertFromInt_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum`1.ConvertFromInt(System.Int32)">ConvertFromInt(Int32)</h4>
+  <div class="markdown level1 summary"><p>Converts from an integer to an enum value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override TEnum ConvertFromInt(int i)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">i</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEnum</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase&lt;TEnum, Microsoft.ML.Probabilistic.Distributions.DiscreteEnum&lt;TEnum&gt;&gt;.ConvertFromInt(System.Int32)</span></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1_ConvertToInt_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum`1.ConvertToInt*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteEnum_1_ConvertToInt__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum`1.ConvertToInt(`0)">ConvertToInt(TEnum)</h4>
+  <div class="markdown level1 summary"><p>Converts the enum value to an integer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int ConvertToInt(TEnum value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEnum</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase&lt;TEnum, Microsoft.ML.Probabilistic.Distributions.DiscreteEnum&lt;TEnum&gt;&gt;.ConvertToInt(TEnum)</span></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSumExact-1.html">SettableToWeightedSumExact&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform&lt;TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1531 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ReplicateGibbsOp2&lt;T&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ReplicateGibbsOp2&lt;T&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1" class="text-break">Class ReplicateGibbsOp2&lt;T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_ReplicateWithMarginalGibbs__1___0_System_Int32_System_Int32_System_Int32___0____0____0__">ReplicateWithMarginalGibbs&lt;T&gt;(T, Int32, Int32, Int32, out T, out T, out T)</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">ReplicateGibbsOp2&lt;T&gt;</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class ReplicateGibbsOp2&lt;T&gt; : object</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_Conditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.Conditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_Conditional__1__0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.Conditional``1(`0,``0)">Conditional&lt;TDist&gt;(T, TDist)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>conditional</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDist Conditional&lt;TDist&gt;(T Def, TDist result)
+    where TDist : HasPoint&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">Def</span></td>
+        <td><p>Incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_Conditional__1__0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_Conditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.Conditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_Conditional__1_IList___0____0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.Conditional``1(IList{``0},``0,``0)">Conditional&lt;TDist&gt;(IList&lt;TDist&gt;, TDist, TDist)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>conditional</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDist Conditional&lt;TDist&gt;(IList&lt;TDist&gt; Uses, TDist Def, TDist result)
+    where TDist : SettableTo&lt;TDist&gt;, SettableToProduct&lt;TDist&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TDist&gt;</td>
+        <td><span class="parametername">Uses</span></td>
+        <td><p>Incoming message from <code>Uses</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">Def</span></td>
+        <td><p>Incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_Conditional__1_IList___0____0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalAcc_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.ConditionalAcc*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalAcc__1___0_Microsoft_ML_Probabilistic_Distributions_Accumulator___0__" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.ConditionalAcc``1(``0,Microsoft.ML.Probabilistic.Distributions.Accumulator{``0})">ConditionalAcc&lt;TDist&gt;(TDist, Accumulator&lt;TDist&gt;)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>conditionalAcc</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Accumulator&lt;TDist&gt; ConditionalAcc&lt;TDist&gt;(TDist conditional, Accumulator&lt;TDist&gt; conditionalAcc)
+    where TDist : ICloneable</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">conditional</span></td>
+        <td><p>Buffer <code>conditional</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;TDist&gt;</td>
+        <td><span class="parametername">conditionalAcc</span></td>
+        <td><p>Buffer <code>conditionalAcc</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;TDist&gt;</td>
+        <td><p>New value of buffer <code>conditionalAcc</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalAcc__1___0_Microsoft_ML_Probabilistic_Distributions_Accumulator___0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalAccInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.ConditionalAccInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalAccInit__1_ICollection___0__System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.ConditionalAccInit``1(ICollection{``0},System.Int32,System.Int32)">ConditionalAccInit&lt;TDist&gt;(ICollection&lt;TDist&gt;, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initialize the buffer <code>conditionalAcc</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Accumulator&lt;TDist&gt; ConditionalAccInit&lt;TDist&gt;(ICollection&lt;TDist&gt; to_conditionals, int burnIn, int thin)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;TDist&gt;</td>
+        <td><span class="parametername">to_conditionals</span></td>
+        <td><p>Previous outgoing message to <code>conditionals</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">burnIn</span></td>
+        <td><p>Constant value for <code>burnIn</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">thin</span></td>
+        <td><p>Constant value for <code>thin</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;TDist&gt;</td>
+        <td><p>Initial value of buffer <code>conditionalAcc</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalAccInit__1_ICollection___0__System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.ConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalInit__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.ConditionalInit``1(``0)">ConditionalInit&lt;TDist&gt;(TDist)</h4>
+  <div class="markdown level1 summary"><p>Initialize the buffer <code>conditional</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDist ConditionalInit&lt;TDist&gt;(TDist to_marginal)
+    where TDist : ICloneable</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">to_marginal</span></td>
+        <td><p>Previous outgoing message to <code>marginal</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><p>Initial value of buffer <code>conditional</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalInit__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalsGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.ConditionalsGibbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalsGibbs__2_Microsoft_ML_Probabilistic_Distributions_Accumulator___0____1_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.ConditionalsGibbs``2(Microsoft.ML.Probabilistic.Distributions.Accumulator{``0},``1)">ConditionalsGibbs&lt;TDist, TDistList&gt;(Accumulator&lt;TDist&gt;, TDistList)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDistList ConditionalsGibbs&lt;TDist, TDistList&gt;(Accumulator&lt;TDist&gt; conditionalAcc, TDistList result)
+    where TDistList : ICollection&lt;TDist&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;TDist&gt;</td>
+        <td><span class="parametername">conditionalAcc</span></td>
+        <td><p>Buffer <code>conditionalAcc</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDistList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_ConditionalsGibbs__2_Microsoft_ML_Probabilistic_Distributions_Accumulator___0____1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_DefGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.DefGibbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_DefGibbs__1___0__0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.DefGibbs``1(``0,`0)">DefGibbs&lt;TDist&gt;(TDist, T)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T DefGibbs&lt;TDist&gt;(TDist def, T sample)
+    where TDist : IDistribution&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">def</span></td>
+        <td><p>Incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Buffer <code>sample</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_DefGibbs__1___0__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_DefGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.DefGibbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_DefGibbs__1_IList___0____0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.DefGibbs``1(IList{``0},``0)">DefGibbs&lt;TDist&gt;(IList&lt;TDist&gt;, TDist)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDist DefGibbs&lt;TDist&gt;(IList&lt;TDist&gt; Uses, TDist result)
+    where TDist : IDistribution&lt;T&gt;, Sampleable&lt;T&gt;, SettableTo&lt;TDist&gt;, SettableToProduct&lt;TDist&gt;, SettableToRatio&lt;TDist&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TDist&gt;</td>
+        <td><span class="parametername">Uses</span></td>
+        <td><p>Incoming message from <code>Uses</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_DefGibbs__1_IList___0____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Uses</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_GibbsEvidence_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.GibbsEvidence*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_GibbsEvidence__1_IList___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.GibbsEvidence``1(IList{``0},`0)">GibbsEvidence&lt;TDist&gt;(IList&lt;TDist&gt;, T)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GibbsEvidence&lt;TDist&gt;(IList&lt;TDist&gt; Uses, T Def)
+    where TDist : IDistribution&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;TDist&gt;</td>
+        <td><span class="parametername">Uses</span></td>
+        <td><p>Incoming message from <code>Uses</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">Def</span></td>
+        <td><p>Incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_GibbsEvidence__1_IList___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_MarginalEstimator_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.MarginalEstimator*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_MarginalEstimator__2___0___1_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.MarginalEstimator``2(``0,``1)">MarginalEstimator&lt;TDist, TAcc&gt;(TDist, TAcc)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>marginalEstimator</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TAcc MarginalEstimator&lt;TDist, TAcc&gt;(TDist conditional, TAcc marginalEstimator)
+    where TAcc : Accumulator&lt;TDist&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">conditional</span></td>
+        <td><p>Buffer <code>conditional</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TAcc</span></td>
+        <td><span class="parametername">marginalEstimator</span></td>
+        <td><p>Buffer <code>marginalEstimator</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TAcc</span></td>
+        <td><p>New value of buffer <code>marginalEstimator</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TAcc</span></td>
+        <td><p>The type of the marginal estimator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_MarginalEstimator__2___0___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_MarginalEstimatorInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.MarginalEstimatorInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_MarginalEstimatorInit__1___0_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.MarginalEstimatorInit``1(``0,System.Int32)">MarginalEstimatorInit&lt;TDist&gt;(TDist, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initialize the buffer <code>marginalEstimator</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static BurnInAccumulator&lt;TDist&gt; MarginalEstimatorInit&lt;TDist&gt;(TDist to_marginal, int burnIn)
+    where TDist : IDistribution&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">to_marginal</span></td>
+        <td><p>Previous outgoing message to <code>marginal</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">burnIn</span></td>
+        <td><p>Constant value for <code>burnIn</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.BurnInAccumulator-1.html">BurnInAccumulator</a>&lt;TDist&gt;</td>
+        <td><p>Initial value of buffer <code>marginalEstimator</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_MarginalEstimatorInit__1___0_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_MarginalGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.MarginalGibbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_MarginalGibbs__1_Microsoft_ML_Probabilistic_Distributions_BurnInAccumulator___0____0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.MarginalGibbs``1(Microsoft.ML.Probabilistic.Distributions.BurnInAccumulator{``0},``0)">MarginalGibbs&lt;TDist&gt;(BurnInAccumulator&lt;TDist&gt;, TDist)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDist MarginalGibbs&lt;TDist&gt;(BurnInAccumulator&lt;TDist&gt; marginalEstimator, TDist result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.BurnInAccumulator-1.html">BurnInAccumulator</a>&lt;TDist&gt;</td>
+        <td><span class="parametername">marginalEstimator</span></td>
+        <td><p>Buffer <code>marginalEstimator</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_MarginalGibbs__1_Microsoft_ML_Probabilistic_Distributions_BurnInAccumulator___0____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_Sample_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_Sample__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.Sample``1(``0,``0)">Sample&lt;TDist&gt;(TDist, TDist)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T Sample&lt;TDist&gt;(TDist to_marginal, TDist conditional)
+    where TDist : IDistribution&lt;T&gt;, Sampleable&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">to_marginal</span></td>
+        <td><p>Previous outgoing message to <code>marginal</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">conditional</span></td>
+        <td><p>Buffer <code>conditional</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>New value of buffer <code>sample</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_Sample__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_SampleAcc_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.SampleAcc*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_SampleAcc__0_Microsoft_ML_Probabilistic_Distributions_Accumulator__0__" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.SampleAcc(`0,Microsoft.ML.Probabilistic.Distributions.Accumulator{`0})">SampleAcc(T, Accumulator&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>sampleAcc</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Accumulator&lt;T&gt; SampleAcc(T sample, Accumulator&lt;T&gt; sampleAcc)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Buffer <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;T&gt;</td>
+        <td><span class="parametername">sampleAcc</span></td>
+        <td><p>Buffer <code>sampleAcc</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;T&gt;</td>
+        <td><p>New value of buffer <code>sampleAcc</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_SampleAcc__0_Microsoft_ML_Probabilistic_Distributions_Accumulator__0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_SampleAccInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.SampleAccInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_SampleAccInit_ICollection__0__System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.SampleAccInit(ICollection{`0},System.Int32,System.Int32)">SampleAccInit(ICollection&lt;T&gt;, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Initialize the buffer <code>sampleAcc</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Accumulator&lt;T&gt; SampleAccInit(ICollection&lt;T&gt; to_samples, int burnIn, int thin)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;T&gt;</td>
+        <td><span class="parametername">to_samples</span></td>
+        <td><p>Previous outgoing message to <code>samples</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">burnIn</span></td>
+        <td><p>Constant value for <code>burnIn</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">thin</span></td>
+        <td><p>Constant value for <code>thin</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;T&gt;</td>
+        <td><p>Initial value of buffer <code>sampleAcc</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_SampleAccInit_ICollection__0__System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_SamplesGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.SamplesGibbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_SamplesGibbs__1_Microsoft_ML_Probabilistic_Distributions_Accumulator__0____0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.SamplesGibbs``1(Microsoft.ML.Probabilistic.Distributions.Accumulator{`0},``0)">SamplesGibbs&lt;TList&gt;(Accumulator&lt;T&gt;, TList)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TList SamplesGibbs&lt;TList&gt;(Accumulator&lt;T&gt; sampleAcc, TList result)
+    where TList : ICollection&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;T&gt;</td>
+        <td><span class="parametername">sampleAcc</span></td>
+        <td><p>Buffer <code>sampleAcc</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_SamplesGibbs__1_Microsoft_ML_Probabilistic_Distributions_Accumulator__0____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.UsesGibbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbs__0_System_Int32__0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.UsesGibbs(`0,System.Int32,`0)">UsesGibbs(T, Int32, T)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T UsesGibbs(T def, int resultIndex, T result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">def</span></td>
+        <td><p>Incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">resultIndex</span></td>
+        <td><p>Index of the <code>Uses</code> for which a message is desired.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbs__0_System_Int32__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.UsesGibbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbs__1___0__0_System_Int32__0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.UsesGibbs``1(``0,`0,System.Int32,`0)">UsesGibbs&lt;TDist&gt;(TDist, T, Int32, T)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T UsesGibbs&lt;TDist&gt;(TDist def, T sample, int resultIndex, T result)
+    where TDist : IDistribution&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">def</span></td>
+        <td><p>Incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Buffer <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">resultIndex</span></td>
+        <td><p>Index of the <code>Uses</code> for which a message is desired.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbs__1___0__0_System_Int32__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbs_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.UsesGibbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbs__1_ICollection___0____0_System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.UsesGibbs``1(ICollection{``0},``0,System.Int32,``0)">UsesGibbs&lt;TDist&gt;(ICollection&lt;TDist&gt;, TDist, Int32, TDist)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDist UsesGibbs&lt;TDist&gt;(ICollection&lt;TDist&gt; Uses, TDist Def, int resultIndex, TDist result)
+    where TDist : IDistribution&lt;T&gt;, Sampleable&lt;T&gt;, SettableTo&lt;TDist&gt;, SettableToProduct&lt;TDist&gt;, SettableToRatio&lt;TDist&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;TDist&gt;</td>
+        <td><span class="parametername">Uses</span></td>
+        <td><p>Incoming message from <code>Uses</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">Def</span></td>
+        <td><p>Incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">resultIndex</span></td>
+        <td><p>Index of the <code>Uses</code> for which a message is desired.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbs__1_ICollection___0____0_System_Int32___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbsInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.UsesGibbsInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbsInit__1___0_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.ReplicateGibbsOp2`1.UsesGibbsInit``1(``0,System.Int32)">UsesGibbsInit&lt;TDist&gt;(TDist, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDist UsesGibbsInit&lt;TDist&gt;(TDist Def, int resultIndex)
+    where TDist : ICloneable</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">Def</span></td>
+        <td><p>Incoming message from <code>Def</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">resultIndex</span></td>
+        <td><p>Index of the <code>Uses</code> for which a message is desired.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The type of the distribution over the replicated variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ReplicateGibbsOp2_1_UsesGibbsInit__1___0_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

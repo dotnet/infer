@@ -1,0 +1,771 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class IListExtensions
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class IListExtensions
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Collections_IListExtensions" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions" class="text-break">Class IListExtensions
+  </h1>
+  <div class="markdown level0 summary"><p>Provides extension methods for IList that support sparse lists.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">IListExtensions</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Collections.html">Microsoft.ML.Probabilistic.Collections</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class IListExtensions : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_AsReadOnly_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.AsReadOnly*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_AsReadOnly__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.AsReadOnly``1(IList{``0})">AsReadOnly&lt;T&gt;(IList&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IReadOnlyList&lt;T&gt; AsReadOnly&lt;T&gt;(this IList&lt;T&gt; list)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IReadOnlyList</span>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_Inner_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.Inner*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_Inner_IList_System_Int32__IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.Inner(IList{System.Int32},IList{System.Double})">Inner(IList&lt;Int32&gt;, IList&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes the inner product between an integer list and a double list of the same size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Inner(this IList&lt;int&gt; source, IList&lt;double&gt; that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_IsSparse_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.IsSparse*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_IsSparse__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.IsSparse``1(IList{``0})">IsSparse&lt;T&gt;(IList&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns true if and only if this list is sparse</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsSparse&lt;T&gt;(this IList&lt;T&gt; source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The list</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of this list</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ListReduce_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ListReduce*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ListReduce__2_IList___0____1_Func___1___0___1__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ListReduce``2(IList{``0},``1,Func{``1,``0,``1})">ListReduce&lt;T, TRes&gt;(IList&lt;T&gt;, TRes, Func&lt;TRes, T, TRes&gt;)</h4>
+  <div class="markdown level1 summary"><p>Reduces across a list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TRes ListReduce&lt;T, TRes&gt;(this IList&lt;T&gt; source, TRes initial, Func&lt;TRes, T, TRes&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>This list</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TRes</span></td>
+        <td><span class="parametername">initial</span></td>
+        <td><p>Initial value for reduction</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TRes, T, TRes&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>The function</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TRes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of this list</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRes</span></td>
+        <td><p>Type of result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ListReduce_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ListReduce*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ListReduce__3_IList___0__IEnumerable___1____2_Func___2___0___1___2__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ListReduce``3(IList{``0},IEnumerable{``1},``2,Func{``2,``0,``1,``2})">ListReduce&lt;T, T2, TRes&gt;(IList&lt;T&gt;, IEnumerable&lt;T2&gt;, TRes, Func&lt;TRes, T, T2, TRes&gt;)</h4>
+  <div class="markdown level1 summary"><p>Reduces across a list and another collection</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TRes ListReduce&lt;T, T2, TRes&gt;(this IList&lt;T&gt; source, IEnumerable&lt;T2&gt; secondList, TRes initial, Func&lt;TRes, T, T2, TRes&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>This list</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;T2&gt;</td>
+        <td><span class="parametername">secondList</span></td>
+        <td><p>The other collection</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TRes</span></td>
+        <td><span class="parametername">initial</span></td>
+        <td><p>Initial value for reduction</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TRes, T, T2, TRes&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>The function</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TRes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of this list</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td><p>Type of the other list</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRes</span></td>
+        <td><p>Type of result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ListSelect_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ListSelect*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ListSelect__2_IList___0__Func___0___1__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ListSelect``2(IList{``0},Func{``0,``1})">ListSelect&lt;T, T2&gt;(IList&lt;T&gt;, Func&lt;T, T2&gt;)</h4>
+  <div class="markdown level1 summary"><p>Similar to LINQ Select, except it takes and returns a list.
+If the supplied list is sparse, the returned list will also be sparse.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IList&lt;T2&gt; ListSelect&lt;T, T2&gt;(this IList&lt;T&gt; source, Func&lt;T, T2&gt; converter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>This list</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;T, T2&gt;</td>
+        <td><span class="parametername">converter</span></td>
+        <td><p>The converter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;T2&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of this list</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td><p>The target element type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ListSum_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ListSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ListSum_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ListSum(IList{System.Int32})">ListSum(IList&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sums the elements of this list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int ListSum(this IList&lt;int&gt; source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ListSum_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ListSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ListSum_IList_System_Int32__Func_System_Int32_System_Double__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ListSum(IList{System.Int32},Func{System.Int32,System.Double})">ListSum(IList&lt;Int32&gt;, Func&lt;Int32, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sums the elements of this list, after transforming each element using the specified converter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double ListSum(this IList&lt;int&gt; source, Func&lt;int, double&gt; converter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">converter</span></td>
+        <td><p>The converter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_SetTo_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_SetTo_IList_System_Double__IEnumerable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.SetTo(IList{System.Double},IEnumerable{System.Double})">SetTo(IList&lt;Double&gt;, IEnumerable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets this list from an enumerable (need separate implementation from
+generic version for interop with Vectors)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetTo(this IList&lt;double&gt; source, IEnumerable&lt;double&gt; that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_SetTo_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_SetTo__1_IList___0__IEnumerable___0__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.SetTo``1(IList{``0},IEnumerable{``0})">SetTo&lt;T&gt;(IList&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets this list from an enumerable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetTo&lt;T&gt;(this IList&lt;T&gt; source, IEnumerable&lt;T&gt; that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ToVector_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ToVector*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ToVector_IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ToVector(IList{System.Double})">ToVector(IList&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Converts a list of doubles into a vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector ToVector(this IList&lt;double&gt; source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ToVector_" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ToVector*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_IListExtensions_ToVector_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Collections.IListExtensions.ToVector(IList{System.Int32})">ToVector(IList&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Converts a list of ints into a double vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector ToVector(this IList&lt;int&gt; source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

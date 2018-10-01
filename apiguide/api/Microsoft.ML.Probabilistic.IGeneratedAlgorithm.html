@@ -1,0 +1,568 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IGeneratedAlgorithm
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IGeneratedAlgorithm
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm" class="text-break">Interface IGeneratedAlgorithm
+  </h1>
+  <div class="markdown level0 summary"><p>Interface for running a generated inference algorithm</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.html">Microsoft.ML.Probabilistic</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IGeneratedAlgorithm</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_NumberOfIterationsDone_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.NumberOfIterationsDone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_NumberOfIterationsDone" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.NumberOfIterationsDone">NumberOfIterationsDone</h4>
+  <div class="markdown level1 summary"><p>The number of iterations done from the initial state or since the last change of observed values</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int NumberOfIterationsDone { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_NumberOfIterationsDone_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Changing an observed value will reset this to 0.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Execute_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Execute*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Execute_System_Int32_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Execute(System.Int32)">Execute(Int32)</h4>
+  <div class="markdown level1 summary"><p>Execute the inference algorithm for the specified number of iterations, starting from the initial state</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Execute(int numberOfIterations)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">numberOfIterations</span></td>
+        <td><p>The number of iterations to perform from the initial state</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Execute_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Sets <code>NumberOfIterationsDone = <code data-dev-comment-type="paramref" class="paramref">numberOfIterations</code></code>.
+This method is equivalent to calling <code>Reset()</code> followed by <code>Update(numberOfIterations)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_GetObservedValue_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.GetObservedValue*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_GetObservedValue_System_String_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.GetObservedValue(System.String)">GetObservedValue(String)</h4>
+  <div class="markdown level1 summary"><p>Gets an observed value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object GetObservedValue(string variableName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Name of the variable in the generated code</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>The observed value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal_System_String_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Marginal(System.String)">Marginal(String)</h4>
+  <div class="markdown level1 summary"><p>Get the marginal distribution (computed up to this point) of a variable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object Marginal(string variableName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Name of the variable in the generated code</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>The marginal distribution computed up to this point</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Execute, Update, or Reset must be called first to set the value of the marginal.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal_System_String_System_String_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Marginal(System.String,System.String)">Marginal(String, String)</h4>
+  <div class="markdown level1 summary"><p>Get the query-specific marginal distribution of a variable.
+For example, GibbsSampling answers &quot;Marginal&quot;, &quot;Samples&quot;, and &quot;Conditionals&quot; queries</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object Marginal(string variableName, string query)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Name of the variable in the generated code</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">query</span></td>
+        <td><p>Query string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>The query-specific marginal distribution computed up to this point</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal_System_String_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Execute, Update, or Reset must be called first to set the value of the marginal.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal__1_System_String_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Marginal``1(System.String)">Marginal&lt;T&gt;(String)</h4>
+  <div class="markdown level1 summary"><p>Get the marginal distribution (computed up to this point) of a variable, converted to type T</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">T Marginal&lt;T&gt;(string variableName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Name of the variable in the generated code</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The marginal distribution computed up to this point</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The distribution type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal__1_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Execute, Update, or Reset must be called first to set the value of the marginal.
+The conversion operation may be costly, even if the marginal already has type T.
+For maximum efficiency, use the non-generic Marginal method when conversion is not needed.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal__1_System_String_System_String_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Marginal``1(System.String,System.String)">Marginal&lt;T&gt;(String, String)</h4>
+  <div class="markdown level1 summary"><p>Get the query-specific marginal distribution of a variable, converted to type T</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">T Marginal&lt;T&gt;(string variableName, string query)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Name of the variable in the generated code</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">query</span></td>
+        <td><p>Query</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The query-specific marginal distribution computed up to this point</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type to cast to</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Marginal__1_System_String_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Execute, Update, or Reset must be called first to set the value of the marginal.
+The conversion operation may be costly, even if the marginal already has type T.
+For maximum efficiency, use the non-generic Marginal method when conversion is not needed.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Reset_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Reset*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Reset" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Reset">Reset()</h4>
+  <div class="markdown level1 summary"><p>Reset all messages to their initial values.  Sets NumberOfIterationsDone to 0</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Reset()</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Reset_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method is equivalent to calling <code>Execute(0)</code></p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_SetObservedValue_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.SetObservedValue*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_SetObservedValue_System_String_System_Object_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.SetObservedValue(System.String,System.Object)">SetObservedValue(String, Object)</h4>
+  <div class="markdown level1 summary"><p>Sets an observed value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetObservedValue(string variableName, object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Name of the variable in the generated code</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The observed value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Update_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Update*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Update_System_Int32_" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.Update(System.Int32)">Update(Int32)</h4>
+  <div class="markdown level1 summary"><p>Perform additional iterations of the inference algorithm</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Update(int additionalIterations)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">additionalIterations</span></td>
+        <td><p>The number of additional iterations to perform</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_Update_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If no observed values have changed, this method increments <code>NumberOfIterationsDone</code> by <code data-dev-comment-type="paramref" class="paramref">additionalIterations</code>,
+and is equivalent to calling <code>Execute(NumberOfIterationsDone + additionalIterations)</code>.
+If some observed values have changed, this method sets <code>NumberOfIterationsDone = <code data-dev-comment-type="paramref" class="paramref">additionalIterations</code></code>,
+and is not equivalent to calling <code>Execute</code>, because it will start from the existing message state rather than the initial state.</p>
+</div>
+  <h3 id="events">Events
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_IGeneratedAlgorithm_ProgressChanged" data-uid="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.ProgressChanged">ProgressChanged</h4>
+  <div class="markdown level1 summary"><p>Fired when the progress of inference changes, typically at the
+end of one iteration of the inference algorithm</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ProgressChangedEventArgs&gt; ProgressChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.ProgressChangedEventArgs.html">ProgressChangedEventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

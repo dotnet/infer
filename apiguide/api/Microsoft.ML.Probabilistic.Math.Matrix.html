@@ -1,0 +1,4132 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Matrix
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Matrix
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Math.Matrix">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Math_Matrix" data-uid="Microsoft.ML.Probabilistic.Math.Matrix" class="text-break">Class Matrix
+  </h1>
+  <div class="markdown level0 summary"><p>Two-dimensional container of doubles.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Matrix</span></div>
+      <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix.html">LowerTriangularMatrix</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Math.UpperTriangularMatrix.html">UpperTriangularMatrix</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.CanSetAllElementsTo-1.html">CanSetAllElementsTo</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Math.html">Microsoft.ML.Probabilistic.Math</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class Matrix : IList&lt;double&gt;, IReadOnlyList&lt;double&gt;, ICloneable, SettableTo&lt;Matrix&gt;, CanSetAllElementsTo&lt;double&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix__ctor_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix__ctor" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.#ctor">Matrix()</h4>
+  <div class="markdown level1 summary"><p>Default constructor just used for serialization.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Matrix()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix__ctor_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix__ctor_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.#ctor(Microsoft.ML.Probabilistic.Math.Matrix)">Matrix(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Copy constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix(Matrix that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix__ctor_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix__ctor_System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.#ctor(System.Double[0:,0:])">Matrix(Double[,])</h4>
+  <div class="markdown level1 summary"><p>Construct a matrix from data in a 2D array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix(double[, ] data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">data</span></td>
+        <td><p>2D array of elements.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix__ctor_System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The 2D array is copied into new storage.
+The size of the matrix is taken from the array.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix__ctor_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix__ctor_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.#ctor(System.Int32,System.Int32)">Matrix(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Construct a zero matrix of the given dimensions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix(int rows, int cols)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">rows</span></td>
+        <td><p>Number of rows &gt;= 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">cols</span></td>
+        <td><p>Number of columns &gt;= 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix__ctor_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix__ctor_System_Int32_System_Int32_System_Double___" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.#ctor(System.Int32,System.Int32,System.Double[])">Matrix(Int32, Int32, Double[])</h4>
+  <div class="markdown level1 summary"><p>Construct a matrix by referencing an array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix(int nRows, int nCols, double[] data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">nRows</span></td>
+        <td><p>Number of rows.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">nCols</span></td>
+        <td><p>Number of columns.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">data</span></td>
+        <td><p>Storage for the matrix elements.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_cols" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.cols">cols</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly int cols</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_data" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.data">data</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected double[] data</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_rows" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.rows">rows</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected readonly int rows</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Cols_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Cols*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Cols" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Cols">Cols</h4>
+  <div class="markdown level1 summary"><p>The number of columns of the matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Cols { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Count_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Count*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Count" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Count">Count</h4>
+  <div class="markdown level1 summary"><p>Number of elements in the matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Count { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Item_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Item_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Item(System.Int32)">Item[Int32]</h4>
+  <div class="markdown level1 summary"><p>Gets and sets an element.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double this[int index] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Item_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Item_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
+  <div class="markdown level1 summary"><p>Gets and sets an element.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double this[int row, int col] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">row</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">col</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Rows_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Rows*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Rows" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Rows">Rows</h4>
+  <div class="markdown level1 summary"><p>The number of rows of the matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Rows { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SourceArray_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SourceArray*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SourceArray" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SourceArray">SourceArray</h4>
+  <div class="markdown level1 summary"><p>Gets/sets the matrix's source array</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double[] SourceArray { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_CheckCompatible_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.CheckCompatible*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_CheckCompatible_Microsoft_ML_Probabilistic_Math_Matrix_System_String_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.CheckCompatible(Microsoft.ML.Probabilistic.Math.Matrix,System.String)">CheckCompatible(Matrix, String)</h4>
+  <div class="markdown level1 summary"><p>Checks that a given matrix is the same size as this matrix.
+Throws an exception if not with the given string</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void CheckCompatible(Matrix that, string paramName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The matrix to check</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">paramName</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_CheckSymmetry_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.CheckSymmetry*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_CheckSymmetry_System_String_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.CheckSymmetry(System.String)">CheckSymmetry(String)</h4>
+  <div class="markdown level1 summary"><p>Checks this matrix for symmetry</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CheckSymmetry(string paramName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">paramName</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Clone_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Clone" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Fully clones this matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Commutation_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Commutation*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Commutation_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Commutation(System.Int32,System.Int32)">Commutation(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Magnus and Neudecker's commutation matrix for a given size matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix Commutation(int rows, int cols)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">rows</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">cols</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>The commutation matrix of size rows<em>cols by rows</em>cols</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Contains_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Contains*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Contains_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Contains(System.Double)">Contains(Double)</h4>
+  <div class="markdown level1 summary"><p>Returns true if this matrix contains the given value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(double item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">item</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_CopyTo_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.CopyTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_CopyTo_System_Double___System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.CopyTo(System.Double[],System.Int32)">CopyTo(Double[], Int32)</h4>
+  <div class="markdown level1 summary"><p>Copies the values in this matrix to an array starting at a given index in the destination array</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(double[] array, int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_CopyTo_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.CopyTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_CopyTo_System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.CopyTo(System.Double[0:,0:])">CopyTo(Double[,])</h4>
+  <div class="markdown level1 summary"><p>Copies matrix values to a two-dimensional array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyTo(double[, ] values)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">values</span></td>
+        <td><p>An array whose <code>GetLength(0) &gt;= Rows</code> and <code>GetLength(1) &gt;= Cols</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Determinant_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Determinant*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Determinant" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Determinant">Determinant()</h4>
+  <div class="markdown level1 summary"><p>Determinant of a square matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Determinant()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The determinant</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Diagonal_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Diagonal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Diagonal" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Diagonal">Diagonal()</h4>
+  <div class="markdown level1 summary"><p>Creates a vector from the diagonal values in the matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector Diagonal()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_DiagonalOfProduct_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.DiagonalOfProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_DiagonalOfProduct_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.DiagonalOfProduct(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">DiagonalOfProduct(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>The diagonal elements of a matrix product.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector DiagonalOfProduct(Matrix a, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>A matrix of size n by m.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>A matrix of size m by n.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p><code>v[i] = sum_k a[i,k]*b[k,i]</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_EigenvaluesInPlace_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.EigenvaluesInPlace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_EigenvaluesInPlace_System_Double___System_Double___" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.EigenvaluesInPlace(System.Double[],System.Double[])">EigenvaluesInPlace(Double[], Double[])</h4>
+  <div class="markdown level1 summary"><p>Compute the eigenvalues of a square matrix, destroying the contents of the matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void EigenvaluesInPlace(double[] eigenvaluesReal, double[] eigenvaluesImag)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">eigenvaluesReal</span></td>
+        <td><p>On output, the real part of the eigenvalues.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">eigenvaluesImag</span></td>
+        <td><p>On output, the imaginary part of the eigenvalues.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_EnumerateDiagonal_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.EnumerateDiagonal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_EnumerateDiagonal" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.EnumerateDiagonal">EnumerateDiagonal()</h4>
+  <div class="markdown level1 summary"><p>Enumerator which yields the diagonal elements of the matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;double&gt; EnumerateDiagonal()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Equals_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Object comparator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>An object - must be an IntMatrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if objects are equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_EqualsAll_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.EqualsAll*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_EqualsAll_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.EqualsAll(System.Double)">EqualsAll(Double)</h4>
+  <div class="markdown level1 summary"><p>Tests if all elements are equal to a given value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool EqualsAll(double value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The value to test against.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if all elements are equal to <code data-dev-comment-type="paramref" class="paramref">value</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_FromArray_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.FromArray*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_FromArray_System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.FromArray(System.Double[0:,0:])">FromArray(Double[,])</h4>
+  <div class="markdown level1 summary"><p>Construct a matrix from data in a 2D array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix FromArray(double[, ] data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">data</span></td>
+        <td><p>2D array of elements.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_FromArray_System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The 2D array is copied into new storage.
+The size of the matrix is taken from the array.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_GetColumn_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.GetColumn*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_GetColumn_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.GetColumn(System.Int32)">GetColumn(Int32)</h4>
+  <div class="markdown level1 summary"><p>Returns the specified column as an array of doubles</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double[] GetColumn(int col)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">col</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_GetEnumerator_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.GetEnumerator*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_GetEnumerator" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.GetEnumerator">GetEnumerator()</h4>
+  <div class="markdown level1 summary"><p>Gets a typed enumerator for this matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;double&gt; GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Hash code generator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The hash code for the instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_GetRow_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.GetRow*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_GetRow_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.GetRow(System.Int32)">GetRow(Int32)</h4>
+  <div class="markdown level1 summary"><p>Returns the specified row as an array of doubles</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double[] GetRow(int row)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">row</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Identity_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Identity*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Identity_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Identity(System.Int32)">Identity(Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates an identity matrix of the specified size</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix Identity(int dimension)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">dimension</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_IdentityScaledBy_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.IdentityScaledBy*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_IdentityScaledBy_System_Int32_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.IdentityScaledBy(System.Int32,System.Double)">IdentityScaledBy(Int32, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates an identity matrix of the specified size, scaled by the specified value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix IdentityScaledBy(int dimension, double scale)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">dimension</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scale</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_IndexOf_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.IndexOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_IndexOf_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.IndexOf(System.Double)">IndexOf(Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the first index of the given item if it exists in the matrix,
+otherwise returns -1</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int IndexOf(double item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">item</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Inner_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Inner*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Inner_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Inner(Microsoft.ML.Probabilistic.Math.Matrix)">Inner(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Inner product of matrices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Inner(Matrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>A matrix with the same size as this.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>sum_ij A[i,j]*this[i,j].</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Inverse_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Inverse*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Inverse" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Inverse">Inverse()</h4>
+  <div class="markdown level1 summary"><p>Return the inverse of this matrix - not implemented yet</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix Inverse()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_IsPositiveDefinite_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.IsPositiveDefinite*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_IsPositiveDefinite" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.IsPositiveDefinite">IsPositiveDefinite()</h4>
+  <div class="markdown level1 summary"><p>Tests for positive-definiteness.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPositiveDefinite()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the matrix is positive-definite, i.e. all eigenvalues &gt; 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Kronecker_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Kronecker*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Kronecker_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Kronecker(Microsoft.ML.Probabilistic.Math.Matrix)">Kronecker(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Kronecker product with another matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix Kronecker(Matrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>The Kronecker product</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_MaxDiff_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.MaxDiff(Microsoft.ML.Probabilistic.Math.Matrix)">MaxDiff(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Returns the maximum absolute difference between matrix elements.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(Matrix that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The second matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>max(abs(this[i,j] - that[i,j])).<br>
+Matching infinities or NaNs do not count.<br>
+If this and that are not the same size, returns infinity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_MaxDiff_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This routine is typically used instead of Equals, since Equals is susceptible to roundoff errors.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_MaxDiff_Microsoft_ML_Probabilistic_Math_Matrix_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.MaxDiff(Microsoft.ML.Probabilistic.Math.Matrix,System.Double)">MaxDiff(Matrix, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the maximum relative difference between matrix elements.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(Matrix that, double rel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The second matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">rel</span></td>
+        <td><p>An offset to avoid division by zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>max(abs(this[i,j] - that[i,j])/(abs(this[i,j]) + rel)).<br>
+Matching infinities or NaNs do not count.<br>
+If this and that are not the same size, returns infinity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_MaxDiff_Microsoft_ML_Probabilistic_Math_Matrix_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This routine is typically used instead of Equals, since Equals is susceptible to roundoff errors.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Median_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Median*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Median" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Median">Median()</h4>
+  <div class="markdown level1 summary"><p>Returns the median of the values in the matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Median()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Outer_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Outer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Outer" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Outer">Outer()</h4>
+  <div class="markdown level1 summary"><p>Returns the product of this matrix and its transpose</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PositiveDefiniteMatrix Outer()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_OuterTranspose_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.OuterTranspose*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_OuterTranspose" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.OuterTranspose">OuterTranspose()</h4>
+  <div class="markdown level1 summary"><p>Returns the transpose of this matrix times this matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PositiveDefiniteMatrix OuterTranspose()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Parse_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Parse*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Parse_System_String_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Parse(System.String)">Parse(String)</h4>
+  <div class="markdown level1 summary"><p>Parse a string (in the format produced by ToString) to recover a Matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix Parse(string s)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">s</span></td>
+        <td><p>The string to parse</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>A matrix</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideBy_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.PredivideBy*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideBy_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.PredivideBy(Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix)">PredivideBy(LowerTriangularMatrix)</h4>
+  <div class="markdown level1 summary"><p>Gets the solution to AX=B, where A is a lower triangular matrix.
+Equivalent to the left-division X = A\B.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix PredivideBy(LowerTriangularMatrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix.html">LowerTriangularMatrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>A lower triangular matrix with A.Rows == this.Rows.  Cannot be <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideBy_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> is used as the right-hand side matrix B, and it also
+receives the solution.
+Throws an exception if <code data-dev-comment-type="paramref" class="paramref">A</code> is singular.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideBy_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.PredivideBy*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideBy_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.PredivideBy(Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">PredivideBy(PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Premultiply this matrix by the inverse of the given positive definite matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix PredivideBy(PositiveDefiniteMatrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideBy_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.PredivideBy*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideBy_Microsoft_ML_Probabilistic_Math_UpperTriangularMatrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.PredivideBy(Microsoft.ML.Probabilistic.Math.UpperTriangularMatrix)">PredivideBy(UpperTriangularMatrix)</h4>
+  <div class="markdown level1 summary"><p>Gets the solution to AX=B, where A is an upper triangular matrix and
+B is a matrix of right-hand sides.    It is equivalent to the left-division X = A\B.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix PredivideBy(UpperTriangularMatrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.UpperTriangularMatrix.html">UpperTriangularMatrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>An upper triangular matrix with A.Rows == this.Rows.  Cannot be <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideBy_Microsoft_ML_Probabilistic_Math_UpperTriangularMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> is used as the right-hand side matrix B, and it also
+receives the solution.
+Throws an exception if <code data-dev-comment-type="paramref" class="paramref">A</code> is singular.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideByTranspose_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.PredivideByTranspose*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideByTranspose_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.PredivideByTranspose(Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix)">PredivideByTranspose(LowerTriangularMatrix)</h4>
+  <div class="markdown level1 summary"><p>Gets the solution to A'X=B, where A is a lower triangular matrix.
+Equivalent to the left-division X = A'\B.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix PredivideByTranspose(LowerTriangularMatrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix.html">LowerTriangularMatrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>A lower triangular matrix with A.Cols == this.Rows.  Cannot be <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_PredivideByTranspose_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> is used as the right-hand side matrix B, and it also
+receives the solution.
+Throws an exception if <code data-dev-comment-type="paramref" class="paramref">A</code> is singular.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_QuadraticForm_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.QuadraticForm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_QuadraticForm_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.QuadraticForm(Microsoft.ML.Probabilistic.Math.Vector)">QuadraticForm(Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the product x'Ax (where ' is transposition).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double QuadraticForm(Vector x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A vector whose length equals Rows.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The above product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_QuadraticForm_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> must be a square matrix with Rows == x.Count.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_QuadraticForm_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.QuadraticForm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_QuadraticForm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.QuadraticForm(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector)">QuadraticForm(Vector, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the product x'Ay (where ' is transposition).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double QuadraticForm(Vector x, Vector y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A vector whose length equals Rows.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>A vector whose length equals Cows.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The above product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_RowVector_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.RowVector*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_RowVector_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.RowVector(System.Int32)">RowVector(Int32)</h4>
+  <div class="markdown level1 summary"><p>A row of the matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector RowVector(int row)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">row</span></td>
+        <td><p>An integer in [0,Rows-1].</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>If colStride == 1, then a Vector object pointing at one row of this matrix.  Otherwise a copy of the row.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Scale_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Scale*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Scale_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Scale(System.Double)">Scale(Double)</h4>
+  <div class="markdown level1 summary"><p>Multiplies this matrix by a scalar.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix Scale(double scale)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scale</span></td>
+        <td><p>The scalar.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>this</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_Scale_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>this receives the product.
+This method is a synonym for SetToProduct(this, scale)</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_ScaleCols_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.ScaleCols*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_ScaleCols_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.ScaleCols(Microsoft.ML.Probabilistic.Math.Vector)">ScaleCols(Vector)</h4>
+  <div class="markdown level1 summary"><p>Multiplies each column of this matrix by a different scalar.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix ScaleCols(Vector colScale)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">colScale</span></td>
+        <td><p>The ith element scales column i.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>this</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_ScaleCols_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>this receives the product.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_ScaleRows_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.ScaleRows*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_ScaleRows_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.ScaleRows(Microsoft.ML.Probabilistic.Math.Vector)">ScaleRows(Vector)</h4>
+  <div class="markdown level1 summary"><p>Multiplies each row of this matrix by a different scalar.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix ScaleRows(Vector rowScale)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">rowScale</span></td>
+        <td><p>The ith element scales row i.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>this</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_ScaleRows_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>this receives the product.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetAllElementsTo_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetAllElementsTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetAllElementsTo_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetAllElementsTo(System.Double)">SetAllElementsTo(Double)</h4>
+  <div class="markdown level1 summary"><p>Sets all elements to a given value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetAllElementsTo(double value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The new value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetDiagonal_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetDiagonal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetDiagonal_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetDiagonal(Microsoft.ML.Probabilistic.Math.Vector)">SetDiagonal(Vector)</h4>
+  <div class="markdown level1 summary"><p>Sets the diagonal elements to the values specified in the given vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetDiagonal(Vector diag)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">diag</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetSubmatrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetSubmatrix*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetSubmatrix_System_Int32_System_Int32_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetSubmatrix(System.Int32,System.Int32,Microsoft.ML.Probabilistic.Math.Matrix)">SetSubmatrix(Int32, Int32, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Set a submatrix of this matrix to match another matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetSubmatrix(int firstRow, int firstColumn, Matrix that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">firstRow</span></td>
+        <td><p>Index of the first row in <code>this</code> to copy to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">firstColumn</span></td>
+        <td><p>Index of the first column in <code>this</code> to copy to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>Size is at most <code>this.Rows-thisRow</code> by <code>this.Cols-thisColumn</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetSubmatrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetSubmatrix*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetSubmatrix_System_Int32_System_Int32_Microsoft_ML_Probabilistic_Math_Matrix_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetSubmatrix(System.Int32,System.Int32,Microsoft.ML.Probabilistic.Math.Matrix,System.Int32,System.Int32,System.Int32,System.Int32)">SetSubmatrix(Int32, Int32, Matrix, Int32, Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets a submatrix of this matrix to match another matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetSubmatrix(int thisRow, int thisColumn, Matrix that, int thatRow, int thatColumn, int numRows, int numColumns)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">thisRow</span></td>
+        <td><p>Index of the first row in <code>this</code> to copy to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">thisColumn</span></td>
+        <td><p>Index of the first column in <code>this</code> to copy to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>Size is at most <code>this.Rows-firstRow</code> by <code>this.Cols-firstColumn</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">thatRow</span></td>
+        <td><p>Index of the first row in <code data-dev-comment-type="paramref" class="paramref">that</code> to copy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">thatColumn</span></td>
+        <td><p>Index of the first column in <code data-dev-comment-type="paramref" class="paramref">that</code> to copy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">numRows</span></td>
+        <td><p>The number of rows to copy</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">numColumns</span></td>
+        <td><p>The number of columns to copy</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetTo_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetTo_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetTo(Microsoft.ML.Probabilistic.Math.Matrix)">SetTo(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Copies values from another matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(Matrix that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The second matrix, which must have the same size as this.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetTo_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetTo_System_Double___" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetTo(System.Double[])">SetTo(Double[])</h4>
+  <div class="markdown level1 summary"><p>Copies values from an array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(double[] values)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">values</span></td>
+        <td><p>An array whose length is at least <code>this.Count</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetTo_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetTo_System_Double___System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetTo(System.Double[],System.Int32)">SetTo(Double[], Int32)</h4>
+  <div class="markdown level1 summary"><p>Copies values from an array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(double[] values, int startIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">values</span></td>
+        <td><p>An array whose length is at least <code>this.Count + startIndex</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startIndex</span></td>
+        <td><p>The index of the first value in <code data-dev-comment-type="paramref" class="paramref">values</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetTo_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetTo_System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetTo(System.Double[0:,0:])">SetTo(Double[,])</h4>
+  <div class="markdown level1 summary"><p>Copies values from a two-dimensional array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(double[, ] values)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">values</span></td>
+        <td><p>An array whose <code>GetLength(0) &gt;= Rows</code> and <code>GetLength(1) &gt;= Cols</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToDiagonal_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToDiagonal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToDiagonal_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToDiagonal(Microsoft.ML.Probabilistic.Math.Vector)">SetToDiagonal(Vector)</h4>
+  <div class="markdown level1 summary"><p>Sets this matrix to a diagonal matrix with diagonal values specified in the given vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToDiagonal(Vector diag)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">diag</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToDifference_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToDifference*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToDifference_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToDifference(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">SetToDifference(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Sets this matrix to the difference of two matrices. Assumes compatible matrices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToDifference(Matrix a, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First matrix, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second matrix, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToDifference_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> receives the difference, and must already be the correct size.
+<code data-dev-comment-type="paramref" class="paramref">a</code> and/or <code data-dev-comment-type="paramref" class="paramref">b</code> may be the same object as <code>this</code>.
+If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref">a</code>/<code data-dev-comment-type="paramref" class="paramref">b</code> occupy distinct yet overlapping portions of the same source array, the results are undefined.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToDifference_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToDifference*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToDifference_Microsoft_ML_Probabilistic_Math_Matrix_System_Double_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToDifference(Microsoft.ML.Probabilistic.Math.Matrix,System.Double,Microsoft.ML.Probabilistic.Math.Matrix)">SetToDifference(Matrix, Double, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Sets this matrix to a - bScale*b</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToDifference(Matrix a, double bScale, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">bScale</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToEigenvectorsOfSymmetric_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToEigenvectorsOfSymmetric*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToEigenvectorsOfSymmetric_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToEigenvectorsOfSymmetric(Microsoft.ML.Probabilistic.Math.Matrix)">SetToEigenvectorsOfSymmetric(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Set the columns to the eigenvectors of a symmetric matrix, modifying the input matrix to contain its eigenvalues on the diagonal.
+The input matrix = this'<em>modified</em>this.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToEigenvectorsOfSymmetric(Matrix symmetricMatrix)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">symmetricMatrix</span></td>
+        <td><p>A symmetric matrix, modified on return to contain its eigenvalues on the diagonal</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToElementwiseProduct_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToElementwiseProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToElementwiseProduct_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToElementwiseProduct(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">SetToElementwiseProduct(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>The element-wise product of two matrices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToElementwiseProduct(Matrix a, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First matrix, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second matrix, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToElementwiseProduct_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this[i,j] = a[i,j] * b[i,j]</code>.  <code>this</code> receives the product, and must already be the correct size.
+<code data-dev-comment-type="paramref" class="paramref">a</code> and/or <code data-dev-comment-type="paramref" class="paramref">b</code> may be the same object as <code>this</code>.
+If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref">a</code>/<code data-dev-comment-type="paramref" class="paramref">b</code> occupy distinct yet overlapping portions of the same source array, the results are undefined.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToElementwiseRatio_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToElementwiseRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToElementwiseRatio_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToElementwiseRatio(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">SetToElementwiseRatio(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>The element-wise ratio of two matrices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToElementwiseRatio(Matrix a, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First matrix, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second matrix, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToElementwiseRatio_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this[i,j] = a[i,j] / b[i,j]</code>.  <code>this</code> receives the ratio, and must already be the correct size.
+<code data-dev-comment-type="paramref" class="paramref">a</code> and/or <code data-dev-comment-type="paramref" class="paramref">b</code> may be the same object as <code>this</code>.
+If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref">a</code>/<code data-dev-comment-type="paramref" class="paramref">b</code> occupy distinct yet overlapping portions of the same source array, the results are undefined.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToIdentity_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToIdentity*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToIdentity" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToIdentity">SetToIdentity()</h4>
+  <div class="markdown level1 summary"><p>Sets the matrix to the identity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToIdentity()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>The mutated matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToIdentity_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The matrix must be square.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToIdentityScaledBy_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToIdentityScaledBy*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToIdentityScaledBy_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToIdentityScaledBy(System.Double)">SetToIdentityScaledBy(Double)</h4>
+  <div class="markdown level1 summary"><p>Sets the matrix to the identity times a number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToIdentityScaledBy(double scale)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scale</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>The mutated matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToIdentityScaledBy_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The matrix must be square.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToKronecker_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToKronecker*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToKronecker_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToKronecker(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">SetToKronecker(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Set this matrix to the Kronecker product of two matrices</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToKronecker(Matrix A, Matrix B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">B</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToLeastSquares_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToLeastSquares*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToLeastSquares_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToLeastSquares(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">SetToLeastSquares(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Solve Y = X*A</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double SetToLeastSquares(Matrix Y, Matrix X)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">Y</span></td>
+        <td><p>Portrait matrix</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">X</span></td>
+        <td><p>Portrait matrix</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The smallest squared singular value of X.  This is useful for detecting an ill-conditioned problem.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToOuter_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToOuter*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToOuter_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToOuter(Microsoft.ML.Probabilistic.Math.Matrix)">SetToOuter(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Modify <code>this</code> to be the product of a matrix and its transpose (A*A').</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToOuter(Matrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Matrix.  Cannot be <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToOuter_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> receives A*A' and must already be the correct size.
+If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref">A</code> occupy overlapping portions of the same source array, the results are undefined.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToOuter_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToOuter*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToOuter_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToOuter(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector)">SetToOuter(Vector, Vector)</h4>
+  <div class="markdown level1 summary"><p>Returns the outer product of two vectors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToOuter(Vector a, Vector b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First vector, of length <code>this.Rows</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second vector, of length <code>this.Cols</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToOuter_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> receives the product, and must already be the correct size.
+If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref">a</code>/<code data-dev-comment-type="paramref" class="paramref">b</code> occupy overlapping portions of the same source array, the results are undefined.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToOuterTranspose_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToOuterTranspose*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToOuterTranspose_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToOuterTranspose(Microsoft.ML.Probabilistic.Math.Matrix)">SetToOuterTranspose(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Modify <code>this</code> to be the product A'*A.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToOuterTranspose(Matrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Matrix.  Cannot be <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToOuterTranspose_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> receives A'*A and must already be the correct size.
+If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref">A</code> occupy overlapping portions of the same source array, the results are undefined.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToProduct_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToProduct(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">SetToProduct(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Modify <code>this</code> to be the product of two matrices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToProduct(Matrix A, Matrix B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>First matrix.  Cannot be <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Second matrix.  Cannot be <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToProduct_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code data-dev-comment-type="paramref" class="paramref">A</code> and <code data-dev-comment-type="paramref" class="paramref">B</code> must have compatible dimensions.
+<code>this</code> receives the product, and must already be the correct size.
+If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref">A</code>/<code data-dev-comment-type="paramref" class="paramref">B</code> occupy overlapping portions of the same source array, the results are undefined.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToProduct_Microsoft_ML_Probabilistic_Math_Matrix_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToProduct(Microsoft.ML.Probabilistic.Math.Matrix,System.Double)">SetToProduct(Matrix, Double)</h4>
+  <div class="markdown level1 summary"><p>Gets a matrix times a scalar.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToProduct(Matrix m, double s)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">m</span></td>
+        <td><p>A matrix, which must have the same size as <code>this</code>.  Can be the same object as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">s</span></td>
+        <td><p>A scalar.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToProduct_Microsoft_ML_Probabilistic_Math_Matrix_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> receives the product, and must already be the correct size.<br>
+If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref">m</code> occupy distinct yet overlapping portions of the same source array, the results are undefined.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToRightSingularVectors_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToRightSingularVectors*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToRightSingularVectors_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToRightSingularVectors(Microsoft.ML.Probabilistic.Math.Matrix)">SetToRightSingularVectors(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Set the columns to the right singular vectors of a matrix, modifying the input matrix to contain its left singular vectors scaled by the singular values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRightSingularVectors(Matrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>A portrait matrix with the same number of columns as <code>this</code>, modified on return to contain its left singular vectors (as columns) scaled by the singular values</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToRightSingularVectors_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> must be a square matrix.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToSubmatrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToSubmatrix*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToSubmatrix_Microsoft_ML_Probabilistic_Math_Matrix_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToSubmatrix(Microsoft.ML.Probabilistic.Math.Matrix,System.Int32,System.Int32)">SetToSubmatrix(Matrix, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets the matrix to a submatrix of another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToSubmatrix(Matrix that, int firstRow, int firstColumn)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>Size must be at least <code>this.Rows+firstRow</code> by <code>this.Cols+firstColumn</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">firstRow</span></td>
+        <td><p>Index of the first row in <code data-dev-comment-type="paramref" class="paramref">that</code> to copy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">firstColumn</span></td>
+        <td><p>Index of the first column in <code data-dev-comment-type="paramref" class="paramref">that</code> to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToSum_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToSum(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">SetToSum(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Sets this matrix to sum of two other matrices. Assumes compatible matrices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToSum(Matrix a, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First matrix, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second matrix, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToSum_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this[i,j] = a[i,j] + b[i,j]</code>.  <code>this</code> receives the sum, and must already be the correct size.
+<code data-dev-comment-type="paramref" class="paramref">a</code> and/or <code data-dev-comment-type="paramref" class="paramref">b</code> may be the same object as <code>this</code>.
+If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref">a</code>/<code data-dev-comment-type="paramref" class="paramref">b</code> occupy distinct yet overlapping portions of the same source array, the results are undefined.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToSum_System_Double_Microsoft_ML_Probabilistic_Math_Matrix_System_Double_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToSum(System.Double,Microsoft.ML.Probabilistic.Math.Matrix,System.Double,Microsoft.ML.Probabilistic.Math.Matrix)">SetToSum(Double, Matrix, Double, Matrix)</h4>
+  <div class="markdown level1 summary"><p>The sum of two matrices with scale factors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToSum(double aScale, Matrix a, double bScale, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">aScale</span></td>
+        <td><p>A scale factor.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First matrix, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">bScale</span></td>
+        <td><p>A scale factor.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second matrix, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToSum_System_Double_Microsoft_ML_Probabilistic_Math_Matrix_System_Double_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this[i,j] = aScale<em>a[i,j] + bScale</em>b[i,j]</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToSumWithOuter_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToSumWithOuter*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToSumWithOuter_Microsoft_ML_Probabilistic_Math_Matrix_System_Double_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToSumWithOuter(Microsoft.ML.Probabilistic.Math.Matrix,System.Double,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector)">SetToSumWithOuter(Matrix, Double, Vector, Vector)</h4>
+  <div class="markdown level1 summary"><p>Returns a matrix plus the scaled outer product of two vectors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToSumWithOuter(Matrix m, double scale, Vector a, Vector b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">m</span></td>
+        <td><p>A matrix with the same size as <code>this</code>.  Can be <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scale</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>A vector with <code>a.Count == this.Rows</code></p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>A vector with <code>b.Count == this.Cols</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>this[i,j] = m[i,j] + scale*a[i]*b[j]</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SetToTranspose_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToTranspose*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToTranspose_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SetToTranspose(Microsoft.ML.Probabilistic.Math.Matrix)">SetToTranspose(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Sets the matrix to the transpose of another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix SetToTranspose(Matrix that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The matrix to transpose.  Can be the same object as <code>this</code>.  <code>that.Count</code> must equal <code>this.Count</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p><code>this</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Matrix_SetToTranspose_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this</code> receives the transposed matrix, and must already
+be the correct size.
+If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref">that</code> are different objects but occupy overlapping portions of the same source array, the results are undefined.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Symmetrize_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Symmetrize*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Symmetrize" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Symmetrize">Symmetrize()</h4>
+  <div class="markdown level1 summary"><p>Set a[i,j] to the average (a[i,j]+a[j,i])/2</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Symmetrize()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_SymmetryError_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SymmetryError*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_SymmetryError" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.SymmetryError">SymmetryError()</h4>
+  <div class="markdown level1 summary"><p>max | this[i,j] - this[j,i] |</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double SymmetryError()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_ToArray_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.ToArray*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_ToArray" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.ToArray">ToArray()</h4>
+  <div class="markdown level1 summary"><p>Creates a 2-D arrays from this matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double[, ] ToArray()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_ToString_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_ToString" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>ToString override</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_ToString_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_ToString_System_String_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.ToString(System.String)">ToString(String)</h4>
+  <div class="markdown level1 summary"><p>Convert the matrix to a string, using a specified number format</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(string format)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">format</span></td>
+        <td><p>The format string for each matrix entry</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Trace_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Trace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Trace" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Trace">Trace()</h4>
+  <div class="markdown level1 summary"><p>Trace of a square matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Trace()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The trace.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_TraceOfProduct_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.TraceOfProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_TraceOfProduct_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.TraceOfProduct(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">TraceOfProduct(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>The sum of diagonal elements of a matrix product.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double TraceOfProduct(Matrix a, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>A matrix of size n by m.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>A matrix of size m by n.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>sum_i sum_k a[i,k]*b[k,i]</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_Transpose_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Transpose*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_Transpose" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.Transpose">Transpose()</h4>
+  <div class="markdown level1 summary"><p>Transposes the matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Matrix Transpose()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>The transposed matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_op_Addition_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Addition*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_op_Addition_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Addition(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">Addition(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Returns the sum of two matrices. Assumes compatible matrices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix operator +(Matrix a, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>Their sum.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_op_Division_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Division*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_op_Division_Microsoft_ML_Probabilistic_Math_Matrix_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Division(Microsoft.ML.Probabilistic.Math.Matrix,System.Double)">Division(Matrix, Double)</h4>
+  <div class="markdown level1 summary"><p>Divides every element of a matrix by a scalar.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix operator /(Matrix m, double s)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">m</span></td>
+        <td><p>A matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">s</span></td>
+        <td><p>A scalar.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>A new matrix with the ratio.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_op_Equality_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Equality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_op_Equality_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Equality(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">Equality(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Equality operator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Matrix a, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second Matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the matrices have the same size and element values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_op_Inequality_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Inequality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_op_Inequality_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Inequality(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">Inequality(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Inequality operator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Matrix a, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if matrices are not equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_op_Multiply_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_op_Multiply_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Multiply(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">Multiply(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Matrix product.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix operator *(Matrix A, Matrix B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>First matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Second matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>A new matrix with their product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_op_Multiply_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_op_Multiply_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Multiply(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Vector)">Multiply(Matrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Premultiplies a vector by a matrix (i.e. A*x).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector operator *(Matrix A, Vector x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>A matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A vector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>A new vector with the product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_op_Multiply_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_op_Multiply_Microsoft_ML_Probabilistic_Math_Matrix_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Multiply(Microsoft.ML.Probabilistic.Math.Matrix,System.Double)">Multiply(Matrix, Double)</h4>
+  <div class="markdown level1 summary"><p>Multiplies every element of a matrix by a scalar.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix operator *(Matrix m, double s)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">m</span></td>
+        <td><p>A matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">s</span></td>
+        <td><p>A scalar.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>A new matrix with the product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_op_Multiply_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_op_Multiply_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Multiply(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Matrix)">Multiply(Vector, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Postmultiplies a vector by a matrix (i.e. x*A).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector operator *(Vector x, Matrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A vector.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>A matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>The new vector with the product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_op_Subtraction_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Subtraction*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_op_Subtraction_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_Subtraction(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">Subtraction(Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Returns the difference of two matrices. Assumes compatible matrices.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix operator -(Matrix a, Matrix b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>Their difference.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Matrix_op_UnaryNegation_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_UnaryNegation*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Matrix_op_UnaryNegation_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Math.Matrix.op_UnaryNegation(Microsoft.ML.Probabilistic.Math.Matrix)">UnaryNegation(Matrix)</h4>
+  <div class="markdown level1 summary"><p>Returns the negation of a matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix operator -(Matrix a)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The matrix to negate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><p>The negation -a.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IReadOnlyList&lt;&gt;</span>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.CanSetAllElementsTo-1.html">CanSetAllElementsTo&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,934 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DistributionFileArray&lt;T, DomainType&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DistributionFileArray&lt;T, DomainType&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2" class="text-break">Class DistributionFileArray&lt;T, DomainType&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>A distribution over an array of type <code data-dev-comment-type="typeparamref" class="typeparamref">DomainType</code>, where each element is independent and has distribution of type <code data-dev-comment-type="typeparamref" class="typeparamref">T</code>, all stored in a file.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html">FileArray</a>&lt;T&gt;</div>
+    <div class="level2"><span class="xref">DistributionFileArray&lt;T, DomainType&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.IArray-1.html">IArray</a>&lt;T&gt;</div>
+    <div><span class="xref">IList</span>&lt;T&gt;</div>
+    <div><span class="xref">IDisposable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;DomainType[]&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;DomainType[]&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;DomainType[]&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;DomainType[]&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_count">FileArray&lt;T&gt;.count</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_prefix">FileArray&lt;T&gt;.prefix</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_doNotDelete">FileArray&lt;T&gt;.doNotDelete</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_Folder">FileArray&lt;T&gt;.Folder</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_GetTempFolder_System_String_">FileArray&lt;T&gt;.GetTempFolder(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_Rank">FileArray&lt;T&gt;.Rank</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_GetLength_System_Int32_">FileArray&lt;T&gt;.GetLength(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_IndexOf__0_">FileArray&lt;T&gt;.IndexOf(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_Insert_System_Int32__0_">FileArray&lt;T&gt;.Insert(Int32, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_RemoveAt_System_Int32_">FileArray&lt;T&gt;.RemoveAt(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_Item_System_Int32_">FileArray&lt;T&gt;.Item[Int32]</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_Add__0_">FileArray&lt;T&gt;.Add(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_Clear">FileArray&lt;T&gt;.Clear()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_Contains__0_">FileArray&lt;T&gt;.Contains(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_CopyTo__0___System_Int32_">FileArray&lt;T&gt;.CopyTo(T[], Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_Count">FileArray&lt;T&gt;.Count</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_IsReadOnly">FileArray&lt;T&gt;.IsReadOnly</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_Remove__0_">FileArray&lt;T&gt;.Remove(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_GetEnumerator">FileArray&lt;T&gt;.GetEnumerator()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html#Microsoft_ML_Probabilistic_Collections_FileArray_1_Dispose">FileArray&lt;T&gt;.Dispose()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DistributionFileArray&lt;T, DomainType&gt; : FileArray&lt;T&gt;, IArray&lt;T&gt;, IList&lt;T&gt;, IDisposable, IDistribution&lt;DomainType[]&gt;, ICloneable, HasPoint&lt;DomainType[]&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;DomainType[]&gt;, Sampleable&lt;DomainType[]&gt;, SettableTo&lt;DistributionFileArray&lt;T, DomainType&gt;&gt;, SettableToProduct&lt;DistributionFileArray&lt;T, DomainType&gt;&gt;, SettableToProduct&lt;DistributionFileArray&lt;T, DomainType&gt;, DistributionFileArray&lt;T, DomainType&gt;&gt;, SettableToRatio&lt;DistributionFileArray&lt;T, DomainType&gt;&gt;, SettableToRatio&lt;DistributionFileArray&lt;T, DomainType&gt;, DistributionFileArray&lt;T, DomainType&gt;&gt;, SettableToPower&lt;DistributionFileArray&lt;T, DomainType&gt;&gt;, SettableToWeightedSum&lt;DistributionFileArray&lt;T, DomainType&gt;&gt;, CanGetLogAverageOf&lt;DistributionFileArray&lt;T, DomainType&gt;&gt;, CanGetLogAverageOfPower&lt;DistributionFileArray&lt;T, DomainType&gt;&gt;, CanGetAverageLog&lt;DistributionFileArray&lt;T, DomainType&gt;&gt; where T : ICloneable, SettableTo&lt;T&gt;, SettableToProduct&lt;T&gt;, SettableToRatio&lt;T&gt;, SettableToPower&lt;T&gt;, SettableToWeightedSum&lt;T&gt;, CanGetLogAverageOf&lt;T&gt;, CanGetLogAverageOfPower&lt;T&gt;, CanGetAverageLog&lt;T&gt;, IDistribution&lt;DomainType&gt;, Sampleable&lt;DomainType&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">DomainType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2__ctor_Microsoft_ML_Probabilistic_Collections_FileArray_Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1___System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.#ctor(Microsoft.ML.Probabilistic.Collections.FileArray{Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1}},System.Int32,System.Int32)">DistributionFileArray(FileArray&lt;DistributionFileArray&lt;T, DomainType&gt;&gt;, Int32, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionFileArray(FileArray&lt;DistributionFileArray&lt;T, DomainType&gt;&gt; parent, int index, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.FileArray-1.html">FileArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;&gt;</td>
+        <td><span class="parametername">parent</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2__ctor_System_String_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.#ctor(System.String,System.Int32)">DistributionFileArray(String, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionFileArray(string prefix, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">prefix</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2__ctor_System_String_System_Int32_Func_System_Int32__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.#ctor(System.String,System.Int32,Func{System.Int32,`0})">DistributionFileArray(String, Int32, Func&lt;Int32, T&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionFileArray(string prefix, int count, Func&lt;int, T&gt; init)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">prefix</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, T&gt;</td>
+        <td><span class="parametername">init</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.Point">Point</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DomainType[] Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>DomainType[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.Clone">Clone()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Collections.FileArray&lt;T&gt;.Clone()</span></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1})">GetAverageLog(DistributionFileArray&lt;T, DomainType&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(DistributionFileArray&lt;T, DomainType&gt; that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1})">GetLogAverageOf(DistributionFileArray&lt;T, DomainType&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(DistributionFileArray&lt;T, DomainType&gt; that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_GetLogAverageOfPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.GetLogAverageOfPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_GetLogAverageOfPower_Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.GetLogAverageOfPower(Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1},System.Double)">GetLogAverageOfPower(DistributionFileArray&lt;T, DomainType&gt;, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOfPower(DistributionFileArray&lt;T, DomainType&gt; that, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_GetLogProb__1___" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.GetLogProb(`1[])">GetLogProb(DomainType[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(DomainType[] value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>DomainType[]</td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.Sample">Sample()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DomainType[] Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>DomainType[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_Sample__1___" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.Sample(`1[])">Sample(DomainType[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DomainType[] Sample(DomainType[] result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>DomainType[]</td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>DomainType[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetTo_Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetTo(Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1})">SetTo(DistributionFileArray&lt;T, DomainType&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(DistributionFileArray&lt;T, DomainType&gt; value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetToPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetToPower_Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetToPower(Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1},System.Double)">SetToPower(DistributionFileArray&lt;T, DomainType&gt;, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPower(DistributionFileArray&lt;T, DomainType&gt; value, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetToProduct_Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetToProduct(Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1},Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1})">SetToProduct(DistributionFileArray&lt;T, DomainType&gt;, DistributionFileArray&lt;T, DomainType&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(DistributionFileArray&lt;T, DomainType&gt; a, DistributionFileArray&lt;T, DomainType&gt; b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetToRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetToRatio_Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetToRatio(Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1},Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1},System.Boolean)">SetToRatio(DistributionFileArray&lt;T, DomainType&gt;, DistributionFileArray&lt;T, DomainType&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRatio(DistributionFileArray&lt;T, DomainType&gt; numerator, DistributionFileArray&lt;T, DomainType&gt; denominator, bool forceProper)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">numerator</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">denominator</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetToSum_System_Double_Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__System_Double_Microsoft_ML_Probabilistic_Distributions_DistributionFileArray__0__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetToSum(System.Double,Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1},System.Double,Microsoft.ML.Probabilistic.Distributions.DistributionFileArray{`0,`1})">SetToSum(Double, DistributionFileArray&lt;T, DomainType&gt;, Double, DistributionFileArray&lt;T, DomainType&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, DistributionFileArray&lt;T, DomainType&gt; value1, double weight2, DistributionFileArray&lt;T, DomainType&gt; value2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">value1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray-2.html">DistributionFileArray</a>&lt;T, DomainType&gt;</td>
+        <td><span class="parametername">value2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DistributionFileArray_2_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.DistributionFileArray`2.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IArray-1.html">IArray&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">IList&lt;&gt;</span>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

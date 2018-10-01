@@ -1,0 +1,3757 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6" class="text-break">Class SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>A base class for implementations of distributions over sequences.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt;</span></div>
+      <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ListDistribution-2.html">ListDistribution&lt;TElement, TElementDistribution&gt;</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ListDistribution-4.html">ListDistribution&lt;TList, TElement, TElementDistribution, TThis&gt;</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;TSequence&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;TSequence&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;TSequence&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;TThis, TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;TThis, TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSumExact-1.html">SettableToWeightedSumExact</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;TSequence&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt; : object, IDistribution&lt;TSequence&gt;, ICloneable, HasPoint&lt;TSequence&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;TSequence&gt;, SettableTo&lt;TThis&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, SettableToRatio&lt;TThis&gt;, SettableToRatio&lt;TThis, TThis&gt;, SettableToPower&lt;TThis&gt;, CanGetLogAverageOf&lt;TThis&gt;, CanGetLogAverageOfPower&lt;TThis&gt;, CanGetAverageLog&lt;TThis&gt;, SettableToWeightedSumExact&lt;TThis&gt;, SettableToWeightedSum&lt;TThis&gt;, SettableToPartialUniform&lt;TThis&gt;, CanGetLogNormalizer, Sampleable&lt;TSequence&gt; where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : class, IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, Sampleable&lt;TElement&gt;, new()
+    where TSequenceManipulator : ISequenceManipulator&lt;TSequence, TElement&gt;, new()
+    where TWeightFunction : Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction&gt;, new()
+    where TThis : SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt;, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TSequence</span></td>
+        <td><p>The type of a sequence.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TElement</span></td>
+        <td><p>The type of a sequence element.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TElementDistribution</span></td>
+        <td><p>The type of a distribution over sequence elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSequenceManipulator</span></td>
+        <td><p>The type providing ways to manipulate sequences.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TWeightFunction</span></td>
+        <td><p>The type of an underlying function mapping sequences to weights. Currently must be a weighted finite state automaton.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TThis</span></td>
+        <td><p>The type of a concrete distribution class.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6__ctor" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.#ctor">SequenceDistribution()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html">SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis&gt;</a> class
+with a null weight function.  The workspace must be set by the subclass constructor or factory method.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected SequenceDistribution()</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsEmpty_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsEmpty*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsEmpty" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsEmpty">IsEmpty</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current distribution
+puts all probability mass on the empty sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsEmpty { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current distribution represents a point mass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the point mass represented by the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TSequence Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Any_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Any*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Any_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Any(System.Int32,System.Nullable{System.Int32})">Any(Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over sequences of length within the given bounds.
+If <code data-dev-comment-type="paramref" class="paramref">maxLength</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Any(int minLength = 0, int? maxLength = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minLength</span></td>
+        <td><p>The minimum possible sequence length.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxLength</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Append*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__0_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Append(`0,System.Byte)">Append(TSequence, Byte)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution over concatenations of sequences from the current distribution and a given sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis Append(TSequence sequence, byte group = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The sequence to append.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group for the appended sequence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The distribution over the concatenations of sequences.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__0_System_Byte__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is equivalent to the distribution produced by the following sampling procedure:</p>
+<ol><li>
+Sample a random sequence from the current distribution.
+</li><li>
+Append <code data-dev-comment-type="paramref" class="paramref">sequence</code> to it and output the result.
+</li></ol>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Append*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__1_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Append(`1,System.Byte)">Append(TElement, Byte)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution over concatenations of sequences from the current distribution and a given element.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis Append(TElement element, byte group = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElement</span></td>
+        <td><span class="parametername">element</span></td>
+        <td><p>The element to append.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group for the appended element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The distribution over the concatenations of sequences and the element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__1_System_Byte__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is equivalent to the distribution produced by the following sampling procedure:</p>
+<ol><li>
+Sample a random sequence from the current distribution.
+</li><li>
+Append the given element to the sampled sequence and output the result.
+</li></ol>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Append*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__2_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Append(`2,System.Byte)">Append(TElementDistribution, Byte)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution over concatenations of sequences from the current distribution
+and elements from a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis Append(TElementDistribution elementDistribution, byte group = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">elementDistribution</span></td>
+        <td><p>The distribution to generate the elements from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group for the appended element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The distribution over the concatenations of sequences and elements.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__2_System_Byte__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is equivalent to the distribution produced by the following sampling procedure:</p>
+<ol><li>
+Sample a random sequence from the current distribution.
+</li><li>
+2) Sample a random element from <code data-dev-comment-type="paramref" class="paramref">elementDistribution</code>.
+</li><li>
+3) Append the sampled element to the sampled sequence and output the result.
+</li></ol>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Append*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__5_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Append(`5,System.Byte)">Append(TThis, Byte)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution over concatenations of sequences from the current distribution
+and sequences from a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis Append(TThis dist, byte group = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution over the sequences to append.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group for the appended sequence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The distribution over the concatenations of sequences.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__5_System_Byte__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is equivalent to the distribution produced by the following sampling procedure:</p>
+<ol><li>
+Sample a random sequence from the current distribution.
+</li><li>
+Sample a random sequence from <code data-dev-comment-type="paramref" class="paramref">dist</code>.
+</li><li>
+Output the concatenation of the sampled pair of sequences.
+</li></ol>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.AppendInPlace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__0_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.AppendInPlace(`0,System.Byte)">AppendInPlace(TSequence, Byte)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution by a distribution over concatenations of sequences
+from the current distribution and a given sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AppendInPlace(TSequence sequence, byte group = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The sequence to append.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group for the appended sequence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__0_System_Byte__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is equivalent to the distribution produced by the following sampling procedure:</p>
+<ol><li>
+Sample a random sequence from the current distribution.
+</li><li>
+Append <code data-dev-comment-type="paramref" class="paramref">sequence</code> to it and output the result.
+</li></ol>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.AppendInPlace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__1_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.AppendInPlace(`1,System.Byte)">AppendInPlace(TElement, Byte)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution by a distribution over concatenations of sequences
+from the current distribution and a given element.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AppendInPlace(TElement element, byte group = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElement</span></td>
+        <td><span class="parametername">element</span></td>
+        <td><p>The element to append.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group for the appended element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__1_System_Byte__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is equivalent to the distribution produced by the following sampling procedure:</p>
+<ol><li>
+Sample a random sequence from the current distribution.
+</li><li>
+Append the given element to the sampled sequence and output the result.
+</li></ol>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.AppendInPlace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__2_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.AppendInPlace(`2,System.Byte)">AppendInPlace(TElementDistribution, Byte)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution by a distribution over concatenations of sequences
+from the current distribution and elements from a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AppendInPlace(TElementDistribution elementDistribution, byte group = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">elementDistribution</span></td>
+        <td><p>The distribution to generate the elements from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group for the appended element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__2_System_Byte__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is equivalent to the distribution produced by the following sampling procedure:</p>
+<ol><li>
+Sample a random sequence from the current distribution.
+</li><li>
+Sample a random element from <code data-dev-comment-type="paramref" class="paramref">elementDistribution</code>.
+</li><li>
+Append the sampled element to the sampled sequence and output the result.
+</li></ol>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.AppendInPlace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__5_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.AppendInPlace(`5,System.Byte)">AppendInPlace(TThis, Byte)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution by a distribution over concatenations of sequences
+from the current distribution and sequences from a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AppendInPlace(TThis dist, byte group = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution over the sequences to append.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">group</span></td>
+        <td><p>The group for the appended sequence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__5_System_Byte__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is equivalent to the distribution produced by the following sampling procedure:</p>
+<ol><li>
+Sample a random sequence from the current distribution.
+</li><li>
+Sample a random sequence from <code data-dev-comment-type="paramref" class="paramref">dist</code>.
+</li><li>
+Output the concatenation of the sampled pair of sequences.
+</li></ol>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Creates a copy of the current distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Contains_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Contains*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Contains__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Contains(`0)">Contains(TSequence)</h4>
+  <div class="markdown level1 summary"><p>Returns true if the given sequence is in the support of this distribution (i.e. has non-zero probability).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(TSequence sequence)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The sequence to check.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the sequence has non-zero probability under this distribiton, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Empty_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Empty*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Empty" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Empty">Empty()</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which puts all probability mass on the empty sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Empty()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_EnumerateComponents_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.EnumerateComponents*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_EnumerateComponents" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.EnumerateComponents">EnumerateComponents()</h4>
+  <div class="markdown level1 summary"><p>Enumerates components of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Tuple&lt;List&lt;TElementDistribution&gt;, double&gt;&gt; EnumerateComponents()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Tuple</span>&lt;<span class="xref">List</span>&lt;TElementDistribution&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><p>For each component, the list of element distributions and the log mixture weight for that component.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_EnumerateComponents_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Any sequence distribution can be represented as a mixture of 'simple' sequence
+distributions where each element is independent.  This method enumerates through
+the components of this distribution treated as such a mixture.  Each component
+is returned as a list of the independent element distributions for each element.</p>
+<p>For some distributions, the number of components may be very large.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_EnumerateSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.EnumerateSupport*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_EnumerateSupport_System_Int32_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.EnumerateSupport(System.Int32,System.Boolean)">EnumerateSupport(Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Enumerates support of this distribution when possible.
+Only point mass elements are supported.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TSequence&gt; EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxCount</span></td>
+        <td><p>The maximum support enumeration count.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">tryDeterminize</span></td>
+        <td><p>Try to determinize if this is a string automaton</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TSequence&gt;</td>
+        <td><p>The strings supporting this distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.AutomatonException.html">AutomatonException</a></td>
+        <td><p>Thrown if enumeration is too large.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Checks if <code data-dev-comment-type="paramref" class="paramref">obj</code> equals to this distribution (i.e. represents the same distribution over sequences).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>The object to compare this distribution with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if this distribution is equal to <code data-dev-comment-type="paramref" class="paramref">obj</code>, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_FromWeightFunction_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.FromWeightFunction*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_FromWeightFunction__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.FromWeightFunction(`4)">FromWeightFunction(TWeightFunction)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution from a given weight (non-normalized probability) function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromWeightFunction(TWeightFunction sequenceToWeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TWeightFunction</span></td>
+        <td><span class="parametername">sequenceToWeight</span></td>
+        <td><p>The weight function specifying the distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_FromWorkspace_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.FromWorkspace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_FromWorkspace__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.FromWorkspace(`4)">FromWorkspace(TWeightFunction)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which will use a given weight function as a workspace.
+Any modifications to the workspace after the distribution has been created
+would put the distribution into an invalid state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromWorkspace(TWeightFunction workspace)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TWeightFunction</span></td>
+        <td><span class="parametername">workspace</span></td>
+        <td><p>The workspace to create the distribution from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetAverageLog__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetAverageLog(`5)">GetAverageLog(TThis)</h4>
+  <div class="markdown level1 summary"><p>Computes the expected logarithm of a given distribution under this distribution.
+Not currently supported.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(TThis that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The distribution to take the logarithm of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>sum_x this.Evaluate(x)*Math.Log(that.Evaluate(x))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetAverageLog__5__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is also known as the cross entropy.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetGroups_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetGroups*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetGroups" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetGroups">GetGroups()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;byte, TThis&gt; GetGroups()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>, TThis&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Gets the hash code of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The hash code.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOf__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetLogAverageOf(`5)">GetLogAverageOf(TThis)</h4>
+  <div class="markdown level1 summary"><p>Returns the logarithm of the probability that the current distribution would draw the same sample
+as a given one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(TThis that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The given distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The logarithm of the probability that distributions would draw the same sample.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOfPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetLogAverageOfPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOfPower__5_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetLogAverageOfPower(`5,System.Double)">GetLogAverageOfPower(TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the log-integral of one distribution times another raised to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOfPower(TThis that, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The other distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td><p>The exponent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>Math.Log(sum_x this.Evaluate(x) * Math.Pow(that.Evaluate(x), power))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOfPower__5_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+This is not the same as GetLogAverageOf(that^power) because it includes the normalization constant of that.
+</p>
+<p>Powers other than 1 are not currently supported.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetLogNormalizer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogNormalizer" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetLogNormalizer">GetLogNormalizer()</h4>
+  <div class="markdown level1 summary"><p>Returns the logarithm of the normalizer of the exponential family representation of this distribution.
+Normalizer of an improper distribution is defined to be 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogNormalizer()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The logarithm of the normalizer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogNormalizer_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Getting the normalizer is currently supported for improper distributions only.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogProb__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetLogProb(`0)">GetLogProb(TSequence)</h4>
+  <div class="markdown level1 summary"><p>Gets the logarithm of the probability of a given sequence under this distribution.
+If the distribution is improper, returns the logarithm of the value of the underlying unnormalized weight function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(TSequence sequence)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The sequence to get the probability for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The logarithm of the probability of the sequence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetNormalizedWorkspaceOrPoint_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetNormalizedWorkspaceOrPoint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetNormalizedWorkspaceOrPoint" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetNormalizedWorkspaceOrPoint">GetNormalizedWorkspaceOrPoint()</h4>
+  <div class="markdown level1 summary"><p>Returns the underlying weight function, or, if the distribution is a point mass,
+a functional representation of the corresponding point.
+Any modifications of the returned function will put the distribution into an undefined state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TWeightFunction GetNormalizedWorkspaceOrPoint()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TWeightFunction</span></td>
+        <td><p>The underlying weight function or a functional representation of the point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetNormalizedWorkspaceOrPoint_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The returned weight function is guaranteed to be normalized.
+If you don't care about an arbitrary scale factor,
+consider using <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetWorkspaceOrPoint">GetWorkspaceOrPoint()</a> which has less overhead.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetProb__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetProb(`0)">GetProb(TSequence)</h4>
+  <div class="markdown level1 summary"><p>Gets the probability of a given sequence under this distribution.
+If the distribution is improper, returns the value of the underlying unnormalized weight function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetProb(TSequence sequence)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The sequence to get the probability for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The probability of the sequence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetWorkspaceOrPoint_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetWorkspaceOrPoint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetWorkspaceOrPoint" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.GetWorkspaceOrPoint">GetWorkspaceOrPoint()</h4>
+  <div class="markdown level1 summary"><p>Returns the underlying weight function, or, if the distribution is a point mass,
+a functional representation of the corresponding point.
+Any modifications of the returned function will put the distribution into an undefined state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TWeightFunction GetWorkspaceOrPoint()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TWeightFunction</span></td>
+        <td><p>The underlying weight function or a functional representation of the point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetWorkspaceOrPoint_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The returned weight function might differ from the probability function by an arbitrary scale factor.
+To ensure that the workspace is normalized, use <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetNormalizedWorkspaceOrPoint">GetNormalizedWorkspaceOrPoint()</a>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_HasGroup_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.HasGroup*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_HasGroup_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.HasGroup(System.Byte)">HasGroup(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasGroup(byte group)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">group</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsPartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsPartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsPartialUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsPartialUniform">IsPartialUniform()</h4>
+  <div class="markdown level1 summary"><p>Checks whether the distribution is uniform over its support.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPartialUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the distribution is uniform over its support, <span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsProper_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsProper*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsProper" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsProper">IsProper()</h4>
+  <div class="markdown level1 summary"><p>Checks whether the current distribution is proper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsProper()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the current distribution is proper, <span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Checks whether the current distribution is uniform over all possible sequences.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the current distribution is uniform over all possible sequences, <span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsZero_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsZero*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsZero" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.IsZero">IsZero()</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current distribution
+is an improper distribution which assigns zero probability to every sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsZero()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if the current distribution
+is an improper distribution that assigns zero probability to every sequence, <span class="xref">false</span> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating how close this distribution is to a given one
+in terms of probabilities they assign to sequences.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The other distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A non-negative value, which is close to zero if the two distribution assign similar values to all sequences.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf__0___" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf(`0[])">OneOf(TSequence[])</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over a given set of sequences.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis OneOf(params TSequence[] sequences)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>TSequence[]</td>
+        <td><span class="parametername">sequences</span></td>
+        <td><p>The set of sequences to create a distribution from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf__5___" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf(`5[])">OneOf(TThis[])</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is a uniform mixture of a given set of distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis OneOf(params TThis[] distributions)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>TThis[]</td>
+        <td><span class="parametername">distributions</span></td>
+        <td><p>The set of distributions to create a mixture from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created mixture distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf(IEnumerable{`0})">OneOf(IEnumerable&lt;TSequence&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over a given set of sequences.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis OneOf(IEnumerable&lt;TSequence&gt; sequences)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TSequence&gt;</td>
+        <td><span class="parametername">sequences</span></td>
+        <td><p>The set of sequences to create a distribution from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_IEnumerable__5__System_Boolean_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf(IEnumerable{`5},System.Boolean,System.Boolean)">OneOf(IEnumerable&lt;TThis&gt;, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is a uniform mixture of a given set of distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis OneOf(IEnumerable&lt;TThis&gt; distributions, bool cloneIfSizeOne = false, bool skipNormalization = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TThis&gt;</td>
+        <td><span class="parametername">distributions</span></td>
+        <td><p>The set of distributions to create a mixture from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">cloneIfSizeOne</span></td>
+        <td><p>If the set has one element, whether to return that element or to clone it.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">skipNormalization</span></td>
+        <td><p>Allow normalization to be skipped as it can be expensive</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created mixture distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_IEnumerable_KeyValuePair__0_System_Double___" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf(IEnumerable{KeyValuePair{`0,System.Double}})">OneOf(IEnumerable&lt;KeyValuePair&lt;TSequence, Double&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which assigns specified probabilities to given sequences.
+Probabilities do not have to be normalized.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis OneOf(IEnumerable&lt;KeyValuePair&lt;TSequence, double&gt;&gt; sequenceProbPairs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">KeyValuePair</span>&lt;TSequence, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><span class="parametername">sequenceProbPairs</span></td>
+        <td><p>A list of (sequence, probability) pairs.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Double__5_System_Double__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOf(System.Double,`5,System.Double,`5)">OneOf(Double, TThis, Double, TThis)</h4>
+  <div class="markdown level1 summary"><p>Creates a mixture of a given pair of distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis OneOf(double weight1, TThis dist1, double weight2, TThis dist2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>The weight of the first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist1</span></td>
+        <td><p>The first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>The weight of the second distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist2</span></td>
+        <td><p>The second distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created mixture distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOrMore*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__0_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOrMore(`0,System.Nullable{System.Int32})">OneOrMore(TSequence, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>An alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__5_System_Int32_System_Nullable_System_Int32__">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</a> with the minimum number of repetitions set to 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis OneOrMore(TSequence sequence, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The sequence.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum number of repetitions, or <span class="xref">null</span> for no upper bound.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOrMore*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__1_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOrMore(`1,System.Nullable{System.Int32})">OneOrMore(TElement, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>An alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__1_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">Repeat(TElement, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a> with the minimum number of repetitions set to 1
+and uniformity kind set to <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind.html#Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_UniformOverValue">UniformOverValue</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis OneOrMore(TElement element, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElement</span></td>
+        <td><span class="parametername">element</span></td>
+        <td><p>The element.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum number of repetitions, or <span class="xref">null</span> for no upper bound.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOrMore*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__2_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOrMore(`2,System.Nullable{System.Int32})">OneOrMore(TElementDistribution, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>An alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__2_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">Repeat(TElementDistribution, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a> with the minimum number of repetitions set to 0
+and uniformity kind set to <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind.html#Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_UniformOverValue">UniformOverValue</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis OneOrMore(TElementDistribution allowedElements, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">allowedElements</span></td>
+        <td><p>The allowed sequence elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum number of repetitions, or <span class="xref">null</span> for no upper bound.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOrMore*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__5_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.OneOrMore(`5,System.Nullable{System.Int32})">OneOrMore(TThis, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>An alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__5_System_Int32_System_Nullable_System_Int32__">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</a> with the minimum number of repetitions set to 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis OneOrMore(TThis dist, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum number of repetitions, or <span class="xref">null</span> for no upper bound.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Optional_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Optional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Optional__0_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Optional(`0,System.Double)">Optional(TSequence, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a mixture of a point mass on the given sequence and a point mass representing an empty sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Optional(TSequence sequence, double prob = 0.5)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The given sequence.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">prob</span></td>
+        <td><p>The probability of the component corresponding to <code data-dev-comment-type="paramref" class="paramref">sequence</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created mixture.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Optional_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Optional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Optional__5_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Optional(`5,System.Double)">Optional(TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a mixture of a given distribution and a point mass representing an empty sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Optional(TThis dist, double prob = 0.5)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">prob</span></td>
+        <td><p>The probability of the component corresponding to <code data-dev-comment-type="paramref" class="paramref">dist</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created mixture.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_PointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.PointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_PointMass__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.PointMass(`0)">PointMass(TSequence)</h4>
+  <div class="markdown level1 summary"><p>Creates a point mass distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis PointMass(TSequence point)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">point</span></td>
+        <td><p>The point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created point mass distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Product_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Product*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Product__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Product(`5)">Product(TThis)</h4>
+  <div class="markdown level1 summary"><p>Returns a product of the current distribution and a given one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TThis Product(TThis that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The distribution to compute the product with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Repeat*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__0_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Repeat(`0,System.Int32,System.Nullable{System.Int32})">Repeat(TSequence, Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over sequences containing N repeats of the
+specified sequence, where n lies within the given bounds.
+If <code data-dev-comment-type="paramref" class="paramref">maxTimes</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the number of repeats, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Repeat(TSequence sequence, int minTimes = 1, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The sequence to repeat.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minTimes</span></td>
+        <td><p>The minimum possible sequence length. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Repeat*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__1_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Repeat(`1,System.Int32,System.Nullable{System.Int32},Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind)">Repeat(TElement, Int32, Nullable&lt;Int32&gt;, DistributionKind)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over sequences of length within the given bounds.
+Sequence elements are restricted to be equal to a given element.
+If <code data-dev-comment-type="paramref" class="paramref">maxTimes</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Repeat(TElement element, int minTimes = 1, int? maxTimes = null, DistributionKind uniformity = DistributionKind.UniformOverValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElement</span></td>
+        <td><span class="parametername">element</span></td>
+        <td><p>The element.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minTimes</span></td>
+        <td><p>The minimum possible sequence length. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind.html">DistributionKind</a></td>
+        <td><span class="parametername">uniformity</span></td>
+        <td><p>The type of uniformity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Repeat*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__2_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Repeat(`2,System.Int32,System.Nullable{System.Int32},Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind)">Repeat(TElementDistribution, Int32, Nullable&lt;Int32&gt;, DistributionKind)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over sequences of length within the given bounds.
+Sequence elements are restricted to be non-zero probability elements from a given distribution.
+If <code data-dev-comment-type="paramref" class="paramref">maxTimes</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Repeat(TElementDistribution allowedElements, int minTimes = 1, int? maxTimes = null, DistributionKind uniformity = DistributionKind.UniformOverValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">allowedElements</span></td>
+        <td><p>The distribution representing allowed sequence elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minTimes</span></td>
+        <td><p>The minimum possible sequence length. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind.html">DistributionKind</a></td>
+        <td><span class="parametername">uniformity</span></td>
+        <td><p>The type of uniformity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Repeat*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__5_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Repeat(`5,System.Int32,System.Nullable{System.Int32})">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>
+Creates a distribution by applying <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Repeat__4_System_Int32_System_Nullable_System_Int32__">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</a>
+to the weight function of a given distribution,
+which is additionally scaled by the inverse of <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOf__5_">GetLogAverageOf(TThis)</a> with itself.
+So, if the given distribution is partial uniform, the result will be partial uniform over the repetitions of
+sequences covered by the distribution.
+</p>
+<p>
+If <code data-dev-comment-type="paramref" class="paramref">maxTimes</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.
+</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Repeat(TThis dist, int minTimes = 1, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minTimes</span></td>
+        <td><p>The minimum number of repetitions. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum number of repetitions, or <span class="xref">null</span> for no upper bound.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>Draws a sample from the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TSequence Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><p>The drawn sample.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Sample__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Sample(`0)">Sample(TSequence)</h4>
+  <div class="markdown level1 summary"><p>Draws a sample from the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TSequence Sample(TSequence result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>A pre-allocated storage for the sample (will be ignored).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><p>The drawn sample.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetTo__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetTo(`5)">SetTo(TThis)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution by a copy of the given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(TThis that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The distribution to set the current distribution to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToPartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPartialUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToPartialUniform">SetToPartialUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets the distribution to be uniform over its support.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPartialUniform()</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPartialUniform_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will fail if the workspace of this distribution cannot be determinized.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPartialUniformOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToPartialUniformOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPartialUniformOf__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToPartialUniformOf(`5)">SetToPartialUniformOf(TThis)</h4>
+  <div class="markdown level1 summary"><p>Sets the distribution to be uniform over the support of a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPartialUniformOf(TThis dist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution which support will be used to setup the current distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPartialUniformOf__5__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will fail if the workspace of <code data-dev-comment-type="paramref" class="paramref">dist</code> cannot be determinized.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPower__5_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToPower(`5,System.Double)">SetToPower(TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution with a given distribution raised to a given power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPower(TThis that, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The distribution to raise to the power.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td><p>The power.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPower__5_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Only 0 and 1 are currently supported as powers.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToProduct__5__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToProduct(`5,`5)">SetToProduct(TThis, TThis)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution with a product of a given pair of distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(TThis dist1, TThis dist2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist1</span></td>
+        <td><p>The first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist2</span></td>
+        <td><p>The second distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToProductAndReturnLogNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToProductAndReturnLogNormalizer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToProductAndReturnLogNormalizer__5__5_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToProductAndReturnLogNormalizer(`5,`5,System.Boolean)">SetToProductAndReturnLogNormalizer(TThis, TThis, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution with a product of a given pair of distributions
+Returns the logarithm of the normalizer for the product (as returned by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOf__5_">GetLogAverageOf(TThis)</a>).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double SetToProductAndReturnLogNormalizer(TThis dist1, TThis dist2, bool tryDeterminize = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist1</span></td>
+        <td><p>The first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist2</span></td>
+        <td><p>The second distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">tryDeterminize</span></td>
+        <td><p>Whether to try to determinize the result.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The logarithm of the normalizer for the product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToRatio__5__5_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToRatio(`5,`5,System.Boolean)">SetToRatio(TThis, TThis, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution with the ratio of a given pair of distributions. Not currently supported.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRatio(TThis numerator, TThis denominator, bool forceProper)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>The numerator in the ratio.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>The denominator in the ratio.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>Specifies whether the ratio must be proper.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToSum_System_Double__5_System_Double__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToSum(System.Double,`5,System.Double,`5)">SetToSum(Double, TThis, Double, TThis)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution with a mixture of a given pair of distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, TThis dist1, double weight2, TThis dist2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>The weight of the first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist1</span></td>
+        <td><p>The first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>The weight of the second distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist2</span></td>
+        <td><p>The second distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToSumLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToSumLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToSumLog_System_Double__5_System_Double__5_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToSumLog(System.Double,`5,System.Double,`5)">SetToSumLog(Double, TThis, Double, TThis)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution with a mixture of a given pair of distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSumLog(double logWeight1, TThis dist1, double logWeight2, TThis dist2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logWeight1</span></td>
+        <td><p>The logarithm of the weight of the first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist1</span></td>
+        <td><p>The first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logWeight2</span></td>
+        <td><p>The logarithm of the weight of the second distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist2</span></td>
+        <td><p>The second distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution with an improper distribution which assigns the probability of 1 to every sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniformOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToUniformOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniformOf__2_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToUniformOf(`2)">SetToUniformOf(TElementDistribution)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution with an improper distribution which assigns the probability of 1 to every sequence.
+Sequence elements are restricted to be non-zero probability elements from a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniformOf(TElementDistribution allowedElements)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">allowedElements</span></td>
+        <td><p>The distribution representing allowed sequence elements.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniformOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToUniformOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniformOf__2_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToUniformOf(`2,System.Double)">SetToUniformOf(TElementDistribution, Double)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution with an improper distribution which assigns a given probability to every sequence.
+Sequence elements are restricted to be non-zero probability elements from a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void SetToUniformOf(TElementDistribution allowedElements, double uniformLogProb)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">allowedElements</span></td>
+        <td><p>The distribution representing allowed sequence elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">uniformLogProb</span></td>
+        <td><p>The logarithm of the probability assigned to every allowed sequence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToZero_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToZero*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToZero" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetToZero">SetToZero()</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution by an improper zero distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToZero()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetWeightFunction_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetWeightFunction*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetWeightFunction__4_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetWeightFunction(`4)">SetWeightFunction(TWeightFunction)</h4>
+  <div class="markdown level1 summary"><p>Replaces the current distribution by a distribution induced by a given weight function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWeightFunction(TWeightFunction newSequenceToWeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TWeightFunction</span></td>
+        <td><span class="parametername">newSequenceToWeight</span></td>
+        <td><p>The function mapping sequences to weights.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetWorkspace_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetWorkspace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetWorkspace__4_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SetWorkspace(`4,System.Boolean)">SetWorkspace(TWeightFunction, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Replaces the workspace (weight function) of the current distribution with a given one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetWorkspace(TWeightFunction workspace, bool normalizeStructure = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TWeightFunction</span></td>
+        <td><span class="parametername">workspace</span></td>
+        <td><p>The workspace to replace the current one with.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">normalizeStructure</span></td>
+        <td><p>Whether to normalize the structure of the distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetWorkspace__4_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If the given workspace represents a point mass, the distribution would be converted to a point mass
+and the workspace would be set to <span class="xref">null</span>.
+Any modifications of the workspace will put the distribution into an undefined state.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ShouldSerializesequenceToWeight_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ShouldSerializesequenceToWeight*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ShouldSerializesequenceToWeight" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ShouldSerializesequenceToWeight">ShouldSerializesequenceToWeight()</h4>
+  <div class="markdown level1 summary"><p>Whether sequenceToWeight needs to be serialized.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShouldSerializesequenceToWeight()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SingleElement*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__1_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SingleElement(`1)">SingleElement(TElement)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which puts all probability mass on a sequence containing only a given element.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis SingleElement(TElement element)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElement</span></td>
+        <td><span class="parametername">element</span></td>
+        <td><p>The element.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SingleElement*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__2_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.SingleElement(`2)">SingleElement(TElementDistribution)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution over sequences of length 1 induced by a given distribution over sequence elements.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis SingleElement(TElementDistribution elementDistribution)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">elementDistribution</span></td>
+        <td><p>The distribution over sequence elements.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__2__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The distribution created by this method can differ from the result of
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__2_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">Repeat(TElementDistribution, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a> with both min and max number of times to repeat set to 1 since the latter always creates a partial uniform distribution.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns a string that represents the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string that represents the distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString_Action__2_StringBuilder__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ToString(Action{`2,StringBuilder})">ToString(Action&lt;TElementDistribution, StringBuilder&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns a string that represents the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected string ToString(Action&lt;TElementDistribution, StringBuilder&gt; appendRegex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Action</span>&lt;TElementDistribution, <span class="xref">StringBuilder</span>&gt;</td>
+        <td><span class="parametername">appendRegex</span></td>
+        <td><p>Optional method for appending at the element distribution level.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string that represents the automaton.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString_Microsoft_ML_Probabilistic_Distributions_Automata_ISequenceDistributionFormat_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ToString(Microsoft.ML.Probabilistic.Distributions.Automata.ISequenceDistributionFormat)">ToString(ISequenceDistributionFormat)</h4>
+  <div class="markdown level1 summary"><p>Returns a string that represents the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(ISequenceDistributionFormat format)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ISequenceDistributionFormat.html">ISequenceDistributionFormat</a></td>
+        <td><span class="parametername">format</span></td>
+        <td><p>The format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string that represents the distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_TryEnumerateSupport_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.TryEnumerateSupport*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_TryEnumerateSupport_System_Int32_IEnumerable__0___System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.TryEnumerateSupport(System.Int32,IEnumerable{`0}@,System.Boolean)">TryEnumerateSupport(Int32, out IEnumerable&lt;TSequence&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Enumerates support of this distribution when possible.
+Only point mass elements are supported.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryEnumerateSupport(int maxCount, out IEnumerable&lt;TSequence&gt; result, bool tryDeterminize = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxCount</span></td>
+        <td><p>The maximum support enumeration count.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;TSequence&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>The strings supporting this distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">tryDeterminize</span></td>
+        <td><p>Try to determinize if this is a string automaton</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if successful, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.AutomatonException.html">AutomatonException</a></td>
+        <td><p>Thrown if enumeration is too large.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Uniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Uniform">Uniform()</h4>
+  <div class="markdown level1 summary"><p>Creates an improper distribution which assigns the probability of 1 to every sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Uniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created uniform distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_UniformOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.UniformOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_UniformOf__2_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.UniformOf(`2,System.Double)">UniformOf(TElementDistribution, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates an improper distribution which assigns a given probability to every sequence.
+Sequence elements are restricted to be non-zero probability elements from a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected static TThis UniformOf(TElementDistribution allowedElements, double uniformLogProb)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">allowedElements</span></td>
+        <td><p>The distribution representing allowed sequence elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">uniformLogProb</span></td>
+        <td><p>The logarithm of the probability assigned to every allowed sequence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Zero_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Zero*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Zero" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.Zero">Zero()</h4>
+  <div class="markdown level1 summary"><p>Creates an improper distribution which assigns zero probability to every sequence.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Zero()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created zero distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ZeroOrMore*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__0_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ZeroOrMore(`0,System.Nullable{System.Int32})">ZeroOrMore(TSequence, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>An alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__5_System_Int32_System_Nullable_System_Int32__">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</a> with the minimum number of repetitions set to 0.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis ZeroOrMore(TSequence sequence, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSequence</span></td>
+        <td><span class="parametername">sequence</span></td>
+        <td><p>The sequence.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum number of repetitions, or <span class="xref">null</span> for no upper bound.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ZeroOrMore*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__1_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ZeroOrMore(`1,System.Nullable{System.Int32})">ZeroOrMore(TElement, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>An alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__1_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">Repeat(TElement, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a> with the minimum number of repetitions set to 0
+and uniformity kind set to <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind.html#Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_UniformOverValue">UniformOverValue</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis ZeroOrMore(TElement element, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElement</span></td>
+        <td><span class="parametername">element</span></td>
+        <td><p>The element.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum number of repetitions, or <span class="xref">null</span> for no upper bound.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ZeroOrMore*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__2_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ZeroOrMore(`2,System.Nullable{System.Int32})">ZeroOrMore(TElementDistribution, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>An alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__2_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">Repeat(TElementDistribution, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a> with the minimum number of repetitions set to 0
+and uniformity kind set to <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind.html#Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_UniformOverValue">UniformOverValue</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis ZeroOrMore(TElementDistribution allowedElements, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TElementDistribution</span></td>
+        <td><span class="parametername">allowedElements</span></td>
+        <td><p>The allowed sequence elements.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum number of repetitions, or <span class="xref">null</span> for no upper bound.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore_" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ZeroOrMore*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__5_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution`6.ZeroOrMore(`5,System.Nullable{System.Int32})">ZeroOrMore(TThis, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>An alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__5_System_Int32_System_Nullable_System_Int32__">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</a> with the minimum number of repetitions set to 0.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis ZeroOrMore(TThis dist, int? maxTimes = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxTimes</span></td>
+        <td><p>The maximum number of repetitions, or <span class="xref">null</span> for no upper bound.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSumExact-1.html">SettableToWeightedSumExact&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform&lt;TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,2231 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct Gaussian
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct Gaussian
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Gaussian" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian" class="text-break">Struct Gaussian
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a one-dimensional Gaussian distribution.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVarianceOut-2.html">CanGetMeanAndVarianceOut</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMeanAndVariance-2.html">CanSetMeanAndVariance</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct Gaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Gaussian&gt;, SettableToProduct&lt;Gaussian&gt;, SettableToProduct&lt;Gaussian, Gaussian&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Gaussian&gt;, SettableToRatio&lt;Gaussian, Gaussian&gt;, SettableToPower&lt;Gaussian&gt;, SettableToWeightedSum&lt;Gaussian&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;Gaussian&gt;, CanGetLogAverageOfPower&lt;Gaussian&gt;, CanGetAverageLog&lt;Gaussian&gt;, CanGetLogNormalizer, CanGetMode&lt;double&gt;</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+    The distribution is represented by two parameters: MeanTimesPrecision and Precision.
+    Precision is the inverse of the variance, so a Gaussian with mean m and variance v is
+    represented as Precision = 1/v, MeanTimesPrecision = m/v.
+</p><p>
+Some special cases:
+If the Precision is zero, then the distribution is uniform.
+If the Precision is infinite, then the distribution is a point mass.  The Point property
+gives the location of the point mass.
+</p><p>
+The formula for the distribution is:
+<code>N(x;m,v) = 1/sqrt(2*pi*v) * exp(-(x-m)^2/(2v))</code>.
+When v=0, this reduces to delta(x-m).
+When v=infinity, the density is redefined to be 1.
+When v &lt; 0, the density is redefined to be <code>exp(-0.5*x^2*(1/v) + x*(m/v))</code>, 
+i.e. we drop the terms <code>exp(-m^2/(2v))/sqrt(2*pi*v)</code>.
+</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian__ctor_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.#ctor(Microsoft.ML.Probabilistic.Distributions.Gaussian)">Gaussian(Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Copy constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Gaussian(Gaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian__ctor_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.#ctor(System.Double,System.Double)">Gaussian(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a Gaussian distribution with specified mean and variance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Gaussian(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_MeanTimesPrecision" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.MeanTimesPrecision">MeanTimesPrecision</h4>
+  <div class="markdown level1 summary"><p>Mean times precision</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MeanTimesPrecision</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Precision" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Precision">Precision</h4>
+  <div class="markdown level1 summary"><p>Precision</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Precision</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Asks whether the instance is a point mass</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Sets/gets the instance as a point mass</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Clones this Gaussian.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>An object which is a clone of the current instance. This must be cast
+if you want to assign the result to a Gaussian type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Override of the Equals method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object thatd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">thatd</span></td>
+        <td><p>The instance to compare to</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the two distributions are the same in value, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_FromDerivatives_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.FromDerivatives*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_FromDerivatives_System_Double_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.FromDerivatives(System.Double,System.Double,System.Double,System.Boolean)">FromDerivatives(Double, Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Construct a Gaussian distribution whose log-pdf has the given derivatives at a point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian FromDerivatives(double x, double dlogp, double ddlogp, bool forceProper)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">dlogp</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ddlogp</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>If true and both derivatives cannot be matched, match only the first.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_FromMeanAndPrecision_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.FromMeanAndPrecision*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_FromMeanAndPrecision_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.FromMeanAndPrecision(System.Double,System.Double)">FromMeanAndPrecision(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a Gaussian distribution with given mean and precision.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian FromMeanAndPrecision(double mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The desired mean.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>precision = 1/variance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>A new Gaussian distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_FromMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.FromMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_FromMeanAndVariance_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.FromMeanAndVariance(System.Double,System.Double)">FromMeanAndVariance(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a Gaussian distribution with given mean and variance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian FromMeanAndVariance(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The desired mean.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>The desired variance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>A new Gaussian distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_FromNatural_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.FromNatural*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_FromNatural_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.FromNatural(System.Double,System.Double)">FromNatural(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a new Gaussian distribution from its natural parameters
+(Mean times precision, and Precision)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian FromNatural(double meanTimesPrecision, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">meanTimesPrecision</span></td>
+        <td><p>Mean time precision</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Precision</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>A new Gaussian distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.Gaussian)">GetAverageLog(Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Gets the expected logarithm of that distribution under this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(Gaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The distribution to take the logarithm of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>sum_x this.Evaluate(x)*Math.Log(that.Evaluate(x))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is also known as the cross entropy.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetDerivatives_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetDerivatives*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetDerivatives_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_System_Double__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetDerivatives(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double,System.Double@,System.Double@)">GetDerivatives(Gaussian, Double, out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>Get the derivatives of the log-pdf at a point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void GetDerivatives(Gaussian dist, double x, out double dlogp, out double ddlogp)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">dlogp</span></td>
+        <td><p>On exit, the first derivative.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ddlogp</span></td>
+        <td><p>On exit, the second derivative.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetDerivatives_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetDerivatives*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetDerivatives_System_Double_System_Double__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetDerivatives(System.Double,System.Double@,System.Double@)">GetDerivatives(Double, out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>Get the derivatives of the log-pdf at a point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetDerivatives(double x, out double dlogp, out double ddlogp)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">dlogp</span></td>
+        <td><p>On exit, the first derivative.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ddlogp</span></td>
+        <td><p>On exit, the second derivative.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Override of GetHashCode method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The hash code for this instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.Gaussian)">GetLogAverageOf(Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Gets the integral of the product of two Gaussians.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(Gaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log(N(m1;m2,v1+v2)).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>this = N(x;m1,v1)</code>.
+<code>that = N(x;m2,v2)</code>.
+<code>int_(-infinity)^(infinity) N(x;m1,v1) N(x;m2,v2) dx = N(m1; m2, v1+v2)</code>.
+When improper, the density is redefined to be <code>exp(-0.5<em>x^2</em>(1/v) + x*(m/v))</code>,
+i.e. we drop the terms <code>exp(-m^2/(2v))/sqrt(2<em>pi</em>v)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogAverageOfPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetLogAverageOfPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogAverageOfPower_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetLogAverageOfPower(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">GetLogAverageOfPower(Gaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Get the integral of this distribution times another distribution raised to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOfPower(Gaussian that, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetLogNormalizer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogNormalizer" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetLogNormalizer">GetLogNormalizer()</h4>
+  <div class="markdown level1 summary"><p>Gets the log of the normalizer for the Gaussian density function</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogNormalizer()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogProb_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetLogProb(System.Double)">GetLogProb(Double)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the log of this one-dimensional Gaussian density.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Must be finite.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>log(N(x;mean,variance))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogProb_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetLogProb(System.Double,System.Double,System.Double)">GetLogProb(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the log of one-dimensional Gaussian density.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GetLogProb(double x, double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Must be finite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Must be finite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Any real number.  May be zero or negative.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>log(N(x;mean,variance))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetLogProb_System_Double_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>N(x;m,v) = 1/sqrt(2<em>pi</em>v) * exp(-(x-m)^2/(2v))</code>.
+When v=0, this reduces to delta(x-m).
+When v=infinity, the density is redefined to be 1.
+When v &lt; 0, the density is redefined to be <code>exp(-0.5<em>x^2</em>(1/v) + x*(m/v))</code>,
+i.e. we drop the terms <code>exp(-m^2/(2v))/sqrt(2<em>pi</em>v)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetMean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetMean" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetMean">GetMean()</h4>
+  <div class="markdown level1 summary"><p>Gets the expected value E(x)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetMean()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>E(x)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetMeanAndPrecision_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetMeanAndPrecision*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetMeanAndPrecision_System_Double__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetMeanAndPrecision(System.Double@,System.Double@)">GetMeanAndPrecision(out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>Gets the mean and precision</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetMeanAndPrecision(out double mean, out double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Where to put the mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Where to put the precision</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetMeanAndVariance_System_Double__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetMeanAndVariance(System.Double@,System.Double@)">GetMeanAndVariance(out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>Gets the mean and variance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetMeanAndVariance(out double mean, out double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Where to put the mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Where to put the variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetMode_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetMode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetMode" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetMode">GetMode()</h4>
+  <div class="markdown level1 summary"><p>The most probable value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetMode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetNatural_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetNatural*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetNatural_System_Double__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetNatural(System.Double@,System.Double@)">GetNatural(out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>Gets the natural parameters of the distribution (mean time precision, and precision)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetNatural(out double meanTimesPrecision, out double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">meanTimesPrecision</span></td>
+        <td><p>Where to put the mean times precision</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Where to put the precision</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetProbLessThan_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetProbLessThan*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetProbLessThan_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetProbLessThan(System.Double)">GetProbLessThan(Double)</h4>
+  <div class="markdown level1 summary"><p>Compute the probability that a sample from this distribution is less than x.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetProbLessThan(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The cumulative gaussian distribution at <code data-dev-comment-type="paramref" class="paramref">x</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetVariance" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetVariance">GetVariance()</h4>
+  <div class="markdown level1 summary"><p>Gets the variance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetVariance()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_IsProper_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.IsProper*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_IsProper" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.IsProper">IsProper()</h4>
+  <div class="markdown level1 summary"><p>Asks whether this Gaussian instance is proper or not. A Gaussian distribution
+is proper only if Precision &gt; 0.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsProper()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if proper, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Asks whether this instance is uniform</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if uniform, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>The maximum difference between the parameters of this Gaussian
+and that Gaussian</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object thatd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">thatd</span></td>
+        <td><p>That Gaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The maximum difference</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_MaxDiff_System_Object__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>a.MaxDiff(b) == b.MaxDiff(a)</code></p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_PointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.PointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_PointMass_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.PointMass(System.Double)">PointMass(Double)</h4>
+  <div class="markdown level1 summary"><p>Create a new point mass Gaussian distribution at a specified location</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian PointMass(double mean)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The location for the point mass</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>A new point mass Gaussian distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>Samples from this Gaussian distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Sample_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Sample(System.Double)">Sample(Double)</h4>
+  <div class="markdown level1 summary"><p>Samples from this Gaussian distribution. This override is only
+present to support the Sampleable interface</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Sample(double result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Ignored</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Sample_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Sample(System.Double,System.Double)">Sample(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Samples from a Gaussian distribution with the specified mean and precision</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Sample(double mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetMeanAndPrecision_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetMeanAndPrecision*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetMeanAndPrecision_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetMeanAndPrecision(System.Double,System.Double)">SetMeanAndPrecision(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets the mean and precision</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetMeanAndPrecision(double mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Precision</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetMeanAndVariance_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetMeanAndVariance(System.Double,System.Double)">SetMeanAndVariance(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets the mean and variance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetMeanAndVariance(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetNatural_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetNatural*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetNatural_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetNatural(System.Double,System.Double)">SetNatural(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets the natural parameters of the distribution (mean time precision, and precision)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetNatural(double meanTimesPrecision, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">meanTimesPrecision</span></td>
+        <td><p>Mean times precision</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Precision</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetTo_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetTo(Microsoft.ML.Probabilistic.Distributions.Gaussian)">SetTo(Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Sets this Gaussian instance to have the parameter values of that Gaussian instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(Gaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>That Gaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetToPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToPower_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetToPower(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">SetToPower(Gaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the power of a source Gaussian to some exponent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPower(Gaussian dist, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The source Gaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td><p>The exponent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToProduct_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetToProduct(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">SetToProduct(Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the product of two Gaussians.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(Gaussian a, Gaussian b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first Gaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second Gaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToProduct_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result may not be proper. No error is thrown in this case.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetToRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetToRatio(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Boolean)">SetToRatio(Gaussian, Gaussian, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the ratio of two Gaussians, optionally forcing the precision to be non-negative.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRatio(Gaussian numerator, Gaussian denominator, bool forceProper = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>The numerator Gaussian.  May be the same as <code>this</code></p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>The denominator Gaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>If true, the result will have non-negative precision, under the constraint that result*denominator has the same mean as numerator</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToSum_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetToSum(System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double,Microsoft.ML.Probabilistic.Distributions.Gaussian)">SetToSum(Double, Gaussian, Double, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Sets the mean and variance to match a Gaussian mixture.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, Gaussian g1, double weight2, Gaussian g2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>First weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">g1</span></td>
+        <td><p>First Gaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>Second weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">g2</span></td>
+        <td><p>Second Gaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets this Gaussian instance to be a uniform distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>ToString override</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>String representation of the instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_ToString_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.ToString(System.String)">ToString(String)</h4>
+  <div class="markdown level1 summary"><p>Get a string representation of the distribution with a given number format</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(string format)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">format</span></td>
+        <td><p>Format string to use for each number</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Uniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.Uniform">Uniform()</h4>
+  <div class="markdown level1 summary"><p>Creates a new uniform Gaussian distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian Uniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>A new uniform Gaussian distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_WeightedSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.WeightedSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_WeightedSum__1___0_System_Double___0_System_Double___0_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.WeightedSum``1(``0,System.Double,``0,System.Double,``0)">WeightedSum&lt;T&gt;(T, Double, T, Double, T)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution of the specified type which matches the mean and variance
+of a Gaussian mixture. The distribution type must implement <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVarianceOut-2.html">CanGetMeanAndVarianceOut&lt;MeanType, VarType&gt;</a>,</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WeightedSum&lt;T&gt;(T result, double weight1, T dist1, double weight2, T dist2)
+    where T : CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, SettableToUniform, SettableTo&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Resulting distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>The first weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">dist1</span></td>
+        <td><p>The first distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>The second weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">dist2</span></td>
+        <td><p>The second distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Distribution type for the mixture</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_op_Division_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.op_Division*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_op_Division_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.op_Division(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">Division(Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Creates a new Gaussian which is the ratio of two other Gaussians</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian operator /(Gaussian numerator, Gaussian denominator)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>numerator Gaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>denominator Gaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>Result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_op_Equality_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.op_Equality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_op_Equality_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.op_Equality(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">Equality(Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Equals operator</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Gaussian a, Gaussian b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_op_ExclusiveOr_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.op_ExclusiveOr*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_op_ExclusiveOr_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.op_ExclusiveOr(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double)">ExclusiveOr(Gaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Raises a distribution to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian operator ^(Gaussian dist, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td><p>The power to raise to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">dist</code> raised to power <code data-dev-comment-type="paramref" class="paramref">exponent</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_op_Inequality_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.op_Inequality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_op_Inequality_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.op_Inequality(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">Inequality(Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Not equals operator</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Gaussian a, Gaussian b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_op_Multiply_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.op_Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_op_Multiply_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.op_Multiply(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">Multiply(Gaussian, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>Creates a new Gaussian which is the product of two other Gaussians</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gaussian operator *(Gaussian a, Gaussian b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First Gaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second Gaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>Result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean&lt;MeanType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance&lt;VarType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVarianceOut-2.html">CanGetMeanAndVarianceOut&lt;MeanType, VarType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMeanAndVariance-2.html">CanSetMeanAndVariance&lt;MeanType, VarType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

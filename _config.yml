@@ -1,0 +1,41 @@
+title: Infer.NET
+description: >- # this means to ignore newlines until "baseurl:"
+  Infer.NET is a framework for running Bayesian inference in graphical models.
+  This website contains the Infer.NET documentation, examples of how to use and the API guide.
+baseurl: "/infer"
+encoding: utf-8
+repository: "https://github.com/dotnet/infer" 
+# Build settings
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  parse_block_html: true
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+includes:
+  - apiguide
+  - userguide
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+exclude:
+   - Gemfile
+   - Gemfile.lock
+   - node_modules
+   - vendor/bundle/
+   - vendor/cache/
+   - vendor/gems/
+   - vendor/ruby/
+   - _build/
+   - README.md
+   - Infer.NET_Intro.docx
+   - InferNet101.docx
+   - infernetlogo.pptx
+   - HowInferNetWorks.pptx
+   - .gitignore

@@ -1,0 +1,2357 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ConcatOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ConcatOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_ConcatOp" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp" class="text-break">Class ConcatOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Concat_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">Concat(Vector, Vector)</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">ConcatOp</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class ConcatOp : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.AverageLogFactor">AverageLogFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(concat,first,second))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ConcatAverageConditional(VectorGaussian, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>concat</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageConditional(VectorGaussian first, VectorGaussian second, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>concat</code> as the random arguments are varied. The formula is <code>proj[p(concat) sum_(first,second) p(first,second) factor(concat,first,second)]/p(concat)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ConcatAverageConditional(VectorGaussian, Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>concat</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageConditional(VectorGaussian first, Vector second, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>concat</code> as the random arguments are varied. The formula is <code>proj[p(concat) sum_(first) p(first) factor(concat,first,second)]/p(concat)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditional(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ConcatAverageConditional(Vector, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>concat</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageConditional(Vector first, VectorGaussian second, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>concat</code> as the random arguments are varied. The formula is <code>proj[p(concat) sum_(second) p(second) factor(concat,first,second)]/p(concat)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditionalInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditionalInit(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ConcatAverageConditionalInit(VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageConditionalInit(VectorGaussian first, VectorGaussian second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditionalInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditionalInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditionalInit(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector)">ConcatAverageConditionalInit(VectorGaussian, Vector)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageConditionalInit(VectorGaussian first, Vector second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditionalInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditionalInit_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageConditionalInit(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ConcatAverageConditionalInit(Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageConditionalInit(Vector first, VectorGaussian second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageConditionalInit_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ConcatAverageLogarithm(VectorGaussian, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>concat</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageLogarithm(VectorGaussian first, VectorGaussian second, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>concat</code> as the random arguments are varied. The formula is <code>proj[sum_(first,second) p(first,second) factor(concat,first,second)]</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ConcatAverageLogarithm(VectorGaussian, Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>concat</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageLogarithm(VectorGaussian first, Vector second, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>concat</code> as the random arguments are varied. The formula is <code>proj[sum_(first) p(first) factor(concat,first,second)]</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithm(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ConcatAverageLogarithm(Vector, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>concat</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageLogarithm(Vector first, VectorGaussian second, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>concat</code> as the random arguments are varied. The formula is <code>proj[sum_(second) p(second) factor(concat,first,second)]</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithmInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithmInit(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ConcatAverageLogarithmInit(VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageLogarithmInit(VectorGaussian first, VectorGaussian second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithmInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithmInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithmInit(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector)">ConcatAverageLogarithmInit(VectorGaussian, Vector)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageLogarithmInit(VectorGaussian first, Vector second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithmInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithmInit_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.ConcatAverageLogarithmInit(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ConcatAverageLogarithmInit(Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ConcatAverageLogarithmInit(Vector first, VectorGaussian second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_ConcatAverageLogarithmInit_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">FirstAverageConditional(VectorGaussian, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>first</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FirstAverageConditional(VectorGaussian concat, VectorGaussian second, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>first</code> as the random arguments are varied. The formula is <code>proj[p(first) sum_(concat,second) p(concat,second) factor(concat,first,second)]/p(first)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">concat</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">FirstAverageConditional(VectorGaussian, Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>first</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FirstAverageConditional(VectorGaussian concat, Vector second, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>first</code> as the random arguments are varied. The formula is <code>proj[p(first) sum_(concat) p(concat) factor(concat,first,second)]/p(first)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">concat</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageConditional(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">FirstAverageConditional(Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>first</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FirstAverageConditional(Vector concat, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>first</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">FirstAverageLogarithm(VectorGaussian, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>first</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FirstAverageLogarithm(VectorGaussian concat, VectorGaussian second, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>first</code>. Because the factor is deterministic, <code>concat</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(second) p(second) log(sum_concat p(concat) factor(concat,first,second)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">concat</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">FirstAverageLogarithm(VectorGaussian, Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>first</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FirstAverageLogarithm(VectorGaussian concat, Vector second, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>first</code> with <code>concat</code> integrated out. The formula is <code>sum_concat p(concat) factor(concat,first,second)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">concat</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.FirstAverageLogarithm(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">FirstAverageLogarithm(Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>first</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FirstAverageLogarithm(Vector concat, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_FirstAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>first</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">LogAverageFactor(VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(VectorGaussian concat, VectorGaussian to_concat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">to_concat</span></td>
+        <td><p>Outgoing message to <code>concat</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(concat) p(concat) factor(concat,first,second))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector)">LogAverageFactor(VectorGaussian, Vector, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(VectorGaussian concat, Vector first, Vector second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(concat) p(concat) factor(concat,first,second))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">LogAverageFactor(Vector, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Vector concat, VectorGaussian first, VectorGaussian second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(first,second) p(first,second) factor(concat,first,second))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector)">LogAverageFactor(Vector, VectorGaussian, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Vector concat, VectorGaussian first, Vector second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(first) p(first) factor(concat,first,second))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">LogAverageFactor(Vector, Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Vector concat, Vector first, VectorGaussian second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(second) p(second) factor(concat,first,second))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogAverageFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector)">LogAverageFactor(Vector, Vector, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Vector concat, Vector first, Vector second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(concat,first,second))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">LogEvidenceRatio(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(VectorGaussian concat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(concat) p(concat) factor(concat,first,second) / sum_concat p(concat) messageTo(concat))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">LogEvidenceRatio(Vector, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Vector concat, VectorGaussian first, VectorGaussian second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(first,second) p(first,second) factor(concat,first,second))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector)">LogEvidenceRatio(Vector, VectorGaussian, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Vector concat, VectorGaussian first, Vector second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(first) p(first) factor(concat,first,second))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">LogEvidenceRatio(Vector, Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Vector concat, Vector first, VectorGaussian second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Incoming message from <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(second) p(second) factor(concat,first,second))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector)">LogEvidenceRatio(Vector, Vector, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Vector concat, Vector first, Vector second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>Constant value for <code>second</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(concat,first,second))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SecondAverageConditional(VectorGaussian, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>second</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SecondAverageConditional(VectorGaussian concat, VectorGaussian first, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>second</code> as the random arguments are varied. The formula is <code>proj[p(second) sum_(concat,first) p(concat,first) factor(concat,first,second)]/p(second)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">concat</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SecondAverageConditional(VectorGaussian, Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>second</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SecondAverageConditional(VectorGaussian concat, Vector first, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>second</code> as the random arguments are varied. The formula is <code>proj[p(second) sum_(concat) p(concat) factor(concat,first,second)]/p(second)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">concat</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageConditional(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SecondAverageConditional(Vector, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>second</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SecondAverageConditional(Vector concat, VectorGaussian first, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>second</code> as the random arguments are varied. The formula is <code>proj[p(second) sum_(first) p(first) factor(concat,first,second)]/p(second)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageConditional(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SecondAverageConditional(Vector, Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>second</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SecondAverageConditional(Vector concat, Vector first, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>second</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SecondAverageLogarithm(VectorGaussian, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>second</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SecondAverageLogarithm(VectorGaussian concat, VectorGaussian first, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>second</code>. Because the factor is deterministic, <code>concat</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(first) p(first) log(sum_concat p(concat) factor(concat,first,second)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">concat</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SecondAverageLogarithm(VectorGaussian, Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>second</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SecondAverageLogarithm(VectorGaussian concat, Vector first, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Incoming message from <code>concat</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>second</code> with <code>concat</code> integrated out. The formula is <code>sum_concat p(concat) factor(concat,first,second)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">concat</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageLogarithm(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SecondAverageLogarithm(Vector, VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>second</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SecondAverageLogarithm(Vector concat, VectorGaussian first, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Incoming message from <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>second</code>. The formula is <code>exp(sum_(first) p(first) log(factor(concat,first,second)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.ConcatOp.SecondAverageLogarithm(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SecondAverageLogarithm(Vector, Vector, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>second</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian SecondAverageLogarithm(Vector concat, Vector first, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">concat</span></td>
+        <td><p>Constant value for <code>concat</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>Constant value for <code>first</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConcatOp_SecondAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>second</code> conditioned on the given values.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

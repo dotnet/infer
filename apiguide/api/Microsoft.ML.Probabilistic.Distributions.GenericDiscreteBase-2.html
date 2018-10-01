@@ -1,0 +1,1971 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GenericDiscreteBase&lt;T, TThis&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GenericDiscreteBase&lt;T, TThis&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2" class="text-break">Class GenericDiscreteBase&lt;T, TThis&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>A generic base class for discrete distributions over a type T.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">GenericDiscreteBase&lt;T, TThis&gt;</span></div>
+      <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteEnum-1.html">DiscreteEnum&lt;TEnum&gt;</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;T&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;T&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;T&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;TThis, TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;TThis, TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSumExact-1.html">SettableToWeightedSumExact</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;TThis&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;T&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class GenericDiscreteBase&lt;T, TThis&gt; : object, IDistribution&lt;T&gt;, ICloneable, HasPoint&lt;T&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;T&gt;, SettableTo&lt;TThis&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, SettableToRatio&lt;TThis&gt;, SettableToRatio&lt;TThis, TThis&gt;, SettableToPower&lt;TThis&gt;, SettableToWeightedSumExact&lt;TThis&gt;, SettableToWeightedSum&lt;TThis&gt;, SettableToPartialUniform&lt;TThis&gt;, CanGetLogAverageOf&lt;TThis&gt;, CanGetLogAverageOfPower&lt;TThis&gt;, CanGetAverageLog&lt;TThis&gt;, Sampleable&lt;T&gt; where TThis : GenericDiscreteBase&lt;T, TThis&gt;, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The domain type of this distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TThis</span></td>
+        <td><p>The type of the subclass (allows factory methods return the correct type)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This class makes it straightforward to implement discrete distributions
+over types other than int.  It is only necessary to make a subclass of
+this abstract class, add a constructor and implement two methods to convert
+the desired type T to and from an integer.</p>
+<p>Internally, this class wraps a Discrete distribution and uses it to provide
+all functionality.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2__ctor_System_Int32_Microsoft_ML_Probabilistic_Math_Sparsity_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.#ctor(System.Int32,Microsoft.ML.Probabilistic.Math.Sparsity)">GenericDiscreteBase(Int32, Sparsity)</h4>
+  <div class="markdown level1 summary"><p>Creates a discrete</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected GenericDiscreteBase(int dimension, Sparsity sparsity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">dimension</span></td>
+        <td><p>The dimension of the underlying discrete</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Sparsity.html">Sparsity</a></td>
+        <td><span class="parametername">sparsity</span></td>
+        <td><p>The sparsity of the underlying discrete</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_disc" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.disc">disc</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Discrete disc</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Dimension_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Dimension*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Dimension" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Dimension">Dimension</h4>
+  <div class="markdown level1 summary"><p>The dimension of this discrete distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Dimension { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IndexRange_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.IndexRange*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IndexRange" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.IndexRange">IndexRange</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Pair&lt;int, int&gt; IndexRange { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Returns true if the distribution is a point mass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Item_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Item__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Item(`0)">Item[T]</h4>
+  <div class="markdown level1 summary"><p>Gets the probability of a given value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double this[T value] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Point property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ValueRange_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ValueRange*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ValueRange" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ValueRange">ValueRange</h4>
+  <div class="markdown level1 summary"><p>Returns the domain values corresponding to the first and last indices of non-zero probabilities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Pair&lt;T, T&gt; ValueRange { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;T, T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Returns a clone of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ConvertFromInt_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ConvertFromInt*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ConvertFromInt_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ConvertFromInt(System.Int32)">ConvertFromInt(Int32)</h4>
+  <div class="markdown level1 summary"><p>Converts an integer to an item of type T.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract T ConvertFromInt(int i)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">i</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ConvertToInt_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ConvertToInt*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ConvertToInt__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ConvertToInt(`0)">ConvertToInt(T)</h4>
+  <div class="markdown level1 summary"><p>Converts an item of type T to an integer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract int ConvertToInt(T value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Override of the Equals method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>The instance to compare to</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the two distributions are the same in value, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.FromDiscrete*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromDiscrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.FromDiscrete(Microsoft.ML.Probabilistic.Distributions.Discrete)">FromDiscrete(Discrete)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution using the probabilities from the given discrete distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromDiscrete(Discrete d)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">d</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromProbs_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.FromProbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromProbs_System_Double___" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.FromProbs(System.Double[])">FromProbs(Double[])</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution from the given probabilities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromProbs(params double[] probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">probs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromVector_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.FromVector*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromVector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.FromVector(Microsoft.ML.Probabilistic.Math.Vector)">FromVector(Vector)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution from the given vector of probabilities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis FromVector(Vector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetAverageLog__1_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetAverageLog(`1)">GetAverageLog(TThis)</h4>
+  <div class="markdown level1 summary"><p>The expected logarithm of that distribution under this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(TThis that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The distribution to take the logarithm of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>sum_x this.Evaluate(x)*Math.Log(that.Evaluate(x))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetAverageLog__1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is also known as the cross entropy.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Override of GetHashCode method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The hash code for this instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetInternalDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetInternalDiscrete*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetInternalDiscrete" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetInternalDiscrete">GetInternalDiscrete()</h4>
+  <div class="markdown level1 summary"><p>Gets the internal discrete distribution that this distribution wraps.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Discrete GetInternalDiscrete()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p>The internal discrete distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogAverageOf__1_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetLogAverageOf(`1)">GetLogAverageOf(TThis)</h4>
+  <div class="markdown level1 summary"><p>The log of the integral of the product of this discrete distribution and that discrete distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(TThis that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>That discrete distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log inner product</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogAverageOfPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetLogAverageOfPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogAverageOfPower__1_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetLogAverageOfPower(`1,System.Double)">GetLogAverageOfPower(TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Get the integral of this distribution times another distribution raised to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOfPower(TThis that, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogProb__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetLogProb(`0)">GetLogProb(T)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the log density at the specified domain value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(T value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The point at which to evaluate</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log density</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogProbs_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetLogProbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetLogProbs" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetLogProbs">GetLogProbs()</h4>
+  <div class="markdown level1 summary"><p>Gets the log-probability at each index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector GetLogProbs()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>The vector of log-probabilities</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetMode_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetMode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetMode" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetMode">GetMode()</h4>
+  <div class="markdown level1 summary"><p>Gets the mode of the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetMode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The value with the highest probability</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetProbs_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetProbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetProbs" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetProbs">GetProbs()</h4>
+  <div class="markdown level1 summary"><p>Gets the probability at each index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector GetProbs()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>The vector of probabilities</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetWorkspace_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetWorkspace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetWorkspace" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetWorkspace">GetWorkspace()</h4>
+  <div class="markdown level1 summary"><p>Gets a Vector of size this.Dimension.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector GetWorkspace()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>A pointer to the internal probs Vector of the object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetWorkspace_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function is intended to be used with SetProbs, to avoid allocating a new Vector.
+The return value should not be interpreted as a probs vector, but only a workspace filled
+with unknown data that can be overwritten.  Until SetProbs is called, the distribution object
+is invalid once this workspace is modified.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IsPartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.IsPartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IsPartialUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.IsPartialUniform">IsPartialUniform()</h4>
+  <div class="markdown level1 summary"><p>Checks whether the distribution is uniform over its support.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPartialUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the distribution is uniform over its support, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Returns true if the distribution is uniform.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if uniform</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>Gets the maximum difference between the parameters of this discrete and that discrete</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>That discrete</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The maximum difference</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_PointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.PointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_PointMass__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.PointMass(`0)">PointMass(T)</h4>
+  <div class="markdown level1 summary"><p>Creates a point mass distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis PointMass(T value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The allowed value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>Returns a sample from the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Sample__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Sample(`0)">Sample(T)</h4>
+  <div class="markdown level1 summary"><p>Returns a sample from the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T Sample(T result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Not used</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetProbs_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetProbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetProbs_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetProbs(Microsoft.ML.Probabilistic.Math.Vector)">SetProbs(Vector)</h4>
+  <div class="markdown level1 summary"><p>Sets the probability of each index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetProbs(Vector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>A vector of non-negative, finite numbers.  Need not sum to 1.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetProbs_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Instead of allocating your own Vector to pass to SetProbs, you can call <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html#Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetWorkspace">GetWorkspace()</a>,
+fill in the resulting Vector, and then pass it to SetProbs.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetTo__1_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetTo(`1)">SetTo(TThis)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters of this instance to the parameters of that instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(TThis value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>That instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToPartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToPartialUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToPartialUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToPartialUniform">SetToPartialUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets the distribution to be uniform over its support.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPartialUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToPartialUniformOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToPartialUniformOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToPartialUniformOf__1_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToPartialUniformOf(`1)">SetToPartialUniformOf(TThis)</h4>
+  <div class="markdown level1 summary"><p>Sets the distribution to be uniform over the support of a given distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPartialUniformOf(TThis dist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution which support will be used to setup the current distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToPower__1_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToPower(`1,System.Double)">SetToPower(TThis, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the power of a discrete distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPower(TThis value, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The discrete distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td><p>The exponent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToProduct__1__1_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToProduct(`1,`1)">SetToProduct(TThis, TThis)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the product of two discrete distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(TThis a, TThis b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first discrete distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second discrete distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToRatio__1__1_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToRatio(`1,`1,System.Boolean)">SetToRatio(TThis, TThis, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the ratio of two discrete distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRatio(TThis numerator, TThis denominator, bool forceProper)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>The numerator discrete distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>The denominator discrete distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>Whether to force the returned distribution to be proper</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToSum_System_Double__1_System_Double__1_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToSum(System.Double,`1,System.Double,`1)">SetToSum(Double, TThis, Double, TThis)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the weighted sum of two discrete distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, TThis value1, double weight2, TThis value2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>The first weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">value1</span></td>
+        <td><p>The first discrete distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>The second weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><span class="parametername">value2</span></td>
+        <td><p>The second discrete distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets this instance to a uniform discrete (i.e. probabilities all equal)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString(`0)">ToString(T)</h4>
+  <div class="markdown level1 summary"><p>Implements a custom ToString() for items of type T.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual string ToString(T value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString(System.String)">ToString(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual string ToString(string format)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">format</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString_System_String_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString(System.String,System.String)">ToString(String, String)</h4>
+  <div class="markdown level1 summary"><p>Returns a string representation of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual string ToString(string format, string delimiter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">format</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">delimiter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Uniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Uniform">Uniform()</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis Uniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRange_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformInRange*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRange__0__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformInRange(`0,`0)">UniformInRange(T, T)</h4>
+  <div class="markdown level1 summary"><p>Creates a Discrete distribution which is uniform over values from
+start to end inclusive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis UniformInRange(T start, T end)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The first value included in the distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">end</span></td>
+        <td><p>The last value included in the distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>Discrete which is uniform over the specified range (and zero elsewhere).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformInRanges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRanges__0___" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformInRanges(`0[])">UniformInRanges(T[])</h4>
+  <div class="markdown level1 summary"><p>Creates a Discrete distribution which is uniform over values in
+multiple ranges specified by pairs of start and end values. These pairs
+are specified as adjacent values in an array whose length must therefore be
+even.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis UniformInRanges(params T[] startEndPairs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">startEndPairs</span></td>
+        <td><p>Sequence of start and end pairs</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>Discrete which is uniform over the specified range (and zero elsewhere).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformInRanges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRanges_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformInRanges(IEnumerable{`0})">UniformInRanges(IEnumerable&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a Discrete distribution which is uniform over values in
+multiple ranges specified by pairs of start and end values. These pairs
+are specified as adjacent values in an enumerable whose length must therefore be
+even.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis UniformInRanges(IEnumerable&lt;T&gt; startEndPairs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><span class="parametername">startEndPairs</span></td>
+        <td><p>Sequence of start and end pairs</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>Discrete which is uniform over the specified range (and zero elsewhere).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformOver_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformOver*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformOver__0___" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformOver(`0[])">UniformOver(T[])</h4>
+  <div class="markdown level1 summary"><p>Creates a Discrete distribution which is uniform over the specified set of values and zero elsewhere.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis UniformOver(params T[] values)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">values</span></td>
+        <td><p>The values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>Discrete which is uniform over the specified set of values and zero elsewhere.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformOver_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformOver*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformOver_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformOver(IEnumerable{`0})">UniformOver(IEnumerable&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a Discrete distribution which is uniform over the specified set of values and zero elsewhere.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TThis UniformOver(IEnumerable&lt;T&gt; values)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><span class="parametername">values</span></td>
+        <td><p>The values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TThis</span></td>
+        <td><p>Discrete which is uniform over the specified set of values and zero elsewhere.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Microsoft_ML_Probabilistic_Distributions_CanGetLogProb_T__GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Microsoft#ML#Probabilistic#Distributions#CanGetLogProb{T}#GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_Microsoft_ML_Probabilistic_Distributions_CanGetLogProb_T__GetLogProb__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.Microsoft#ML#Probabilistic#Distributions#CanGetLogProb{T}#GetLogProb(`0)">CanGetLogProb&lt;T&gt;.GetLogProb(T)</h4>
+  <div class="markdown level1 summary"><p>Returns the log probability of the value under this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double CanGetLogProb&lt;T&gt;.GetLogProb(T value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSumExact-1.html">SettableToWeightedSumExact&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform&lt;TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

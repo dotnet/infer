@@ -1,0 +1,1464 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ProductWishartOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ProductWishartOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp" class="text-break">Class ProductWishartOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Product_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Double_">Product(PositiveDefiniteMatrix, Double)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Product_System_Double_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_">Product(Double, PositiveDefiniteMatrix)</a></li></ul>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">ProductWishartOp</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class ProductWishartOp : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.Wishart,System.Double,Microsoft.ML.Probabilistic.Distributions.Wishart)">AAverageConditional(Wishart, Double, Wishart)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Wishart AAverageConditional(Wishart Product, double B, Wishart result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(product) p(product) factor(product,a,b)]/p(a)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Wishart)">AAverageLogarithm(Wishart, Gamma, Wishart)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Wishart AAverageLogarithm(Wishart Product, Gamma B, Wishart result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>a</code>. Because the factor is deterministic, <code>product</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(b) p(b) log(sum_product p(product) factor(product,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Wishart,System.Double,Microsoft.ML.Probabilistic.Distributions.Wishart)">AAverageLogarithm(Wishart, Double, Wishart)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Wishart AAverageLogarithm(Wishart Product, double B, Wishart result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>a</code> with <code>product</code> integrated out. The formula is <code>sum_product p(product) factor(product,a,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Wishart)">AAverageLogarithm(PositiveDefiniteMatrix, Gamma, Wishart)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Wishart AAverageLogarithm(PositiveDefiniteMatrix Product, Gamma B, Wishart result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>a</code>. The formula is <code>exp(sum_(b) p(b) log(factor(product,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,System.Double,Microsoft.ML.Probabilistic.Distributions.Wishart)">AAverageLogarithm(PositiveDefiniteMatrix, Double, Wishart)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Wishart AAverageLogarithm(PositiveDefiniteMatrix Product, double B, Wishart result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>a</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.Wishart)">AverageLogFactor(Wishart)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Wishart product)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">BAverageConditional(Wishart, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma BAverageConditional(Wishart Product, PositiveDefiniteMatrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing EP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(product) p(product) factor(product,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageConditional_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageConditional(Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">BAverageConditional(PositiveDefiniteMatrix, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma BAverageConditional(PositiveDefiniteMatrix Product, PositiveDefiniteMatrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing EP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageConditional_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Distributions.Wishart)">BAverageLogarithm(Wishart, Wishart)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma BAverageLogarithm(Wishart Product, Wishart A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>b</code>. Because the factor is deterministic, <code>product</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(a) p(a) log(sum_product p(product) factor(product,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">BAverageLogarithm(Wishart, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma BAverageLogarithm(Wishart Product, PositiveDefiniteMatrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> with <code>product</code> integrated out. The formula is <code>sum_product p(product) factor(product,a,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.Wishart)">BAverageLogarithm(PositiveDefiniteMatrix, Wishart)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma BAverageLogarithm(PositiveDefiniteMatrix Product, Wishart A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>b</code>. The formula is <code>exp(sum_(a) p(a) log(factor(product,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">BAverageLogarithm(PositiveDefiniteMatrix, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma BAverageLogarithm(PositiveDefiniteMatrix Product, PositiveDefiniteMatrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Distributions.Wishart,System.Double)">LogEvidenceRatio(Wishart, Wishart, Double)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Wishart product, Wishart a, double b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(product,a) p(product,a) factor(product,a,b) / sum_product p(product) messageTo(product))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogEvidenceRatio(Wishart, PositiveDefiniteMatrix, Gamma)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Wishart product, PositiveDefiniteMatrix a, Gamma b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(product,b) p(product,b) factor(product,a,b) / sum_product p(product) messageTo(product))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.Wishart,System.Double)">LogEvidenceRatio(PositiveDefiniteMatrix, Wishart, Double)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(PositiveDefiniteMatrix product, Wishart a, double b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a) p(a) factor(product,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.ProductAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.ProductAverageConditional(Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Wishart)">ProductAverageConditional(Wishart, PositiveDefiniteMatrix, Gamma, Gamma, Wishart)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Wishart ProductAverageConditional(Wishart Product, PositiveDefiniteMatrix A, Gamma B, Gamma to_B, Wishart result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">Product</span></td>
+        <td><p>Incoming message from <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">to_B</span></td>
+        <td><p>Previous outgoing message to <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[p(product) sum_(b) p(b) factor(product,a,b)]/p(product)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.ProductAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.ProductAverageConditional(Microsoft.ML.Probabilistic.Distributions.Wishart,System.Double,Microsoft.ML.Probabilistic.Distributions.Wishart)">ProductAverageConditional(Wishart, Double, Wishart)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Wishart ProductAverageConditional(Wishart A, double B, Wishart result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[p(product) sum_(a) p(a) factor(product,a,b)]/p(product)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.ProductAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.ProductAverageConditional(Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,System.Double,Microsoft.ML.Probabilistic.Distributions.Wishart)">ProductAverageConditional(PositiveDefiniteMatrix, Double, Wishart)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Wishart ProductAverageConditional(PositiveDefiniteMatrix A, double B, Wishart result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>product</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.ProductAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.ProductAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Wishart)">ProductAverageLogarithm(Wishart, Gamma, Wishart)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Wishart ProductAverageLogarithm(Wishart A, Gamma B, Wishart result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[sum_(a,b) p(a,b) factor(product,a,b)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.ProductAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Factors.ProductWishartOp.ProductAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Wishart,System.Double,Microsoft.ML.Probabilistic.Distributions.Wishart)">ProductAverageLogarithm(Wishart, Double, Wishart)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Wishart ProductAverageLogarithm(Wishart A, double B, Wishart result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ProductWishartOp_ProductAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Wishart_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[sum_(a) p(a) factor(product,a,b)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1258 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class UnnormalizedDiscrete
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class UnnormalizedDiscrete
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete" class="text-break">Class UnnormalizedDiscrete
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a discrete distribution in the log domain without explicit normalization.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">UnnormalizedDiscrete</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a>&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class UnnormalizedDiscrete : object, IDistribution&lt;int&gt;, ICloneable, HasPoint&lt;int&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;int&gt;, SettableTo&lt;UnnormalizedDiscrete&gt;, Sampleable&lt;int&gt;, SettableToProduct&lt;UnnormalizedDiscrete&gt;, SettableToProduct&lt;UnnormalizedDiscrete, UnnormalizedDiscrete&gt;, SettableToRatio&lt;UnnormalizedDiscrete&gt;, SettableToRatio&lt;UnnormalizedDiscrete, UnnormalizedDiscrete&gt;, SettableToPower&lt;UnnormalizedDiscrete&gt;, SettableToWeightedSum&lt;UnnormalizedDiscrete&gt;, CanGetLogAverageOf&lt;UnnormalizedDiscrete&gt;, CanGetAverageLog&lt;UnnormalizedDiscrete&gt;</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_logProb" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.logProb">logProb</h4>
+  <div class="markdown level1 summary"><p>Log probability of each value (when not a point mass).  Since the distribution is unnormalized, these may be shifted by an arbitrary constant.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected DenseVector logProb</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_logProb_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>logprob.Length == D.</p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Dimension_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Dimension*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Dimension" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Dimension">Dimension</h4>
+  <div class="markdown level1 summary"><p>Dimension of the unnormalised discrete distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Dimension { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Whether or not this instance is a point mass.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Sets/gets this distribution as a point distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Clones this unnormalised discrete distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>An object which is a clone of the current instance. This must be cast
+if you want to assign the result to a UnnormalizedDiscrete type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Evaluate_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Evaluate*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Evaluate_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Evaluate(System.Int32)">Evaluate(Int32)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the unnormalized probability at the specified domain value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Evaluate(int value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The point at which to evaluate</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The unnormalized probability</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_FromDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.FromDiscrete*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_FromDiscrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.FromDiscrete(Microsoft.ML.Probabilistic.Distributions.Discrete)">FromDiscrete(Discrete)</h4>
+  <div class="markdown level1 summary"><p>Creates an unnormalized discrete distribution from a normal discrete distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static UnnormalizedDiscrete FromDiscrete(Discrete d)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">d</span></td>
+        <td><p>The discrete distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_FromLogProbs_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.FromLogProbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_FromLogProbs_Microsoft_ML_Probabilistic_Math_DenseVector_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.FromLogProbs(Microsoft.ML.Probabilistic.Math.DenseVector)">FromLogProbs(DenseVector)</h4>
+  <div class="markdown level1 summary"><p>Creates an unnormalized discrete distribution from a vector of log probabilities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static UnnormalizedDiscrete FromLogProbs(DenseVector logProb)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
+        <td><span class="parametername">logProb</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete)">GetAverageLog(UnnormalizedDiscrete)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(UnnormalizedDiscrete that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete)">GetLogAverageOf(UnnormalizedDiscrete)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(UnnormalizedDiscrete that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetLogProb_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.GetLogProb(System.Int32)">GetLogProb(Int32)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the log of the unnormalized density at the specified domain value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(int value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The point at which to evaluate</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log unnormalized density</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetProbs_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.GetProbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetProbs" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.GetProbs">GetProbs()</h4>
+  <div class="markdown level1 summary"><p>Gets the unnormalized probability vector for this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DenseVector GetProbs()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetWorkspace_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.GetWorkspace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetWorkspace" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.GetWorkspace">GetWorkspace()</h4>
+  <div class="markdown level1 summary"><p>Gets a Vector of size this.Dimension.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DenseVector GetWorkspace()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
+        <td><p>A pointer to the internal log prob Vector of the object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetWorkspace_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function is intended to be used with SetLogProbs, to avoid allocating a new Vector.
+The return value should not be interpreted as a probs vector, but only a workspace filled
+with unknown data that can be overwritten.  Until SetLogProbs is called, the distribution object
+is invalid once this workspace is modified.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Returns whether the distribution is uniform or not</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if uniform</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>The maximum difference between the parameters of this discrete and that discrete</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>That discrete</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The maximum difference</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Sample">Sample()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Sample_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Sample(System.Int32)">Sample(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Sample(int result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetLogProbs_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetLogProbs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetLogProbs_Microsoft_ML_Probabilistic_Math_DenseVector_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetLogProbs(Microsoft.ML.Probabilistic.Math.DenseVector)">SetLogProbs(DenseVector)</h4>
+  <div class="markdown level1 summary"><p>Sets the log probability vector for this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetLogProbs(DenseVector logProbs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
+        <td><span class="parametername">logProbs</span></td>
+        <td><p>A vector of non-negative, finite numbers.  Need not sum to 1.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetLogProbs_Microsoft_ML_Probabilistic_Math_DenseVector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Instead of allocating your own Vector to pass to SetProbs, you can call <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html#Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_GetWorkspace">GetWorkspace()</a>,
+fill in the resulting Vector, and then pass it to SetProbs.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetMaxToZero_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetMaxToZero*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetMaxToZero" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetMaxToZero">SetMaxToZero()</h4>
+  <div class="markdown level1 summary"><p>Rescales the unnormalised distribution, so that the max log prob is zero i.e. the max unnormalised prob is 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetMaxToZero()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetTo_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetTo(Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete)">SetTo(UnnormalizedDiscrete)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters of this instance to the parameters of that instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(UnnormalizedDiscrete value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>That instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetToPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetToPower_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetToPower(Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete,System.Double)">SetToPower(UnnormalizedDiscrete, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPower(UnnormalizedDiscrete dist, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetToProduct_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetToProduct(Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete,Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete)">SetToProduct(UnnormalizedDiscrete, UnnormalizedDiscrete)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the product of two unnormalized discrete distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(UnnormalizedDiscrete a, UnnormalizedDiscrete b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first unnormalized discrete distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second unnormalized discrete distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetToRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetToRatio_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetToRatio(Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete,Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete,System.Boolean)">SetToRatio(UnnormalizedDiscrete, UnnormalizedDiscrete, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the ratio of two unnormalized discrete distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRatio(UnnormalizedDiscrete numerator, UnnormalizedDiscrete denominator, bool forceProper = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>The first unnormalized discrete distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>The second unnormalized discrete distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>Ignored</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetToSum_System_Double_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_System_Double_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetToSum(System.Double,Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete,System.Double,Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete)">SetToSum(Double, UnnormalizedDiscrete, Double, UnnormalizedDiscrete)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, UnnormalizedDiscrete value1, double weight2, UnnormalizedDiscrete value2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">value1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">value2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets this instance to a uniform distribution (i.e. probabilities all equal)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_ToDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.ToDiscrete*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_ToDiscrete" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.ToDiscrete">ToDiscrete()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Discrete ToDiscrete()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Override of ToString method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>String representation of this instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_ToString_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.ToString(System.String)">ToString(String)</h4>
+  <div class="markdown level1 summary"><p>Override of ToString method which allows custom number formatting</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(string format)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">format</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>String representation of this instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Uniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Uniform_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.Uniform(System.Int32)">Uniform(Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform unnormalized discrete distribution over the values from 0 to numValues-1</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static UnnormalizedDiscrete Uniform(int numValues)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">numValues</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_op_Division_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.op_Division*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_op_Division_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.op_Division(Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete,Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete)">Division(UnnormalizedDiscrete, UnnormalizedDiscrete)</h4>
+  <div class="markdown level1 summary"><p>Creates an unnormalized discrete distribution which is the ratio of two unnormalized discrete distributions</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static UnnormalizedDiscrete operator /(UnnormalizedDiscrete a, UnnormalizedDiscrete b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><p>The resulting unnormalized discrete distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_op_ExclusiveOr_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.op_ExclusiveOr*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_op_ExclusiveOr_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.op_ExclusiveOr(Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete,System.Double)">ExclusiveOr(UnnormalizedDiscrete, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static UnnormalizedDiscrete operator ^(UnnormalizedDiscrete dist, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_op_Multiply_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.op_Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_op_Multiply_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_Microsoft_ML_Probabilistic_Distributions_UnnormalizedDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.op_Multiply(Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete,Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete)">Multiply(UnnormalizedDiscrete, UnnormalizedDiscrete)</h4>
+  <div class="markdown level1 summary"><p>Creates an unnormalized discrete distribution which is the product of two unnormalized discrete distributions</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static UnnormalizedDiscrete operator *(UnnormalizedDiscrete a, UnnormalizedDiscrete b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.UnnormalizedDiscrete.html">UnnormalizedDiscrete</a></td>
+        <td><p>The resulting unnormalized discrete distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

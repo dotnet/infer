@@ -1,0 +1,925 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MatchboxRecommender
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MatchboxRecommender
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender" class="text-break">Class MatchboxRecommender
+  </h1>
+  <div class="markdown level0 summary"><p>Matchbox recommender factory.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">MatchboxRecommender</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class MatchboxRecommender : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_Create_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.Create*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_Create__2_Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping___0___1__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.Create``2(Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping{``0,``1})">Create&lt;TInstanceSource, TFeatureSource&gt;(IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a Matchbox recommender from a native data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMatchboxRecommender&lt;TInstanceSource, int, int, Discrete, TFeatureSource&gt; Create&lt;TInstanceSource, TFeatureSource&gt;(IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping-2.html">IMatchboxRecommenderMapping</a>&lt;TInstanceSource, TFeatureSource&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the native format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender</a>&lt;TInstanceSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>, TFeatureSource&gt;</td>
+        <td><p>The recommender instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_Create_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.Create*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_Create__6_Microsoft_ML_Probabilistic_Learners_Mappings_IStarRatingRecommenderMapping___0___1___2___3___4___5_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.Create``6(Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping{``0,``1,``2,``3,``4,``5,Microsoft.ML.Probabilistic.Math.Vector})">Create&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource&gt;(IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a recommender from a standard data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMatchboxRecommender&lt;TInstanceSource, TUser, TItem, System.Collections.Generic.IDictionary&lt;int, double&gt;, TFeatureSource&gt; Create&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource&gt;(IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping-7.html">IStarRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the standard format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender</a>&lt;TInstanceSource, TUser, TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">System.Collections.Generic.IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TFeatureSource&gt;</td>
+        <td><p>The recommender instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRating</span></td>
+        <td><p>The type of a rating.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_Load_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.Load*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_Load__5_Stream_IFormatter_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.Load``5(Stream,IFormatter)">Load&lt;TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource&gt;(Stream, IFormatter)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a recommender from a given stream and formatter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMatchboxRecommender&lt;TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource&gt; Load&lt;TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource&gt;(Stream stream, IFormatter formatter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>The stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IFormatter</span></td>
+        <td><span class="parametername">formatter</span></td>
+        <td><p>The formatter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender</a>&lt;TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource&gt;</td>
+        <td><p>The deserialized recommender object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRatingDistribution</span></td>
+        <td><p>The type of a distribution over ratings.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_Load_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.Load*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_Load__5_System_String_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.Load``5(System.String)">Load&lt;TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource&gt;(String)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a Matchbox recommender from a file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMatchboxRecommender&lt;TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource&gt; Load&lt;TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource&gt;(string fileName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>The file name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender</a>&lt;TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource&gt;</td>
+        <td><p>The deserialized recommender object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRatingDistribution</span></td>
+        <td><p>The type of a distribution over ratings.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible__2_BinaryReader_Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping___0___1__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible``2(BinaryReader,Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping{``0,``1})">LoadBackwardCompatible&lt;TInstanceSource, TFeatureSource&gt;(BinaryReader, IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a Matchbox recommender from a reader to a binary stream and a native data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMatchboxRecommender&lt;TInstanceSource, int, int, Discrete, TFeatureSource&gt; LoadBackwardCompatible&lt;TInstanceSource, TFeatureSource&gt;(BinaryReader reader, IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BinaryReader</span></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>The reader of a binary stream to a serialized Matchbox recommender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping-2.html">IMatchboxRecommenderMapping</a>&lt;TInstanceSource, TFeatureSource&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the native format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender</a>&lt;TInstanceSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>, TFeatureSource&gt;</td>
+        <td><p>The deserialized recommender object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible__2_Stream_Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping___0___1__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible``2(Stream,Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping{``0,``1})">LoadBackwardCompatible&lt;TInstanceSource, TFeatureSource&gt;(Stream, IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a Matchbox recommender from a binary stream and a native data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMatchboxRecommender&lt;TInstanceSource, int, int, Discrete, TFeatureSource&gt; LoadBackwardCompatible&lt;TInstanceSource, TFeatureSource&gt;(Stream stream, IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>The binary stream to a serialized Matchbox recommender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping-2.html">IMatchboxRecommenderMapping</a>&lt;TInstanceSource, TFeatureSource&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the native format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender</a>&lt;TInstanceSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>, TFeatureSource&gt;</td>
+        <td><p>The deserialized recommender object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible__2_System_String_Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping___0___1__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible``2(System.String,Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping{``0,``1})">LoadBackwardCompatible&lt;TInstanceSource, TFeatureSource&gt;(String, IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a Matchbox recommender from a file with the specified name and a native data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMatchboxRecommender&lt;TInstanceSource, int, int, Discrete, TFeatureSource&gt; LoadBackwardCompatible&lt;TInstanceSource, TFeatureSource&gt;(string fileName, IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>The name of the file of a serialized Matchbox recommender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping-2.html">IMatchboxRecommenderMapping</a>&lt;TInstanceSource, TFeatureSource&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the native format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender</a>&lt;TInstanceSource, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>, TFeatureSource&gt;</td>
+        <td><p>The deserialized recommender object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible__6_BinaryReader_Microsoft_ML_Probabilistic_Learners_Mappings_IStarRatingRecommenderMapping___0___1___2___3___4___5_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible``6(BinaryReader,Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping{``0,``1,``2,``3,``4,``5,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatible&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource&gt;(BinaryReader, IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a Matchbox recommender from a reader to a binary stream and a standard data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMatchboxRecommender&lt;TInstanceSource, TUser, TItem, System.Collections.Generic.IDictionary&lt;int, double&gt;, TFeatureSource&gt; LoadBackwardCompatible&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource&gt;(BinaryReader reader, IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BinaryReader</span></td>
+        <td><span class="parametername">reader</span></td>
+        <td><p>The reader of a binary stream to a serialized Matchbox recommender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping-7.html">IStarRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the standard format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender</a>&lt;TInstanceSource, TUser, TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">System.Collections.Generic.IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TFeatureSource&gt;</td>
+        <td><p>The deserialized recommender object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRating</span></td>
+        <td><p>The type of a rating.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible__6_Stream_Microsoft_ML_Probabilistic_Learners_Mappings_IStarRatingRecommenderMapping___0___1___2___3___4___5_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible``6(Stream,Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping{``0,``1,``2,``3,``4,``5,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatible&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource&gt;(Stream, IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a Matchbox recommender from a binary stream and a standard data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMatchboxRecommender&lt;TInstanceSource, TUser, TItem, System.Collections.Generic.IDictionary&lt;int, double&gt;, TFeatureSource&gt; LoadBackwardCompatible&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource&gt;(Stream stream, IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Stream</span></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>The binary stream to a serialized Matchbox recommender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping-7.html">IStarRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the standard format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender</a>&lt;TInstanceSource, TUser, TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">System.Collections.Generic.IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TFeatureSource&gt;</td>
+        <td><p>The deserialized recommender object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRating</span></td>
+        <td><p>The type of a rating.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommender_LoadBackwardCompatible__6_System_String_Microsoft_ML_Probabilistic_Learners_Mappings_IStarRatingRecommenderMapping___0___1___2___3___4___5_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommender.LoadBackwardCompatible``6(System.String,Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping{``0,``1,``2,``3,``4,``5,Microsoft.ML.Probabilistic.Math.Vector})">LoadBackwardCompatible&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource&gt;(String, IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Deserializes a Matchbox recommender from a file with the specified name and a standard data format mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMatchboxRecommender&lt;TInstanceSource, TUser, TItem, System.Collections.Generic.IDictionary&lt;int, double&gt;, TFeatureSource&gt; LoadBackwardCompatible&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource&gt;(string fileName, IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, Vector&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>The name of the file of a serialized Matchbox recommender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping-7.html">IStarRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping used for accessing data in the standard format.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender</a>&lt;TInstanceSource, TUser, TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">System.Collections.Generic.IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TFeatureSource&gt;</td>
+        <td><p>The deserialized recommender object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRating</span></td>
+        <td><p>The type of a rating.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

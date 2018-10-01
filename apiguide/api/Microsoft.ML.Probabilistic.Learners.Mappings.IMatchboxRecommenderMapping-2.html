@@ -1,0 +1,925 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2" class="text-break">Interface IMatchboxRecommenderMapping&lt;TInstanceSource, TFeatureSource&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>A mapping used by the implementations of
+<a class="xref" href="Microsoft.ML.Probabilistic.Learners.IMatchboxRecommender-5.html">IMatchboxRecommender&lt;TInstanceSource, TUser, TItem, TRatingDistribution, TFeatureSource&gt;</a>
+interface to convert user data to an appropriate format.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.html">Microsoft.ML.Probabilistic.Learners.Mappings</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IMatchboxRecommenderMapping&lt;in TInstanceSource, in TFeatureSource&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a source of features.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Feature-related methods in this interface are only called when user of item features are being used.
+During training, features for all entities are required, and hence the methods called are the GetAll<em>Feature</em> ones.
+During prediction, features are requested on per-entity basis, and hence the GetSingle<em>Feature</em> methods are called.
+Note that entity features are expected not to change between training and prediction, and therefore only features
+of cold users or items will be requested during prediction.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllItemNonZeroFeatureIndices_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetAllItemNonZeroFeatureIndices*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllItemNonZeroFeatureIndices__1_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetAllItemNonZeroFeatureIndices(`1)">GetAllItemNonZeroFeatureIndices(TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Gets non-zero feature indices for all items present in a given feature source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;IList&lt;int&gt;&gt; GetAllItemNonZeroFeatureIndices(TFeatureSource featureSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source to obtain feature indices from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><p>An array of non-zero item feature index arrays where the outer array is indexed by item id</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllItemNonZeroFeatureIndices__1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will be called during training if the item feature support is enabled.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllItemNonZeroFeatureValues_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetAllItemNonZeroFeatureValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllItemNonZeroFeatureValues__1_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetAllItemNonZeroFeatureValues(`1)">GetAllItemNonZeroFeatureValues(TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Gets non-zero feature values for all items present in a given feature source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;IList&lt;double&gt;&gt; GetAllItemNonZeroFeatureValues(TFeatureSource featureSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source to obtain features from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><p>An array of non-zero item feature arrays where the outer array is indexed by item id</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllItemNonZeroFeatureValues__1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will be called during training if the item feature support is enabled.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllUserNonZeroFeatureIndices_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetAllUserNonZeroFeatureIndices*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllUserNonZeroFeatureIndices__1_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetAllUserNonZeroFeatureIndices(`1)">GetAllUserNonZeroFeatureIndices(TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Gets non-zero feature indices for all users present in a given feature source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;IList&lt;int&gt;&gt; GetAllUserNonZeroFeatureIndices(TFeatureSource featureSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source to obtain feature indices from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><p>An array of non-zero user feature index arrays where the outer array is indexed by user id.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllUserNonZeroFeatureIndices__1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will be called during training if the user feature support is enabled.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllUserNonZeroFeatureValues_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetAllUserNonZeroFeatureValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllUserNonZeroFeatureValues__1_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetAllUserNonZeroFeatureValues(`1)">GetAllUserNonZeroFeatureValues(TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Gets non-zero feature values for all users present in a given feature source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;IList&lt;double&gt;&gt; GetAllUserNonZeroFeatureValues(TFeatureSource featureSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source to obtain features from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><p>An array of non-zero user feature arrays where the outer array is indexed by user id.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetAllUserNonZeroFeatureValues__1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will be called during training if the user feature support is enabled.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetItemCount_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetItemCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetItemCount__0_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetItemCount(`0)">GetItemCount(TInstanceSource)</h4>
+  <div class="markdown level1 summary"><p>Gets the number of items from a given instance source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int GetItemCount(TInstanceSource instanceSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of instances to get number of items from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The number of items.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetItemFeatureCount_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetItemFeatureCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetItemFeatureCount__1_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetItemFeatureCount(`1)">GetItemFeatureCount(TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Gets the number of item features.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int GetItemFeatureCount(TFeatureSource featureSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source to obtain features from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The number of item features.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetItemIds_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetItemIds*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetItemIds__0_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetItemIds(`0,System.Int32)">GetItemIds(TInstanceSource, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the list of item identifiers from a given instance source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;int&gt; GetItemIds(TInstanceSource instanceSource, int batchNumber = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of instances to get the item identifiers from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">batchNumber</span></td>
+        <td><p>The number of the current batch (used only if the data is divided into batches).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><p>The list of item identifiers.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetItemIds__0_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Note that this method can be called concurrently from multiple threads,
+so its implementation must be thread-safe.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetRatingCount_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetRatingCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetRatingCount__0_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetRatingCount(`0)">GetRatingCount(TInstanceSource)</h4>
+  <div class="markdown level1 summary"><p>Gets the number of star ratings.
+This is equal to one plus the difference between the maximum and the minimum rating.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int GetRatingCount(TInstanceSource instanceSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of instances to get number of items from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The number of ratings.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetRatings_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetRatings*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetRatings__0_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetRatings(`0,System.Int32)">GetRatings(TInstanceSource, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the list of ratings from a given instance source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;int&gt; GetRatings(TInstanceSource instanceSource, int batchNumber = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of instances to get the ratings from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">batchNumber</span></td>
+        <td><p>The number of the current batch (used only if the data is divided into batches).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><p>The list of ratings</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetRatings__0_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Note that this method can be called concurrently from multiple threads,
+so its implementation must be thread-safe.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleItemNonZeroFeatureIndices_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetSingleItemNonZeroFeatureIndices*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleItemNonZeroFeatureIndices__1_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetSingleItemNonZeroFeatureIndices(`1,System.Int32)">GetSingleItemNonZeroFeatureIndices(TFeatureSource, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets non-zero feature indices for a given item.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;int&gt; GetSingleItemNonZeroFeatureIndices(TFeatureSource featureSource, int itemId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source to obtain feature indices from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">itemId</span></td>
+        <td><p>The item identifier.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><p>Non-zero feature values for the item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleItemNonZeroFeatureIndices__1_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will be called during prediction for cold items if the item feature support is enabled.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleItemNonZeroFeatureValues_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetSingleItemNonZeroFeatureValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleItemNonZeroFeatureValues__1_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetSingleItemNonZeroFeatureValues(`1,System.Int32)">GetSingleItemNonZeroFeatureValues(TFeatureSource, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets non-zero feature values for a given item.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;double&gt; GetSingleItemNonZeroFeatureValues(TFeatureSource featureSource, int itemId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source to obtain features from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">itemId</span></td>
+        <td><p>The item identifier.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>Non-zero feature values for the item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleItemNonZeroFeatureValues__1_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will be called during prediction for cold items if the item feature support is enabled.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleUserNonZeroFeatureIndices_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetSingleUserNonZeroFeatureIndices*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleUserNonZeroFeatureIndices__1_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetSingleUserNonZeroFeatureIndices(`1,System.Int32)">GetSingleUserNonZeroFeatureIndices(TFeatureSource, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets non-zero feature indices for a given user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;int&gt; GetSingleUserNonZeroFeatureIndices(TFeatureSource featureSource, int userId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source to obtain feature indices from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The user identifier.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><p>Non-zero feature indices for the user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleUserNonZeroFeatureIndices__1_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will be called during prediction for cold users if the user feature support is enabled.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleUserNonZeroFeatureValues_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetSingleUserNonZeroFeatureValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleUserNonZeroFeatureValues__1_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetSingleUserNonZeroFeatureValues(`1,System.Int32)">GetSingleUserNonZeroFeatureValues(TFeatureSource, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets non-zero feature values for a given user.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;double&gt; GetSingleUserNonZeroFeatureValues(TFeatureSource featureSource, int userId)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source to obtain features from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">userId</span></td>
+        <td><p>The user identifier.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>Non-zero feature values for the user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetSingleUserNonZeroFeatureValues__1_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function will be called during prediction for cold users if the user feature support is enabled.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetUserCount_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetUserCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetUserCount__0_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetUserCount(`0)">GetUserCount(TInstanceSource)</h4>
+  <div class="markdown level1 summary"><p>Gets the number of users from a given instance source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int GetUserCount(TInstanceSource instanceSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of instances to get number of users from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The number of users.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetUserFeatureCount_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetUserFeatureCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetUserFeatureCount__1_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetUserFeatureCount(`1)">GetUserFeatureCount(TFeatureSource)</h4>
+  <div class="markdown level1 summary"><p>Gets the number of user features.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int GetUserFeatureCount(TFeatureSource featureSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source to obtain features from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The number of user features.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetUserIds_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetUserIds*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetUserIds__0_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.IMatchboxRecommenderMapping`2.GetUserIds(`0,System.Int32)">GetUserIds(TInstanceSource, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the list of user identifiers from a given instance source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IList&lt;int&gt; GetUserIds(TInstanceSource instanceSource, int batchNumber = 0)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TInstanceSource</span></td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of instances to get the user identifiers from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">batchNumber</span></td>
+        <td><p>The number of the current batch (used only if the data is divided into batches).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><p>The list of user identifiers.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_IMatchboxRecommenderMapping_2_GetUserIds__0_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Note that this method can be called concurrently from multiple threads,
+so its implementation must be thread-safe.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,3421 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MMath
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MMath
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Math.MMath">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Math_MMath" data-uid="Microsoft.ML.Probabilistic.Math.MMath" class="text-break">Class MMath
+  </h1>
+  <div class="markdown level0 summary"><p>This class provides mathematical constants and special functions,
+analogous to System.Math.
+It cannot be instantiated and consists of static members only.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">MMath</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Math.html">Microsoft.ML.Probabilistic.Math</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class MMath : object</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+In order to provide the highest accuracy, some routines return their results in log form or logit form.
+These transformations expand the domain to cover the full range of double-precision values, ensuring 
+all bits of the representation are utilized.  A good example of this is the NormalCdf function, whose 
+value lies between 0 and 1.  Numbers between 0 and 1 use only a small fraction of the capacity of a 
+double-precision number.  The function NormalCdfLogit transforms the result p according to log(p/(1-p)), 
+providing full use of the range from -Infinity to Infinity and (potentially) much higher precision.
+</p><p>
+To get maximal use out of these transformations, you want to stay in the expanded form as long as 
+possible.  Every time you transform into a smaller domain, you lose precision.  Thus helper functions 
+are provided which allow you to perform common tasks directly in the log form and logit form. 
+For logs, you have addition.  For logit, you have averaging. 
+</p>
+</div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Digamma1" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Digamma1">Digamma1</h4>
+  <div class="markdown level1 summary"><p>Digamma(1)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double Digamma1 = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_EulerGamma" data-uid="Microsoft.ML.Probabilistic.Math.MMath.EulerGamma">EulerGamma</h4>
+  <div class="markdown level1 summary"><p>The Euler-Mascheroni Constant.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double EulerGamma = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_InvSqrt2PI" data-uid="Microsoft.ML.Probabilistic.Math.MMath.InvSqrt2PI">InvSqrt2PI</h4>
+  <div class="markdown level1 summary"><p>1.0/Math.Sqrt(2*Math.PI)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double InvSqrt2PI = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Ln2" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Ln2">Ln2</h4>
+  <div class="markdown level1 summary"><p>Math.Log(2)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double Ln2 = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LnPI" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LnPI">LnPI</h4>
+  <div class="markdown level1 summary"><p>Math.Log(Math.PI)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double LnPI = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LnSqrt2PI" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LnSqrt2PI">LnSqrt2PI</h4>
+  <div class="markdown level1 summary"><p>Math.Log(Math.Sqrt(2*Math.PI)).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double LnSqrt2PI = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Sqrt2" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Sqrt2">Sqrt2</h4>
+  <div class="markdown level1 summary"><p>Math.Sqrt(2)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double Sqrt2 = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Sqrt2PI" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Sqrt2PI">Sqrt2PI</h4>
+  <div class="markdown level1 summary"><p>Math.Sqrt(2*Math.PI)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double Sqrt2PI = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_SqrtHalf" data-uid="Microsoft.ML.Probabilistic.Math.MMath.SqrtHalf">SqrtHalf</h4>
+  <div class="markdown level1 summary"><p>Math.Sqrt(0.5)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double SqrtHalf = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Zeta2" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Zeta2">Zeta2</h4>
+  <div class="markdown level1 summary"><p>Zeta(2) = Trigamma(1) = pi^2/6.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double Zeta2 = null</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_AbsDiff_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.AbsDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_AbsDiff_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.AbsDiff(System.Double,System.Double)">AbsDiff(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the distance between two numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AbsDiff(double x, double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>abs(x - y)</code>.
+Matching infinities give zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_AbsDiff_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.AbsDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_AbsDiff_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.AbsDiff(System.Double,System.Double,System.Double)">AbsDiff(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the relative distance between two numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AbsDiff(double x, double y, double rel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">rel</span></td>
+        <td><p>An offset to avoid division by zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>abs(x - y)/(abs(x) + rel)</code>.
+Matching infinities give zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_AbsDiff_System_Double_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This routine is often used to measure the error of y in estimating x.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_AreEqual_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.AreEqual*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_AreEqual_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.AreEqual(System.Double,System.Double)">AreEqual(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns true if two numbers are equal when represented in double precision.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool AreEqual(double x, double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_BesselI_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.BesselI*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_BesselI_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.BesselI(System.Double,System.Double)">BesselI(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Modified Bessel function of the first kind</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double BesselI(double a, double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Order parameter.  Any real number except a negative integer.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Argument of the Bessel function.  Non-negative real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>BesselI(a,x)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_BesselI_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Reference:
+&quot;A short note on parameter approximation for von Mises-Fisher distributions, And a fast implementation of Is(x)&quot;
+Suvrit Sra
+Computational Statistics, 2011
+<a href="http://people.kyb.tuebingen.mpg.de/suvrit/papers/vmfFinal.pdf">http://people.kyb.tuebingen.mpg.de/suvrit/papers/vmfFinal.pdf</a></p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Beta_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Beta*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Beta_System_Double_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Beta(System.Double,System.Double,System.Double,System.Double)">Beta(Double, Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the regularized incomplete beta function: int_0^x t^(a-1) (1-t)^(b-1) dt / Beta(a,b)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Beta(double x, double a, double b, double epsilon = 1E-15)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>The first argument - any real number between 0 and 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The second argument - any real number greater than 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The third argument - any real number greater than 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">epsilon</span></td>
+        <td><p>A tolerance for terminating the series calculation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The incomplete beta function at (<code data-dev-comment-type="paramref" class="paramref">x</code>, <code data-dev-comment-type="paramref" class="paramref">a</code>, <code data-dev-comment-type="paramref" class="paramref">b</code>).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_Beta_System_Double_System_Double_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The beta function is obtained by setting x to 1.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_ChooseLn_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ChooseLn*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_ChooseLn_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ChooseLn(System.Double,System.Double)">ChooseLn(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the natural logarithm of Gamma(n+1)/(Gamma(k+1)*Gamma(n-k+1))</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double ChooseLn(double n, double k)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">n</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">k</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_ChooseLn_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ChooseLn*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_ChooseLn_System_Double_System_Double___" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ChooseLn(System.Double,System.Double[])">ChooseLn(Double, Double[])</h4>
+  <div class="markdown level1 summary"><p>Evaluates the natural logarithm of Gamma(n+1)/(prod_i Gamma(k[i]+1))</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double ChooseLn(double n, double[] k)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">n</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">k</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_DifferenceOfExp_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.DifferenceOfExp*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_DifferenceOfExp_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.DifferenceOfExp(System.Double,System.Double)">DifferenceOfExp(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes exp(x)-exp(y) to high accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double DifferenceOfExp(double x, double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Any real number</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>exp(x)-exp(y)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_DiffLogSumExp_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.DiffLogSumExp*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_DiffLogSumExp_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.DiffLogSumExp(System.Double,System.Double,System.Double)">DiffLogSumExp(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes log(exp(x)+exp(a))-log(exp(x)+exp(b)) to high accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double DiffLogSumExp(double x, double a, double b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number from -Inf to Inf, or NaN.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>A finite real number.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>A finite real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log(exp(x)+exp(a))-log(exp(x)+exp(b))</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_DiffLogSumExp_System_Double_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function provides higher accuracy than a direct evaluation of
+<code>LogSumExp(x,a)-LogSumExp(x,b)</code>, particularly when x is large.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Digamma_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Digamma*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Digamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Digamma(System.Double)">Digamma(Double)</h4>
+  <div class="markdown level1 summary"><p>Evaluates Digamma(x), the derivative of ln(Gamma(x)).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Digamma(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Digamma(x).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Digamma_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Digamma*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Digamma_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Digamma(System.Double,System.Double)">Digamma(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Derivative of the natural logarithm of the multivariate Gamma function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Digamma(double x, double d)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A real value &gt;= 0</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">d</span></td>
+        <td><p>The dimension, an integer &gt; 0</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>digamma_d(x)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Erfc_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Erfc*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Erfc_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Erfc(System.Double)">Erfc(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the complementary error function. This function is defined by 2/sqrt(pi) * integral from x to infinity of exp (-t^2) dt.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Erfc(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The complementary error function at x.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_ErfcInv_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ErfcInv*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_ErfcInv_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ErfcInv(System.Double)">ErfcInv(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the inverse of the complementary error function, i.e.
+<code>erfcinv(erfc(x)) == x</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double ErfcInv(double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>A real number between 0 and 2.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A number x such that <code>erfc(x) == y</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_ExpMinus1_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ExpMinus1*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_ExpMinus1_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ExpMinus1(System.Double)">ExpMinus1(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the exponential of x and subtracts 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double ExpMinus1(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number from -Inf to Inf, or NaN.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>exp(x)-1</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_ExpMinus1_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function is more accurate than a direct evaluation of <code>exp(x)-1</code> when x is small.
+It is the inverse function to Log1Plus: <code>ExpMinus1(Log1Plus(x)) == x</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_ExpMinus1RatioMinus1RatioMinusHalf_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ExpMinus1RatioMinus1RatioMinusHalf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_ExpMinus1RatioMinus1RatioMinusHalf_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ExpMinus1RatioMinus1RatioMinusHalf(System.Double)">ExpMinus1RatioMinus1RatioMinusHalf(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes ((exp(x)-1)/x - 1)/x - 0.5</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double ExpMinus1RatioMinus1RatioMinusHalf(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number from 0 to Inf, or NaN.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>((exp(x)-1)/x - 1)/x - 0.5</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Gamma_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Gamma*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Gamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Gamma(System.Double)">Gamma(Double)</h4>
+  <div class="markdown level1 summary"><p>Evaluates Gamma(x), defined as the integral from 0 to x of t^(x-1)*exp(-t) dt.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Gamma(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Gamma(x).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_GammaLn_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.GammaLn*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_GammaLn_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.GammaLn(System.Double)">GammaLn(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the natural logarithm of the Gamma function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GammaLn(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A real value &gt;= 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>ln(Gamma(x)).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_GammaLn_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function provides higher accuracy than <code>Math.Log(Gamma(x))</code>, which may fail for large x.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_GammaLn_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.GammaLn*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_GammaLn_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.GammaLn(System.Double,System.Double)">GammaLn(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the natural logarithm of the multivariate Gamma function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GammaLn(double x, double d)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A real value &gt;= 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">d</span></td>
+        <td><p>The dimension, an integer &gt; 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>ln(Gamma_d(x))</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_GammaLn_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The <a href="http://en.wikipedia.org/wiki/Multivariate_gamma_function">multivariate Gamma function</a>
+is defined as Gamma_d(x) = pi^(d*(d-1)/4)*prod_(i=1..d) Gamma(x + (1-i)/2)</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_GammaLower_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.GammaLower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_GammaLower_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.GammaLower(System.Double,System.Double)">GammaLower(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Compute the regularized lower incomplete Gamma function: int_0^x t^(a-1) exp(-t) dt / Gamma(a)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GammaLower(double a, double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The shape parameter, &gt; 0</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>The upper bound of the integral, &gt;= 0</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_GammaUpper_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.GammaUpper*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_GammaUpper_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.GammaUpper(System.Double,System.Double)">GammaUpper(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Compute the regularized upper incomplete Gamma function: int_x^inf t^(a-1) exp(-t) dt / Gamma(a)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GammaUpper(double a, double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The shape parameter, &gt; 0</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>The lower bound of the integral, &gt;= 0</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_IndexOfMaximum_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.IndexOfMaximum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_IndexOfMaximum__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Math.MMath.IndexOfMaximum``1(IList{``0})">IndexOfMaximum&lt;T&gt;(IList&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the index of the maximum element, or -1 if empty.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int IndexOfMaximum&lt;T&gt;(IList&lt;T&gt; list)
+    where T : IComparable&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_IndexOfMaximumDouble_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.IndexOfMaximumDouble*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_IndexOfMaximumDouble_IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.MMath.IndexOfMaximumDouble(IList{System.Double})">IndexOfMaximumDouble(IList&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the index of the maximum element, or -1 if empty.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int IndexOfMaximumDouble(IList&lt;double&gt; list)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_IndexOfMinimum_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.IndexOfMinimum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_IndexOfMinimum__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Math.MMath.IndexOfMinimum``1(IList{``0})">IndexOfMinimum&lt;T&gt;(IList&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the index of the minimum element, or -1 if empty.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int IndexOfMinimum&lt;T&gt;(IList&lt;T&gt; list)
+    where T : IComparable&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Log1MinusExp_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Log1MinusExp*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Log1MinusExp_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Log1MinusExp(System.Double)">Log1MinusExp(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes log(1 - exp(x)) to high accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Log1MinusExp(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A non-positive real number: -Inf &lt;= x &lt;= 0, or NaN.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log(1-exp(x)), which is always &lt;= 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_Log1MinusExp_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function provides higher accuracy than a direct evaluation of <code>log(1-exp(x))</code>,
+particularly when x &lt; -7.5 or x &gt; -1e-5.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Log1Plus_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Log1Plus*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Log1Plus_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Log1Plus(System.Double)">Log1Plus(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the natural logarithm of 1+x.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Log1Plus(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A real number in the range -1 &lt;= x &lt;= Inf, or NaN.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log(1+x), which is always &gt;= 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_Log1Plus_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function provides higher accuracy than a direct evaluation of <code>log(1+x)</code>,
+particularly when <code data-dev-comment-type="paramref" class="paramref">x</code> is small.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Log1PlusExp_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Log1PlusExp*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Log1PlusExp_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Log1PlusExp(System.Double)">Log1PlusExp(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes log(1 + exp(x)) to high accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Log1PlusExp(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number from -Inf to Inf, or NaN.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log(1+exp(x)), which is always &gt;= 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_Log1PlusExp_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function provides higher accuracy than a direct evaluation of <code>log(1+exp(x))</code>,
+particularly when x &lt; -36 or x &gt; 50.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Log1PlusExpGaussian_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Log1PlusExpGaussian*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Log1PlusExpGaussian_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Log1PlusExpGaussian(System.Double,System.Double)">Log1PlusExpGaussian(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Evaluates E[log(1+exp(x))] under a Gaussian distribution with specified mean and variance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Log1PlusExpGaussian(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogDifferenceOfExp_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogDifferenceOfExp*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogDifferenceOfExp_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogDifferenceOfExp(System.Double,System.Double)">LogDifferenceOfExp(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes log(exp(x) - exp(y)) to high accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogDifferenceOfExp(double x, double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number from -Inf to Inf, or NaN.  Must be greater or equal to y.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Any real number from -Inf to Inf, or NaN.  Must be less or equal to x.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_LogDifferenceOfExp_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function provides higher accuracy than a direct evaluation of <code>log(exp(x)-exp(y))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogExpMinus1_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogExpMinus1*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogExpMinus1_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogExpMinus1(System.Double)">LogExpMinus1(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes <code>log(exp(x)-1)</code> for non-negative x.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogExpMinus1(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A non-negative real number: 0 &lt;= x &lt;= Inf, or NaN.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>log(exp(x)-1)</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_LogExpMinus1_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function is more accurate than a direct evaluation of <code>log(exp(x)-1)</code> when x &lt; 1e-3
+or x &gt; 50.
+It is the inverse function to Log1PlusExp: <code>LogExpMinus1(Log1PlusExp(x)) == x</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Logistic_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Logistic*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Logistic_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Logistic(System.Double)">Logistic(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the logistic function 1/(1+exp(-x)).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Logistic(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number from -Inf to Inf, or NaN.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>1/(1+exp(-x)).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussian_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogisticGaussian*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussian_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogisticGaussian(System.Double,System.Double)">LogisticGaussian(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Calculate sigma(m,v) = \int N(x;m,v) logistic(x) dx</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogisticGaussian(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The value of this special function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussian_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+    Note <code>1-LogisticGaussian(m,v) = LogisticGaussian(-m,v)</code> which is more accurate.
+</p><p>
+For large v we can use the big v approximation <code>\sigma(m,v)=normcdf(m/sqrt(v+pi^2/3))</code>.
+For small and moderate v we use Gauss-Hermite quadrature.
+For moderate v we first find the mode of the (log concave) function since this may be quite far from m.
+</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussianDerivative_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogisticGaussianDerivative*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussianDerivative_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogisticGaussianDerivative(System.Double,System.Double)">LogisticGaussianDerivative(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Calculate <code>\sigma'(m,v)=\int N(x;m,v)logistic'(x) dx</code></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogisticGaussianDerivative(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The value of this special function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussianDerivative_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+    For large v we can use the big v approximation <code>\sigma&apos;(m,v)=N(m,0,v+pi^2/3)</code>.
+    For small and moderate v we use Gauss-Hermite quadrature.
+    For moderate v we first find the mode of the (log concave) function since this may be quite far from m.
+</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussianDerivative2_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogisticGaussianDerivative2*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussianDerivative2_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogisticGaussianDerivative2(System.Double,System.Double)">LogisticGaussianDerivative2(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Calculate <code>\sigma''(m,v)=\int N(x;m,v)logistic''(x) dx</code></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogisticGaussianDerivative2(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The value of this special function.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussianDerivative2_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+    For large v we can use the big v approximation <code>\sigma&apos;(m,v)=-m/(v+pi^2/3)*N(m,0,v+pi^2/3)</code>.
+    For small and moderate v we use Gauss-Hermite quadrature.
+    The function is multimodal so mode finding is difficult and probably won&apos;t help.
+</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussianRatio_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogisticGaussianRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogisticGaussianRatio_System_Double_System_Double_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogisticGaussianRatio(System.Double,System.Double,System.Int32)">LogisticGaussianRatio(Double, Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Calculate (kth derivative of LogisticGaussian)<em>exp(0.5</em>mean^2/variance)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogisticGaussianRatio(double mean, double variance, int k)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">k</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogisticLn_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogisticLn*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogisticLn_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogisticLn(System.Double)">LogisticLn(Double)</h4>
+  <div class="markdown level1 summary"><p>Compute the natural logarithm of the logistic function, i.e. -log(1+exp(-x)).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogisticLn(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number from -Inf to Inf, or NaN.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>-log(1+exp(-x)).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_LogisticLn_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function provides higher accuracy than a direct evaluation of <code>-log(1+exp(-x))</code>,
+which can fail for x &lt; -50 and x &gt; 36.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Logit_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Logit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Logit_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Logit(System.Double)">Logit(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the log-odds function log(p/(1-p)).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Logit(double p)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">p</span></td>
+        <td><p>Any number between 0 and 1, inclusive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log(p/(1-p))</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_Logit_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function is the inverse of the logistic function,
+i.e. <code>Logistic(Logit(p)) == p.</code></p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogitFromLog_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogitFromLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogitFromLog_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogitFromLog(System.Double)">LogitFromLog(Double)</h4>
+  <div class="markdown level1 summary"><p>Compute log(p/(1-p)) from log(p).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogitFromLog(double logp)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">logp</span></td>
+        <td><p>Any number between -infinity and 0, inclusive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log(exp(logp)/(1-exp(logp))) = -log(exp(-logp)-1).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogRatio_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogRatio_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogRatio(System.Double,System.Double)">LogRatio(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes log(numerator/denominator) to high accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogRatio(double numerator, double denominator)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>Any positive real number.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>Any positive real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log(numerator/denominator)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogSumExp_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogSumExp*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogSumExp_IEnumerable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogSumExp(IEnumerable{System.Double})">LogSumExp(IEnumerable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the log of the sum of exponentials of a list of doubles</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogSumExp(IEnumerable&lt;double&gt; list)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogSumExp_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogSumExp*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogSumExp_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogSumExp(System.Double,System.Double)">LogSumExp(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes log(exp(x) + exp(y)) to high accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogSumExp(double x, double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number from -Inf to Inf, or NaN.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Any real number from -Inf to Inf, or NaN.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log(exp(x)+exp(y)), which is always &gt;= max(x,y).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_LogSumExp_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function provides higher accuracy than a direct evaluation of <code>log(exp(x)+exp(y))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_LogSumExpSparse_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogSumExpSparse*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_LogSumExpSparse_IEnumerable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.MMath.LogSumExpSparse(IEnumerable{System.Double})">LogSumExpSparse(IEnumerable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the log of the sum of exponentials of a list of doubles</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogSumExpSparse(IEnumerable&lt;double&gt; list)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Max_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Max*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Max_IEnumerable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Max(IEnumerable{System.Double})">Max(IEnumerable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the maximum of a list of doubles</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Max(IEnumerable&lt;double&gt; list)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Median_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Median*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Median_System_Double___" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Median(System.Double[])">Median(Double[])</h4>
+  <div class="markdown level1 summary"><p>Returns the median of the array elements.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Median(double[] array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The median ignoring NaNs.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Median_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Median*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Median_System_Double___System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Median(System.Double[],System.Int32,System.Int32)">Median(Double[], Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Returns the median of elements in a subrange of an array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Median(double[] array, int start, int length)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>Starting index of the range.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>The number of elements in the range.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The median of array[start:(start+length-1)], ignoring NaNs.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Min_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Min*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Min_IEnumerable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Min(IEnumerable{System.Double})">Min(IEnumerable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the minimum of a list of doubles</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Min(IEnumerable&lt;double&gt; list)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdf_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdf_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdf(System.Double)">NormalCdf(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the cumulative Gaussian distribution, defined as the
+integral from -infinity to x of N(t;0,1) dt.<br>
+For example, <code>NormalCdf(0) == 0.5</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalCdf(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The cumulative Gaussian distribution at <code data-dev-comment-type="paramref" class="paramref">x</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdf_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdf_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdf(System.Double,System.Double,System.Double)">NormalCdf(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the cumulative bivariate normal distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalCdf(double x, double y, double r)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>First upper limit.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Second upper limit.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">r</span></td>
+        <td><p>Correlation coefficient.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>phi(x,y,r)</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdf_System_Double_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The cumulative bivariate normal distribution is defined as
+<code>int_(-inf)^x int_(-inf)^y N([x;y],[0;0],[1 r; r 1]) dx dy</code>
+where <code>N([x;y],[0;0],[1 r; r 1]) = exp(-0.5*(x^2+y^2-2<em>x</em>y<em>r)/(1-r^2))/(2</em>pi*sqrt(1-r^2))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfInv_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfInv*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfInv_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfInv(System.Double)">NormalCdfInv(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the inverse of the cumulative Gaussian distribution,
+i.e. <code>NormalCdf(NormalCdfInv(p)) == p</code>.
+For example, <code>NormalCdfInv(0.5) == 0</code>.
+This is also known as the Gaussian quantile function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalCdfInv(double p)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">p</span></td>
+        <td><p>A real number in [0,1].</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A number x such that <code>NormalCdf(x) == p</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfLn_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfLn*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfLn_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfLn(System.Double)">NormalCdfLn(Double)</h4>
+  <div class="markdown level1 summary"><p>The natural logarithm of the cumulative Gaussian distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalCdfLn(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>ln(NormalCdf(x)).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfLn_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function provides higher accuracy than <code>Math.Log(NormalCdf(x))</code>, which can fail for x &lt; -7.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfLn_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfLn*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfLn_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfLn(System.Double,System.Double,System.Double)">NormalCdfLn(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the natural logarithm of the cumulative bivariate normal distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalCdfLn(double x, double y, double r)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>First upper limit.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Second upper limit.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">r</span></td>
+        <td><p>Correlation coefficient.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>ln(phi(x,y,r))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfLogit_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfLogit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfLogit_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfLogit(System.Double)">NormalCdfLogit(Double)</h4>
+  <div class="markdown level1 summary"><p>The log-odds of the cumulative Gaussian distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalCdfLogit(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>ln(NormalCdf(x)/(1-NormalCdf(x))).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfMomentRatio_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfMomentRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfMomentRatio_System_Int32_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfMomentRatio(System.Int32,System.Double)">NormalCdfMomentRatio(Int32, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes int_0^infinity t^n N(t;x,1) dt / (n! N(x;0,1))</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalCdfMomentRatio(int n, double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">n</span></td>
+        <td><p>The exponent</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfMomentRatioDiff_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfMomentRatioDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfMomentRatioDiff_System_Int32_System_Double_System_Double_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfMomentRatioDiff(System.Int32,System.Double,System.Double,System.Int32)">NormalCdfMomentRatioDiff(Int32, Double, Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Computes <code>NormalCdfMomentRatio(n, x+delta)-NormalCdfMomentRatio(n, x)</code></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalCdfMomentRatioDiff(int n, double x, double delta, int startingIndex = 1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">n</span></td>
+        <td><p>A non-negative integer</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">delta</span></td>
+        <td><p>A finite real number with absolute value less than 9.9, or less than 70% of the absolute value of x.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startingIndex</span></td>
+        <td><p>The first moment to use in the power series.  Used to skip leading terms.  For example, 2 will skip NormalCdfMomentRatio(n+1, x).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfRatio_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfRatio_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfRatio(System.Double)">NormalCdfRatio(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes <code>NormalCdf(x)/N(x;0,1)</code> to high accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalCdfRatio(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfRatioDiff_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfRatioDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_NormalCdfRatioDiff_System_Double_System_Double_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.NormalCdfRatioDiff(System.Double,System.Double,System.Int32)">NormalCdfRatioDiff(Double, Double, Int32)</h4>
+  <div class="markdown level1 summary"><p>Computes <code>NormalCdfRatio(x+delta)-NormalCdfRatio(x)</code></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalCdfRatioDiff(double x, double delta, int startingIndex = 1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">delta</span></td>
+        <td><p>A finite real number with absolute value less than 9.9, or less than 70% of the absolute value of x.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">startingIndex</span></td>
+        <td><p>The first moment to use in the power series.  Used to skip leading terms.  For example, 2 will skip NormalCdfMomentRatio(1, x).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_OneMinusSqrtOneMinus_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.OneMinusSqrtOneMinus*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_OneMinusSqrtOneMinus_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.OneMinusSqrtOneMinus(System.Double)">OneMinusSqrtOneMinus(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes <code>1-sqrt(1-x)</code> to high accuracy.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double OneMinusSqrtOneMinus(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A real number between 0 and 1</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_ReciprocalFactorialMinus1_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ReciprocalFactorialMinus1*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_ReciprocalFactorialMinus1_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.ReciprocalFactorialMinus1(System.Double)">ReciprocalFactorialMinus1(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes <code>1/Gamma(x+1) - 1</code> to high accuracy</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double ReciprocalFactorialMinus1(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A real number &gt;= 0</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_RemoveNaNs_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.RemoveNaNs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_RemoveNaNs_System_Double___System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.RemoveNaNs(System.Double[],System.Int32,System.Int32)">RemoveNaNs(Double[], Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Given an array, returns a new array with all NANs removed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double[] RemoveNaNs(double[] array, int start, int length)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>The source array</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The start index in the source array</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>How many items to look at in the source array</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Softmax_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Softmax*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Softmax(IList{System.Double})">Softmax(IList&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Exponentiate array elements and normalize to sum to 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector Softmax(IList&lt;double&gt; x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">x</span></td>
+        <td><p>May be +/-infinity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>A Vector p where <code>p[k] = exp(x[k])/sum_j exp(x[j])</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Sparse lists and vectors are handled efficiently</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Tetragamma_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Tetragamma*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Tetragamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Tetragamma(System.Double)">Tetragamma(Double)</h4>
+  <div class="markdown level1 summary"><p>Evaluates Tetragamma, the forth derivative of logGamma(x)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Tetragamma(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Trigamma_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Trigamma*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Trigamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Trigamma(System.Double)">Trigamma(Double)</h4>
+  <div class="markdown level1 summary"><p>Evaluates Trigamma(x), the derivative of Digamma(x).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Trigamma(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Trigamma(x).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Trigamma_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Trigamma*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Trigamma_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Trigamma(System.Double,System.Double)">Trigamma(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Second derivative of the natural logarithm of the multivariate Gamma function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Trigamma(double x, double d)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A real value &gt;= 0</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">d</span></td>
+        <td><p>The dimension, an integer &gt; 0</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>trigamma_d(x)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_MMath_Ulp_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Ulp*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_MMath_Ulp_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.MMath.Ulp(System.Double)">Ulp(Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the positive distance between a value and the next representable value that is larger in magnitude.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Ulp(double value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>Any double-precision value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

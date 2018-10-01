@@ -1,0 +1,2417 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DiscreteAreEqualOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DiscreteAreEqualOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp" class="text-break">Class DiscreteAreEqualOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_AreEqual_System_Int32_System_Int32_">AreEqual(Int32, Int32)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.EnumSupport.html#Microsoft_ML_Probabilistic_Factors_EnumSupport_AreEqual__1___0___0_">AreEqual&lt;TEnum&gt;(TEnum, TEnum)</a></li></ul>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">DiscreteAreEqualOp</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class DiscreteAreEqualOp : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">AAverageConditional(Bernoulli, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete AAverageConditional(Bernoulli areEqual, Discrete B, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(areEqual,b) p(areEqual,b) factor(areEqual,a,b)]/p(a)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.Bernoulli,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">AAverageConditional(Bernoulli, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete AAverageConditional(Bernoulli areEqual, int B, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(areEqual) p(areEqual) factor(areEqual,a,b)]/p(a)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageConditional(System.Boolean,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">AAverageConditional(Boolean, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete AAverageConditional(bool areEqual, Discrete B, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(b) p(b) factor(areEqual,a,b)]/p(a)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageConditional(System.Boolean,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">AAverageConditional(Boolean, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete AAverageConditional(bool areEqual, int B, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageConditional_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>a</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">AAverageLogarithm(Bernoulli, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete AAverageLogarithm(Bernoulli areEqual, Discrete B, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>a</code>. Because the factor is deterministic, <code>areEqual</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(b) p(b) log(sum_areEqual p(areEqual) factor(areEqual,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Bernoulli,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">AAverageLogarithm(Bernoulli, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete AAverageLogarithm(Bernoulli areEqual, int B, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>a</code> with <code>areEqual</code> integrated out. The formula is <code>sum_areEqual p(areEqual) factor(areEqual,a,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageLogarithm(System.Boolean,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">AAverageLogarithm(Boolean, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete AAverageLogarithm(bool areEqual, Discrete B, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>a</code>. The formula is <code>exp(sum_(b) p(b) log(factor(areEqual,a,b)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AAverageLogarithm(System.Boolean,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">AAverageLogarithm(Boolean, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete AAverageLogarithm(bool areEqual, int B, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AAverageLogarithm_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>a</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageConditional_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageConditional(Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">AreEqualAverageConditional(Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>areEqual</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli AreEqualAverageConditional(Discrete A, Discrete B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p>The outgoing EP message to the <code>areEqual</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageConditional_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>areEqual</code> as the random arguments are varied. The formula is <code>proj[p(areEqual) sum_(a,b) p(a,b) factor(areEqual,a,b)]/p(areEqual)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageConditional_Microsoft_ML_Probabilistic_Distributions_Discrete_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageConditional(Microsoft.ML.Probabilistic.Distributions.Discrete,System.Int32)">AreEqualAverageConditional(Discrete, Int32)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>areEqual</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli AreEqualAverageConditional(Discrete A, int B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p>The outgoing EP message to the <code>areEqual</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageConditional_Microsoft_ML_Probabilistic_Distributions_Discrete_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>areEqual</code> as the random arguments are varied. The formula is <code>proj[p(areEqual) sum_(a) p(a) factor(areEqual,a,b)]/p(areEqual)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageConditional_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageConditional(System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">AreEqualAverageConditional(Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>areEqual</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli AreEqualAverageConditional(int A, Discrete B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p>The outgoing EP message to the <code>areEqual</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageConditional_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>areEqual</code> as the random arguments are varied. The formula is <code>proj[p(areEqual) sum_(b) p(b) factor(areEqual,a,b)]/p(areEqual)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">AreEqualAverageLogarithm(Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli AreEqualAverageLogarithm(Discrete A, Discrete B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(areEqual,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Discrete_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Discrete,System.Int32)">AreEqualAverageLogarithm(Discrete, Int32)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>areEqual</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli AreEqualAverageLogarithm(Discrete A, int B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p>The outgoing VMP message to the <code>areEqual</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Discrete_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>areEqual</code> as the random arguments are varied. The formula is <code>proj[sum_(b) p(b) factor(areEqual,a,b)]</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageLogarithm_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AreEqualAverageLogarithm(System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">AreEqualAverageLogarithm(Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>areEqual</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli AreEqualAverageLogarithm(int A, Discrete B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p>The outgoing VMP message to the <code>areEqual</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AreEqualAverageLogarithm_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>areEqual</code> as the random arguments are varied. The formula is <code>proj[sum_(a,b) p(a,b) factor(areEqual,a,b)]</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AverageLogFactor">AverageLogFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+    In Variational Message Passing, the evidence contribution of a deterministic factor is zero.
+</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AverageLogFactor_System_Boolean_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.AverageLogFactor(System.Boolean,System.Int32,System.Int32)">AverageLogFactor(Boolean, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(bool areEqual, int a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_AverageLogFactor_System_Boolean_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(areEqual,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">BAverageConditional(Bernoulli, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete BAverageConditional(Bernoulli areEqual, Discrete A, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(areEqual,a) p(areEqual,a) factor(areEqual,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.Bernoulli,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">BAverageConditional(Bernoulli, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete BAverageConditional(Bernoulli areEqual, int A, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(areEqual) p(areEqual) factor(areEqual,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageConditional(System.Boolean,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">BAverageConditional(Boolean, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete BAverageConditional(bool areEqual, Discrete A, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(a) p(a) factor(areEqual,a,b)]/p(b)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageConditional(System.Boolean,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">BAverageConditional(Boolean, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete BAverageConditional(bool areEqual, int A, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageConditional_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">BAverageLogarithm(Bernoulli, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete BAverageLogarithm(Bernoulli areEqual, Discrete A, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>b</code>. Because the factor is deterministic, <code>areEqual</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(a) p(a) log(sum_areEqual p(areEqual) factor(areEqual,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Bernoulli,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">BAverageLogarithm(Bernoulli, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete BAverageLogarithm(Bernoulli areEqual, int A, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> with <code>areEqual</code> integrated out. The formula is <code>sum_areEqual p(areEqual) factor(areEqual,a,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">areEqual</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageLogarithm(System.Boolean,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">BAverageLogarithm(Boolean, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete BAverageLogarithm(bool areEqual, Discrete A, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>b</code>. The formula is <code>exp(sum_(a) p(a) log(factor(areEqual,a,b)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.BAverageLogarithm(System.Boolean,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">BAverageLogarithm(Boolean, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete BAverageLogarithm(bool areEqual, int A, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_BAverageLogarithm_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli)">LogAverageFactor(Bernoulli, Bernoulli)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Bernoulli areEqual, Bernoulli to_areEqual)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">to_areEqual</span></td>
+        <td><p>Outgoing message to <code>areEqual</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(areEqual) p(areEqual) factor(areEqual,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Bernoulli,System.Int32,System.Int32)">LogAverageFactor(Bernoulli, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Bernoulli areEqual, int a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(areEqual) p(areEqual) factor(areEqual,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor(System.Boolean,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">LogAverageFactor(Boolean, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(bool areEqual, Discrete A, Discrete B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor(System.Boolean,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">LogAverageFactor(Boolean, Discrete, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(bool areEqual, Discrete A, Discrete B, Discrete to_A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">to_A</span></td>
+        <td><p>Outgoing message to <code>A</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor(System.Boolean,Microsoft.ML.Probabilistic.Distributions.Discrete,System.Int32)">LogAverageFactor(Boolean, Discrete, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(bool areEqual, Discrete A, int B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a) p(a) factor(areEqual,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor(System.Boolean,Microsoft.ML.Probabilistic.Distributions.Discrete,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">LogAverageFactor(Boolean, Discrete, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(bool areEqual, Discrete A, int B, Discrete to_A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">to_A</span></td>
+        <td><p>Outgoing message to <code>A</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a) p(a) factor(areEqual,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor(System.Boolean,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">LogAverageFactor(Boolean, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(bool areEqual, int A, Discrete B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(b) p(b) factor(areEqual,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor(System.Boolean,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">LogAverageFactor(Boolean, Int32, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(bool areEqual, int A, Discrete B, Discrete to_B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">to_B</span></td>
+        <td><p>Outgoing message to <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(b) p(b) factor(areEqual,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogAverageFactor(System.Boolean,System.Int32,System.Int32)">LogAverageFactor(Boolean, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(bool areEqual, int a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogAverageFactor_System_Boolean_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(areEqual,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Bernoulli_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Bernoulli)">LogEvidenceRatio(Bernoulli)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Bernoulli areEqual)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Incoming message from <code>areEqual</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Bernoulli__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(areEqual) p(areEqual) factor(areEqual,a,b) / sum_areEqual p(areEqual) messageTo(areEqual))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogEvidenceRatio(System.Boolean,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">LogEvidenceRatio(Boolean, Discrete, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(bool areEqual, Discrete A, Discrete B, Discrete to_A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">to_A</span></td>
+        <td><p>Outgoing message to <code>A</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a,b) p(a,b) factor(areEqual,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogEvidenceRatio(System.Boolean,Microsoft.ML.Probabilistic.Distributions.Discrete,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete)">LogEvidenceRatio(Boolean, Discrete, Int32, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(bool areEqual, Discrete A, int B, Discrete to_A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">to_A</span></td>
+        <td><p>Outgoing message to <code>A</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_System_Boolean_Microsoft_ML_Probabilistic_Distributions_Discrete_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a) p(a) factor(areEqual,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogEvidenceRatio(System.Boolean,System.Int32,Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">LogEvidenceRatio(Boolean, Int32, Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(bool areEqual, int A, Discrete B, Discrete to_B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">to_B</span></td>
+        <td><p>Outgoing message to <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_System_Boolean_System_Int32_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(b) p(b) factor(areEqual,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_System_Boolean_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteAreEqualOp.LogEvidenceRatio(System.Boolean,System.Int32,System.Int32)">LogEvidenceRatio(Boolean, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(bool areEqual, int a, int b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">areEqual</span></td>
+        <td><p>Constant value for <code>areEqual</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteAreEqualOp_LogEvidenceRatio_System_Boolean_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(areEqual,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

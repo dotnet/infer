@@ -1,0 +1,1914 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SparseGP
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SparseGP
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.38.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_SparseGP" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP" class="text-break">Class SparseGP
+  </h1>
+  <div class="markdown level0 summary"><p>A Gaussian Process distribution over functions, represented by a GP prior times a set of regression likelihoods on basis points.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">SparseGP</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IGaussianProcess.html">IGaussianProcess</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a>&gt;</div>
+    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a>&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class SparseGP : object, IGaussianProcess, IDistribution&lt;IFunction&gt;, ICloneable, HasPoint&lt;IFunction&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;IFunction&gt;, SettableTo&lt;SparseGP&gt;, SettableToProduct&lt;SparseGP&gt;, SettableToProduct&lt;SparseGP, SparseGP&gt;, SettableToRatio&lt;SparseGP&gt;, SettableToRatio&lt;SparseGP, SparseGP&gt;, SettableToPower&lt;SparseGP&gt;, SettableToWeightedSum&lt;SparseGP&gt;, CanGetLogAverageOf&lt;SparseGP&gt;, CanGetLogAverageOfPower&lt;SparseGP&gt;, CanGetAverageLog&lt;SparseGP&gt;, CanGetMean&lt;IFunction&gt;, Sampleable&lt;IFunction&gt;</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+This distribution family comes from the paper &quot;Sparse-posterior Gaussian Processes for general likelihoods&quot;
+by Qi et al (2010), http://event.cwi.nl/uai2010/papers/UAI2010_0283.pdf
+</p><p>
+The state of the distribution is represented by (FixedParameters, IncludePrior, InducingDist, pointFunc).
+The GP prior and basis point locations are stored in FixedParameters.
+The regression likelihoods are stored as a single VectorGaussian called InducingDist.
+IncludePrior=false does not include the prior in the distribution (i.e. the distribution is degenerate).
+If pointFunc != null, the distribution is a point mass.
+If InducingDist is uniform and IncludePrior is false, the distribution is uniform.
+The GP prior is assumed to be non-uniform.
+</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP__ctor" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.#ctor">SparseGP()</h4>
+  <div class="markdown level1 summary"><p>Parameterless constructor needed for serialization</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected SparseGP()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP__ctor_Microsoft_ML_Probabilistic_Distributions_SparseGP_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.#ctor(Microsoft.ML.Probabilistic.Distributions.SparseGP)">SparseGP(SparseGP)</h4>
+  <div class="markdown level1 summary"><p>Copy constructor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SparseGP(SparseGP that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP__ctor_Microsoft_ML_Probabilistic_Distributions_SparseGPFixed_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.#ctor(Microsoft.ML.Probabilistic.Distributions.SparseGPFixed)">SparseGP(SparseGPFixed)</h4>
+  <div class="markdown level1 summary"><p>Constructs sparse GP, given basis etc</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SparseGP(SparseGPFixed spgf)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGPFixed.html">SparseGPFixed</a></td>
+        <td><span class="parametername">spgf</span></td>
+        <td><p>The fixed parameters</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP__ctor_Microsoft_ML_Probabilistic_Distributions_SparseGPFixed_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.#ctor(Microsoft.ML.Probabilistic.Distributions.SparseGPFixed,System.Boolean)">SparseGP(SparseGPFixed, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SparseGP(SparseGPFixed spgf, bool includePrior)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGPFixed.html">SparseGPFixed</a></td>
+        <td><span class="parametername">spgf</span></td>
+        <td><p>Fixed parameters</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">includePrior</span></td>
+        <td><p>Whether this instance includes the prior</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP__ctor_Microsoft_ML_Probabilistic_Distributions_SparseGPFixed_System_Boolean_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_IFunction_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.#ctor(Microsoft.ML.Probabilistic.Distributions.SparseGPFixed,System.Boolean,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.IFunction)">SparseGP(SparseGPFixed, Boolean, VectorGaussian, IFunction)</h4>
+  <div class="markdown level1 summary"><p>Constructor from full specification</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SparseGP(SparseGPFixed spgf, bool includePrior, VectorGaussian InducingDist, IFunction pointFunc)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGPFixed.html">SparseGPFixed</a></td>
+        <td><span class="parametername">spgf</span></td>
+        <td><p>Fixed parameters</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">includePrior</span></td>
+        <td><p>Whether this instance includes the prior</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">InducingDist</span></td>
+        <td><p>Inducing distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td><span class="parametername">pointFunc</span></td>
+        <td><p>If not null, set this as a point distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_alpha" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.alpha">alpha</h4>
+  <div class="markdown level1 summary"><p>Field for Alpha property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Vector alpha</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_beta" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.beta">beta</h4>
+  <div class="markdown level1 summary"><p>Field for Beta property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected PositiveDefiniteMatrix beta</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_fixedParameters" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.fixedParameters">fixedParameters</h4>
+  <div class="markdown level1 summary"><p>Field for FixedParameters property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected SparseGPFixed fixedParameters</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGPFixed.html">SparseGPFixed</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_IncludePrior" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.IncludePrior">IncludePrior</h4>
+  <div class="markdown level1 summary"><p>Whether this sparse GP includes the prior</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IncludePrior</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_InducingDist" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.InducingDist">InducingDist</h4>
+  <div class="markdown level1 summary"><p>The regression likelihoods that modify the prior.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VectorGaussian InducingDist</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_InducingDist_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If this field is changed, ClearCachedValues() must be called before accessing any other property.</p>
+</div>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_meanB" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.meanB">meanB</h4>
+  <div class="markdown level1 summary"><p>Field for Mean_B property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Vector meanB</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_pointFunc" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.pointFunc">pointFunc</h4>
+  <div class="markdown level1 summary"><p>Use for setting point distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected IFunction pointFunc</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_varBB" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.varBB">varBB</h4>
+  <div class="markdown level1 summary"><p>Field for Var_B_B property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected PositiveDefiniteMatrix varBB</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Alpha_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Alpha*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Alpha" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Alpha">Alpha</h4>
+  <div class="markdown level1 summary"><p>Alpha - along with beta, this encodes the posterior means
+and covariances of the Sparse GP</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector Alpha { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Beta*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Beta" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Beta">Beta</h4>
+  <div class="markdown level1 summary"><p>Beta - along with alpha, this encodes the posterior means
+and covariances of the Sparse GP</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PositiveDefiniteMatrix Beta { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_FixedParameters_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.FixedParameters*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_FixedParameters" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.FixedParameters">FixedParameters</h4>
+  <div class="markdown level1 summary"><p>Sets and gets the fixed sparse parameters - parameters
+which are not changed by inference</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SparseGPFixed FixedParameters { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGPFixed.html">SparseGPFixed</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Asks the distribution whether it is a point mass</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Mean_B_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Mean_B*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Mean_B" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Mean_B">Mean_B</h4>
+  <div class="markdown level1 summary"><p>m(B). This is a calculated Vector maintained
+by the class</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector Mean_B { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Sets or Gets a point. If not a point function,
+the get returns the mean function of the sparse GP</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IFunction Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Var_B_B_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Var_B_B*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Var_B_B" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Var_B_B">Var_B_B</h4>
+  <div class="markdown level1 summary"><p>var(B, B). This is a calculated matrix maintained
+by the class</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PositiveDefiniteMatrix Var_B_B { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_ClearCachedValues_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.ClearCachedValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_ClearCachedValues" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.ClearCachedValues">ClearCachedValues()</h4>
+  <div class="markdown level1 summary"><p>Function to signal recalculation of calculated parameters.
+This is called automatically if the fixed parameter
+class is swapped out, or if the kernel is changed, or
+if parameters are changed. It should also be called
+by any external program modifies the kernel or other
+fixed parameters in place</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ClearCachedValues()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Clone. Note that the fixed parameters and the rank1 list
+are just referenced</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>The cloned object</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Covariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Covariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Covariance_IList_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Covariance(IList{Microsoft.ML.Probabilistic.Math.Vector})">Covariance(IList&lt;Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Predictive coariance at a given list of points</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PositiveDefiniteMatrix Covariance(IList&lt;Vector&gt; XList)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">XList</span></td>
+        <td><p>List of inputs</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><p>Predictive covariance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Covariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Covariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Covariance_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Covariance(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector)">Covariance(Vector, Vector)</h4>
+  <div class="markdown level1 summary"><p>Predictive covariance at a given pair of points</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Covariance(Vector x, Vector y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">y</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_EvaluateMean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.EvaluateMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_EvaluateMean_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.EvaluateMean(Microsoft.ML.Probabilistic.Math.Vector)">EvaluateMean(Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the mean function of the GP</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double EvaluateMean(Vector X)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">X</span></td>
+        <td><p>Input variable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Evaulated function value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_SparseGP_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.SparseGP)">GetAverageLog(SparseGP)</h4>
+  <div class="markdown level1 summary"><p>The expected logarithm of that distribution under this distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(SparseGP that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_SparseGP__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Not yet implemented</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_SparseGP_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.SparseGP)">GetLogAverageOf(SparseGP)</h4>
+  <div class="markdown level1 summary"><p>Gets the log of the integral of the product of this SparseGP and that SparseGP</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(SparseGP that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetLogAverageOfPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetLogAverageOfPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetLogAverageOfPower_Microsoft_ML_Probabilistic_Distributions_SparseGP_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetLogAverageOfPower(Microsoft.ML.Probabilistic.Distributions.SparseGP,System.Double)">GetLogAverageOfPower(SparseGP, Double)</h4>
+  <div class="markdown level1 summary"><p>Get the integral of this distribution times another distribution raised to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOfPower(SparseGP that, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetLogProb_Microsoft_ML_Probabilistic_Distributions_IFunction_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetLogProb(Microsoft.ML.Probabilistic.Distributions.IFunction)">GetLogProb(IFunction)</h4>
+  <div class="markdown level1 summary"><p>Gets the log density for a given value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(IFunction value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetMean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_GetMean" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.GetMean">GetMean()</h4>
+  <div class="markdown level1 summary"><p>Gets the mean function for the Sparse GP</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IFunction GetMean()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td><p>The mean function</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Asks the distribution whether it is uniform</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True or false</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Joint_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Joint*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Joint_IList_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Joint(IList{Microsoft.ML.Probabilistic.Math.Vector})">Joint(IList&lt;Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Predictive distribution at a given list of points</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VectorGaussian Joint(IList&lt;Vector&gt; XList)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">XList</span></td>
+        <td><p>List of inputs</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>Predictive distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Marginal_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Marginal_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Marginal(Microsoft.ML.Probabilistic.Math.Vector)">Marginal(Vector)</h4>
+  <div class="markdown level1 summary"><p>Predictive distribution at a given point</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Gaussian Marginal(Vector X)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">X</span></td>
+        <td><p>Input</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td><p>Predictive distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>Max difference between two sparse GPs - used for
+convergence testing</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object thatd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">thatd</span></td>
+        <td><p>That sparse GP which will be compared to this sparse GP</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Mean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Mean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Mean_IList_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Mean(IList{Microsoft.ML.Probabilistic.Math.Vector})">Mean(IList&lt;Vector&gt;)</h4>
+  <div class="markdown level1 summary"><p>Mean at a given list of points</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector Mean(IList&lt;Vector&gt; XList)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">XList</span></td>
+        <td><p>List of inputs</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>Predictive mean vector</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Mean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Mean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Mean_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Mean(Microsoft.ML.Probabilistic.Math.Vector)">Mean(Vector)</h4>
+  <div class="markdown level1 summary"><p>Mean at a given point</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Mean(Vector X)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">X</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_PointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.PointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_PointMass_Microsoft_ML_Probabilistic_Distributions_SparseGPFixed_Microsoft_ML_Probabilistic_Distributions_IFunction_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.PointMass(Microsoft.ML.Probabilistic.Distributions.SparseGPFixed,Microsoft.ML.Probabilistic.Distributions.IFunction)">PointMass(SparseGPFixed, IFunction)</h4>
+  <div class="markdown level1 summary"><p>Creates a sparse GP point mass - i.e. all the mass is at a given function</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SparseGP PointMass(SparseGPFixed sgpf, IFunction value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGPFixed.html">SparseGPFixed</a></td>
+        <td><span class="parametername">sgpf</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>Samples from the Sparse Gaussian distribution
+This is only implemented for a 1-dimensional input space,
+and returns a simple linear spline function</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IFunction Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td><p>Sample function</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Sample_Microsoft_ML_Probabilistic_Distributions_IFunction_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Sample(Microsoft.ML.Probabilistic.Distributions.IFunction)">Sample(IFunction)</h4>
+  <div class="markdown level1 summary"><p>Samples from the Sparse Gaussian distribution
+This is only implemented for a 1-dimensional input space,
+and returns a simple linear spline function. result is ignored</p>
+<param name="result">This argument is ignored
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IFunction Sample(IFunction result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IFunction.html">IFunction</a></td>
+        <td><p>Sample function</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetTo_Microsoft_ML_Probabilistic_Distributions_SparseGP_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetTo(Microsoft.ML.Probabilistic.Distributions.SparseGP)">SetTo(SparseGP)</h4>
+  <div class="markdown level1 summary"><p>Sets one sparse GP to another. Everything is copied
+except the FixedParameters and the lsit of rank 1 potentials
+which are referenced.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(SparseGP that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The sparse GP to copy</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetToPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToPower_Microsoft_ML_Probabilistic_Distributions_SparseGP_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetToPower(Microsoft.ML.Probabilistic.Distributions.SparseGP,System.Double)">SetToPower(SparseGP, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets this sparse GP the the power of another sparse GP</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPower(SparseGP dist, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToProduct_Microsoft_ML_Probabilistic_Distributions_SparseGP_Microsoft_ML_Probabilistic_Distributions_SparseGP_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetToProduct(Microsoft.ML.Probabilistic.Distributions.SparseGP,Microsoft.ML.Probabilistic.Distributions.SparseGP)">SetToProduct(SparseGP, SparseGP)</h4>
+  <div class="markdown level1 summary"><p>Sets this instance to the product of two sparse GPs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(SparseGP a, SparseGP b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Sparse GP</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Sparse GP</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetToRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToRatio_Microsoft_ML_Probabilistic_Distributions_SparseGP_Microsoft_ML_Probabilistic_Distributions_SparseGP_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetToRatio(Microsoft.ML.Probabilistic.Distributions.SparseGP,Microsoft.ML.Probabilistic.Distributions.SparseGP,System.Boolean)">SetToRatio(SparseGP, SparseGP, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Sets this instance to the ratio of two sparse GPs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRatio(SparseGP numerator, SparseGP denominator, bool forceProper = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>Sparse GP</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>Sparse GP</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToSum_System_Double_Microsoft_ML_Probabilistic_Distributions_SparseGP_System_Double_Microsoft_ML_Probabilistic_Distributions_SparseGP_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetToSum(System.Double,Microsoft.ML.Probabilistic.Distributions.SparseGP,System.Double,Microsoft.ML.Probabilistic.Distributions.SparseGP)">SetToSum(Double, SparseGP, Double, SparseGP)</h4>
+  <div class="markdown level1 summary"><p>Sets this SparseGP distribution to the weighted sum of two other such distributions</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, SparseGP value1, double weight2, SparseGP value2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">value1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">value2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToSum_System_Double_Microsoft_ML_Probabilistic_Distributions_SparseGP_System_Double_Microsoft_ML_Probabilistic_Distributions_SparseGP__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Not yet implemented</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets to uniform</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>ToString override</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>String representation of instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Uniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Uniform_Microsoft_ML_Probabilistic_Distributions_SparseGPFixed_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Uniform(Microsoft.ML.Probabilistic.Distributions.SparseGPFixed)">Uniform(SparseGPFixed)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform sparse GP</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SparseGP Uniform(SparseGPFixed sgpf)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGPFixed.html">SparseGPFixed</a></td>
+        <td><span class="parametername">sgpf</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Variance_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Variance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_Variance_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.Variance(Microsoft.ML.Probabilistic.Math.Vector)">Variance(Vector)</h4>
+  <div class="markdown level1 summary"><p>Predictive Variance at a given point</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Variance(Vector X)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">X</span></td>
+        <td><p>Input</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Predictive variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_op_Division_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.op_Division*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_op_Division_Microsoft_ML_Probabilistic_Distributions_SparseGP_Microsoft_ML_Probabilistic_Distributions_SparseGP_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.op_Division(Microsoft.ML.Probabilistic.Distributions.SparseGP,Microsoft.ML.Probabilistic.Distributions.SparseGP)">Division(SparseGP, SparseGP)</h4>
+  <div class="markdown level1 summary"><p>Creates a new SparseGP which the ratio of two other SparseGPs</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SparseGP operator /(SparseGP numerator, SparseGP denominator)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>numerator SparseGP</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>denominator SparseGP</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><p>Result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_SparseGP_op_Multiply_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.op_Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_SparseGP_op_Multiply_Microsoft_ML_Probabilistic_Distributions_SparseGP_Microsoft_ML_Probabilistic_Distributions_SparseGP_" data-uid="Microsoft.ML.Probabilistic.Distributions.SparseGP.op_Multiply(Microsoft.ML.Probabilistic.Distributions.SparseGP,Microsoft.ML.Probabilistic.Distributions.SparseGP)">Multiply(SparseGP, SparseGP)</h4>
+  <div class="markdown level1 summary"><p>Creates a new SparseGP which the product of two other SparseGPs</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SparseGP operator *(SparseGP a, SparseGP b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First SparseGP</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second SparseGP</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseGP.html">SparseGP</a></td>
+        <td><p>Result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IGaussianProcess.html">IGaussianProcess</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">ICloneable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean&lt;MeanType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
