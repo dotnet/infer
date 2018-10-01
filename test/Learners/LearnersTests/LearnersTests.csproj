@@ -1,0 +1,132 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\Infer2.snk</AssemblyOriginatorKeyFile>
+    <AssemblyName>Microsoft.ML.Probabilistic.Learners.Tests</AssemblyName>
+    <RootNamespace>Microsoft.ML.Probabilistic.Learners.Tests</RootNamespace>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
+      <PropertyGroup>
+        <TargetFramework>net461</TargetFramework>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
+      <PropertyGroup>
+        <TargetFramework>netcoreapp2.0</TargetFramework>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0'">
+    <DefineConstants>$(DefineConstants);NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
+    <DefineConstants>$(DefineConstants);NET45;NETFULL</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugCore|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU' OR '$(Configuration)|$(Platform)'=='ReleaseFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='ReleaseCore|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Compiler\Compiler.csproj" />
+    <ProjectReference Include="..\..\..\src\Runtime\Runtime.csproj" />
+    <ProjectReference Include="..\..\..\src\Learners\Classifier\Classifier.csproj" />
+    <ProjectReference Include="..\..\..\src\Learners\Core\Core.csproj" />
+    <ProjectReference Include="..\..\..\src\Learners\Recommender\Recommender.csproj" />
+    <ProjectReference Include="..\..\..\src\Learners\Runners\CommandLine\CommandLine.csproj" />
+    <ProjectReference Include="..\..\..\src\Learners\Runners\Common\Common.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="CustomSerializedLearners\2015-03-20\SparseBinaryNativeClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\DenseBinaryNativeClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\DenseMulticlassNativeClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\SparseMulticlassNativeClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\DenseBinaryStandardClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\SparseBinaryStandardClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\DenseMulticlassStandardClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\SparseMulticlassStandardClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorDenseBinaryNativeClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorSparseBinaryNativeClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorDenseMulticlassStandardClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorSparseMulticlassStandardClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorDenseMulticlassNativeClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorSparseMulticlassNativeClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorDenseBinaryStandardClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-03-20\GaussianPriorSparseBinaryStandardClassifier-2015-03-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-11-20\NativeRecommender-2015-11-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2015-11-20\StandardRecommender-2015-11-20.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2018-07-27\NativeRecommender-2018-07-27.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CustomSerializedLearners\2018-07-27\StandardRecommender-2018-07-27.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\W5ANormalized.csv.gz">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

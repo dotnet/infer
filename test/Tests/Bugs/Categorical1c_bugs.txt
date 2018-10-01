@@ -1,0 +1,5 @@
+model {
+q[1:4] ~ ddirch(alpha[])
+x ~ dcat(p[])
+x_unary ~ dcat(x_unary_p[x,])
+}

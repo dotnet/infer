@@ -1,0 +1,6 @@
+model {
+mean[1:2] ~ dmnorm(mean_m[], mean_p[,])
+precision[1:2,1:2] ~ dwish(precision_b[,],precision_k)
+x[1:2] ~ dmnorm(mean[], precision[,])
+x_unary[1:2] ~ dmnorm(x[], x_unary_p[,]) 
+}

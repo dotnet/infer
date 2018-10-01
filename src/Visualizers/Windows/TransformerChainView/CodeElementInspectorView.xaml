@@ -1,0 +1,39 @@
+<!-- Licensed to the .NET Foundation under one or more agreements.
+     The .NET Foundation licenses this file to you under the MIT license.
+     See the LICENSE file in the project root for more information. -->
+<UserControl x:Class="Microsoft.ML.Probabilistic.Compiler.Visualizers.CodeElementInspectorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vw="clr-namespace:Microsoft.ML.Probabilistic.Compiler.Visualizers"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="UserControl_DataContextChanged" BorderBrush="LightGray" BorderThickness="1" Background="#EEEEEE">
+    <UserControl.Resources>
+        <vw:AttributeToTextConverter x:Key="AttributeToTextConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Attributes" HorizontalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold" Padding="2"/>
+        <Button Name="ClearSearch" Grid.Column="1" Command="Close" BorderThickness="0" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="1" Background="Transparent"
+                    >
+            <TextBlock Text="X" FontWeight="ExtraBold" Padding="10,0"/>
+        </Button>
+        <ListBox Name="AttributeListBox" Grid.Row="1" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Background="Transparent" VirtualizingPanel.ScrollUnit="Pixel">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Border BorderThickness="1" BorderBrush="LightGray" Background="white" HorizontalAlignment="Stretch">
+                        <vw:AttributeView DataContext="{Binding Converter={StaticResource AttributeToTextConverter}}"/>
+                </Border>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+    </Grid>
+</UserControl>

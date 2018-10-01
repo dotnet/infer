@@ -1,0 +1,61 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [ "src/Compiler/Compiler.csproj", "src/Runtime/Runtime.csproj", "src/Learners/Recommender/Recommender.csproj", "src/Learners/Classifier/Classifier.csproj", "src/Learners/Core/Core.csproj" ],
+          "exclude": [ "**/bin/**", "**/obj/**" ],
+          "src": "../InferNet_Copy_Temp/"
+        }
+      ],
+      "dest": "obj/api",
+      "properties": {
+          "TargetFramework": "netstandard2.0"
+      }
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [ "**.yml" ],
+        "src": "obj/api",
+        "dest": "api"
+      },
+      {
+        "files": [ "index.md" ],
+        "src": ".",
+        "dest": "api"
+      },
+      {
+        "files": [ "toc.yml" ]
+      }
+    ],
+    "resource": [ 
+      {
+        "files": [ "images/**" ],
+        "exclude": [ "_site/**", "**/obj/**", "**.meta" ]
+      }
+    ],
+    "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
+    "postProcessors": [ "ExtractSearchIndex" ],
+    "globalMetadata": {
+      "_appTitle": "Infer.NET API Guide",
+      "_appFooter": "<span>Copyright © .NET Foundation. All rights reserved.</span>",
+      "_appLogoPath": "images/infernet.png",
+      "_disableContribution": true,
+      "_appFaviconPath": "favicon.ico"
+    },
+    "fileMetadata": {
+      "priority": {
+        "**.md": 2.5,
+        "api/**.md": 3
+      }
+    },
+    "markdownEngineName": "markdig",
+    "dest": "../apiguide-tmp",
+    "template": [
+      "default",
+      "template"
+    ]
+  }
+}

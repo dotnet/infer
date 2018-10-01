@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "InferNetExamples", "InferNetExamples\InferNetExamples.pyproj", "{44D352DE-299B-4409-9371-949AC48B4225}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{44D352DE-299B-4409-9371-949AC48B4225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44D352DE-299B-4409-9371-949AC48B4225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A50DD3F-722D-4652-B5AB-5F1E62C4B299}
+	EndGlobalSection
+EndGlobal

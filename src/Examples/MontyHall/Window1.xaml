@@ -1,0 +1,304 @@
+<!-- Licensed to the .NET Foundation under one or more agreements.
+     The .NET Foundation licenses this file to you under the MIT license.
+     See the LICENSE file in the project root for more information. -->
+<Window
+    x:Class="MontyHall.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="The Monty Hall Problem using Infer.NET"
+    ResizeMode="NoResize" Height="768" Width="1024" Icon="Images/Infer.ico" FontSize="20">
+
+    <Canvas Width="1024" Height="768" Cursor="Arrow">
+
+        <Button Canvas.Left="150" Canvas.Top="550" Height="68" Name="button1" Click="button1_Click" VerticalAlignment="Top" Width="260" Cursor="Hand" FontSize="24">Start again</Button>
+        <Button Canvas.Left="420" Canvas.Top="550" Name="button2" Click="button2_Click" Visibility="Hidden" Grid.RowSpan="2" Height="68" Width="260" Cursor="Hand" FontSize="24">Let Host Pick Door</Button>
+        <Button Canvas.Left="690" Canvas.Top="550" Name="button3" Click="button3_Click" Visibility="Hidden" Height="68" Width="260" Cursor="Hand" FontSize="24">Clear Stats</Button>
+
+        <Label Canvas.Top="624" Canvas.Left="325" FontSize="24" HorizontalContentAlignment="Center" Name="percentlbl" VerticalAlignment="Top" Height="80" Width="400" />
+
+        <Image Canvas.Left="150" Canvas.Top="30" Height="440" Name="image1" Source="images/frame-red.png" Stretch="Fill" Width="260" />
+        <Image Canvas.Left="420" Canvas.Top="30" Height="440" Name="image2" Source="images/frame-blue.png" Stretch="Fill" Width="260" />
+        <Image Canvas.Left="690" Canvas.Top="30" Height="440" Name="image3" Source="images/frame-yellow.png" Stretch="Fill" Width="260" />
+
+        <Label Grid.Column="0" Grid.Row="2" Name="label1" Canvas.Left="0" Canvas.Top="470" Height="102" Width="183" HorizontalContentAlignment="Right" FontSize="20" VerticalAlignment="Top" />
+        <Label Grid.Column="1" Grid.Row="2" Name="Lbl1" Canvas.Left="150" Canvas.Top="470" Height="102" Width="260" HorizontalContentAlignment="Center" FontSize="20" HorizontalAlignment="Center" />
+        <Label Grid.Column="2" Grid.Row="2" Name="Lbl2" Canvas.Left="420" Canvas.Top="470" Height="102" Width="260" HorizontalContentAlignment="Center" FontSize="20" HorizontalAlignment="Center" />
+        <Label Grid.Column="3" Grid.Row="2" Name="Lbl3" Canvas.Left="690" Canvas.Top="470" Height="102" Width="260" HorizontalContentAlignment="Center" FontSize="20" HorizontalAlignment="Center" />
+
+        <Image Name="carg1" Canvas.Left="180" Width="200" Canvas.Top="240" Grid.Column="1" Height="120" Opacity="0" Source="images/car1.gif" Stretch="Fill" VerticalAlignment="Top" Grid.Row="1" MouseDown="Door1_MouseDown" MouseEnter="Door1_Enter" MouseLeave="Door1_Leave" />
+        <Image Name="carg2" Canvas.Left="450" Width="200" Canvas.Top="240" Grid.Column="2" Height="120" Opacity="0" Source="images/car2.gif" Stretch="Fill" VerticalAlignment="Top" Grid.Row="1" MouseDown="Door2_MouseDown" MouseEnter="Door2_Enter" MouseLeave="Door2_Leave" />
+        <Image Name="carg3" Canvas.Left="720" Width="200" Canvas.Top="240" Grid.Column="3" Height="120" Opacity="0" Source="images/car3.png" Stretch="Fill" VerticalAlignment="Top" Grid.Row="1" MouseDown="Door3_MouseDown" MouseEnter="Door3_Enter" MouseLeave="Door3_Leave" />
+
+        <Image Name="goatg1" Canvas.Left="150" Width="260" Canvas.Top="130" Height="260" Opacity="0" Source="images/goat.png" Stretch="Fill" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" />
+        <Image Name="goatg2" Canvas.Left="420" Width="260" Canvas.Top="130" Height="260" Opacity="0" Source="images/goat.png" Stretch="Fill" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
+        <Image Name="goatg3" Canvas.Left="690" Width="260" Canvas.Top="130" Height="260" Opacity="0" Source="images/goat.png" Stretch="Fill" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" />
+
+        <Image Name="Door1" Source="images/door-red.png" Grid.Column="1" Grid.Row="1" Canvas.Left="150" Canvas.Top="30" Height="440" Stretch="Fill" Width="260" MouseDown="Door1_MouseDown" MouseEnter="Door1_Enter" MouseLeave="Door1_Leave" />
+        <Image Name="Door2" Source="images/door-blue.png" Grid.Column="2" Grid.Row="1" Canvas.Left="420" Canvas.Top="30" Height="440" Stretch="Fill" Width="260" MouseDown="Door2_MouseDown" MouseEnter="Door2_Enter" MouseLeave="Door2_Leave" />
+        <Image Name="Door3" Source="images/door-yellow.png" Grid.Column="3" Grid.Row="1" Canvas.Left="690" Canvas.Top="30" Height="440" Stretch="Fill" Width="260" MouseDown="Door3_MouseDown" MouseEnter="Door3_Enter" MouseLeave="Door3_Leave" />
+
+        <Label Name="q1" Canvas.Left="150" Canvas.Top="50" FontSize="300" Height="440" Width="260" HorizontalContentAlignment="Center" Visibility="Visible" MouseDown="Door1_MouseDown" Opacity="0" Cursor="Hand">?</Label>
+        <Label Name="q2" Canvas.Left="420" Canvas.Top="50" FontSize="300" Height="440" Width="260" HorizontalContentAlignment="Center" Visibility="Visible" MouseDown="Door2_MouseDown" Opacity="0" Cursor="Hand">?</Label>
+        <Label Name="q3" Canvas.Left="690" Canvas.Top="50" FontSize="300" Height="440" Width="260" HorizontalContentAlignment="Center" Visibility="Visible" MouseDown="Door3_MouseDown" Opacity="0" Cursor="Hand">?</Label>
+    </Canvas>
+
+    <Window.Resources>
+
+        <!-- Doors -->
+
+        <Storyboard x:Key="opendoor1">
+            <DoubleAnimationUsingPath Storyboard.TargetName="Door1" Storyboard.TargetProperty="Width">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="260,0" IsClosed="False">
+                                <LineSegment Point="20,0" />
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+        </Storyboard>
+        <Storyboard x:Key="opendoor2">
+            <DoubleAnimationUsingPath Storyboard.TargetName="Door2" Storyboard.TargetProperty="Width">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="260,0" IsClosed="False">
+                                <LineSegment Point="20,0" />
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+        </Storyboard>
+        <Storyboard x:Key="opendoor3">
+            <DoubleAnimationUsingPath Storyboard.TargetName="Door3" Storyboard.TargetProperty="Width">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="260,0" IsClosed="False">
+                                <LineSegment Point="20,0" />
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+        </Storyboard>
+
+        <Storyboard x:Key="closedoor1">
+            <DoubleAnimationUsingPath Storyboard.TargetName="Door1" Storyboard.TargetProperty="Width">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="20,0" IsClosed="False">
+                                <LineSegment Point="260,0" />
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+        </Storyboard>
+        <Storyboard x:Key="closedoor2">
+            <DoubleAnimationUsingPath Storyboard.TargetName="Door2" Storyboard.TargetProperty="Width">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="20,0" IsClosed="False">
+                                <LineSegment Point="260,0" />
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+        </Storyboard>
+        <Storyboard x:Key="closedoor3">
+            <DoubleAnimationUsingPath Storyboard.TargetName="Door3" Storyboard.TargetProperty="Width">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="20,0" IsClosed="False">
+                                <LineSegment Point="260,0" />
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+        </Storyboard>
+
+        <!-- Q Marks -->
+
+        <Storyboard x:Key="showq1">
+            <DoubleAnimation
+            Storyboard.TargetName="q1"
+            Storyboard.TargetProperty="(Label.Opacity)"
+            From="0"
+            To="1"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="showq2">
+            <DoubleAnimation
+            Storyboard.TargetName="q2"
+            Storyboard.TargetProperty="(Label.Opacity)"
+            From="0"
+            To="1"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="showq3">
+            <DoubleAnimation
+            Storyboard.TargetName="q3"
+            Storyboard.TargetProperty="(Label.Opacity)"
+            From="0"
+            To="1"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+
+        <Storyboard x:Key="hideq1">
+            <DoubleAnimation
+            Storyboard.TargetName="q1"
+            Storyboard.TargetProperty="(Label.Opacity)"
+            From="1"
+            To="0"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="hideq2">
+            <DoubleAnimation
+            Storyboard.TargetName="q2"
+            Storyboard.TargetProperty="(Label.Opacity)"
+            From="1"
+            To="0"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="hideq3">
+            <DoubleAnimation
+            Storyboard.TargetName="q3"
+            Storyboard.TargetProperty="(Label.Opacity)"
+            From="1"
+            To="0"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+
+        <!-- Cars -->
+
+        <Storyboard x:Key="showcarg1">
+            <DoubleAnimation
+            Storyboard.TargetName="carg1"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="0"
+            To="1"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="showcarg2">
+            <DoubleAnimation
+            Storyboard.TargetName="carg2"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="0"
+            To="1"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="showcarg3">
+            <DoubleAnimation
+            Storyboard.TargetName="carg3"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="0"
+            To="1"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+
+        <Storyboard x:Key="hidecarg1">
+            <DoubleAnimation
+            Storyboard.TargetName="carg1"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="1"
+            To="0"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="hidecarg2">
+            <DoubleAnimation
+            Storyboard.TargetName="carg2"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="1"
+            To="0"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="hidecarg3">
+            <DoubleAnimation
+            Storyboard.TargetName="carg3"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="1"
+            To="0"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+
+        <!-- Goats -->
+
+        <Storyboard x:Key="showgoatg1">
+            <DoubleAnimation
+            Storyboard.TargetName="goatg1"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="0"
+            To="1"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="showgoatg2">
+            <DoubleAnimation
+            Storyboard.TargetName="goatg2"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="0"
+            To="1"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="showgoatg3">
+            <DoubleAnimation
+            Storyboard.TargetName="goatg3"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="0"
+            To="1"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+
+        <Storyboard x:Key="hidegoatg1">
+            <DoubleAnimation
+            Storyboard.TargetName="goatg1"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="1"
+            To="0"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="hidegoatg2">
+            <DoubleAnimation
+            Storyboard.TargetName="goatg2"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="1"
+            To="0"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+        <Storyboard x:Key="hidegoatg3">
+            <DoubleAnimation
+            Storyboard.TargetName="goatg3"
+            Storyboard.TargetProperty="(Image.Opacity)"
+            From="1"
+            To="0"
+            Duration="0:0:1"
+            RepeatBehavior="1x" />
+        </Storyboard>
+
+    </Window.Resources>
+
+</Window>

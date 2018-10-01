@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.1">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9234127e-fbc0-4587-bad9-65727458cc0f}</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>TestWrapper.py</StartupFile>
+    <SearchPath>..\..\..\Compiler\bin\Release\;..\..\InferNetExamples\InferNetExamples</SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <InterpreterId>IronPython|2.7-32</InterpreterId>
+    <LaunchProvider>IronPython (.NET) launcher</LaunchProvider>
+    <AssemblyName>SmokeTest</AssemblyName>
+    <Name>TestWrapper</Name>
+    <RootNamespace>SmokeTest</RootNamespace>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <IsWindowsApplication>False</IsWindowsApplication>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="TestWrapper.py" />
+    <Compile Include="TestWrapperFuncs.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="IronPython|2.7-32" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>

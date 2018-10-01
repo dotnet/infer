@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ModelNetwork xmlns:j="http://www.inference.phy.cam.ac.uk/jmw39" j:version="1.1" name="logistic_test.xml">
+  <nodes j:type="ArrayList">
+    <ModelNode j:name="w">
+      <attributes j:type="HashMap">
+        <key-LOCATION j:array="I">150,240</key-LOCATION>
+      </attributes>
+      <distribution j:type="GaussianNode"/>
+      <parentEdges j:type="ArrayList">
+        <BasicEdge nodeA.ref="m"/>
+        <BasicEdge nodeA.ref="prec"/>
+      </parentEdges>
+    </ModelNode>
+    <ModelNode j:name="m">
+      <attributes j:type="HashMap">
+        <key-LOCATION j:array="I">130,120</key-LOCATION>
+      </attributes>
+      <distribution j:type="Constant" value="1.2"/>
+    </ModelNode>
+    <ModelNode j:name="prec">
+      <attributes j:type="HashMap">
+        <key-LOCATION j:array="I">265,120</key-LOCATION>
+      </attributes>
+      <distribution j:type="Constant" value="0.4"/>
+    </ModelNode>
+    <ModelNode name="y">
+      <attributes j:type="HashMap">
+        <key-LOCATION j:array="I">150,350</key-LOCATION>
+      </attributes>
+      <distribution j:type="LogisticNode"/>
+      <parentEdges j:type="ArrayList">
+        <BasicEdge nodeA.ref="w"/>
+      </parentEdges>
+    </ModelNode>
+  </nodes>
+</ModelNetwork>

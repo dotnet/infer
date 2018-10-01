@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\Infer2.snk</AssemblyOriginatorKeyFile>
+    <AssemblyName>$(AssemblyNamePrefix)Microsoft.ML.Probabilistic.Compiler</AssemblyName>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <DefineConstants>TRACE;SUPPRESS_XMLDOC_WARNINGS, SUPPRESS_UNREACHABLE_CODE_WARNINGS, SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS</DefineConstants>
+    <NoWarn>1591</NoWarn>
+    <RootNamespace>Microsoft.ML.Probabilistic</RootNamespace>
+		<RoslynSupport>true</RoslynSupport>
+		<CodeDomSupport>true</CodeDomSupport>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RoslynSupport)' == 'true'">
+    <DefineConstants>$(DefineConstants);ROSLYN</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(CodeDomSupport)' == 'true'">
+    <DefineConstants>$(DefineConstants);CODEDOM</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyNamePrefix)Microsoft.ML.Probabilistic.Compiler.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Runtime\Runtime.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Condition="$(DefineConstants.Contains('ROSLYN'))" Include="Microsoft.CodeAnalysis.CSharp" version="2.0.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
+    <PackageReference Condition="$(DefineConstants.Contains('CODEDOM'))" Include="System.CodeDom" Version="4.4.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="Infer\Infer.ico" />
+    <EmbeddedResource Include="Infer\Infer.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\SharedAssemblyFileVersion.cs" />
+    <Compile Include="..\Shared\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+</Project>

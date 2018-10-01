@@ -1,0 +1,11 @@
+model {
+mean1 ~ dnorm(mean_m,mean_p)
+mean[1] <- mean1
+mean[2] <- 0
+precision1 ~ dgamma(precision1_k, precision1_b)
+precision[1] <- precision1
+precision[2] <- 1
+selector ~ dcat(selector_p[])
+x ~ dnorm(mean[selector],precision[selector])
+x_unary ~ dnorm(x, x_unary_p)
+}

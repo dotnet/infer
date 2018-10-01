@@ -1,0 +1,8 @@
+model {
+  # p is not in the plate
+  q[1:4] ~ ddirch(alpha[])
+  for(i in 1:3) {
+    x[i] ~ dcat(p[])
+    x_unary[i] ~ dcat(x_unary_p[x[i],])
+  }
+}

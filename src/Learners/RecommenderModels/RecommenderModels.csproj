@@ -1,0 +1,78 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\Infer2.snk</AssemblyOriginatorKeyFile>
+    <AssemblyName>Microsoft.ML.Probabilistic.Learners.RecommenderModels</AssemblyName>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>TRACE</DefineConstants>
+    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <RootNamespace>Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal</RootNamespace>
+    <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
+    <StartupObject>Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal.Program</StartupObject>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(Configuration)'=='DebugFull' OR '$(Configuration)'=='ReleaseFull'">
+      <PropertyGroup>
+        <TargetFramework>net461</TargetFramework>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(Configuration)'=='DebugCore' OR '$(Configuration)'=='ReleaseCore'">
+      <PropertyGroup>
+        <TargetFramework>netcoreapp2.0</TargetFramework>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
+        <!-- No need to generate code twice -->
+        <IgnorePostBuildNetCore>true</IgnorePostBuildNetCore>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0'">
+    <DefineConstants>$(DefineConstants);NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+    <RunPostBuildNetCore Condition="$(IgnorePostBuildNetCore) != 'true'">true</RunPostBuildNetCore>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461'">
+    <DefineConstants>$(DefineConstants);NETFULL</DefineConstants>
+    <RunPostBuildNetFull>true</RunPostBuildNetFull>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='DebugCore|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Microsoft.ML.Probabilistic.Learners.RecommenderModels.XML</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Compiler\Compiler.csproj" />
+    <ProjectReference Include="..\..\Runtime\Runtime.csproj" />
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Shared\SharedAssemblyFileVersion.cs" />
+    <Compile Include="..\..\Shared\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <Target Name="PostBuildNetFull" AfterTargets="PostBuildEvent" Condition="'$(RunPostBuildNetFull)' == 'true'">
+    <Exec Command="&quot;$(TargetPath)&quot; &quot;$([System.IO.Path]::Combine($(SolutionDir),'src', 'Learners', 'Recommender', 'MatchboxRecommenderInternal', 'GeneratedAlgorithms'))&quot;" />
+  </Target>
+
+  <Target Name="PostBuildNetCore" AfterTargets="PostBuildEvent" Condition="'$(RunPostBuildNetCore)' == 'true'">
+    <Exec Command="dotnet &quot;$(TargetPath)&quot; &quot;$([System.IO.Path]::Combine($(SolutionDir),'src', 'Learners', 'Recommender', 'MatchboxRecommenderInternal', 'GeneratedAlgorithms'))&quot;" />
+  </Target>
+</Project>

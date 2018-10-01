@@ -1,0 +1,42 @@
+<!-- Licensed to the .NET Foundation under one or more agreements.
+     The .NET Foundation licenses this file to you under the MIT license.
+     See the LICENSE file in the project root for more information. -->
+<UserControl x:Class="Microsoft.ML.Probabilistic.Compiler.Visualizers.DeclarationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vw="clr-namespace:Microsoft.ML.Probabilistic.Compiler.Visualizers"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="UserControl_DataContextChanged">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vw:LineOfCode}">
+            <vw:LineOfCodeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vw:MatchedLine}">
+            <vw:LineOfCodeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vw:CollapsedCode}">
+            <vw:CollapsedCodeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vw:FaintLine}">
+            <vw:LineOfCodeView Opacity="0.3"/>
+        </DataTemplate>
+        <Style TargetType="Hyperlink">
+            <Setter Property="TextDecorations" Value="None"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="TextDecorations" Value="Underline"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <ListBox Name="MyListView" HorizontalContentAlignment="Stretch" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
+        <ListBox.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Show attributes" Command="Properties"/>
+                <MenuItem Header="Copy code to clipboard" Click="CopyCode_Click"/>
+            </ContextMenu>
+        </ListBox.ContextMenu>
+    </ListBox>
+</UserControl>

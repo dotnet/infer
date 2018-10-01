@@ -1,0 +1,9 @@
+model {
+  for(j in 1:2) {
+    mean[j] ~ dnorm(mean_m, mean_p)
+    precision[j] ~ dgamma(precision_k, precision_b)
+    for(i in 1:500) {
+      x[j,i] ~ dnorm(mean[j], precision[j])
+    }
+  }
+}

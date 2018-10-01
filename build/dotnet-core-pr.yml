@@ -1,0 +1,33 @@
+# Build and test Infer.NET using .NET Core
+resources:
+- repo: self
+  clean: true
+  
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: DotNetCoreInstaller@0
+  inputs:
+    packageType: 'sdk' 
+    version: '2.1.202' 
+
+- script: |
+    dotnet build --configuration $(buildConfiguration)Core Infer2.sln
+  displayName: Build Solution
+    
+- task: Bash@3
+  inputs:
+    filePath: test/netcoretest.sh
+    workingDirectory: test
+    arguments: |
+      Tests/bin/$(buildConfiguration)Core/netcoreapp2.0/Microsoft.ML.Probabilistic.Tests.dll
+      Learners/LearnersTests/bin/$(buildConfiguration)Core/netcoreapp2.0/Microsoft.ML.Probabilistic.Learners.Tests.dll
+      TestPublic/bin/$(buildConfiguration)Core/netcoreapp2.0/TestPublic.dll
+    displayName: Run Tests
+    continueOnError: true
+    
+- task: PublishTestResults@2
+  inputs:
+    testRunner: XUnit
+    testResultsFiles: 'test/*core-tests.xml'

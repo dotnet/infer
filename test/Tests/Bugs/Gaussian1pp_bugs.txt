@@ -1,0 +1,9 @@
+model {
+  # mean,precision are not in the plate
+  mean ~ dnorm(mean_m, mean_p)
+  precision ~ dgamma(precision_k, precision_b)
+  for(i in 1:3) {
+    x[i] ~ dnorm(mean, precision)
+    x_unary[i] ~ dnorm(x[i], x_unary_p)
+  }
+}

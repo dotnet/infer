@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelNetwork xmlns:j="http://www.inference.phy.cam.ac.uk/jmw39" j:version="1.1" name="regression.xml">
+<nodes j:type="ArrayList">
+<ModelNode j:name="w">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">150,240</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="m"/>
+<BasicEdge nodeA.ref="prec"/>
+</parentEdges>
+<plates j:type="ArrayList">
+<BasicPlate j:ref="d"/>
+</plates>
+</ModelNode>
+<ModelNode j:name="m">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">130,120</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="2.0">
+<distribution j:type="Constant" value="2.0"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="prec">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">265,120</key-LOCATION>
+</attributes>
+<distribution j:type="GammaNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="x">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">245,235</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="2.0">
+<distribution j:type="Constant" value="2.0"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="0.5">
+<distribution j:type="Constant" value="0.5"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+<plates j:type="ArrayList">
+<BasicPlate j:ref="d"/>
+</plates>
+</ModelNode>
+<ModelNode j:name="y">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">300,380</key-LOCATION>
+</attributes>
+<distribution arrayDimension.ref="d" j:type="DotProduct"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="w"/>
+<BasicEdge nodeA.ref="x"/>
+</parentEdges>
+</ModelNode>
+<ModelNode name="yNoisy">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">309,473</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="y"/>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="10.0">
+<distribution j:type="Constant" value="10.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+</nodes>
+<plates j:type="ArrayList">
+<BasicPlate j:name="d" size="2">
+<attributes j:type="HashMap">
+<key-BOUNDS j:array="I">135,215,216,89</key-BOUNDS>
+</attributes>
+</BasicPlate>
+</plates>
+</ModelNetwork>

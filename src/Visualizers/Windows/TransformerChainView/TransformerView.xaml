@@ -1,0 +1,82 @@
+<!-- Licensed to the .NET Foundation under one or more agreements.
+     The .NET Foundation licenses this file to you under the MIT license.
+     See the LICENSE file in the project root for more information. -->
+<UserControl x:Class="Microsoft.ML.Probabilistic.Compiler.Visualizers.TransformerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vw="clr-namespace:Microsoft.ML.Probabilistic.Compiler.Visualizers"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="UserControl_DataContextChanged">
+    <UserControl.Resources>
+        <vw:TransformErrorConverter x:Key="TransformErrorConverter"/>        
+    </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="Search" Executed="CommandBinding_Executed_1"/>
+        <CommandBinding Command="Close" Executed="CloseAttributePanel"/>
+        <CommandBinding Command="Properties" Executed="OpenAttributePanel"/>
+    </UserControl.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Name="ErrorsRow" Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Name="AttributesColumn" Width="0"/>
+        </Grid.ColumnDefinitions>
+        <Grid Margin="5" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Search: "/>
+            <TextBox Name="SearchTextBox" Grid.Column="1" MouseDoubleClick="SearchTextBox_MouseDoubleClick"/>
+            <Button Name="ClearSearch" Grid.Column="1" Click="ClearSearch_Click" BorderThickness="0" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="1" Background="Transparent"
+                    Visibility="Collapsed">
+                <TextBlock Text="X" FontWeight="ExtraBold" Padding="15,0"/>
+            </Button>
+        </Grid>
+        <TabControl Name="MyTabControl" Grid.Row="1" TabStripPlacement="Bottom" BorderThickness="0" SelectionChanged="MyTabControl_SelectionChanged">
+            <TabItem>
+                <vw:DeclarationView x:Name="MyDeclarationView"/>
+            </TabItem>
+        </TabControl>
+        <GridSplitter Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="5"/>        
+        <vw:CodeElementInspectorView x:Name="CodeElementInspector" Grid.Column="2" Grid.Row="1"/>
+        <GridSplitter Name="ErrorsSplitter" Grid.ColumnSpan="3" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Height="5"/>
+        <ScrollViewer Grid.Row="3" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <DataGrid Name="ErrorsTable" AutoGenerateColumns="False" IsReadOnly="True" FontSize="11" FontFamily="Consolas" GridLinesVisibility="None" Background="White" RowHeaderWidth="0"
+                  SelectionMode="Single" SelectionUnit="FullRow" SelectedCellsChanged="ErrorsTable_SelectedCellsChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Converter={StaticResource TransformErrorConverter}, ConverterParameter=Type}" Header="Type" Width="auto"/>
+                    <DataGridTemplateColumn Header="Message" Width="auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <vw:AttributeView DataContext="{Binding ErrorText}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Exception" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <vw:AttributeView DataContext="{Binding Converter={StaticResource TransformErrorConverter}, ConverterParameter=Exception}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Input element" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                <vw:AttributeView DataContext="{Binding Converter={StaticResource TransformErrorConverter}, ConverterParameter=InputElement}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

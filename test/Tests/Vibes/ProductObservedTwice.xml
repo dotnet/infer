@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ModelNetwork xmlns:j="http://www.inference.phy.cam.ac.uk/jmw39" j:version="1.1" name="ProductObservedTwice.xml">
+  <nodes j:type="ArrayList">
+    <ModelNode j:name="a">
+      <attributes j:type="HashMap">
+        <key-LOCATION j:array="I">140,110</key-LOCATION>
+      </attributes>
+      <distribution j:type="GaussianNode"/>
+      <parentEdges j:type="ArrayList">
+        <BasicEdge>
+          <nodeA j:type="ModelNode" name="1.0">
+            <distribution j:type="Constant" value="1.0"/>
+          </nodeA>
+        </BasicEdge>
+        <BasicEdge>
+          <nodeA j:type="ModelNode" name="100.0">
+            <distribution j:type="Constant" value="100.0"/>
+          </nodeA>
+        </BasicEdge>
+      </parentEdges>
+    </ModelNode>
+    <ModelNode j:name="b">
+      <attributes j:type="HashMap">
+        <key-LOCATION j:array="I">300,110</key-LOCATION>
+      </attributes>
+      <distribution j:type="GaussianNode"/>
+      <parentEdges j:type="ArrayList">
+        <BasicEdge>
+          <nodeA j:type="ModelNode" name="10.0">
+            <distribution j:type="Constant" value="10.0"/>
+          </nodeA>
+        </BasicEdge>
+        <BasicEdge>
+          <nodeA j:type="ModelNode" name="10.0">
+            <distribution j:type="Constant" value="10.0"/>
+          </nodeA>
+        </BasicEdge>
+      </parentEdges>
+    </ModelNode>
+    <ModelNode j:name="ab">
+      <attributes j:type="HashMap">
+        <key-LOCATION j:array="I">222,221</key-LOCATION>
+      </attributes>
+      <distribution j:type="Product"/>
+      <parentEdges j:type="ArrayList">
+        <BasicEdge nodeA.ref="a"/>
+        <BasicEdge nodeA.ref="b"/>
+      </parentEdges>
+    </ModelNode>
+    <ModelNode name="abNoisy">
+      <attributes j:type="HashMap">
+        <key-LOCATION j:array="I">150,335</key-LOCATION>
+      </attributes>
+      <distribution j:type="GaussianNode"/>
+      <parentEdges j:type="ArrayList">
+        <BasicEdge nodeA.ref="ab"/>
+        <BasicEdge>
+          <nodeA j:type="ModelNode" name="2.0">
+            <distribution j:type="Constant" value="2.0"/>
+          </nodeA>
+        </BasicEdge>
+      </parentEdges>
+    </ModelNode>
+    <ModelNode name="ab2Noisy">
+      <attributes j:type="HashMap">
+        <key-LOCATION j:array="I">310,335</key-LOCATION>
+      </attributes>
+      <distribution j:type="GaussianNode"/>
+      <parentEdges j:type="ArrayList">
+        <BasicEdge nodeA.ref="ab"/>
+        <BasicEdge>
+          <nodeA j:type="ModelNode" name="3.0">
+            <distribution j:type="Constant" value="3.0"/>
+          </nodeA>
+        </BasicEdge>
+      </parentEdges>
+    </ModelNode>
+  </nodes>
+</ModelNetwork>

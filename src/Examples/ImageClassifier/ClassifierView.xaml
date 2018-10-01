@@ -1,0 +1,75 @@
+<!-- Licensed to the .NET Foundation under one or more agreements.
+     The .NET Foundation licenses this file to you under the MIT license.
+     See the LICENSE file in the project root for more information. -->
+<UserControl x:Class="ImageClassifier.ClassifierView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Width="1024" Height="768">
+    <Canvas>
+        <Grid Background="White" Width="1024" Height="768">
+            <Grid.RowDefinitions>
+                <RowDefinition Name="binRow" Height="160" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Rectangle Height="Auto" Name="positiveBlock" Stroke="LightGreen" StrokeThickness="2">
+                <Rectangle.Fill>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0" Color="MintCream"/>
+                        <GradientStop Offset="1" Color="PaleGreen"/>
+                    </LinearGradientBrush>
+
+                </Rectangle.Fill> 
+            </Rectangle>
+            <TextBlock Text="Drag good images here" Foreground="white" FontSize="40" TextAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
+            <Rectangle Height="Auto" Name="negativeBlock" Stroke="Pink" StrokeThickness="2" Grid.Column="1">
+                <Rectangle.Fill>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0" Color="MintCream"/>
+                        <GradientStop Offset="1" Color="Red"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill> 
+            </Rectangle>
+            <TextBlock Text="Drag bad images here" Foreground="white" FontSize="40" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" IsHitTestVisible="False"/>
+        </Grid>
+        <ItemsControl Name="itemsControl" ItemsSource="{Binding Items}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>            
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Top" Value="10"/>
+                    <Setter Property="Canvas.Left" Value="10"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Name="itemRect" Stroke="Black" StrokeThickness="2" Cursor="Hand"
+                               MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" MouseLeftButtonUp="Rectangle_MouseLeftButtonUp"
+                               MouseMove="Rectangle_MouseMove" Loaded="itemRect_Loaded">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush>
+                                <GradientStop Offset="0" Color="White"/>
+                                <GradientStop Offset="1" Color="LightGray"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>     
+        <Canvas  Visibility="Hidden" Name="BottomPanel">
+            <TextBlock Text="Reset" FontSize="30" Cursor="Hand" Margin="2" Canvas.Top="712" Canvas.Left="470" MouseDown="Button_Click" Foreground="DarkGray" TextDecorations="Underline"/>
+            <Polyline Stroke="DarkGray" StrokeThickness="5" Points="50,724 20,738 50,752" StrokeLineJoin="Round"/>
+        <Polyline Stroke="DarkGray" StrokeThickness="5" Points="20,738 220,738"/>
+        <TextBlock Text="Better" Canvas.Top="715" Canvas.Left="230" FontSize="30" Foreground="DarkGray" />
+        <TextBlock Text="Worse" Canvas.Top="715" Canvas.Left="710" FontSize="30" Foreground="DarkGray"/>
+        <Polyline Stroke="DarkGray" StrokeThickness="5" Points="804,738 1004,738" StrokeLineJoin="Round"/>
+        <Polyline Stroke="DarkGray" StrokeThickness="5" Points="974,724 1004,738 974,752" StrokeLineJoin="Round"/>
+            </Canvas>
+    </Canvas>
+</UserControl>

@@ -1,0 +1,5 @@
+model {
+x2 ~ dcat(x2_prior[])
+x1 ~ dcat(x1_prior[])
+y ~ dcat(probs[x1,x2,])
+}

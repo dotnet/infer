@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelNetwork xmlns:j="http://www.inference.phy.cam.ac.uk/jmw39" j:version="1.1" name="sumOfSumPlusProdArray.xml">
+<nodes j:type="ArrayList">
+<ModelNode j:name="a">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">60,25</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="-1.0">
+<distribution j:type="Constant"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="b">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">240,25</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="2.0">
+<distribution j:type="Constant" value="2.0"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="10.0">
+<distribution j:type="Constant" value="10.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="aPb">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">40,185</key-LOCATION>
+</attributes>
+<distribution j:type="Add"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="a"/>
+<BasicEdge nodeA.ref="b"/>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="x">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">45,300</key-LOCATION>
+</attributes>
+<distribution j:type="Add"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="aPb"/>
+<BasicEdge nodeA.ref="bc"/>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="c">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">455,35</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="10.0">
+<distribution j:type="Constant" value="10.0"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="10.0">
+<distribution j:type="Constant" value="10.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="bc">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">225,180</key-LOCATION>
+</attributes>
+<distribution j:type="Product"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="b"/>
+<BasicEdge nodeA.ref="c"/>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="xx1">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">300,370</key-LOCATION>
+</attributes>
+<distribution j:type="Product"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="x"/>
+<BasicEdge nodeA.ref="x1"/>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="bPc">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">395,170</key-LOCATION>
+</attributes>
+<distribution j:type="Add"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="b"/>
+<BasicEdge nodeA.ref="c"/>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="ac">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">525,160</key-LOCATION>
+</attributes>
+<distribution j:type="Product"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="a"/>
+<BasicEdge nodeA.ref="c"/>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="x1">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">470,290</key-LOCATION>
+</attributes>
+<distribution j:type="Add"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="bPc"/>
+<BasicEdge nodeA.ref="ac"/>
+</parentEdges>
+</ModelNode>
+<ModelNode name="xNoisy">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">305,490</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="xx1"/>
+<BasicEdge nodeA.ref="prec"/>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="prec">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">437,410</key-LOCATION>
+</attributes>
+<distribution j:type="GammaNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+</nodes>
+</ModelNetwork>

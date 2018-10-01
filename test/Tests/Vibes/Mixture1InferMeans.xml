@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelNetwork xmlns:j="http://www.inference.phy.cam.ac.uk/jmw39" j:version="1.1" name="Mixture1InferMeans.xml">
+<nodes j:type="ArrayList">
+<ModelNode j:name="m">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">315,115</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="mprior"/>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="10.0">
+<distribution j:type="Constant" value="10.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+<plates j:type="ArrayList">
+<BasicPlate j:ref="k"/>
+</plates>
+</ModelNode>
+<ModelNode name="x">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">370,275</key-LOCATION>
+</attributes>
+<distribution arrayDimension.ref="k" j:type="MixtureNode">
+<component j:type="GaussianNode"/>
+</distribution>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="c"/>
+<BasicEdge nodeA.ref="m"/>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="10.0">
+<distribution j:type="Constant" value="10.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+<plates j:type="ArrayList">
+<BasicPlate j:ref="N"/>
+</plates>
+</ModelNode>
+<ModelNode j:name="D">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">115,140</key-LOCATION>
+</attributes>
+<distribution dimension.ref="k" j:type="DirichletNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="c">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">115,275</key-LOCATION>
+</attributes>
+<distribution dimension.ref="k" j:type="DiscreteNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="D"/>
+</parentEdges>
+<plates j:type="ArrayList">
+<BasicPlate j:ref="N"/>
+</plates>
+</ModelNode>
+<ModelNode j:name="mprior">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">425,80</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="3.0">
+<distribution j:type="Constant" value="3.0"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="2.0">
+<distribution j:type="Constant" value="2.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+<plates j:type="ArrayList">
+<BasicPlate j:ref="k"/>
+</plates>
+</ModelNode>
+</nodes>
+<plates j:type="ArrayList">
+<BasicPlate j:name="k" size="2">
+<attributes j:type="HashMap">
+<key-BOUNDS j:array="I">290,55,339,148</key-BOUNDS>
+</attributes>
+</BasicPlate>
+<BasicPlate j:name="N" size="1">
+<attributes j:type="HashMap">
+<key-BOUNDS j:array="I">72,220,398,150</key-BOUNDS>
+</attributes>
+</BasicPlate>
+</plates>
+</ModelNetwork>

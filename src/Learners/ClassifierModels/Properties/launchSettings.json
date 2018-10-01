@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ClassifierModels": {
+      "commandName": "Project",
+      "commandLineArgs": "."
+    }
+  }
+}

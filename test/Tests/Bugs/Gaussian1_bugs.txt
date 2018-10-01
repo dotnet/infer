@@ -1,0 +1,6 @@
+model {
+mean ~ dnorm(mean_m, mean_p)
+precision ~ dgamma(precision_k, precision_b)
+x ~ dnorm(mean, precision)
+x_unary ~ dnorm(x, x_unary_p)
+}

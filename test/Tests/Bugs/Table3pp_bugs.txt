@@ -1,0 +1,8 @@
+model {
+  # x2 is not in the plate
+  x2 ~ dcat(x2_prior[])
+  for(i in 1:3) {
+    x1[i] ~ dcat(x1_prior[])
+    y[i] ~ dcat(probs[x1[i],x2,])
+  }
+}

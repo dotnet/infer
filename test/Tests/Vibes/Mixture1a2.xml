@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelNetwork xmlns:j="http://www.inference.phy.cam.ac.uk/jmw39" j:version="1.1" name="Mixture1a_v2.xml">
+<nodes j:type="ArrayList">
+<ModelNode j:name="m">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">370,130</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="10.0">
+<distribution j:type="Constant" value="10.0"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="0.01">
+<distribution j:type="Constant" value="0.01"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+<plates j:type="ArrayList">
+<BasicPlate j:ref="k"/>
+</plates>
+</ModelNode>
+<ModelNode name="x">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">370,275</key-LOCATION>
+</attributes>
+<distribution arrayDimension.ref="k" j:type="MixtureNode">
+<component j:type="GaussianNode"/>
+</distribution>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="c"/>
+<BasicEdge nodeA.ref="m"/>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="D">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">115,145</key-LOCATION>
+</attributes>
+<distribution dimension.ref="k" j:type="DirichletNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="c">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">115,275</key-LOCATION>
+</attributes>
+<distribution dimension.ref="k" j:type="DiscreteNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="D"/>
+</parentEdges>
+</ModelNode>
+</nodes>
+<plates j:type="ArrayList">
+<BasicPlate j:name="k" size="2">
+<attributes j:type="HashMap">
+<key-BOUNDS j:array="I">345,47,192,148</key-BOUNDS>
+</attributes>
+</BasicPlate>
+</plates>
+</ModelNetwork>

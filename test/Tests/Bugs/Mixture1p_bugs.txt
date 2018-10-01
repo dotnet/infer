@@ -1,0 +1,13 @@
+model {
+  for(i in 1:3) {
+    mean1[i] ~ dnorm(mean_m,mean_p)
+    mean[i,1] <- mean1[i]
+    mean[i,2] <- 0
+    precision1[i] ~ dgamma(precision1_k, precision1_b)
+    precision[i,1] <- precision1[i]
+    precision[i,2] <- 1
+    selector[i] ~ dcat(selector_p[])
+    x[i] ~ dnorm(mean[i,selector[i]],precision[i,selector[i]])
+    x_unary[i] ~ dnorm(x[i], x_unary_p)
+  }
+}

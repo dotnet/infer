@@ -1,0 +1,72 @@
+# Template for Windows environment (.NET 4.6.1)
+parameters:
+  buildConfiguration: 'Release'
+  testRunner: 'vstest' # or 'all'; TODO: add support for dotnet
+  testPlatform: 'x64' # or 'x86' or 'all'
+  testSuite: 'fast' # or 'all'; TODO: add Nightly
+  
+steps:
+- task: DotNetCoreInstaller@0
+  inputs:
+    packageType: 'sdk' 
+    version: '2.1.202' 
+
+- task: NuGetToolInstaller@0
+  inputs:
+    versionSpec: '4.7.0'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+
+- task: MSBuild@1
+  inputs:
+    solution: '**/*.sln'
+    clean: true
+    configuration: ${{ parameters.buildConfiguration }}
+
+- ${{ if or(eq(parameters.testRunner, 'vstest'), eq(parameters.testRunner, 'all')) }}:
+  - ${{ if or(eq(parameters.testSuite, 'fast'), eq(parameters.testSuite, 'all')) }}:
+    - ${{ if or(eq(parameters.testPlatform, 'x64'), eq(parameters.testPlatform, 'all')) }}:
+      # Fast test suite on vstest x64
+      - task: VSTest@2
+        displayName: Unit tests x64 (sequential)
+        inputs:
+          testSelector: 'testAssemblies'
+          testAssemblyVer2: test/Tests/bin/*/net461/Microsoft.ML.Probabilistic.Tests.dll
+          testFiltercriteria: '(Platform!=x86)&(((Category=CsoftModel)|(Category=ModifiesGlobals)|(Category=DistributedTests)|(Category=Performance))&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest))' 
+          runInParallel: false
+          runSettingsFile: test.runsettings
+      - task: VSTest@2
+        displayName: Unit tests x64
+        inputs:
+          testSelector: 'testAssemblies'
+          testAssemblyVer2: |
+            test/Tests/bin/*/net461/Microsoft.ML.Probabilistic.Tests.dll
+            test/Learners/LearnersTests/bin/*/net461/Microsoft.ML.Probabilistic.Learners.Tests.dll
+            test/TestPublic/bin/*/net461/TestPublic.dll
+          testFiltercriteria: '(Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)' 
+          runInParallel: true
+          runSettingsFile: test.runsettings
+    - ${{ if or(eq(parameters.testPlatform, 'x32'), eq(parameters.testPlatform, 'all')) }}:
+      # Fast test suite on vstest x86
+      - task: VSTest@2
+        displayName: Unit tests x86 (sequential)
+        inputs:
+          testSelector: 'testAssemblies'
+          testAssemblyVer2: test/Tests/bin/*/net461/Microsoft.ML.Probabilistic.Tests.dll
+          testFiltercriteria: '(Platform!=x64)&(((Category=CsoftModel)|(Category=ModifiesGlobals)|(Category=DistributedTests)|(Category=Performance))&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest))' 
+          runInParallel: false
+          runSettingsFile: x86.runsettings
+      - task: VSTest@2
+        displayName: Unit tests x86
+        inputs:
+          testSelector: 'testAssemblies'
+          testAssemblyVer2: |
+            test/Tests/bin/*/net461/Microsoft.ML.Probabilistic.Tests.dll
+            test/Learners/LearnersTests/bin/*/net461/Microsoft.ML.Probabilistic.Learners.Tests.dll
+            test/TestPublic/bin/*/net461/TestPublic.dll
+          testFiltercriteria: '(Platform!=x64)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)' 
+          runInParallel: true
+          runSettingsFile: x86.runsettings

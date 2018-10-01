@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelNetwork xmlns:j="http://www.inference.phy.cam.ac.uk/jmw39" j:version="1.1" name="sum.xml">
+<nodes j:type="ArrayList">
+<ModelNode j:name="z">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">95,155</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="2.0">
+<distribution j:type="Constant" value="2.0"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="y">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">225,155</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge>
+<nodeA j:type="ModelNode" name="10.0">
+<distribution j:type="Constant" value="10.0"/>
+</nodeA>
+</BasicEdge>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="1.0">
+<distribution j:type="Constant" value="1.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+<ModelNode j:name="x">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">160,255</key-LOCATION>
+</attributes>
+<distribution j:type="Add"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="z"/>
+<BasicEdge nodeA.ref="y"/>
+</parentEdges>
+</ModelNode>
+<ModelNode name="xNoisy">
+<attributes j:type="HashMap">
+<key-LOCATION j:array="I">160,340</key-LOCATION>
+</attributes>
+<distribution j:type="GaussianNode"/>
+<parentEdges j:type="ArrayList">
+<BasicEdge nodeA.ref="x"/>
+<BasicEdge>
+<nodeA j:type="ModelNode" name="10.0">
+<distribution j:type="Constant" value="10.0"/>
+</nodeA>
+</BasicEdge>
+</parentEdges>
+</ModelNode>
+</nodes>
+</ModelNetwork>

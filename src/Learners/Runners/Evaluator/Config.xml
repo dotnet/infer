@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <!--All common configuration elements shared between different test runs should be places inside this section-->
+  <Dictionary>
+    <!--Common settings for different implementations of the Matchbox model-->
+    <Element xsi:type="MatchboxRecommender" Id="Matchbox common">
+      <TraitCount>5</TraitCount>
+      <IterationCount>20</IterationCount>
+      <BatchCount>1</BatchCount>
+      <UseUserFeatures>false</UseUserFeatures>
+      <UseItemFeatures>false</UseItemFeatures>
+      <UseSharedUserThresholds>false</UseSharedUserThresholds>
+      <AffinityNoiseVariance>1.0</AffinityNoiseVariance>
+      <ThresholdNoiseVariance>0.25</ThresholdNoiseVariance>
+      <TraitVariance>1.0</TraitVariance>
+      <BiasVariance>1.0</BiasVariance>
+      <ThresholdPriorVariance>0.5</ThresholdPriorVariance>
+      <RatingLossFunction>Absolute</RatingLossFunction>
+    
+  </Element>
+    <!--Infer.NET-based implementation of the Matchbox model-->
+    <Element xsi:type="MatchboxRecommender" Id="Infer.NET Matchbox" Parent="Matchbox common">
+    </Element>
+
+    <!--VW recommender-->
+    <Element xsi:type="VWRecommender" Id="VW">
+      <TraitCount>5</TraitCount>
+      <BitPrecision>18</BitPrecision>
+      <LearningRate>0.021</LearningRate>
+      <LearningRateDecay>0.97</LearningRateDecay>
+      <PassCount>10</PassCount>
+      <L1Regularization>1</L1Regularization>
+      <L2Regularization>0.001</L2Regularization>
+      <UseUserFeatures>false</UseUserFeatures>
+      <UseItemFeatures>false</UseItemFeatures>
+    </Element>
+
+    <!--Common settings for different Mahout algorithms-->
+    <Element xsi:type="MahoutRecommender" Id="Mahout Common">
+      <RatingSimilarity>Euclidean</RatingSimilarity>
+      <MissingRatingPredictionAlgorithm>TakeMedian</MissingRatingPredictionAlgorithm>
+      <TraitCount>5</TraitCount>
+      <IterationCount>10</IterationCount>
+      <UserNeighborhoodSize>500</UserNeighborhoodSize>
+    </Element>
+    
+    <!--Mahout SlopeOne recommender-->
+    <Element xsi:type="MahoutRecommender" Id="Mahout SlopeOne" Parent="Mahout Common">
+      <RatingPredictionAlgorithm>SlopeOne</RatingPredictionAlgorithm>
+    </Element>
+
+    <!--Mahout SVD recommender-->
+    <Element xsi:type="MahoutRecommender" Id="Mahout SVD" Parent="Mahout Common">
+      <RatingPredictionAlgorithm>Svd</RatingPredictionAlgorithm>
+    </Element>
+
+    <!--Default dataset splitting settings-->
+    <Element xsi:type="RecommenderDatasetSplitSettings" Id="Small recommender dataset">
+      <FoldCount>1</FoldCount>
+      <TrainingOnlyUserFraction>0.05</TrainingOnlyUserFraction>
+      <TestUserRatingTrainingFraction>0.25</TestUserRatingTrainingFraction>
+      <ColdItemFraction>0</ColdItemFraction>
+      <ColdUserFraction>0</ColdUserFraction>
+      <IgnoredUserFraction>0.9</IgnoredUserFraction>
+      <IgnoredItemFraction>0</IgnoredItemFraction>
+      <RemoveOccasionalColdItems>true</RemoveOccasionalColdItems>
+    </Element>
+    <Element xsi:type="RecommenderDatasetSplitSettings" Id="Large recommender dataset">
+      <FoldCount>1</FoldCount>
+      <TrainingOnlyUserFraction>0.5</TrainingOnlyUserFraction>
+      <TestUserRatingTrainingFraction>0.25</TestUserRatingTrainingFraction>
+      <ColdItemFraction>0</ColdItemFraction>
+      <ColdUserFraction>0</ColdUserFraction>
+      <IgnoredUserFraction>0</IgnoredUserFraction>
+      <IgnoredItemFraction>0</IgnoredItemFraction>
+      <RemoveOccasionalColdItems>true</RemoveOccasionalColdItems>
+    </Element>
+
+    <!--Datasets-->
+    <Element xsi:type="RecommenderGeneratedDataset" Id="Movie Lens dataset">
+      <FileName>data/Recommendation/MovieLens.dat</FileName>
+      <Generator>Microsoft.ML.Probabilistic.Learners.Runners.DatasetGenerators.MovieLensGenerator</Generator>
+    </Element>
+    <Element xsi:type="RecommenderGeneratedDataset" Id="Jester dataset">
+      <FileName>data/Recommendation/Jester.dat</FileName>
+      <Generator>Microsoft.ML.Probabilistic.Learners.Runners.DatasetGenerators.JesterGenerator</Generator>
+    </Element>
+    <Element xsi:type="RecommenderGeneratedDataset" Id="Book-crossing dataset">
+      <FileName>data/Recommendation/BookCrossing.dat</FileName>
+      <Generator>Microsoft.ML.Probabilistic.Learners.Runners.DatasetGenerators.BookCrossingGenerator</Generator>
+    </Element>
+
+    <!--Default rating prediction test-->
+    <Element xsi:type="PredictRatings" Id="Default rating prediction test">
+      <ComputeUncertainPredictionMetrics>true</ComputeUncertainPredictionMetrics>
+    </Element>
+    <!--Default item recommendation test-->
+    <Element xsi:type="RecommendItems" Id="Default item recommendation test">
+      <MaxRecommendedItemCount>5</MaxRecommendedItemCount>
+      <MinRecommendationPoolSize>5</MinRecommendationPoolSize>
+    </Element>
+    <!--Default related user prediction test-->
+    <Element xsi:type="PredictRelatedUsers" Id="Default related user prediction test">
+      <MaxRelatedUserCount>5</MaxRelatedUserCount>
+      <MinCommonRatingCount>5</MinCommonRatingCount>
+      <MinRelatedUserPoolSize>1</MinRelatedUserPoolSize>
+    </Element>
+    <!--Default related item prediction test-->
+    <Element xsi:type="PredictRelatedItems" Id="Default related item prediction test">
+      <MaxRelatedItemCount>5</MaxRelatedItemCount>
+      <MinCommonRatingCount>5</MinCommonRatingCount>
+      <MinRelatedItemPoolSize>1</MinRelatedItemPoolSize>
+    </Element>
+  </Dictionary>
+
+  <!--Use this section to describe which tests on which recommenders do you actually want to perform-->
+  <Runs>
+    <!--Runs on MovieLens dataset-->
+    <Run>
+      <Name>Infer.NET Matchbox (default) on Movie Lens small</Name>
+      <Recommender xsi:type="MatchboxRecommender" Parent="Infer.NET Matchbox"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test"/>
+        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
+        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
+        <Test xsi:type="PredictRelatedUsers" Parent="Default related user prediction test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Movie Lens dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>VW (default) on Movie Lens small</Name>
+      <Recommender xsi:type="VWRecommender" Parent="VW"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Movie Lens dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>Mahout SlopeOne (default) on Movie Lens small</Name>
+      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SlopeOne"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
+        <Test xsi:type="PredictRelatedUsers" Parent="Default related user prediction test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Movie Lens dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>Mahout SVD (default) on Movie Lens small</Name>
+      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SVD"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Movie Lens dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>Random on Movie Lens small</Name>
+      <Recommender xsi:type="RandomRecommender"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test"/>
+        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
+        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
+        <Test xsi:type="PredictRelatedUsers" Parent="Default related user prediction test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Movie Lens dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+
+    <!--Runs on Jester dataset, no related user evaluation due to its density, no uncertain predictions due to negative ratings-->
+    <Run>
+      <Name>Infer.NET Matchbox (default) on Jester small</Name>
+      <Recommender xsi:type="MatchboxRecommender" Parent="Infer.NET Matchbox"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
+        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Jester dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>VW (default) on Jester small</Name>
+      <Recommender xsi:type="VWRecommender" Parent="VW"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Jester dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>Mahout SlopeOne (default) on Jester small</Name>
+      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SlopeOne"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Jester dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>Mahout SVD (default) on Jester small</Name>
+      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SVD"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Jester dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>Random on Jester small</Name>
+      <Recommender xsi:type="RandomRecommender"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
+        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Jester dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    
+    <!--Runs on book-crossing dataset-->
+    <Run>
+      <Name>Infer.NET Matchbox (default) on book-crossing small</Name>
+      <Recommender xsi:type="MatchboxRecommender" Parent="Infer.NET Matchbox"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test"/>
+        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
+        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
+        <Test xsi:type="PredictRelatedUsers" Parent="Default related user prediction test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Book-crossing dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>VW (default) on book-crossing small</Name>
+      <Recommender xsi:type="VWRecommender" Parent="VW"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Book-crossing dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>Mahout SlopeOne (default) on book-crossing small</Name>
+      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SlopeOne"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
+        <Test xsi:type="PredictRelatedUsers" Parent="Default related user prediction test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Book-crossing dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+    <Run>
+      <Name>Mahout SVD (default) on book-crossing small</Name>
+      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SVD"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
+          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
+        </Test>
+        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
+        <Test xsi:type="PredictRelatedUsers" Parent="Default related user prediction test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Book-crossing dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>    
+    <Run>
+      <Name>Random on book-crossing small</Name>
+      <Recommender xsi:type="RandomRecommender"/>
+      <Tests>
+        <Test xsi:type="PredictRatings" Parent="Default rating prediction test"/>
+        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
+        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
+        <Test xsi:type="PredictRelatedUsers" Parent="Default related user prediction test"/>
+      </Tests>
+      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Book-crossing dataset"/>
+      <SplitSettings Parent="Small recommender dataset"/>
+    </Run>
+  </Runs>
+</Configuration>

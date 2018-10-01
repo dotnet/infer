@@ -1,0 +1,52 @@
+<StyleCopSettings Version="105">
+  <GlobalSettings>
+    <CollectionProperty Name="RecognizedWords">
+      <Value>determinization</Value>
+      <Value>determinize</Value>
+      <Value>determinizing</Value>
+      <Value>determinized</Value>
+      <Value>Kleene</Value>
+      <Value>memoization</Value>
+      <Value>non-normalizable</Value>
+      <Value>non-simplifiable</Value>
+      <Value>normalizable</Value>
+      <Value>nucleobase</Value>
+      <Value>nucleobases</Value>
+      <Value>quantile</Value>
+      <Value>recompute</Value>
+      <Value>recomputing</Value>
+      <Value>semiring</Value>
+      <Value>simplifiable</Value>
+      <Value>Tarjan's</Value>
+      <Value>trie</Value>
+      <Value>unnormalized</Value>
+    </CollectionProperty>
+  </GlobalSettings>
+  <Analyzers>
+    <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
+      <Rules>
+        <Rule Name="FileMustHaveHeader">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FileHeaderMustContainFileName">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FileHeaderFileNameDocumentationMustMatchFileName">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="FileHeaderFileNameDocumentationMustMatchTypeName">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">False</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+      </Rules>
+      <AnalyzerSettings />
+    </Analyzer>
+  </Analyzers>
+</StyleCopSettings>

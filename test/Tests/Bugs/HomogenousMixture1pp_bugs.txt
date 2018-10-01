@@ -1,0 +1,12 @@
+model {
+  # mean,precision,selector are not in the plate
+  for(j in 1:2) {
+    mean[j] ~ dnorm(mean_m,mean_p)
+    precision[j] ~ dgamma(precision_k, precision_b)
+  }
+  selector ~ dcat(selector_p[])
+  for(i in 1:3) {
+    x[i] ~ dnorm(mean[selector],precision[selector])
+    x_unary[i] ~ dnorm(x[i], x_unary_p)
+  }
+}

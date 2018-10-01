@@ -1,0 +1,7 @@
+model {
+  for(i in 1:3) {
+    q[i,1:4] ~ ddirch(alpha[])
+    x[i] ~ dcat(p[i,])
+    x_unary[i] ~ dcat(x_unary_p[x[i],])
+  }
+}

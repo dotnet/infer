@@ -1,0 +1,16 @@
+model {
+  selector_p[1:10] ~ ddirch(alpha[])
+  for(i in 1:500) {
+    selector[i] ~ dcat(selector_p[])
+  }
+  for(j in 1:2) {
+    for(k in 1:10) {
+      mean[j,k] ~ dnorm(mean_m, mean_p)
+      precision[j,k] ~ dgamma(precision_k, precision_b)
+    }
+    for(i in 1:500) {
+      #selector[i] ~ dcat(selector_p[])
+      x[j,i] ~ dnorm(mean[j,selector[i]], precision[j,selector[i]])
+    }
+  }
+}
