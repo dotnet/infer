@@ -1,0 +1,24 @@
+# Licensed to the .NET Foundation under one or more agreements.
+# The .NET Foundation licenses this file to you under the MIT license.
+# See the LICENSE file in the project root for more information.
+
+# Template for running fast test suite (~30 minutes) on .NET Core platform
+
+parameters:
+  Configuration: 'ReleaseCore' 
+
+steps:
+- task: Bash@3
+  displayName: 'Running tests'
+  inputs:
+    filePath: test/netcoretest.sh
+    workingDirectory: test
+    arguments: ${{ parameters.Configuration }}
+    displayName: Run tests
+    continueOnError: true
+    
+- task: PublishTestResults@2
+  displayName: 'Publishing test results'
+  inputs:
+    testRunner: XUnit
+    testResultsFiles: 'test/netcoretest-result*.xml'
