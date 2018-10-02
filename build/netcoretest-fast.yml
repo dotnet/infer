@@ -7,7 +7,7 @@ steps:
   inputs:
     filePath: test/netcoretest.sh
     workingDirectory: test
-    arguments: {{ $parameters.Configuration }}
+    arguments: ${{ parameters.Configuration }}
     displayName: Run tests
     continueOnError: true
     
