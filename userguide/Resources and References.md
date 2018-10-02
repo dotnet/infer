@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+[Infer.NET user guide](index.md)
 
 ## Resources and References
 

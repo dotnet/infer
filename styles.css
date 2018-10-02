@@ -33,9 +33,9 @@ body {
 }
 
 table {
-    border-collapse: collapse;
-    margin-top: 10px;
-    margin-bottom: 5px;
+  border-collapse: collapse;
+  margin-top: 10px;
+	margin-bottom: 5px;
 }
 table, th, td {
     border: 1px solid black;
@@ -111,6 +111,9 @@ h4 {
   font-weight: bold;
 	font-size: 18px;
 	color: #3c7ad3;
+}
+table code {
+	white-space: nowrap;
 }
 code p {
 	font-family: "Courier New", Courier, monospace;
