@@ -35,13 +35,13 @@ steps:
     clean: true
     configuration: $(BuildConfiguration)
 
-# - template: vstest-fast.yml
-#   parameters:
-#     Platform: 'x64'
+- template: vstest-fast.yml
+  parameters:
+    Platform: 'x64'
 
-# - template: vstest-fast.yml
-#   parameters:
-#     Platform: 'x86'
+- template: vstest-fast.yml
+  parameters:
+    Platform: 'x86'
 
 - task: Bash@3
   condition: eq(variables['BuildConfiguration'], 'Release')
