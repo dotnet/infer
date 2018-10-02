@@ -27,7 +27,10 @@ echo -e "    about parallel test running in            \033[35;40m${xml_parallel
 echo -e "    about sequential test running in          \033[35;40m${xml_sequential}\033[0m"
 
 compath=/bin/${configuration}/netcoreapp2.0/
-dlls="Tests${compath}Microsoft.ML.Probabilistic.Tests.dll Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll TestPublic${compath}TestPublic.dll"
+
+# Please note that order of test assemblies is important. *.Learners.Tests.dll must be first, otherwise BinaryFormatter-based tests will fail.
+# These failures don't occur when testing *.Learners.Tests separately so this is probably xUnit issue.
+dlls="Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll Tests${compath}Microsoft.ML.Probabilistic.Tests.dll TestPublic${compath}TestPublic.dll"
 
 # path to the xunit runner
 runner=~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll
