@@ -1,0 +1,68 @@
+# Licensed to the .NET Foundation under one or more agreements.
+# The .NET Foundation licenses this file to you under the MIT license.
+# See the LICENSE file in the project root for more information.
+
+# Nightly build for Windows. Tests on x86 and x64. Produces NuGet packages
+
+name: 0.3.$(Date:yyMM).$(Date:dd)$(Rev:rr)
+
+resources:
+- repo: self
+  clean: true
+  
+trigger: none # disable CI build
+  
+steps:
+- task: Bash@3
+  inputs:
+    filePath: build/updateversion.sh
+    workingDirectory: build
+    arguments: $(Build.BuildNumber)
+
+- task: NuGetToolInstaller@0
+  inputs:
+    versionSpec: '4.7.0'
+
+- task: NuGetCommand@2
+  displayName: 'Restoring NuGet packages'
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+
+- task: MSBuild@1
+  inputs:
+    solution: '**/*.sln'
+    clean: true
+    configuration: $(BuildConfiguration)
+
+# - template: vstest-fast.yml
+#   parameters:
+#     Platform: 'x64'
+
+# - template: vstest-fast.yml
+#   parameters:
+#     Platform: 'x86'
+
+
+-${{ if eq($(BuildConfiguration), 'Release') }}:
+  - task: Bash@3
+    inputs:
+      filePath: build/copyassemblies.sh
+      arguments: ../bin $(BuildConfiguration)
+      workingDirectory: build
+
+  - task: NuGetCommand@2
+    inputs:
+      command: pack
+      packagesToPack: build/*.nuspec
+      includeSymbols: true
+      buildProperties: version=$(Build.BuildNumber);bin=../bin
+
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: bin
+      targetFolder: $(Build.ArtifactStagingDirectory)
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      artifactName: 'Everything'
