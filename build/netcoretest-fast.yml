@@ -21,4 +21,4 @@ steps:
   displayName: 'Publishing test results'
   inputs:
     testRunner: XUnit
-    testResultsFiles: 'test/netcore-*tests.xml'
+    testResultsFiles: 'test/netcoretest-result*.xml'
