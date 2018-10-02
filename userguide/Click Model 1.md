@@ -3,7 +3,7 @@ layout: default
 --- 
 [Infer.NET user guide](index.md) : [Tutorials and examples](Infer.NET tutorials and examples.md)
 
-[Page 1](Click model example.md) \| Page 2 \|  [Page 3](Click model 2.md) \| [Page 4](Click Model Prediction.md)
+[Page 1](Click model example.md) \| Page 2 \| [Page 3](Click model 2.md) \| [Page 4](Click Model Prediction.md)
 
 ## Click model 1 example
 
@@ -16,7 +16,7 @@ In designing this model, we start off by thinking about the nature of the click 
 We could include m directly in the model as a parameter to a Binomial factor, but this example adopts a different approach where the posterior for m is calculated outside the model. This posterior can be analytically and simply calculated as a beta distribution. We then use moment-matching to project this distribution onto a Gaussian distribution (the reason for this is that we will later be introducing a Gaussian score variable corresponding to this observation). All of this can be very simply done using the Infer.NET class libraries. For simplicity, we just assume for now that the observation distributions are in a single array, though this will change later.
 
 ```csharp
-Gaussian[] observationDistrib= new  Gaussian[clicks.Length];  
+Gaussian[] observationDistrib= new Gaussian[clicks.Length];  
 for (int i = 0; i < clicks.Length; i++)  
 {    
     int nC = clicks[i];    // Number of clicks int nE = exams[i]; // Number of examinations int nNC = nE - nC; // Number of non-clicks  
@@ -27,10 +27,10 @@ for (int i = 0; i < clicks.Length; i++)
 }
 ```
 
-We can then imagine, for each query/document pair (index **i**), a Gaussian 'click score' variable **scoresC\[i\]** representing a click probability. The corresponding **observationDistrib\[i\]** represents a distribution over observations for a given query/document pair, and we constrain **scoresC\[i**\]  to be a random sample from that distribution. In Infer.NET, the set of click scores and corresponding observations can be indexed by a **Range** object which can be used when specifying this constraint:
+We can then imagine, for each query/document pair (index **i**), a Gaussian 'click score' variable **scoresC\[i\]** representing a click probability. The corresponding **observationDistrib\[i\]** represents a distribution over observations for a given query/document pair, and we constrain **scoresC\[i**\] to be a random sample from that distribution. In Infer.NET, the set of click scores and corresponding observations can be indexed by a **Range** object which can be used when specifying this constraint:
 
 ```csharp
-Range r = new  Range("N", observationDistrib);  
+Range r = new Range("N", observationDistrib);  
 ...  
 Variable.ConstrainEqualRandom(scoresC[r], observationDistrib[r]);
 ```
@@ -40,8 +40,8 @@ Variable.ConstrainEqualRandom(scoresC[r], observationDistrib[r]);
 We will find it useful, when constructing this part of the model, to partition the click data by judgement label. So rather than the single **observationDistrib** array, as shown above, we in fact have three (in this case) arrays - **observationDistribs\[0\],** **observationDistribs\[1**\]**, and** **observationDistribs\[2\]**, indexed by label class. We then make these arrays as observed variable arrays in the inference problem. The ranges are then label dependent, and the **ConstrainEqualRandom** constraint must then be modified to loop over labels:
 
 ```csharp
-VariableArray<Gaussian>[] observationDistribs = new  VariableArray<Gaussian>[numLabels];  
-Variable<int>[] numberOfObservations = new  Variable<int>[numLabels];  
+VariableArray<Gaussian>[] observationDistribs = new VariableArray<Gaussian>[numLabels];  
+Variable<int>[] numberOfObservations = new Variable<int>[numLabels];  
 for (int i = 0; i < numLabels; i++)  
 {  
     numberOfObservations[i] = Variable.New<int>().Named("NumObs" + i);  
@@ -81,8 +81,8 @@ The **scoreC** and **scoreJ** variables are directly or indirectly observed, but
 We will also learn the mean of **scores\[i\]** (**scoreMean**), but fix its precision (**scorePrec**) to a nominal point distribution (however, we will keep **scorePrec** as a variable in the model in case we later want to infer it). The model then looks as follows:
 
 ```csharp
-VariableArray<Gaussian>[] observationDistribs = new  VariableArray<Gaussian>[numLabels];  
-Variable<int>[] numberOfObservations = new  Variable<int>[numLabels];  
+VariableArray<Gaussian>[] observationDistribs = new VariableArray<Gaussian>[numLabels];  
+Variable<int>[] numberOfObservations = new Variable<int>[numLabels];  
 for (int i = 0; i < numLabels; i++)  
 {  
     numberOfObservations[i] = Variable.New<int>().Named("NumObs" + i);  
@@ -151,7 +151,7 @@ for (int i = 0; i < numLabels; i++)
 // (b) Request the marginals  
 //     Inference engine must be EP because of the ConstrainBetween constraint  
 InferenceEngine engine = new InferenceEngine(new ExpectationPropagation());  
-engine.NumberOfIterations = 10;  // Restrict the number of iterations  
+engine.NumberOfIterations = 10; // Restrict the number of iterations  
 ClickModelMarginals marginals = new ClickModelMarginals(numLabels);  
 marginals.marginalScoreMean = engine.Infer<Gaussian>(scoreMean);  
 marginals.marginalScorePrec = engine.Infer<Gamma>(scorePrec);  
@@ -164,4 +164,4 @@ for (int i = 0; i < numThresholds; i++)
 The first marginal that is requested will trigger the compilation of the model and the inference. **marginals** is just an instance of an application-specific class that has been set up to hold the set of references we are interested in. This information can be passed to a prediction model. The prediction model, results, and their interpretation can be found [here](Click Model Prediction.md).
 
 <br/>
-[Page 1](Click model example.md) \| Page 2 \|  [Page 3](Click model 2.md) \| [Page 4](Click Model Prediction.md)
+[Page 1](Click model example.md) \| Page 2 \| [Page 3](Click model 2.md) \| [Page 4](Click Model Prediction.md)

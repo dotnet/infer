@@ -6,11 +6,11 @@ layout: default
 
 ## Working with arrays and ranges
 
-When defining a large model, it is a good idea to avoid creating too many Variable objects.  One way to do this is to use Infer.NET's built-in concept of a [**VariableArray**](../apiguide/api/Microsoft.ML.Probabilistic.Models.VariableArray-1.html).  VariableArrays are processed as a unit during model compilation and inference, allowing dramatic speedups. This section covers single-dimensional and multi-dimensional arrays. [Jagged arrays](Jagged arrays.md) (arrays of arrays) are described in a later section.
+When defining a large model, it is a good idea to avoid creating too many Variable objects. One way to do this is to use Infer.NET's built-in concept of a [**VariableArray**](../apiguide/api/Microsoft.ML.Probabilistic.Models.VariableArray-1.html). VariableArrays are processed as a unit during model compilation and inference, allowing dramatic speedups. This section covers single-dimensional and multi-dimensional arrays. [Jagged arrays](Jagged arrays.md) (arrays of arrays) are described in a later section.
 
 #### Ranges
 
-A [**Range**](../apiguide/api/Microsoft.ML.Probabilistic.Models.Range.html) object represents a stream of integers from 0 to N-1 inclusive.  The following code creates a range from 0 to 9: 
+A [**Range**](../apiguide/api/Microsoft.ML.Probabilistic.Models.Range.html) object represents a stream of integers from 0 to N-1 inclusive. The following code creates a range from 0 to 9: 
 
 ```csharp
 Range pixel = new Range(10);
@@ -26,7 +26,7 @@ The size of a range does not have to be fixed when defining your model, for exam
 
 ```csharp
 Variable<int> nImages = Variable.New<int>();  
-Range image = new  Range(nImages);
+Range image = new Range(nImages);
 ```
 
 You can then set the size of the range before you run inference:
@@ -160,15 +160,15 @@ Constants are so named because they are embedded in the generated code as litera
 Observed variable arrays are similar to constant variable arrays but the values can be changed before running inference. They can be created using **Variable.Array** or **Variable.Observed**, the latter providing the additional convenience of providing an initial setting for the array.
 
 ```csharp
-VariableArray<double> obs = Variable.Observed( new  double[] { 1, 2, 3, 4 }, image);  
-VariableArray2D<double> obs2D = Variable.Observed( new  double[,] { {5,6}, {7,9} }, range1, range2);
+VariableArray<double> obs = Variable.Observed( new double[] { 1, 2, 3, 4 }, image);  
+VariableArray2D<double> obs2D = Variable.Observed( new double[,] { {5,6}, {7,9} }, range1, range2);
 ```
 
 Alternatively, you can define the observed variable arrays without specifying ranges, and define the ranges from the arrays:
 
 ```csharp
-VariableArray<double> obs = Variable.Observed(new  double[] { 1, 2, 3, 4 });  
-VariableArray2D<double> obs2D = Variable.Observed(new  double[,] { { 5, 6 }, { 7, 9 } });  
+VariableArray<double> obs = Variable.Observed(new double[] { 1, 2, 3, 4 });  
+VariableArray2D<double> obs2D = Variable.Observed(new double[,] { { 5, 6 }, { 7, 9 } });  
 Range r = obs.Range;Range r0 = obs2D.Range0;Range r1 = obs2D.Range1;
 ```
 
@@ -177,15 +177,15 @@ If you use `Variable.Observed`, you must supply initial values. If you want to o
 ```csharp
 Variable<int> sizeX = Variable.New<int>();  
 Variable<int> sizeY = Variable.New<int>();  
-Range x = new  Range(sizeX);  
-Range y = new  Range(sizeX);  
+Range x = new Range(sizeX);  
+Range y = new Range(sizeX);  
 VariableArray2D<double> arrayXY = Variable.Array<double>(x, y);
 ```
 
 Later, when you want to run inference, you can supply the observed value as follows. Infer.NET will expect the array to be the same size as the ranges:
 
 ```csharp
-double[,] obs2DData = new  double[,] { { 5, 6 }, { 7, 9 }, {6, 7} };  
+double[,] obs2DData = new double[,] { { 5, 6 }, { 7, 9 }, {6, 7} };  
 sizeX.ObservedValue = obs2DData.GetLength(0);  
 sizeY.ObservedValue = obs2DData.GetLength(1);  
 arrayXY.ObservedValue = obs2DData;

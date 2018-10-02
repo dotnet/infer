@@ -20,9 +20,9 @@ Because of the possibly large number of users and items, as well as the high spa
 The resulting affinity is a floating point number which needs to be converted into a rating value. This is achieved by using thresholds. The number of threshold levels (_numLevels_) is equal to the number of possible ratings minus one. For example, we only need one threshold for a binary rating. If this threshold is 5 and the affinity value is 8, then the rating is true. If the affinity is 3, then the rating is false. The model takes into account that different users might have different thresholds (i.e. the thresholds are personalised). Therefore, for each user we maintain a noisy threshold vector of dimensionality _numLevels_.
 
 Ratings are represented by a bool vector, the dimensionality of which is _numLevels_. The number of trues in the vector indicates the rating value. For example, in a 3-star rating there are 2 threshold levels, and ratings are represented as follows:  
-    \- 1 star: (F, F)  
-    \- 2 stars: (T, F) or (F, T)  
-    \- 3 stars: (T, T)  
+    - 1 star: (F, F)  
+    - 2 stars: (T, F) or (F, T)  
+    - 3 stars: (T, T)  
 If the user threshold levels are sorted in ascending order, then each rating will have a unique bool vector representation - the one formed of zero or mores trues followed by zero or more falses. However, the model doesn't particularly impose such a requirement, and thus it's not included in our implementation.
 
 ### Model implementation
@@ -35,6 +35,7 @@ We'll implement the model in the following steps:
     5\. Define the model by iterating over the training data. 
 
 We start by fixing the sizes of the arrays used in the model and defining the ranges over them. We will consider 50 users, 10 items and a 3-star rating (i.e. 2 levels). We'll only use 2-dimensional trait vectors, but the reader should be aware that a larger number is usually required in practise. The number of traits should be chosen empirically based on the training data and the available computational resources. As to the size of the training data, we'll generate 100 _(user, item, rating)_ triples. And since we'll want to use the same model for training and making predictions, the value of _numObservations_ will need to be reset between the two. Therefore, it needs to be declared as a `Variable<int>` rather than a native int.
+
 ```csharp
 // Define counts  
 int numUsers = 50;  
@@ -50,21 +51,29 @@ Range trait = new Range(numTraits);
 Range observation = new Range(numObservations);  
 Range level = new Range(numLevels);
 ```
+
 We then define the latent arrays in the model. Their elements are all of type `int`. As to the user and item traits, they are variable jagged arrays with _numUsers_ and _numItems_ rows respectively, and _numTraits_ columns (one trait vector for each user and item). It's important to note that in Infer.NET this type of an array is defined as:
+
 ```csharp
 Variable.Array(Variable.Array<double>(numColumns), numRows)  
 ```
+
 rather than:  
+
 ```csharp
 Variable.Array(Variable.Array<double>(numRows), numColumns)  
 ```
+
 The return type of this operation is  
+
 ```csharp
 VariableArray<VariableArray<double>, double[][]>  
 ```
+
 In this case the second generic parameter (the array type) needs to be specified for technical reasons. For more information on jagged arrays, look at the [corresponding section](Jagged arrays.md) in the User Guide.
 
 The user and item biases are simple 1-D arrays (one bias value for each user and item), and the user thresholds are represented by a _numUsers_ by _numLevels_ variable jagged array (one threshold vector for each user).
+
 ```csharp
 // Define latent variables  
 var userTraits = Variable.Array(Variable.Array<double>(trait), user);  
@@ -73,7 +82,9 @@ var userBias = Variable.Array<double>(user);
 var itemBias = Variable.Array<double>(item);  
 var userThresholds = Variable.Array(Variable.Array<double>(level), user);
 ```
+
 The definition of the priors is analogous to the one of the latent variables, the only difference being the array type - this time it's Gaussian rather than double. That's because we draw these floating-point parameters from a normal prior.
+
 ```csharp
 // Define priors  
 var userTraitsPrior = Variable.Array(Variable.Array<Gaussian>(trait), user);  
@@ -82,7 +93,9 @@ var userBiasPrior = Variable.Array<Gaussian>(user);
 var itemBiasPrior = Variable.Array<Gaussian>(item);  
 var userThresholdsPrior = Variable.Array(Variable.Array<Gaussian>(level), user);
 ```
+
 Now we need to connect the latent variables to their priors. As explained in the [Infer.NET 101](http://research.microsoft.com/en-us/um/cambridge/projects/infernet/docs/InferNet101.pdf) paper, this is referred to as the _statistical definition_ of the latent variables and is implemented using the `Variable.Random` factor. Because we work with arrays here, we'll need to iterate over each element of the latent variable arrays and statistically define it to its corresponding element in the prior distribution arrays. Note that we don't need to use `ForEach` in this case because ranges are used on both sides of the assignment.
+
 ```csharp
 // Define latent variables statistically  
 userTraits[user][trait] = Variable<double>.Random(userTraitsPrior[user][trait]);  
@@ -91,7 +104,9 @@ userBias[user] = Variable<double>.Random(userBiasPrior[user]);
 itemBias[item] = Variable<double>.Random(itemBiasPrior[item]);  
 userThresholds[user][level] = Variable<double>.Random(userThresholdsPrior[user][level]);
 ```
+
 The initial values of the priors need to be manually set. As to the trait prior, it can be a standard Gaussian(0, 1). In this small example we use the same distribution for the bias prior, but in practise a broader variance might be considered - like Gaussian (0, 10). We set the initial interval size between two user thresholds to 1, and we keep the thresholds zero-centred in the beginning. Thus, if we have 4 threshold levels, they will be -1.5, -0.5, 0.5, and 1.5. For easy initialisation of the priors, we use the static `ArrayIni`t method of the Infer.NET Util class. It has two parameters - the length of the array to be created and a .NET _Converter_ delegate. `ArrayInit` iterates over the range \[0; length) and converts each index into an array element.
+
 ```csharp
 // Initialise priors  
 Gaussian traitPrior = Gaussian.FromMeanAndVariance(0.0, 1.0);  
@@ -103,18 +118,22 @@ itemBiasPrior.ObservedValue = Util.ArrayInit(numItems, i => biasPrior);
 userThresholdsPrior.ObservedValue = Util.ArrayInit(numUsers, u =>  
         Util.ArrayInit(numLevels, l => Gaussian.FromMeanAndVariance(l - numLevels / 2.0 + 0.5, 1.0)));
 ```
+
 We should now choose how to represent the training data. As previously discussed, a rating matrix with _numUsers_ rows and _numItems_ columns is not an option. We could also maintain a list of rated items for each user or a list of rating users for each item. But we're looking for a representation which scales linearly with the number of observations. This is efficient in terms of memory usage and also suitable for online learning. Therefore, we internally maintain the training data as a list of (user, item, rating) triples, or actually as 3 equal-size variable arrays - one for users, items, and ratings.
+
 ```csharp
 // Declare training data variables  
 var userData = Variable.Array<int>(observation);  
 var itemData = Variable.Array<int>(observation);  
 var ratingData = Variable.Array(Variable.Array<bool>(level), observation);
 ```
+
 Now that we have the latent variables, their priors, and the training data, it's time to build the model. We do that by iterating over each observation. Intermediate variables are defined locally for simplicity. That is, rather than maintaining an array of affinity values, we define a new affinity variable for each observation.
 
 For each observation the current user id is `userData[observation]`, the item id is `itemData[observation]`, and the rating vector is `ratingData[observation][]`. Given this model data, we start by defining the product vector of the user and item traits. This is achieved by iterating over the trait range and computing the corresponding products. The product operator used here ('*') should be the one from Variational Message Passing. And since we use Expectation Propagation, special care needs to be taken when setting the compiler options for this operator (explained later in _Running inference and making predictions_). The reasons behind the need to use VMP multiplication are explained in the paper referenced in the beginning of this tutorial. After having the trait product vector, we sum up its elements by using the Sum factor. This sum plus the user and item biases for the current user and item gives us the affinity. We form a new variable from it - noisyAffinity, which is constructed from the already familiar GaussianFromMeanAndVariance factor. We set the noise level to 0.1 because of the small amount of data we work with, but in practise probably a choice of 1.0 might yield better results.
 
 The noisy affinity should now be compared against the different levels of user thresholds. But since these thresholds might vary with time, some noise should be added here as well. Therefore, we create a new variable array - noisyThresholds, which is formed from the current user thresholds by adding some noise. We use a variance of 0.1 here again, but the developer should tune this parameter in accordance with their data. Now each of the rating levels (ratingData\[observation\]\[level\]) is formed by comparing the noisy affinity to the corresponding level of the noisy thresholds.
+
 ```csharp
 // Model  
 using (Variable.ForEach(observation)) {  
@@ -129,22 +148,28 @@ using (Variable.ForEach(observation)) {
     ratingData[observation][level] = noisyAffinity > noisyThresholds[level];  
 }  
 ```
+
 ### Running inference and making predictions
 
 Now that the model is in place, we can create an inference engine and make some predictions. The inference algorithm used is Expectation Propagation, but we need to call the implementation of the vector product operator from Variational Message Passing. This is achieved by setting the compiler option GivePriorityTo(typeof( GaussianProductOp_SHG09)).
+
 ```csharp
 // Allow EP to process the product factor as if running VMP  
 // as in Stern, Herbrich, Graepel paper. 
-InferenceEngine engine = new  InferenceEngine();  
+InferenceEngine engine = new InferenceEngine();  
 engine.Compiler.GivePriorityTo(typeof(GaussianProductOp_SHG09));
 ```
+
 We now use the inference engine to obtain the posteriors. These are then fed into the model as the new priors by using the `ObservedValue` property. Note that because we infer multiple distributions, temporary variables should be used here, rather than assigning the priors immediately and performing inference again. I.e. the following is **incorrect**:
-```csharp
+
+```
 userTraitsPrior.ObservedValue = engine.Infer<Gaussian[][]>(userTraits);  
 itemTraitsPrior.ObservedValue = engine.Infer<Gaussian[][]>(itemTraits);  
 ...
 ```
+
 Here is the correct way to implement it:
+
 ```csharp
 // Run inference  
 var userTraitsPosterior = engine.Infer<Gaussian[][]>(userTraits);  
@@ -160,18 +185,21 @@ userBiasPrior.ObservedValue = userBiasPosterior;
 itemBiasPrior.ObservedValue = itemBiasPosterior;  
 userThresholdsPrior.ObservedValue = userThresholdsPosterior;
 ```
+
 With the inferred priors in place, we can use the same model to make predictions. There are only a few minor modifications to be made. First, we need to reset the number of observations. In our example this will be the number of ratings to be inferred. We set it to 1 for the sake of simplicity. Second, we should reset the training data. As to the user and item data, we provide the arrays with the corresponding users and items to be matched. As to the rating data, it needs to be cleared (because it will all be inferred). This is achieved by using the `ClearObservedValue()` method. Finally, we can infer the ratings arrays (in our case only one). We call the Infer() method with a Bernoulli\[\]\[\] generic parameter, and the first element of the resulting jagged array is the predicted rating (represented as Bernoulli\[\]). In our example it contains the probabilities 0.6869 and 0.1147. This means that user 5 will most likely rate item 6 with 2 out of 3 stars.
+
 ```csharp
 // Make a prediction  
 numObservations.ObservedValue = 1;  
-userData.ObservedValue = new  int[] { 5 };  
-itemData.ObservedValue = new  int[] { 6 };  
+userData.ObservedValue = new int[] { 5 };  
+itemData.ObservedValue = new int[] { 6 };  
 ratingData.ClearObservedValue();  
 
 Bernoulli[] predictedRating = engine.Infer<Bernoulli[][]>(ratingData)[0];  
 Console.WriteLine("Predicted rating:");  
 foreach (var rating in predictedRating) Console.WriteLine(rating);
 ```
+
 ### Resolving parameter ambiguity
 
 The model explained in this example is symmetric. One way of coping with such problems was discussed in the [Mixture of Gaussians tutorial](Mixture of Gaussians tutorial.md) and explained in the [User Guide](customising the algorithm initialisation.md). It involves overriding the initialisation of the algorithm by specifying an initial marginal for some variables. We'll undertake another method here, which is to manually set some priors to a fixed value. We choose this approach because later we'll generate data from the model and we'll want to be able to compare the true parameters to the learned ones (explained later in the _Generating data from the model_ section).
@@ -183,6 +211,7 @@ Let's now look at the broader picture. Consider a particular user vector _`u`_ a
 ![Matchbox formula](MatchboxFormula.png)
 
 This shows that in the traits there are _numTraits_ by _numTraits_ degrees of freedom. It doesn't really matter if we'll fix these in the user traits or in the item traits. So all we need to do in order to remove the ambiguity in the traits is to set the upper square part of any trait matrix to the identity matrix. Note how this will break the symmetry - all trait columns are different.
+
 ```csharp
 // Break symmetry and remove ambiguity in the traits  
 for (int i = 0; i < numTraits; i++) {    // Assume that numTraits < numItems  
@@ -192,11 +221,13 @@ for (int i = 0; i < numTraits; i++) {    // Assume that numTraits < numItems
     itemTraitsPrior.ObservedValue[i][i] = Gaussian.PointMass(1);  
 }
 ```
+
 ### Generating data from the model
 
 In order to make sure that the model is working properly, we generate data from it and compare the true parameters to the learned ones.
 
 A simple model data generation can be found in the code of the Mixture of Gaussians example. The model parameters there are the means and precisions of the distributions to be learned, as well as the vector of mixture weights. So these are the ones that are explicitly set in the code. In the current example the set of true parameters is larger - it comprises the user and item traits, the user and item biases, and the user thresholds. We undertake a typical approach here, which is to sample these parameters from their priors.
+
 ```csharp
 // Sample model parameters from the priors  
 Rand.Restart(12347);  
@@ -206,12 +237,14 @@ double[] userBias = Util.ArrayInit(numUsers, u => userBiasPrior[u].Sample());
 double[] itemBias = Util.ArrayInit(numItems, i => itemBiasPrior[i].Sample());  
 double[][] userThresholds = Util.ArrayInit(numUsers, u => Util.ArrayInit(numLevels, l => userThresholdsPrior[u][l].Sample()));
 ```
+
 Now when we have the true parameters, we can sample data from the model. We do that by repeating the whole model definition step by step and obtaining the final values. Since the parameters are fixed, we no longer work with probabilities. Therefore, the Infer.NET modelling API is not used here (i.e. there is no mention of the `Variable` class). The only stochastic parameter in the data generation is the noise, which we sample from fixed Gaussians.
 
 The code in the data generation is semantically very similar to the one in the model definition. The only difference that might seem odd is the rejection of user-item pairs. Because here we don't iterate over all possible user-item combinations, we randomly generate only some number of them (_numObservations_). Thus, if a duplicate pair is generated, it should be rejected. This is implemented by encoding the pairs into integers and keeping track of the visited ones in a C# HashSet.
+
 ```csharp
 // Repeat the model with fixed parameters  
-HashSet<int> visited = new  HashSet<int>();  
+HashSet<int> visited = new HashSet<int>();  
 for (int observation = 0; observation < numObservations; observation++) {
       int user = Rand.Int(numUsers);  
       int item = Rand.Int(numItems); int userItemPairID = user * numItems + item; // pair encoding  
@@ -222,14 +255,15 @@ for (int observation = 0; observation < numObservations; observation++) {
     double[] products = Util.ArrayInit(numTraits, t => userTraits[user][t] * itemTraits[item][t]);
     double bias = userBias[user] + itemBias[item];
     double affinity = bias + products.Sum();
-    double noisyAffinity = new  Gaussian(affinity, affinityNoiseVariance).Sample();
-    double[] noisyThresholds = Util.ArrayInit(numLevels, l => new  Gaussian(userThresholds[user][l], thresholdsNoiseVariance).Sample());  
+    double noisyAffinity = new Gaussian(affinity, affinityNoiseVariance).Sample();
+    double[] noisyThresholds = Util.ArrayInit(numLevels, l => new Gaussian(userThresholds[user][l], thresholdsNoiseVariance).Sample());  
 
     generatedUserData[observation] = user;  
     generatedItemData[observation] = item;  
     generatedRatingData[observation] = Util.ArrayInit(numLevels, l => noisyAffinity > noisyThresholds[l]);  
 }
 ```
+
 Since we generate the data from the model, we can compare the true parameters to the learned ones. For simplicity, we'll only look at the first 5 item traits. If we print these out right after data generation (the _true_ parameters) and print the itemTraitsPosterior's means right after inference (the _learned_ parameters), here's what we'll see:
 
 | **true parameters** | **learned parameters** |

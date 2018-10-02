@@ -24,7 +24,7 @@ If you are embedding your generated code into production code, for example, you 
 The required and recommended quality bands can be set on the Compiler property for the inference engine. For example:
 
 ```csharp
-InferenceEngine engine = new  InferenceEngine();  
+InferenceEngine engine = new InferenceEngine();  
 engine.Compiler.RequiredQuality = QualityBand.Experimental;  
 engine.Compiler.RecommendedQuality = QualityBand.Stable;
 ```

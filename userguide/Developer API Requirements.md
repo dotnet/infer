@@ -20,7 +20,7 @@ The list of requirements below came out of a meeting where Andy Gordon presented
     *   Should not assume the existence of a model (e.g. could work with Infer.NET as well as TLC) (Infer.NET)
     *   Discoverable
     *   Options should be consistent across different models, e.g. via option classes or interfaces
-*   Option to pre-compile inference code  (Infer.NET)
+*   Option to pre-compile inference code (Infer.NET)
 *   Cross-language (.NET, Excel, C++, R, Matlab)
 *   Online/incremental (as an option)
 *   Active learning (as an option) - label can be provided by a callback.

@@ -3,7 +3,7 @@ layout: default
 --- 
 [Infer.NET user guide](index.md) : [Tutorials and examples](Infer.NET tutorials and examples.md)
 
-[Page 1](Click model example.md) \| [Page 2](Click Model 1.md) \|  [Page 3](Click model 2.md) \| Page 4
+[Page 1](Click model example.md) \| [Page 2](Click Model 1.md) \| [Page 3](Click model 2.md) \| Page 4
 
 ## Click model prediction
 
@@ -81,6 +81,6 @@ Clicks   Exams   Score     Label0    Label1    Label2
 What we have gained from this model is the calibration of human judgement data against click data using query/document pairs for which we have both observations. We can use this either to identify data for which click data and human judgement data are inconsistent and therefore clean up the training data for a ranking model. Or we could use the predicted labels or score to supplement the human judgement training data.
 
 <br/>
-[Page 1](Click model example.md) \| [Page 2](Click Model 1.md) \|  [Page 3](Click model 2.md) \| Page 4
+[Page 1](Click model example.md) \| [Page 2](Click Model 1.md) \| [Page 3](Click model 2.md) \| Page 4
 
 ​

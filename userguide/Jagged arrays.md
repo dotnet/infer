@@ -11,10 +11,10 @@ In many models data will not be in the form of a flat single dimensional or a mu
 The simplest jagged array is a 1D array of 1D arrays. The outer array can be indexed by a standard range, but the inner array is variable in size, and the size itself is a function of the outer index. Here is an example the illustrates the syntax:
 
 ```csharp
-int[] sizes = new  int[] { 2, 3 };  
-Range item = new  Range(sizes.Length).Named("item");  
+int[] sizes = new int[] { 2, 3 };  
+Range item = new Range(sizes.Length).Named("item");  
 VariableArray<int> sizesVar = Variable.Constant(sizes, item).Named("sizes");  
-Range feature = new  Range(sizesVar[item]).Named("feature");  
+Range feature = new Range(sizesVar[item]).Named("feature");  
 var x = Variable.Array(Variable.Array<double>(feature), item).Named("x");
 ```
 
@@ -30,7 +30,7 @@ The .NET type of a jagged array in Infer.NET is a **[VariableArray](../apiguide/
 We can now use the ranges to index and loop over our jagged array in a natural manner:
 
 ```csharp
-Gaussian xPrior = new  Gaussian(1.2, 3.4);  
+Gaussian xPrior = new Gaussian(1.2, 3.4);  
 x[item][feature] = Variable.Random(xPrior).ForEach(item, feature);  
 Variable.ConstrainPositive(x[item][feature]);
 ```
@@ -42,12 +42,12 @@ If you use **ForEach** blocks rather than the inline **ForEach** method, the out
 You can define a constant jagged array initialised to its equivalent .NET array directly in the definition. For example:
 
 ```csharp
-double[][] a = new  double[][] { new  double[] {1.1, 3.3}, new  double[] {1.1, 2.2, 4.4} };  
-int[] innerSizes = new  int[a.Length];  
+double[][] a = new double[][] { new double[] {1.1, 3.3}, new double[] {1.1, 2.2, 4.4} };  
+int[] innerSizes = new int[a.Length];  
 for (int i=0; i < a.Length; i++)  
-    innerSizes[i] = a[i].Length;Range outer = new  Range(a.Length).Named("outer");  
+    innerSizes[i] = a[i].Length;Range outer = new Range(a.Length).Named("outer");  
 VariableArray<int> innerSizesVar = Variable.Constant(innerSizes, outer).Named("innerSizes");  
-Range inner = new  Range(innerSizesVar[outer]).Named("outer");  
+Range inner = new Range(innerSizesVar[outer]).Named("outer");  
 var aConst = Variable.Constant(a, outer, inner);
 ```
 
@@ -86,11 +86,11 @@ aObs.ObservedValue = a;
 The Infer.NET API also supports more complex jagged arrays such as a 2D array of arrays, or an array of array of arrays. Here is an example of a 2D array of arrays. In this example, the inner range is of fixed size which simplifies the definition.
 
 ```csharp
-int[,] sizes2D = new  int[,] { {2, 3}, {4, 2}, {3, 1} };  
-Range rx = new  Range(sizes2D.GetLength(0)).Named("rx");  
-Range ry = new  Range(sizes2D.GetLength(1)).Named("ry");  
+int[,] sizes2D = new int[,] { {2, 3}, {4, 2}, {3, 1} };  
+Range rx = new Range(sizes2D.GetLength(0)).Named("rx");  
+Range ry = new Range(sizes2D.GetLength(1)).Named("ry");  
 VariableArray2D<int> sizes2DVar = Variable.Constant(sizes2D, rx, ry);  
-Range rz = new  Range(sizes2DVar[rx,ry]).Named("rz");  
+Range rz = new Range(sizes2DVar[rx,ry]).Named("rz");  
 var zVar = Variable.Array(Variable.Array<double>(rz), rx, ry).Named("zVar");
 ```
 

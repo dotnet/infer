@@ -99,7 +99,7 @@ WorkerLabel.ObservedValue = workerLabels;
 
 Finally, we run inference on this model in the standard way by creating an inference engine and calling `Infer`.
 
-```csharp
+```
 WorkerConfusionMatrix = Engine.Infer<Dirichlet[][]>(ConfusionMatrix);
 TrueLabel = Engine.Infer<Discrete[]>(TrueLabel);
 CommunityScoreMatrix = Engine.Infer<VectorGaussian[][]>(CommunityScoreMatrix);
@@ -119,7 +119,7 @@ Take a look at computing model evidence for model selection in Infer.NET [here](
  
 ### How to set the other hyper-parameters
 
-In addition to the community count, the model has other hyper-parameters  that need to be set for training:
+In addition to the community count, the model has other hyper-parameters that need to be set for training:
 
 ```csharp 
 // Precision of the noisification factor generating a worker's score matrix

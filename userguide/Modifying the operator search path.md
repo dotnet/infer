@@ -7,12 +7,12 @@ layout: default
 
 The operator search path allows you to switch between different implementations of the message operators for a factor. In some cases, Infer.NET includes different implementations of a factor, allowing you to control speed versus accuracy. The search path also allows you to override a built-in message operator with your own implementation.
 
-For example, consider the `SumOp` class from the page on [How to add a new factor and message operators](How to add a new factor and message operators.md). On that page,  `SumOp` was registered against a custom factor called `MyFactors.Sum`. Suppose you instead wanted to register `SumOp` against the built-in factor `Factor.Sum`. To start, you would change the `FactorMethod` attribute to read:
+For example, consider the `SumOp` class from the page on [How to add a new factor and message operators](How to add a new factor and message operators.md). On that page, `SumOp` was registered against a custom factor called `MyFactors.Sum`. Suppose you instead wanted to register `SumOp` against the built-in factor `Factor.Sum`. To start, you would change the `FactorMethod` attribute to read:
 
 ```csharp
 [FactorMethod(typeof(Factor), "Sum", typeof(double[]))]  
-public  static  class  SumOp  
-{  
+public static class SumOp 
+{ 
   ... 
 }
 ```

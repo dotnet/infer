@@ -44,9 +44,10 @@ When learning a BPM, we aim to learn a posterior distribution over the weight **
 We can define a Bayes Point Machine in Infer.NET as follows,
 
 ```csharp
-Variable<Vector> w = Variable.Random( new VectorGaussian(Vector.Zero(3), PositiveDefiniteMatrix.Identity(3)));  
+Variable<Vector> w = Variable.Random(new VectorGaussian(Vector.Zero(3), PositiveDefiniteMatrix.Identity(3)));  
 Range j = y.Range;  
-double noise = 0.1;y[j] = Variable.GaussianFromMeanAndVariance(Variable.InnerProduct(w, x[j]),noise)>0;
+double noise = 0.1;
+y[j] = Variable.GaussianFromMeanAndVariance(Variable.InnerProduct(w, x[j]),noise)>0;
 ```
 
 The first line creates a random variable for **w** with a broad prior. We then create a range **j** which is the size of the data. The last line constrains the target **y\[j\]** to be true if the inner product **w.x** plus noise is positive or false otherwise. Note: here we have picked the noise variance to be 0.1 which sets the 'slack' in the classifier - you should tune this value when using a BPM for your own problem.
@@ -62,7 +63,7 @@ Console.WriteLine("Dist over w=\n"+wPosterior);
 When this code is executed, the result is
 
 ```
-Dist over w=  
+Dist over w =  
 VectorGaussian(0.06323 -0.006453 -1.408,  0.001157   -0.0004818  -0.01197 )  
                                          -0.0004818   0.0006099  -0.006733  
                                          -0.01197    -0.006733    0.5215

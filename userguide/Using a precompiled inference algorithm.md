@@ -9,7 +9,7 @@ Internally Infer.NET compiles a model into a C# class for performing inference o
 
 *   **To remove the dependence on the compiler.** For standalone applications that make heavy use of a specific inference algorithm it might be desired to remove the dependence on the compiler.
 
-*   **To use Infer.NET from Silverlight.** Security restrictions in Silverlight do not allow dynamic compilation, so you must precompile your model before including it in a Silverlight project ([find out more](Running%20under%20Silverlight.md)).
+*   **To use Infer.NET from Silverlight.** Security restrictions in Silverlight do not allow dynamic compilation, so you must precompile your model before including it in a Silverlight project.
 
 *   **To run multi-threaded inference.** Including the compiled algorithm directly allows different instances of the compiled algorithm to be used in each thread separately without recompilation.
 
@@ -28,13 +28,13 @@ To ensure that the output code has a convenient interface, it is useful to follo
 
 ```csharp
 // Initial Data  
-double[] dataSet = new  double[100];  
+double[] dataSet = new double[100];  
 for (int i = 0; i < dataSet.Length; i++)  
     dataSet[i] = Rand.Normal(0, 1);  
 
 // Observed variables for data and data count  
 Variable<int> dataCount = Variable.Observed(dataSet.Length).Named("dataCount");  
-Range N = new  Range(dataCount);  
+Range N = new Range(dataCount);  
 VariableArray<double> data = Variable.Observed<double>(dataSet, N).Named("data");  
 
 // Observations are assumed to be sampled from a Gaussian with unknown parameters  
@@ -43,11 +43,12 @@ Variable<double> precision = Variable.GammaFromShapeAndScale(1, 1).Named("precis
 data[N] = Variable.GaussianFromMeanAndPrecision(mean, precision).ForEach(N);  
 
 // Create an inference engine for VMP  
-InferenceEngine engine = new  InferenceEngine(new  VariationalMessagePassing());  
+InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());  
 
 // Retrieve the posterior distributions  
 Console.WriteLine("mean=" + engine.Infer(mean));Console.WriteLine("prec=" + engine.Infer(precision));
 ```
+
 Run this example, take the generated output code (it will be named **Model_VMP.cs** unless you set the **ModelName** property on the engine) and add it to your project. This instance contains the compiled model class **Model_VMP**.
 
 There are two ways to call the compiled inference algorithm from your code. The easiest way to use this class is through its `IGeneratedAlgorithm` interface as described in [Controlling how inference is performed](Controlling how inference is performed.md). Alternatively you can use the strongly-typed model-specific properties and methods as documented below.

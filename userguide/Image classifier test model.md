@@ -28,7 +28,7 @@ This is very similar to the training model. Apart from the names being prefixed 
 In preparation for inference test outputs, our BayesPointMachine constructor also creates a test inference engine which contains the inference parameters we want to use for test:
 
 ```csharp
-testEngine = new  InferenceEngine(new  ExpectationPropagation());  
+testEngine = new InferenceEngine(new ExpectationPropagation());  
 testEngine.NumberOfIterations = 1;
 ```
 

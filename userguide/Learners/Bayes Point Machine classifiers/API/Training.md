@@ -17,7 +17,7 @@ Sometimes features and ground truth labels live in different objects. Let's say 
 classifier.Train(trainingSetFeatures, trainingSetLabels);
 ```
 
-At this point, the classifier will call the mapping methods to obtain the instances, features and labels of the training set. Then, it will create and run the Infer.NET message-passing algorithm. At this stage, the Infer.NET compiler would typically generate the training algorithm from the underlying probabilistic model. In the Bayes Point Machine classifiers, however, all inference algorithms are [_precompiled_](Using a precompiled inference algorithm.md) for fast execution of both training and prediction.
+At this point, the classifier will call the mapping methods to obtain the instances, features and labels of the training set. Then, it will create and run the Infer.NET message-passing algorithm. At this stage, the Infer.NET compiler would typically generate the training algorithm from the underlying probabilistic model. In the Bayes Point Machine classifiers, however, all inference algorithms are [_precompiled_](../../../Using a precompiled inference algorithm.md) for fast execution of both training and prediction.
 
 ### Incremental training
 
@@ -45,7 +45,7 @@ Of course, it is possible change both the IterationCount and the BatchCount [set
 
 ### Evidence computation
 
-The [evidence](Computing model evidence for model selection.md) or marginal likelihood is a measure of how likely the data is under the given the model. Model evidence is hence extensively used to compare or [select models](http://alumni.media.mit.edu/~tpminka/statlearn/demo/). In contrast to other approaches, evidence computation does not require a hold-out set for validation purposes, but can be computed for the training set.
+The [evidence](../../../Computing model evidence for model selection.md) or marginal likelihood is a measure of how likely the data is under the given the model. Model evidence is hence extensively used to compare or [select models](http://alumni.media.mit.edu/~tpminka/statlearn/demo/). In contrast to other approaches, evidence computation does not require a hold-out set for validation purposes, but can be computed for the training set.
 
 To compute model evidence, you need to activate the ComputeModelEvidence [setting](Settings.md) prior to training:
 

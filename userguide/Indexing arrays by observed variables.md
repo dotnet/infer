@@ -8,7 +8,7 @@ layout: default
 Besides ranges, VariableArrays can be indexed by integer variables. This allows you to create complex dependencies between array elements. For example, suppose you have an array of boolean variables, and you want to constrain one of them to be true. This can be accomplished as follows:
 
 ```csharp
-Rangeitem = new  Range(4);  
+Rangeitem = new Range(4);  
 VariableArray<bool> bools = Variable.Array<bool>(item);  
 bools[item] = Variable.Bernoulli(0.7).ForEach(item);  
 Variable<int> index = Variable.New<int>();  

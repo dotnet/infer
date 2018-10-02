@@ -22,7 +22,7 @@ Console.WriteLine("The probability that a Gaussian(0,1) > 0.5 is {0}", Math.Exp(
 
 The output of this code is:
 
-```csharp
+```
 The probability that a Gaussian(0,1) > 0.5 is 0.308537538725987
 ```
 

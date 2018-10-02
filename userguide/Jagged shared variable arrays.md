@@ -23,8 +23,8 @@ Below is an example where we want to learn the mean of jagged array of Gaussian-
 
 ```csharp
 double[][][] data = new double[][][] {  
- new double[][] { new double[] { 1,2 }, new double[] { 3,4 } },   
- new double[][] { new double[] { 5,6 }, new double[] { 7,8 } }  
+  new double[][] { new double[] { 1,2 }, new double[] { 3,4 } },   
+  new double[][] { new double[] { 5,6 }, new double[] { 7,8 } }  
 };  
 int numChunks = data.Length;  
 Range outer = new Range(data[0].Length);  
@@ -40,16 +40,16 @@ InferenceEngine engine = new InferenceEngine();
   
 for (int pass = 0; pass < 5; pass++)  
 {  
- for (int c = 0; c < numChunks; c++)  
- {  
- x.ObservedValue = data[c];  
- model.InferShared(engine, c);  
- }  
+  for (int c = 0; c < numChunks; c++)  
+  {  
+    x.ObservedValue = data[c];  
+    model.InferShared(engine, c);  
+  }  
 }  
 var posteriorW = w.Marginal<Gaussian[][]>();
 ```
 
-If you want to make a jagged array with more than 2 brackets, you will need to specify the full array type as the type argument to SharedVariable. (This also works with 2 brackets, but isn't needed.)  For example, to make an array with 3 brackets:  
+If you want to make a jagged array with more than 2 brackets, you will need to specify the full array type as the type argument to SharedVariable. (This also works with 2 brackets, but isn't needed.) For example, to make an array with 3 brackets:  
 
 ```csharp
 var x = SharedVariable<double[][][]>.Random(Variable.Array(Variable.Array<double>(innerinner), inner), outer, prior);

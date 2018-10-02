@@ -10,7 +10,7 @@ Repeat blocks provide an efficient way to repeat part of a model many times. A r
 ```csharp
 using (Variable.Repeat(count))  
 {  
-// contained modelling statements  
+  // contained modelling statements  
 }
 ```
 

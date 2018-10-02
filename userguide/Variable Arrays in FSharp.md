@@ -23,7 +23,7 @@ let precs = Variable.ArrayInit
 
 ### Assigning arrays from a generator function
 
-The `Variable.AssignVariableArray` function provides an easy way of assigning the values of a VariableArray given a generator function to provide the values for assignment. The type signature for this method is : _`VariableArray<'a> -> Range -> (Range -> Variable<'a>) -> VariableArray<'a>`._ The following example shows how it can be used to assign values to the variableArrays used in the [Clinical trial tutorial](Clinical trial.md) using a generator function. Similarly, methods to assign values to 2-Dimensional and jagged `VariableArrays` are also provided in the form of  Variable.AssignVariableArray2D with type signature : _`VariableArray2D<'a> -> Range -> (Range -> Variable<'a>) -> VariableArray2D<'a>`_ and
+The `Variable.AssignVariableArray` function provides an easy way of assigning the values of a VariableArray given a generator function to provide the values for assignment. The type signature for this method is : _`VariableArray<'a> -> Range -> (Range -> Variable<'a>) -> VariableArray<'a>`._ The following example shows how it can be used to assign values to the variableArrays used in the [Clinical trial tutorial](Clinical trial.md) using a generator function. Similarly, methods to assign values to 2-Dimensional and jagged `VariableArrays` are also provided in the form of Variable.AssignVariableArray2D with type signature : _`VariableArray2D<'a> -> Range -> (Range -> Variable<'a>) -> VariableArray2D<'a>`_ and
 
 ```fsharp
 let controlGroup = Variable.Observed<bool>([|false; false; true; false; false|])  

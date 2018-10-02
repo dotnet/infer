@@ -14,7 +14,7 @@ You can run the code in this tutorial either using the [Examples Browser](The ex
 This is going to be a Bayesian mixture of Gaussians, so we need to define priors on each of the parameters of our model. To do this, start by defining a range for the number of mixture components:
 
 ```csharp
-Range k = new  Range(2);
+Range k = new Range(2);
 ```
 
 Using this range, create an array for the means of our mixture components and give them priors:
@@ -103,14 +103,14 @@ Dist over precs=
                  -0.002167 0.006726
 ```
 
-This is not helpful - the two mixture components are identical!  The reason for this is that the model is _symmetrical_ \- the mixture components are all defined the same way and the inference updates never distinguish them. 
+This is not helpful - the two mixture components are identical! The reason for this is that the model is _symmetrical_ \- the mixture components are all defined the same way and the inference updates never distinguish them. 
 
 We can break symmetry in this case by randomly initialising the messages used in message passing. Infer.NET does not do this automatically, because it normally guarantees to give the same result each time you perform inference - introducing random initialisation would break this contract. If you want to break symmetry, you must do it explicitly. In this example, we can achieve this using **InitialiseTo()** to randomise the initial message for **z**, as follows:
 
 _**See also:** [Customising the algorithm initialisation](customising the algorithm initialisation.md)_
 
 ```csharp
-Discrete[] zinit = new  Discrete[n.SizeAsInt];  
+Discrete[] zinit = new Discrete[n.SizeAsInt];  
 for(int i = 0; i < zinit.Length; i++)  
   zinit[i]=Discrete.PointMass(Rand.Int(k.SizeAsInt), k.SizeAsInt);  
 (Distribution<int>.Array(zinit));

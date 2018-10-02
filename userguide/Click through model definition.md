@@ -9,7 +9,7 @@ layout: default
 
 #### Initializing variables:
 
-In this example, we assume the probabilities which represent whether a user will  examine the next document (conditioned on whether a user clicks and whether the document is relevant) are specified by the user. These values do not need to be specified during model specification, and are needed only during inference. Therefore, we just create them as new variables, and hold off on giving them values until we run the model:
+In this example, we assume the probabilities which represent whether a user will examine the next document (conditioned on whether a user clicks and whether the document is relevant) are specified by the user. These values do not need to be specified during model specification, and are needed only during inference. Therefore, we just create them as new variables, and hold off on giving them values until we run the model:
 
 ```csharp
 Variable<double>[] probNextIfNotClick = Variable.New<double>();  

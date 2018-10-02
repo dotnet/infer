@@ -46,7 +46,7 @@ The final line in this model definition combines the **InnerProduct** factor, th
 In preparation for inference, our BayesPointMachine constructor also creates an inference engine which contains the inference parameters we want to use for training:
 
 ```csharp
-trainEngine = new  InferenceEngine(new  ExpectationPropagation());  
+trainEngine = new InferenceEngine(new ExpectationPropagation());  
 trainEngine.NumberOfIterations = 5;
 ```
 

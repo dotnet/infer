@@ -16,9 +16,9 @@ The data in this tutorial consists of the outcomes for individuals who took part
 ```csharp
 // Data from clinical trial  
 VariableArray<bool> controlGroup =
-    Variable.Observed(new  bool[] { false, false, true, false, false });
+    Variable.Observed(new bool[] { false, false, true, false, false });
 VariableArray<bool> treatedGroup =
-    Variable.Observed(new  bool[] { true, false, true, true, true });
+    Variable.Observed(new bool[] { true, false, true, true, true });
 Range i = controlGroup.Range; Range j = treatedGroup.Range;
 ```
 
@@ -70,7 +70,7 @@ The variable **probAll** is both declared and defined inside the if block, since
 We have now fully defined the model and can go ahead and infer the distributions of interest.
 
 ```csharp
-InferenceEngine ie = new  InferenceEngine();  
+InferenceEngine ie = new InferenceEngine();  
 Console.WriteLine("Probability treatment has an effect = " + ie.Infer(isEffective));Console.WriteLine("Probability of good outcome if given treatment = "  
                    + (float)ie.Infer<Beta>(probIfTreated).GetMean());  
 Console.WriteLine("Probability of good outcome if control = "  

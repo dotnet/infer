@@ -19,7 +19,7 @@ If MonoDevelop cannot resolve the reference to FSharp.Core when trying to build 
 
 For example:  
 
-```html
+```xml
 <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">  
     <HintPath>\usr\lib\mono\4.5\FSharp.Core.dll</HintPath>  
     <Private>True</Private>  

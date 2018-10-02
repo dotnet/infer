@@ -18,15 +18,15 @@ The blue line shows a Gaussian distribution with mean zero and variance one. The
 We can achieve this using what we learned in the [previous tutorial](Two coins tutorial.md), by creating a random double variable with a Gaussian prior but now we also need to add a _constraint_ constraining it to be greater than 0.5. This can be achieved with the following code:
 
 ```csharp
-Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x");  
+Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x"); 
 Variable.ConstrainTrue(x > 0.5);
 ```
 
 If we now use the inference engine to infer the distribution over **x**, the result will depend on the inference algorithm we use. If we use expectation propagation, the result will be the Gaussian distribution closest to the shaded area above, in terms of moment matching. The following code achieves this, 
 
 ```csharp
-InferenceEngine engine = new  InferenceEngine();  
-engine.Algorithm = new  ExpectationPropagation();  
+InferenceEngine engine = new InferenceEngine(); 
+engine.Algorithm = new ExpectationPropagation(); 
 Console.WriteLine("Dist over x=" + engine.Infer(x));
 ```
 
@@ -45,9 +45,12 @@ x = randn(1e7,1); x = x(x>0.5); \[mean(x) var(x)\]
 Suppose you want to investigate what happens if you change the truncation threshold to values other than 0.5. The simplest way to do this is to place all of the above code in a loop:
 
 ```csharp
-for (double thresh = 0; thresh <= 1; thresh+=0.1)  
-{ Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x"); Variable.ConstrainTrue(x > thresh); InferenceEngine engine = new  InferenceEngine();  
-  engine.Algorithm = new  ExpectationPropagation();  
+for (double thresh = 0; thresh <= 1; thresh+=0.1)
+{ 
+  Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x");
+  Variable.ConstrainTrue(x > thresh); 
+  InferenceEngine engine = new InferenceEngine();  
+  engine.Algorithm = new ExpectationPropagation();  
   Console.WriteLine("Dist over x given thresh of "+thresh+"=" + engine.Infer(x));  
 }
 ```
@@ -81,18 +84,18 @@ Variable<double> threshold = Variable.New<double>().Named("threshold");
 It is normal to provide a name for the variable, which should be the name of the variable in your code. You can now use this variable directly in the constraint expression:
 
 ```csharp
-Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x");  
+Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1).Named("x"); 
 Variable.ConstrainTrue(x > threshold);
 ```
 
 Notice that we have not yet set the value of **threshold**. If we tried to infer **x** at this point, we would get an exception with the message "Variable 'threshold' has no definition". To set the value of a variable, we set its **ObservedValue** property. In this case, we set the value inside the loop and then call **Infer(x)**:
 
 ```csharp
-InferenceEngine engine = new  InferenceEngine();  
-engine.Algorithm = new  ExpectationPropagation();  
-for (double thresh = 0; thresh <= 1; thresh += 0.1)  
-{  
-  threshold.ObservedValue = thresh; Console.WriteLine("Dist over x given thresh of " + thresh + "=" + engine.Infer(x));  
+InferenceEngine engine = new InferenceEngine(); 
+engine.Algorithm = new ExpectationPropagation(); 
+for (double thresh = 0; thresh <= 1; thresh += 0.1) 
+{ 
+  threshold.ObservedValue = thresh; Console.WriteLine("Dist over x given thresh of " + thresh + "=" + engine.Infer(x)); 
 }
 ```
 

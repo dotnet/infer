@@ -29,7 +29,7 @@ Common questions and answers about the Infer.NET framework.
 
     ```
     @misc{InferNET18,
-    author = "Minka, T. and Winn, J.M. and Guiver, J.P. and Zaykov, Y. and Fabian, D. and  Bronskill, J.",
+    author = "Minka, T. and Winn, J.M. and Guiver, J.P. and Zaykov, Y. and Fabian, D. and Bronskill, J.",
     title = {/{Infer.NET 2.8}},
     year = 2018,
     note = {Microsoft Research Cambridge. http://research.microsoft.com/infernet}
@@ -131,7 +131,7 @@ Common questions and answers about the Infer.NET framework.
 
 *   **ImproperMessageException during inference**
 
-    To avoid this, depending on your model, use initialization (for an example of initialization, see the [Mixture of Gaussians tutorial](Mixture of Gaussians tutorial.md)),  try changing priors or reorder the data.
+    To avoid this, depending on your model, use initialization (for an example of initialization, see the [Mixture of Gaussians tutorial](Mixture of Gaussians tutorial.md)), try changing priors or reorder the data.
 
 *   **AllZeroException during inference**
 
@@ -147,9 +147,9 @@ Common questions and answers about the Infer.NET framework.
 
 
 1.  Is there enough data?
-2.  Does the model have a strong enough link between the parameters and the data for them to be recovered?  For example, is the noise level too high?
-3.  Does the model have parameter symmetries, i.e. different settings of the parameters that produce the same data distribution?  See the [Recommender System](Recommender System.md) example.
-4.  Has the inference algorithm converged?  You can determine this by running for different numbers of iterations.
+2.  Does the model have a strong enough link between the parameters and the data for them to be recovered? For example, is the noise level too high?
+3.  Does the model have parameter symmetries, i.e. different settings of the parameters that produce the same data distribution? See the [Recommender System](Recommender System.md) example.
+4.  Has the inference algorithm converged? You can determine this by running for different numbers of iterations.
 5.  Try initializing the algorithm near the true values. If this helps, then the problem may have multiple solutions.
 6.  Try a different inference algorithm.
 7.  Try simplifying the model by observing some of the parameters to their true values.

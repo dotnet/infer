@@ -60,7 +60,7 @@ let data = Variable.ArrayInit n (fun i ->
 
 ### If Blocks
 
-The `Variable.IfBlock` method returns an `IfBlock` for creating if then else statements which are dependant on the value of a Variable<bool>   This is a function with type signature: _`Variable.IfBlock: Variable<bool>->(Variable<bool->unit)->Variable<bool->unit)->unit`_ where, the first argument is a `boolean` variable, the second argument is a function to be applied if the Boolean Variable has value true and the third argument is a function to be applied if the Boolean Variable has value false. Here the If block is used in the [Clinical trial tutorial](Clinical trial.md) shown below
+The `Variable.IfBlock` method returns an `IfBlock` for creating if then else statements which are dependant on the value of a `Variable<bool>`. This is a function with type signature: _`Variable.IfBlock: Variable<bool>->(Variable<bool->unit)->Variable<bool->unit)->unit`_ where, the first argument is a `boolean` variable, the second argument is a function to be applied if the Boolean Variable has value true and the third argument is a function to be applied if the Boolean Variable has value false. Here the If block is used in the [Clinical trial tutorial](Clinical trial.md) shown below
 
 ```fsharp
 // Data from a clinical trial  
@@ -78,7 +78,8 @@ let f1 (vb1: Variable<bool>) =
     ()  
 
 // IfNot Block function  
-let f2 (vb2: Variable<bool>) =    let probAll = Variable.Beta(1.0, 1.0).Named("probAll")  
+let f2 (vb2: Variable<bool>) =  
+    let probAll = Variable.Beta(1.0, 1.0).Named("probAll")  
     let controlGroup = Variable.AssignVariableArray controlGroup i (fun i ->Variable.Bernoulli(probAll))  
     let treatedGroup = Variable.AssignVariableArray treatedGroup j (fun j ->Variable.Bernoulli(probAll))  
     ()  

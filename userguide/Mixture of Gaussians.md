@@ -31,7 +31,7 @@ open Microsoft.ML.Probabilistic.FSharp
 //--------------------------  
 let GenerateData nData = let trueM1,trueP1 = Vector.FromArray[|2.0;3.0|],PositiveDefiniteMatrix(Array2D.create2D [ [3.0;0.2];[0.2;2.0] ]) let trueM2,trueP2 = Vector.FromArray[|7.0;5.0|],PositiveDefiniteMatrix(Array2D.create2D [ [2.0;0.4];[0.4;4.0] ])    let trueVG1 = VectorGaussian.FromMeanAndPrecision(trueM1,trueP1) let trueVG2 = VectorGaussian.FromMeanAndPrecision(trueM2,trueP2) let truePi = 0.6 let trueB = new Bernoulli(truePi)  
     Rand.Restart(12347) // Restart the infer.NET random number generator  
-    Array.init nData (fun j ->  if trueB.Sample()then trueVG1.Sample() else trueVG2.Sample())
+    Array.init nData (fun j -> if trueB.Sample()then trueVG1.Sample() else trueVG2.Sample())
 
 //-----------------------------------  
 // The model  

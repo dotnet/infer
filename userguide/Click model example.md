@@ -3,7 +3,7 @@ layout: default
 --- 
 [Infer.NET user guide](index.md) : [Tutorials and examples](Infer.NET tutorials and examples.md)
 
-Page 1 \| [Page 2](Click Model 1.md) \|  [Page 3](Click model 2.md) \| [Page 4](Click Model Prediction.md)
+Page 1 \| [Page 2](Click Model 1.md) \| [Page 3](Click model 2.md) \| [Page 4](Click Model Prediction.md)
 
 ## Click model example
 
@@ -58,11 +58,11 @@ The human judgement in each row always provides a bit of evidence. However, note
 ```csharp
 // Method to read click data. This assumes a header row  
 // followed by data rows with tab or comma separated text  
-static  private  void LoadData( string ifn, // The file name  
+static private void LoadData( string ifn, // The file name  
     bool allowNoExams, // Allow records with no examinations  
-    out  int[] labels, // Labels  
-    out  int[] clicks,  // Clicks  
-    out  int[] exams) // Examinations
+    out int[] labels, // Labels  
+    out int[] clicks, // Clicks  
+    out int[] exams) // Examinations
 ```
 
 #### **The model**

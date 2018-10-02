@@ -3,7 +3,7 @@ layout: default
 --- 
 [Infer.NET user guide](index.md) : [Tutorials and examples](Infer.NET tutorials and examples.md)
 
-[Page 1](Click model example.md) \| [Page 2](Click Model 1.md) \|  Page 3 \| [Page 4](Click Model Prediction.md)
+[Page 1](Click model example.md) \| [Page 2](Click Model 1.md) \| Page 3 \| [Page 4](Click Model Prediction.md)
 
 ## Click model 2 example
 
@@ -104,4 +104,4 @@ for (int pass = 0; pass < maxPasses; pass++)
 We can run model 2 using the same [prediction model](Click Model Prediction.md) as for model 1. We present the data in chunks of 200; the inference converges after 4 passes, and gets identical results (up to some small numeric tolerance) with model 1.
 
 <br/>
-[Page 1](Click model example.md) \| [Page 2](Click Model 1.md) \|  Page 3 \| [Page 4](Click Model Prediction.md)
+[Page 1](Click model example.md) \| [Page 2](Click Model 1.md) \| Page 3 \| [Page 4](Click Model Prediction.md)

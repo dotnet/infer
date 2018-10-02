@@ -57,7 +57,7 @@ var tweetTrueLabel = Variable.Subarray(TweetTrueLabel, WorkerTaskIndex[k]);
         // Label inference
         using (Variable.Switch(tweetTrueLabel[kn]))
         {
-            WorkerLabel[k][kn]  = Variable.Discrete(WorkerConfusionMatrix[k][trueLabel[kn]]);
+            WorkerLabel[k][kn] = Variable.Discrete(WorkerConfusionMatrix[k][trueLabel[kn]]);
           }
     }
     // Words inference 

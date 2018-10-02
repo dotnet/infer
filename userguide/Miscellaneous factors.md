@@ -13,7 +13,7 @@ These methods provide a convenient short alternative to using `Variable<T>.Facto
 |----------------------------------------------|
 | _Subarray_ | `Variable.Subarray<T>(T[] array, int[] indices)` | Create a **T\[\]** random variable array by extracting elements of _array_ at the specified _indices_, which **cannot include duplicates**. Subarray should be used instead of `GetItems`, whenever you can be sure that there are no duplicates, since it is more efficient. |
 | _GetItems_ | `Variable.GetItems<T>(T[] array, int[] indices)` | Create a **T\[\]** random variable array by extracting elements of _array_ at the specified _indices_, which may include duplicates. Some uses of GetItems can also be achieved through indexing. If there are no duplicate indices, Subarray should be used instead. |
-| _Enum to int_ | `Variable.EnumToInt<TEnum>(TEnum enumVar)` | Create an **int** random variable corresponding to the supplied enum random variable. This allows enums to be used as arguments to  **Variable.Case()** or **Variable.Switch()**. |
+| _Enum to int_ | `Variable.EnumToInt<TEnum>(TEnum enumVar)` | Create an **int** random variable corresponding to the supplied enum random variable. This allows enums to be used as arguments to **Variable.Case()** or **Variable.Switch()**. |
 | _Vector from array_ | `Variable.Vector(double[] array)` | Create a vector random variable corresponding the supplied array of random doubles. |
 | _Array from vector_ | `Variable.ArrayFromVector(Vector vector)` | Create an array of double random variables corresponding to the elements of the supplied random vector. This is more efficient than calling `GetItem` on each element. |
 | _Concat_ | `Variable.Concat(Vector first, Vector second)` | Concatenates two random vectors. |

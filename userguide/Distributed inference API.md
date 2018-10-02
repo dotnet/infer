@@ -77,7 +77,7 @@ The shortcut `ConstrainFromIndex` takes a delegate mapping a `Variable<int>` to 
 
 #### Inferring a partitioned array
 
-In some problems, we need to infer a partitioned array. For example, suppose we wanted to infer the array x above. What should `engine.Infer(x)` return?  It cannot explicitly return the entire distribution, since this may not fit in memory. However, it can return an _implicit_ array of distributions. An implicit array is an integer count together with a delegate that maps an index into a value. By looping over all indices and calling the delegate, we can access all elements of the array. For example:
+In some problems, we need to infer a partitioned array. For example, suppose we wanted to infer the array x above. What should `engine.Infer(x)` return? It cannot explicitly return the entire distribution, since this may not fit in memory. However, it can return an _implicit_ array of distributions. An implicit array is an integer count together with a delegate that maps an index into a value. By looping over all indices and calling the delegate, we can access all elements of the array. For example:
 
 ```csharp
 object xDist = engine.Infer(x);

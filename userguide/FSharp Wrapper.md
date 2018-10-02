@@ -5,7 +5,7 @@ layout: default
 
 ## Calling Infer.NET from F\#
 
-This release of Infer.NET is tested with version 2.0 of F# as included with Visual Studio 2010. As Infer.NET is a .NET API, it can be called directly from F#. Infer.NET also ships with a wrapper DLL along with its source code which can be found in the bin and Source folders in the installation folder. The use of this wrapper is optional but it does allow for more succinct code.
+This release of Infer.NET is tested with version 2.0 of F# as included with Visual Studio 2010. As Infer.NET is a .NET API, it can be called directly from F#. Infer.NET also ships with a wrapper DLL along with its source code. The use of this wrapper is optional but it does allow for more succinct code.
 
 #### Porting existing C# code to F\#
 
@@ -30,7 +30,7 @@ The F# wrapper is accessed by referencing the FSharpWrapper.dll and including th
 
 *   **FloatDistribution**: Provides type declarations for distributions over float-based array domains (float arrays, Vector arrays, and PositiveDefiniteMatrix arrays). Also provides variable types for these distribution array types which are useful for providing observed priors to your model.
 
-*   **IntDistribution**:  Provides type declarations for distributions over integer array domains. Also provides variable types for these distribution array types which are useful for providing observed priors to your model.
+*   **IntDistribution**: Provides type declarations for distributions over integer array domains. Also provides variable types for these distribution array types which are useful for providing observed priors to your model.
 *   **BoolDistribution**: Provides type declarations for distributions over boolean array domains. Also provides variable types for these distribution array types which are useful for providing observed priors to your model.
 *   **Variable**: Provides methods for calling imperative structures such as ForEach statements, If Blocks and Switch Blocks. It also provides methods for creating and initialising VariableArrays.
 *   **Operators**:  Provides a set of operator overloads for the comparison operators which can be used to compare objects of type `Variable<'a> ` with `Variable<'a>` or with type 'a. The module name is not needed when using such operators.

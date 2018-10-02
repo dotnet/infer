@@ -8,8 +8,8 @@ layout: default
 Consider the following MSL:
 
 ```csharp
-double[] a = new double[N];  // random
-int[] b = new int[M];  // observed
+double[] a = new double[N]; // random
+int[] b = new int[M]; // observed
 for(int j = 0; j < M; j++) {
   Constrain.Positive(a[b[j]]);
 }
@@ -65,8 +65,8 @@ The transformation is currently done in the API as the model is being constructe
 The inefficiency of the current implementation grows as the indexing gets more complex. Consider the following MSL (indexing by a jagged array):
 
 ```csharp
-double[] a = new double[N];  // random
-int[][] b = new int[M][L];  // observed
+double[] a = new double[N]; // random
+int[][] b = new int[M][L]; // observed
 for(int j = 0; j < M; j++) {
   for(int k = 0; k < L; k++) {
     Constrain.Positive(a[b[j][k]]);
@@ -93,9 +93,9 @@ This code gives the correct answer. However, the original code has cost O(N+ML).
 Here is another problem case (indexing a jagged array, can make a similar example for indexing a 2D array):
 
 ```csharp
-double[][] a = new double[N][P];  // random
-int[] b = new int[M];  // observed
-int[] c = new int[M];   // observed
+double[][] a = new double[N][P]; // random
+int[] b = new int[M]; // observed
+int[] c = new int[M]; // observed
 for(int j = 0; j < M; j++) {
    Constrain.Positive(a[b[j]][c[j]]);
 }
@@ -120,9 +120,9 @@ The original code has cost O(NP+M). The transformed code has cost O(NP+MP), whic
 Putting these together, we can index a jagged array by jagged indices:
 
 ```csharp
-double[][] a = new double[N][P];  // random
-int[][] b = new int[M][K];  // observed
-int[][] c = new int[M][L];  // observed
+double[][] a = new double[N][P]; // random
+int[][] b = new int[M][K]; // observed
+int[][] c = new int[M][L]; // observed
 for(int j = 0; j < M; j++) {
   for(int k = 0; k < K; k++) {
     for(int l = 0; l < L; l++) {
@@ -158,7 +158,7 @@ The original code has cost O(NP+MKL). The transformed code has cost O(NPM+MKP+MK
 
 #### Alternative design
 
-Create a new DistributionSubarray type, which represents a distribution over an array of length N but only stores M elements, the rest being implicitly uniform. (There could be a specialized version for M=1.)  Change a_uses_B[0] and a_uses_F[0] to use this type. Using this message type automatically fixes the evidence computation, so Factor.Subarray is never needed. We still need Factor.GetItems to deal with duplication. It should be changed to use an O(M) algorithm.
+Create a new DistributionSubarray type, which represents a distribution over an array of length N but only stores M elements, the rest being implicitly uniform. (There could be a specialized version for M=1.) Change a_uses_B[0] and a_uses_F[0] to use this type. Using this message type automatically fixes the evidence computation, so Factor.Subarray is never needed. We still need Factor.GetItems to deal with duplication. It should be changed to use an O(M) algorithm.
 
 The case of indexing by a jagged array is automatically efficient since Factor.GetItems(a, b[j]) will use DistributionSubarrays of size L, making the cost O(N+ML).
 

@@ -34,7 +34,7 @@ The BayesPointMachine Test method looks as follows:
 nTest.ObservedValue = data.Length;  
 testItems.ObservedValue = data;  
 Bernoulli[] labelPosteriors = Distribution.ToArray<Bernoulli[]>(testEngine.Infer(testLabels));  
-double[] probs = new  double[data.Length];  
+double[] probs = new double[data.Length];  
 for (int i = 0; i < probs.Length; i++)  
     probs[i] = labelPosteriors[i].GetProbTrue();  
 return probs;

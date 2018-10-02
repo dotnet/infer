@@ -5,7 +5,7 @@ layout: default
 
 ## Cloning ranges
 
-Sometimes you want to access all pairs of array elements in an expression. For example, suppose you wanted to define a two-dimensional array **outerProduct** where outerProduct\[i,j\] = y\[i\]*y\[j\]. How do you declare ranges i and j?  You might try the following:
+Sometimes you want to access all pairs of array elements in an expression. For example, suppose you wanted to define a two-dimensional array **outerProduct** where outerProduct\[i,j\] = y\[i\]*y\[j\]. How do you declare ranges i and j? You might try the following:
 
 ```csharp
 Range i = new Range(3);
@@ -33,18 +33,18 @@ Another good example of where you need to clone a Range is in the **'Mixed Membe
 
 ```csharp
 // Observed interaction matrix  
-var YObs = new  bool[5][];  
-YObs[0] = new  bool[] { false, true, true, false, false };  
-YObs[1] = new  bool[] { true, false, true, false, false };  
-YObs[2] = new  bool[] { true, true, false, false, false };  
-YObs[3] = new  bool[] { false, false, false, false, true };  
-YObs[4] = new  bool[] { false, false, false, true, false };int K = 2;           // Number of blocks  
+var YObs = new bool[5][];  
+YObs[0] = new bool[] { false, true, true, false, false };  
+YObs[1] = new bool[] { true, false, true, false, false };  
+YObs[2] = new bool[] { true, true, false, false, false };  
+YObs[3] = new bool[] { false, false, false, false, true };  
+YObs[4] = new bool[] { false, false, false, true, false };int K = 2; // Number of blocks  
 int N = YObs.Length; // Number of nodes  
 
 // Ranges  
-Range p = new  Range(N).Named("p");   // Range for initiator  
+Range p = new Range(N).Named("p"); // Range for initiator  
 Range q = p.Clone().Named("q"); // Range for receiver  
-Range kp = new  Range(K).Named("kp"); // Range for initiator block membership  
+Range kp = new Range(K).Named("kp"); // Range for initiator block membership  
 Range kq = kp.Clone().Named("kq"); // Range for receiver block membership  
 
 // The model  
@@ -59,16 +59,16 @@ using (Variable.ForEach(p)) { using (Variable.ForEach(q)) { var z1 = Variable.Di
 }  
 
 // Initialise to break symmetry  
-var piInit = new  Dirichlet[N];  
+var piInit = new Dirichlet[N];  
 for (int i = 0; i < N; i++) { Vector v = Vector.Zero(K); for (int j = 0; j < K; j++) v[j] = 10 * Rand.Double();  
-    piInit[i] = new  Dirichlet(v);  
+    piInit[i] = new Dirichlet(v);  
 }  
 
 // Hook up the data  
 Y.ObservedValue = YObs;  
 
 // Infer  
-var engine = new  InferenceEngine(new  VariationalMessagePassing());  
+var engine = new InferenceEngine(new VariationalMessagePassing());  
 pi.InitialiseTo(Distribution<Vector>.Array(piInit));  
 var posteriorPi = engine.Infer<Dirichlet[]>(pi);  
 var posteriorB = engine.Infer<Beta[,]>(B);

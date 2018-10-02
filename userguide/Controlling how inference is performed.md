@@ -10,7 +10,7 @@ You can get fine-grained control of how inference is performed by getting hold o
 
 ```csharp
 // Set the inference algorithm  
-InferenceEngine engine = new  InferenceEngine(new  VariationalMessagePassing());  
+InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());  
 // Get the compiled inference algorithm  
 var ca = engine.GetCompiledInferenceAlgorithm(mean, precision);
 ```
@@ -48,7 +48,7 @@ ca.Execute(10);
 
 #### Setting observed values
 
-When using a compiled algorithm directly, you must use the **SetObservedValue(variableName, value)** method to ensure that the compiled algorithm is aware of the value of an observed variable.  You can also retrieve these values back using **GetObservedValue(variableName)**.  To get the name of a variable in the generated code, use the [NameInGeneratedCode](../apiguide/api/Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_NameInGeneratedCode) property.  The compiled algorithm is automatically filled in with any observed values that were in place at the point when GetCompiledInferenceAlgorithm was called, so you only need to update the compiled algorithm when an observed value changes after that point.
+When using a compiled algorithm directly, you must use the **SetObservedValue(variableName, value)** method to ensure that the compiled algorithm is aware of the value of an observed variable. You can also retrieve these values back using **GetObservedValue(variableName)**. To get the name of a variable in the generated code, use the [NameInGeneratedCode](../apiguide/api/Microsoft.ML.Probabilistic.Models.Variable.html#Microsoft_ML_Probabilistic_Models_Variable_NameInGeneratedCode) property. The compiled algorithm is automatically filled in with any observed values that were in place at the point when GetCompiledInferenceAlgorithm was called, so you only need to update the compiled algorithm when an observed value changes after that point.
 
 #### Getting marginals
 
@@ -69,19 +69,19 @@ The call to GetCompiledInferenceAlgorithm compiles the model and returns a **IGe
 Variable<double> mean = Variable.GaussianFromMeanAndVariance(0, 100);  
 Variable<double> precision = Variable.GammaFromShapeAndScale(1, 1);  
 Variable<int> dataCount = Variable.Observed(0);  
-Range item = new  Range(dataCount);  
+Range item = new Range(dataCount);  
 VariableArray<double> data = Variable.Observed<double>(null, item).Named("data");  
 data[item] = Variable.GaussianFromMeanAndPrecision(mean, precision).ForEach(item);  
 
 // The data  
-double[][] dataSets = new  double[][]  
+double[][] dataSets = new double[][]  
 {
-  new  double[] { 11, 5, 8, 9 },
-  new  double[] { -1, -3, 2, 3, -5 }  
+  new double[] { 11, 5, 8, 9 },
+  new double[] { -1, -3, 2, 3, -5 }  
 };  
 
 // Set the inference algorithm  
-InferenceEngine engine = new  InferenceEngine(new  VariationalMessagePassing());  
+InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());  
 
 // Get the compiled inference algorithm  
 var ca = engine.GetCompiledInferenceAlgorithm(mean, precision);  
@@ -104,6 +104,7 @@ for (int j = 0; j < dataSets.Length; j++)
 ```
 
 The output from the inference is:
+
 ```
 mean=Gaussian(8.165, 1.026)  
 prec=Gamma(3, 0.08038)  

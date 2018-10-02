@@ -32,6 +32,6 @@ A distribution factor creates a random variable from a parameterised distributio
 | _ArrayFromVector_ | `Variable.ArrayFromVector(Vector vector)` | Create an array of double random variables corresponding to the elements of the supplied random vector. This is more efficient than calling GetItem on each element. |
 | _Split_ | `Variable.Split<T>(T[] array, Range headRange, Range tailRange, out VariableArray<T> tail)` | Creates two arrays by splitting _array_ into disjoint parts. The sizes of the parts are given by _headRange_ and _tailRange_. |
 | _SplitSubarray_ | `Variable.SplitSubarray<T>(T[] array, int[][] indices)` | Creates a jagged array, shaped according to _indices_, from disjoint elements of _array_. _indices_ cannot include duplicates. To allow duplicates, use JaggedSubarray. |
-| _JaggedSubarray_ | `Variable.JaggedSubarray<T>(T[] array, int[][] indices)` | Creates a jagged array, shaped according to _indices_,  from elements of _array_. indices\[i\]\[j\] must be different for different j and same i, but can match for different i. If all indices are different, use SplitSubarray. |
+| _JaggedSubarray_ | `Variable.JaggedSubarray<T>(T[] array, int[][] indices)` | Creates a jagged array, shaped according to _indices_, from elements of _array_. indices\[i\]\[j\] must be different for different j and same i, but can match for different i. If all indices are different, use SplitSubarray. |
 
 ​

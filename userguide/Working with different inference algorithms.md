@@ -17,13 +17,13 @@ The algorithm is a property of the **InferenceEngine** object and can be set as 
 
 ```csharp
 // Use Expectation Propagation  
-InferenceEngine ie = new  InferenceEngine();  
-ie.Algorithm = new  ExpectationPropagation();
+InferenceEngine ie = new InferenceEngine();  
+ie.Algorithm = new ExpectationPropagation();
 ```
 
 ```csharp
 // Use Variational Message Passing  
-InferenceEngine ie = new  InferenceEngine();  
+InferenceEngine ie = new InferenceEngine();  
 ie.Algorithm = new VariationalMessagePassing();
 ```
 
@@ -31,7 +31,7 @@ ie.Algorithm = new VariationalMessagePassing();
 
 This table gives a brief summary of the properties of the different algorithms - for more information see the individual pages on each algorithm.
 
-| | **[Expectation  Propagation](Expectation Propagation.md)** | **[Variational  Message Passing](Variational Message Passing.md)** | **[Gibbs  sampling](Gibbs sampling.md)** |
+| | **[Expectation Propagation](Expectation Propagation.md)** | **[Variational Message Passing](Variational Message Passing.md)** | **[Gibbs sampling](Gibbs sampling.md)** |
 |-------------------------------------------------------------------------------------------|
 | **Deterministic?** Deterministic algorithms will give the same answer for the same problem (given the same initialization). | Yes | Yes | No |
 | **Exact result?** Whether the algorithm will give the exact result. | Only in simple cases (if factor graph is discrete or linear-Gaussian and has no loops) | No | Ultimately (but this may involve running the algorithm for an unfeasibly long time) |

@@ -14,7 +14,7 @@ You can listen to this event using the following line of code:
 
 ```csharp
 // Add a listener to the inference engine  
-engine.ProgressChanged += new  InferenceProgressEventHandler(engine_ProgressChanged);
+engine.ProgressChanged += new InferenceProgressEventHandler(engine_ProgressChanged);
 ```
 
 In this case, the **engine_ProgressChanged** method will be called each time the progress changes. It has the following signature:

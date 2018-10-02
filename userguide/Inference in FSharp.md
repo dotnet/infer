@@ -16,7 +16,7 @@ let xPost1 = ie.Infer<Gaussian>(x)
 let xPost2 = ie.Infer< >(x)
 ```
 
-The first line returns a Gaussian instance which is good if you want to call methods on the posterior distribution, but you do have to know what the distribution of the  `Variable<float>` is. The second line does not require you to know what the distribution is, as it returns the distribution as an object; however, this limits what you can do with the distribution without casting it further.
+The first line returns a Gaussian instance which is good if you want to call methods on the posterior distribution, but you do have to know what the distribution of the `Variable<float>` is. The second line does not require you to know what the distribution is, as it returns the distribution as an object; however, this limits what you can do with the distribution without casting it further.
 
 Now let's look at arrays. By default, the Infer function will return a Distribution array of some sort; in general you will not know the concrete class, but you can type it in a number of ways. Suppose we have a `VariableArray<float> x` which we want to infer. The following lines both return the same object:
 

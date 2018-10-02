@@ -109,14 +109,14 @@ questionOfObs.ObservedValue = ...;
 var response = Variable.Array<int>(obs);  
 response.ObservedValue = ...;  
 using (Variable.ForEach(obs)) {  
-var q = questionOfObs[obs];  
+  var q = questionOfObs[obs];  
   var advantage = (ability[subjectOfObs[obs]] - difficulty[q]);  
   var advantageNoisy = Variable.GaussianFromMeanAndPrecision(advantage, discrimination[q]);  
   var correct = (advantageNoisy > 0);  
-using (Variable.If(correct))  
-response[obs] = trueAnswer[q];  
-using (Variable.IfNot(correct))  
-response[obs] = Variable.DiscreteUniform(nChoices);  
+  using (Variable.If(correct))  
+    response[obs] = trueAnswer[q];  
+  using (Variable.IfNot(correct))  
+    response[obs] = Variable.DiscreteUniform(nChoices);  
 }
 ```
 

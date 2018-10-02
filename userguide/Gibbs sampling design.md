@@ -104,7 +104,7 @@ A boolean root variable coin with marginal prototype Bernoulli gets the followin
 ```csharp
 GibbsMsg<Bernoulli,bool> coin_Marginal;
 Bernoulli coin_F; // if parent factor is stochastic
-bool coin_F;  // if parent factor is deterministic
+bool coin_F; // if parent factor is deterministic
 GibbsMsg<Bernoulli,bool> coin_B;
 GibbsMsg<Bernoulli,bool>[] coin_uses_F;
 Bernoulli[] coin_uses_B;
@@ -131,7 +131,7 @@ A boolean array variable coins gets the following associated messages in the Mes
 ```csharp
 GibbsMsg<DistributionArray<Bernoulli>,bool[]> coin_Marginal;
 DistributionArray<Bernoulli> coin_F; // if parent factor is stochastic
-bool[] coin_F;  // if parent factor is deterministic
+bool[] coin_F; // if parent factor is deterministic
 GibbsMsg<DistributionArray<Bernoulli>,bool[]> coin_B;
 GibbsMsg<DistributionArray<Bernoulli>,bool[]>[] coin_uses_F;
 DistributionArray<Bernoulli>[] coin_uses_B;
@@ -151,7 +151,7 @@ A boolean root variable coin with marginal prototype Bernoulli gets the followin
 Bernoulli coin_Conditional;
 bool coin_Sample;
 Bernoulli coin_F; // if parent factor is stochastic
-bool coin_F;  // if parent factor is deterministic
+bool coin_F; // if parent factor is deterministic
 Bernoulli coin_B;
 Bernoulli[] coin_uses_F;
 Bernoulli[] coin_uses_B;

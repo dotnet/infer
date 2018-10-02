@@ -5,14 +5,14 @@ layout: default
 
 ## How to add a new factor and message operators
 
-In this section, we explain how to add a new factor to Infer.Net. For illustration, we create a new factor called 'Sum' that sums the elements of an array of doubles. To place a custom factor in your model once it is created, use `Variable<T>.Factor()` as described [on this page](Applying functions and operators to variables.md). For the Sum factor, the result variable's distribution type is Gaussian, which is assumed by default in Infer.NET. If the result variable's distribution type for your factor is not Gaussian or Bernoulli, then you will need to attach a [MarginalPrototype](Adding attributes to your model.md)  attribute to the variable. For example, if the output of your factor should be assumed Gamma distributed, then you will need to attach a `MarginalPrototype(new Gamma())` attribute. 
+In this section, we explain how to add a new factor to Infer.Net. For illustration, we create a new factor called 'Sum' that sums the elements of an array of doubles. To place a custom factor in your model once it is created, use `Variable<T>.Factor()` as described [on this page](Applying functions and operators to variables.md). For the Sum factor, the result variable's distribution type is Gaussian, which is assumed by default in Infer.NET. If the result variable's distribution type for your factor is not Gaussian or Bernoulli, then you will need to attach a [MarginalPrototype](Adding attributes to your model.md) attribute to the variable. For example, if the output of your factor should be assumed Gamma distributed, then you will need to attach a `MarginalPrototype(new Gamma())` attribute. 
 
 ### Step 1: Make a factor class
 
 1\. Create a static class with your name of choice. In this example, we name the class as "MyFactor". If you plan on making a number of factors, they can all go in this one class.
 
 ```csharp
-public  static  class  MyFactor  
+public static class MyFactor  
 {  
 }
 ```
@@ -22,7 +22,7 @@ public  static  class  MyFactor
 ```csharp
 public static class MyFactor  
 {  
-  public static  double Sum(double[] array)  
+  public static double Sum(double[] array)  
   {  
   }  
 }
@@ -52,7 +52,7 @@ Below is an example where we have slightly modified the Sum factor to add Gaussi
 public static class MyFactor  
 {  
   [Stochastic]   
-  public  static  double **SumWithNoise**(double[] array)  
+  public static double **SumWithNoise**(double[] array)  
   {  
     double sum = **Gaussian.Sample(0,1);**  
     for (int i = 0; i < array.Length; i++)  
@@ -63,13 +63,13 @@ public static class MyFactor
 }
 ```
 
-5.  (Optional) Customize parameter naming. Every factor has named parameters. In a graphical model these parameters can be thought of as edges. Each edge is named based on the name of the factor method and its parameter names. In our example, the edges therefore are called "Sum" and "array" by default. When defining your factor, you can override the defaults by attaching the ParameterNames attribute to your factor method:
+5\. (Optional) Customize parameter naming. Every factor has named parameters. In a graphical model these parameters can be thought of as edges. Each edge is named based on the name of the factor method and its parameter names. In our example, the edges therefore are called "Sum" and "array" by default. When defining your factor, you can override the defaults by attaching the ParameterNames attribute to your factor method:
 
 ```csharp
 public static class MyFactor  
 {
   [ParameterNames("Sum", "a")]  
-  public static  double Sum(double[] array)  
+  public static double Sum(double[] array)  
   {  
   }  
 }
@@ -87,10 +87,10 @@ The operator class implements inference when factor arguments are stochastic. To
 [assembly: Microsoft.ML.Probabilistic.Factors.HasMessageFunctions]
 ```
 
-2\. Create a public static class with any name. Conventionally, this is the name of the factor followed by 'Op'. In our example, this class will be named  SumOp.
+2\. Create a public static class with any name. Conventionally, this is the name of the factor followed by 'Op'. In our example, this class will be named SumOp.
 
 ```csharp
-public  static  class  SumOp  
+public static class SumOp  
 {  
 }
 ```
@@ -99,12 +99,12 @@ public  static  class  SumOp
 
 ```csharp
 [FactorMethod(typeof(MyFactor), "Sum")]  
-public  static  class  SumOp  
+public static class SumOp  
 {  
 }
 ```
 
-4\. Add declarations for operator methods. Each method is named \[recipient\]\[suffix\], for example if the recipient is "Sum" and the suffix is "AverageConditional", the function is named "SumAverageConditional". The recipient name is the name of the edge that connects the variable to the factor. This is automatically determined from the factor method and can be overridden as described above. The suffix is determined by the choice of the message passing algorithm:  'AverageConditional' for EP and Gibbs sampling, 'AverageLogarithm' for VMP. 
+4\. Add declarations for operator methods. Each method is named \[recipient\]\[suffix\], for example if the recipient is "Sum" and the suffix is "AverageConditional", the function is named "SumAverageConditional". The recipient name is the name of the edge that connects the variable to the factor. This is automatically determined from the factor method and can be overridden as described above. The suffix is determined by the choice of the message passing algorithm: 'AverageConditional' for EP and Gibbs sampling, 'AverageLogarithm' for VMP. 
 
 The parameters of the method are the incoming messages to the factor. The messages come from the variables that are attached to the factor. The parameter types are either distributions or ordinary values. They are not Variables. The parameter names in the method should match the parameter names of the factor (ignoring capitalization). Only include messages that are actually used to compute the output of the factor. The return type should always be a distribution type. 
 
@@ -112,13 +112,13 @@ In our running example, there are two edges ("array" and "sum") to the factor, a
 
 ```csharp
 [FactorMethod(typeof(MyFactor), "Sum")]  
-public  static  class  SumOp  
+public static class SumOp  
 {   
-  public  static  Gaussian SumAverageConditional(IList<Gaussian> array)   
+  public static Gaussian SumAverageConditional(IList<Gaussian> array)   
   {  
   }  
 
-  public  static  GaussianArray ArrayAverageConditional<GaussianArray>(GaussianArray array, Gaussian sum)   
+  public static GaussianArray ArrayAverageConditional<GaussianArray>(GaussianArray array, Gaussian sum)   
     where GaussianArray : IList<Gaussian>  
   {  
   }  
@@ -133,31 +133,38 @@ This code is not quite correct as it does not handle the special case where one 
 
 ```csharp
 [FactorMethod(typeof(MyFactor), "Sum")]  
-public  static  class  SumOp  
+public static class SumOp  
 {  
-  public  static  Gaussian SumAverageConditional([SkipIfAnyUniform] IList<Gaussian> array)  
+  public static Gaussian SumAverageConditional([SkipIfAnyUniform] IList<Gaussian> array)  
   {  
-     double mean=0;     double variance=0;     double mean1;     double variance1; for (int i = 0; i < array.Count; i++)  
+     double mean=0;   
+     double variance=0;   
+     double mean1;  
+     double variance1; 
+     for (int i = 0; i < array.Count; i++)  
      {  
         array[i].GetMeanAndVariance(out mean1, out variance1);  
         mean = mean + mean1;  
         variance = variance + variance1;  
-     }     return  new  Gaussian(mean, variance);  
+     }     
+     return new Gaussian(mean, variance);  
   }  
 
-  public  static  GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUniform] GaussianArray array, [SkipIfUniform] Gaussian sum, GaussianArray result)  
+  public static GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUniform] GaussianArray array, [SkipIfUniform] Gaussian sum, GaussianArray result)  
     where GaussianArray : IList<Gaussian>  
-  { double mean, mean1; double variance, variance1; // get the mean and variance of sum of all the Gaussians  
-     Gaussian to_sum = SumAverageConditional(array);  
-     to_sum.GetMeanAndVariance(out mean, out variance);     // subtract it off from the mean and variance of incoming Gaussian from Sum  
-     sum.GetMeanAndVariance(out mean1, out variance1);  
-     mean = mean1 - mean;  
-     variance = variance1 + variance;     for (int i = 0; i < array.Count; i++)  
-     {  
-        array[i].GetMeanAndVariance(out mean1, out variance1);  
-        result[i] = new  Gaussian(mean + mean1, variance - variance1);  
-     }
-     return result;  
+  { 
+    double mean, mean1; double variance, variance1; // get the mean and variance of sum of all the Gaussians  
+    Gaussian to_sum = SumAverageConditional(array);  
+    to_sum.GetMeanAndVariance(out mean, out variance);     // subtract it off from the mean and variance of incoming Gaussian from Sum  
+    sum.GetMeanAndVariance(out mean1, out variance1);  
+    mean = mean1 - mean;  
+    variance = variance1 + variance;   
+    for (int i = 0; i < array.Count; i++)  
+    {  
+      array[i].GetMeanAndVariance(out mean1, out variance1);  
+      result[i] = new Gaussian(mean + mean1, variance - variance1);  
+    }
+    return result;  
   }  
 }
 ```
@@ -167,7 +174,7 @@ public  static  class  SumOp
 7\. Add overloads for observed variables. When a variable is observed, its incoming message will be a concrete value rather than a distribution. For this factor, we have two variables: "array" and "sum". If "array" is observed, Infer.NET will call our original factor method. When "sum" is observed, Infer.NET will look for an operator method accepting "`double sum`". We can implement this case in a lazy way by creating a Gaussian point mass for "sum" and calling back to the general method. Note that "`double sum`" does not need a parameter annotation since it is never uniform.
 
 ```csharp
-public  static  GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUniform] GaussianArray array, double sum, GaussianArray result)  
+public static GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUniform] GaussianArray array, double sum, GaussianArray result)  
     where GaussianArray : IList<Gaussian>  
   {
     return ArrayAverageConditional(array, Gaussian.PointMass(sum), result);  
@@ -183,13 +190,13 @@ In the case of a stochastic factor, such as SumWithNoise above, we would need to
 "LogAverageFactor" returns the logarithm of the average value of the factor, given distributions over the arguments. For a deterministic factor like Sum, the average value is simply the probability that the output is the correct function of the inputs. Since we already have a function to compute the distribution of the output given the inputs (this is the SumAverageConditional method), we just need to compute the probability that a draw from this distribution equals the actual value of the output. This is done by the GetLogProb and GetLogAverageOf methods on distribution types.
 
 ```csharp
-public  static  double LogAverageFactor(double sum, [SkipIfAnyUniform] IList<Gaussian> array)  
+public static double LogAverageFactor(double sum, [SkipIfAnyUniform] IList<Gaussian> array)  
 {  
   Gaussian to_sum = SumAverageConditional(array);
   return to_sum.GetLogProb(sum);  
 }
 
-public  static  double LogAverageFactor([SkipIfUniform] Gaussian sum, [SkipIfAnyUniform] IList<Gaussian> array)  
+public static double LogAverageFactor([SkipIfUniform] Gaussian sum, [SkipIfAnyUniform] IList<Gaussian> array)  
 {  
   Gaussian to_sum = SumAverageConditional(array);
   return to_sum.GetLogAverageOf(sum);
@@ -203,10 +210,10 @@ This technique also works for stochastic factors. Special care is only required 
 "LogEvidenceRatio" is the evidence contribution for EP, which is defined in a unique way for Infer.NET. It is essentially the same as LogAverageFactor but with a correction term. Specifically, you take the logarithm of: the average value of the factor divided by the average value of the message sent to the output variable (if any). When the output variable is observed, then there is no message sent to it, so LogEvidenceRatio reduces to LogAverageFactor. Otherwise you need to compute the average value of the message (using GetLogAverageOf) and subtract this from LogAverageFactor. For the Sum factor, this simplifies mathematically, because the average value of the message to "sum" is exactly the same as the average value of the factor (in fact we used this trick to compute the average value of the factor above). Therefore the LogEvidenceRatio is zero when the output variable is not observed. The implementation of LogEvidenceRatio for the Sum factor boils down to:
 
 ```csharp
-public  static  double LogEvidenceRatio(double sum, [SkipIfAnyUniform] IList<Gaussian> array) { return LogAverageFactor(sum, array); }  
+public static double LogEvidenceRatio(double sum, [SkipIfAnyUniform] IList<Gaussian> array) { return LogAverageFactor(sum, array); }  
   [Skip]
 
-public  static  double LogEvidenceRatio(Gaussian sum) { return 0.0; }
+public static double LogEvidenceRatio(Gaussian sum) { return 0.0; }
 ```
 
 Here we have introduced the "Skip" annotation. This tells Infer.NET that the method returns an unimportant value (zero or a uniform distribution) and so does not need to be called. Infer.NET will not bother calling this method in the generated code. For an example of LogEvidenceRatio which is not zero, see the source code for ExpOp.LogEvidenceRatio.
@@ -216,7 +223,7 @@ Here we have introduced the "Skip" annotation. This tells Infer.NET that the met
 The Sum factor provides a nice illustration of the first approach. Notice that our implementation of ArrayAverageConditional and LogAverageFactor makes use of the message sent to "sum", and they recompute this message each time. We can save computation by re-using the message that was already sent to "sum" during the schedule. To refer to this message, simply add a parameter called "to_sum". The optimized implementations become:
 
 ```csharp
-public  static  GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUniform] GaussianArray array, [SkipIfUniform] Gaussian sum, [Fresh] Gaussian to_sum, GaussianArray result)  
+public static GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUniform] GaussianArray array, [SkipIfUniform] Gaussian sum, [Fresh] Gaussian to_sum, GaussianArray result)  
     where GaussianArray : IList<Gaussian>  
   {
     double mean, mean1;
@@ -226,21 +233,22 @@ public  static  GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUnif
     ... 
   }
 
-  public  static  GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUniform] GaussianArray array, double sum, GaussianArray result)  
+public static GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUniform] GaussianArray array, double sum, GaussianArray result)  
     where GaussianArray : IList<Gaussian>  
   {  
      Gaussian to_sum = SumAverageConditional(array);
      return ArrayAverageConditional(array, Gaussian.PointMass(sum), to_sum, result);  
   } 
 
- public  static  double LogAverageFactor(double sum, [SkipIfAnyUniform] IList<Gaussian> array)
+public static double LogAverageFactor(double sum, [SkipIfAnyUniform] IList<Gaussian> array)
 {
- Gaussian to_sum = SumAverageConditional(array);
- return to_sum.GetLogProb(sum);
+  Gaussian to_sum = SumAverageConditional(array);
+  return to_sum.GetLogProb(sum);
 }
 
-public  static  double LogAverageFactor([SkipIfUniform] Gaussian sum, [Fresh, SkipIfUniform] Gaussian to_sum) {  
-    return to_sum.GetLogAverageOf(sum);
+public static double LogAverageFactor([SkipIfUniform] Gaussian sum, [Fresh, SkipIfUniform] Gaussian to_sum) 
+{  
+  return to_sum.GetLogAverageOf(sum);
 }
 ```
 

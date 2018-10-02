@@ -10,7 +10,7 @@ Computing evidence in a shared variable model requires special treatment. In [th
 The following snippets show how to deal with evidence in the shared variable case, using the [LDA shared variable example](Shared variable LDA.md). You must first explicitly mark the evidence variable as such by setting the shared variable's `IsEvidenceVariable` property to true:
 
 ```csharp
-SharedVariable<bool> Evidence = SharedVariable<bool>.Random(new  Bernoulli(0.5));  
+SharedVariable<bool> Evidence = SharedVariable<bool>.Random(new Bernoulli(0.5));  
 Evidence.IsEvidenceVariable = true;
 ```
 

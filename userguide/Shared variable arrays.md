@@ -2,7 +2,7 @@
 layout: default 
 --- 
  
-[Infer.NET user guide](index.md)  :  [Sharing variables between models](Sharing variables between models.md)
+[Infer.NET user guide](index.md) : [Sharing variables between models](Sharing variables between models.md)
 
 ## Shared variable arrays
 

@@ -11,7 +11,7 @@ You can run the code in this tutorial either using the [Examples Browser](The ex
 
 ### Thinking big
 
-Because real world applications involve large amounts of data,  Infer.NET has been designed to work efficiently with large arrays. To exploit this capability, you need to use a `VariableArray` object rather than an array of `Variable` objects. This tutorial demonstrates the performance difference between these two options.
+Because real world applications involve large amounts of data, Infer.NET has been designed to work efficiently with large arrays. To exploit this capability, you need to use a `VariableArray` object rather than an array of `Variable` objects. This tutorial demonstrates the performance difference between these two options.
 
 In this example, our data will be an array of 100 data points sampled from a Gaussian distribution. This can be achieved using the handy Rand class in the **Microsoft.ML.Probabilistic.Math** namespace which has methods for sampling from a variety of distributions.
 ```csharp

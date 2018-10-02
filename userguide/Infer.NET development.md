@@ -22,5 +22,5 @@ layout: default
 ### Issues
 
 *   [Indexing arrays by observed arrays - issues](Indexing arrays by observed arrays - issues.md)
-*   [Usability issues -  issues which impact the usability of Infer.NET](Usability issues.md)
+*   [Usability issues - issues which impact the usability of Infer.NET](Usability issues.md)
 *   [Efficiency](Efficiency of Infer.NET for the Bayes Point Machine.md)

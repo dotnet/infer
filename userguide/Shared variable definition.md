@@ -10,7 +10,7 @@ The standard definition of a shared variable requires that you specify a fixed p
 Here is a simple example from the [Shared variable LDA](Shared variable LDA.md). This snippet shows the shared variable _Phi_ being defined in terms of a non-shared variable _PhiPrior._ This is the defining model. Note that (a) the batch count for the defining model is required to be 1, and (b) the Random method on the SharedVariable instance requires a uniform prior - otherwise SetDefinitionTo will raise an exception.
 
 ```csharp
-Model PhiDefModel = new  Model(1);  
+Model PhiDefModel = new Model(1);  
 SharedVariableArray<Vector> Phi = SharedVariable<Vector>.Random(  
     T, CreateUniformDirichletArray(numTopics, sizeVocab, ...))  
 PhiPrior = Variable.Array<Dirichlet>(T);  
@@ -21,6 +21,6 @@ Phi.SetDefinitionTo(PhiDefModel, PhiDef);
 The shared variable _Phi_ can then be used as usual in any other models by using the GetCopyFor method:
 
 ```csharp
-Model DocModel = new  Model(numBatches);  
+Model DocModel = new Model(numBatches);  
 VariableArray<Vector> PhiDoc = Phi.GetCopyFor(DocModel);
 ```

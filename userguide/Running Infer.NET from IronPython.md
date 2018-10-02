@@ -52,13 +52,13 @@ Alternatively, you can make use of the package folder provided as part the Infer
 
 ### InferNet Package
 
-The InferNet package folder can be found in the Source\\Wrapper\\IronPython\\Package folder under the Infer.NET installation folder.
+The InferNetWrapper package folder can be found in the [src\\IronPythonWrapper](https://github.com/dotnet/infer/tree/master/src/IronPythonWrapper).
 
 For IronPython, you can copy this folder into the Lib\\site-packages folder in the IronPython installation. For [Sho](http://research.microsoft.com/sho/), you can copy this folder into the Packages folder in the Sho installation folder. You will need administrator privileges to do these copies. Once they have been copied, you can just import the package to start working with Infer.NET. For example:
 
-```
->>> import InferNet  
->>> import InferNet as inet  
+```shell
+>>> import InferNetWrapper  
+>>> import InferNetWrapper as inet  
 >>> firstCoin = inet.Variable.Bernoulli(0.5)  
 >>> secondCoin = inet.Variable.Bernoulli(0.5)  
 >>> bothHeads = firstCoin & secondCoin  

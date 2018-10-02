@@ -64,7 +64,7 @@ Notice that we have changed the **ForEach** across **dataRange** from being inli
 It is common for data sets to use special values, like -1 or 99 to indicate that the data is missing. The method above can be used in this case, but it is often possible to use a more compact form. Supposing we change the definition of **data** above to be:
 
 ```csharp
-double[] data = new  double[] { -1, 5.0, -1, 7.0, -1 };
+double[] data = new double[] { -1, 5.0, -1, 7.0, -1 };
 ```
 
 where negative values mean 'missing' and positive values are non-missing. We can now skip the creation of the **isMissing** array and instead write

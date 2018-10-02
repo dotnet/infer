@@ -49,7 +49,7 @@ There are often multiple ways of using Infer.NET to solve a particular problem. 
     <configuration>  
       <runtime>  
         <gcServer  enabled="false" />  
-        <gcConcurrent  enabled="false" />  
+        <gcConcurrent enabled="false" />  
       </runtime>  
     </configuration>
     ```
