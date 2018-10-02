@@ -15,21 +15,7 @@ then
     configuration=Release
 fi
 
-# files to save results
-xml_parallel=netcore-partests.xml
-xml_sequential=netcore-seqtests.xml
-
-
-echo "Script for running xUnit tests."
-echo -e "Usage: \033[33;40m ./netcoretest.sh [Release|Debug]\033[0m"
-echo -e "Script stores info"
-echo -e "    about parallel test running in            \033[35;40m${xml_parallel}\033[0m"
-echo -e "    about sequential test running in          \033[35;40m${xml_sequential}\033[0m"
-
 compath=/bin/${configuration}/netcoreapp2.0/
-
-# Please note that order of test assemblies is important. *.Learners.Tests.dll must be first, otherwise BinaryFormatter-based tests will fail.
-# These failures don't occur when testing *.Learners.Tests separately so this is probably xUnit issue.
 dlls="Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll Tests${compath}Microsoft.ML.Probabilistic.Tests.dll TestPublic${compath}TestPublic.dll"
 
 # path to the xunit runner
@@ -42,19 +28,25 @@ parallel_filter='-notrait Platform=x86 -notrait Category=OpenBug -notrait Catego
 sequential_filter='-notrait Platform=x86 -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest'
 
 exitcode=0
+index=0
 
 echo -e "\033[44;37m=====================PARALLEL TESTS RUNNING============================\033[0m"
-dotnet "$runner" $dlls $parallel_filter -xml $xml_parallel
-if [ 0 -ne $? ]
-then
-    echo -e "\033[5;41;1;37mParallel running failure!\033[0m"
-    exitcode=1
-else
-    echo -e "\033[32;1mParallel running success!\033[0m"
-fi
+for assembly in Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll Tests${compath}Microsoft.ML.Probabilistic.Tests.dll TestPublic${compath}TestPublic.dll
+do
+    # Please note that due to xUnit issue we need to run tests for each assembly separately
+    dotnet "$runner" "$assembly" $parallel_filter -xml "netcoretest-result${index}.xml"
+    if [ 0 -ne $? ]
+    then
+        echo -e "\033[5;41;1;37mParallel running failure!\033[0m"
+        exitcode=1
+    else
+        echo -e "\033[32;1mParallel running success!\033[0m"
+    fi
+    (( index++ ))
+done
 
 echo -e "\033[44;37m=====================SEQUENTIAL TESTS RUNNING=========================\033[0m"
-dotnet "$runner" $dlls $sequential_filter -parallel none -xml $xml_sequential
+dotnet "$runner" "Tests${compath}Microsoft.ML.Probabilistic.Tests.dll" $sequential_filter -parallel none -xml "netcoretest-result${index}.xml"
 if [ 0 -ne $? ]
 then
     echo -e "\033[5;41;1;37mSequential running failure!\033[0m"
