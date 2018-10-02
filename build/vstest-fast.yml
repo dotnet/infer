@@ -1,0 +1,47 @@
+# Template for running fast test suite (~30 minutes) using vstest in Windows environment (.NET 4.6.1)
+parameters:
+  Platform: 'x64' # or 'x86' or both
+  
+steps:
+  - ${{ if contains(parameters.Platform, 'x64') }}:
+    # Run fast test suite on x64
+    - task: VSTest@2
+      displayName: Unit tests x64 (sequential)
+      inputs:
+        testSelector: 'testAssemblies'
+        testAssemblyVer2: test/Tests/bin/*/net461/Microsoft.ML.Probabilistic.Tests.dll
+        testFiltercriteria: '(Platform!=x86)&(((Category=CsoftModel)|(Category=ModifiesGlobals)|(Category=DistributedTests)|(Category=Performance))&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest))' 
+        runInParallel: false
+        runSettingsFile: test.runsettings
+    - task: VSTest@2
+      displayName: Unit tests x64
+      inputs:
+        testSelector: 'testAssemblies'
+        testAssemblyVer2: |
+          test/Tests/bin/*/net461/Microsoft.ML.Probabilistic.Tests.dll
+          test/Learners/LearnersTests/bin/*/net461/Microsoft.ML.Probabilistic.Learners.Tests.dll
+          test/TestPublic/bin/*/net461/TestPublic.dll
+        testFiltercriteria: '(Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)' 
+        runInParallel: true
+        runSettingsFile: test.runsettings
+  - ${{ if contains(parameters.Platform, 'x32') }}:
+    # Run fast test suite on x86
+    - task: VSTest@2
+      displayName: Unit tests x86 (sequential)
+      inputs:
+        testSelector: 'testAssemblies'
+        testAssemblyVer2: test/Tests/bin/*/net461/Microsoft.ML.Probabilistic.Tests.dll
+        testFiltercriteria: '(Platform!=x64)&(((Category=CsoftModel)|(Category=ModifiesGlobals)|(Category=DistributedTests)|(Category=Performance))&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest))' 
+        runInParallel: false
+        runSettingsFile: x86.runsettings
+    - task: VSTest@2
+      displayName: Unit tests x86
+      inputs:
+        testSelector: 'testAssemblies'
+        testAssemblyVer2: |
+          test/Tests/bin/*/net461/Microsoft.ML.Probabilistic.Tests.dll
+          test/Learners/LearnersTests/bin/*/net461/Microsoft.ML.Probabilistic.Learners.Tests.dll
+          test/TestPublic/bin/*/net461/TestPublic.dll
+        testFiltercriteria: '(Platform!=x64)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)' 
+        runInParallel: true
+        runSettingsFile: x86.runsettings

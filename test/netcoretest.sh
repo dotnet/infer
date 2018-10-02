@@ -5,30 +5,29 @@
 # See the LICENSE file in the project root for more information.
 
 # Script for testing Infer.Net on net core.
-# Input parameters: test dll list.
-# It saves results of testing in the `seqcore.xml` and `seqcore.xml` files
+# Input parameters: build configuration ('Release' by default) 
+# It saves results of testing in the `netcore-seqtests.xml` and `netcore-partests.xml` files
 # in executing directory.
 
-if [ -z $1 ]
+configuration=$1
+if [ -z $configuration ]
 then
-    echo -e "\033[5;41;1;37mEmpty dll list!\033[0m"
-    echo -e "Give\033[33;40m -h \033[0mor\033[33;40m --help \033[0margument to get reference"
-    exit 1
-fi
-
-if [ $1 = "-h" -o $1 = "--help" ]
-then
-    echo "Script for running xUnit tests."
-    echo -e "Usage: \033[33;40m ./netcoretest.sh <dll list>\033[0m"
-    echo -e "Script stores info"
-    echo -e "    about parallel test running in            \033[35;40mparcore-tests.xml\033[0m"
-    echo -e "    about sequential test running in          \033[35;40mseqcore-tests.xml\033[0m"
-    exit 0
+    configuration=Release
 fi
 
 # files to save results
-xml_parallel=parcore-tests.xml
-xml_sequential=seqcore-tests.xml
+xml_parallel=netcore-partests.xml
+xml_sequential=netcore-seqtests.xml
+
+
+echo "Script for running xUnit tests."
+echo -e "Usage: \033[33;40m ./netcoretest.sh [Release|Debug]\033[0m"
+echo -e "Script stores info"
+echo -e "    about parallel test running in            \033[35;40m${xml_parallel}\033[0m"
+echo -e "    about sequential test running in          \033[35;40m${xml_sequential}\033[0m"
+
+compath=/bin/${configuration}/netcoreapp2.0/
+dlls="Tests${compath}Microsoft.ML.Probabilistic.Tests.dll Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll TestPublic${compath}TestPublic.dll"
 
 # path to the xunit runner
 runner=~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll
@@ -42,7 +41,7 @@ sequential_filter='-notrait Platform=x86 -trait Category=CsoftModel -trait Categ
 exitcode=0
 
 echo -e "\033[44;37m=====================PARALLEL TESTS RUNNING============================\033[0m"
-dotnet "$runner" $@ $parallel_filter -xml $xml_parallel
+dotnet "$runner" $dlls $parallel_filter -xml $xml_parallel
 if [ 0 -ne $? ]
 then
     echo -e "\033[5;41;1;37mParallel running failure!\033[0m"
@@ -52,7 +51,7 @@ else
 fi
 
 echo -e "\033[44;37m=====================SEQUENTIAL TESTS RUNNING=========================\033[0m"
-dotnet "$runner" $@ $sequential_filter -parallel none -xml $xml_sequential
+dotnet "$runner" $dlls $sequential_filter -parallel none -xml $xml_sequential
 if [ 0 -ne $? ]
 then
     echo -e "\033[5;41;1;37mSequential running failure!\033[0m"

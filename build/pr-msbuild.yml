@@ -1,0 +1,26 @@
+# PR build for Infer.NET using MSBuild
+resources:
+- repo: self
+  clean: true
+  
+trigger: none # disable CI build
+
+steps:
+- task: NuGetToolInstaller@0
+  inputs:
+    versionSpec: '4.7.0'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+
+- task: MSBuild@1
+  inputs:
+    solution: '**/*.sln'
+    clean: true
+    configuration: 'Release'
+
+- template: vstest-fast.yml
+  parameters:
+    Platform: 'x64'

@@ -1,0 +1,17 @@
+# Template for running fast test suite (~30 minutes) on .NET Core platform
+parameters:
+  Configuration: 'ReleaseCore' 
+
+steps:
+- task: Bash@3
+  inputs:
+    filePath: test/netcoretest.sh
+    workingDirectory: test
+    arguments: {{ $parameters.Configuration }}
+    displayName: Run tests
+    continueOnError: true
+    
+- task: PublishTestResults@2
+  inputs:
+    testRunner: XUnit
+    testResultsFiles: 'test/netcore-*tests.xml'
