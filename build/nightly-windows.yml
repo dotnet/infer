@@ -43,26 +43,28 @@ steps:
 #   parameters:
 #     Platform: 'x86'
 
+- task: Bash@3
+  condition: eq($(BuildConfiguration), 'Release')
+  inputs:
+    filePath: build/copyassemblies.sh
+    arguments: ../bin $(BuildConfiguration)
+    workingDirectory: build
 
--${{ if eq($(BuildConfiguration), 'Release') }}:
-  - task: Bash@3
-    inputs:
-      filePath: build/copyassemblies.sh
-      arguments: ../bin $(BuildConfiguration)
-      workingDirectory: build
+- task: NuGetCommand@2
+  condition: eq($(BuildConfiguration), 'Release')
+  inputs:
+    command: pack
+    packagesToPack: build/*.nuspec
+    includeSymbols: true
+    buildProperties: version=$(Build.BuildNumber);bin=../bin
 
-  - task: NuGetCommand@2
-    inputs:
-      command: pack
-      packagesToPack: build/*.nuspec
-      includeSymbols: true
-      buildProperties: version=$(Build.BuildNumber);bin=../bin
+- task: CopyFiles@2
+  condition: eq($(BuildConfiguration), 'Release')
+  inputs:
+    sourceFolder: bin
+    targetFolder: $(Build.ArtifactStagingDirectory)
 
-  - task: CopyFiles@2
-    inputs:
-      sourceFolder: bin
-      targetFolder: $(Build.ArtifactStagingDirectory)
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-      artifactName: 'Everything'
+- task: PublishBuildArtifacts@1
+  condition: eq($(BuildConfiguration), 'Release')
+  inputs:
+    artifactName: 'Everything'
