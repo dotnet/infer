@@ -6,8 +6,8 @@
 
 # Script for testing Infer.Net on net core.
 # Input parameters: build configuration ('Release' by default) 
-# It saves results of testing in the `netcore-seqtests.xml` and `netcore-partests.xml` files
-# in executing directory.
+# It saves results of testing in the `netcoretest-result*.xml` files
+# in the working directory.
 
 configuration=$1
 if [ -z $configuration ]
