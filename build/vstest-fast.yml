@@ -14,7 +14,7 @@ steps:
         runInParallel: false
         runSettingsFile: test.runsettings
     - task: VSTest@2
-      displayName: Unit tests x64
+      displayName: Unit tests x64 (parallel)
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |

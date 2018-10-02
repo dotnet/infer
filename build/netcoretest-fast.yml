@@ -4,6 +4,7 @@ parameters:
 
 steps:
 - task: Bash@3
+  displayName: 'Running tests'
   inputs:
     filePath: test/netcoretest.sh
     workingDirectory: test
@@ -12,6 +13,7 @@ steps:
     continueOnError: true
     
 - task: PublishTestResults@2
+  displayName: 'Publishing test results'
   inputs:
     testRunner: XUnit
     testResultsFiles: 'test/netcore-*tests.xml'

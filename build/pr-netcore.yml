@@ -20,4 +20,4 @@ steps:
     
 - template: netcoretest-fast.yml
   parameters:
-    Configuration: '$(buildConfiguration)Release'
+    Configuration: '$(buildConfiguration)Core'
