@@ -32,7 +32,7 @@ Prediction settings
 
 **SetPredictionLossFunction** sets the loss function to be used during rating prediction for a given user-item pair when converting a probability distribution over the ratings into a point estimate. There are four options here.
 
-    *   **ZeroOne** loss function is equivalent to choosing the mode of the predicted distribution as a point estimate. Use this loss function to minimize mean classification error.
-    *   **Squared** (or quadratic) loss function is equivalent to choosing the mean of the predicted distribution as a point estimate. Use this loss function to minimize mean squared error.
-    *   **Absolute** loss function is equivalent to choosing the median of the predicted distribution as a point estimate. Use this loss function to minimize mean absolute error.
-    *   **Custom** loss function can be specified if none of the above loss functions satisfy your specific needs.
+*   **ZeroOne** loss function is equivalent to choosing the mode of the predicted distribution as a point estimate. Use this loss function to minimize mean classification error.
+*   **Squared** (or quadratic) loss function is equivalent to choosing the mean of the predicted distribution as a point estimate. Use this loss function to minimize mean squared error.
+*   **Absolute** loss function is equivalent to choosing the median of the predicted distribution as a point estimate. Use this loss function to minimize mean absolute error.
+*   **Custom** loss function can be specified if none of the above loss functions satisfy your specific needs.

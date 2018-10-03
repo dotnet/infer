@@ -29,7 +29,7 @@ Variable<double> z = (a + b) * Variable.GaussianFromMeanAndPrecision(mean + x, p
 
 Note that under the hood this expression creates all the necessary variables: (a+b), (mean+x) and the Gaussian variable with mean (mean+x) and precision "precision". This means that the expression a*(b+c) is not exactly equivalent to ab+ac. While the former makes the variables (b+c) and a*(b+c), the later makes ab, ac and ab+ac.
 
-**! Caution:** **All C# operators are overridden, including both the == and != operators, which return Variable<bool>. This means you cannot use them to compare Variable objects themselves, for example, to see if a Variable object is null. Instead you must first cast the Variable to object and compare that to null. This is illustrated in the following code snippet,**
+**! Caution: All C# operators are overridden, including both the == and != operators, which return Variable<bool\>. This means you cannot use them to compare Variable objects themselves, for example, to see if a Variable object is null. Instead you must first cast the Variable to object and compare that to null. This is illustrated in the following code snippet,**
 
 ```csharp
 Variable<double> var = null;  
@@ -77,4 +77,4 @@ which creates a new random variable of type **T**, as the result of calling Meth
 
 Built-in factor methods include: **And**, **Bernoulli**, **Difference**, **Gaussian**, **InnerProduct**, **IsBetween**, **IsPositive**, **MatrixMultiply**, **Not**, **Or**, **Product**, **Ratio**, **Sum** and **VectorGaussian** (see [the full list of factors](list of factors and constraints.md) for more). You can also [define your own factor methods](How to add a new factor and message operators.md). 
 
-**! Caution:** **Some factors are limited in which arguments can be stochastic/deterministic, i.e. which can be stochastic random variables or deterministic constants/parameters (modelled as observed or constant variables). Most built-in factors support all combinations, but not all of them, depending on the inference algorithm chosen. If you use an invalid combination, you will get an error when the model is compiled for inference. You can see which factors support which argument combinations by looking at the [list of factors and constraints](list of factors and constraints.md).**
+**! Caution: Some factors are limited in which arguments can be stochastic/deterministic, i.e. which can be stochastic random variables or deterministic constants/parameters (modelled as observed or constant variables). Most built-in factors support all combinations, but not all of them, depending on the inference algorithm chosen. If you use an invalid combination, you will get an error when the model is compiled for inference. You can see which factors support which argument combinations by looking at the [list of factors and constraints](list of factors and constraints.md).**

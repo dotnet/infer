@@ -21,4 +21,4 @@ IList<int> GetUserIds(TInstanceSource instanceSource, int batchNumber = 0);
 ```
 The standard mapping serves as a wrapper around the native mapping. Thus, it will always be more efficient to use the native mapping. However, it is unlikely that your data is already in this format, and therefore the standard mapping is more commonly used.
 
-Data mappings: [Standard data format](Mappings/Standard.md) | [Native data format](Mappings/Native.md) | [Data splitting](Mappings/Splitting.md) | [Negative data generation](Mappings/Negative.md)
+Data mappings: [Standard data format](Mappings/Standard.md) \| [Native data format](Mappings/Native.md) \| [Data splitting](Mappings/Splitting.md) \| [Negative data generation](Mappings/Negative.md)

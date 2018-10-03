@@ -71,7 +71,8 @@ We have now fully defined the model and can go ahead and infer the distributions
 
 ```csharp
 InferenceEngine ie = new InferenceEngine();  
-Console.WriteLine("Probability treatment has an effect = " + ie.Infer(isEffective));Console.WriteLine("Probability of good outcome if given treatment = "  
+Console.WriteLine("Probability treatment has an effect = " + ie.Infer(isEffective));
+Console.WriteLine("Probability of good outcome if given treatment = "  
                    + (float)ie.Infer<Beta>(probIfTreated).GetMean());  
 Console.WriteLine("Probability of good outcome if control = "  
                    + (float)ie.Infer<Beta>(probIfControl).GetMean());

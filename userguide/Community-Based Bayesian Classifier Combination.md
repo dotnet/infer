@@ -79,14 +79,14 @@ using (Variable.ForEach(k))
                           NoiseMatrix);
   }
 
-   WorkerConfusionMatrix[k] = Variable.Softmax(WorkerScoreMatrix[k]);
-   using (Variable.ForEach(kn))
-   {
-     using (Variable.Switch(trueLabel[kn]))
-     {
+  WorkerConfusionMatrix[k] = Variable.Softmax(WorkerScoreMatrix[k]);
+  using (Variable.ForEach(kn))
+  {
+    using (Variable.Switch(trueLabel[kn]))
+    {
       WorkerLabel[k][kn] = Variable.Discrete(WorkerConfusionMatrix[k][trueLabel[kn]]);
-     }
-   }
+    }
+  }
 }
 ```
 

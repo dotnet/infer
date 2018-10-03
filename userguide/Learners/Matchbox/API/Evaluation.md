@@ -22,4 +22,4 @@ Evaluation is then performed by computing a metric for rating prediction, item r
 var predictions = recommender.Predict(testSet);
 double mae = evaluator.RatingPredictionMetric(testSet, predictions, Metrics.AbsoluteError);
 ```
-Evaluating: [Rating prediction](Evaluation/Rating prediction.md) | [Item recommendation](Evaluation/Item recommendation.md) | [Related users](Evaluation/Related users.md) |[Related items](Evaluation/Related items.md)
+Evaluating: [Rating prediction](Evaluation/Rating prediction.md) \| [Item recommendation](Evaluation/Item recommendation.md) \| [Related users](Evaluation/Related users.md) \| [Related items](Evaluation/Related items.md)

@@ -43,13 +43,15 @@ let probIfControl = ref (Variable.New<float>())
 let f1 (vb1: Variable<bool>) =  
     probIfControl := Variable.Beta(1.0, 1.0).Named("probIfControl")  
     let controlGroup = Variable.AssignVariableArray   
-                           controlGroup i (fun i ->Variable.Bernoulli(!probIfControl)) ```csharp
-probIfTreated := Variable.Beta(1.0, 1.0).Named("probIfTreated") let treatedGroup = Variable.AssignVariableArray   
-                           treatedGroup j (fun j ->Variable.Bernoulli(!probIfTreated))  
+                           controlGroup i (fun i -> Variable.Bernoulli(!probIfControl)) 
+    probIfTreated := Variable.Beta(1.0, 1.0).Named("probIfTreated") 
+    let treatedGroup = Variable.AssignVariableArray   
+                           treatedGroup j (fun j -> Variable.Bernoulli(!probIfTreated))  
     ()
 
 // IfNot Block function  
-let f2 (vb2: Variable<bool>) =    let probAll = Variable.Beta(1.0, 1.0).Named("probAll")  
+let f2 (vb2: Variable<bool>) =    
+    let probAll = Variable.Beta(1.0, 1.0).Named("probAll")  
     let controlGroup = Variable.AssignVariableArray   
                            controlGroup i (fun i ->Variable.Bernoulli(probAll))  
     let treatedGroup = Variable.AssignVariableArray  

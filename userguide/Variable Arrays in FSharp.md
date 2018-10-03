@@ -33,9 +33,10 @@ let j = treatedGroup.Range
 // Prior on being an effective treatment  
 let isEffective = Variable.Bernoulli(0.5).Named("isEffective");  
 let probIfTreated = ref (Variable.New<float>())  
-let probIfControl = ref (Variable.New<float>())//rewrite If Block  
+let probIfControl = ref (Variable.New<float>()) //rewrite If Block  
 let f1 (vb1: Variable<bool>) =  
     probIfControl := Variable.Beta(1.0, 1.0).Named("probIfControl")  
-    let controlGroup = Variable.AssignVariableArray controlGroup i (fun i ->Variable.Bernoulli(!probIfControl)) let treatedGroup = Variable.AssignVariableArray treatedGroup j (fun j ->Variable.Bernoulli(!probIfTreated))  
+    let controlGroup = Variable.AssignVariableArray controlGroup i (fun i ->Variable.Bernoulli(!probIfControl)) 
+    let treatedGroup = Variable.AssignVariableArray treatedGroup j (fun j ->Variable.Bernoulli(!probIfTreated))  
     ()
 ```

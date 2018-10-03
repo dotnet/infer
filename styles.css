@@ -50,11 +50,7 @@ th, td {
 th {
 	text-align: left;
 }
-.highlight {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-.team-div {
+.questions-div {
 	display: grid;
 	grid-template-columns: 100px 40%;
 }
@@ -100,6 +96,7 @@ h3 {
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
 }
+
 h4 {
 	display: block;
   -webkit-margin-before: 1.33em;
@@ -195,8 +192,11 @@ a:link {
 /* Highlighters */
 
 .highlight .hll { background-color: #ffffcc }
-.highlight  { background: #f0f0f0; }
-
+.highlight  { 
+	background: #f0f0f0;
+	padding-left: 0.2em;
+	padding-right: 0.2em; 
+}
 .highlight .c { color: #008000 } /* Comment */
 .highlight .ch { color: #008000 } /* Comment.Hashbang */
 .highlight .cm { color: #008000 } /* Comment.Multiline */

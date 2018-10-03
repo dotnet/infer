@@ -54,13 +54,22 @@ pi[p] = Variable.DirichletUniform(kp).ForEach(p);
 var B = Variable.Array<double>(kp, kq).Named("B"); // Link probability matrix  
 B[kp, kq] = Variable.Beta(1, 1).ForEach(kp, kq);  
 
-using (Variable.ForEach(p)) { using (Variable.ForEach(q)) { var z1 = Variable.Discrete(pi[p]).Named("z1"); // Draw initiator membership indicator var z2 = Variable.Discrete(pi[q]).Named("z2"); // Draw receiver membership indicator z2.SetValueRange(kq); using (Variable.Switch(z1)) using (Variable.Switch(z2))  
-        Y[p][q] = Variable.Bernoulli(B[z1, z2]); // Sample interaction value }  
+using (Variable.ForEach(p)) { 
+    using (Variable.ForEach(q)) { 
+        var z1 = Variable.Discrete(pi[p]).Named("z1"); // Draw initiator membership indicator 
+        var z2 = Variable.Discrete(pi[q]).Named("z2"); // Draw receiver membership indicator 
+        z2.SetValueRange(kq); 
+        using (Variable.Switch(z1)) 
+            using (Variable.Switch(z2))  
+                Y[p][q] = Variable.Bernoulli(B[z1, z2]); // Sample interaction value 
+    }  
 }  
 
 // Initialise to break symmetry  
 var piInit = new Dirichlet[N];  
-for (int i = 0; i < N; i++) { Vector v = Vector.Zero(K); for (int j = 0; j < K; j++) v[j] = 10 * Rand.Double();  
+for (int i = 0; i < N; i++) { 
+    Vector v = Vector.Zero(K); 
+    for (int j = 0; j < K; j++) v[j] = 10 * Rand.Double();  
     piInit[i] = new Dirichlet(v);  
 }  
 

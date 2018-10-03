@@ -39,7 +39,8 @@ public static class MyFactor
     for (int i = 0; i < array.Length; i++)  
     {  
       sum = sum + array[i];  
-    } return sum;  
+    } 
+    return sum;  
   }  
 }
 ```
@@ -52,13 +53,14 @@ Below is an example where we have slightly modified the Sum factor to add Gaussi
 public static class MyFactor  
 {  
   [Stochastic]   
-  public static double **SumWithNoise**(double[] array)  
+  public static double SumWithNoise(double[] array)  
   {  
-    double sum = **Gaussian.Sample(0,1);**  
+    double sum = Gaussian.Sample(0,1);  
     for (int i = 0; i < array.Length; i++)  
     {  
       sum = sum + array[i];  
-    } return sum;  
+    } 
+    return sum;  
   }  
 }
 ```
@@ -211,8 +213,8 @@ This technique also works for stochastic factors. Special care is only required 
 
 ```csharp
 public static double LogEvidenceRatio(double sum, [SkipIfAnyUniform] IList<Gaussian> array) { return LogAverageFactor(sum, array); }  
-  [Skip]
-
+  
+[Skip]
 public static double LogEvidenceRatio(Gaussian sum) { return 0.0; }
 ```
 
@@ -224,21 +226,21 @@ The Sum factor provides a nice illustration of the first approach. Notice that o
 
 ```csharp
 public static GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUniform] GaussianArray array, [SkipIfUniform] Gaussian sum, [Fresh] Gaussian to_sum, GaussianArray result)  
-    where GaussianArray : IList<Gaussian>  
-  {
-    double mean, mean1;
-    double variance, variance1;
-    // get the mean and variance of sum of all the Gaussians  
-    to_sum.GetMeanAndVariance(out mean, out variance);    
-    ... 
-  }
+  where GaussianArray : IList<Gaussian>  
+{
+  double mean, mean1;
+  double variance, variance1;
+  // get the mean and variance of sum of all the Gaussians  
+  to_sum.GetMeanAndVariance(out mean, out variance);    
+  ... 
+}
 
 public static GaussianArray ArrayAverageConditional<GaussianArray>([SkipIfUniform] GaussianArray array, double sum, GaussianArray result)  
-    where GaussianArray : IList<Gaussian>  
-  {  
-     Gaussian to_sum = SumAverageConditional(array);
-     return ArrayAverageConditional(array, Gaussian.PointMass(sum), to_sum, result);  
-  } 
+  where GaussianArray : IList<Gaussian>  
+{  
+  Gaussian to_sum = SumAverageConditional(array);
+  return ArrayAverageConditional(array, Gaussian.PointMass(sum), to_sum, result);  
+} 
 
 public static double LogAverageFactor(double sum, [SkipIfAnyUniform] IList<Gaussian> array)
 {
