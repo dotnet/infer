@@ -147,7 +147,7 @@ All components of Infer&#46;NET and almost all sample projects run on .NET Core 
 
 * **[.NET Core 2.0 SDK](https://www.microsoft.com/net/download/dotnet-core/2.0)** to build and run .NET Standard and .NET Core projects
 
-  and/or
+  and, optionally,
 
 * **[Mono](https://www.mono-project.com/download/stable/)** (version 5.0 and higher) and **[NuGet](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools)** package manager to build and run .NET Framework 4.6.1 projects that don't use WPF
 
