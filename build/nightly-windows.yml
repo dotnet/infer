@@ -14,6 +14,7 @@ trigger: none # disable CI build
   
 steps:
 - task: Bash@3
+  displayName: 'Updating assembly versions'
   inputs:
     filePath: build/updateversion.sh
     workingDirectory: build
@@ -30,6 +31,7 @@ steps:
     restoreSolution: '**/*.sln'
 
 - task: MSBuild@1
+  displayName: 'Building solutions'
   inputs:
     solution: '**/*.sln'
     clean: true
@@ -44,6 +46,7 @@ steps:
     Platform: 'x86'
 
 - task: Bash@3
+  displayName: 'Gathering built assemblies'
   condition: eq(variables['BuildConfiguration'], 'Release')
   inputs:
     filePath: build/copyassemblies.sh
@@ -51,6 +54,7 @@ steps:
     workingDirectory: build
 
 - task: NuGetCommand@2
+  displayName: 'Creating NuGet packages'
   condition: eq(variables['BuildConfiguration'], 'Release')
   inputs:
     command: pack
@@ -59,12 +63,14 @@ steps:
     buildProperties: version=$(Build.BuildNumber);bin=../bin
 
 - task: CopyFiles@2
+  displayName: 'Copying build artifacts'
   condition: eq(variables['BuildConfiguration'], 'Release')
   inputs:
     sourceFolder: bin
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publishing build artifacts'
   condition: eq(variables['BuildConfiguration'], 'Release')
   inputs:
     artifactName: 'Everything'

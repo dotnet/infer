@@ -40,7 +40,7 @@ steps:
         runInParallel: false
         runSettingsFile: x86.runsettings
     - task: VSTest@2
-      displayName: Unit tests x86
+      displayName: Unit tests x86 (parallel)
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
