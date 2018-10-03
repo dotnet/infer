@@ -29,7 +29,7 @@ steps:
         testFiltercriteria: '(Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)' 
         runInParallel: true
         runSettingsFile: test.runsettings
-  - ${{ if contains(parameters.Platform, 'x32') }}:
+  - ${{ if contains(parameters.Platform, 'x86') }}:
     # Run fast test suite on x86
     - task: VSTest@2
       displayName: Unit tests x86 (sequential)
@@ -40,7 +40,7 @@ steps:
         runInParallel: false
         runSettingsFile: x86.runsettings
     - task: VSTest@2
-      displayName: Unit tests x86
+      displayName: Unit tests x86 (parallel)
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
