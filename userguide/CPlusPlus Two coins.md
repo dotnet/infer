@@ -10,10 +10,7 @@ For a description of this tutorial and the C# code please see [the two coins tut
 ```c++
 #include "stdafx.h"  
 using namespace System;  
-using namespace MicrosoftResearch::Infer;  
-using namespace MicrosoftResearch::Infer::Models;  
-using namespace MicrosoftResearch::Infer::Distributions;  
-using namespace MicrosoftResearch::Infer::Maths;  
+using Microsoft::ML::Probabilistic::Models;
 
 void TwoCoins()  
 {  

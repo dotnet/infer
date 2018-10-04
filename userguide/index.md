@@ -110,6 +110,6 @@ layout: default
     *   How-to guides: [How to handle missing data](How to handle missing data.md), [How to build scalable applications](How to build scalable applications.md), [more...](Infer.NET tutorials and examples.md)
 
 
-*   [Infer.NET development](Infer.NET development.md)
+*   [Infer.NET development](../development/index.md)
 *   [**Code documentation**](../apiguide/api/index.html)
 *   [Release change history](Release change history.md)

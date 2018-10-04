@@ -2,7 +2,7 @@
 layout: default
 ---
 
-[Learners](../../../Infer.NET Learners.md) : [Matchbox recommender](../../Mathcbox recommender.md) : [Learner API](../../Matchbox recommender/Learner API.md)
+[Learners](../../../Infer.NET Learners.md) : [Matchbox recommender](../../Matchbox recommender.md) : [Learner API](../../Matchbox recommender/Learner API.md)
 
 ## Training
 

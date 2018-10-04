@@ -44,4 +44,4 @@ Note that you can get simple feedback to the console without using this event by
 
 _Note: In a future release, we plan to extend this event so that is can be used to create custom convergence criteria. In this case, the signature of the event handler may change slightly._
 
-The **[ModelCompiler](../apiguide/api/Microsoft.ML.Probabilistic.ModelCompiler.html)** class provides a pair of events for monitoring compilation. They are called **Compiling** (for when compilation starts) and **Compiled** (for when it finishes). See the code documentation for more details.
+The **[ModelCompiler](../apiguide/api/Microsoft.ML.Probabilistic.Compiler.ModelCompiler.html)** class provides a pair of events for monitoring compilation. They are called **Compiling** (for when compilation starts) and **Compiled** (for when it finishes). See the code documentation for more details.

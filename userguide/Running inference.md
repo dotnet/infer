@@ -38,7 +38,7 @@ The term 'marginal' is a common term in statistics which refers to the operation
 
 ### Creating an inference engine
 
-All inferences in Infer.NET are achieved through the use of an [**InferenceEngine**](../apiguide/api/Microsoft.ML.Probabilistic.InferenceEngine.html) object. When you create this object, you can specify the inference algorithm you wish to use. For example, to create an inference engine that uses Variational Message Passing, you write: 
+All inferences in Infer.NET are achieved through the use of an [**InferenceEngine**](../apiguide/api/Microsoft.ML.Probabilistic.Models.InferenceEngine.html) object. When you create this object, you can specify the inference algorithm you wish to use. For example, to create an inference engine that uses Variational Message Passing, you write: 
 
 ```csharp
 InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
