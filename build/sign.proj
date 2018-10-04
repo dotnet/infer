@@ -11,8 +11,8 @@
     <Message Text="Attempting to sign %(FilesToSign.Identity) with authenticode='%(FilesToSign.Authenticode)'" />
   </Target>
 
-  <!-- <Import Project="$(ToolsDir)MicroBuild.Core.props" />
-  <Import Project="$(ToolsDir)MicroBuild.Core.targets" /> -->
+  <Import Project="$(ToolsDir)MicroBuild.Core.props" />
+  <Import Project="$(ToolsDir)MicroBuild.Core.targets" />
 
   <Target Name="SetSigningProperties">
     <PropertyGroup>
@@ -29,6 +29,10 @@
 
   <Target Name="SignBinaries" Condition="'$(SignType)' == 'real'" DependsOnTargets="GetFilesToSign">
     <CallTarget Targets="SignFiles" />
+  </Target>
+
+  <Target Name="TestSign" Condition="'$(SignType)' == 'test'" DependsOnTargets="GetFilesToSign">
+    <Message Text="Test signing %(FilesToSign.Identity) with authenticode='%(FilesToSign.Authenticode)'" />
   </Target>
 
   <Target Name="GetFilesToSign">
