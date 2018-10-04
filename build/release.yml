@@ -12,20 +12,26 @@ resources:
   
 trigger: none # disable CI build
   
+# Build and test on MacOS
+
 jobs:
-- job: macOS
+- job: macOS # Hosted MacOS agent
   pool:
     vmImage: xcode9-macos10.13
   steps:
   - script: echo Placeholder for macOS build
 
-- job: Linux
+# Build and test on Linux
+
+- job: Linux # Hosted Linux agent
   pool:
     vmImage: ubuntu-16.04
   steps:
   - script: echo Placeholder for Linux build
 
-- job: Windows 
+# Assign assembly versions, build, test and publish versioned assemblies
+
+- job: Windows # Hosted Windows agent, VS 2017
   pool:
     vmImage: vs2017-win2016
 
@@ -67,27 +73,61 @@ jobs:
     condition: eq(variables['BuildConfiguration'], 'Release')
     inputs:
       filePath: build/copyassemblies.sh
-      arguments: ../bin $(BuildConfiguration)
+      arguments: ../asmtmp $(BuildConfiguration)
       workingDirectory: build
 
-  - task: NuGetCommand@2
-    displayName: 'Creating NuGet packages'
-    condition: eq(variables['BuildConfiguration'], 'Release')
-    inputs:
-      command: pack
-      packagesToPack: build/*.nuspec
-      includeSymbols: true
-      buildProperties: version=$(Build.BuildNumber);bin=../bin
-
   - task: CopyFiles@2
-    displayName: 'Copying build artifacts'
+    displayName: 'Copying versioned assemblies'
     condition: eq(variables['BuildConfiguration'], 'Release')
     inputs:
-      sourceFolder: bin
+      sourceFolder: asmtmp
       targetFolder: $(Build.ArtifactStagingDirectory)
 
   - task: PublishBuildArtifacts@1
-    displayName: 'Publishing build artifacts'
+    displayName: 'Publishing versioned assemblies'
     condition: eq(variables['BuildConfiguration'], 'Release')
     inputs:
-      artifactName: 'Everything'
+      artifactName: VersionedAssemblies
+
+# Sign assemblies and packages
+
+  # - task: NuGetCommand@2
+  #   displayName: 'Creating NuGet packages'
+  #   condition: eq(variables['BuildConfiguration'], 'Release')
+  #   inputs:
+  #     command: pack
+  #     packagesToPack: build/*.nuspec
+  #     includeSymbols: true
+  #     buildProperties: version=$(Build.BuildNumber);bin=../bin
+
+- job: Sign 
+  pool:
+    name: MicroBuildV2Pool # For real signing
+
+  steps:
+  # Install MicroBuild plugin
+  - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@1
+    displayName: Install MicroBuild Signing Plugin
+    inputs:
+      signType: '$(SignType)'
+      zipSources: false
+      esrpSigning: true
+    env:
+      TeamName: 'Infer.NET'
+    continueOnError: false
+    condition: and(succeeded(), in(variables.SignType, 'real', 'test'))
+
+  # Download all agent packages from all previous phases
+  - task: DownloadBuildArtifacts@0
+    displayName: Download package assets
+    inputs:
+      artifactName: VersionedAssemblies
+      downloadPath: $(Build.SourcesDirectory)/bin/obj/packages
+
+  # Workaround https://github.com/Microsoft/vsts-tasks/issues/6739
+  - task: CopyFiles@2
+    displayName: Copy package assets to correct folder
+    inputs:
+      sourceFolder: $(Build.SourcesDirectory)/bin/obj/packages/VersionedAssemblies
+      targetFolder: $(Build.SourcesDirectory)/bin/obj/packages  
+
