@@ -100,7 +100,11 @@ jobs:
   #     includeSymbols: true
   #     buildProperties: version=$(Build.BuildNumber);bin=../bin
 
-- job: Sign 
+- job: Sign
+  dependsOn:
+  - Linux
+  - macOS
+  - Windows
   pool:
     name: MicroBuildV2Pool # For real signing
 
