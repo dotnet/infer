@@ -5,9 +5,7 @@ layout: default
 
 ## Structure of generated inference code
 
-Infer.NET generates a C# class for performing inference on your model. By default, the source of this class is placed at: . There are circumstances where it is useful to use this generated code directly, for example, to use a [precompiled inference algorithm](Using a precompiled inference algorithm.md) or to manually modify the message-passing schedule or some other aspect of the code. To help with this, we will now describe the structure of the generated class. Generated source code files also contain full documentation for the class, fields and methods so you can also refer to these directly.
-
-**(Debug/Release)\\\bin\\\GeneratedSource\\\\[ModelName\].cs**. There are circumstances where it is useful to use this generated code directly, for example, to use a [precompiled inference algorithm](Using a precompiled inference algorithm.md) or to manually modify the message-passing schedule or some other aspect of the code. To help with this, we will now describe the structure of the generated class. Generated source code files also contain full documentation for the class, fields and methods so you can also refer to these directly.
+Infer.NET generates a C# class for performing inference on your model. By default, the source of this class is placed at: **(Debug/Release)\\bin\\GeneratedSource\\\[ModelName\].cs**. There are circumstances where it is useful to use this generated code directly, for example, to use a [precompiled inference algorithm](Using a precompiled inference algorithm.md) or to manually modify the message-passing schedule or some other aspect of the code. To help with this, we will now describe the structure of the generated class. Generated source code files also contain full documentation for the class, fields and methods so you can also refer to these directly.
 
 #### The Generated Class
 

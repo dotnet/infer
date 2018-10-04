@@ -15,7 +15,7 @@ layout: default
 
 *   **Building probabilistic models** 
 
-    *   [Model-Based Machine Learning Book](http://mbmlbook.com/)
+    *   Conceptual background: [Model-Based Machine Learning Book](http://mbmlbook.com/)
     *   [The Infer.NET modelling API](The Infer.NET modelling API.md)
         *   [Creating variables](Creating variables.md)
             *   [Variable types and their distributions](Variable types and their distributions.md)
@@ -49,6 +49,7 @@ layout: default
     *   Advanced model building
         *   [Adding attributes to your model](Adding attributes to your model.md)
         *   [The Model Specification Language](The Model Specification Language.md)
+        *   [Transform browser](Transform browser.md)
 
 *   **Running inference on your model**
 
@@ -83,7 +84,7 @@ layout: default
     *   [Adding a new factor and its message operators](How to add a new factor and message operators.md)
     *   [Adding a new constraint](How to add a new constraint.md)
     *   [Modifying the operator search path](Modifying the operator search path.md)
-    *   [KJIT](https://github.com/wittawatj/kernel-ep)
+    *   Automatically computing EP messages: [KJIT](https://github.com/wittawatj/kernel-ep)
 
 *   **Calling Infer.NET from other languages**
 
@@ -112,4 +113,3 @@ layout: default
 *   [Infer.NET development](Infer.NET development.md)
 *   [**Code documentation**](../apiguide/api/index.html)
 *   [Release change history](Release change history.md)
-*   [Resources and References](Resources and References.md)

@@ -60,6 +60,8 @@ This property holds the compiler that the inference engine uses to compile the m
 | **UseParallelForLoops** | If true, instructs the compiler to use multiple cores by emitting parallel 'for' loops rather than normal 'for' loops. | false |
 | **UseSerialSchedules** _(experimental)_ | If true, instructs the compiler to update variables in a sequential order (determined by Sequential attributes attached to ranges). See the [Difficulty versus ability](Difficulty versus ability.md) example. <br /><br /> _This is an experimental feature and subject to change in future releases._ | true |
 | **AllowSerialInitializers** _(experimental)_ | Controls the schedule when UseSerialSchedules=true. Set this to false to reduce memory in exchange for more computation. Useful for large datasets that would otherwise run out of memory. <br /><br /> _This is an experimental feature and subject to change in future releases._​ | true |​
+| **BrowserMode** | Controls when the [transform browser](Transform browser.md) is shown.  | Never |
+| **CompilerChoice** | Selects the compiler used to compile the generated code: Roslyn or CodeDom.Compiler. | CodeDom on .NET framework 4.6.1 or higher, otherwise Roslyn. |
 
 #### DefaultEngine
 
@@ -89,13 +91,15 @@ engine.Group(b, c);
 var marg = engine.Infer<Gaussian>(c);
 ```
 
-#### ModelName
+#### ModelName and ModelNamespace
 
-Allows a name to be specified for the model, which is used in the class name of the generated code. Defaults to "Model".
+Allows a name to be specified for the model, which is used in the class name of the generated code. `ModelName` defaults to "Model" and `ModelNamespace` defaults to "Models".
 
 ```csharp
 // Change the model name  
 engine.ModelName = "MyMixtureModel";
+// Change the model namespace
+engine.ModelNamespace = "MyNamespace";
 ```
 
 #### NumberOfIterations
@@ -209,4 +213,14 @@ If this flag is set to true, any warnings encountered during inference will be p
 ```csharp
 // Do not print out warnings  
 engine.ShowWarnings = false;
+```
+
+#### Visualizer
+
+This is a global setting that provides the implementation of ShowFactorGraph, ShowSchedule, and BrowserMode for the platform.
+Defaults to `DefaultVisualizer`.
+
+```csharp
+// Custom visualization for the Windows platform
+InferenceEngine.Visualizer = new WindowsVisualizer();
 ```

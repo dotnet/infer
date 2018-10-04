@@ -5,7 +5,7 @@ layout: default
 
 ## Mono Support
 
-This version of Infer.NET has been tested with Mono version 4.6.2 on Ubuntu 17.10.
+This version of Infer.NET has been tested with Mono version 5.0.
 
 The following examples will not build or run on Mono because they require Windows Presentation Foundation (WPF)
 

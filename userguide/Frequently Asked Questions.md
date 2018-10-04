@@ -22,17 +22,17 @@ Common questions and answers about the Infer.NET framework.
     Please cite using the following text:
 
     T. Minka, J. Winn, J. Guiver, Y. Zaykov, D. Fabian, and J. Bronskill  
-    Infer.NET 2.8, Microsoft Research Cambridge, 2018. 
-    [http://research.microsoft.com/infernet](http://research.microsoft.com/infernet)
+    Infer.NET 0.3, Microsoft Research Cambridge, 2018. 
+    [http://dotnet.github.io/infer](http://dotnet.github.io/infer)
 
     or using the following BibTeX:
 
     ```
     @misc{InferNET18,
     author = "Minka, T. and Winn, J.M. and Guiver, J.P. and Zaykov, Y. and Fabian, D. and Bronskill, J.",
-    title = {/{Infer.NET 2.8}},
+    title = {/{Infer.NET 0.3}},
     year = 2018,
-    note = {Microsoft Research Cambridge. http://research.microsoft.com/infernet}
+    note = {Microsoft Research Cambridge. http://dotnet.github.io/infer}
     }
     ```
 
@@ -44,7 +44,7 @@ Common questions and answers about the Infer.NET framework.
 
 *   **Do I have to use Microsoft Windows?**  
 
-    No. Infer.NET works great under the [Mono framework](http://www.mono-project.com/). 
+    No. Infer.NET works great on Linux, macOS, or any platform that supports .NET Standard 2.0.
 
 *   **Can I use Infer.NET in a commercial application?**
 
@@ -73,7 +73,7 @@ Common questions and answers about the Infer.NET framework.
 
 *   **What models can Infer.NET _not_ handle?**
 
-    Non-parametric models, e.g. Dirichlet processes (except for Gaussian Processes which are supported).
+    Non-parametric models such as Dirichlet processes are not supported.  However, Gaussian Processes are supported.
 
 
 ### Inference

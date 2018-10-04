@@ -49,7 +49,7 @@ InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
 Console.WriteLine("mean=" + engine.Infer(mean));Console.WriteLine("prec=" + engine.Infer(precision));
 ```
 
-Run this example, take the generated output code (it will be named **Model_VMP.cs** unless you set the **ModelName** property on the engine) and add it to your project. This instance contains the compiled model class **Model_VMP**.
+Run this example, take the generated output code (it will be named **Model_VMP.cs** unless you set the **ModelName** property on the engine) and add it to your project. This instance contains the compiled model class **Models.Model_VMP**.
 
 There are two ways to call the compiled inference algorithm from your code. The easiest way to use this class is through its `IGeneratedAlgorithm` interface as described in [Controlling how inference is performed](Controlling how inference is performed.md). Alternatively you can use the strongly-typed model-specific properties and methods as documented below.
 

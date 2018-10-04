@@ -5,6 +5,15 @@ layout: default
 
 ## Release change history
 
+#### 0.3 (4th October 2018)
+
+*   Open source release on GitHub, with MIT license.
+*   The Infer.NET Compiler and Runtime libraries follow .NET Standard 2.0, making them useable on Linux (without installing Mono) and macOS.  On Windows, Infer.NET requires .NET framework version 4.6.1 or .NET Core 2.0, as explained at [.NET implementation support](https://docs.microsoft.com/en-us/dotnet/standard/net-standard).
+*   The namespace prefix is now Microsoft.ML.Probabilistic, and many classes have changed their namespaces.
+*   Graph visualization differs between platforms and is controlled by `InferenceEngine.Visualizer`.  By default, graphs are visualized using [GraphViz](http://www.graphviz.org/) in a web browser.  On Windows, users can select the `WindowsVisualizer` which visualizes graphs using [MSAGL](https://github.com/microsoft/automatic-graph-layout).
+*   Added `InferenceEngine.Compiler.BrowserMode` for viewing the steps of the compiler.  See [Transform browser](Transform browser.md).
+*   Added `InferenceEngine.ModelNamespace` for customizing the namespace of the generated code.  The default namespace of generated code is now `Models`.
+
 #### 2.7 (19th March 2018)
 
 *   Changed `Variable.InitialiseTo` to have a larger effect on the message schedule. This may change the runtime behavior of some models.
