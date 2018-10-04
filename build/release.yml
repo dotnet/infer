@@ -21,7 +21,7 @@ jobs:
 
 - job: Linux
   pool:
-    vmImage: ubuntu-1604
+    vmImage: ubuntu-16.04
   steps:
   - script: echo Placeholder for Linux build
 
