@@ -148,8 +148,8 @@ jobs:
   - task: NuGetCommand@2
     displayName: Install MicroBuild.Core
     inputs:
-      command: install 
-      arguments: MicroBuild.Core
+      command: custom 
+      arguments: 'install MicroBuild.Core'
 
   - task: MSBuild@1
     displayName: Sign Windows Binaries
