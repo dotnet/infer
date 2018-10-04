@@ -135,13 +135,13 @@ jobs:
     condition: in(variables.SignType, 'real', 'test')
 
   - task: NuGetCommand@2
-      displayName: 'Creating NuGet packages'
-      inputs:
-        command: pack
-        packagesToPack: build/*.nuspec
-        includeSymbols: true
-        buildProperties: version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages
-        packDestination: $(Build.SourcesDirectory)/bin/packages
+    displayName: 'Creating NuGet packages'
+    inputs:
+      command: pack
+      packagesToPack: build/*.nuspec
+      includeSymbols: true
+      buildProperties: version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages
+      packDestination: $(Build.SourcesDirectory)/bin/packages
 
   - task: MSBuild@1
     displayName: Sign Packages
