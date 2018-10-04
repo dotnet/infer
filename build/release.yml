@@ -28,9 +28,9 @@ jobs:
       dotnet build --configuration $(BuildConfiguration)Core Infer2.sln
     displayName: Build Solution
       
-  # - template: netcoretest-fast.yml
-  #   parameters:
-  #     Configuration: '$(buildConfiguration)Core'
+  - template: netcoretest-fast.yml
+    parameters:
+      Configuration: '$(BuildConfiguration)Core'
 
 # Build and test on Linux
 
@@ -47,9 +47,9 @@ jobs:
       dotnet build --configuration $(BuildConfiguration)Core Infer2.sln
     displayName: Build Solution
 
-  # - template: netcoretest-fast.yml
-  #   parameters:
-  #     Configuration: '$(buildConfiguration)Core'
+  - template: netcoretest-fast.yml
+    parameters:
+      Configuration: '$(BuildConfiguration)Core'
 
 # Assign assembly versions, build, test and publish versioned assemblies
 
@@ -82,9 +82,9 @@ jobs:
       clean: true
       configuration: $(BuildConfiguration)
 
-  # - template: vstest-fast.yml
-  #   parameters:
-  #     Platform: 'x64'
+  - template: vstest-fast.yml
+    parameters:
+      Platform: 'x64'
 
   - task: Bash@3
     displayName: 'Gathering built assemblies'
@@ -155,7 +155,7 @@ jobs:
     displayName: Sign Windows Binaries
     inputs:
       solution: build/sign.proj
-      msbuildArguments: /p:SignType=$(SignType) /verbosity:diagnostic
+      msbuildArguments: /p:SignType=$(SignType) /verbosity:detailed
       msbuildVersion: 14.0
     condition: in(variables.SignType, 'real', 'test')
 
