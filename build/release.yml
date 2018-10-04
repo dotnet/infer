@@ -91,15 +91,6 @@ jobs:
 
 # Sign assemblies and packages
 
-  # - task: NuGetCommand@2
-  #   displayName: 'Creating NuGet packages'
-  #   condition: eq(variables['BuildConfiguration'], 'Release')
-  #   inputs:
-  #     command: pack
-  #     packagesToPack: build/*.nuspec
-  #     includeSymbols: true
-  #     buildProperties: version=$(Build.BuildNumber);bin=../bin
-
 - job: Sign
   dependsOn:
   - Linux
@@ -135,3 +126,37 @@ jobs:
       sourceFolder: $(Build.SourcesDirectory)/bin/obj/packages/VersionedAssemblies
       targetFolder: $(Build.SourcesDirectory)/bin/obj/packages  
 
+  - task: MSBuild@1
+    displayName: Sign Windows Binaries
+    inputs:
+      solution: build/sign.proj
+      msbuildArguments: /p:SignType=$(SignType)
+      msbuildVersion: 15.0
+    condition: in(variables.SignType, 'real', 'test')
+
+  - task: NuGetCommand@2
+      displayName: 'Creating NuGet packages'
+      inputs:
+        command: pack
+        packagesToPack: build/*.nuspec
+        includeSymbols: true
+        buildProperties: version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages
+        packDestination: $(Build.SourcesDirectory)/bin/packages
+
+  - task: MSBuild@1
+    displayName: Sign Packages
+    inputs:
+      solution: build/sign.proj
+      msbuildArguments: /p:SignType=$(SignType) /p:SignNugetPackages=true
+      msbuildVersion: 15.0
+    condition: in(variables.SignType, 'real', 'test')
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publishing signed packages'
+    inputs:
+      artifactName: SignedPackages
+      pathtoPublish: $(Build.SourcesDirectory)/bin/packages
+
+  - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
+    displayName: 'Clean up and send Telemetry'
+    condition: always()
