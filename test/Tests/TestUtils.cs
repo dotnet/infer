@@ -273,7 +273,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         internal static MethodInfo[] FindTestMethods(Assembly assembly, string filter = null)
         {
             var methods = assembly.GetTypes().SelectMany(t => t.GetMethods()).ToArray();
-            var excludeCategories = new[] { "BadTest", "OpenBug", "CompilerOptionsTest" };
+            var excludeCategories = new[] { "BadTest", "OpenBug", "CompilerOptionsTest", "x86" };
             var testMethods = methods.Where(method =>
             {
                 if (!method.GetCustomAttributes().Any(attr => attr is FactAttribute)) return false;
