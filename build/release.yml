@@ -145,7 +145,7 @@ jobs:
       targetFolder: $(Build.SourcesDirectory)/bin/obj/packages  
 
   # Install MicroBuild.Core
-  - task: NuGet
+  - task: NuGetCommand@2
     displayName: Install MicroBuild.Core
     inputs:
       command: install
