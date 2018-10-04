@@ -149,7 +149,7 @@ jobs:
     displayName: Install MicroBuild.Core
     inputs:
       command: install 
-      arguments: MicroBuild.Core -OutputDirectory Tools
+      arguments: MicroBuild.Core
 
   - task: MSBuild@1
     displayName: Sign Windows Binaries
