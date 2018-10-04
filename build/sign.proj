@@ -4,7 +4,7 @@
     <PackageAssetsPath>$(RepoRoot)bin/obj/packages/</PackageAssetsPath>
     <PackageOutputPath>$(RepoRoot)bin/packages/</PackageOutputPath>
     <IntermediateOutputRootPath>$(RepoRoot)bin/obj/Release/</IntermediateOutputRootPath>
-    <MicroBuildToolsPath>$(RepoRoot)MicroBuild.Core.0.3.0\build</MicroBuildToolsPath>
+    <MicroBuildToolsPath>$(RepoRoot)MicroBuild.Core.0.3.0\build\</MicroBuildToolsPath>
   </PropertyGroup>
 
   <!-- This will be overridden if we're building with MicroBuild. -->
