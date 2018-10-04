@@ -14,14 +14,20 @@ trigger: none # disable CI build
   
 jobs:
 - job: macOS
+  pool:
+    vmImage: xcode9-macos10.13
   steps:
   - script: echo Placeholder for macOS build
 
 - job: Linux
+  pool:
+    vmImage: ubuntu-1604
   steps:
   - script: echo Placeholder for Linux build
 
 - job: Windows 
+  pool:
+    vmImage: vs2017-win2016
 
   steps:
   - task: Bash@3
