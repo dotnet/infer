@@ -58,6 +58,36 @@ th {
 	padding-right: 10px;
 	padding-bottom: 20px;
 }
+.teamphoto {
+	display:grid;
+	grid-template-columns: 55% 0.5% 44.5%;
+	grid-template-rows: 90% 10%;
+
+}
+.teamphoto-1 {
+	grid-column-start: 1;
+	grid-row-start: 1;
+	grid-column-end: 1;
+	grid-row-end: 1;
+}
+.teamphoto-2 {
+	grid-column-start: 3;
+	grid-row-start: 1;
+	grid-column-end: 3;
+	grid-row-end: 1;
+}
+.teamphoto-text-1 {
+	grid-column-start: 1;
+	grid-row-start: 2;
+	grid-column-end: 1;
+	grid-row-end: 2;
+}
+.teamphoto-text-2 {
+	grid-column-start: 3;
+	grid-row-start: 2;
+	grid-column-end: 3;
+	grid-row-end: 2;
+}
 @media screen and (max-width: 1083px) {
 	#mainContent {
     padding-left: 20px;
