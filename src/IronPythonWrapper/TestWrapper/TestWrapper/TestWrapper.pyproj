@@ -6,7 +6,7 @@
     <ProjectGuid>{9234127e-fbc0-4587-bad9-65727458cc0f}</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>TestWrapper.py</StartupFile>
-    <SearchPath>..\..\..\Compiler\bin\Release\;..\..\InferNetExamples\InferNetExamples</SearchPath>
+    <SearchPath>..\..\..\Compiler\bin\Release\;..\..\InferNetExamples\InferNetExamples;..\..\Compiler</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <InterpreterId>IronPython|2.7-32</InterpreterId>
     <LaunchProvider>IronPython (.NET) launcher</LaunchProvider>

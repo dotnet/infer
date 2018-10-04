@@ -29,6 +29,6 @@ def gaussian_ranges():
     x.ObservedValue = data
 
     # The inference
-    ie = InferenceEngine(VariationalMessagePassing())
+    ie = InferenceEngine(Algorithms.VariationalMessagePassing())
     print "mean = ", ie.Infer(mean)
     print "prec = ", ie.Infer(precision)
