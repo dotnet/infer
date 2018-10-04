@@ -38,12 +38,16 @@ import Microsoft.ML.Probabilistic
 import Microsoft.ML.Probabilistic.Models  
 import Microsoft.ML.Probabilistic.Distributions  
 import Microsoft.ML.Probabilistic.Factors  
-import Microsoft.ML.Probabilistic.Math# Import all classes from above namespaces  
+import Microsoft.ML.Probabilistic.Math
+
+# Import all classes from above namespaces  
 from Microsoft.ML.Probabilistic import *  
 from Microsoft.ML.Probabilistic.Distributions import *  
 from Microsoft.ML.Probabilistic.Models import *  
 from Microsoft.ML.Probabilistic.Factors import *  
-from Microsoft.ML.Probabilistic.Math import *# Optionally import the IronPythonWrapper and associated classes  
+from Microsoft.ML.Probabilistic.Math import *
+
+# Optionally import the IronPythonWrapper and associated classes  
 import IronPythonWrapper  
 from IronPythonWrapper import *
 ```

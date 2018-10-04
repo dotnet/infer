@@ -45,7 +45,7 @@ There are often multiple ways of using Infer.NET to solve a particular problem. 
 
     If you are running on a 64-bit machine, configure the garbage collector so that it does not run concurrently and so that it does not run in server mode. You can do this by adding the following lines to your application's app.config file:  
     
-    ```html
+    ```xml
     <configuration>  
       <runtime>  
         <gcServer  enabled="false" />  

@@ -23,7 +23,7 @@ def bayes_point_machine():
  # The model  
  len = Variable.New[int]()  
  j = Range(len)  
-x = Variable.Array[Vector](j)  
+ x = Variable.Array[Vector](j)  
  y = Variable.Array[bool](j)  
  w0 = VectorGaussian(Vector.Zero(3), PositiveDefiniteMatrix.Identity(3))  
  w = Variable.Random[Vector](w0)  
