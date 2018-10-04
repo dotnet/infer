@@ -19,7 +19,18 @@ jobs:
   pool:
     vmImage: xcode9-macos10.13
   steps:
-  - script: echo Placeholder for macOS build
+  - task: DotNetCoreInstaller@0
+    inputs:
+      packageType: 'sdk' 
+      version: '2.1.202' 
+
+  - script: |
+      dotnet build --configuration $(BuildConfiguration)Core Infer2.sln
+    displayName: Build Solution
+      
+  # - template: netcoretest-fast.yml
+  #   parameters:
+  #     Configuration: '$(buildConfiguration)Core'
 
 # Build and test on Linux
 
@@ -27,7 +38,14 @@ jobs:
   pool:
     vmImage: ubuntu-16.04
   steps:
-  - script: echo Placeholder for Linux build
+  - task: DotNetCoreInstaller@0
+    inputs:
+      packageType: 'sdk' 
+      version: '2.1.202' 
+      
+  - script: |
+      dotnet build --configuration $(BuildConfiguration)Core Infer2.sln
+    displayName: Build Solution
 
 # Assign assembly versions, build, test and publish versioned assemblies
 
