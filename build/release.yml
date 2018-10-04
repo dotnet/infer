@@ -130,7 +130,7 @@ jobs:
     displayName: Sign Windows Binaries
     inputs:
       solution: build/sign.proj
-      msbuildArguments: /p:SignType=$(SignType)
+      msbuildArguments: /p:SignType=$(SignType) /verbosity:detailed
       msbuildVersion: 15.0
     condition: in(variables.SignType, 'real', 'test')
 
@@ -147,7 +147,7 @@ jobs:
     displayName: Sign Packages
     inputs:
       solution: build/sign.proj
-      msbuildArguments: /p:SignType=$(SignType) /p:SignNugetPackages=true
+      msbuildArguments: /p:SignType=$(SignType) /p:SignNugetPackages=true /verbosity:detailed
       msbuildVersion: 15.0
     condition: in(variables.SignType, 'real', 'test')
 
