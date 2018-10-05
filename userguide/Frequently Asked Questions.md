@@ -15,7 +15,7 @@ Common questions and answers about the Infer.NET framework.
 
 *   **Who is behind Infer.NET?**
 
-    Infer.NET is being developed in the Machine Learning and Perception group at Microsoft Research Cambridge. The framework was conceived and designed by Tom Minka and John Winn who remain technical leaders, principal researchers, and key developers on the project. Other contributors over the years include John Guiver, Anitha Kannan, David Knowles, Sam Webster, Yordan Zaykov, Boris Yangel, Alex Spengler, Dany Fabian, and John Bronskill.
+    Infer.NET is being developed in the Machine Learning and Perception group at Microsoft Research Cambridge. The framework was conceived and designed by Tom Minka and John Winn who remain technical leaders, principal researchers, and key developers on the project. Other contributors over the years include John Guiver, Anitha Kannan, David Knowles, Sam Webster, Yordan Zaykov, Boris Yangel, Alex Spengler, Dany Fabian, Martin Kukla, Pavel Myshkov, Sergey Berezin, Elena Pochernina, Dmitry Kats, Mikhail Nikolaev, and John Bronskill.
 
 *   **How do I cite Infer.NET?**
 
@@ -73,7 +73,7 @@ Common questions and answers about the Infer.NET framework.
 
 *   **What models can Infer.NET _not_ handle?**
 
-    Non-parametric models such as Dirichlet processes are not supported.  However, Gaussian Processes are supported.
+    Non-parametric models such as Dirichlet processes are not supported.  However, Gaussian Processes are supported.  Infer.NET requires a model to be defined by a sampling process.  It does not allow a model to be defined by a custom probability density function.
 
 
 ### Inference
