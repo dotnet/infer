@@ -278,7 +278,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 if (!method.GetCustomAttributes().Any(attr => attr is FactAttribute)) return false;
                 var categories = TraitHelper.GetTraits(method)
-                    .Where(trait => trait.Key == "Category")
+                    .Where(trait => trait.Key == "Category" || trait.Key == "Platform")
                     .Select(trait => trait.Value)
                     .ToArray();
                 return !categories.Any(excludeCategories.Contains) && (filter == null || categories.Contains(filter));
