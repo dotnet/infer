@@ -20,6 +20,7 @@ import Microsoft.ML.Probabilistic.Distributions
 import Microsoft.ML.Probabilistic.Collections
 import Microsoft.ML.Probabilistic.Factors
 import Microsoft.ML.Probabilistic.Math
+import Microsoft.ML.Probabilistic.Algorithms
 from Microsoft.ML.Probabilistic import * 
 
 #---------import all classes and methods from above namespaces-----------
@@ -28,6 +29,9 @@ from Microsoft.ML.Probabilistic.Models import *
 from Microsoft.ML.Probabilistic.Collections import *
 from Microsoft.ML.Probabilistic.Factors import *
 from Microsoft.ML.Probabilistic.Math import *
+from Microsoft.ML.Probabilistic.Algorithms import *
+
+InferenceEngine.DefaultEngine.Compiler.CompilerChoice = Microsoft.ML.Probabilistic.Compiler.CompilerChoice.Roslyn
 
 #----------------------------------------------------------------------------
 #----------------  Variable array helper methos   ---------------------------

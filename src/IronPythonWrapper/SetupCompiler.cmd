@@ -1,0 +1,1 @@
+dotnet publish -c ReleaseCore -o ../IronPythonWrapper/Compiler ../Compiler/Compiler.csproj
