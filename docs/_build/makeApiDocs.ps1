@@ -13,15 +13,13 @@ $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 $sourceDirectory = [IO.Path]::GetFullPath((join-path $scriptDir '../../'))
 $destinationDirectory = [IO.Path]::GetFullPath((join-path $scriptDir '../../InferNet_Copy_Temp/'))
-$excludes = @("InferNet_Copy_Temp", "docs", "packages", "_site", "build", "apiguide-tmp", ".git")
 
-Write-Host "Copy subfolders to InferNet_Copy_Temp directory"
-Get-ChildItem $sourceDirectory -Directory | 
-    Where-Object{$_.Name -notin $excludes} | 
-    Copy-Item -Destination $destinationDirectory -Recurse -Force
+Write-Host $sourceDirectory
+Write-Host "Copy src to InferNet_Copy_Temp directory"
+Copy-Item -Path "$sourceDirectory/src/" -Destination "$destinationDirectory/src/" -Recurse -Force
 
 Write-Host "Copy root files to InferNet_Copy_Temp directory"
-Get-ChildItem -Path $sourceDirectory -Include "*.*" | Copy-Item -Destination $destinationDirectory -Force 
+Get-ChildItem -Path $sourceDirectory -Filter "*.*" | Copy-Item -Destination $destinationDirectory -Force 
 
 
 Write-Host "Build PrepareSource project"

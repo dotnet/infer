@@ -1172,7 +1172,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Log-probability that all distributions in the list would produce the same value.
         /// </summary>
         /// <param name="dists"></param>
-        /// <returns><c>sum_x prod_i dists[i](x)</c></returns>
+        /// <returns><c>sum_x prod_i dists[i]&#8203;(x)</c></returns>
         public static double LogInnerProduct<T>(IList<T> dists)
             where T : CanGetLogAverageOf<T>, SettableToProduct<T>, ICloneable
         {
