@@ -2,16 +2,15 @@
 # The .NET Foundation licenses this file to you under the MIT license.
 # See the LICENSE file in the project root for more information.
 
-# PR build and test Infer.NET using .NET Core
+# Nightly build using .NET Core
+
+name: 0.3.$(Date:yyMM).$(Date:dd)$(Rev:rr)
 
 resources:
 - repo: self
   clean: true
   
 trigger: none # disable CI build
-
-variables:
-  buildConfiguration: 'Release'
 
 steps:
 - task: DotNetCoreInstaller@0
@@ -20,9 +19,9 @@ steps:
     version: '2.1.202' 
 
 - script: |
-    dotnet build /p:DisableImplicitNuGetFallbackFolder=true --configuration $(buildConfiguration)Core Infer2.sln
+    dotnet build /p:DisableImplicitNuGetFallbackFolder=true  --configuration $(BuildConfiguration)Core Infer2.sln
   displayName: Build Solution
     
 - template: netcoretest-fast.yml
   parameters:
-    Configuration: '$(buildConfiguration)Core'
+    Configuration: '$(BuildConfiguration)Core'
