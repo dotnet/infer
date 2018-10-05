@@ -12,6 +12,7 @@ and many others.
 
 - [Build Status](#build-status)
 - [Installation](#installation)
+- [Documentation](#documentation)
 - [Structure of Repository](#structure-of-repository)
 - [Build and Test](#build-and-test)
     - [Windows](##windows)
@@ -57,6 +58,10 @@ There currently are [four maintained Infer.NET nuget packages](https://www.nuget
 1. `Microsoft.ML.Probabilistic.Compiler` contains the Infer&#46;NET Compiler, which takes model descriptions written using the Infer&#46;NET API and converts them into inference code. It also contains utilities for the visualization of the generated code.
 1. `Microsoft.ML.Probabilistic.Learners` contains complete machine learning applications including a classifier and a recommender system.
 1. `Microsoft.ML.Probabilistic.Visualizers.Windows` contains an alternative .NET Framework and Windows specific set of visualization tools for exploring and analyzing models.
+
+## Documentation
+
+Documentation can be found on the [Infer&#46;NET website](https://dotnet.github.io/infer/userguide/).
 
 ## Structure of Repository
 
