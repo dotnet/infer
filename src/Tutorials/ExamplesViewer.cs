@@ -131,10 +131,17 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                     tempBox.SelectionTabs = sourceTextBox.SelectionTabs;
                     EfficientTextBox etb = new EfficientTextBox(tempBox);
                     StreamReader sr = new StreamReader(filename);
+                    bool isHeader = true;
                     while (true)
                     {
                         string line = sr.ReadLine();
                         if (line == null) break;
+                        if (isHeader)
+                        {
+                            string trimmed = line.TrimStart();
+                            if (trimmed.Length == 0 || trimmed.StartsWith("// ")) continue;
+                            else isHeader = false;
+                        }
                         PrintWithSyntaxHighlighting(etb, line);
                     }
                     etb.Flush();
@@ -257,7 +264,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 }
 
                 // If not, look in the release folder. This allows running
-                // the example browser from the bin folder in the release. If the
+                // the examples browser from the bin folder in the release. If the
                 // release folders change, this must be updated.
                 var samplesPath = Path.Combine(parentDirectory.ToString(), "Samples", "C#", "ExamplesBrowser", fileName);
                 if (File.Exists(samplesPath))
@@ -760,7 +767,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         /// </summary>
         public void RunBrowser()  // Must not be called "Run"
         {
-            Microsoft.ML.Probabilistic.Compiler.Visualizers.WindowsVisualizer.FormHelper.RunInForm(this, "Infer.NET example browser", false);
+            Compiler.Visualizers.WindowsVisualizer.FormHelper.RunInForm(this, "Infer.NET Examples Browser", false);
         }
 
         private void timingsCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -785,7 +792,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
 
         private void browserCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            InferenceEngine.DefaultEngine.Compiler.BrowserMode = browserCheckBox.Checked ? Microsoft.ML.Probabilistic.Compiler.BrowserMode.Always : Microsoft.ML.Probabilistic.Compiler.BrowserMode.OnError;
+            InferenceEngine.DefaultEngine.Compiler.BrowserMode = browserCheckBox.Checked ? Compiler.BrowserMode.Always : Compiler.BrowserMode.OnError;
         }
 
         private void scheduleCheckBox_CheckedChanged(object sender, EventArgs e)
