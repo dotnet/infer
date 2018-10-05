@@ -15,11 +15,17 @@ layout: default
 *   [Graph library](Graph library.md)
 *   [Cursor arrays](Cursor arrays.md)
 *   [Distributed inference](Distributed inference_2.md)
-*   [Distributed inference API](Distributed inference API.md)
-*   [Estimating computational cost](Estimating computational cost.md)
+*   [Gate computations](Gate computations.md)
 
 ### Issues
 
 *   [Indexing arrays by observed arrays - issues](Indexing arrays by observed arrays - issues.md)
 *   [Usability issues - issues which impact the usability of Infer.NET](Usability issues.md)
 *   [Efficiency](Efficiency of Infer.NET for the Bayes Point Machine.md)
+
+### Proposals
+
+*   [Distributed inference API](Distributed inference API.md)
+*   [Estimating computational cost](Estimating computational cost.md)
+*   [Polymorphic random variables](Polymorphic random variables.md)
+

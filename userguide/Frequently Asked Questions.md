@@ -73,8 +73,9 @@ Common questions and answers about the Infer.NET framework.
 
 *   **What models can Infer.NET _not_ handle?**
 
-    Non-parametric models such as Dirichlet processes are not supported.  However, Gaussian Processes are supported.  Infer.NET requires a model to be defined by a sampling process.  It does not allow a model to be defined by a custom probability density function.
-
+    * Non-parametric models such as Dirichlet processes are not supported.  However, Gaussian Processes are supported.
+    * Infer.NET requires a model to be defined by a sampling process.  It does not allow a model to be defined by a custom probability density function.
+    * Infer.NET does not support models that perform inference internally, i.e. nested inference.  This limits its ability to automatically search over the space of models, as explained below.
 
 ### Inference
 

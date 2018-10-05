@@ -5,7 +5,7 @@ layout: default
 
 ## Release change history
 
-#### 0.3 (4th October 2018)
+#### 0.3 (5th October 2018)
 
 *   Open source release on GitHub, with MIT license.
 *   The Infer.NET Compiler and Runtime libraries follow .NET Standard 2.0, making them useable on Linux (without installing Mono) and macOS.  On Windows, Infer.NET requires .NET framework version 4.6.1 or .NET Core 2.0, as explained at [.NET implementation support](https://docs.microsoft.com/en-us/dotnet/standard/net-standard).
