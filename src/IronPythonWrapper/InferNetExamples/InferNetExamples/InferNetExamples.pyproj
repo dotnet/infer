@@ -6,7 +6,7 @@
     <ProjectGuid>{44d352de-299b-4409-9371-949ac48b4225}</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>InferNetExamples.py</StartupFile>
-    <SearchPath>..\..\..\Compiler\bin\Release</SearchPath>
+    <SearchPath>..\..\Compiler</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <InterpreterId>IronPython|2.7-32</InterpreterId>
     <LaunchProvider>IronPython (.NET) launcher</LaunchProvider>
@@ -17,6 +17,7 @@
     <SccProvider>SAK</SccProvider>
     <SccAuxPath>SAK</SccAuxPath>
     <SccLocalPath>SAK</SccLocalPath>
+    <DebugStdLib>False</DebugStdLib>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
