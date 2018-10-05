@@ -91,7 +91,7 @@ Documentation can be found on the [Infer&#46;NET website](https://dotnet.github.
 
   * `FSharpWrapper` is a wrapper project that hides some of the generic constructs in the Infer&#46;NET API allowing simpler calls to the Infer&#46;NET API from standard F#.
 
-  * `IronPythonWrapper` contains wrapper for calling Infer&#46;NET from the [IronPython](https://ironpython.net/) programming language and tests for the wrapper. Please refer to [README.md](IronPythonWrapper/README.md) for more information.
+  * `IronPythonWrapper` contains wrapper for calling Infer&#46;NET from the [IronPython](https://ironpython.net/) programming language and tests for the wrapper. Please refer to [README.md](src/IronPythonWrapper/README.md) for more information.
 
   * `Learners` folder contains Visual Studio projects for complete machine learning applications including classification and recommendation. You can read more about Learners [here](https://dotnet.github.io/infer/userguide/Infer.NET%20Learners.html).
 
