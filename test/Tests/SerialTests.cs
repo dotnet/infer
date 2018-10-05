@@ -2870,8 +2870,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        [Trait("Category", "OpenBug")]
         public void EndCoupledChainsTest2()
         {
+            //problem appears, if OptimiseInferenceCode == false,
+            //so this test can't be run from TestAllCompilerOptions
+            InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = false;
+
             EndCoupledChains2(true);
             EndCoupledChains2(false);
         }
@@ -2971,7 +2976,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 maxError = System.Math.Max(maxError, System.Math.Max(aError, bError));
             }
             Console.WriteLine("maxError = {0}", maxError);
-            Assert.True(maxError < 1e-10);
+            Assert.True(maxError < 1e-10, $"Error was {maxError}");
         }
 
         [Fact]
