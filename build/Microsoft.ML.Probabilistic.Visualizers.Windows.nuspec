@@ -4,7 +4,6 @@
     <id>Microsoft.ML.Probabilistic.Visualizers.Windows</id>
     <version>$version$</version>
     <authors>Microsoft</authors>
-    <owners>Microsoft</owners>
     <licenseUrl>https://github.com/dotnet/infer/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://dotnet.github.io/infer</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/dotnet/infer/master/docs/images/infernet.png</iconUrl>
