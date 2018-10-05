@@ -19,11 +19,20 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Numbers in increasing order.
         /// </summary>
-        private double[] quantiles;
+        private readonly double[] quantiles;
+        /// <summary>
+        /// Gaussian approximation of the lower tail.
+        /// </summary>
+        Gaussian lowerGaussian;
+        /// <summary>
+        /// Gaussian approximation of the upper tail.
+        /// </summary>
+        Gaussian upperGaussian;
 
         private InnerQuantiles(int quantileCount)
         {
             this.quantiles = new double[quantileCount];
+            CacheGaussians();
         }
 
         public InnerQuantiles(int quantileCount, CanGetQuantile canGetQuantile) : this(quantileCount)
@@ -32,6 +41,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 this.quantiles[i] = canGetQuantile.GetQuantile((i + 1.0) / (quantileCount + 1.0));
             }
+            CacheGaussians();
         }
 
         public override string ToString()
@@ -56,6 +66,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public double GetProbLessThan(double x)
         {
+            if (x < quantiles[0])
+            {
+                return lowerGaussian.GetProbLessThan(x);
+            }
+            int n = quantiles.Length;
+            if (x > quantiles[n - 1])
+            {
+                return upperGaussian.GetProbLessThan(x);
+            }
             return GetProbLessThan(x, quantiles);
         }
 
@@ -70,20 +89,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             A.SetToLeastSquares(X, Z);
             mean = A[0];
             deviation = A[1];
-        }
-
-        private static double GetGaussianQuantileRank(double x, double x0, double p0, double x1, double p1)
-        {
-            double mean, stddev;
-            GetGaussianFromQuantiles(x0, p0, x1, p1, out mean, out stddev);
-            return MMath.NormalCdf((x - mean) / stddev);
-        }
-
-        private static double GetGaussianQuantile(double probability, double x0, double p0, double x1, double p1)
-        {
-            double mean, stddev;
-            GetGaussianFromQuantiles(x0, p0, x1, p1, out mean, out stddev);
-            return MMath.NormalCdfInv(probability) * stddev + mean;
         }
 
         /// <summary>
@@ -120,6 +125,60 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return (index + frac) / (n + 1);
         }
 
+        private void CacheGaussians()
+        {
+            lowerGaussian = GetLowerGaussian(quantiles);
+            upperGaussian = GetUpperGaussian(quantiles);
+        }
+
+        private static Gaussian GetLowerGaussian(IReadOnlyList<double> quantiles)
+        {
+            int n = quantiles.Count;
+            // find the next quantile
+            int i = 1;
+            while (i < n && quantiles[i] == quantiles[0])
+            {
+                i++;
+            }
+            if (i == n)
+            {
+                // all quantiles are equal
+                return Gaussian.PointMass(quantiles[0]);
+            }
+            else
+            {
+                double p0 = 1.0 / (n + 1);
+                double p1 = (i + 1.0) / (n + 1);
+                double mean, stddev;
+                GetGaussianFromQuantiles(quantiles[0], p0, quantiles[i], p1, out mean, out stddev);
+                return Gaussian.FromMeanAndVariance(mean, stddev * stddev);
+            }
+        }
+
+        private static Gaussian GetUpperGaussian(IReadOnlyList<double> quantiles)
+        {
+            int n = quantiles.Count;
+            // find the previous quantile
+            int i = n - 2;
+            while (i >= 0 && quantiles[i] == quantiles[n - 1])
+            {
+                i--;
+            }
+            if (i < 0)
+            {
+                // all quantiles are equal
+                return Gaussian.PointMass(quantiles[n - 1]);
+            }
+            else
+            {
+                double p0 = (double)n / (n + 1);
+                double p1 = (i + 1.0) / (n + 1);
+                double mean, stddev;
+                GetGaussianFromQuantiles(quantiles[n-1], p0, quantiles[i], p1, out mean, out stddev);
+                return Gaussian.FromMeanAndVariance(mean, stddev * stddev);
+            }
+        }
+
         /// <summary>
         /// Get the quantile rank of x.
         /// </summary>
@@ -131,35 +190,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             int n = quantiles.Count;
             if (x < quantiles[0])
             {
-                // find the next quantile
-                int i = 1;
-                while (i < n && quantiles[i] == quantiles[0])
-                    i++;
-                if (i == n)
-                {
-                    // all quantiles are equal
-                    return 0;
-                }
-                double p0 = 1.0 / (n + 1);
-                double p1 = (i + 1.0) / (n + 1);
-                return GetGaussianQuantileRank(x, quantiles[0], p0, quantiles[i], p1);
+                return GetLowerGaussian(quantiles).GetProbLessThan(x);
             }
             if (x > quantiles[n - 1])
             {
-                // find the previous quantile
-                int i = n - 2;
-                while (i >= 0 && quantiles[i] == quantiles[n - 1])
-                {
-                    i--;
-                }
-                if (i < 0)
-                {
-                    // all quantiles are equal
-                    return 1;
-                }
-                double p0 = (double)n / (n + 1);
-                double p1 = (i + 1.0) / (n + 1);
-                return GetGaussianQuantileRank(x, quantiles[n - 1], p0, quantiles[i], p1);
+                return GetUpperGaussian(quantiles).GetProbLessThan(x);
             }
             // IReadOnlyList does not have BinarySearch.
             // Start at 1 because we already know that x > quantiles[0].
@@ -178,35 +213,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             int n = quantiles.Length;
             if(probability < 1.0/(n+1.0))
             {
-                // find the next quantile
-                int i = 1;
-                while (i < n && quantiles[i] == quantiles[0])
-                    i++;
-                if (i == n)
-                {
-                    // all quantiles are equal
-                    return quantiles[0];
-                }
-                double p0 = 1.0 / (n + 1);
-                double p1 = (i + 1.0) / (n + 1);
-                return GetGaussianQuantile(probability, quantiles[0], p0, quantiles[i], p1);
+                return lowerGaussian.GetQuantile(probability);
             }
             if(probability > n/(n+1.0))
             {
-                // find the previous quantile
-                int i = n - 2;
-                while (i >= 0 && quantiles[i] == quantiles[n - 1])
-                {
-                    i--;
-                }
-                if (i < 0)
-                {
-                    // all quantiles are equal
-                    return quantiles[n-1];
-                }
-                double p0 = n / (n + 1.0);
-                double p1 = (i + 1.0) / (n + 1.0);
-                return GetGaussianQuantile(probability, quantiles[n - 1], p0, quantiles[i], p1);
+                return upperGaussian.GetQuantile(probability);
             }
             double pos = probability * (quantiles.Length + 1) - 1;
             int lower = (int)Math.Floor(pos);

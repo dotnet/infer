@@ -5,6 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Math
 {
     using System;
+    using System.Diagnostics;
     using Microsoft.ML.Probabilistic.Collections;
 
     public class BranchAndBound
@@ -20,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Math
             }
         }
 
-        internal static bool Debug;
+        public static bool Debug;
         public enum SplitMethod
         {
             Random,
@@ -28,6 +29,7 @@ namespace Microsoft.ML.Probabilistic.Math
             LowestChild
         }
         static SplitMethod splitMethod = SplitMethod.Cycle;
+        static MeanVarianceAccumulator timeAccumulator = new MeanVarianceAccumulator();
 
         /// <summary>
         /// Finds the input that maximizes a function.
@@ -47,12 +49,20 @@ namespace Microsoft.ML.Probabilistic.Math
             Vector argmax = bounds.GetMidpoint();
             Action<Region> addRegion = delegate (Region region)
             {
+                Stopwatch watch = Stopwatch.StartNew();
                 double upperBoundF = GetUpperBound(region);
+                watch.Stop();
+                if (Debug)
+                {
+                    if (Debug && timeAccumulator.Count > 10 && watch.ElapsedMilliseconds > timeAccumulator.Mean + 4 * Math.Sqrt(timeAccumulator.Variance))
+                        Trace.WriteLine($"GetUpperBound took {watch.ElapsedMilliseconds}ms");
+                    timeAccumulator.Add(watch.ElapsedMilliseconds);
+                }
                 double upperBound = upperBoundF;
                 if (upperBound > lowerBound)
                 {
                     if (Debug)
-                        Console.WriteLine($"added region {region} with upperBoundF = {upperBoundF}");
+                        Trace.WriteLine($"added region {region} with upperBoundF = {upperBoundF}");
                     QueueNode node = new QueueNode()
                     {
                         Region = region,
@@ -61,7 +71,7 @@ namespace Microsoft.ML.Probabilistic.Math
                     queue.Add(node);
                 }
                 else if (Debug)
-                    Console.WriteLine($"rejected region {region} with upperBound {upperBound} <= lowerBound {lowerBound}");
+                    Trace.WriteLine($"rejected region {region} with upperBound {upperBound} <= lowerBound {lowerBound}");
             };
             addRegion(bounds);
             int splitDim = 0;
@@ -73,9 +83,17 @@ namespace Microsoft.ML.Probabilistic.Math
                 Region region = node.Region;
                 // compute the lower bound
                 Vector midpoint = region.GetMidpoint();
+                Stopwatch watch = Stopwatch.StartNew();
                 double nodeLowerBound = Evaluate(midpoint);
+                watch.Stop();
                 if (Debug)
-                    Console.WriteLine($"expanding region {region} with upper bound = {node.UpperBound} lower bound = {nodeLowerBound}");
+                {
+                    if (Debug && timeAccumulator.Count > 10 && watch.ElapsedMilliseconds > timeAccumulator.Mean + 4 * Math.Sqrt(timeAccumulator.Variance))
+                        Trace.WriteLine($"Evaluate took {watch.ElapsedMilliseconds}ms");
+                    timeAccumulator.Add(watch.ElapsedMilliseconds);
+                }
+                if (Debug)
+                    Trace.WriteLine($"expanding region {region} with upper bound = {node.UpperBound} lower bound = {nodeLowerBound}");
                 if (nodeLowerBound > node.UpperBound) throw new Exception("nodeLowerBound > node.UpperBound");
                 if (nodeLowerBound > lowerBound)
                 {

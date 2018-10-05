@@ -40,7 +40,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                              Sampleable<double>,
                              CanGetMean<double>, CanGetVariance<double>, CanGetMeanAndVarianceOut<double, double>,
                              CanSetMeanAndVariance<double, double>, CanGetLogAverageOf<Gaussian>, CanGetLogAverageOfPower<Gaussian>,
-                             CanGetAverageLog<Gaussian>, CanGetLogNormalizer, CanGetMode<double>
+                             CanGetAverageLog<Gaussian>, CanGetLogNormalizer, CanGetMode<double>,
+                             CanGetProbLessThan, CanGetQuantile
     {
         /// <summary>
         /// Mean times precision
@@ -258,9 +259,33 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
+                double mean = MeanTimesPrecision / Precision;
                 double sqrtPrec = Math.Sqrt(Precision);
                 // (x - m)/sqrt(v) = x/sqrt(v) - m/v * sqrt(v)
-                return MMath.NormalCdf(x * sqrtPrec - MeanTimesPrecision / sqrtPrec);
+                return MMath.NormalCdf((x - mean) * sqrtPrec);
+            }
+        }
+
+        /// <summary>
+        /// Returns the value x such that GetProbLessThan(x) == probability.
+        /// </summary>
+        /// <param name="probability">A real number in [0,1].</param>
+        /// <returns></returns>
+        public double GetQuantile(double probability)
+        {
+            if (this.IsPointMass)
+            {
+                return (probability == 1.0) ? (this.Point + MMath.Ulp(this.Point)) : this.Point;
+            }
+            else if (Precision <= 0.0)
+            {
+                throw new ImproperDistributionException(this);
+            }
+            else
+            {
+                double mean = MeanTimesPrecision / Precision;
+                double sqrtPrec = Math.Sqrt(Precision);
+                return MMath.NormalCdfInv(probability) / sqrtPrec + mean;
             }
         }
 
