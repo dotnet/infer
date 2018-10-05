@@ -20,7 +20,7 @@ steps:
     version: '2.1.202' 
 
 - script: |
-    dotnet build --configuration $(buildConfiguration)Core Infer2.sln
+    dotnet build /p:DisableImplicitNuGetFallbackFolder=true --configuration $(buildConfiguration)Core Infer2.sln
   displayName: Build Solution
     
 - template: netcoretest-fast.yml
