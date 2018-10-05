@@ -3,15 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using System.IO;
-using System.Diagnostics;
-using Microsoft.ML.Probabilistic.Compiler.Visualizers;
 using Microsoft.ML.Probabilistic.Algorithms;
 using Microsoft.ML.Probabilistic.Models;
-using Microsoft.ML.Probabilistic.Models.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {
@@ -23,11 +16,9 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         [STAThread]
         public static void Main()
         {
-            Type tutorialClass = null;
-
-            // ********** UNCOMMENT AND EDIT THIS LINE TO RUN A PARTICULAR TUTORIAL DIRECTLY *************
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.FirstExample);
-
+            // When compiled with .NET 4.6.1 or higher, this will pop up a window for running examples, then exit.  
+            // Otherwise it does nothing.
+            ExamplesBrowser.RunBrowser();
 
             //Choose one of the algorithms
             InferenceEngine.DefaultEngine.Algorithm = new ExpectationPropagation();
@@ -41,77 +32,35 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             InferenceEngine.DefaultEngine.ShowFactorGraph = false;
             InferenceEngine.DefaultEngine.ShowSchedule = false;
 
-#if NETCORE
             //Tutorials
             //Uncomment one of these lines to run a particular tutorial in console application
 
-            tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.FirstExample);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.TruncatedGaussian);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.TruncatedGaussianEfficient);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.LearningAGaussian);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.LearningAGaussianWithRanges);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.BayesPointMachineExample);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.ClinicalTrial);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.MixtureOfGaussians);
+            new FirstExample().Run();
+            //new TruncatedGaussian().Run();
+            //new TruncatedGaussianEfficient().Run();
+            //new LearningAGaussian().Run();
+            //new LearningAGaussianWithRanges().Run();
+            //new BayesPointMachineExample().Run();
+            //new ClinicalTrial().Run();
+            //new MixtureOfGaussians().Run();
 
             //String tutorials
 
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.HelloStrings);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.StringFormat);
+            //new HelloStrings().Run();
+            //new StringFormat().Run();
 
             //Applications
 
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.BayesianPCA);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.BugsRats);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.ChessAnalysis);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.ClickModel);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.DifficultyAbility);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.GaussianProcessClassifier);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.MultinomialRegression);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.RecommenderSystem);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.StudentSkills);
-            //tutorialClass = typeof(Microsoft.ML.Probabilistic.Tutorials.WetGrassSprinklerRain);
-#endif
-            if (tutorialClass != null)
-            {
-                // Run the specified tutorial
-                RunTutorial(tutorialClass);
-            }
-#if NETFULL
-            else
-            {
-                InferenceEngine.Visualizer = new WindowsVisualizer();
-                // Show all tutorials, in a browser
-                IAlgorithm[] algs = InferenceEngine.GetBuiltInAlgorithms();
-
-                // Avoid max product in the examples browser, as none of the examples apply.
-                List<IAlgorithm> algList = new List<IAlgorithm>(algs);
-                algList.RemoveAll(alg => alg is MaxProductBeliefPropagation);
-                ExamplesViewer tview = new ExamplesViewer(typeof(RunMe), algList.ToArray());
-                tview.RunBrowser();
-            }
-#endif
-        }
-
-        /// <summary>
-        /// Runs the tutorial contained in the supplied class.
-        /// </summary>
-        /// <param name="tutorialClass">The class containing the tutorial to be run</param>
-        public static void RunTutorial(Type tutorialClass)  // Must not be called "Run"
-        {
-            if (tutorialClass == null)
-            {
-                return;
-            }
-
-            object obj = Activator.CreateInstance(tutorialClass);
-            MethodInfo mi = tutorialClass.GetMethod("Run");
-            if (mi == null)
-            {
-                return;
-            }
-
-            mi.Invoke(obj, new object[0]);
+            //new BayesianPCA().Run();
+            //new BugsRats().Run();
+            //new ChessAnalysis().Run();
+            //new ClickModel().Run();
+            //new DifficultyAbility().Run();
+            //new GaussianProcessClassifier().Run();
+            //new MultinomialRegression().Run();
+            //new RecommenderSystem().Run();
+            //new StudentSkills().Run();
+            //new WetGrassSprinklerRain().Run();
         }
     }
 }
