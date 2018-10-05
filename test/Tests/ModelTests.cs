@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine();
             engine.Compiler.WriteSourceFiles = true;
             engine.Compiler.UseExistingSourceFiles = true;
-            engine.ModelName = "GeneratedSourceError";
+            engine.ModelName = "src_" + DateTime.Now.ToString("MM_dd_yy_HH_mm_ss_ff");
             Directory.CreateDirectory(engine.Compiler.GeneratedSourceFolder);
             string sourcePath = Path.Combine(engine.Compiler.GeneratedSourceFolder, engine.ModelName + "_EP.cs");
             File.WriteAllText(sourcePath, "invalid");
