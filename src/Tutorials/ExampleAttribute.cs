@@ -20,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         private string prefix;
 
         /// <summary>
-        /// Creates a new ExamplesViewer attribute with a specified category and description
+        /// Creates a new Example attribute with a specified category and description
         /// </summary>
         /// <param name="category">Category of the example</param>
         /// <param name="description">Description of the example</param>
