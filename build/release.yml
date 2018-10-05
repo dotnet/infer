@@ -1,0 +1,189 @@
+# Licensed to the .NET Foundation under one or more agreements.
+# The .NET Foundation licenses this file to you under the MIT license.
+# See the LICENSE file in the project root for more information.
+
+# Official signed build
+
+name: 0.3.$(Date:yyMM).$(Date:dd)$(Rev:rr)
+
+resources:
+- repo: self
+  clean: true
+  
+trigger: none # disable CI build
+  
+# Build and test on MacOS
+
+jobs:
+- job: macOS # Hosted MacOS agent
+  pool:
+    vmImage: xcode9-macos10.13
+  steps:
+  - task: DotNetCoreInstaller@0
+    inputs:
+      packageType: 'sdk' 
+      version: '2.1.202' 
+
+  - script: |
+      dotnet build --configuration $(BuildConfiguration)Core Infer2.sln
+    displayName: Build Solution
+      
+  - template: netcoretest-fast.yml
+    parameters:
+      Configuration: '$(BuildConfiguration)Core'
+
+# Build and test on Linux
+
+- job: Linux # Hosted Linux agent
+  pool:
+    vmImage: ubuntu-16.04
+  steps:
+  - task: DotNetCoreInstaller@0
+    inputs:
+      packageType: 'sdk' 
+      version: '2.1.202' 
+
+  - script: |
+      dotnet build --configuration $(BuildConfiguration)Core Infer2.sln
+    displayName: Build Solution
+
+  - template: netcoretest-fast.yml
+    parameters:
+      Configuration: '$(BuildConfiguration)Core'
+
+# Assign assembly versions, build, test and publish versioned assemblies
+
+- job: Windows # Hosted Windows agent, VS 2017
+  pool:
+    vmImage: vs2017-win2016
+
+  steps:
+  - task: Bash@3
+    displayName: 'Updating assembly versions'
+    inputs:
+      filePath: build/updateversion.sh
+      workingDirectory: build
+      arguments: $(Build.BuildNumber)
+
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: '4.7.0'
+
+  - task: NuGetCommand@2
+    displayName: 'Restoring NuGet packages'
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
+
+  - task: MSBuild@1
+    displayName: 'Building solutions'
+    inputs:
+      solution: '**/*.sln'
+      clean: true
+      configuration: $(BuildConfiguration)
+
+  - template: vstest-fast.yml
+    parameters:
+      Platform: 'x64'
+
+  - task: Bash@3
+    displayName: 'Gathering built assemblies'
+    condition: eq(variables['BuildConfiguration'], 'Release')
+    inputs:
+      filePath: build/copyassemblies.sh
+      arguments: ../asmtmp $(BuildConfiguration)
+      workingDirectory: build
+
+  - task: CopyFiles@2
+    displayName: 'Copying versioned assemblies'
+    condition: eq(variables['BuildConfiguration'], 'Release')
+    inputs:
+      sourceFolder: asmtmp
+      targetFolder: $(Build.ArtifactStagingDirectory)
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publishing versioned assemblies'
+    condition: eq(variables['BuildConfiguration'], 'Release')
+    inputs:
+      artifactName: VersionedAssemblies
+
+# Sign assemblies and packages
+
+- job: Sign
+  dependsOn:
+  - Linux
+  - macOS
+  - Windows
+  pool:
+    name: MicroBuildV2Pool # For real signing
+
+  steps:
+  # Install MicroBuild plugin
+  - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@1
+    displayName: Install MicroBuild Signing Plugin
+    inputs:
+      signType: '$(SignType)'
+      zipSources: false
+      esrpSigning: true
+    env:
+      TeamName: 'Infer.NET'
+    continueOnError: false
+    condition: and(succeeded(), in(variables.SignType, 'real', 'test'))
+
+  # Download all agent packages from all previous phases
+  - task: DownloadBuildArtifacts@0
+    displayName: Download package assets
+    inputs:
+      artifactName: VersionedAssemblies
+      downloadPath: $(Build.SourcesDirectory)/bin/obj/packages
+
+  # Workaround https://github.com/Microsoft/vsts-tasks/issues/6739
+  - task: CopyFiles@2
+    displayName: Copy package assets to correct folder
+    inputs:
+      sourceFolder: $(Build.SourcesDirectory)/bin/obj/packages/VersionedAssemblies
+      targetFolder: $(Build.SourcesDirectory)/bin/obj/packages  
+
+  # Install MicroBuild.Core
+  - task: NuGetCommand@2
+    displayName: Install MicroBuild.Core
+    inputs:
+      command: custom 
+      arguments: 'install MicroBuild.Core'
+
+  - task: MSBuild@1
+    displayName: Sign Windows Binaries
+    inputs:
+      solution: build/sign.proj
+      msbuildArguments: /p:SignType=$(SignType) /verbosity:detailed
+      msbuildVersion: 14.0
+    condition: in(variables.SignType, 'real', 'test')
+
+  - task: NuGetCommand@2
+    displayName: 'Creating NuGet packages'
+    inputs:
+      command: pack
+      packagesToPack: build/*.nuspec
+      includeSymbols: true
+      buildProperties: version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages
+      packDestination: $(Build.SourcesDirectory)/bin/packages
+
+  - task: MSBuild@1
+    displayName: Sign Packages
+    inputs:
+      solution: build/sign.proj
+      msbuildArguments: /p:SignType=$(SignType) /p:SignNugetPackages=true /verbosity:detailed
+      msbuildVersion: 14.0
+    condition: in(variables.SignType, 'real', 'test')
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publishing signed packages'
+    inputs:
+      artifactName: SignedPackages
+      pathtoPublish: $(Build.SourcesDirectory)/bin/packages
+
+  - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
+    displayName: 'Clean up and send Telemetry'
+    env:
+      TeamName: 'Infer.NET'
+    condition: always()
