@@ -1622,7 +1622,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var loserPerformance = Variable.GaussianFromMeanAndVariance(playerSkills[losers[game]], 1.0);
 
                 // The winner performed better in this game
-                Variable.ConstrainPositive(winnerPerformance - loserPerformance);
+                Variable.ConstrainTrue(winnerPerformance > loserPerformance);
             }
 
             // Attach the data to the model
