@@ -103,7 +103,7 @@ Documentation can be found on the [Infer&#46;NET website](https://dotnet.github.
 
 * `test/`
 
-  * `TestApp` contains C# console application for quick invocation and debugging of variouse Infer&#46;NET components.
+  * `TestApp` contains C# console application for quick invocation and debugging of various Infer&#46;NET components.
 
   * `TestFSharp` is an F# console project for smoke testing of Infer&#46;NET F# wrapper.
 
