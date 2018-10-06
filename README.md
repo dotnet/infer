@@ -103,7 +103,7 @@ Documentation can be found on the [Infer&#46;NET website](https://dotnet.github.
 
 * `test/`
 
-  * `TestApp` contains C# console application for quick invocation and debugging of variouse Infer&#46;NET components.
+  * `TestApp` contains C# console application for quick invocation and debugging of various Infer&#46;NET components.
 
   * `TestFSharp` is an F# console project for smoke testing of Infer&#46;NET F# wrapper.
 
@@ -176,7 +176,7 @@ and
 ```bash
 msbuild /c:ReleaseFull /p:MonoSupport=true /restore Infer2.sln
 ```
-Please, expect build failure messages about exapmles that use WPF GUI. Libraries and executables that don't reference WPF should build, though.
+Please, expect build failure messages about examples that use WPF GUI. Libraries and executables that don't reference WPF should build, though.
 
 #### Run unit tests
 
