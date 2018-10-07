@@ -77,7 +77,7 @@ Documentation can be found on the [Infer&#46;NET website](https://dotnet.github.
 
     * `ClickThroughModel` - a web search example of converting a sequence of clicks by the user into inferences about the relevance of documents.
 
-    * `ClinicalTrial` - the clinical trial tutorial example with an interactive user interface.`
+    * `ClinicalTrial` - the clinical trial tutorial example with an interactive user interface.
 
     * `InferNET101` - samples from Infer&#46;NET 101 introduction to the basics of Microsoft Infer&#46;NET programming.
   
@@ -115,7 +115,7 @@ Documentation can be found on the [Infer&#46;NET website](https://dotnet.github.
 
 * `build` folder contains the YAML definitions for the Continuous Integration builds and the specification files for the nuget packages.
 
-* `docs` folder contains the scripts for bulding API documentation and for updating https://dotnet.github.io/infer. Please refer to [README.md](docs/README.md) for more details.
+* `docs` folder contains the scripts for building API documentation and for updating https://dotnet.github.io/infer. Please refer to [README.md](docs/README.md) for more details.
 
 ## Build and Test
 
@@ -176,7 +176,7 @@ and
 ```bash
 msbuild /c:ReleaseFull /p:MonoSupport=true /restore Infer2.sln
 ```
-Please, expect build failure messages about exapmles that use WPF GUI. Libraries and executables that don't reference WPF should build, though.
+Please, expect build failure messages about examples that use WPF GUI. Libraries and executables that don't reference WPF should build, though.
 
 #### Run unit tests
 
