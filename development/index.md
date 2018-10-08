@@ -29,3 +29,17 @@ layout: default
 *   [Estimating computational cost](Estimating computational cost.md)
 *   [Polymorphic random variables](Polymorphic random variables.md)
 
+### Features
+
+*   String and dates
+    *    [Performance lessons learned](Performance lessons learned.md)
+    *    String inference (notes on theory):
+         *    [String inference](StringInference.pdf) 
+         *    [Belief Propagation with Strings](nips2014.pdf)
+    *    [Useful facts from automata theory](Useful facts from automata theory.md)
+    *    [Viewing automata](Viewing automata.md)
+    *    [Links](Links.md)
+*   [Compiler overview](Compiler overview.md) 
+    *   [Compiler-generated variable names](Compiler-generated variable names.md)
+    *   [Transform tutorial](Transform tutorial.md)
+*   [Comparison to other PP frameworks](Comparison to other PP frameworks.md)
