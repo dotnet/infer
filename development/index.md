@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-[Infer.NET user guide](index.md)
+[Infer.NET user guide](../userguide/index.md)
 
 ## Infer.NET development
 
