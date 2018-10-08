@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-[Infer.NET development](../index.md) : [Infer.NET compiler design](../Infer.NET compiler design.md)
+[Infer.NET development](../index.md) : [Compiler transforms](../Compiler transforms.md)
 
 ## Scheduling transform
 
