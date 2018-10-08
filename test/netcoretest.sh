@@ -15,7 +15,7 @@ then
     configuration=Release
 fi
 
-compath=/bin/${configuration}/netcoreapp2.0/
+compath=/bin/${configuration}/netcoreapp2.1/
 dlls="Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll Tests${compath}Microsoft.ML.Probabilistic.Tests.dll TestPublic${compath}TestPublic.dll"
 
 # path to the xunit runner

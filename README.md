@@ -31,9 +31,9 @@ and many others.
 
 ## Installation
 
-Infer&#46;NET runs on Windows, Linux, and macOS - any platform where [.NET Core 2.0](https://github.com/dotnet/core) is available.
+Infer&#46;NET runs on Windows, Linux, and macOS - any platform where [.NET Core 2.1](https://github.com/dotnet/core) is available.
 
-First ensure you have installed [.NET Core 2.0](https://www.microsoft.com/net/download/dotnet-core/2.0). Infer&#46;NET also works on the .NET Framework 4.6.1 and above.
+First ensure you have installed [.NET Core 2.1](https://www.microsoft.com/net/download/). Infer&#46;NET also works on the .NET Framework 4.6.1 and above.
 
 Once you have an app, you can install the Infer&#46;NET NuGet package(s) from the .NET Core CLI using:
 ```
@@ -119,15 +119,15 @@ Documentation can be found on the [Infer&#46;NET website](https://dotnet.github.
 
 ## Build and Test
 
-Infer&#46;NET is cross platform and supports .NET Framework 4.6.1, .NET Core 2.0, and Mono 5.0. Unit tests are written using the [XUnit](https://xunit.github.io/) framework.
+Infer&#46;NET is cross platform and supports .NET Framework 4.6.1, .NET Core 2.1, and Mono 5.0. Unit tests are written using the [XUnit](https://xunit.github.io/) framework.
 
-All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produce executables (including test projects) mostly target .NET Framework 4.6.1, .NET Core 2.0, or both depending on build configuration:
+All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produce executables (including test projects) mostly target .NET Framework 4.6.1, .NET Core 2.1, or both depending on build configuration:
 
 | Configurations | Targeted Frameworks |
 |:---|---:|
-| Debug, Release | both .NET Framework 4.6.1 and .NET Core 2.0 |
+| Debug, Release | both .NET Framework 4.6.1 and .NET Core 2.1 |
 | DebugFull, ReleaseFull | .NET Framework 4.6.1 only |
-| DebugCore, ReleaseCore | .NET Core 2.0 only |
+| DebugCore, ReleaseCore | .NET Core 2.1 only |
 
 
 ### Windows
@@ -146,11 +146,11 @@ Unit tests are available in `Test Explorer` window. Normally you should see test
 
 ### Linux and macOS
 
-All components of Infer&#46;NET and almost all sample projects run on .NET Core 2.0 and/or Mono except sample applications that use WPF.
+All components of Infer&#46;NET and almost all sample projects run on .NET Core 2.1 and/or Mono except sample applications that use WPF.
 
 #### Prerequisites
 
-* **[.NET Core 2.0 SDK](https://www.microsoft.com/net/download/dotnet-core/2.0)** to build and run .NET Standard and .NET Core projects
+* **[.NET Core 2.1 SDK](https://www.microsoft.com/net/download/)** to build and run .NET Standard and .NET Core projects
 
   and, optionally,
 
@@ -182,7 +182,7 @@ Please, expect build failure messages about examples that use WPF GUI. Libraries
 
 In order to run unit tests, build the test project and execute one of the following commands:
 ```bash
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll <path to netcoreapp2.0 assembly with tests> <filter>
+dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.1/xunit.console.dll <path to netcoreapp2.1 assembly with tests> <filter>
 ```
 ```bash
 mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe <path to net461 assembly with tests> <filter>
@@ -194,7 +194,7 @@ There are three test assemblies in the solution:
 - **TestPublic.dll** in the folder `test/TestPublic`.
 - **Microsoft.ML.Probabilistic.Learners.Tests.dll** in the folder `test/Learners/LearnersTests`. 
 
-Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<netcoreapp2.0|net461>` or `bin/Release<Core|Full>/<netcoreapp2.0|net461>` subdirectories
+Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<netcoreapp2.1|net461>` or `bin/Release<Core|Full>/<netcoreapp2.1|net461>` subdirectories
 of the test project.
 
 `<filter>` is a rule to choose what tests will be run. You can specify them
@@ -221,9 +221,9 @@ _OpenBug_ is a category of tests that can fail.
 An example of quick testing of `Microsoft.ML.Probabilistic.Tests.dll` in `Debug` configuration after changing working directory to
 the `Tests` project looks like:
 ```bash
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll bin/DebugCore/netcoreapp2.0/Microsoft.ML.Probabilistic.Tests.dll -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance
+dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.1/xunit.console.dll bin/DebugCore/netcoreapp2.1/Microsoft.ML.Probabilistic.Tests.dll -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance
 
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.0/xunit.console.dll bin/DebugCore/netcoreapp2.0/Microsoft.ML.Probabilistic.Tests.dll -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -parallel none
+dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.1/xunit.console.dll bin/DebugCore/netcoreapp2.1/Microsoft.ML.Probabilistic.Tests.dll -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -parallel none
 ```
 To run the same set of tests on Mono:
 
