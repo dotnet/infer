@@ -5,6 +5,8 @@ layout: default
 
 ## Comparison to other PP frameworks
 
+*UNDER CONSTRUCTION*
+
 |                                            | Infer.NET                 | Stan | Edward | PyMC3 | Pyro |
 |---------------------------------------------------------------------------------------|
 | **Inference**                              | EP, VMP, Gibbs            | NUTS, HMC, ADVI | | | |	

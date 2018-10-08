@@ -3,7 +3,36 @@ layout: default
 ---
 [Infer.NET development](index.md)
 
-## Useful facts from automata theory
+## String inference
+
+Infer.NET represents distributions on strings via probabilistic automata.  Operations on automata are described in [Belief Propagation with Strings](https://www.microsoft.com/en-us/research/publication/belief-propagation-strings/), with more details in [Notes on String operators](StringInference.pdf).
+
+### Viewing automata
+
+You can create a GraphViz file from a SequenceDistribution by calling `ToString` on the distribution using the   `SequenceDistributionFormats.GraphViz` format and writing to file.
+
+You can use [http://dot-graphics1.appspot.com/](http://dot-graphics1.appspot.com/) to view small automata by copying and pasting the string from the file to the window.
+
+To view large automata, install GraphViz, and run `dot.exe`. The following example creates a jpeg from the file containing the graph description:
+
+```shell
+dot -Tjpeg myautomaton.txt > myautomaton.jpeg
+```
+
+### Reading
+
+*   [Introduction to Automata Theory](https://mcdtu.files.wordpress.com/2017/03/introduction-to-automata-theory.pdf) - a book covering basics
+*   [Weighted Finite-State Transducer Algorithms: An Overview](https://cs.nyu.edu/~mohri/pub/fla.pdf) - a survey of algorithms on WFSA covering intersection, determinization, weight pushing and minimization.
+*   [Finite-State Transducers in Language and Speech Processing](http://www.aclweb.org/anthology/J97-2003) - a more detailed survey
+*   [Weighted Automata Algorithms](https://cs.nyu.edu/~mohri/pub/hwa.pdf) - one more survey, with a focus on algorithms
+
+### Automata libraries
+
+*   [ASTL](http://astl.sourceforge.net/) - C++ automata library with STL-like design: algorithms are implemented in terms of automata iterators.
+*   [Jolt.NET](https://archive.codeplex.com/?p=jolt) - .NET DFA/NFA library
+*   [OpenFST](http://www.openfst.org/twiki/bin/view/FST/WebHome) - weighted finite-state transducer C++ library
+
+### Useful facts from automata theory
 
 *   Transducer operations
     *   Intersection - regular relations aren't closed under intersection, complement and subtraction \[[link]()\]

@@ -3,9 +3,9 @@ layout: default
 ---
 [Infer.NET development](index.md)
 
-## Infer.NET compiler design
+## Compiler transforms
 
-This page documents the design of the Infer.NET compiler. This consists of a series of code transformations.
+This page collects documentation on the Infer.NET compiler transforms.
 
 | **Transform** | **Summary** |
 |-----------------------------|

@@ -13,7 +13,7 @@ The Infer.NET API produces a subset of C#, called model specification language (
 
 Frequently, additional information about a particular element in the code model must be communicated between separate transforms in the compiler. When this information doesn't fit easily into the AST, compiler attributes are used. They can be thought of much like normal attributes but instead of inheriting from Attribute, they implement our empty [ICompilerAttribute](../apiguide/api/Microsoft.ML.Probabilistic.Compiler.ICompilerAttribute.html) interface. They are held in a separate data structure from the AST and queried in a different way. There are about 70 different compiler attributes. Some are marker attributes with no data e.g. OperatorStatement and some are more complex data structures e.g. [DependencyInformation](https://github.com/dotnet/infer/blob/master/src/Compiler/Infer/CompilerAttributes/DependencyInformation.cs).
 
-To visualise the changes that the transforms makes as the program passes through the compiler, we have the transform browser. This can be enabled using `InferenceEngine.BrowserMode`.
+To visualise the changes that the transforms makes as the program passes through the compiler, we have the [Transform browser](../userguide/Transform browser.md).
 
 Transforms are implemented using a depth-first recursive pattern by inheriting from [ShallowCopyTransform](../apiguide/api/Microsoft.ML.Probabilistic.Compiler.Transforms.ShallowCopyTransform.html). Most transforms are single pass. Some transforms cannot be performed in a single pass so use a pattern whereby an analysis transform is implemented as an inner class and executed prior to the main transform.
 
