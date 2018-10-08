@@ -5,7 +5,7 @@ layout: default
 
 ## Model
 
-The Matchbox recommender in Infer.NET implements the original Matchbox model described in a [paper by D. Stern, R. Herbrich, and T. Graepel](http://research.microsoft.com/pubs/79460/www09.pdf).
+The Matchbox recommender in Infer.NET implements the original Matchbox model described in a [paper by D. Stern, R. Herbrich, and T. Graepel](https://www.microsoft.com/en-us/research/publication/matchbox-large-scale-bayesian-recommendations/).
 
 In the core of the model sits the inner product of the **user and item traits**. Traits can be thought of as implicit features or characteristics learned about the users and the items, such that the observed data can be explained well. More technically, the number of traits is the dimension of the latent space that the users and items are mapped to. An intuition for the concept of traits is given in the [Introduction](Introduction.md).
 

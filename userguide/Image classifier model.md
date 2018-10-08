@@ -7,7 +7,7 @@ layout: default
 
 ## Bayes Point Machine
 
-The [Bayes Point Machine](http://research.microsoft.com/apps/pubs/default.html?id=65611), as implemented in this example, is represented by the following factor graph:
+The [Bayes Point Machine](http://jmlr.org/papers/v1/herbrich01a.html), as implemented in this example, is represented by the following factor graph:
 
 ![](BayesPointMachine.png)
 

@@ -5,7 +5,7 @@ layout: default
 
 ## Tutorial 4: Bayes Point Machine
 
-This tutorial demonstrates how to use Infer.NET in a standard supervised learning setting. We will define a classifier, train it using a training set and then apply it to a test set. The classifier in question is the [Bayes Point Machine](http://research.microsoft.com/apps/pubs/default.html?id=65611) (R. Herbrich, T. Graepel, and C. Campbell, **Bayes Point Machines**, JMLR, 2001) trained via [Expectation Propagation](http://research.microsoft.com/~minka/papers/ep/) (T. Minka, UAI, 2001).
+This tutorial demonstrates how to use Infer.NET in a standard supervised learning setting. We will define a classifier, train it using a training set and then apply it to a test set. The classifier in question is the [Bayes Point Machine](http://jmlr.org/papers/v1/herbrich01a.html) (R. Herbrich, T. Graepel, and C. Campbell, **Bayes Point Machines**, JMLR, 2001) trained via [Expectation Propagation](http://research.microsoft.com/~minka/papers/ep/) (T. Minka, UAI, 2001).
 
 You can run the code in this tutorial either using the [Examples Browser](The examples browser.md) or by opening the Tutorials solution in Visual Studio and executing **BayesPointMachineExample.cs**.
 

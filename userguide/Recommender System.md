@@ -5,7 +5,7 @@ layout: default
 
 ## Recommender System
 
-This tutorial shows how to build a [recommender system](http://en.wikipedia.org/wiki/Recommender_system) using Infer.NET. In particular, it implements the design developed by David Stern, Ralf Herbrich, and Thore Graepel described in their 2009 paper [](http://research.microsoft.com/pubs/79460/www09.pdf)_[Matchbox: Large Scale Online Bayesian Recommendations](http://research.microsoft.com/pubs/79460/www09.pdf)_.
+This tutorial shows how to build a [recommender system](http://en.wikipedia.org/wiki/Recommender_system) using Infer.NET. In particular, it implements the design developed by David Stern, Ralf Herbrich, and Thore Graepel described in their 2009 paper _[Matchbox: Large Scale Online Bayesian Recommendations](https://www.microsoft.com/en-us/research/publication/matchbox-large-scale-bayesian-recommendations/)_.
 
 You can run the code in this tutorial either using the [**Examples Browser**](The examples browser.md) or by opening the Tutorials solution in Visual Studio and executing **RecommenderSystem.cs**.
 

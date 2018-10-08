@@ -67,5 +67,5 @@ The Infer.NET code for the previously described classification models lives in t
 
 ### References
 
-*   Herbrich, R., Graepel, T. and Campbell, C. (2001). [Bayes Point Machines](http://research.microsoft.com/apps/pubs/default.html?id=65611). _Journal of Machine Learning Research_ **1**, 245-279.
-*   Minka, T. (2001). [Expectation Propagation for approximate Bayesian inference](http://research.microsoft.com/en-us/um/people/minka/papers/ep/). _Uncertainty in Artificial Intelligence_, 2001, 362-369.
+*   Herbrich, R., Graepel, T. and Campbell, C. (2001). [Bayes Point Machines](http://jmlr.org/papers/v1/herbrich01a.html). _Journal of Machine Learning Research_ **1**, 245-279.
+*   Minka, T. (2001). [Expectation Propagation for approximate Bayesian inference](https://tminka.github.io/papers/ep/). _Uncertainty in Artificial Intelligence_, 2001, 362-369.

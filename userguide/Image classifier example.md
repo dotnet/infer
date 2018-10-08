@@ -17,7 +17,7 @@ Here, the left-hand images tend to be faces, animals and grass, and the right ha
 
 #### Solution Files
 
-This sample code along with a Visual Studio solution can be found in the [src\\Examples\\ImageClassifier folder](https://github.com/dotnet/infer/tree/master/src/Examples//imageClassifier). The code files are in the ImageClassifier subfolder, and are as follows:
+This sample code along with a Visual Studio solution can be found in the [src\\Examples\\ImageClassifier folder](https://github.com/dotnet/infer/tree/master/src/Examples/ImageClassifier). The code files are in the ImageClassifier subfolder, and are as follows:
 
 | | |
 |-|-|
