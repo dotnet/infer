@@ -10,6 +10,7 @@ parameters:
 steps:
 - task: Bash@3
   displayName: 'Running Evaluator'
+  condition: not(endsWith('${{ parameters.Configuration }}', 'Core')
   inputs:
     targetType: 'inline'
     script: Evaluator.exe InferNetRunsOnly.xml
