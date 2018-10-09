@@ -1,0 +1,18 @@
+# Licensed to the .NET Foundation under one or more agreements.
+# The .NET Foundation licenses this file to you under the MIT license.
+# See the LICENSE file in the project root for more information.
+
+# Template for running Evaluator (~30 minutes) on .NET Core platform
+
+parameters:
+  Configuration: 'ReleaseCore'
+
+steps:
+- task: Bash@3
+  displayName: 'Running Evaluator'
+  inputs:
+    targetType: 'inline'
+    script: dotnet Evaluator.dll InferNetRunsOnly.xml
+    workingDirectory: src/Learners/Runners/Evaluator/bin/${{ parameters.Configuration }}/netcoreapp2.1
+    displayName: Running Evaluator
+    continueOnError: true

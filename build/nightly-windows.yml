@@ -45,6 +45,16 @@ steps:
   parameters:
     Platform: 'x86'
 
+- template: evaluator-netcore.yml
+  condition: not(endsWith(variables['BuildConfiguration']), 'Full')
+  parameters:
+    Configuration: '$(BuildConfiguration)'
+
+- template: evaluator-netframework.yml
+  condition: not(endsWith(variables['BuildConfiguration']), 'Core')
+  parameters:
+    Configuration: '$(BuildConfiguration)'
+
 - task: Bash@3
   displayName: 'Gathering built assemblies'
   condition: eq(variables['BuildConfiguration'], 'Release')

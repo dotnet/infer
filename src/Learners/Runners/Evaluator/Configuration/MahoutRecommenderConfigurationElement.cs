@@ -48,7 +48,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// Gets or sets the number of iterations.
         /// </summary>
         public int? IterationCount { get; set; }
-        
+
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use 64-bit JVM to run Mahout
+        /// </summary>
+        public bool? UseX64JVM { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum heap size in MB for JVM running Mahout
+        /// </summary>
+        public int? JavaMaxHeapSizeInMb { get; set; }
+
         /// <summary>
         /// Creates an instance of the Mahout recommender using the settings from this configuration element.
         /// </summary>
@@ -65,6 +76,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             recommender.Settings.UserNeighborhoodSize = this.UserNeighborhoodSize.Value;
             recommender.Settings.TraitCount = this.TraitCount.Value;
             recommender.Settings.IterationCount = this.IterationCount.Value;
+            recommender.Settings.UseX64JVM = this.UseX64JVM.Value;
+            recommender.Settings.JavaMaxHeapSizeInMb = this.JavaMaxHeapSizeInMb.Value;
             
             return recommender;
         }

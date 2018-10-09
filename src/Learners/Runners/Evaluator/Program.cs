@@ -17,6 +17,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// </summary>
         private const string DefaultConfigFile = "Config.xml";
 
+        private static bool ErrorHappened = false;
+
         #region Event handler lists
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// The entry point of the application.
         /// </summary>
         /// <param name="args">The list of command line arguments.</param>
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
             try
             {
@@ -68,8 +70,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             }
             catch (Exception e)
             {
+                ErrorHappened = true;
                 PrintErrorMessage(e);
             }
+            int exitCode = ErrorHappened ? 1 : 0;
+            return exitCode;
         }
 
         #region Console output formatting
@@ -140,7 +145,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 
             runInterruptedHandlers = new List<EventHandler<RecommenderRunInterruptedEventArgs>>
                 {
-                    ConsoleOutputRecommenderRunInterruptedHandler
+                    ConsoleOutputRecommenderRunInterruptedHandler,
+                    FlagRaisingRecommenderRunInterruptedHandler
                 };
         }
 
@@ -246,6 +252,16 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             Console.WriteLine();
             PrintErrorMessage(e.Exception);
             Console.WriteLine();
+        }
+
+        /// <summary>
+        /// <see cref="RecommenderRun.Interrupted"/> handler which sets ErrorHappened flag to true.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The arguments of the event.</param>
+        private static void FlagRaisingRecommenderRunInterruptedHandler(object sender, RecommenderRunInterruptedEventArgs e)
+        {
+            ErrorHappened = true;
         }
 
         #endregion
