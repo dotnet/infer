@@ -13,7 +13,7 @@ steps:
   condition: not(endsWith('${{ parameters.Configuration }}', 'Core'))
   inputs:
     targetType: 'inline'
-    script: Evaluator.exe InferNetRunsOnly.xml
+    script: ./Evaluator.exe InferNetRunsOnly.xml
     workingDirectory: ${{ format('src/Learners/Runners/Evaluator/bin/{0}/net461', parameters.Configuration) }}
     displayName: Running Evaluator
     continueOnError: true
