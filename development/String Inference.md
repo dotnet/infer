@@ -35,7 +35,7 @@ dot -Tjpeg myautomaton.txt > myautomaton.jpeg
 ### Useful facts from automata theory
 
 *   Transducer operations
-    *   Intersection - regular relations aren't closed under intersection, complement and subtraction \[[link]()\]
+    *   Intersection - regular relations aren't closed under intersection, complement and subtraction \[[link](https://web.archive.org/web/20130606165805/https:/courses.cit.cornell.edu/ling4424/regular-relations-oct5.pdf)\]
         *   What would happen if one applies the joint traversal as for automata intersection?
 *   DFA (deterministic finite automaton) minimization
     *   [Survey](https://arxiv.org/pdf/1010.5318.pdf)
@@ -55,7 +55,7 @@ dot -Tjpeg myautomaton.txt > myautomaton.jpeg
     *   What if one gives up on the optimality guarantees? \[[discussion link](https://cstheory.stackexchange.com/questions/18074/simplification-of-weighted-nfa)\]
         *   One can introduce a state equivalence relation stronger than the language equality relation and merge states based on it. Examples include equivalence based on simulation relations \[[link](https://arxiv.org/pdf/1210.6624v1.pdf)\].
         *   There exist some attempts to generalize this technique to the weighted case \[[link](https://people.cs.umu.se/johanna/bisimulation/hogmalmay07c.pdf), [link](https://www.sciencedirect.com/science/article/pii/S0304397507008614)\]
-*   Weighted NFA determinization \[[link]()\]
+*   Weighted NFA determinization \[[link](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.437.2637&rep=rep1&type=pdf)\]
     *   Requires an extension of power set construction since it matters not only in which state you are, but also how much weight you carry
     *   Extended power set construction may not halt for some automata
         *   Some weighted NFA don't even have an equivalent weighted DFA
