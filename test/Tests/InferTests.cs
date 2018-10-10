@@ -1657,10 +1657,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        /// <summary>
-        /// Fails because bools_marginal_F is not reallocated on every call to Infer, as it should be.
-        /// This happens because bools_marginal_F is not used in the iteration loop.
-        /// </summary>
         [Fact]
         public void ReturnCopiesTest2()
         {

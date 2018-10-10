@@ -2870,13 +2870,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        [Trait("Category", "OpenBug")]
         public void EndCoupledChainsTest2()
         {
-            //problem appears, if OptimiseInferenceCode == false,
-            //so this test can't be run from TestAllCompilerOptions
-            InferenceEngine.DefaultEngine.Compiler.OptimiseInferenceCode = false;
-
             EndCoupledChains2(true);
             EndCoupledChains2(false);
         }

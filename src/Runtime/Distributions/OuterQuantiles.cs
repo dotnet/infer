@@ -26,13 +26,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             this.quantiles = quantiles;
         }
 
-        private OuterQuantiles(int quantileCount)
+        public OuterQuantiles(int quantileCount, CanGetQuantile canGetQuantile)
         {
             this.quantiles = new double[quantileCount];
-        }
-
-        public OuterQuantiles(int quantileCount, CanGetQuantile canGetQuantile) : this(quantileCount)
-        {
             for (int i = 0; i < quantileCount; i++)
             {
                 this.quantiles[i] = canGetQuantile.GetQuantile(i / (quantileCount - 1.0));
@@ -92,37 +88,39 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
             if (probability > 1.0) throw new ArgumentOutOfRangeException(nameof(probability), "probability > 1.0");
+            int n = quantiles.Length;
+            if (quantiles == null) throw new ArgumentNullException(nameof(quantiles));
+            if (n == 0) throw new ArgumentException("quantiles array is empty", nameof(quantiles));
             if (probability == 1.0)
             {
-                double max = quantiles[quantiles.Length - 1];
-                return max + MMath.Ulp(max);
+                return MMath.NextDouble(quantiles[n - 1]);
             }
-            int n = quantiles.Length;
-            double pos = probability * (n - 1);
+            if (n == 1) return quantiles[0];
+            double pos = MMath.LargestDoubleProduct(n - 1, probability);
             int lower = (int)Math.Floor(pos);
             int upper = (int)Math.Ceiling(pos);
             if (upper == lower) upper = lower + 1;
             return GetQuantile(probability, lower, quantiles[lower], quantiles[upper], n);
         }
 
+        /// <summary>
+        /// Returns the largest quantile such that ((quantile - lowerItem)/(upperItem - lowerItem) + lowerIndex)/(n-1) &lt;= probability.
+        /// </summary>
+        /// <param name="probability"></param>
+        /// <param name="lowerIndex"></param>
+        /// <param name="lowerItem"></param>
+        /// <param name="upperItem"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
         internal static double GetQuantile(double probability, long lowerIndex, double lowerItem, double upperItem, long n)
         {
-            double pos = probability * (n - 1);
-            double frac = pos - lowerIndex;
+            if (n == 1) throw new ArgumentOutOfRangeException("n == 1");
+            double pos = MMath.LargestDoubleProduct(n - 1, probability);
+            double frac = MMath.LargestDoubleSum(-lowerIndex, pos);
             double diff = upperItem - lowerItem;
-            double offset = frac * diff;
-            double quantile = lowerItem + offset;
-            // increase quantile until the desired probability is exceeded.
-            // due to round off errors, it is hard to predict the estimated probability without computing it.
-            while (((quantile - lowerItem) / diff + lowerIndex) / (n - 1) <= probability)
-            {
-                quantile += MMath.Ulp(quantile);
-            }
-            while (((quantile - lowerItem) / diff + lowerIndex) / (n - 1) > probability)
-            {
-                quantile -= MMath.Ulp(quantile);
-            }
-            return quantile;
+            if (diff == 0) return lowerItem;
+            double offset = MMath.LargestDoubleProduct(diff, frac);
+            return MMath.LargestDoubleSum(lowerItem, offset);
         }
     }
 }

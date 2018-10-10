@@ -275,7 +275,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (this.IsPointMass)
             {
-                return (probability == 1.0) ? (this.Point + MMath.Ulp(this.Point)) : this.Point;
+                return (probability == 1.0) ? MMath.NextDouble(this.Point) : this.Point;
             }
             else if (Precision <= 0.0)
             {

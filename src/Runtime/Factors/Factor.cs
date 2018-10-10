@@ -269,7 +269,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [ParameterNames("sample", "mean", "precision")]
         public static double Gaussian(double mean, double precision)
         {
-            return Microsoft.ML.Probabilistic.Distributions.Gaussian.Sample(mean, precision);
+            return Distributions.Gaussian.Sample(mean, precision);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [ParameterNames("sample", "mean", "precision")]
         public static Vector VectorGaussian(Vector mean, PositiveDefiniteMatrix precision)
         {
-            return Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Sample(mean, precision);
+            return Distributions.VectorGaussian.Sample(mean, precision);
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [ParameterNames("sample", "mean")]
         public static int Poisson(double mean)
         {
-            return Microsoft.ML.Probabilistic.Distributions.Poisson.Sample(mean);
+            return Distributions.Poisson.Sample(mean);
         }
 
         /// <summary>
@@ -859,6 +859,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="array">The array</param>
         /// <param name="indices">Array of indices for items we want to get</param>
         /// <returns>The items</returns>
+        [Hidden]
         [ParameterNames("items", "array", "indices")]
         public static T[] GetItems<T>(IList<T> array, IList<int> indices)
         {
@@ -877,6 +878,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="array">The array</param>
         /// <param name="indices">Array of indices for items we want to get</param>
         /// <returns>The items</returns>
+        [Hidden]
         [ParameterNames("items", "array", "indices")]
         public static T[][] GetJaggedItems<T>(IList<T> array, IList<IList<int>> indices)
         {
@@ -895,6 +897,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="array">The array</param>
         /// <param name="indices">Array of indices for items we want to get</param>
         /// <returns>The items</returns>
+        [Hidden]
         [ParameterNames("items", "array", "indices")]
         public static T[][][] GetDeepJaggedItems<T>(IList<T> array, IList<IList<IList<int>>> indices)
         {
@@ -918,6 +921,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="indices">Array of depth 1 indices for items we want to get</param>
         /// <param name="indices2">Array of depth 2 indices for items we want to get</param>
         /// <returns>The items</returns>
+        [Hidden]
         [ParameterNames("items", "array", "indices", "indices2")]
         public static T[] GetItemsFromJagged<T>(IList<IList<T>> array, IList<int> indices, IList<int> indices2)
         {
@@ -938,6 +942,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="indices2">Array of depth 2 indices for items we want to get</param>
         /// <param name="indices3">Array of depth 3 indices for items we want to get</param>
         /// <returns>The items</returns>
+        [Hidden]
         [ParameterNames("items", "array", "indices", "indices2", "indices3")]
         public static T[] GetItemsFromDeepJagged<T>(IList<IList<IList<T>>> array, IList<int> indices, IList<int> indices2, IList<int> indices3)
         {
@@ -957,6 +962,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="indices">Array of depth 1 indices for items we want to get</param>
         /// <param name="indices2">Array of depth 2 indices for items we want to get</param>
         /// <returns>The items</returns>
+        [Hidden]
         [ParameterNames("items", "array", "indices", "indices2")]
         public static T[][] GetJaggedItemsFromJagged<T>(IList<IList<T>> array, IList<IList<int>> indices, IList<IList<int>> indices2)
         {
@@ -978,6 +984,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="array">The array</param>
         /// <param name="indices">Array of indices for items we want to get.  Must all be different.</param>
         /// <returns>The items</returns>
+        [Hidden]
         [ParameterNames("items", "array", "indices")]
         // Note the signature cannot use IReadOnlyList since IList does not implement IReadOnlyList
         public static T[] Subarray<T>(IList<T> array, IList<int> indices)
@@ -994,6 +1001,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="array2"></param>
         /// <returns>The items</returns>
         [ParameterNames("items", "array", "indices", "array2")]
+        [Hidden]
         public static T[] Subarray2<T>(IList<T> array, IList<int> indices, IList<T> array2)
         {
             T[] result = new T[indices.Count];
@@ -1014,6 +1022,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="array">The array</param>
         /// <param name="indices">Array of indices for items to get.  indices[i][j] must be different for different j and same i, but can match for different i.</param>
         /// <returns>The items</returns>
+        [Hidden]
         [ParameterNames("items", "array", "indices")]
         public static T[][] JaggedSubarray<T>(IList<T> array, int[][] indices)
         {
@@ -1047,6 +1056,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="array">The array</param>
         /// <param name="indices">Jagged array containing the indices of the elements to get.  The indices must all be different.  The shape of this array determines the shape of the result.</param>
         /// <returns>The items</returns>
+        [Hidden]
         [ParameterNames("items", "array", "indices")]
         public static T[][] SplitSubarray<T>(IList<T> array, int[][] indices)
         {
@@ -1058,6 +1068,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
+        [Hidden]
         [ParameterNames("head", "array", "count", "tail")]
         public static T[] Split<T>(IList<T> array, int count, out T[] tail)
         {
@@ -1248,6 +1259,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="T">The type of array element</typeparam>
         /// <param name="value">The value to fill with.</param>
         /// <returns>A new array with all entries set to value.</returns>
+        [Hidden]
         [ParameterNames("Uses", "Def")]
         public static Array ReplicateNd<T>(T value)
         {
@@ -1282,6 +1294,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="T">The type of array element</typeparam>
         /// <param name="value">The value to return.</param>
         /// <returns>The supplied value.</returns>
+        [Hidden]
         [Fresh] // needed for CopyPropagationTransform
         [HasUnitDerivative]
         public static T Copy<T>([SkipIfUniform] T value)
@@ -1295,6 +1308,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="T">The type the input value.</typeparam>
         /// <param name="value">The value to return.</param>
         /// <returns>The supplied value.</returns>
+        [Hidden]
         public static T Cut<T>([SkipIfUniform] T value)
         {
             return value;

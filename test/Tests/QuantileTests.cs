@@ -16,6 +16,32 @@ namespace Microsoft.ML.Probabilistic.Tests
 
     public class QuantileTests
     {
+        [Fact]
+        public void QuantileEstimator_SinglePointIsMedian()
+        {
+            QuantileEstimator est = new QuantileEstimator(0.1);
+            double point = 2;
+            est.Add(point);
+            Assert.Equal(point, est.GetQuantile(0.5));
+
+            OuterQuantiles outer = new OuterQuantiles(new[] { point });
+            Assert.Equal(point, outer.GetQuantile(0.5));
+
+            InnerQuantiles inner = new InnerQuantiles(new[] { point });
+            Assert.Equal(point, inner.GetQuantile(0.5));
+        }
+
+        /// <summary>
+        /// Test a tricky case.
+        /// </summary>
+        [Fact]
+        public void InnerQuantileTest()
+        {
+            double[] quantiles = { -2.3396737042130806, -2.1060851851919309, -1.8587796492436919, -1.7515040214502977, -1.6631549706936311, -1.5649421094540212, -1.4760970897199182, -1.4120516891795316, -1.3472276831887715, -1.2800915764085863, -1.2315546431485036, -1.1733035015194753, -1.1275506999997809, -1.0868191452824896, -1.0423720676050061, -1.0030087867587449, -0.96427545374863111, -0.917480799606264, -0.88868683894166878, -0.85040868414900372, -0.80942702953353063, -0.78299794937710787, -0.74791530550923879, -0.71057667829968463, -0.6764786230399974, -0.64937712088706545, -0.61647747819758114, -0.585418062478127, -0.55212155586237877, -0.52794712262708809, -0.49602391921870309, -0.4699661621821, -0.44707572988386468, -0.41779003649017038, -0.38751278424822111, -0.3659754249474671, -0.33671101603741, -0.30844051169056652, -0.28736460398884939, -0.26394181175383763, -0.2339421108026867, -0.20421395179821347, -0.17975005820876525, -0.15495505128166037, -0.12881080807789203, -0.10882854018038969, -0.080502768973386082, -0.054592779524389491, -0.030746556623353873, 0.0010699779508669754, 0.018476164506076323, 0.042997842018717161, 0.068170326454891988, 0.098939711480485845, 0.12364243085219064, 0.14897752107634207, 0.17232065117344095, 0.19510514320430472, 0.21967681963331126, 0.25144866739098226, 0.26627058021030359, 0.28976112810281413, 0.325183138022793, 0.34611510490686043, 0.37135045464414679, 0.40484250840269187, 0.423660564514518, 0.45260008550109493, 0.47897070643517381, 0.513466904702678, 0.54074552445523427, 0.56782579073247685, 0.59191546380311844, 0.630594130276651, 0.66170186000470765, 0.69059427870805967, 0.72267836185626344, 0.75388989983592025, 0.78095231060517345, 0.81945443104186122, 0.85806474163877222, 0.88543000730858912, 0.9254742516670329, 0.96663287584250224, 1.0081099518226813, 1.0414716524617549, 1.0873521052324735, 1.138068925150572, 1.1769604530537776, 1.2209510765755074, 1.2805602443304192, 1.3529085306332467, 1.4111760504339896, 1.4822842454846386, 1.5518312997748602, 1.6439254270476189, 1.7357210363862619, 1.9281504259252962, 2.064331420559117, 2.3554568165928291, };
+            InnerQuantiles inner = new InnerQuantiles(quantiles);
+            inner.GetQuantile(0.49471653842100138);
+        }
+
         /// <summary>
         /// Test that QuantileEstimator can handle billions of items.
         /// </summary>
@@ -147,7 +173,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             double first = 1;
             double second = 2;
             double between = (first + second) / 2;
-            double next = second + MMath.Ulp(second);
+            double next = MMath.NextDouble(second);
             double[] x = { first, first, second, second };
             // quantiles are 0, 1/3, 2/3, 1
             var outer = new OuterQuantiles(x);
@@ -212,7 +238,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 double x = canGetQuantile.GetQuantile(probability);
                 double probLessThanX = canGetProbLessThan.GetProbLessThan(x);
                 Assert.True(probLessThanX <= probability);
-                double next = x + MMath.Ulp(x);
+                double next = MMath.NextDouble(x);
                 double probLessThanNext = canGetProbLessThan.GetProbLessThan(next);
                 Assert.True(probLessThanNext > probability);
             }
@@ -222,7 +248,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void QuantileEstimator_AllEqualTest()
         {
             double middle = 3.4;
-            double next = middle + MMath.Ulp(middle);
+            double next = MMath.NextDouble(middle);
             double[] x = { middle, middle, middle };
             foreach (int weight in new[] { 1, 2, 3 })
             {

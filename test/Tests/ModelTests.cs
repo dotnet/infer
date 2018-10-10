@@ -163,7 +163,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// </summary>
         [Fact]
         [Trait("Category", "OpenBug")]
-
         public void JaggedRangesError()
         {
             Assert.Throws<CompilationFailedException>(() =>
@@ -242,7 +241,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         [Trait("Category", "OpenBug")]
         public void CloneRangeWithBadInnerRangeError()
-
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
@@ -436,10 +434,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        /// <summary>
+        /// Fails with the wrong error message.
+        /// </summary>
         [Fact]
         [Trait("Category", "OpenBug")]
         public void DefinitionBeforeDeclarationError()
-
         {
             Assert.Throws<CompilationFailedException>(() =>
             {
@@ -2097,7 +2097,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 InferenceEngine engine = new InferenceEngine();
                 Console.WriteLine(engine.Infer(temp)); // illegal
 
-});
+            });
         }
 
         [Fact]
@@ -2109,7 +2109,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Variable.ConstrainTrue(temp);
                 Variable<bool> x = Variable.New<bool>().Named("x");
                 x.SetTo(temp); // illegal
-    InferenceEngine engine = new InferenceEngine();
+                InferenceEngine engine = new InferenceEngine();
                 Console.WriteLine(engine.Infer(x));
 
             });
@@ -2131,9 +2131,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                     array[R] = x;
                 }
                 var ie = new InferenceEngine();
-    // ie.ShowFactorGraph = true;
-    // ie.ShowMsl = true;
-    Console.WriteLine("array = " + ie.Infer(array));
+                // ie.ShowFactorGraph = true;
+                // ie.ShowMsl = true;
+                Console.WriteLine("array = " + ie.Infer(array));
 
             });
         }
@@ -2160,7 +2160,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 InferenceEngine engine = new InferenceEngine();
                 Console.WriteLine(engine.Infer(temp)); // illegal
 
-});
+            });
         }
 
         [Fact]
@@ -2410,8 +2410,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Variable<bool> bools = Variable.Bernoulli(0.1).ForEach(r).Named("bools");
                 bools.SetTo(Variable.Bernoulli(0.2).ForEach(r).Named("bools2"));
                 InferenceEngine engine = new InferenceEngine();
-    //engine.BrowserMode = BrowserMode.Always;
-    engine.Infer<DistributionArray<Bernoulli>>(bools);
+                //engine.BrowserMode = BrowserMode.Always;
+                engine.Infer<DistributionArray<Bernoulli>>(bools);
 
             });
         }
@@ -2554,8 +2554,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 x[r] = Variable.GaussianFromMeanAndVariance(0, 1).ForEach(r);
                 size.ObservedValue = 3;
                 InferenceEngine engine = new InferenceEngine();
-    //engine.BrowserMode = BrowserMode.Always;
-    DistributionArray<Gaussian> xActual = engine.Infer<DistributionArray<Gaussian>>(x);
+                //engine.BrowserMode = BrowserMode.Always;
+                DistributionArray<Gaussian> xActual = engine.Infer<DistributionArray<Gaussian>>(x);
 
             });
         }
@@ -2570,8 +2570,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 VariableArray<double> x = Variable.Array<double>(r).Named("x");
                 x[r] = Variable.GaussianFromMeanAndVariance(0, 1).ForEach(r);
                 InferenceEngine engine = new InferenceEngine();
-    //engine.BrowserMode = BrowserMode.Always;
-    DistributionArray<Gaussian> xActual = engine.Infer<DistributionArray<Gaussian>>(x);
+                //engine.BrowserMode = BrowserMode.Always;
+                DistributionArray<Gaussian> xActual = engine.Infer<DistributionArray<Gaussian>>(x);
 
             });
         }
@@ -2579,7 +2579,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "OpenBug")]
         [Fact]
         public void RedefineVariableError()
-
         {
             Assert.Throws<InferCompilerException>(() =>
             {
@@ -2620,11 +2619,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                 VariableArray<double> array = Variable.Constant(new double[] { 1.2 }).Named("array");
                 VariableArray<int> indices = Variable.Constant(new int[] { 0 }).Named("indices");
                 VariableArray<double> x = Variable.GetItems(array, indices).Named("x");
-    // redefinition of x
-    x[r] = Variable.GaussianFromMeanAndVariance(0, 1).ForEach(r);
+                // redefinition of x
+                x[r] = Variable.GaussianFromMeanAndVariance(0, 1).ForEach(r);
                 InferenceEngine engine = new InferenceEngine();
-    //engine.BrowserMode = BrowserMode.Always;
-    DistributionArray<Gaussian> xActual = engine.Infer<DistributionArray<Gaussian>>(x);
+                //engine.BrowserMode = BrowserMode.Always;
+                DistributionArray<Gaussian> xActual = engine.Infer<DistributionArray<Gaussian>>(x);
 
             });
         }
@@ -2632,17 +2631,15 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "OpenBug")]
         [Fact]
         public void RedefineArrayError2()
-
         {
             Assert.Throws<InferCompilerException>(() =>
             {
-
                 Range timeRange = new Range(2);
                 var sum = Variable.Array<double>(timeRange).Named("sum");
                 var x = Variable.Array<double>(timeRange).Named("x");
 
-    // for each time step
-    using (var block = Variable.ForEach(timeRange))
+                // for each time step
+                using (var block = Variable.ForEach(timeRange))
                 {
                     var t = block.Index;
 
@@ -2656,8 +2653,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                         sum[t] = sum[t - 1] + x[t - 1];
                     }
 
-        // order iff below minimum
-        Variable<bool> mustOrder = Variable.Bernoulli(0.1);
+                    // order iff below minimum
+                    Variable<bool> mustOrder = Variable.Bernoulli(0.1);
                     using (Variable.If(mustOrder))
                     {
                         x[t].SetTo(0.0);
@@ -2668,9 +2665,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }    // end ForEach block      
 
-    InferenceEngine ie = new InferenceEngine();
+                InferenceEngine ie = new InferenceEngine();
                 var xActual = ie.Infer<IList<Gaussian>>(x);
-
             });
         }
 
@@ -2682,8 +2678,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Range r = new Range(1).Named("r");
                 VariableArray<double> x = Variable.Array<double>(r).Named("x");
                 InferenceEngine engine = new InferenceEngine();
-    //engine.BrowserMode = BrowserMode.Always;
-    DistributionArray<Gaussian> xActual = engine.Infer<DistributionArray<Gaussian>>(x);
+                //engine.BrowserMode = BrowserMode.Always;
+                DistributionArray<Gaussian> xActual = engine.Infer<DistributionArray<Gaussian>>(x);
 
             });
         }
@@ -2918,9 +2914,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 DistributionArray<Bernoulli> d = engine.Infer<DistributionArray<Bernoulli>>(bools);
                 Console.WriteLine("bools = ");
                 Console.WriteLine(d);
-    //Assert.True(d[0].MaxDiff(new Bernoulli(0.9)) < 1e-10);
+                //Assert.True(d[0].MaxDiff(new Bernoulli(0.9)) < 1e-10);
 
-});
+            });
         }
 
         [Fact]
@@ -2953,9 +2949,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 DistributionArray<Bernoulli> d = engine.Infer<DistributionArray<Bernoulli>>(bools);
                 Console.WriteLine("bools = ");
                 Console.WriteLine(d);
-    //Assert.True(d[0].MaxDiff(new Bernoulli(0.9)) < 1e-10);
+                //Assert.True(d[0].MaxDiff(new Bernoulli(0.9)) < 1e-10);
 
-});
+            });
         }
 
         [Fact]
@@ -2970,7 +2966,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 InferenceEngine engine = new InferenceEngine(new ExpectationPropagation());
                 p.ObservedValue = 0.9; // must use p.Array.Value
-    Console.WriteLine(engine.Infer(bools));
+                Console.WriteLine(engine.Infer(bools));
 
             });
         }

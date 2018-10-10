@@ -560,7 +560,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var engine = new InferenceEngine();
                 engine.Compiler.RequiredQuality = QualityBand.Unknown;
                 engine.Infer(Variable<bool>.Factor(MissingBufferMethodsFailureFactorAndOp.Factor, Variable.Bernoulli(0.5)));
-
             });
         }
 
@@ -576,6 +575,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             /// </summary>
             /// <param name="x">Factor argument.</param>
             /// <returns>Nothing since an exception is always thrown.</returns>
+            [Hidden]
             public static bool Factor(bool x)
             {
                 throw new NotImplementedException();
