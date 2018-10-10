@@ -17,8 +17,8 @@
       <BiasVariance>1.0</BiasVariance>
       <ThresholdPriorVariance>0.5</ThresholdPriorVariance>
       <RatingLossFunction>Absolute</RatingLossFunction>
-    
-  </Element>
+
+    </Element>
     <!--Infer.NET-based implementation of the Matchbox model-->
     <Element xsi:type="MatchboxRecommender" Id="Infer.NET Matchbox" Parent="Matchbox common">
     </Element>
@@ -43,10 +43,10 @@
       <TraitCount>5</TraitCount>
       <IterationCount>10</IterationCount>
       <UserNeighborhoodSize>500</UserNeighborhoodSize>
-      <UseX64JVM>false</UseX64JVM>
-      <JavaMaxHeapSizeInMb>1024</JavaMaxHeapSizeInMb>
+      <UseX64JVM>true</UseX64JVM>
+      <JavaMaxHeapSizeInMb>6144</JavaMaxHeapSizeInMb>
     </Element>
-    
+
     <!--Mahout SlopeOne recommender-->
     <Element xsi:type="MahoutRecommender" Id="Mahout SlopeOne" Parent="Mahout Common">
       <RatingPredictionAlgorithm>SlopeOne</RatingPredictionAlgorithm>
@@ -242,7 +242,7 @@
       <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Jester dataset"/>
       <SplitSettings Parent="Small recommender dataset"/>
     </Run>
-    
+
     <!--Runs on book-crossing dataset-->
     <Run>
       <Name>Infer.NET Matchbox (default) on book-crossing small</Name>
@@ -293,7 +293,7 @@
       </Tests>
       <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Book-crossing dataset"/>
       <SplitSettings Parent="Small recommender dataset"/>
-    </Run>    
+    </Run>
     <Run>
       <Name>Random on book-crossing small</Name>
       <Recommender xsi:type="RandomRecommender"/>

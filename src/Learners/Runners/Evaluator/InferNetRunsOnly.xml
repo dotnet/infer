@@ -17,44 +17,10 @@
       <BiasVariance>1.0</BiasVariance>
       <ThresholdPriorVariance>0.5</ThresholdPriorVariance>
       <RatingLossFunction>Absolute</RatingLossFunction>
-    
-  </Element>
+
+    </Element>
     <!--Infer.NET-based implementation of the Matchbox model-->
-    <Element xsi:type="MatchboxRecommender" Id="Infer.NET Matchbox" Parent="Matchbox common">
-    </Element>
-
-    <!--VW recommender-->
-    <Element xsi:type="VWRecommender" Id="VW">
-      <TraitCount>5</TraitCount>
-      <BitPrecision>18</BitPrecision>
-      <LearningRate>0.021</LearningRate>
-      <LearningRateDecay>0.97</LearningRateDecay>
-      <PassCount>10</PassCount>
-      <L1Regularization>1</L1Regularization>
-      <L2Regularization>0.001</L2Regularization>
-      <UseUserFeatures>false</UseUserFeatures>
-      <UseItemFeatures>false</UseItemFeatures>
-    </Element>
-
-    <!--Common settings for different Mahout algorithms-->
-    <Element xsi:type="MahoutRecommender" Id="Mahout Common">
-      <RatingSimilarity>Euclidean</RatingSimilarity>
-      <MissingRatingPredictionAlgorithm>TakeMedian</MissingRatingPredictionAlgorithm>
-      <TraitCount>5</TraitCount>
-      <IterationCount>10</IterationCount>
-      <UserNeighborhoodSize>500</UserNeighborhoodSize>
-      <UseX64JVM>false</UseX64JVM>
-      <JavaMaxHeapSizeInMb>1024</JavaMaxHeapSizeInMb>
-    </Element>
-    
-    <!--Mahout SlopeOne recommender-->
-    <Element xsi:type="MahoutRecommender" Id="Mahout SlopeOne" Parent="Mahout Common">
-      <RatingPredictionAlgorithm>SlopeOne</RatingPredictionAlgorithm>
-    </Element>
-
-    <!--Mahout SVD recommender-->
-    <Element xsi:type="MahoutRecommender" Id="Mahout SVD" Parent="Mahout Common">
-      <RatingPredictionAlgorithm>Svd</RatingPredictionAlgorithm>
+      <Element xsi:type="MatchboxRecommender" Id="Infer.NET Matchbox" Parent="Matchbox common">
     </Element>
 
     <!--Default dataset splitting settings-->
@@ -132,42 +98,6 @@
       <SplitSettings Parent="Small recommender dataset"/>
     </Run>
     <Run>
-      <Name>VW (default) on Movie Lens small</Name>
-      <Recommender xsi:type="VWRecommender" Parent="VW"/>
-      <Tests>
-        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
-          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
-        </Test>
-        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
-      </Tests>
-      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Movie Lens dataset"/>
-      <SplitSettings Parent="Small recommender dataset"/>
-    </Run>
-    <Run>
-      <Name>Mahout SlopeOne (default) on Movie Lens small</Name>
-      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SlopeOne"/>
-      <Tests>
-        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
-          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
-        </Test>
-        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
-        <Test xsi:type="PredictRelatedUsers" Parent="Default related user prediction test"/>
-      </Tests>
-      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Movie Lens dataset"/>
-      <SplitSettings Parent="Small recommender dataset"/>
-    </Run>
-    <Run>
-      <Name>Mahout SVD (default) on Movie Lens small</Name>
-      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SVD"/>
-      <Tests>
-        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
-          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
-        </Test>
-      </Tests>
-      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Movie Lens dataset"/>
-      <SplitSettings Parent="Small recommender dataset"/>
-    </Run>
-    <Run>
       <Name>Random on Movie Lens small</Name>
       <Recommender xsi:type="RandomRecommender"/>
       <Tests>
@@ -195,41 +125,6 @@
       <SplitSettings Parent="Small recommender dataset"/>
     </Run>
     <Run>
-      <Name>VW (default) on Jester small</Name>
-      <Recommender xsi:type="VWRecommender" Parent="VW"/>
-      <Tests>
-        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
-          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
-        </Test>
-        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
-      </Tests>
-      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Jester dataset"/>
-      <SplitSettings Parent="Small recommender dataset"/>
-    </Run>
-    <Run>
-      <Name>Mahout SlopeOne (default) on Jester small</Name>
-      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SlopeOne"/>
-      <Tests>
-        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
-          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
-        </Test>
-        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
-      </Tests>
-      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Jester dataset"/>
-      <SplitSettings Parent="Small recommender dataset"/>
-    </Run>
-    <Run>
-      <Name>Mahout SVD (default) on Jester small</Name>
-      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SVD"/>
-      <Tests>
-        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
-          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
-        </Test>
-      </Tests>
-      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Jester dataset"/>
-      <SplitSettings Parent="Small recommender dataset"/>
-    </Run>
-    <Run>
       <Name>Random on Jester small</Name>
       <Recommender xsi:type="RandomRecommender"/>
       <Tests>
@@ -242,7 +137,7 @@
       <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Jester dataset"/>
       <SplitSettings Parent="Small recommender dataset"/>
     </Run>
-    
+
     <!--Runs on book-crossing dataset-->
     <Run>
       <Name>Infer.NET Matchbox (default) on book-crossing small</Name>
@@ -256,44 +151,6 @@
       <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Book-crossing dataset"/>
       <SplitSettings Parent="Small recommender dataset"/>
     </Run>
-    <Run>
-      <Name>VW (default) on book-crossing small</Name>
-      <Recommender xsi:type="VWRecommender" Parent="VW"/>
-      <Tests>
-        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
-          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
-        </Test>
-        <Test xsi:type="RecommendItems" Parent="Default item recommendation test"/>
-      </Tests>
-      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Book-crossing dataset"/>
-      <SplitSettings Parent="Small recommender dataset"/>
-    </Run>
-    <Run>
-      <Name>Mahout SlopeOne (default) on book-crossing small</Name>
-      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SlopeOne"/>
-      <Tests>
-        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
-          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
-        </Test>
-        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
-        <Test xsi:type="PredictRelatedUsers" Parent="Default related user prediction test"/>
-      </Tests>
-      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Book-crossing dataset"/>
-      <SplitSettings Parent="Small recommender dataset"/>
-    </Run>
-    <Run>
-      <Name>Mahout SVD (default) on book-crossing small</Name>
-      <Recommender xsi:type="MahoutRecommender" Parent="Mahout SVD"/>
-      <Tests>
-        <Test xsi:type="PredictRatings" Parent="Default rating prediction test">
-          <ComputeUncertainPredictionMetrics>false</ComputeUncertainPredictionMetrics>
-        </Test>
-        <Test xsi:type="PredictRelatedItems" Parent="Default related item prediction test"/>
-        <Test xsi:type="PredictRelatedUsers" Parent="Default related user prediction test"/>
-      </Tests>
-      <Dataset xsi:type="RecommenderGeneratedDataset" Parent="Book-crossing dataset"/>
-      <SplitSettings Parent="Small recommender dataset"/>
-    </Run>    
     <Run>
       <Name>Random on book-crossing small</Name>
       <Recommender xsi:type="RandomRecommender"/>

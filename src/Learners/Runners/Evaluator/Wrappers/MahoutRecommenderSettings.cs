@@ -119,5 +119,15 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// Gets or sets the number of iterations used by the SVD recommender.
         /// </summary>
         public int IterationCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use 64-bit JVM to run Mahout
+        /// </summary>
+        public bool UseX64JVM { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum heap size in MB for JVM running Mahout
+        /// </summary>
+        public int JavaMaxHeapSizeInMb { get; set; }
     }
 }

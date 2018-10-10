@@ -778,9 +778,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// <param name="mahoutRunnerCommandLine">The command line for the Mahout wrapper.</param>
         private void RunMahoutWrapper(string mahoutRunnerCommandLine)
         {
-            const int MaxHeapSizeInMb = 1024;
             string command =
-                $"java -Xmx{MaxHeapSizeInMb}m -classpath \"{Path.Combine(PathToClasses, "MahoutRunner.jar")}{JarSeparator}{Path.Combine(PathToClasses, "mahout-core-0.8-job.jar")}\" MahoutRunner {mahoutRunnerCommandLine}";
+                $"java {(this.Settings.UseX64JVM ? "-d64" : "")} -Xmx{this.Settings.JavaMaxHeapSizeInMb}m -classpath \"{Path.Combine(PathToClasses, "MahoutRunner.jar")}{JarSeparator}{Path.Combine(PathToClasses, "mahout-core-0.8-job.jar")}\" MahoutRunner {mahoutRunnerCommandLine}";
             WrapperUtils.ExecuteExternalCommand(command);
         }
 
