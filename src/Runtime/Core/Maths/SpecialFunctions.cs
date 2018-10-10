@@ -1016,7 +1016,7 @@ for k in range(2,26):
         /// Coefficients of de Moivre's expansion for the quadgamma function.
         /// Each coefficient is -(2j+1) B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=0
         /// </summary>
-        private static readonly double[] c_tetragamma_series = { -1, -.5, +1 / 6.0, -1 / 6.0, +3 / 10.0, -5 / 6.0, 691.0/210, -35.0/2 };
+        private static readonly double[] c_tetragamma_series = { -1, -.5, +1 / 6.0, -1 / 6.0, +3 / 10.0, -5 / 6.0, 691.0 / 210, -35.0 / 2 };
 
         /// <summary>
         /// Computes the natural logarithm of the multivariate Gamma function.
@@ -3630,6 +3630,151 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             long bits = BitConverter.DoubleToInt64Bits(value);
             double nextValue = BitConverter.Int64BitsToDouble(bits + 1);
             return nextValue - value;
+        }
+
+        /// <summary>
+        /// Returns the smallest double precision number greater than value, if one exists.  Otherwise returns value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double NextDouble(double value)
+        {
+            if (value < 0) return -PreviousDouble(-value);
+            value = Math.Abs(value); // needed to handle -0
+            if (double.IsNaN(value)) return value;
+            if (double.IsPositiveInfinity(value)) return value;
+            long bits = BitConverter.DoubleToInt64Bits(value);
+            return BitConverter.Int64BitsToDouble(bits + 1);
+        }
+
+        /// <summary>
+        /// Returns the largest double precision number less than value, if one exists.  Otherwise returns value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double PreviousDouble(double value)
+        {
+            if (value <= 0) return -NextDouble(-value);
+            if (double.IsNaN(value)) return value;
+            if (double.IsNegativeInfinity(value)) return value;
+            long bits = BitConverter.DoubleToInt64Bits(value);
+            return BitConverter.Int64BitsToDouble(bits - 1);
+        }
+
+        /// <summary>
+        /// Returns the largest value such that value/denominator &lt;= ratio.
+        /// </summary>
+        /// <param name="denominator"></param>
+        /// <param name="ratio"></param>
+        /// <returns></returns>
+        internal static double LargestDoubleProduct(double denominator, double ratio)
+        {
+            if (denominator < 0) return LargestDoubleProduct(-denominator, -ratio);
+            if (denominator == 0)
+            {
+                if (double.IsNaN(ratio)) return 0;
+                else if (double.IsPositiveInfinity(ratio))
+                    return double.PositiveInfinity;
+                else if (double.IsNegativeInfinity(ratio))
+                    return PreviousDouble(0);
+                else
+                    return double.NaN;
+            }
+            if (double.IsPositiveInfinity(denominator))
+            {
+                if (double.IsNaN(ratio)) return denominator;
+                else return double.MaxValue;
+            }
+            if (double.IsPositiveInfinity(ratio)) return ratio;
+            // denominator > 0
+            // avoid infinite bounds
+            double lowerBound = Math.Max(double.MinValue, denominator * PreviousDouble(ratio));
+            double upperBound = Math.Min(double.MaxValue, denominator * NextDouble(ratio));
+            if(double.IsNegativeInfinity(ratio))
+            {
+                lowerBound = PreviousDouble(upperBound);
+            }
+            while (true)
+            {
+                double value = (lowerBound + upperBound) / 2;
+                if (double.IsInfinity(value)) value = 0.5 * lowerBound + 0.5 * upperBound;
+                if (value < lowerBound || value > upperBound) throw new Exception();
+                if (value / denominator <= ratio)
+                {
+                    double value2 = NextDouble(value);
+                    if (value2 == value || value2 / denominator > ratio)
+                    {
+                        return value;
+                    }
+                    else
+                    {
+                        // value is too low
+                        lowerBound = value2;
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception();
+                    }
+                }
+                else
+                {
+                    // value is too high
+                    upperBound = PreviousDouble(value);
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the largest value such that value - b &lt;= sum.
+        /// </summary>
+        /// <param name="sum"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        internal static double LargestDoubleSum(double b, double sum)
+        {
+            if (double.IsPositiveInfinity(b))
+            {
+                if (double.IsNaN(sum)) return double.PositiveInfinity;
+                else return double.MaxValue;
+            }
+            if (double.IsNegativeInfinity(b))
+            {
+                if (double.IsNaN(sum)) return double.NegativeInfinity;
+                else return double.PositiveInfinity;
+            }
+            if (double.IsPositiveInfinity(sum)) return sum;
+            // denominator > 0
+            double lowerBound = PreviousDouble(b + sum);
+            double upperBound = NextDouble(b) + NextDouble(sum);
+            upperBound = Math.Max(NextDouble(b) + sum, b + NextDouble(sum));
+            long iterCount = 0;
+            while (true)
+            {
+                iterCount++;
+                double value = (lowerBound + upperBound) / 2;
+                if (double.IsInfinity(value)) value = 0.5 * lowerBound + 0.5 * upperBound;
+                if (value < lowerBound || value > upperBound) throw new Exception();
+                if (value - b <= sum)
+                {
+                    double value2 = NextDouble(value);
+                    if (value2 == value || value2 - b > sum)
+                    {
+                        //if (iterCount > 10)
+                        //    throw new Exception();
+                        return value;
+                    }
+                    else
+                    {
+                        // value is too low
+                        lowerBound = value2;
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception();
+                    }
+                }
+                else
+                {
+                    // value is too high
+                    upperBound = PreviousDouble(value);
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception();
+                }
+            }
         }
 
         #region Enumerations and constants

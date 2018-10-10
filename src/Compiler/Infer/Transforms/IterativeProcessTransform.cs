@@ -633,7 +633,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             },
             _ => { }, _ => { },
             addStatementToGraph);
-            bool includeBackEdges = true;
+            // includeBackEdges=true seems intuitive but it causes EndCoupledChainsTest2 to fail when Optimize=false.
+            // In that model there are two iteration loops with a (false) write-after-read dependency between the loop initializers.
+            bool includeBackEdges = false;
             if (includeBackEdges)
             {
                 // add write-after-read dependencies
@@ -702,6 +704,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     // a loop initializer must run when the number of iterations decreases.
                     parameterDependencies[sourceIndex] = AddParameterDependencies(parameterDependencies[sourceIndex], newDeps);
+                    if (debug)
+                        AddParameterDependencyMessage(nodes[sourceIndex], $"{parameterDependencies[sourceIndex]} initializer of whileLoop node {loopNode}, hasLoopAncestor = {hasLoopAncestor[loopNode]}");
                 });
             }
 
@@ -714,6 +718,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 foreach (NodeIndex source in dependencyGraph.SourcesOf(target))
                 {
                     parameterDepsChanged |= InheritMembers(parameterDependencies, target, source);
+                    if (debug)
+                        AddParameterDependencyMessage(nodes[target], $"{parameterDependencies[target]} inherited from {nodes[source]}");
                 }
                 if (containerDependencies[target] != null)
                 {
@@ -781,6 +787,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (!loopInitializerAncestors.Contains(edge.Target))
                     {
                         parameterDepsChanged |= InheritMembers(parameterDependencies, edge.Target, edge.Source);
+                        if (debug)
+                            AddParameterDependencyMessage(nodes[edge.Target], $"{parameterDependencies[edge.Target]} upward inherited from {nodes[edge.Source]}");
                     }
                 };
                 dfs.TreeEdge += inheritDeps;
@@ -812,7 +820,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         // a loop initializer should not run only because the number of iterations increases.
                         initParams.Remove(numberOfIterationsDecl);
                         if (parameterDependencies[sourceIndex].Contains(numberOfIterationsDecl))
-                            throw new Exception("loop initializer cannot depend on numberOfIterations");
+                            Error("loop initializer cannot depend on numberOfIterations");
                     }
                     // if the node already has a dependency on a parameter, then it doesn't need an init dependency on that parameter.
                     initParams.Remove(parameterDependencies[sourceIndex]);
@@ -1165,7 +1173,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             foreach (NodeIndex nodeIndex in sub.statements)
             {
                 IStatement ist = nodes[nodeIndex];
-                //context.InputAttributes.Set(ist, new ParameterDependencyAttribute(ParameterDependencies[nodeIndex]));
                 if (IsConvergenceLoop(ist))
                 {
                     Assert.IsTrue(sub.containsConvergenceLoop);
@@ -1283,8 +1290,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             public override string ToString()
             {
-                return "{" + StringUtil.CollectionToString(parameters.Select(ipd => ipd.Name).OrderBy(s => s), ",") + "}{" +
-                       StringUtil.CollectionToString(initParameters.Select(ipd => ipd.Name).OrderBy(s => s), ",") + "}";
+                return "SubroutineDependencies(parameterDeps={" + StringUtil.CollectionToString(parameters.Select(ipd => ipd.Name).OrderBy(s => s), ",") + "}, initDeps={" +
+                       StringUtil.CollectionToString(initParameters.Select(ipd => ipd.Name).OrderBy(s => s), ",") + "})";
             }
         }
 
@@ -1384,22 +1391,26 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-#if false
-    // useful for debugging
-        public class ParameterDependencyAttribute
+        internal class ParameterDependencyMessages : ICompilerAttribute
         {
-            Set<IParameterDeclaration> parameters;
+            public readonly List<string> Messages = new List<string>();
 
-            public ParameterDependencyAttribute(Set<IParameterDeclaration> set)
+            public void Add(string message)
             {
-                parameters = set;
+                Messages.Add(message);
             }
+
             public override string ToString()
             {
-                return "ParameterDependencies("+StringUtil.CollectionToString(Enumerable.ConvertAll(parameters, p => p.Name), ",")+")";
+                return StringUtil.EnumerableToString(Messages, Environment.NewLine);
             }
         }
-#endif
+
+        private void AddParameterDependencyMessage(IStatement ist, string message)
+        {
+            ParameterDependencyMessages attr = context.InputAttributes.GetOrCreate(ist, () => new ParameterDependencyMessages());
+            attr.Add(message);
+        }
 
         Set<T> AddParameterDependencies<T>(Set<T> set, IEnumerable<T> itemsToAdd)
         {
