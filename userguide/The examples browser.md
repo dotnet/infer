@@ -5,7 +5,7 @@ layout: default
 
 ## The Examples Browser
 
-The Examples Browser provides a simple way of viewing and running the tutorials and examples included in Infer.NET. The Examples Browser is built by the Tutorials project in the Infer2.sln Visual Studio solution found in the repository root folder. After launching the project you will get a window that looks like this:
+The Examples Browser provides a simple way of viewing and running the tutorials and examples included in Infer.NET. The Examples Browser is built by the Tutorials project in the Infer.sln Visual Studio solution found in the repository root folder. After launching the project you will get a window that looks like this:
 
 ![Infer.NET block diagram](ExamplesBrowser.PNG)  
 
