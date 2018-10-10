@@ -31,7 +31,7 @@ exitcode=0
 index=0
 
 echo -e "\033[44;37m=====================PARALLEL TESTS RUNNING============================\033[0m"
-for assembly in Learners/LearnersTests${compath}Microsoft.ML.Probabilistic.Learners.Tests.dll Tests${compath}Microsoft.ML.Probabilistic.Tests.dll TestPublic${compath}TestPublic.dll
+for assembly in $dlls
 do
     # Please note that due to xUnit issue we need to run tests for each assembly separately
     dotnet "$runner" "$assembly" $parallel_filter -xml "netcoretest-result${index}.xml"

@@ -25,7 +25,11 @@ namespace Microsoft.ML.Probabilistic.Tests.CodeCompilerTests
 
         public AbstractCompilerTester()
         {
-            assemblies = AppDomain.CurrentDomain.GetAssemblies().GroupBy(x => x.FullName).Select(x => x.First()).ToList();
+            assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.IsDynamic && !string.IsNullOrEmpty(a.Location))
+                .GroupBy(x => x.FullName)
+                .Select(x => x.First())
+                .ToList();
             compiler = new CodeCompiler();
         }
 

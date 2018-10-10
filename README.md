@@ -135,7 +135,7 @@ All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produ
 #### Prerequisites
 
 **Visual Studio 2017.**
-If you don't have Visual Studio 2017, you can install the free [Visual Studio 2017 Community](http://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx).
+If you don't have Visual Studio 2017, you can install the free [Visual Studio 2017 Community](https://visualstudio.microsoft.com/vs/community/).
 
 #### Build and test
 You can load `Infer2.sln` solution located in the root of repository into Visual Studio and build all libraries and samples.
