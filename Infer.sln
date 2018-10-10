@@ -4,7 +4,7 @@ VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A181C943-2E01-454D-9008-2E3C53AA09CC}"
 	ProjectSection(SolutionItems) = preProject
-		Infer2.snk = Infer2.snk
+		Infer.snk = Infer.snk
 		TestRunConfig1.testrunconfig = TestRunConfig1.testrunconfig
 	EndProjectSection
 	ProjectSection(FolderStartupServices) = postProject
