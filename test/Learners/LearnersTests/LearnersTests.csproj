@@ -2,7 +2,7 @@
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\Infer2.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\Infer.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>Microsoft.ML.Probabilistic.Learners.Tests</AssemblyName>
     <RootNamespace>Microsoft.ML.Probabilistic.Learners.Tests</RootNamespace>
     <DefineConstants>TRACE</DefineConstants>

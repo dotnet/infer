@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TestRunConfiguration name="TestRunConfig1" id="8de3ef11-ed64-4bd5-bbd8-d35dd5a63e94" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <Description>This is a default test run configuration for a local test run.</Description>
-  <CodeCoverage keyFile="Infer2.snk" />
+  <CodeCoverage keyFile="Infer.snk" />
   <Timeouts testTimeout="300000" />
   <TestTypeSpecific>
     <WebTestRunConfiguration testTypeId="4e7599fa-5ecb-43e9-a887-cd63cf72d207">
