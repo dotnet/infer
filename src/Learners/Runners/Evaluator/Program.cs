@@ -17,7 +17,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// </summary>
         private const string DefaultConfigFile = "Config.xml";
 
-        private static bool ErrorHappened = false;
+        private static bool HasFailed = false;
 
         #region Event handler lists
 
@@ -70,10 +70,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             }
             catch (Exception e)
             {
-                ErrorHappened = true;
+                HasFailed = true;
                 PrintErrorMessage(e);
             }
-            int exitCode = ErrorHappened ? 1 : 0;
+            int exitCode = HasFailed ? 1 : 0;
             return exitCode;
         }
 
@@ -261,7 +261,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// <param name="e">The arguments of the event.</param>
         private static void FlagRaisingRecommenderRunInterruptedHandler(object sender, RecommenderRunInterruptedEventArgs e)
         {
-            ErrorHappened = true;
+            HasFailed = true;
         }
 
         #endregion
