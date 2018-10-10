@@ -65,7 +65,7 @@ Documentation can be found on the [Infer&#46;NET website](https://dotnet.github.
 
 ## Structure of Repository
 
-* The Visual Studio solution `Infer2.sln` in the root of the repository contains all Infer&#46;NET components, unit tests and sample programs from the folders described below.
+* The Visual Studio solution `Infer.sln` in the root of the repository contains all Infer&#46;NET components, unit tests and sample programs from the folders described below.
 
 * `src/`
 
@@ -138,7 +138,7 @@ All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produ
 If you don't have Visual Studio 2017, you can install the free [Visual Studio 2017 Community](https://visualstudio.microsoft.com/vs/community/).
 
 #### Build and test
-You can load `Infer2.sln` solution located in the root of repository into Visual Studio and build all libraries and samples.
+You can load `Infer.sln` solution located in the root of repository into Visual Studio and build all libraries and samples.
 
 **NB!** The solution has a number of build configurations that allows building either for all supported frameworks simultaneously or only for a specific one, but in order for Visual Studio to behave correctly, the solution needs to be closed and re-opened after switching between such configurations.
 
@@ -160,21 +160,21 @@ All components of Infer&#46;NET and almost all sample projects run on .NET Core 
 
 To build .NET Standard libraries and .NET Core executables, run in the root of the repository either
 ```bash
-dotnet build -c DebugCore Infer2.sln
+dotnet build -c DebugCore Infer.sln
 ```
 to build debug assemblies, or
 ```bash
-dotnet build -c ReleaseCore Infer2.sln
+dotnet build -c ReleaseCore Infer.sln
 ```
 to build release assemblies.
 
 The corresponding commands to build .NET Standard libraries and .NET Framework executables with Mono are
 ```bash
-msbuild /c:DebugFull /p:MonoSupport=true /restore Infer2.sln
+msbuild /c:DebugFull /p:MonoSupport=true /restore Infer.sln
 ```
 and
 ```bash
-msbuild /c:ReleaseFull /p:MonoSupport=true /restore Infer2.sln
+msbuild /c:ReleaseFull /p:MonoSupport=true /restore Infer.sln
 ```
 Please, expect build failure messages about examples that use WPF GUI. Libraries and executables that don't reference WPF should build, though.
 
