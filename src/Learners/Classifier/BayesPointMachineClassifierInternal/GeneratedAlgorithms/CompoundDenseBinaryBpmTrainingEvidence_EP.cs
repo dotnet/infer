@@ -351,6 +351,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange] = new Bernoulli[3];
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange][1] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange][0] = Bernoulli.Uniform();
+				this.SharedWeightPrecisionRates_uses_F[FeatureRange][1] = Gamma.Uniform();
 				this.ModelSelector_selector_cases_0_rep2_uses_B[FeatureRange][2] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep2_B[FeatureRange] = Bernoulli.Uniform();
 				this.ModelSelector_selector_cases_0_rep5_uses_B[FeatureRange] = new Bernoulli[2];
@@ -664,7 +665,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Weights_rep_F_marginal[FeatureRange] = ReplicateOp_Divide.MarginalInit<Gaussian>(this.Weights_uses_F[FeatureRange][1]);
 				this.Weights_rep_B_toDef[FeatureRange] = ReplicateOp_Divide.ToDefInit<Gaussian>(this.Weights_uses_F[FeatureRange][1]);
 				this.WeightPrecisions_B_FeatureRange__Q[FeatureRange] = default(Gamma);
-				this.SharedWeightPrecisionRates_uses_F[FeatureRange][1] = Gamma.Uniform();
 			}
 			this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isDone = true;
 			this.Changed_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_WeightConst3_isInitialised = true;
@@ -739,7 +739,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			}
 			this.CommonWeightPrecision_rep_F_marginal = ReplicateOp_Divide.MarginalInit<Gamma>(this.CommonWeightPrecision_F);
 			this.CommonWeightPrecision_rep_B_toDef = ReplicateOp_Divide.ToDefInit<Gamma>(this.CommonWeightPrecision_F);
-			this.CommonWeightPrecision_F = GammaFromShapeAndRateOpBase.SampleAverageConditional(1.0, 1.0);
 			this.CommonWeightPrecision_rep_F_marginal = ReplicateOp_Divide.Marginal<Gamma>(this.CommonWeightPrecision_rep_B_toDef, this.CommonWeightPrecision_F, this.CommonWeightPrecision_rep_F_marginal);
 			this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isDone = true;
 			this.Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_InstanceCount_Labels_WeightConst9_isInitialised = true;
@@ -791,7 +790,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			this.ModelSelector_selector_cases_0_uses_B[2] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[1] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[0] = Bernoulli.Uniform();
-			this.CommonWeightPrecision_F = Gamma.Uniform();
+			this.CommonWeightPrecision_F = GammaFromShapeAndRateOpBase.SampleAverageConditional(1.0, 1.0);
 			this.ModelSelector_selector_cases_0_uses_B[13] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[17] = Bernoulli.Uniform();
 			this.ModelSelector_selector_cases_0_uses_B[19] = Bernoulli.Uniform();

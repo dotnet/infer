@@ -25,3 +25,7 @@ steps:
 - template: netcoretest-fast.yml
   parameters:
     Configuration: '$(BuildConfiguration)Core'
+
+- template: evaluator-netcore.yml
+  parameters:
+    Configuration: '$(BuildConfiguration)Core'

@@ -114,6 +114,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     /// <summary>
     /// Damp factor methods
     /// </summary>
+    [Hidden]
     public static class Damp
     {
         /// <summary>

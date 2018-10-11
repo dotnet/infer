@@ -706,6 +706,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     /// <summary>
     /// Special factors used to modify the inference schedule.
     /// </summary>
+    [Hidden]
     public static class NoSkip
     {
         /// <summary>
@@ -752,6 +753,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
+    [Hidden]
     public static class Diode
     {
         /// <summary>

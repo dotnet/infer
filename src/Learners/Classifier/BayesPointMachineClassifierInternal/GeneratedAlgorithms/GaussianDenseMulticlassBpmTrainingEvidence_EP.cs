@@ -411,6 +411,9 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Weights_rep_F[ClassRange] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.featureCount);
 				this.Weights_rep_B[ClassRange] = new DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>(this.featureCount);
 				this.ModelSelector_selector_cases_0_rep4_rep_uses_B[ClassRange] = new Bernoulli[this.featureCount][];
+				for(int _iv = 0; _iv<this.featureCount; _iv++) {
+					this.Weights_uses_F[ClassRange][_iv][0] = Gaussian.Uniform();
+				}
 				this.ModelSelector_selector_cases_0_rep4_rep_B[ClassRange] = new DistributionStructArray<Bernoulli,bool>(this.featureCount);
 				for(int FeatureRange = 0; FeatureRange<this.featureCount; FeatureRange++) {
 					this.ModelSelector_selector_cases_0_rep4_rep_uses_B[ClassRange][FeatureRange] = new Bernoulli[3];
@@ -586,9 +589,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				return ;
 			}
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
-				for(int ClassRange = 0; ClassRange<this.classCount; ClassRange++) {
-					this.NoisyScores_F[InstanceRange][ClassRange] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.Scores_F[InstanceRange][ClassRange], 1.0);
-				}
 				for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
 					if (this.labels[InstanceRange]==ClassMaxNoisyScore) {
 						this.MaxNoisyScore_rep_F_marginal[InstanceRange][ClassMaxNoisyScore] = ReplicateOp_Divide.Marginal<Gaussian>(this.MaxNoisyScore_rep_B_toDef[InstanceRange][ClassMaxNoisyScore], this.NoisyScores_F[InstanceRange][ClassMaxNoisyScore], this.MaxNoisyScore_rep_F_marginal[InstanceRange][ClassMaxNoisyScore]);
@@ -622,6 +622,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						this.FeatureScores_F[InstanceRange][ClassRange][FeatureRange] = GaussianProductOpBase.ProductAverageConditional(this.featureValues[InstanceRange][FeatureRange], this.Weights_rep_F[ClassRange][FeatureRange][InstanceRange]);
 					}
 					this.Scores_F[InstanceRange][ClassRange] = FastSumOp.SumAverageConditional(this.FeatureScores_F[InstanceRange][ClassRange]);
+					this.NoisyScores_F[InstanceRange][ClassRange] = GaussianFromMeanAndVarianceOp.SampleAverageConditional(this.Scores_F[InstanceRange][ClassRange], 1.0);
 				}
 			}
 			this.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16_isDone = true;
@@ -718,9 +719,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 					this.Weights_rep_F_marginal[ClassRange][FeatureRange] = ReplicateOp_Divide.MarginalInit<Gaussian>(this.Weights_uses_F[ClassRange][FeatureRange][1]);
 					this.Weights_rep_B_toDef[ClassRange][FeatureRange] = ReplicateOp_Divide.ToDefInit<Gaussian>(this.Weights_uses_F[ClassRange][FeatureRange][1]);
 				}
-				for(int _iv = 0; _iv<this.featureCount; _iv++) {
-					this.Weights_uses_F[ClassRange][_iv][0] = Gaussian.Uniform();
-				}
 			}
 			this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3_isDone = true;
 			this.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3_isInitialised = true;
@@ -804,6 +802,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				}
 				this.ModelSelector_selector_cases_0_rep24_rep_B[InstanceRange] = new DistributionStructArray<Bernoulli,bool>(this.classCount);
 				for(int ClassRange = 0; ClassRange<this.classCount; ClassRange++) {
+					this.ModelSelector_selector_cases_0_rep24_rep_uses_B[InstanceRange][ClassRange][1] = Bernoulli.Uniform();
 					this.ModelSelector_selector_cases_0_rep24_rep_B[InstanceRange][ClassRange] = Bernoulli.Uniform();
 				}
 				this.ModelSelector_selector_cases_0_rep25_rep_B[InstanceRange] = new DistributionStructArray<Bernoulli,bool>(this.classCount);
@@ -891,7 +890,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 			for(int InstanceRange = 0; InstanceRange<this.instanceCount; InstanceRange++) {
 				for(int ClassRange = 0; ClassRange<this.classCount; ClassRange++) {
 					this.ModelSelector_selector_cases_0_rep24_rep_uses_B[InstanceRange][ClassRange][0] = Bernoulli.Uniform();
-					this.ModelSelector_selector_cases_0_rep24_rep_uses_B[InstanceRange][ClassRange][1] = Bernoulli.Uniform();
 				}
 				this.vbool39[InstanceRange] = new bool[this.classCount][];
 				for(int ClassRange = 0; ClassRange<this.classCount; ClassRange++) {

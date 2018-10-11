@@ -112,8 +112,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     if (item > upperBound) upperBound = item;
                 }
             }
-            if (probability == 1.0) return upperBound + MMath.Ulp(upperBound);
+            if (probability == 1.0) return MMath.NextDouble(upperBound);
             if (double.IsPositiveInfinity(lowerBound)) throw new Exception("QuantileEstimator has no data");
+            if (lowerBound == upperBound) return upperBound;
             // use bisection
             while (true)
             {
@@ -124,7 +125,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 long lowerWeight, minLowerWeight, upperWeight, minUpperWeight;
                 long itemCount;
                 GetAdjacentItems(x, out lowerItem, out upperItem, out lowerIndex, out lowerWeight, out upperWeight, out minLowerWeight, out minUpperWeight, out itemCount);
-                double scaledProbability = probability * (itemCount - 1);
+                double scaledProbability = MMath.LargestDoubleProduct(itemCount - 1, probability);
                 // probability of lowerItem ranges from (lowerIndex - lowerWeight + 1) / (itemCount - 1)
                 // to lowerIndex / (itemCount - 1).
                 if ((scaledProbability >= lowerIndex - lowerWeight + 1) && (scaledProbability < lowerIndex))

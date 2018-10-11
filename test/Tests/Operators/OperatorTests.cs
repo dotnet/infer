@@ -22,6 +22,48 @@ namespace Microsoft.ML.Probabilistic.Tests
 
     public class OperatorTests
     {
+        [Fact]
+        public void LargestDoubleProductTest()
+        {
+            foreach (var denominator in DoublesGreaterThanZero())
+            {
+                if (double.IsPositiveInfinity(denominator)) continue;
+                foreach (var ratio in Doubles())
+                {
+                    AssertLargestDoubleProduct(denominator, ratio);
+                }
+            }
+        }
+
+        private void AssertLargestDoubleProduct(double denominator, double ratio)
+        {
+            double numerator = MMath.LargestDoubleProduct(denominator, ratio);
+            Assert.True(numerator / denominator <= ratio);
+            Assert.True(double.IsPositiveInfinity(numerator) || MMath.NextDouble(numerator) / denominator > ratio);
+        }
+
+        [Fact]
+        public void LargestDoubleSumTest()
+        {
+            MMath.LargestDoubleSum(1, -1);
+            foreach (var b in Doubles())
+            {
+                if (double.IsNegativeInfinity(b)) continue;
+                if (double.IsPositiveInfinity(b)) continue;
+                foreach (var sum in Doubles())
+                {
+                    AssertLargestDoubleSum(b, sum);
+                }
+            }
+        }
+
+        private void AssertLargestDoubleSum(double b, double sum)
+        {
+            double a = MMath.LargestDoubleSum(b, sum);
+            Assert.True(a - b <= sum);
+            Assert.True(double.IsPositiveInfinity(a) || MMath.NextDouble(a) - b > sum);
+        }
+
         // Test inference on a model where precision is scaled.
         internal void GammaProductTest()
         {
@@ -1398,7 +1440,7 @@ zL = (L - mx)*sqrt(prec)
                     //X.Precision *= 100;
                     //X.MeanTimesPrecision *= 0.999999;
                     //X.SetMeanAndPrecision(mx, X.Precision * 2);
-                    X.SetMeanAndPrecision(mx, X.Precision + MMath.Ulp(X.Precision));
+                    X.SetMeanAndPrecision(mx, MMath.NextDouble(X.Precision));
                 }
             }
             else

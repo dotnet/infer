@@ -9,6 +9,7 @@ using Microsoft.ML.Probabilistic.Factors.Attributes;
 
 namespace Microsoft.ML.Probabilistic.Factors
 {
+    [Hidden]
     public static class LowPriority
     {
         public static T Forward<T>(T value)

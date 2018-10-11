@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Evaluator": {
+      "commandName": "Project",
+      "commandLineArgs": "x64JVMConfig.xml"
+    }
+  }
+}

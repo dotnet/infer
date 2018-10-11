@@ -228,17 +228,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                                                    throw new Exception("Internal: back edge already present");
                                                                dependencyGraph.AddEdge(targetIndex, node);
                                                            }
-                                                           else 
+                                                           else if (backEdgeHandling == BackEdgeHandling.Reverse)
                                                            {
                                                                // make a new edge, even if one exists.
                                                                EdgeIndex edge = dependencyGraph.AddEdge(node, targetIndex);
                                                                isWriteAfterRead[edge] = true;
                                                            }
+                                                           else throw new NotSupportedException($"backEdgeHandling == {backEdgeHandling}");
                                                        }
                                                    }
                                                    action(ist, targetIndex);
                                                });
-            if (string.Empty.Length>0)
+            bool includeWriteAfterRead = false;
+            if (includeWriteAfterRead)
             {
                 // loop statements in their original order
                 foreach (NodeIndex target in dependencyGraph.Nodes)

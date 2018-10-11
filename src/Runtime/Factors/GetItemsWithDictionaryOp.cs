@@ -10,6 +10,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
+    [Hidden]
     internal static class ExperimentalFactor
     {
         [ParameterNames("items", "array", "indices", "dict")]

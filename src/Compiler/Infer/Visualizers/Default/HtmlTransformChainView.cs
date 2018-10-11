@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.ML.Probabilistic.Compiler.CodeModel;
+using Microsoft.ML.Probabilistic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,14 +31,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
         /// <param name="transformer"></param>
         public void AddTransformer(CodeTransformer transformer)
         {
-            if(fileNames.ContainsKey(transformer))
+            if (fileNames.ContainsKey(transformer))
             {
                 return;
             }
 
             fileNames.Add(transformer, GetFileName(transformer.Transform.Name));
         }
- 
+
         private string GetFileName(string transformName)
         {
             return fileNames.Count + "_" + transformName + ".html";
@@ -50,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
         public void Visualize(string path)
         {
             var dir = Directory.CreateDirectory(path);
-            foreach(var f in dir.GetFileSystemInfos())
+            foreach (var f in dir.GetFileSystemInfos())
             {
                 f.Delete();
             }
@@ -88,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             htmlWriter.OpenTag("body", "style=\"overflow-x: hidden; overflow-y: hidden\"");
 
             //main grid
-            htmlWriter.OpenTag("div", "style=\"display: grid; grid-template-columns: auto auto; grid-column-gap: 10px\"");
+            htmlWriter.OpenTag("div", "style=\"display: grid; grid-template-columns: auto auto; grid-column-gap: 10px; justify-content: start\"");
 
             //file names list
             // "display: grid" makes it expand to fill the vertical space
@@ -125,19 +126,27 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
                 htmlWriter.OpenTag("pre");
                 htmlWriter.OpenTag("code", "class=\"language-csharp\"");
 
+                if (transformer.Transform.Context.Results.ErrorCount > 0)
+                {
+                    foreach (var error in transformer.Transform.Context.Results.errorsAndWarnings)
+                    {
+                        foreach(var line in StringUtil.Lines(error.ToString()))
+                        {
+                            htmlWriter.Append("// ");
+                            htmlWriter.Append(ToHtmlContent(line));
+                            htmlWriter.Append(Environment.NewLine);
+                        }
+                        htmlWriter.Append(Environment.NewLine);
+                    }
+                }
+
                 foreach (ITypeDeclaration itd in transformer.transformMap.Values)
                 {
                     using (var writer = new StringWriter())
                     {
-                        string code;
                         SourceNode node = languageWriter.GeneratePartialSource(itd);
                         LanguageWriter.WriteSourceNode(writer, node);
-
-                        code = writer.ToString().Trim()
-                            .Replace("&", "&amp;")
-                            .Replace("<", "&lt;")
-                            .Replace(">", "&gt;");
-
+                        string code = ToHtmlContent(writer.ToString().Trim());
                         htmlWriter.Append(code);
                     }
                 }
@@ -164,11 +173,18 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             htmlWriter.SaveToFile(Path.Combine(path, fileName));
         }
 
+        private static string ToHtmlContent(string text)
+        {
+            return text.Replace("&", "&amp;")
+                       .Replace("<", "&lt;")
+                       .Replace(">", "&gt;");
+        }
+
         private void OpenFiles(string path)
         {
             string firstOpenFileName;
 
-            if(SelectedTransformer == null || !fileNames.ContainsKey(SelectedTransformer))
+            if (SelectedTransformer == null || !fileNames.ContainsKey(SelectedTransformer))
             {
                 firstOpenFileName = Path.Combine(path, "origin.html");
                 WriteFile(path, "origin.html");
@@ -186,7 +202,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             {
                 p.Start();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("Problem with opening source files in HTML format");
                 Console.WriteLine($"Exception message: {e.Message}");

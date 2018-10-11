@@ -828,7 +828,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         if (f < 0)
                             break;
                         // get the next representable floating point number
-                        rmax += MMath.Ulp(rmax);
+                        rmax = MMath.NextDouble(rmax);
                     }
                     break;
                 }
@@ -863,7 +863,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         if (f < 0)
                             break;
                         // get the previous representable floating point number
-                        rmin -= MMath.Ulp(rmin);
+                        rmin = MMath.PreviousDouble(rmin);
                     }
                     break;
                 }

@@ -23,25 +23,31 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Gaussian approximation of the lower tail.
         /// </summary>
-        Gaussian lowerGaussian;
+        private readonly Gaussian lowerGaussian;
         /// <summary>
         /// Gaussian approximation of the upper tail.
         /// </summary>
-        Gaussian upperGaussian;
+        private readonly Gaussian upperGaussian;
 
-        private InnerQuantiles(int quantileCount)
+        public InnerQuantiles(double[] quantiles)
         {
-            this.quantiles = new double[quantileCount];
-            CacheGaussians();
+            if (quantiles == null) throw new ArgumentNullException(nameof(quantiles));
+            if (quantiles.Length == 0) throw new ArgumentException("quantiles array is empty", nameof(quantiles));
+            this.quantiles = quantiles;
+            lowerGaussian = GetLowerGaussian(quantiles);
+            upperGaussian = GetUpperGaussian(quantiles);
         }
 
-        public InnerQuantiles(int quantileCount, CanGetQuantile canGetQuantile) : this(quantileCount)
+        public InnerQuantiles(int quantileCount, CanGetQuantile canGetQuantile)
         {
+            if (quantileCount == 0) throw new ArgumentException("quantileCount == 0", nameof(quantiles));
+            this.quantiles = new double[quantileCount];
             for (int i = 0; i < quantileCount; i++)
             {
                 this.quantiles[i] = canGetQuantile.GetQuantile((i + 1.0) / (quantileCount + 1.0));
             }
-            CacheGaussians();
+            lowerGaussian = GetLowerGaussian(quantiles);
+            upperGaussian = GetUpperGaussian(quantiles);
         }
 
         public override string ToString()
@@ -125,12 +131,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return (index + frac) / (n + 1);
         }
 
-        private void CacheGaussians()
-        {
-            lowerGaussian = GetLowerGaussian(quantiles);
-            upperGaussian = GetUpperGaussian(quantiles);
-        }
-
         private static Gaussian GetLowerGaussian(IReadOnlyList<double> quantiles)
         {
             int n = quantiles.Count;
@@ -210,6 +210,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public double GetQuantile(double probability)
         {
+            if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
+            if (probability > 1.0) throw new ArgumentOutOfRangeException(nameof(probability), "probability > 1.0");
             int n = quantiles.Length;
             if(probability < 1.0/(n+1.0))
             {
@@ -219,11 +221,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 return upperGaussian.GetQuantile(probability);
             }
-            double pos = probability * (quantiles.Length + 1) - 1;
+            if (n == 1) return quantiles[0]; // probability must be 0.5
+            double pos = MMath.LargestDoubleProduct(n + 1, probability) - 1;
             int lower = (int)Math.Floor(pos);
             int upper = (int)Math.Ceiling(pos);
             if (upper == lower) upper = lower + 1;
-            return OuterQuantiles.GetQuantile(probability, lower + 1, quantiles[lower], quantiles[upper], quantiles.Length + 2);
+            return OuterQuantiles.GetQuantile(probability, lower + 1, quantiles[lower], quantiles[upper], n + 2);
         }
     }
 }
