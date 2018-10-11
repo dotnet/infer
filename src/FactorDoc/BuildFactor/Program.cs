@@ -9,61 +9,70 @@ using System.IO;
 namespace Microsoft.ML.Probabilistic.FactorDocs.BuildFactor
 {
     /// <summary>
-    /// Cases of running program.
+    /// Cases of starting program.
     /// </summary>
-    enum Status { Run, NoArgument, NotExistingFile, Help, CorrectDoc, Updated }
+    enum StartStatus { Normal, DefaultFile, NoArgument, NotExistingFile, Help }
 
     class Program
     {
+        static private string defaultXmlDocFilePath = Path.Combine("..", "..", "..", "..", "..", "Runtime", "Factors", "FactorDocs.xml");
+
         static int Main(string[] args)
         {
-            Status status = GetStatus(args);
+            int exitCode = 0;
+            StartStatus status = GetStatus(args);
 
-            if(status == Status.Help)
+            if(status == StartStatus.Help)
             {
                 ShowReference();
             }
-            else if(status == Status.Run)
+            else if(status == StartStatus.Normal || status == StartStatus.DefaultFile)
             {
-                bool isFactorExists = CheckOrUpdate(args[0]);
+                string fileName = status == StartStatus.DefaultFile ? defaultXmlDocFilePath : args[0];
+                bool isFactorExists = CheckOrUpdate(fileName);
 
                 if (!isFactorExists)
                 {
-                    status = Status.Updated;
+                    exitCode = 1;
                     Console.WriteLine($"A factor documentation is updated");
                 }
                 else
                 {
-                    status = Status.CorrectDoc;
                     Console.WriteLine($"A factor documentation is correct");
                 }
             }
             else
             {
                 ShowErrorMessage(status);
+                exitCode = 2;
             }
 
-            return GetExitCode(status);
+            return exitCode;
         }
 
-        private static Status GetStatus(string[] args)
+        private static StartStatus GetStatus(string[] args)
         {
             if(args.Length == 0)
             {
-                return Status.NoArgument;
+                if(!File.Exists(defaultXmlDocFilePath))
+                {
+                    return StartStatus.NoArgument;
+                }
+
+                return StartStatus.DefaultFile;
             }
 
             if("-h".Equals(args[0]) || "--help".Equals(args[0]))
             {
-                return Status.Help;
+                return StartStatus.Help;
             }
 
             if(!File.Exists(args[0]))
             {
-                return Status.NotExistingFile;
+                return StartStatus.NotExistingFile;
             }
 
-            return Status.Run;
+            return StartStatus.Normal;
         }
 
         private static void ShowReference()
@@ -71,7 +80,12 @@ namespace Microsoft.ML.Probabilistic.FactorDocs.BuildFactor
             Console.WriteLine($@"Factor builder. Updates factor documentation if it necessary.
 
 Usage:
-    {Path.GetFileName(Environment.GetCommandLineArgs()[0])} <path to the factor documentation file>
+    Program gets a file path as a command line argument.
+    If argument is not given, program uses default documentation file (if it exists):
+
+    ""{Path.GetFullPath(defaultXmlDocFilePath)}""
+
+    If argument equals ""-h"" or ""--help"", reference is showing.
 
 Returns:
     0 - if factor documentation is up to date
@@ -118,16 +132,16 @@ Returns:
             return flag;
         }
 
-        private static void ShowErrorMessage(Status status)
+        private static void ShowErrorMessage(StartStatus status)
         {
             string msg;
 
             switch(status)
             {
-                case Status.NoArgument:
-                    msg = "No given argument!\n";
+                case StartStatus.NoArgument:
+                    msg = $"No given argument and default file (\"{Path.GetFullPath(defaultXmlDocFilePath)}\") is not found!\n";
                     break;
-                case Status.NotExistingFile:
+                case StartStatus.NotExistingFile:
                     msg = "File is not exist!\n";
                     break;
                 default:
@@ -137,20 +151,6 @@ Returns:
 
             msg += "Give '-h' or '--help' argument to get reference";
             Console.WriteLine(msg);
-        }
-
-        private static int GetExitCode(Status status)
-        {
-            if(status == Status.Help || status == Status.CorrectDoc)
-            {
-                return 0;
-            }
-            else if(status == Status.Updated)
-            {
-                return 1;
-            }
-
-            return 2;
         }
     }
 }
