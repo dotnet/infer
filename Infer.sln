@@ -38,15 +38,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickThroughModel", "src\Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicalTrial", "src\Examples\ClinicalTrial\ClinicalTrial.csproj", "{B517BBF2-60E6-4C69-885A-AE5C014D877B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InferNET101", "src\Examples\InferNET101\InferNET101.csproj", "{52D174E7-2407-4FC1-9DDA-4D9D14F18618}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InferNET101", "src\Examples\InferNET101\InferNET101.csproj", "{52D174E7-2407-4FC1-9DDA-4D9D14F18618}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MontyHall", "src\Examples\MontyHall\MontyHall.csproj", "{6139CF19-0190-4ED5-AEE3-D3CE7458E517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotifFinder", "src\Examples\MotifFinder\MotifFinder.csproj", "{D2A7B5F5-8D33-45AC-9776-07C23F5859BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotifFinder", "src\Examples\MotifFinder\MotifFinder.csproj", "{D2A7B5F5-8D33-45AC-9776-07C23F5859BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image_Classifier", "src\Examples\ImageClassifier\Image_Classifier.csproj", "{87D09BD4-119E-49C1-B0B4-86DF962A00EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LDA", "src\Examples\LDA\LDA.csproj", "{6FF3E672-378C-4D61-B4CA-A5A5E01C2563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LDA", "src\Examples\LDA\LDA.csproj", "{6FF3E672-378C-4D61-B4CA-A5A5E01C2563}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Csoft", "src\Csoft\Csoft.csproj", "{5B669C82-B04C-4DD6-8CE6-47D025D98777}"
 EndProject
@@ -75,6 +75,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnersTests", "test\Learners\LearnersTests\LearnersTests.csproj", "{7A774F1F-31D6-4D7F-90D5-9C4F387D2EEE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Visualizers.Windows", "src\Visualizers\Windows\Visualizers.Windows.csproj", "{FB669026-E1C8-417F-962B-D8235A3DA2D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactorDoc.BuildFactor", "src\FactorDoc\BuildFactor\FactorDoc.BuildFactor.csproj", "{AE934C82-F869-427F-A926-6A54BEBFD12D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactorDoc.PrepareSource", "src\FactorDoc\PrepareSource\FactorDoc.PrepareSource.csproj", "{8342B783-EEBE-4DE9-9AA0-77C074E3869E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -394,6 +398,30 @@ Global
 		{FB669026-E1C8-417F-962B-D8235A3DA2D3}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
 		{FB669026-E1C8-417F-962B-D8235A3DA2D3}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
 		{FB669026-E1C8-417F-962B-D8235A3DA2D3}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.DebugCore|Any CPU.Build.0 = Debug|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.DebugFull|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.DebugFull|Any CPU.Build.0 = Debug|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
+		{AE934C82-F869-427F-A926-6A54BEBFD12D}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.DebugCore|Any CPU.Build.0 = Debug|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.DebugFull|Any CPU.ActiveCfg = Debug|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.DebugFull|Any CPU.Build.0 = Debug|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
+		{8342B783-EEBE-4DE9-9AA0-77C074E3869E}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
