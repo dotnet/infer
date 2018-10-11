@@ -7818,7 +7818,7 @@
   </message_op_class>
   <message_op_class name="ExpOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Exp(double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Exp(double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(double, double)">
       <summary>Evidence message for EP.</summary>
@@ -8047,7 +8047,7 @@
   </message_op_class>
   <message_op_class name="ExpOp_Slow">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Exp(double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Exp(double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="DAverageConditional(Gamma, Gaussian)">
       <summary>EP message to <c>d</c>.</summary>
@@ -8086,7 +8086,7 @@
   </message_op_class>
   <message_op_class name="ExpOp_LaplaceProp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Exp(double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Exp(double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(Gamma, Gaussian, Gaussian)">
       <summary>Evidence message for EP.</summary>
@@ -8144,7 +8144,7 @@
   </message_op_class>
   <message_op_class name="ExpOp_Laplace">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Exp(double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Exp(double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="XInit(Gaussian)">
       <summary>Initialize the buffer <c>x</c>.</summary>
@@ -8239,7 +8239,7 @@
   </message_op_class>
   <message_op_class name="ExpOp_BFGS">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Exp(double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Exp(double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="DAverageLogarithm(Gamma, Gaussian, Gaussian)">
       <summary>VMP message to <c>d</c>.</summary>
@@ -16782,7 +16782,7 @@
   </message_op_class>
   <message_op_class name="LogOp_EP">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Log(double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Log(double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(double, double)">
       <summary>Evidence message for EP.</summary>
@@ -16912,7 +16912,7 @@
   </message_op_class>
   <message_op_class name="LogOp_VMP">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Log(double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Log(double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageLogarithm(Gaussian, double, Gaussian)">
       <summary>VMP message to <c>log</c>.</summary>
@@ -18283,7 +18283,7 @@
   </message_op_class>
   <message_op_class name="MaxGaussianOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Max(double, double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Max(double, double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="LogAverageFactor(double, double, double)">
       <summary>Evidence message for EP.</summary>
@@ -18639,7 +18639,7 @@
   </message_op_class>
   <message_op_class name="MaxGammaOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Max(double, double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Max(double, double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="MaxAverageConditional(Gamma, double)">
       <summary>EP message to <c>max</c>.</summary>
@@ -18684,7 +18684,7 @@
   </message_op_class>
   <message_op_class name="MaxTruncatedGammaOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Max(double, double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Max(double, double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="MaxAverageConditional(TruncatedGamma, double)">
       <summary>EP message to <c>max</c>.</summary>
@@ -18729,7 +18729,7 @@
   </message_op_class>
   <message_op_class name="MinGammaOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Min(double, double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Min(double, double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="MinAverageConditional(Gamma, double)">
       <summary>EP message to <c>min</c>.</summary>
@@ -18774,7 +18774,7 @@
   </message_op_class>
   <message_op_class name="MinTruncatedGammaOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Min(double, double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Min(double, double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="MinAverageConditional(TruncatedGamma, double)">
       <summary>EP message to <c>min</c>.</summary>
@@ -21372,7 +21372,7 @@
   </message_op_class>
   <message_op_class name="PowerOp">
     <doc>
-      <summary>Provides outgoing messages for <see cref="Math.Pow(double, double)" />, given random arguments to the function.</summary>
+      <summary>Provides outgoing messages for <see cref="System.Math.Pow(double, double)" />, given random arguments to the function.</summary>
     </doc>
     <message_doc name="PowAverageConditional(GammaPower, double)">
       <summary>EP message to <c>pow</c>.</summary>

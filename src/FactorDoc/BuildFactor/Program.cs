@@ -5,6 +5,7 @@
 using Microsoft.ML.Probabilistic.Compiler.Transforms;
 using System;
 using System.IO;
+using System.Text;
 
 namespace Microsoft.ML.Probabilistic.FactorDocs.BuildFactor
 {
@@ -99,35 +100,19 @@ Returns:
             string tempFile = Path.GetTempFileName();
 
             FactorDocumentationWriter.WriteFactorDocumentation(tempFile);
-            var generated = File.ReadAllLines(tempFile);
-            var current = File.ReadAllLines(path);
-            bool flag = true;
-
-            for(int i = 0; i < generated.Length; i++)
-            {
-                if(i < current.Length)
-                {
-                    if(!generated[i].Equals(current[i]))
-                    {
-                        flag = false;
-                    }
-                }
-                else
-                {
-                    flag = false;
-                }
-
-                if(!flag)
-                {
-                    break;
-                }
-            }
+            var generated = File.ReadAllText(tempFile);
+            var current = File.ReadAllText(path);
+            bool flag = generated.Equals(current);
 
             if(!flag)
             {
-                File.Delete(path);
-                File.Move(tempFile, path);
+                using (var writer = new StreamWriter(path, false, Encoding.UTF8))
+                {
+                    writer.Write(generated);
+                }
             }
+
+            File.Delete(tempFile);
 
             return flag;
         }
