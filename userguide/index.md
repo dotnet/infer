@@ -11,7 +11,7 @@ layout: default
     *   [How Infer.NET works](how Infer.NET works.md)
     *   [Frequently Asked Questions](Frequently Asked Questions.md)
     *   [Resources and References](Resources and References.md)
-    *   [Infer.NET 101 paper](../InferNet101.pdf)
+    *   [Infer.NET 101 paper](../InferNet101.pdf), a detailed sample-based introduction to programming with Infer.NET.
 
 *   **Building probabilistic models** 
 

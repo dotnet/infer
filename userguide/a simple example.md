@@ -11,8 +11,8 @@ Here is an example of using Infer.NET to work out the probability of getting bot
 Variable<bool> firstCoin = Variable.Bernoulli(0.5);
 Variable<bool> secondCoin = Variable.Bernoulli(0.5);
 Variable<bool> bothHeads = firstCoin & secondCoin;
-InferenceEngine ie = new InferenceEngine();
-Console.WriteLine("Probability both coins are heads: "+ie.Infer(bothHeads));
+InferenceEngine engine = new InferenceEngine();
+Console.WriteLine("Probability both coins are heads: "+engine.Infer(bothHeads));
 ```
 
 The output of this program is:

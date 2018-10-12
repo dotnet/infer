@@ -27,8 +27,8 @@ def two_coins() :
  bothHeads = firstCoin & secondCoin  
 
  # The inference  
- ie = InferenceEngine()  
- print "Probability both coins are heads:", ie.Infer(bothHeads)  
+ engine = InferenceEngine()  
+ print "Probability both coins are heads:", engine.Infer(bothHeads)  
  bothHeads.ObservedValue = False  
- print "Probability distribution over firstCoin:", ie.Infer(firstCoin)
+ print "Probability distribution over firstCoin:", engine.Infer(firstCoin)
  ```

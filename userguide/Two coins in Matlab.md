@@ -26,8 +26,8 @@ secondCoin = Variable.Bernoulli(0.5);
 bothHeads = firstCoin.op_BitwiseAnd(firstCoin, secondCoin);  
 
 % The inference  
-ie = InferenceEngine();  
-disp(['Probability both coins are heads: ' char(ie.Infer(bothHeads).ToString)]);  
+engine = InferenceEngine();  
+disp(['Probability both coins are heads: ' char(engine.Infer(bothHeads).ToString)]);  
 bothHeads.ObservedValue = false;  
-disp(['Probability distribution over firstCoin: ' char(ie.Infer(firstCoin).ToString)]);
+disp(['Probability distribution over firstCoin: ' char(engine.Infer(firstCoin).ToString)]);
 ```

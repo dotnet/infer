@@ -39,8 +39,8 @@ Here, **bothHeads** is true only if both **firstCoin** and **secondCoin** are tr
 The primary purpose of Infer.NET is to perform inference, in other words, to infer the posterior distribution of a particular random variable. In this example, we have created a variable **bothHeads**which is random**,** and would like to find out its distribution. To do this, we need to use an Infer.NET _inference engine_. All inference in Infer.NET is achieved through the use of an inference engine, using its **Infer()** method. This code creates an inference engine with default settings and uses it to infer the distribution over **bothHeads**.
 
 ```csharp
-InferenceEngine ie = new InferenceEngine();  
-Console.WriteLine("Probability both coins are heads: "+ie.Infer(bothHeads));
+InferenceEngine engine = new InferenceEngine();  
+Console.WriteLine("Probability both coins are heads: "+engine.Infer(bothHeads));
 ```
 
 When run, this code prints out:
@@ -59,7 +59,7 @@ We can also use Infer.NET to do backwards reasoning, where we _observe_ the outp
 
 ```csharp
 bothHeads.ObservedValue=false;  
-Console.WriteLine("Probability distribution over firstCoin: " + ie.Infer(firstCoin));
+Console.WriteLine("Probability distribution over firstCoin: " + engine.Infer(firstCoin));
 ```
 
 When run, this code prints out:
