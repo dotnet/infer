@@ -14,7 +14,7 @@ and many others.
 - [Installing pre-built binaries](#installing-pre-built-binaries)
 - [Documentation](#documentation)
 - [Structure of Repository](#structure-of-repository)
-- [Building Infer.NET from its source code](#Building-Infer.NET-from-its-source-code)
+- [Building Infer.NET from its source code](#building-infernet-from-its-source-code)
 - [Contributing](#contributing)
 - [License](#license)
 - [.NET Foundation](#.net-foundation)

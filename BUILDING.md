@@ -1,7 +1,7 @@
 # Building Infer.NET from its source code
 
-- [Building with Visual Studio 2017](##Building-with-Visual-Studio-2017)
-- [Building from the command line](##Building-from-the-command-line)
+- [Building with Visual Studio 2017](#building-with-visual-studio-2017)
+- [Building from the command line](#building-from-the-command-line)
 
 To build from source, you must first clone the repository.
 Next decide whether you want to use a code editor like Visual Studio (recommended) or the command line.
