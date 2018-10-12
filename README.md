@@ -31,7 +31,7 @@ and many others.
 
 ## Installing pre-built binaries
 
-Binaries for Infer.NET are located on [nuget.org](https://www.nuget.org/packages?q=Microsoft.ML.Probabilistic).  These binaries are cross-platform and work anywhere that .NET is supported---there is no need to select your platform.  You do not need to clone the GitHub repository to use the pre-built binaries.
+Binaries for Infer.NET are located on [nuget.org](https://www.nuget.org/packages?q=Microsoft.ML.Probabilistic).  These binaries are cross-platform and work anywhere that .NET is supported, so there is no need to select your platform.  You do not need to clone the GitHub repository to use the pre-built binaries.
 
 There currently are [four maintained Infer.NET nuget packages](https://www.nuget.org/packages?q=Microsoft.ML.Probabilistic):
 
