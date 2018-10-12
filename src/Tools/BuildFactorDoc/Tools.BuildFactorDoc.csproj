@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\Infer.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>Microsoft.ML.Probabilistic.Tools.BuildFactorDoc</RootNamespace>
+    <AssemblyName>Microsoft.ML.Probabilistic.Tools.BuildFactorDoc</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Compiler\Compiler.csproj" />
+  </ItemGroup>
+
+</Project>

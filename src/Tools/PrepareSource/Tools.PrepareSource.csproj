@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>Microsoft.ML.Probabilistic.Tools.PrepareSource</AssemblyName>
+    <RootNamespace>Microsoft.ML.Probabilistic.Tools.PrepareSource</RootNamespace>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\Infer.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+</Project>

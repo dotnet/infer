@@ -141,6 +141,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             
             string methodName = QuoteCodeElementName(
                 StringUtil.MethodSignatureToString(method, useFullName: true, omitParameterNames: true));
+
+            // some changes to prevent System.Math and Microsoft.ML.Probabilistic.Math conflict
+            if(methodName.StartsWith("Math."))
+            {
+                methodName = "System." + methodName;
+            }
             writer.WriteElementAttributeString("see", "cref", methodName);
         }
 
