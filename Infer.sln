@@ -76,9 +76,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnersTests", "test\Learn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Visualizers.Windows", "src\Visualizers\Windows\Visualizers.Windows.csproj", "{FB669026-E1C8-417F-962B-D8235A3DA2D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactorDoc.BuildFactor", "src\FactorDoc\BuildFactor\FactorDoc.BuildFactor.csproj", "{AE934C82-F869-427F-A926-6A54BEBFD12D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tools.BuildFactorDoc", "src\Tools\BuildFactorDoc\Tools.BuildFactorDoc.csproj", "{AE934C82-F869-427F-A926-6A54BEBFD12D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactorDoc.PrepareSource", "src\FactorDoc\PrepareSource\FactorDoc.PrepareSource.csproj", "{8342B783-EEBE-4DE9-9AA0-77C074E3869E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tools.PrepareSource", "src\Tools\PrepareSource\Tools.PrepareSource.csproj", "{8342B783-EEBE-4DE9-9AA0-77C074E3869E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

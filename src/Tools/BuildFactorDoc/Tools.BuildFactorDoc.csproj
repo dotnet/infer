@@ -5,8 +5,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\Infer.snk</AssemblyOriginatorKeyFile>
-    <RootNamespace>Microsoft.ML.Probabilistic.FactorDoc.BuildFactor</RootNamespace>
-    <AssemblyName>Microsoft.ML.Probabilistic.FactorDoc.BuildFactor</AssemblyName>
+    <RootNamespace>Microsoft.ML.Probabilistic.Tools.BuildFactorDoc</RootNamespace>
+    <AssemblyName>Microsoft.ML.Probabilistic.Tools.BuildFactorDoc</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

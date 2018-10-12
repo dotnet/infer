@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.ML.Probabilistic.FactorDocs.BuildFactor
+namespace Microsoft.ML.Probabilistic.Tools.BuildFactorDoc
 {
     /// <summary>
     /// Cases of starting program.
