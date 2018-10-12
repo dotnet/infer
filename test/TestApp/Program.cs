@@ -7,21 +7,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Microsoft.ML.Probabilistic.Tests;
-using Microsoft.ML.Probabilistic.Tests.CodeModel;
+using System.Collections.Concurrent;
+using System.Reflection;
 using Microsoft.ML.Probabilistic;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Distributions;
-using Microsoft.ML.Probabilistic.Compiler.Transforms;
 using Microsoft.ML.Probabilistic.Factors;
-using Microsoft.ML.Probabilistic.Tests.Core;
-using System.Collections.Concurrent;
-using System.Reflection;
 using Microsoft.ML.Probabilistic.Factors.Attributes;
 using Microsoft.ML.Probabilistic.Compiler;
+using Microsoft.ML.Probabilistic.Compiler.Transforms;
 using Microsoft.ML.Probabilistic.Compiler.Visualizers;
+using Microsoft.ML.Probabilistic.Tests;
+using Microsoft.ML.Probabilistic.Tests.Core;
+using Microsoft.ML.Probabilistic.Tests.CodeModel;
+using Microsoft.ML.Probabilistic.Tests.CodeCompilerTests;
 
 
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS

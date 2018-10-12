@@ -11,12 +11,12 @@ and many others.
 ## Contents
 
 - [Build Status](#build-status)
-- [Installation](#installation)
+- [Installing pre-built binaries](#installing-pre-built-binaries)
 - [Documentation](#documentation)
 - [Structure of Repository](#structure-of-repository)
-- [Build and Test](#build-and-test)
-    - [Windows](##windows)
-    - [Linux and macOS](##linux-and-macos)
+- [Building Infer.NET from its source code](#Building-Infer.NET-from-its-source-code)
+    - [Building with Visual Studio 2017](##Building-with-Visual-Studio-2017)
+    - [Building from the command line](##Building-from-the-command-line)
 - [Contributing](#contributing)
 - [License](#license)
 - [.NET Foundation](#.net-foundation)
@@ -29,28 +29,9 @@ and many others.
 |**Linux**|[![Linux Debug](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20Linux%20Debug)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=137)|[![Linux Release](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20Linux%20Release)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=136)|
 |**macOS**|[![macOS Debug](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20macOS%20Debug)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=139)|[![macOS Release](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20macOS%20Release)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=138)|
 
-## Installation
+## Installing pre-built binaries
 
-Infer&#46;NET runs on Windows, Linux, and macOS - any platform where [.NET Core 2.1](https://github.com/dotnet/core) is available.
-
-First ensure you have installed [.NET Core 2.1](https://www.microsoft.com/net/download/). Infer&#46;NET also works on the .NET Framework 4.6.1 and above.
-
-Once you have an app, you can install the Infer&#46;NET NuGet package(s) from the .NET Core CLI using:
-```
-dotnet add package Microsoft.ML.Probabilistic
-dotnet add package Microsoft.ML.Probabilistic.Compiler
-dotnet add package Microsoft.ML.Probabilistic.Learners
-```
-
-or from the NuGet package manager:
-```powershell
-Install-Package Microsoft.ML.Probabilistic
-Install-Package Microsoft.ML.Probabilistic.Compiler
-Install-Package Microsoft.ML.Probabilistic.Learners
-Install-Package Microsoft.ML.Probabilistic.Visualizers.Windows
-```
-
-Or alternatively you can add the Microsoft.ML.Probabilistic.* package(s) from within Visual Studio's NuGet package manager or via [Paket](https://github.com/fsprojects/Paket).
+Binaries for Infer.NET are located on [nuget.org](https://www.nuget.org/packages?q=Microsoft.ML.Probabilistic).  These binaries are cross-platform and work anywhere that .NET is supported---there is no need to select your platform.  You do not need to clone the GitHub repository to use the pre-built binaries.
 
 There currently are [four maintained Infer.NET nuget packages](https://www.nuget.org/packages?q=Microsoft.ML.Probabilistic):
 
@@ -58,6 +39,16 @@ There currently are [four maintained Infer.NET nuget packages](https://www.nuget
 1. `Microsoft.ML.Probabilistic.Compiler` contains the Infer&#46;NET Compiler, which takes model descriptions written using the Infer&#46;NET API and converts them into inference code. It also contains utilities for the visualization of the generated code.
 1. `Microsoft.ML.Probabilistic.Learners` contains complete machine learning applications including a classifier and a recommender system.
 1. `Microsoft.ML.Probabilistic.Visualizers.Windows` contains an alternative .NET Framework and Windows specific set of visualization tools for exploring and analyzing models.
+
+NuGet packages do not need to be manually downloaded.  Instead, you add the package name to your project file, and the binaries are downloaded automatically when the project is compiled.  Most code editors have an option to add a NuGet package reference to an existing project file.  For example, in [Visual Studio 2017 for Windows](https://docs.microsoft.com/en-us/visualstudio/install/install-visual-studio), you select `Project -> Manage NuGet packages`.
+
+[.NET Core 2.1](https://www.microsoft.com/net/download/) provides command-line tools for creating and editing project files.
+Using the command line, you can add a NuGet package reference to an existing project file with:
+```
+dotnet add package Microsoft.ML.Probabilistic
+dotnet add package Microsoft.ML.Probabilistic.Compiler
+dotnet add package Microsoft.ML.Probabilistic.Learners
+```
 
 ## Documentation
 
@@ -117,10 +108,11 @@ Documentation can be found on the [Infer&#46;NET website](https://dotnet.github.
 
 * `docs` folder contains the scripts for building API documentation and for updating https://dotnet.github.io/infer. Please refer to [README.md](docs/README.md) for more details.
 
-## Build and Test
+## Building Infer.NET from its source code
 
-Infer&#46;NET is cross platform and supports .NET Framework 4.6.1, .NET Core 2.1, and Mono 5.0. Unit tests are written using the [XUnit](https://xunit.github.io/) framework.
-
+To build from source, you must first clone the repository.
+Next decide whether you want to use a code editor like Visual Studio (recommended) or the command line.
+When building, you must select a configuration.
 All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produce executables (including test projects) mostly target .NET Framework 4.6.1, .NET Core 2.1, or both depending on build configuration:
 
 | Configurations | Targeted Frameworks |
@@ -130,21 +122,19 @@ All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produ
 | DebugCore, ReleaseCore | .NET Core 2.1 only |
 
 
-### Windows
+### Building with Visual Studio 2017
 
-#### Prerequisites
+1. If you don't have Visual Studio 2017, you can install the free [Visual Studio 2017 Community](https://visualstudio.microsoft.com/vs/community/).
+1. Start Visual Studio.
+1. Select `File -> Open -> Project/Solution` and open the `Infer.sln` solution file located in your cloned repository.
+1. Select a build configuration using `Build -> Configuration Manager...`.  When switching between configurations that change the targeted frameworks, Visual Studio currently requires you to close and re-open the solution file using `File -> Close Solution` and `File -> Open`.
+1. Compile using `Build -> Build Solution`.
+1. At this point, you can play with the [tutorials and examples](https://dotnet.github.io/infer/userguide/Infer.NET%20tutorials%20and%20examples.html), or run all tests to verify the installation.  Run the tutorials by setting the startup project to `Tutorials`.  If your configuration is `DebugFull` or `ReleaseFull`, you will get the [Examples Browser](https://dotnet.github.io/infer/userguide/The%20examples%20browser.html).  Otherwise, edit `src/Tutorials/RunMe.cs` to see different tutorials.  Run an example by setting the startup project to that example.
+1. To run all tests, open the test explorer using `Test -> Windows -> Test Explorer`.
+1. In the test explorer search bar, type `-Trait:"BadTest" -Trait:"OpenBug" -Trait:"CompilerOptionsTest" -Trait:"Performance"` to exclude long-running tests and tests that are not supposed to succeed.
+1. Click `Run All`.
 
-**Visual Studio 2017.**
-If you don't have Visual Studio 2017, you can install the free [Visual Studio 2017 Community](https://visualstudio.microsoft.com/vs/community/).
-
-#### Build and test
-You can load `Infer.sln` solution located in the root of repository into Visual Studio and build all libraries and samples.
-
-**NB!** The solution has a number of build configurations that allows building either for all supported frameworks simultaneously or only for a specific one, but in order for Visual Studio to behave correctly, the solution needs to be closed and re-opened after switching between such configurations.
-
-Unit tests are available in `Test Explorer` window. Normally you should see tests from 3 projects: `Tests`, `PublicTests` and `LearnersTest`. Note, that some of the tests are categorized, and those falling in the `OpenBug` or `BadTest` categories are not supposed to succeed.
-
-### Linux and macOS
+### Building from the command line
 
 All components of Infer&#46;NET and almost all sample projects run on .NET Core 2.1 and/or Mono except sample applications that use WPF.
 
@@ -178,6 +168,7 @@ Please, expect build failure messages about examples that use WPF GUI. Libraries
 
 #### Run unit tests
 
+Unit tests are written using the [XUnit](https://xunit.github.io/) framework.
 In order to run unit tests, build the test project and execute one of the following commands:
 ```bash
 dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.1/xunit.console.dll <path to netcoreapp2.1 assembly with tests> <filter>
