@@ -31,7 +31,7 @@ if (!($dotnetExe))
     exit 1
 }
 
-$projPath = [IO.Path]::GetFullPath((join-path $sourceDirectory 'src/FactorDoc/PrepareSource/FactorDoc.PrepareSource.csproj'))
+$projPath = [IO.Path]::GetFullPath((join-path $sourceDirectory 'src/Tools/PrepareSource/Tools.PrepareSource.csproj'))
 if (!(Test-Path $projPath)) {
     Write-Error -Message ('ERROR: Failed to locate PrepareSource project file at ' + $projPath)
     exit 1
@@ -43,7 +43,7 @@ $BuildArgs = @{
 Start-Process @BuildArgs -NoNewWindow -Wait
 
 Write-Host "Run PrepareSource for InferNet_Copy_Temp folder"
-$prepareSourcePath = [IO.Path]::GetFullPath((join-path $sourceDirectory 'src/FactorDoc/PrepareSource/bin/Release/netcoreapp2.1/Microsoft.ML.Probabilistic.FactorDoc.PrepareSource.dll'))
+$prepareSourcePath = [IO.Path]::GetFullPath((join-path $sourceDirectory 'src/Tools/PrepareSource/bin/Release/netcoreapp2.1/Microsoft.ML.Probabilistic.Tools.PrepareSource.dll'))
 $prepareSourceCmd = "& $dotnetExe ""$prepareSourcePath"" ""$destinationDirectory"""
 Invoke-Expression $prepareSourceCmd
 
@@ -65,9 +65,9 @@ if ((Test-Path $destinationDirectory)) {
     Write-Host "Remove temp repository"
     Remove-Item -Path $destinationDirectory -Recurse -Force
 }
-$apiguideTmp = "./apiguide-tmp"
+$apiguideTmp = [IO.Path]::GetFullPath((join-path $sourceDirectory 'apiguide-tmp'))
 if (!(Test-Path $apiguideTmp)) {
-    Write-Host "Couldn't find the folder \apiguide-tmp."
+    Write-Host ("Couldn't find the folder """ + $apiguideTmp + """.")
     exit 1
 } else {
     Write-Host "Switch to gh-pages. All uncommited changes will be stashed."
