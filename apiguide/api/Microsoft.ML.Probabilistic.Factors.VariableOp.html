@@ -163,7 +163,8 @@
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_VariableOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.VariableOp.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_VariableOp_LogEvidenceRatio__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.VariableOp.LogEvidenceRatio``1(``0)">LogEvidenceRatio&lt;T&gt;(T)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -182,7 +183,8 @@
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">use</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>use</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -197,7 +199,8 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -216,6 +219,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VariableOp_LogEvidenceRatio__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(use) p(use) factor(use,def,marginal) / sum_use p(use) messageTo(use))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_VariableOp_MarginalAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.VariableOp.MarginalAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_VariableOp_MarginalAverageConditional__1___0___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.VariableOp.MarginalAverageConditional``1(``0,``0,``0)">MarginalAverageConditional&lt;T&gt;(T, T, T)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>marginal</code>.</p>

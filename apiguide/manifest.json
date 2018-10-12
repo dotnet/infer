@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "https://github.com/dotnet/infer/docs",
+  "source_base_path": "C:/Work/git/dotnet/infer/docs",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -3984,15 +3984,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "ManagedReference",
       "source_relative_path": "obj/api/Microsoft.ML.Probabilistic.Distributions.Distribution.yml",
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Distributions.Distribution.html",
-          "hash": "ooAQ/Kqk0xmBClSo/JJI1g=="
+          "hash": "hVbpvVZrFWmHTA0uS9eo4g=="
         }
       },
       "is_incremental": false,
@@ -4184,7 +4181,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Distributions.Gaussian.html",
-          "hash": "k/1dN7k4vhB3yiFaviXLIQ=="
+          "hash": "5xPYs9ALFLGT4flwGGCNCg=="
         }
       },
       "is_incremental": false,
@@ -4328,7 +4325,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Distributions.InnerQuantiles.html",
-          "hash": "8HY+qhhVj/LdWf+Al5CLMw=="
+          "hash": "h7VbPg//7HhMih6Y1aSX6g=="
         }
       },
       "is_incremental": false,
@@ -4988,7 +4985,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.ArrayFromVectorOp.html",
-          "hash": "mshsdmesi2jojRodYT3TNQ=="
+          "hash": "yWdJ5GAfvzYxiRhe91T3XQ=="
         }
       },
       "is_incremental": false,
@@ -5840,7 +5837,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.CopyOp-1.html",
-          "hash": "S+/V3VvPPSXZejnyl1t6qQ=="
+          "hash": "oCY9klq7+1Cqdg0arvshfQ=="
         }
       },
       "is_incremental": false,
@@ -5924,7 +5921,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.DerivedVariableOp.html",
-          "hash": "IRFzYf+4jnZIW0SDNJi7FQ=="
+          "hash": "n6nAQrASDxTsefceLoPjeQ=="
         }
       },
       "is_incremental": false,
@@ -6464,7 +6461,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GateEnterOneOp-1.html",
-          "hash": "T2RE7z+Lsi4PHuXxSzLUnw=="
+          "hash": "0KWp5cW29rYyZxgQKMlhJw=="
         }
       },
       "is_incremental": false,
@@ -6476,7 +6473,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GateEnterOp-1.html",
-          "hash": "xqeGa9ZVjm2zYy401pcClA=="
+          "hash": "BKrH2Gkq7zZDHpQqQCPZIQ=="
         }
       },
       "is_incremental": false,
@@ -6488,7 +6485,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GateEnterPartialOp-1.html",
-          "hash": "OkrkQvj7GvXzhKqapibmZw=="
+          "hash": "0bCoL+hlCtgBRL6o1TA0pQ=="
         }
       },
       "is_incremental": false,
@@ -6512,7 +6509,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GateExitOp-1.html",
-          "hash": "qWzaEoMuGv0YiQ/av7fbvg=="
+          "hash": "miWgFYtN4OZl2BVCsUoxsQ=="
         }
       },
       "is_incremental": false,
@@ -6788,7 +6785,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GaussianRatioVmpOp.html",
-          "hash": "jX0/elFkjBKN6lr/2MrKnA=="
+          "hash": "ofYY4NzCYQnj38h6enlUPA=="
         }
       },
       "is_incremental": false,
@@ -6800,7 +6797,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp-1.html",
-          "hash": "akGTgPXTJsrSE6LFR27i5g=="
+          "hash": "qvSNf7rVtc8k6AOdTwXRCQ=="
         }
       },
       "is_incremental": false,
@@ -6860,7 +6857,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GetItemsFromDeepJaggedOp-1.html",
-          "hash": "swqHwsEKpgPiRcxhVwk2oQ=="
+          "hash": "2wgnqpxRVnChW9YRNCC4WA=="
         }
       },
       "is_incremental": false,
@@ -6872,7 +6869,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GetItemsFromDeepJaggedPointOp-1.html",
-          "hash": "xMB79eywT5G6Q2V67ZAj8A=="
+          "hash": "SEu6QSBRYfDuK3RRNH9NQA=="
         }
       },
       "is_incremental": false,
@@ -6884,7 +6881,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GetItemsFromJaggedOp-1.html",
-          "hash": "8SzOxhuWMSxD70QmzHij7A=="
+          "hash": "7jrqYAzuqf4YElNM/6qZ9Q=="
         }
       },
       "is_incremental": false,
@@ -6896,7 +6893,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GetItemsFromJaggedPointOp-1.html",
-          "hash": "YKh2Xn8nso/DcasvEV+07Q=="
+          "hash": "wd/3i0pDRb/LsONk/xYRvg=="
         }
       },
       "is_incremental": false,
@@ -6908,7 +6905,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GetItemsOp-1.html",
-          "hash": "sS3R72Z9I54JvrDTZE68ww=="
+          "hash": "xSoxWifdz7VRC1uI3kEjqg=="
         }
       },
       "is_incremental": false,
@@ -6944,7 +6941,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GetJaggedItemsFromJaggedOp-1.html",
-          "hash": "iduVuE0m11+si1R/ctLidA=="
+          "hash": "jcR6cqNjj/KVc0eoN/jFsg=="
         }
       },
       "is_incremental": false,
@@ -6968,7 +6965,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.GetJaggedItemsOp-1.html",
-          "hash": "3jbHBwTUOTn7WserhxGjJw=="
+          "hash": "Qfsdal2Jq16TnuwdCyTuKA=="
         }
       },
       "is_incremental": false,
@@ -7040,7 +7037,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.IndexOfMaximumStochasticOp.html",
-          "hash": "p2NLUUJIO9iEhETxKru0Iw=="
+          "hash": "iFuKSe8G5PkZac9w8/SiPw=="
         }
       },
       "is_incremental": false,
@@ -7088,7 +7085,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.InnerProductOpBase.html",
-          "hash": "ySNaOhc1bNWglDXfk+Rg2Q=="
+          "hash": "zfLhMGTHQhZiaNErjxnPKA=="
         }
       },
       "is_incremental": false,
@@ -7112,7 +7109,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.InnerProductPartialCovarianceOp.html",
-          "hash": "ofKA0OUlR0SsX0AJ+WHb0Q=="
+          "hash": "LfyS1LFchCHyXAFEjheWZg=="
         }
       },
       "is_incremental": false,
@@ -7364,7 +7361,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.html",
-          "hash": "EDEDfYdENlLn3LiO2i39Ow=="
+          "hash": "whEFKhylcQ6kkZPwyBjmPg=="
         }
       },
       "is_incremental": false,
@@ -7388,7 +7385,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.MaxGaussianOp.html",
-          "hash": "SoAAzlgrmn9MRsyoPlcp/w=="
+          "hash": "ZlVJyCZX+3HWbwiVFUpcdA=="
         }
       },
       "is_incremental": false,
@@ -8372,7 +8369,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.TruncatedGaussianIsBetweenOp.html",
-          "hash": "45Qxs18t5azfoDaC9TxkaA=="
+          "hash": "zThitcr+IusihQTBowUD2g=="
         }
       },
       "is_incremental": false,
@@ -8516,7 +8513,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.VariableOp.html",
-          "hash": "rw/OFeiGSqJsR5ajIN3jMQ=="
+          "hash": "AYIkmo+SBSQyexTAp1Ml3g=="
         }
       },
       "is_incremental": false,
@@ -8648,7 +8645,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.html",
-          "hash": "ufbkMesF9hNmlZ4wLifk6Q=="
+          "hash": "jJ36wKMVwyVUGC1eDgmnQA=="
         }
       },
       "is_incremental": false,
@@ -8684,7 +8681,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.VectorGaussianOp_Laplace2.html",
-          "hash": "4SjmvjlAfT9Yjh09MMmS2A=="
+          "hash": "GLqGrD22B2ZhfthopD7n9g=="
         }
       },
       "is_incremental": false,
@@ -8756,7 +8753,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Factors.html",
-          "hash": "7vSHZbjBS+qP017/Vfpfkg=="
+          "hash": "ud/YUou6iZOpbIEWPDhVLw=="
         }
       },
       "is_incremental": false,
@@ -8960,7 +8957,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseBinaryBpmTrainingEvidence_EP.html",
-          "hash": "vRhDAVg/w8OUlmi0t74/7Q=="
+          "hash": "nG+N6RmYrTFmhg1Dj5S2yQ=="
         }
       },
       "is_incremental": false,
@@ -8972,7 +8969,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseBinaryBpmTraining_EP.html",
-          "hash": "CqHJfZMV9R8CHr198EhWZA=="
+          "hash": "tp8Qq90qiYHG0XkKr7SIUw=="
         }
       },
       "is_incremental": false,
@@ -9800,7 +9797,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal.MatchboxCommunityTraining_EP.html",
-          "hash": "+3Q1vJTAFO6q3edd1la5xg=="
+          "hash": "Ib/G7BeTAINQMBbhkq7Kyg=="
         }
       },
       "is_incremental": false,
@@ -10184,7 +10181,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Math.BranchAndBound.html",
-          "hash": "gZgbZ5xD5wzzKqbeM1bkCw=="
+          "hash": "K+wdwOiTc36XbAYAmBOvaQ=="
         }
       },
       "is_incremental": false,
@@ -10376,7 +10373,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.ML.Probabilistic.Math.MMath.html",
-          "hash": "NSR9OKLX2uUi4nNDhN+7/Q=="
+          "hash": "OKRpR/dbZ1p6+1Mz/48ywg=="
         }
       },
       "is_incremental": false,
@@ -12045,21 +12042,22 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": true,
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
         "incrementalPhase": "build"
       },
       "processors": {
-        "ResourceDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build"
-        },
         "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
           "incrementalPhase": "build"
         },
         "ConceptualDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
+          "incrementalPhase": "build"
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
         "TocDocumentProcessor": {

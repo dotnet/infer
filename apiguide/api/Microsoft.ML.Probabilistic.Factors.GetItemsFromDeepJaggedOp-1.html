@@ -83,7 +83,8 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_GetItemsFromDeepJaggedOp_1" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsFromDeepJaggedOp`1" class="text-break">Class GetItemsFromDeepJaggedOp&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromJagged__1_IList_IList___0___IList_System_Int32__IList_System_Int32__">GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -1937,7 +1938,8 @@
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemsFromDeepJaggedOp_1_MarginalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsFromDeepJaggedOp`1.MarginalInit*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemsFromDeepJaggedOp_1_MarginalInit__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemsFromDeepJaggedOp`1.MarginalInit``1(``0)">MarginalInit&lt;ArrayType&gt;(ArrayType)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Initialize the buffer <code>marginal</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1957,7 +1959,8 @@
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">array</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1972,7 +1975,8 @@
     <tbody>
       <tr>
         <td><span class="xref">ArrayType</span></td>
-        <td></td>
+        <td><p>Initial value of buffer <code>marginal</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1988,6 +1992,25 @@
       <tr>
         <td><span class="parametername">ArrayType</span></td>
         <td><p>The type of an array for the marginal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemsFromDeepJaggedOp_1_MarginalInit__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">array</code> is not a proper distribution.</p>
 </td>
       </tr>
     </tbody>

@@ -101,7 +101,8 @@
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.TruncatedGaussianIsBetweenOp.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.TruncatedGaussianIsBetweenOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian)">AverageLogFactor(TruncatedGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -120,7 +121,8 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a></td>
         <td><span class="parametername">X</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>x</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -135,13 +137,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Zero.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.TruncatedGaussianIsBetweenOp.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_LogEvidenceRatio_System_Boolean_Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.TruncatedGaussianIsBetweenOp.LogEvidenceRatio(System.Boolean,Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian,System.Double,System.Double)">LogEvidenceRatio(Boolean, TruncatedGaussian, Double, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -160,22 +167,26 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">isBetween</span></td>
-        <td></td>
+        <td><p>Constant value for <code>isBetween</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a></td>
         <td><span class="parametername">x</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>x</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">lowerBound</span></td>
-        <td></td>
+        <td><p>Constant value for <code>lowerBound</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">upperBound</span></td>
-        <td></td>
+        <td><p>Constant value for <code>upperBound</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -190,13 +201,34 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_LogEvidenceRatio_System_Boolean_Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(x) p(x) factor(isBetween,x,lowerBound,upperBound))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">x</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_XAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.TruncatedGaussianIsBetweenOp.XAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_XAverageConditional_System_Boolean_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.TruncatedGaussianIsBetweenOp.XAverageConditional(System.Boolean,System.Double,System.Double)">XAverageConditional(Boolean, Double, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>x</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -215,17 +247,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">isBetween</span></td>
-        <td></td>
+        <td><p>Constant value for <code>isBetween</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">lowerBound</span></td>
-        <td></td>
+        <td><p>Constant value for <code>lowerBound</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">upperBound</span></td>
-        <td></td>
+        <td><p>Constant value for <code>upperBound</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -240,13 +275,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>x</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_XAverageConditional_System_Boolean_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>x</code> conditioned on the given values.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_XAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.TruncatedGaussianIsBetweenOp.XAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_XAverageLogarithm_System_Boolean_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.TruncatedGaussianIsBetweenOp.XAverageLogarithm(System.Boolean,System.Double,System.Double)">XAverageLogarithm(Boolean, Double, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>x</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -265,17 +305,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">isBetween</span></td>
-        <td></td>
+        <td><p>Constant value for <code>isBetween</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">lowerBound</span></td>
-        <td></td>
+        <td><p>Constant value for <code>lowerBound</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">upperBound</span></td>
-        <td></td>
+        <td><p>Constant value for <code>upperBound</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -290,10 +333,14 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>x</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_TruncatedGaussianIsBetweenOp_XAverageLogarithm_System_Boolean_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>x</code> conditioned on the given values.</p>
+</div>
 </article>
           </div>
           

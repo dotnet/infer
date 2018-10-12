@@ -400,8 +400,7 @@
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialOp`1.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialOp_1_LogEvidenceRatio__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialOp`1.LogEvidenceRatio``1(IList{``0})">LogEvidenceRatio&lt;TDist&gt;(IList&lt;TDist&gt;)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -436,8 +435,7 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -456,9 +454,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialOp_1_LogEvidenceRatio__1_IList___0___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(enterPartial,selector,value,indices))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialOp_1_SelectorAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialOp`1.SelectorAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialOp_1_SelectorAverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialOp`1.SelectorAverageConditional(Microsoft.ML.Probabilistic.Distributions.Bernoulli)">SelectorAverageConditional(Bernoulli)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>selector</code>.</p>
@@ -678,7 +673,7 @@
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">value</span></td>
-        <td><p>Incoming message from <code>value</code>.</p>
+        <td><p>Incoming message from <code>value</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
@@ -749,6 +744,11 @@
         <td><p><code data-dev-comment-type="paramref" class="paramref">selector</code> is not a proper distribution.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">value</code> is not a proper distribution.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialOp_1_ValueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialOp`1.ValueAverageConditional*"></a>
@@ -786,7 +786,7 @@
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">value</span></td>
-        <td><p>Incoming message from <code>value</code>.</p>
+        <td><p>Incoming message from <code>value</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
@@ -855,6 +855,11 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
         <td><p><code data-dev-comment-type="paramref" class="paramref">selector</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">value</code> is not a proper distribution.</p>
 </td>
       </tr>
     </tbody>

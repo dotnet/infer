@@ -111,12 +111,14 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile.html">CanGetQuantile</a></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct Gaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Gaussian&gt;, SettableToProduct&lt;Gaussian&gt;, SettableToProduct&lt;Gaussian, Gaussian&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Gaussian&gt;, SettableToRatio&lt;Gaussian, Gaussian&gt;, SettableToPower&lt;Gaussian&gt;, SettableToWeightedSum&lt;Gaussian&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;Gaussian&gt;, CanGetLogAverageOfPower&lt;Gaussian&gt;, CanGetAverageLog&lt;Gaussian&gt;, CanGetLogNormalizer, CanGetMode&lt;double&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public struct Gaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Gaussian&gt;, SettableToProduct&lt;Gaussian&gt;, SettableToProduct&lt;Gaussian, Gaussian&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Gaussian&gt;, SettableToRatio&lt;Gaussian, Gaussian&gt;, SettableToPower&lt;Gaussian&gt;, SettableToWeightedSum&lt;Gaussian&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;Gaussian&gt;, CanGetLogAverageOfPower&lt;Gaussian&gt;, CanGetAverageLog&lt;Gaussian&gt;, CanGetLogNormalizer, CanGetMode&lt;double&gt;, CanGetProbLessThan, CanGetQuantile</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -1136,6 +1138,48 @@ i.e. we drop the terms <code>exp(-m^2/(2v))/sqrt(2<em>pi</em>v)</code>.</p>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><p>The cumulative gaussian distribution at <code data-dev-comment-type="paramref" class="paramref">x</code></p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetQuantile_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetQuantile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Gaussian_GetQuantile_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Gaussian.GetQuantile(System.Double)">GetQuantile(Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the value x such that GetProbLessThan(x) == probability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetQuantile(double probability)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">probability</span></td>
+        <td><p>A real number in [0,1].</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -2196,6 +2240,12 @@ of a Gaussian mixture. The distribution type must implement <a class="xref" href
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetQuantile.html">CanGetQuantile</a>
   </div>
 </article>
           </div>

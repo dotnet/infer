@@ -1327,7 +1327,7 @@
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">value</span></td>
-        <td><p>Incoming message from <code>value</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>value</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -1367,22 +1367,6 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_CopyOp_1_LogEvidenceRatio__1__0___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(copy,value) p(copy,value) factor(copy,value) / sum_copy p(copy) messageTo(copy))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">value</code> is not a proper distribution.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_CopyOp_1_ValueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.CopyOp`1.ValueAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_CopyOp_1_ValueAverageConditional__0_" data-uid="Microsoft.ML.Probabilistic.Factors.CopyOp`1.ValueAverageConditional(`0)">ValueAverageConditional(T)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>value</code>.</p>

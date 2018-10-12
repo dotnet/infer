@@ -427,7 +427,8 @@
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorGaussianOp_Laplace2_MeanAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorGaussianOp_Laplace2.MeanAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_VectorGaussianOp_Laplace2_MeanAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorGaussianOp_Laplace2.MeanAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">MeanAverageConditional(VectorGaussian, Wishart, Wishart, VectorGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>mean</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -446,22 +447,26 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
         <td><span class="parametername">sample</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
         <td><span class="parametername">precision</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
         <td><span class="parametername">to_precision</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -476,7 +481,32 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorGaussianOp_Laplace2_MeanAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>mean</code> as the random arguments are varied. The formula is <code>proj[p(mean) sum_(sample,precision) p(sample,precision) factor(sample,mean,precision)]/p(mean)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -578,7 +608,8 @@
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorGaussianOp_Laplace2_SampleAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorGaussianOp_Laplace2.SampleAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_VectorGaussianOp_Laplace2_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorGaussianOp_Laplace2.SampleAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Distributions.Wishart,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SampleAverageConditional(VectorGaussian, Wishart, Wishart, VectorGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>sample</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -597,22 +628,26 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
         <td><span class="parametername">mean</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>mean</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
         <td><span class="parametername">precision</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>precision</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a></td>
         <td><span class="parametername">to_precision</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>precision</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -627,7 +662,32 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorGaussianOp_Laplace2_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_Wishart_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>sample</code> as the random arguments are varied. The formula is <code>proj[p(sample) sum_(mean,precision) p(mean,precision) factor(sample,mean,precision)]/p(sample)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">mean</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">precision</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>

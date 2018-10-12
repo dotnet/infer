@@ -330,8 +330,7 @@
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_IndexOfMaximumStochasticOp_ListAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.IndexOfMaximumStochasticOp.ListAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_IndexOfMaximumStochasticOp_ListAverageConditional__1_Microsoft_ML_Probabilistic_Factors_IndexOfMaximumBuffer_____0_Microsoft_ML_Probabilistic_Distributions_Discrete___0_" data-uid="Microsoft.ML.Probabilistic.Factors.IndexOfMaximumStochasticOp.ListAverageConditional``1(Microsoft.ML.Probabilistic.Factors.IndexOfMaximumBuffer[],``0,Microsoft.ML.Probabilistic.Distributions.Discrete,``0)">ListAverageConditional&lt;GaussianList&gt;(IndexOfMaximumBuffer[], GaussianList, Discrete, GaussianList)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>list</code>.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -351,26 +350,22 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.IndexOfMaximumBuffer.html">IndexOfMaximumBuffer</a>[]</td>
         <td><span class="parametername">Buffers</span></td>
-        <td><p>Buffer <code>Buffers</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">list</span></td>
-        <td><p>Incoming message from <code>list</code>.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
         <td><span class="parametername">IndexOfMaximumDouble</span></td>
-        <td><p>Incoming message from <code>indexOfMaximumDouble</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -385,8 +380,7 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -402,25 +396,6 @@
       <tr>
         <td><span class="parametername">GaussianList</span></td>
         <td><p>The type of an incoming message from <code>list</code>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_IndexOfMaximumStochasticOp_ListAverageConditional__1_Microsoft_ML_Probabilistic_Factors_IndexOfMaximumBuffer_____0_Microsoft_ML_Probabilistic_Distributions_Discrete___0__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>list</code> as the random arguments are varied. The formula is <code>proj[p(list) sum_(indexOfMaximumDouble) p(indexOfMaximumDouble) factor(indexOfMaximumDouble,list)]/p(list)</code>.</p>
-</div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">IndexOfMaximumDouble</code> is not a proper distribution.</p>
 </td>
       </tr>
     </tbody>

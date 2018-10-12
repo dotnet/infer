@@ -101,7 +101,8 @@
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.ArrayAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.ArrayAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageConditional&lt;GaussianList&gt;(VectorGaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>data</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -121,17 +122,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
         <td><span class="parametername">vector</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>fromArray</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">array</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>data</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -146,7 +150,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -162,6 +167,25 @@
       <tr>
         <td><span class="parametername">GaussianList</span></td>
         <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>data</code> as the random arguments are varied. The formula is <code>proj[p(data) sum_(fromArray) p(fromArray) factor(fromArray,data)]/p(data)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">vector</code> is not a proper distribution.</p>
 </td>
       </tr>
     </tbody>
