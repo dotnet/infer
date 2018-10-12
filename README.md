@@ -11,12 +11,10 @@ and many others.
 ## Contents
 
 - [Build Status](#build-status)
-- [Installation](#installation)
+- [Installing pre-built binaries](#installing-pre-built-binaries)
 - [Documentation](#documentation)
 - [Structure of Repository](#structure-of-repository)
-- [Build and Test](#build-and-test)
-    - [Windows](##windows)
-    - [Linux and macOS](##linux-and-macos)
+- [Building Infer.NET from its source code](#building-infernet-from-its-source-code)
 - [Contributing](#contributing)
 - [License](#license)
 - [.NET Foundation](#.net-foundation)
@@ -29,28 +27,9 @@ and many others.
 |**Linux**|[![Linux Debug](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20Linux%20Debug)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=137)|[![Linux Release](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20Linux%20Release)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=136)|
 |**macOS**|[![macOS Debug](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20macOS%20Debug)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=139)|[![macOS Release](https://msrcambridge.visualstudio.com/Infer.NET/_apis/build/status/Nightly%20macOS%20Release)](https://msrcambridge.visualstudio.com/Infer.NET/_build/latest?definitionId=138)|
 
-## Installation
+## Installing pre-built binaries
 
-Infer&#46;NET runs on Windows, Linux, and macOS - any platform where [.NET Core 2.1](https://github.com/dotnet/core) is available.
-
-First ensure you have installed [.NET Core 2.1](https://www.microsoft.com/net/download/). Infer&#46;NET also works on the .NET Framework 4.6.1 and above.
-
-Once you have an app, you can install the Infer&#46;NET NuGet package(s) from the .NET Core CLI using:
-```
-dotnet add package Microsoft.ML.Probabilistic
-dotnet add package Microsoft.ML.Probabilistic.Compiler
-dotnet add package Microsoft.ML.Probabilistic.Learners
-```
-
-or from the NuGet package manager:
-```powershell
-Install-Package Microsoft.ML.Probabilistic
-Install-Package Microsoft.ML.Probabilistic.Compiler
-Install-Package Microsoft.ML.Probabilistic.Learners
-Install-Package Microsoft.ML.Probabilistic.Visualizers.Windows
-```
-
-Or alternatively you can add the Microsoft.ML.Probabilistic.* package(s) from within Visual Studio's NuGet package manager or via [Paket](https://github.com/fsprojects/Paket).
+Binaries for Infer.NET are located on [nuget.org](https://www.nuget.org/packages?q=Microsoft.ML.Probabilistic).  These binaries are cross-platform and work anywhere that .NET is supported, so there is no need to select your platform.  You do not need to clone the GitHub repository to use the pre-built binaries.
 
 There currently are [four maintained Infer.NET nuget packages](https://www.nuget.org/packages?q=Microsoft.ML.Probabilistic):
 
@@ -58,6 +37,22 @@ There currently are [four maintained Infer.NET nuget packages](https://www.nuget
 1. `Microsoft.ML.Probabilistic.Compiler` contains the Infer&#46;NET Compiler, which takes model descriptions written using the Infer&#46;NET API and converts them into inference code. It also contains utilities for the visualization of the generated code.
 1. `Microsoft.ML.Probabilistic.Learners` contains complete machine learning applications including a classifier and a recommender system.
 1. `Microsoft.ML.Probabilistic.Visualizers.Windows` contains an alternative .NET Framework and Windows specific set of visualization tools for exploring and analyzing models.
+
+NuGet packages do not need to be manually downloaded.  Instead, you add the package name to your project file, and the binaries are downloaded automatically when the project is compiled.  Most code editors have an option to add a NuGet package reference to an existing project file.  For example, in [Visual Studio 2017 for Windows](https://docs.microsoft.com/en-us/visualstudio/install/install-visual-studio), you select `Project -> Manage NuGet packages`.
+
+[.NET Core 2.1](https://www.microsoft.com/net/download/) provides command-line tools for creating and editing project files.
+Using the command line, you can add a NuGet package reference to an existing project file with:
+```
+dotnet add package Microsoft.ML.Probabilistic
+dotnet add package Microsoft.ML.Probabilistic.Compiler
+dotnet add package Microsoft.ML.Probabilistic.Learners
+```
+
+## Tutorials and Examples
+
+There is a getting started guide on [docs.microsoft.com](https://docs.microsoft.com/en-us/dotnet/machine-learning/how-to-guides/matchup-app-infer-net).
+
+More tutorials and examples can be found on the [Infer&#46;NET website](https://dotnet.github.io/infer/userguide/Infer.NET%20tutorials%20and%20examples.html).
 
 ## Documentation
 
@@ -117,121 +112,9 @@ Documentation can be found on the [Infer&#46;NET website](https://dotnet.github.
 
 * `docs` folder contains the scripts for building API documentation and for updating https://dotnet.github.io/infer. Please refer to [README.md](docs/README.md) for more details.
 
-## Build and Test
+## Building Infer.NET from its source code
 
-Infer&#46;NET is cross platform and supports .NET Framework 4.6.1, .NET Core 2.1, and Mono 5.0. Unit tests are written using the [XUnit](https://xunit.github.io/) framework.
-
-All of the Infer&#46;NET libraries target .NET Standard 2.0. Projects that produce executables (including test projects) mostly target .NET Framework 4.6.1, .NET Core 2.1, or both depending on build configuration:
-
-| Configurations | Targeted Frameworks |
-|:---|---:|
-| Debug, Release | both .NET Framework 4.6.1 and .NET Core 2.1 |
-| DebugFull, ReleaseFull | .NET Framework 4.6.1 only |
-| DebugCore, ReleaseCore | .NET Core 2.1 only |
-
-
-### Windows
-
-#### Prerequisites
-
-**Visual Studio 2017.**
-If you don't have Visual Studio 2017, you can install the free [Visual Studio 2017 Community](https://visualstudio.microsoft.com/vs/community/).
-
-#### Build and test
-You can load `Infer.sln` solution located in the root of repository into Visual Studio and build all libraries and samples.
-
-**NB!** The solution has a number of build configurations that allows building either for all supported frameworks simultaneously or only for a specific one, but in order for Visual Studio to behave correctly, the solution needs to be closed and re-opened after switching between such configurations.
-
-Unit tests are available in `Test Explorer` window. Normally you should see tests from 3 projects: `Tests`, `PublicTests` and `LearnersTest`. Note, that some of the tests are categorized, and those falling in the `OpenBug` or `BadTest` categories are not supposed to succeed.
-
-### Linux and macOS
-
-All components of Infer&#46;NET and almost all sample projects run on .NET Core 2.1 and/or Mono except sample applications that use WPF.
-
-#### Prerequisites
-
-* **[.NET Core 2.1 SDK](https://www.microsoft.com/net/download/)** to build and run .NET Standard and .NET Core projects
-
-* (Optional) **[Mono](https://www.mono-project.com/download/stable/)** (version 5.0 and higher) and **[NuGet](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools)** package manager to build and run .NET Framework 4.6.1 projects that don't use WPF.  There are some examples that use Win Forms and, therefore, don't run on .NET Core, but can be built and run with Mono; there's also Visualizers/Windows project mentioned above that can be built with Mono using `/p:MonoSupport=true`
-
-#### Build 
-
-To build .NET Standard libraries and .NET Core executables, run in the root of the repository either
-```bash
-dotnet build -c DebugCore Infer.sln
-```
-to build debug assemblies, or
-```bash
-dotnet build -c ReleaseCore Infer.sln
-```
-to build release assemblies.
-
-The corresponding commands to build .NET Standard libraries and .NET Framework executables with Mono are
-```bash
-msbuild /c:DebugFull /p:MonoSupport=true /restore Infer.sln
-```
-and
-```bash
-msbuild /c:ReleaseFull /p:MonoSupport=true /restore Infer.sln
-```
-Please, expect build failure messages about examples that use WPF GUI. Libraries and executables that don't reference WPF should build, though.
-
-#### Run unit tests
-
-In order to run unit tests, build the test project and execute one of the following commands:
-```bash
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.1/xunit.console.dll <path to netcoreapp2.1 assembly with tests> <filter>
-```
-```bash
-mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe <path to net461 assembly with tests> <filter>
-```
-
-There are three test assemblies in the solution:
-
-- **Microsoft.ML.Probabilistic.Tests.dll** in the folder `test/Tests`. 
-- **TestPublic.dll** in the folder `test/TestPublic`.
-- **Microsoft.ML.Probabilistic.Learners.Tests.dll** in the folder `test/Learners/LearnersTests`. 
-
-Depending on the build configuration and targeted framework, the assemblies will be located in the `bin/Debug<Core|Full>/<netcoreapp2.1|net461>` or `bin/Release<Core|Full>/<netcoreapp2.1|net461>` subdirectories
-of the test project.
-
-`<filter>` is a rule to choose what tests will be run. You can specify them
-using `-trait Category=<category>` and `-notrait Category=<category>` parts
-of `<filter>`. The former selects tests of
-the given category, while the latter selects test that don't belong to the given
-category. These can be combined: several `-trait` options mean that _at least one_ of the listed traits has to be present, while several `-notrait` options mean that _none_ of such traits can be present on the filtered tests.
-
-Runner executes tests in parallel by default. However, some test category must be run
-sequentially. Such categories are:
-- _Performance_
-- _DistributedTest_
-- _CsoftModel_
-- _ModifiesGlobals_
-
-Add the `-parallel none` argument to run them.
-
-_CompilerOptionsTest_ is a category for long running tests, so, for quick
-testing you must filter these out by `-notrait`.
-_BadTest_ is a category of tests that must fail.
-_OpenBug_ is a category of tests that can fail.
-
-
-An example of quick testing of `Microsoft.ML.Probabilistic.Tests.dll` in `Debug` configuration after changing working directory to
-the `Tests` project looks like:
-```bash
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.1/xunit.console.dll bin/DebugCore/netcoreapp2.1/Microsoft.ML.Probabilistic.Tests.dll -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance
-
-dotnet ~/.nuget/packages/xunit.runner.console/2.3.1/tools/netcoreapp2.1/xunit.console.dll bin/DebugCore/netcoreapp2.1/Microsoft.ML.Probabilistic.Tests.dll -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -parallel none
-```
-To run the same set of tests on Mono:
-
-```bash
-mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe bin/DebugFull/net461/Microsoft.ML.Probabilistic.Tests.dll -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -notrait Category=CsoftModel -notrait Category=ModifiesGlobals -notrait Category=DistributedTest -notrait Category=Performance
-
-mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe bin/DebugFull/net461/Microsoft.ML.Probabilistic.Tests.dll -trait Category=CsoftModel -trait Category=ModifiesGlobals -trait Category=DistributedTests -trait Category=Performance -notrait Category=OpenBug -notrait Category=BadTest -notrait Category=CompilerOptionsTest -parallel none
-```
-
-Helper scripts `netcoretest.sh` and `monotest.sh` for running unit tests on .NET Core and Mono respectively are located in the `test` folder.
+Please, refer to our [building guide](BUILDING.md).
 
 ## Contributing
 
