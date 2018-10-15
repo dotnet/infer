@@ -117,3 +117,15 @@ mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe
 ```
 
 Helper scripts `netcoretest.sh` and `monotest.sh` for running unit tests on .NET Core and Mono respectively are located in the `test` folder.
+
+## Using MKL on x64 platform
+`Infer.Net` supports optional [Single Dynamic Library](https://software.intel.com/en-us/articles/intel-math-kernel-library-intel-mkl-linkage-and-distribution-quick-reference-guide)-linkage to Intel MKL. This model seems to have a known [issue](https://software.intel.com/en-us/articles/a-new-linking-model-single-dynamic-library-mkl_rt-since-intel-mkl-103). Steps below describe how to use Intel MKL with `Infer.Net`. 
+1. Download [Intel MKL](https://software.intel.com/en-us/mkl/) which includes redistributables. Typically, this is installed in  "C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\redist\intel64_win". We'll reference this folder as `MKL_DIR`.
+1. Navigate to `MKL_DIR\mkl` and rename `mkl_rt.dll` to `mkl.dll`.
+1. Add `MKL_DIR\mkl` and `MKL_DIR\compiler` to PATH environment variable.
+1. In Runtime project settings > Build > Add a conditional compilation symbol `LAPACK`.
+1. In Runtime project settings > Build > Check `Allow unsafe code`.
+1. In TestApp project settings (or project of your choice), add all the paths for MKL redistributables as Reference paths.
+1. Restart Visual Studio or Command Prompt.
+1. Run TestApp (or project of your choice).
+1. An alternative to having two paths defined is to copy all dlls into one folder and add that folder to PATH as well as reference it from the project.
