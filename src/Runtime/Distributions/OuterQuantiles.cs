@@ -98,9 +98,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (n == 1) return quantiles[0];
             double pos = MMath.LargestDoubleProduct(n - 1, probability);
             int lower = (int)Math.Floor(pos);
-            int upper = (int)Math.Ceiling(pos);
-            if (upper == lower) upper = lower + 1;
-            return GetQuantile(probability, lower, quantiles[lower], quantiles[upper], n);
+            if (lower == n - 1) return quantiles[lower];
+            return GetQuantile(probability, lower, quantiles[lower], quantiles[lower+1], n);
         }
 
         /// <summary>
