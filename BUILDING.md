@@ -118,14 +118,22 @@ mono ~/.nuget/packages/xunit.runner.console/2.3.1/tools/net452/xunit.console.exe
 
 Helper scripts `netcoretest.sh` and `monotest.sh` for running unit tests on .NET Core and Mono respectively are located in the `test` folder.
 
-## Using MKL on x64 platform
-`Infer.Net` supports optional [Single Dynamic Library](https://software.intel.com/en-us/articles/intel-math-kernel-library-intel-mkl-linkage-and-distribution-quick-reference-guide)-linkage to Intel MKL. This model seems to have a known [issue](https://software.intel.com/en-us/articles/a-new-linking-model-single-dynamic-library-mkl_rt-since-intel-mkl-103). Steps below describe how to use Intel MKL with `Infer.Net`. 
-1. Download [Intel MKL](https://software.intel.com/en-us/mkl/) which includes redistributables. Typically, this is installed in  "C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\redist\intel64_win". We'll reference this folder as `MKL_DIR`.
-1. Navigate to `MKL_DIR\mkl` and rename `mkl_rt.dll` to `mkl.dll`.
-1. Add `MKL_DIR\mkl` and `MKL_DIR\compiler` to PATH environment variable.
-1. In Runtime project settings > Build > Add a conditional compilation symbol `LAPACK`.
-1. In Runtime project settings > Build > Check `Allow unsafe code`.
-1. In TestApp project settings (or project of your choice), add all the paths for MKL redistributables as Reference paths.
-1. Restart Visual Studio or Command Prompt.
-1. Run TestApp (or project of your choice).
-1. An alternative to having two paths defined is to copy all dlls into one folder and add that folder to PATH as well as reference it from the project.
+## Fast matrix operations with Intel MKL
+Matrix operations in Infer.NET can be significantly accelerated by building with Intel MKL support.
+This requires building Infer.NET with a special option.
+In Runtime project settings > Build:
+1. Add ";LAPACK" to the Conditional compilation symbols.
+1. Check `Allow unsafe code`.
+
+You can also use other BLAS/LAPACK libraries compatible with MKL.  If your library is not called "mkl_rt.dll", change the `dllName` string in [Lapack.cs](https://github.com/dotnet/infer/blob/master/src/Runtime/Core/Maths/Lapack.cs).
+
+When using use this special build of Infer.NET, you must tell your code where to find the MKL dynamic libraries.
+1. Download [Intel MKL](https://software.intel.com/en-us/mkl/) which includes redistributables. Typically, this is installed in  `C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\redist\intel64_win`. We'll reference this folder as *MKL_DIR*.
+1. (Optional) Add *MKL_DIR* to the environment variable PATH.  If you do this, the remaining steps are unnecessary, but your code will only run on machines where this has been done.
+1. Add the MKL dynamic libraries as items to your project that uses Infer.NET.
+   1. `Project > Add Existing Item`
+   2. Navigate to your MKL binaries folder *MKL_DIR*.
+   3. Change the file type dropdown to "All Files".
+   4. Select the libraries listed in the [MKL linkage guide](https://software.intel.com/en-us/articles/intel-math-kernel-library-intel-mkl-linkage-and-distribution-quick-reference-guide): `mkl_rt.dll`, `mkl_intel_thread.dll`, `mkl_core.dll`, `libiomp5md.dll`, etc.
+   5. Click "Add" or "Add as Link"
+1. For each of the added items, change the "Copy to output directory" property to "Copy if newer".  When you build your project, the MKL libraries will be included alongside the Infer.NET libraries.

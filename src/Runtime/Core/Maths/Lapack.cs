@@ -16,9 +16,10 @@ namespace Microsoft.ML.Probabilistic.Math
     /// </summary>
     unsafe public static class Lapack
     {
+        const string dllName = "mkl_rt.dll";
+
         // http://software.intel.com/en-us/node/469230#00589A5E-742D-44A6-AEEF-DA54064AFEA5
-        [DllImport(@"mkl.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, SetLastError = false)]
-        //[DllImport(@"libmwlapack.dll")]
+        [DllImport(dllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, SetLastError = false)]
         internal static extern void dgeev(char* jobvl, char* jobvr, ptrdiff_t* n, double* a, ptrdiff_t* lda, double* wr, double* wi, double* vl, 
             ptrdiff_t *ldvl, double *vr, ptrdiff_t *ldvr, double *work, ptrdiff_t *lwork, ptrdiff_t *info);
 
@@ -49,8 +50,7 @@ namespace Microsoft.ML.Probabilistic.Math
             }
         }
 
-        [DllImport(@"mkl.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, SetLastError = false)]
-        //[DllImport(@"libmwlapack.dll")]
+        [DllImport(dllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, SetLastError = false)]
         internal static extern void dsyev(char* jobz, char* uplo, ptrdiff_t* n, double* a, ptrdiff_t* lda, double* w, double* work, ptrdiff_t* lwork, ptrdiff_t* info);
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Microsoft.ML.Probabilistic.Math
             }
         }
 
-        [DllImport(@"mkl.dll", CallingConvention=CallingConvention.Cdecl, ExactSpelling=true, SetLastError=false)]
+        [DllImport(dllName, CallingConvention=CallingConvention.Cdecl, ExactSpelling=true, SetLastError=false)]
         internal static extern void dgemm(char* transa, char* transb,
                                                                         ptrdiff_t* m, ptrdiff_t* n, ptrdiff_t* k,
                                                                         double* alpha, double* A,
@@ -112,7 +112,7 @@ namespace Microsoft.ML.Probabilistic.Math
             }
         }
 
-        [DllImport(@"mkl.dll", CallingConvention=CallingConvention.Cdecl, ExactSpelling=true, SetLastError=false)]
+        [DllImport(dllName, CallingConvention=CallingConvention.Cdecl, ExactSpelling=true, SetLastError=false)]
         internal static extern void dgemv(char* trans, ptrdiff_t* m, ptrdiff_t* n,
                                                                         double* alpha, double* A, ptrdiff_t* lda,
                                                                         double* x, ptrdiff_t* incx, double* beta,
@@ -141,10 +141,8 @@ namespace Microsoft.ML.Probabilistic.Math
         }
 
         // http://www.netlib.org/lapack/double/dpotrf.f
-        //[DllImport(@"libmwlapack.dll")]
-        //[DllImport(@"lapack.dll")]
         // http://software.intel.com/en-us/node/468690
-        [DllImport(@"mkl.dll", CallingConvention=CallingConvention.Cdecl, ExactSpelling=false, SetLastError=false)]
+        [DllImport(dllName, CallingConvention=CallingConvention.Cdecl, ExactSpelling=false, SetLastError=false)]
         internal static extern int dpotrf(char* uplo, ptrdiff_t* n, double* A, ptrdiff_t* lda, ptrdiff_t* info);
 
         /// <summary>
@@ -175,8 +173,7 @@ namespace Microsoft.ML.Probabilistic.Math
         }
 
         // http://www.netlib.org/lapack/double/dpotri.f
-        //[DllImport(@"libmwlapack.dll")]
-        [DllImport(@"mkl.dll", CallingConvention=CallingConvention.Cdecl, ExactSpelling=true, SetLastError=false)]
+        [DllImport(dllName, CallingConvention=CallingConvention.Cdecl, ExactSpelling=true, SetLastError=false)]
         internal static extern int dpotri(char* uplo, ptrdiff_t* n, double* A, ptrdiff_t* lda, ptrdiff_t* info);
 
         /// <summary>
@@ -208,7 +205,7 @@ namespace Microsoft.ML.Probabilistic.Math
         }
 
         // http://www.netlib.org/blas/dtrsm.f
-        [DllImport(@"mkl.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, SetLastError = false)]
+        [DllImport(dllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, SetLastError = false)]
         internal static extern int dtrsm(char* side, char* uplo, char* transa, char* diag,
             ptrdiff_t* m, ptrdiff_t* n, double* alpha, double* a, ptrdiff_t* lda,
             double* b, ptrdiff_t* ldb);
