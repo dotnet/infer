@@ -1,0 +1,22 @@
+# Licensed to the .NET Foundation under one or more agreements.
+# The .NET Foundation licenses this file to you under the MIT license.
+# See the LICENSE file in the project root for more information.
+
+# Checks if factordocs.xml is up to date
+
+resources:
+- repo: self
+  clean: true
+  
+trigger: none # disable CI build
+
+steps:
+- task: DotNetCoreInstaller@0
+  inputs:
+    packageType: 'sdk' 
+    version: '2.1.403' 
+
+- script: |
+    dotnet run /p:DisableImplicitNuGetFallbackFolder=true --configuration ReleaseCore -- ../../Runtime/Factors/FactorDocs.xml 
+  displayName: Verify if factordocs.xml is up to date
+  workingDirectory: src/Tools/BuildFactorDoc
