@@ -15,15 +15,15 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             Variable<bool> firstCoin = Variable.Bernoulli(0.5).Named("firstCoin");
             Variable<bool> secondCoin = Variable.Bernoulli(0.5).Named("secondCoin");
             Variable<bool> bothHeads = (firstCoin & secondCoin).Named("bothHeads");
-            InferenceEngine ie = new InferenceEngine();
-            if (ie.Algorithm is Algorithms.VariationalMessagePassing)
+            InferenceEngine engine = new InferenceEngine();
+            if (engine.Algorithm is Algorithms.VariationalMessagePassing)
             {
                 Console.WriteLine("This example does not run with Variational Message Passing");
                 return;
             }
-            Console.WriteLine("Probability both coins are heads: " + ie.Infer(bothHeads));
+            Console.WriteLine("Probability both coins are heads: " + engine.Infer(bothHeads));
             bothHeads.ObservedValue = false;
-            Console.WriteLine("Probability distribution over firstCoin: " + ie.Infer(firstCoin));
+            Console.WriteLine("Probability distribution over firstCoin: " + engine.Infer(firstCoin));
         }
     }
 }
