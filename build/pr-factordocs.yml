@@ -18,6 +18,7 @@ steps:
 
 - script: |
     echo Checking $(Build.Repository.LocalPath)\src\Runtime\Factors\FactorDocs.xml...
-    dotnet run /p:DisableImplicitNuGetFallbackFolder=true --configuration ReleaseCore -- "$(Build.Repository.LocalPath)\src\Runtime\Factors\FactorDocs.xml" 
+    dotnet build /p:DisableImplicitNuGetFallbackFolder=true  --configuration ReleaseCore 
+    dotnet run  --configuration ReleaseCore -- "$(Build.Repository.LocalPath)\src\Runtime\Factors\FactorDocs.xml" 
   displayName: Verify if factordocs.xml is up to date
   workingDirectory: src/Tools/BuildFactorDoc
