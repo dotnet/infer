@@ -3698,7 +3698,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             {
                 double value = (lowerBound + upperBound) / 2;
                 if (double.IsInfinity(value)) value = 0.5 * lowerBound + 0.5 * upperBound;
-                if (value < lowerBound || value > upperBound) throw new Exception();
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value}, lowerBound={lowerBound}, upperBound={upperBound}, denominator={denominator}, ratio={ratio}");
                 if (value / denominator <= ratio)
                 {
                     double value2 = NextDouble(value);
@@ -3710,14 +3710,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception();
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value}, lowerBound={lowerBound}, upperBound={upperBound}, denominator={denominator}, ratio={ratio}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception();
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value}, lowerBound={lowerBound}, upperBound={upperBound}, denominator={denominator}, ratio={ratio}");
                 }
             }
         }
