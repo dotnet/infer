@@ -22,6 +22,16 @@ namespace Microsoft.ML.Probabilistic.Tests
 
     public class OperatorTests
     {
+        /// <summary>
+        /// Tests an edge case involving subnormal numbers.
+        /// </summary>
+        [Fact]
+        public void LargestDoubleProductTest2()
+        {
+            MMath.LargestDoubleProduct(0.00115249439895759, 4.9187693503017E-319);
+            MMath.LargestDoubleProduct(0.00115249439895759, -4.9187693503017E-319);
+        }
+
         [Fact]
         public void LargestDoubleProductTest()
         {

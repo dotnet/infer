@@ -3689,7 +3689,11 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             // denominator > 0
             // avoid infinite bounds
             double lowerBound = Math.Max(double.MinValue, denominator * PreviousDouble(ratio));
+            // subnormal numbers are linearly spaced, which can lead to lowerBound being too large.  Set lowerBound to zero to avoid this.
+            const double maxSubnormal = 2.3e-308;
+            if (lowerBound > 0 && lowerBound < maxSubnormal) lowerBound = 0;
             double upperBound = Math.Min(double.MaxValue, denominator * NextDouble(ratio));
+            if (upperBound < 0 && upperBound > -maxSubnormal) upperBound = 0;
             if(double.IsNegativeInfinity(ratio))
             {
                 lowerBound = PreviousDouble(upperBound);
