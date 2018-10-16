@@ -53,14 +53,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public override string ToString()
         {
             string quantileString;
-            if(quantiles.Length <= 5)
+            if (quantiles.Length <= 5)
             {
                 quantileString = StringUtil.CollectionToString(quantiles, " ");
             }
             else
             {
                 int n = quantiles.Length;
-                quantileString = $"{quantiles[0]:g2} {quantiles[1]:g2} ... {quantiles[n-2]:g2} {quantiles[n-1]:g2}";
+                quantileString = $"{quantiles[0]:g2} {quantiles[1]:g2} ... {quantiles[n - 2]:g2} {quantiles[n - 1]:g2}";
             }
             return $"InnerQuantiles({quantiles.Length}, {quantileString})";
         }
@@ -174,7 +174,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double p0 = (double)n / (n + 1);
                 double p1 = (i + 1.0) / (n + 1);
                 double mean, stddev;
-                GetGaussianFromQuantiles(quantiles[n-1], p0, quantiles[i], p1, out mean, out stddev);
+                GetGaussianFromQuantiles(quantiles[n - 1], p0, quantiles[i], p1, out mean, out stddev);
                 return Gaussian.FromMeanAndVariance(mean, stddev * stddev);
             }
         }
@@ -208,25 +208,29 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return (index + frac) / (n + 1);
         }
 
+        /// <summary>
+        /// Returns the largest value x such that GetProbLessThan(x) &lt;= probability.
+        /// </summary>
+        /// <param name="probability">A real number in [0,1].</param>
+        /// <returns></returns>
         public double GetQuantile(double probability)
         {
             if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
             if (probability > 1.0) throw new ArgumentOutOfRangeException(nameof(probability), "probability > 1.0");
             int n = quantiles.Length;
-            if(probability < 1.0/(n+1.0))
+            if (probability < 1.0 / (n + 1.0))
             {
                 return lowerGaussian.GetQuantile(probability);
             }
-            if(probability > n/(n+1.0))
+            if (probability > n / (n + 1.0))
             {
                 return upperGaussian.GetQuantile(probability);
             }
             if (n == 1) return quantiles[0]; // probability must be 0.5
             double pos = MMath.LargestDoubleProduct(n + 1, probability) - 1;
             int lower = (int)Math.Floor(pos);
-            int upper = (int)Math.Ceiling(pos);
-            if (upper == lower) upper = lower + 1;
-            return OuterQuantiles.GetQuantile(probability, lower + 1, quantiles[lower], quantiles[upper], n + 2);
+            if (lower == n - 1) return quantiles[lower];
+            return OuterQuantiles.GetQuantile(probability, lower + 1, quantiles[lower], quantiles[lower + 1], n + 2);
         }
     }
 }
