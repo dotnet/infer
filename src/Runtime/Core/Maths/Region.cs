@@ -61,12 +61,18 @@ namespace Microsoft.ML.Probabilistic.Math
                 {
                     if (double.IsPositiveInfinity(upper))
                         midpoint = 0.0;
+                    else if (upper > 0)
+                        midpoint = -upper;
+                    else if (upper < 0)
+                        midpoint = 2 * upper;
                     else
-                        midpoint = upper - 1;
+                        midpoint = -1;
                 }
                 else if (double.IsPositiveInfinity(upper))
                 {
-                    midpoint = lower + 1;
+                    if (lower > 0) midpoint = 2 * lower;
+                    else if (lower < 0) midpoint = -lower;
+                    else midpoint = 1;
                 }
                 else
                 {
