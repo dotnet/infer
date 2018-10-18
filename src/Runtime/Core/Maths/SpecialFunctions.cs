@@ -1755,7 +1755,7 @@ f = 1/gamma(x+1)-1
                 // however, this is less accurate because GammaUpper uses the Gamma function 
                 // which only gets 14 digits of accuracy.
                 double s = NormalCdfRatio(x);
-                s *= Math.Exp(-0.5 * x * x) * InvSqrt2PI;
+                s *= Math.Exp(-0.5 * x * x) / Sqrt2PI;
                 return s;
             }
         }
@@ -3872,16 +3872,15 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// </summary>
         private static readonly double[] c_normcdfln_series =
             {
-                -1, 5.0/2, -37.0/3, 353.0/4, -4081.0/5, 55205.0/6, - 854197.0/7
+                -1, 5.0/2, -37.0/3, 353.0/4, -4081.0/5, 55205.0/6, -854197.0/7
             };
 
         /// <summary>
         /// NormCdf(x)/NormPdf(x) for x = 0, -1, -2, -3, ..., -16
         /// </summary>
         private static readonly double[] c_normcdf_table = 
-            // the first entry must be set to 0.5/InvSqrt2PI so that when multiplied by InvSqrt2PI we get exactly 0.5 for NormalCdf(0)
             {
-                0.5/InvSqrt2PI, 0.655679542418798471543871, .421369229288054473, 0.30459029871010329573361254651, .236652382913560671,
+                Sqrt2PI/2, 0.655679542418798471543871, .421369229288054473, 0.30459029871010329573361254651, .236652382913560671,
                 0.1928081047153157648774657, .162377660896867462, 0.140104183453050241599534, .123131963257932296, 0.109787282578308291230, .0990285964717319214,
                 0.09017567550106468227978, .0827662865013691773, 0.076475761016248502993495, .0710695805388521071, 0.0663742358232501735, .0622586659950261958
             };
