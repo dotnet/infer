@@ -162,7 +162,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(outer.GetQuantile(0.3), middle);
             Assert.Equal(outer.GetQuantile(0.5), middle);
             Assert.Equal(outer.GetQuantile(0.7), middle);
-            CheckGetQuantile(inner, inner, 100/8, 100*7/8);
+            CheckGetQuantile(inner, inner, (int)Math.Ceiling(100.0/8), (int)Math.Floor(100.0*7/8));
             var est = new QuantileEstimator(0.01);
             est.AddRange(x);
             Assert.Equal(0.25, est.GetProbLessThan(middle));

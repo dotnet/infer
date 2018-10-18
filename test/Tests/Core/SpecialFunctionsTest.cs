@@ -531,7 +531,8 @@ ncdf(-12.2)
 
             double[,] normcdfln_pairs = new double[,]
                 {
-                    {0, -0.693147180559945309417232121458176568075500134360254},
+                    {0, -0.69314718055994530941723212145817656807550013436},
+                    {1.0000000000000008E-16, -0.693147180559945229628776041171580332420285756167},
                     {1, -0.172753779023449889526483173520800730009426290527980},
                     {2, -0.230129093289634884653361749085087592720212805122830e-1},
                     {3, -0.135080996474819379884111049051738009272934829377570e-2},
@@ -1093,6 +1094,15 @@ gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
                         Assert.True(false, strMsg);
                 }
             }
+        }
+
+        [Fact]
+        public void NormalCdfRatioTest()
+        {
+            double r0 = MMath.Sqrt2PI/2;
+            Assert.Equal(r0, MMath.NormalCdfRatio(0));
+            Assert.Equal(r0, MMath.NormalCdfRatio(6.6243372842224754E-170));
+            Assert.Equal(r0, MMath.NormalCdfRatio(-6.6243372842224754E-170));
         }
 
         [Fact]

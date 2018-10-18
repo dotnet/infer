@@ -23,6 +23,45 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class OperatorTests
     {
         [Fact]
+        public void AverageTest()
+        {
+            foreach(var a in Doubles())
+            {
+                foreach(var b in Doubles())
+                {
+                    if (double.IsNaN(a+b)) continue;
+                    double midpoint = MMath.Average(a, b);
+                    Assert.True(midpoint >= System.Math.Min(a,b));
+                    Assert.True(midpoint <= System.Math.Max(a,b));
+                }
+            }
+        }
+
+        [Fact]
+        public void AverageLongTest()
+        {
+            foreach (var a in Longs())
+            {
+                foreach (var b in Longs())
+                {
+                    double midpoint = MMath.Average(a, b);
+                    Assert.True(midpoint >= System.Math.Min(a, b));
+                    Assert.True(midpoint <= System.Math.Max(a, b));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tests an edge case involving subnormal numbers.
+        /// </summary>
+        [Fact]
+        public void LargestDoubleProductTest2()
+        {
+            MMath.LargestDoubleProduct(0.00115249439895759, 4.9187693503017E-319);
+            MMath.LargestDoubleProduct(0.00115249439895759, -4.9187693503017E-319);
+        }
+
+        [Fact]
         public void LargestDoubleProductTest()
         {
             foreach (var denominator in DoublesGreaterThanZero())
@@ -38,7 +77,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         private void AssertLargestDoubleProduct(double denominator, double ratio)
         {
             double numerator = MMath.LargestDoubleProduct(denominator, ratio);
-            Assert.True(numerator / denominator <= ratio);
+            if (double.IsNegativeInfinity(ratio))
+                Assert.True(MMath.AreEqual(numerator / denominator, ratio));
+            else
+                Assert.True(numerator / denominator <= ratio);
             Assert.True(double.IsPositiveInfinity(numerator) || MMath.NextDouble(numerator) / denominator > ratio);
         }
 
@@ -2001,6 +2043,7 @@ zL = (L - mx)*sqrt(prec)
 
         public static double UlpDiff(double a, double b)
         {
+            if (a == b) return 0; // avoid infinity-infinity
             double diff = System.Math.Abs(a - b);
             if (diff == 0) return diff;  // avoid 0/0
             return diff / System.Math.Max(MMath.Ulp(a), MMath.Ulp(b));
@@ -2012,13 +2055,34 @@ zL = (L - mx)*sqrt(prec)
         }
 
         /// <summary>
+        /// Generates a representative set of int64 numbers for testing purposes.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<long> Longs()
+        {
+            yield return long.MaxValue;
+            yield return 0L;
+            yield return long.MinValue;
+            for (int i = 0; i < 64; i++)
+            {
+                double bigValue = System.Math.Pow(2, i);
+                yield return -(long)bigValue;
+                yield return (long)bigValue;
+            }
+        }
+
+        /// <summary>
         /// Generates a representative set of double-precision numbers for testing purposes.
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<double> Doubles()
         {
             yield return double.NegativeInfinity;
+            yield return MMath.NextDouble(double.NegativeInfinity);
+            yield return MMath.PreviousDouble(0);
             yield return 0.0;
+            yield return MMath.NextDouble(0);
+            yield return MMath.PreviousDouble(double.PositiveInfinity);
             yield return double.PositiveInfinity;
             for (int i = 0; i <= 100; i++)
             {
@@ -2098,23 +2162,25 @@ zL = (L - mx)*sqrt(prec)
             {
                 foreach (var lowerBound in Doubles())
                 {
+                    if (lowerBound >= 0) continue;
                     //Console.WriteLine($"isBetween = {isBetween}, lowerBound = {lowerBound:r}");
-                    foreach (var upperBound in UpperBounds(lowerBound))
+                    foreach (var upperBound in new[] { -lowerBound })// UpperBounds(lowerBound))
                     {
                         //Console.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
-                        double center = (lowerBound + upperBound) / 2;
+                        double center = MMath.Average(lowerBound, upperBound);
                         if (double.IsNegativeInfinity(lowerBound) && double.IsPositiveInfinity(upperBound))
                             center = 0;
                         if (double.IsInfinity(center)) continue;
-                        if (center != 0) continue;
                         foreach (var x in Gaussians())
                         {
                             double mx = x.GetMean();
                             if (double.IsInfinity(mx)) continue;
                             Gaussian toX = DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
-                            Gaussian x2 = Gaussian.FromMeanAndPrecision(2 * center - mx, x.Precision);
+                            //Gaussian x2 = Gaussian.FromMeanAndPrecision(2 * center - mx, x.Precision);
+                            Gaussian x2 = Gaussian.FromNatural(-x.MeanTimesPrecision, x.Precision);
                             Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(isBetween, x2, lowerBound, upperBound);
                             double precUlpDiff = UlpDiff(toX2.Precision, toX.Precision);
+                            Assert.Equal(0, precUlpDiff);
                             if (precUlpDiff > precMaxUlpError)
                             {
                                 precMaxUlpError = precUlpDiff;
@@ -2127,6 +2193,7 @@ zL = (L - mx)*sqrt(prec)
                             double mean = xPost.GetMean();
                             double mean2 = 2 * center - xPost2.GetMean();
                             double meanUlpDiff = UlpDiff(mean, mean2);
+                            Assert.Equal(0, meanUlpDiff);
                             if (meanUlpDiff > meanMaxUlpError)
                             {
                                 meanMaxUlpError = meanUlpDiff;
@@ -2393,7 +2460,7 @@ zL = (L - mx)*sqrt(prec)
                                     meanMaxUlpError = meanUlpDiff;
                                     meanMaxUlpErrorLowerBound = lowerBound;
                                     meanMaxUlpErrorUpperBound = upperBound;
-                                    //Assert.True(meanUlpDiff < 1e5);
+                                    Assert.True(meanUlpDiff < 1e5);
                                 }
                             }
                             // When mx > center, increasing prior mean should increase posterior precision.
@@ -2405,7 +2472,7 @@ zL = (L - mx)*sqrt(prec)
                                     precMaxUlpError = ulpDiff;
                                     precMaxUlpErrorLowerBound = lowerBound;
                                     precMaxUlpErrorUpperBound = upperBound;
-                                    //Assert.True(precMaxUlpError < 1e6);
+                                    Assert.True(precMaxUlpError < 1e6);
                                 }
                             }
                         }
@@ -2491,6 +2558,7 @@ zL = (L - mx)*sqrt(prec)
                             if (toX2.Precision > toX.Precision)
                             {
                                 double ulpDiff = UlpDiff(toX.Precision, toX2.Precision);
+                                Assert.True(ulpDiff < 1e15);
                                 if (ulpDiff > precMaxUlpError)
                                 {
                                     precMaxUlpError = ulpDiff;
@@ -2534,7 +2602,7 @@ zL = (L - mx)*sqrt(prec)
                 }
             }
             //Console.WriteLine($"maxUlpError = {maxUlpError}");
-            Assert.True(maxUlpError <= 2);
+            Assert.True(maxUlpError <= 3);
         }
 
         [Fact]
@@ -2699,7 +2767,6 @@ weight * (tau + alphaX) + alphaX
             expected = Gaussian.FromNatural(229999.9352600054688757876, 99999973.0000021996482);
             Assert.True(MaxUlpDiff(expected, result2) < 1e2);
             Gaussian result = DoubleIsBetweenOp.XAverageConditional_Slow(Bernoulli.PointMass(true), new Gaussian(-48.26, 1.537), new Gaussian(-12.22, 0.4529), new Gaussian(-17.54, 0.3086));
-            Console.WriteLine(result);
             result2 = DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(1, 1e-19), -10, 0);
             // exact posterior mean = -0.99954598008990312211948
             // exact posterior variance = 0.99545959476495245821845
@@ -2709,7 +2776,7 @@ weight * (tau + alphaX) + alphaX
             // exact posterior mean = -0.00000000025231325216567798206492
             // exact posterior variance = 0.00000000000000000003633802275634766987678763433333
             expected = Gaussian.FromNatural(-6943505261.522269414985891, 17519383944062174805.8794215);
-            Assert.True(MaxUlpDiff(expected, result2) < 2);
+            Assert.True(MaxUlpDiff(expected, result2) <= 5);
         }
 
         [Fact]
