@@ -22,6 +22,21 @@ namespace Microsoft.ML.Probabilistic.Tests
 
     public class OperatorTests
     {
+        [Fact]
+        public void AverageTest()
+        {
+            foreach(var a in Doubles())
+            {
+                foreach(var b in Doubles())
+                {
+                    if (double.IsNaN(a+b)) continue;
+                    double midpoint = MMath.Average(a, b);
+                    Assert.True(midpoint >= System.Math.Min(a,b));
+                    Assert.True(midpoint <= System.Math.Max(a,b));
+                }
+            }
+        }
+
         /// <summary>
         /// Tests an edge case involving subnormal numbers.
         /// </summary>
@@ -48,7 +63,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         private void AssertLargestDoubleProduct(double denominator, double ratio)
         {
             double numerator = MMath.LargestDoubleProduct(denominator, ratio);
-            Assert.True(numerator / denominator <= ratio);
+            if (double.IsNegativeInfinity(ratio))
+                Assert.True(MMath.AreEqual(numerator / denominator, ratio));
+            else
+                Assert.True(numerator / denominator <= ratio);
             Assert.True(double.IsPositiveInfinity(numerator) || MMath.NextDouble(numerator) / denominator > ratio);
         }
 
@@ -2028,7 +2046,11 @@ zL = (L - mx)*sqrt(prec)
         public static IEnumerable<double> Doubles()
         {
             yield return double.NegativeInfinity;
+            yield return MMath.NextDouble(double.NegativeInfinity);
+            yield return MMath.PreviousDouble(0);
             yield return 0.0;
+            yield return MMath.NextDouble(0);
+            yield return MMath.PreviousDouble(double.PositiveInfinity);
             yield return double.PositiveInfinity;
             for (int i = 0; i <= 100; i++)
             {

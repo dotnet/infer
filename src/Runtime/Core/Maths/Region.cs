@@ -6,6 +6,9 @@ namespace Microsoft.ML.Probabilistic.Math
 {
     using System;
 
+    /// <summary>
+    /// Represents a hyper-rectangle in arbitrary dimensions.
+    /// </summary>
     public class Region
     {
         public Vector Lower, Upper;
@@ -18,6 +21,10 @@ namespace Microsoft.ML.Probabilistic.Math
             }
         }
 
+        /// <summary>
+        /// Creates a new Region containing only the all-zero vector.
+        /// </summary>
+        /// <param name="dimension"></param>
         public Region(int dimension)
         {
             Lower = Vector.Zero(dimension);
@@ -44,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             for (int i = 0; i < Dimension; i++)
             {
-                if (x[i] < Lower[i] || x[i] >= Upper[i]) return false;
+                if (x[i] < Lower[i] || x[i] > Upper[i]) return false;
             }
             return true;
         }
@@ -54,33 +61,32 @@ namespace Microsoft.ML.Probabilistic.Math
             Vector x = Vector.Zero(Dimension);
             for (int i = 0; i < Dimension; i++)
             {
-                double lower = Lower[i];
-                double upper = Upper[i];
-                double midpoint;
-                if (double.IsNegativeInfinity(lower))
-                {
-                    if (double.IsPositiveInfinity(upper))
-                        midpoint = 0.0;
-                    else if (upper > 0)
-                        midpoint = -upper;
-                    else if (upper < 0)
-                        midpoint = 2 * upper;
-                    else
-                        midpoint = -1;
-                }
-                else if (double.IsPositiveInfinity(upper))
-                {
-                    if (lower > 0) midpoint = 2 * lower;
-                    else if (lower < 0) midpoint = -lower;
-                    else midpoint = 1;
-                }
-                else
-                {
-                    midpoint = 0.5 * (lower + upper);
-                }
-                x[i] = midpoint;
+                x[i] = GetMidpoint(Lower[i], Upper[i]);
             }
             return x;
+        }
+
+        public static double GetMidpoint(double lower, double upper)
+        {
+            double midpoint;
+            if (double.IsNegativeInfinity(lower))
+            {
+                if (double.IsPositiveInfinity(upper)) midpoint = 0.0;
+                else if (upper > 0) midpoint = -upper;
+                else if (upper < 0) midpoint = 2 * upper;
+                else midpoint = -1;
+            }
+            else if (double.IsPositiveInfinity(upper))
+            {
+                if (lower > 0) midpoint = 2 * lower;
+                else if (lower < 0) midpoint = -lower;
+                else midpoint = 1;
+            }
+            else
+            {
+                midpoint = MMath.Average(lower, upper);
+            }
+            return midpoint;
         }
 
         public Vector Sample()

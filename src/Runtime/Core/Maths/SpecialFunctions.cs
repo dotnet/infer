@@ -3689,20 +3689,24 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             // denominator > 0
             // avoid infinite bounds
             double lowerBound = Math.Max(double.MinValue, denominator * PreviousDouble(ratio));
+            if (lowerBound == 0 && ratio < 0) lowerBound = -denominator; // must have ratio > -1
+            if (double.IsPositiveInfinity(lowerBound)) lowerBound = denominator; // must have ratio > 1
             // subnormal numbers are linearly spaced, which can lead to lowerBound being too large.  Set lowerBound to zero to avoid this.
             const double maxSubnormal = 2.3e-308;
             if (lowerBound > 0 && lowerBound < maxSubnormal) lowerBound = 0;
             double upperBound = Math.Min(double.MaxValue, denominator * NextDouble(ratio));
+            if (upperBound == 0 && ratio > 0) upperBound = denominator; // must have ratio < 1
+            if (double.IsNegativeInfinity(upperBound)) return upperBound; // must have ratio < -1 and denominator > 1
             if (upperBound < 0 && upperBound > -maxSubnormal) upperBound = 0;
-            if(double.IsNegativeInfinity(ratio))
+            if (double.IsNegativeInfinity(ratio))
             {
-                lowerBound = PreviousDouble(upperBound);
+                if (AreEqual(upperBound / denominator, ratio)) return upperBound;
+                else return PreviousDouble(upperBound);
             }
             while (true)
             {
-                double value = (lowerBound + upperBound) / 2;
-                if (double.IsInfinity(value)) value = 0.5 * lowerBound + 0.5 * upperBound;
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value}, lowerBound={lowerBound}, upperBound={upperBound}, denominator={denominator}, ratio={ratio}");
+                double value = Average(lowerBound, upperBound);
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
                 if (value / denominator <= ratio)
                 {
                     double value2 = NextDouble(value);
@@ -3714,16 +3718,29 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value}, lowerBound={lowerBound}, upperBound={upperBound}, denominator={denominator}, ratio={ratio}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value}, lowerBound={lowerBound}, upperBound={upperBound}, denominator={denominator}, ratio={ratio}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns (a+b)/2, avoiding overflow.  The result is guaranteed to be between a and b.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static double Average(double a, double b)
+        {
+            double midpoint = (a + b) / 2;
+            if (double.IsInfinity(midpoint)) midpoint = 0.5 * a + 0.5 * b;
+            return midpoint;
         }
 
         /// <summary>
@@ -3745,17 +3762,22 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 else return double.PositiveInfinity;
             }
             if (double.IsPositiveInfinity(sum)) return sum;
-            // denominator > 0
             double lowerBound = PreviousDouble(b + sum);
-            double upperBound = NextDouble(b) + NextDouble(sum);
-            upperBound = Math.Max(NextDouble(b) + sum, b + NextDouble(sum));
+            double upperBound;
+            if (Math.Abs(sum) > Math.Abs(b))
+            {
+                upperBound = b + NextDouble(sum);
+            }
+            else
+            {
+                upperBound = NextDouble(b) + sum;
+            }
             long iterCount = 0;
             while (true)
             {
                 iterCount++;
-                double value = (lowerBound + upperBound) / 2;
-                if (double.IsInfinity(value)) value = 0.5 * lowerBound + 0.5 * upperBound;
-                if (value < lowerBound || value > upperBound) throw new Exception();
+                double value = Average(lowerBound, upperBound); // TODO: use logarithmic average
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
                 if (value - b <= sum)
                 {
                     double value2 = NextDouble(value);
@@ -3769,14 +3791,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception();
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception();
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
                 }
             }
         }

@@ -37,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="bounds">Bounds for the search.</param>
         /// <param name="Evaluate">The function to maximize.</param>
         /// <param name="GetUpperBound">Returns an upper bound to the function in a region.  Need not be tight, but must become tight as the region shrinks.</param>
-        /// <param name="xTolerance">Allowable error in the solution on any dimension.  Must be greater than zero.</param>
+        /// <param name="xTolerance">Allowable relative error in the solution on any dimension.  Must be greater than zero.</param>
         /// <returns>A Vector close to the global maximum of the function.</returns>
         public static Vector Search(Region bounds, Func<Vector, double> Evaluate, Func<Region, double> GetUpperBound, double xTolerance = 1e-4)
         {
@@ -153,7 +153,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 bool foundSplit = false;
                 for (int i = 0; i < dim; i++)
                 {
-                    if (region.Upper[splitDim] - region.Lower[splitDim] < xTolerance)
+                    if (MMath.AbsDiff(region.Upper[splitDim], region.Lower[splitDim], 1e-10) < xTolerance)
                     {
                         if (++splitDim == dim)
                             splitDim = 0;
@@ -169,16 +169,20 @@ namespace Microsoft.ML.Probabilistic.Math
                     break;
                 }
 
-                double splitValue = midpoint[splitDim];
-
                 // split the node
-                Region leftRegion = new Region(region);
-                leftRegion.Upper[splitDim] = splitValue;
-                Region rightRegion = new Region(region);
-                rightRegion.Lower[splitDim] = splitValue;
-
-                addRegion(leftRegion);
-                addRegion(rightRegion);
+                double splitValue = midpoint[splitDim];
+                if (region.Upper[splitDim] != splitValue)
+                {
+                    Region leftRegion = new Region(region);
+                    leftRegion.Upper[splitDim] = splitValue;
+                    addRegion(leftRegion);
+                }
+                if (region.Lower[splitDim] != splitValue)
+                {
+                    Region rightRegion = new Region(region);
+                    rightRegion.Lower[splitDim] = splitValue;
+                    addRegion(rightRegion);
+                }
             }
             return argmax;
         }
