@@ -3731,19 +3731,6 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         }
 
         /// <summary>
-        /// Returns (a+b)/2, avoiding overflow.  The result is guaranteed to be between a and b.
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public static double Average(double a, double b)
-        {
-            double midpoint = (a + b) / 2;
-            if (double.IsInfinity(midpoint)) midpoint = 0.5 * a + 0.5 * b;
-            return midpoint;
-        }
-
-        /// <summary>
         /// Returns the largest value such that value - b &lt;= sum.
         /// </summary>
         /// <param name="sum"></param>
@@ -3776,14 +3763,15 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             while (true)
             {
                 iterCount++;
-                double value = Average(lowerBound, upperBound); // TODO: use logarithmic average
+                double value = Average(lowerBound, upperBound);
+                //double value = RepresentationMidpoint(lowerBound, upperBound);
                 if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
                 if (value - b <= sum)
                 {
                     double value2 = NextDouble(value);
                     if (value2 == value || value2 - b > sum)
                     {
-                        //if (iterCount > 10)
+                        //if (iterCount > 100)
                         //    throw new Exception();
                         return value;
                     }
@@ -3802,6 +3790,52 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 }
             }
         }
+
+        /// <summary>
+        /// Returns (a+b)/2, avoiding overflow.  The result is guaranteed to be between a and b.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static double Average(double a, double b)
+        {
+            double midpoint = (a + b) / 2;
+            if (double.IsInfinity(midpoint)) midpoint = 0.5 * a + 0.5 * b;
+            return midpoint;
+        }
+
+        /// <summary>
+        /// Returns (a+b)/2, avoiding overflow.  The result is guaranteed to be between a and b.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static long Average(long a, long b)
+        {
+            return a / 2 + b / 2 + ((a % 2) + (b % 2)) / 2;
+        }
+
+        private static double RepresentationMidpoint(double lower, double upper)
+        {
+            if (lower == 0)
+            {
+                if (upper < 0) return -RepresentationMidpoint(-lower, -upper);
+                else if (upper == 0) return lower;
+                // fall through
+            }
+            else if (lower < 0)
+            {
+                if (upper <= 0) return -RepresentationMidpoint(-lower, -upper);
+                else return 0; // upper > 0
+            }
+            else if (upper < 0) return 0; // lower > 0
+            // must have lower >= 0, upper >= 0
+            long lowerBits = BitConverter.DoubleToInt64Bits(lower);
+            long upperBits = BitConverter.DoubleToInt64Bits(upper);
+            long midpoint = MMath.Average(lowerBits, upperBits);
+            return BitConverter.Int64BitsToDouble(midpoint);
+        }
+
 
         #region Enumerations and constants
 

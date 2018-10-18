@@ -37,6 +37,20 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        [Fact]
+        public void AverageLongTest()
+        {
+            foreach (var a in Longs())
+            {
+                foreach (var b in Longs())
+                {
+                    double midpoint = MMath.Average(a, b);
+                    Assert.True(midpoint >= System.Math.Min(a, b));
+                    Assert.True(midpoint <= System.Math.Max(a, b));
+                }
+            }
+        }
+
         /// <summary>
         /// Tests an edge case involving subnormal numbers.
         /// </summary>
@@ -2038,6 +2052,23 @@ zL = (L - mx)*sqrt(prec)
         public static double MaxUlpDiff(Gaussian a, Gaussian b)
         {
             return System.Math.Max(UlpDiff(a.MeanTimesPrecision, b.MeanTimesPrecision), UlpDiff(a.Precision, b.Precision));
+        }
+
+        /// <summary>
+        /// Generates a representative set of int64 numbers for testing purposes.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<long> Longs()
+        {
+            yield return long.MaxValue;
+            yield return 0L;
+            yield return long.MinValue;
+            for (int i = 0; i < 64; i++)
+            {
+                double bigValue = System.Math.Pow(2, i);
+                yield return -(long)bigValue;
+                yield return (long)bigValue;
+            }
         }
 
         /// <summary>
