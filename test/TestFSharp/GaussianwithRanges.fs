@@ -10,7 +10,6 @@ open System
 open Microsoft.ML.Probabilistic
 open Microsoft.ML.Probabilistic.Models
 open Microsoft.ML.Probabilistic.Distributions
-open Microsoft.ML.Probabilistic.Factors
 open Microsoft.ML.Probabilistic.Math
 open Microsoft.ML.Probabilistic.FSharp
 

@@ -5,11 +5,9 @@
 #light
 namespace Microsoft.ML.Probabilistic.FSharp
 
-open Microsoft.FSharp.Quotations
 open Microsoft.FSharp.Quotations.Patterns
 open Microsoft.ML.Probabilistic
 open Microsoft.ML.Probabilistic.Distributions
-open Microsoft.ML.Probabilistic.Factors
 open Microsoft.ML.Probabilistic.Math
 open Microsoft.ML.Probabilistic.Models
 
