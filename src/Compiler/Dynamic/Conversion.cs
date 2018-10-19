@@ -566,14 +566,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             return false;
         }
 
-        private class Pair
+        private class ConvertedDelegate
         {
-            public object first, second;
+            public readonly Delegate InnerDelegate;
+            public readonly Converter Converter;
 
-            public Pair(object first, object second)
+            public ConvertedDelegate(Delegate inner, Converter converter)
             {
-                this.first = first;
-                this.second = second;
+                this.InnerDelegate = inner;
+                this.Converter = converter;
             }
         }
 
@@ -605,7 +606,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             Converter c = conv.Converter;
             if (c != null)
             {
-                target = new Pair(inner, c);
+                target = new ConvertedDelegate(inner, c);
             }
             Type[] formals = Invoker.GetParameterTypes(signature);
             Type[] formalsWithTarget = formals;
@@ -640,13 +641,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             if (c != null)
             {
                 il.Emit(OpCodes.Ldarg_0);
-                il.Emit(OpCodes.Ldfld, typeof (Pair).GetField("second"));
+                il.Emit(OpCodes.Ldfld, typeof (ConvertedDelegate).GetField("Converter"));
             }
             // call the inner delegate
             il.Emit(OpCodes.Ldarg_0);
             if (c != null)
             {
-                il.Emit(OpCodes.Ldfld, typeof (Pair).GetField("first"));
+                il.Emit(OpCodes.Ldfld, typeof (ConvertedDelegate).GetField("InnerDelegate"));
             }
             il.Emit(OpCodes.Ldloc, args);
             il.Emit(OpCodes.Call, inner.GetType().GetMethod("Invoke"));
@@ -672,15 +673,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             }
             il.Emit(OpCodes.Ret);
             return method.CreateDelegate(delegateType, target);
-        }
-
-        public static void EmitTryInvoke(ILGenerator il, Delegate d)
-        {
-            //il.BeginExceptionBlock();
-            //il.BeginCatchBlock(typeof(TargetInvocationException));
-            //il.Emit(OpCodes.Call, typeof(TargetInvocationException).GetMethod("get_InnerException"));
-            //il.Emit(OpCodes.Throw);
-            //il.EndExceptionBlock();
         }
     }
 

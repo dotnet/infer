@@ -367,11 +367,14 @@ namespace Microsoft.ML.Probabilistic.Factors
                         double alphaU = d_p * Math.Exp(logPhiU - logZ);
                         double alphaX = alphaL - alphaU;
                         double betaX = alphaX * alphaX;
-                        if (alphaU != 0.0)
-                            betaX += (upperBound - mx) / vx * alphaU;
-                        if (alphaL != 0.0)
-                            betaX -= (lowerBound - mx) / vx * alphaL;
-                        //Console.WriteLine($"alphaX = {alphaX} {alphaX2} betaX = {betaX} {betaX2} vp = {vp} {vp2}");
+                        double betaU;
+                        if (alphaU == 0.0) betaU = 0;
+                        else betaU = (upperBound * X.Precision - X.MeanTimesPrecision) * alphaU;   // (upperBound - mx) / vx * alphaU;
+                        double betaL;
+                        if (alphaL == 0.0) betaL = 0;
+                        else betaL = (X.MeanTimesPrecision - lowerBound * X.Precision) * alphaL; // -(lowerBound - mx) / vx * alphaL;
+                        if (Math.Abs(betaU) > Math.Abs(betaL)) betaX = (betaX + betaL) + betaU;
+                        else betaX = (betaX + betaU) + betaL;
                         return GaussianOp.GaussianFromAlphaBeta(X, alphaX, betaX, ForceProper);
                     }
                     // in the flipped case, (2*center-x - center) = (center - x) = abs(x - center)
@@ -442,8 +445,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                                     mp2 = upperBound + offset;
                                 }
                             }
+                            // Abs is needed to avoid some 32-bit oddities.
                             double prec2 = (expMinus1Ratio * expMinus1Ratio) /
-                                (r1U / X.Precision * expMinus1 * expMinus1RatioMinus1RatioMinusHalf
+                                Math.Abs(r1U / X.Precision * expMinus1 * expMinus1RatioMinus1RatioMinusHalf
                                 + rU / sqrtPrec * diff * (expMinus1RatioMinus1RatioMinusHalf - delta / 2 * (expMinus1RatioMinus1RatioMinusHalf + 1))
                                 + diff * diff / 4);
                             return Gaussian.FromMeanAndPrecision(mp2, prec2) / X;
