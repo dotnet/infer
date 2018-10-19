@@ -566,16 +566,26 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             return false;
         }
 
+        private class Pair
+        {
+            public object item1, item2;
+            public Pair(object item1, object item2)
+            {
+                this.item1 = item1;
+                this.item2 = item2;
+            }
+        }
+        
         /// <summary>
-        /// Convert a weakly-typed delegate into a strongly-typed delegate.
-        /// </summary>
-        /// <param name="delegateType">The desired delegate type.</param>
-        /// <param name="inner">A delegate with parameters (object[] args).
-        /// The
-        /// return type can be any type convertible to the return type of delegateType, or void if
-        /// the delegateType is void.</param>
-        /// <returns>A delegate of type delegateType.  The arguments of this delegate will be
-        /// passed as (object[]) args to the innerMethod.</returns>
+         /// Convert a weakly-typed delegate into a strongly-typed delegate.
+         /// </summary>
+         /// <param name="delegateType">The desired delegate type.</param>
+         /// <param name="inner">A delegate with parameters (object[] args).
+         /// The
+         /// return type can be any type convertible to the return type of delegateType, or void if
+         /// the delegateType is void.</param>
+         /// <returns>A delegate of type delegateType.  The arguments of this delegate will be
+         /// passed as (object[]) args to the innerMethod.</returns>
         public static Delegate ConvertDelegate(Type delegateType, Delegate inner)
         {
             // This code is based on:
@@ -594,7 +604,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             Converter c = conv.Converter;
             if (c != null)
             {
-                target = Tuple.Create(inner, c);
+                target = new Pair(inner, c);
             }
             Type[] formals = Invoker.GetParameterTypes(signature);
             Type[] formalsWithTarget = formals;
@@ -629,13 +639,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             if (c != null)
             {
                 il.Emit(OpCodes.Ldarg_0);
-                il.Emit(OpCodes.Ldfld, typeof (Tuple).GetField("Item2"));
+                il.Emit(OpCodes.Ldfld, typeof(Pair).GetField("item2"));
             }
             // call the inner delegate
             il.Emit(OpCodes.Ldarg_0);
             if (c != null)
             {
-                il.Emit(OpCodes.Ldfld, typeof (Tuple).GetField("Item1"));
+                il.Emit(OpCodes.Ldfld, typeof(Pair).GetField("item1"));
             }
             il.Emit(OpCodes.Ldloc, args);
             il.Emit(OpCodes.Call, inner.GetType().GetMethod("Invoke"));
