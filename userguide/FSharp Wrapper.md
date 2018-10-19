@@ -5,7 +5,7 @@ layout: default
 
 ## Calling Infer.NET from F\#
 
-This release of Infer.NET is tested with version 2.0 of F# as included with Visual Studio 2010. As Infer.NET is a .NET API, it can be called directly from F#. Infer.NET also ships with a wrapper DLL along with its source code. The use of this wrapper is optional but it does allow for more succinct code.
+Since Infer.NET is a .NET API, it can be called directly from F#. In addition to this, the Infer.NET source code includes an optional wrapper library that allows more succinct F# code.
 
 #### Porting existing C# code to F\#
 
@@ -29,14 +29,13 @@ A final issue is comparison operator overriding for `Variable<T>` objects. In C#
 The F# wrapper is accessed by referencing the FSharpWrapper.dll and including the namespace Microsoft.ML.Probabilistic.FSharp in an F# script file, or by including references in the Solution Project of an F# program file. It contains the following modules, which can be accessed by calling moduleName.methodName with appropriate arguments, from an F# file. Alternatively use open moduleName to avoid referring to the moduleName each time a module is used.  
 
 *   **FloatDistribution**: Provides type declarations for distributions over float-based array domains (float arrays, Vector arrays, and PositiveDefiniteMatrix arrays). Also provides variable types for these distribution array types which are useful for providing observed priors to your model.
-
 *   **IntDistribution**: Provides type declarations for distributions over integer array domains. Also provides variable types for these distribution array types which are useful for providing observed priors to your model.
 *   **BoolDistribution**: Provides type declarations for distributions over boolean array domains. Also provides variable types for these distribution array types which are useful for providing observed priors to your model.
 *   **Variable**: Provides methods for calling imperative structures such as ForEach statements, If Blocks and Switch Blocks. It also provides methods for creating and initialising VariableArrays.
 *   **Operators**:  Provides a set of operator overloads for the comparison operators which can be used to compare objects of type `Variable<'a> ` with `Variable<'a>` or with type 'a. The module name is not needed when using such operators.
 *   **Inference**: Provides methods of calling Inference methods without the need for complex explicit typing.
-*   **Factors:** Provides a mechanism for adding new Factors in F#, through a CreateDelegate method which can then be registered and used in a model.
-*   Array2D: Provides a method for creating 2D .NET arrays from lists of lists
+*   **Factors**: Provides a mechanism for adding new Factors in F#, through a CreateDelegate method which can then be registered and used in a model.
+*   **Array2D**: Provides a method for creating 2D .NET arrays from lists of lists
 
 #### Using the Methods in the F# Wrapper
 
@@ -50,13 +49,13 @@ A following description of how to use the methods is divided up by commonly used
 *   [Creating delegates in F#](Creating delegates in FSharp.md)
 *   [Adding New Factors in F#](Adding New Factors in FSharp.md)
 
-#### Tutorials
+#### Tutorial modules
 
-These tutorials show how to use the F# Wrapper modules to rewrite the C# tutorials provided for Infer.NET in F#
+These modules show how to use the F# Wrapper to rewrite the C# tutorials:
 
-*   [Two coins](Two coins.md)
-*   [Efficient truncated Gaussian](Efficient truncated Gaussian.md)
-*   [Learning a Gaussian with Ranges](Learning a Gaussian with Ranges.md)
-*   [Clinical trial](Clinical trial.md)
-*   [Bayes point machine](Bayes point machine.md)
-*   [Mixture of Gaussians](Mixture of Gaussians.md)
+*   [Two coins](https://github.com/dotnet/infer/blob/master/test/TestFSharp/TwoCoins.fs)
+*   [Efficient truncated Gaussian](https://github.com/dotnet/infer/blob/master/test/TestFSharp/TruncatedGaussian.fs)
+*   [Learning a Gaussian with Ranges](https://github.com/dotnet/infer/blob/master/test/TestFSharp/GaussianwithRanges.fs)
+*   [Clinical trial](https://github.com/dotnet/infer/blob/master/test/TestFSharp/ClinicalTrial.fs)
+*   [Bayes point machine](https://github.com/dotnet/infer/blob/master/test/TestFSharp/BayesPointMachine.fs)
+*   [Mixture of Gaussians](https://github.com/dotnet/infer/blob/master/test/TestFSharp/MixtureofGaussians.fs)

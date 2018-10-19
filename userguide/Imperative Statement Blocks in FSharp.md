@@ -48,9 +48,10 @@ There is also another Switch construct which returns a `Variable<'a>` and can be
 ```fsharp
 //using the SwitchExpr Block  
 
+let k = new Range(2) 
 let means = Variable.ArrayInit k (fun k ->  
                 Variable.VectorGaussianFromMeanAndPrecision(  
-                    new Vector(2,0.0), PositiveDefiniteMatrix.Identity(2)))  
+                    Vector.Zero(2), PositiveDefiniteMatrix.Identity(2)))  
 let precs = Variable.ArrayInit k (fun k ->  
                 Variable.WishartFromShapeAndScale(1.0,  
                     PositiveDefiniteMatrix.Identity(2)))  
