@@ -566,17 +566,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             return false;
         }
 
-        private class Pair
-        {
-            public object first, second;
-
-            public Pair(object first, object second)
-            {
-                this.first = first;
-                this.second = second;
-            }
-        }
-
         /// <summary>
         /// Convert a weakly-typed delegate into a strongly-typed delegate.
         /// </summary>
@@ -605,7 +594,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             Converter c = conv.Converter;
             if (c != null)
             {
-                target = new Pair(inner, c);
+                target = Tuple.Create(inner, c);
             }
             Type[] formals = Invoker.GetParameterTypes(signature);
             Type[] formalsWithTarget = formals;
@@ -640,13 +629,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Reflection
             if (c != null)
             {
                 il.Emit(OpCodes.Ldarg_0);
-                il.Emit(OpCodes.Ldfld, typeof (Pair).GetField("second"));
+                il.Emit(OpCodes.Ldfld, typeof (Tuple).GetField("Item2"));
             }
             // call the inner delegate
             il.Emit(OpCodes.Ldarg_0);
             if (c != null)
             {
-                il.Emit(OpCodes.Ldfld, typeof (Pair).GetField("first"));
+                il.Emit(OpCodes.Ldfld, typeof (Tuple).GetField("Item1"));
             }
             il.Emit(OpCodes.Ldloc, args);
             il.Emit(OpCodes.Call, inner.GetType().GetMethod("Invoke"));
