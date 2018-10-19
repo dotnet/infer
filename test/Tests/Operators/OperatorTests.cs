@@ -77,11 +77,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         private void AssertLargestDoubleProduct(double denominator, double ratio)
         {
             double numerator = MMath.LargestDoubleProduct(denominator, ratio);
-            if (double.IsNegativeInfinity(ratio))
-                Assert.True(MMath.AreEqual(numerator / denominator, ratio));
-            else
-                Assert.True(numerator / denominator <= ratio);
-            Assert.True(double.IsPositiveInfinity(numerator) || MMath.NextDouble(numerator) / denominator > ratio);
+            Assert.True((double)(numerator / denominator) <= ratio);
+            Assert.True(double.IsPositiveInfinity(numerator) || (double)(MMath.NextDouble(numerator) / denominator) > ratio);
         }
 
         [Fact]

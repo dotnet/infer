@@ -3688,13 +3688,13 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             if (double.IsPositiveInfinity(ratio)) return ratio;
             // denominator > 0
             // avoid infinite bounds
-            double lowerBound = Math.Max(double.MinValue, denominator * PreviousDouble(ratio));
+            double lowerBound = (double)Math.Max(double.MinValue, denominator * PreviousDouble(ratio));
             if (lowerBound == 0 && ratio < 0) lowerBound = -denominator; // must have ratio > -1
             if (double.IsPositiveInfinity(lowerBound)) lowerBound = denominator; // must have ratio > 1
             // subnormal numbers are linearly spaced, which can lead to lowerBound being too large.  Set lowerBound to zero to avoid this.
             const double maxSubnormal = 2.3e-308;
             if (lowerBound > 0 && lowerBound < maxSubnormal) lowerBound = 0;
-            double upperBound = Math.Min(double.MaxValue, denominator * NextDouble(ratio));
+            double upperBound = (double)Math.Min(double.MaxValue, denominator * NextDouble(ratio));
             if (upperBound == 0 && ratio > 0) upperBound = denominator; // must have ratio < 1
             if (double.IsNegativeInfinity(upperBound)) return upperBound; // must have ratio < -1 and denominator > 1
             if (upperBound < 0 && upperBound > -maxSubnormal) upperBound = 0;
@@ -3705,12 +3705,12 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             }
             while (true)
             {
-                double value = Average(lowerBound, upperBound);
+                double value = (double)Average(lowerBound, upperBound);
                 if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
-                if (value / denominator <= ratio)
+                if ((double)(value / denominator) <= ratio)
                 {
                     double value2 = NextDouble(value);
-                    if (value2 == value || value2 / denominator > ratio)
+                    if (value2 == value || (double)(value2 / denominator) > ratio)
                     {
                         return value;
                     }
