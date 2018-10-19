@@ -4,8 +4,8 @@
 
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
+    using System;
     using System.Collections.Generic;
-    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
@@ -32,7 +32,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// The list of the states in the closure.
             /// </summary>
-            private readonly List<Pair<State, Weight>> weightedStates = new List<Pair<State, Weight>>(DefaultStateListCapacity);
+            private readonly List<ValueTuple<State, Weight>> weightedStates = new List<ValueTuple<State, Weight>>(DefaultStateListCapacity);
 
             /// <summary>
             /// Initializes a new instance of the <see cref="EpsilonClosure"/> class.
@@ -63,7 +63,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (singleNodeClosure)
                 {
                     Weight stateWeight = Weight.ApproximateClosure(selfLoopWeight);
-                    this.weightedStates.Add(Pair.Create(state, stateWeight));
+                    this.weightedStates.Add(ValueTuple.Create(state, stateWeight));
                     this.EndWeight = Weight.Product(stateWeight, state.EndWeight);
                 }
                 else
@@ -75,7 +75,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         for (int j = 0; j < component.Size; ++j)
                         {
                             State componentState = component.GetStateByIndex(j);
-                            this.weightedStates.Add(Pair.Create(componentState, condensation.GetWeightFromRoot(componentState)));
+                            this.weightedStates.Add(ValueTuple.Create(componentState, condensation.GetWeightFromRoot(componentState)));
                         }
                     }
 
@@ -106,7 +106,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 Argument.CheckIfInRange(index >= 0 && index < this.weightedStates.Count, "index", "An invalid closure state index given.");
 
-                return this.weightedStates[index].First;
+                return this.weightedStates[index].Item1;
             }
 
             /// <summary>
@@ -119,7 +119,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 Argument.CheckIfInRange(index >= 0 && index < this.weightedStates.Count, "index", "An invalid closure state index given.");
 
-                return this.weightedStates[index].Second;
+                return this.weightedStates[index].Item2;
             }
         }
     }

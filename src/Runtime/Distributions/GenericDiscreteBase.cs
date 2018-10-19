@@ -6,13 +6,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using System.Linq;
     using System.Runtime.Serialization;
     using Math;
-    using Utilities;
     using Factors.Attributes;
-    using Collections;
     using Microsoft.ML.Probabilistic.Serialization;
 
     /// <summary>
@@ -476,23 +473,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Returns the domain values corresponding to the first and last indices of non-zero probabilities.
         /// </summary>
-        public Pair<T, T> ValueRange
+        public ValueTuple<T, T> ValueRange
         {
             get
             {
                 var probs = disc.GetWorkspace();
                 int firstIndex = probs.FindFirstIndex(p => p > 0.0);
                 int lastIndex = probs.FindLastIndex(p => p > 0.0);
-                return Pair.Create(ConvertFromInt(firstIndex), ConvertFromInt(lastIndex));
+                return ValueTuple.Create(ConvertFromInt(firstIndex), ConvertFromInt(lastIndex));
             }
         }
 
-        public Pair<int, int> IndexRange
+        public ValueTuple<int, int> IndexRange
         {
             get
             {
                 var probs = disc.GetWorkspace();
-                return Pair.Create(probs.FindFirstIndex(p => p > 0.0), probs.FindLastIndex(p => p > 0.0));
+                return ValueTuple.Create(probs.FindFirstIndex(p => p > 0.0), probs.FindLastIndex(p => p > 0.0));
             }
         }
 

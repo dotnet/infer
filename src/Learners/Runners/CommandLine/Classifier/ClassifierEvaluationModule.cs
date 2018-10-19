@@ -521,7 +521,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             Debug.Assert(positiveClassLabel != null, "The label of the positive class must not be null.");
 
             var calibrationCurve = evaluator.CalibrationCurve(positiveClassLabel, groundTruth, predictiveDistributions);
-            double calibrationError = calibrationCurve.Select(i => Metrics.AbsoluteError(i.First, i.Second)).Average();
+            double calibrationError = calibrationCurve.Select(i => Metrics.AbsoluteError(i.Item1, i.Item2)).Average();
 
             using (var writer = new StreamWriter(fileName))
             {
@@ -533,7 +533,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                 writer.WriteLine("# Predicted probability, empirical probability");
                 foreach (var point in calibrationCurve)
                 {
-                    writer.WriteLine("{0}, {1}", point.First, point.Second);
+                    writer.WriteLine("{0}, {1}", point.Item1, point.Item2);
                 }
             }
         }
@@ -567,7 +567,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                 writer.WriteLine("# Recall (R), precision (P)");
                 foreach (var point in precisionRecallCurve)
                 {
-                    writer.WriteLine("{0}, {1}", point.First, point.Second);
+                    writer.WriteLine("{0}, {1}", point.Item1, point.Item2);
                 }
             }
         }
@@ -602,7 +602,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                 writer.WriteLine("# False positive rate (FPR), true positive rate (TPR)");
                 foreach (var point in rocCurve)
                 {
-                    writer.WriteLine("{0}, {1}", point.First, point.Second);
+                    writer.WriteLine("{0}, {1}", point.Item1, point.Item2);
                 }
             }
         }

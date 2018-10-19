@@ -4504,10 +4504,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             double tolerance = Tolerance)
         {
             Assert.Equal(expectedDistributions.Count(), predictedDistributions.Count());
-            var distributions = expectedDistributions.Zip(predictedDistributions, Pair.Create);
+            var distributions = expectedDistributions.Zip(predictedDistributions, ValueTuple.Create);
             foreach (var pair in distributions)
             {
-                Assert.Equal(pair.First.GetProbTrue(), pair.Second.GetProbTrue(), tolerance);
+                Assert.Equal(pair.Item1.GetProbTrue(), pair.Item2.GetProbTrue(), tolerance);
             }
         }
 
@@ -4523,13 +4523,13 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             double tolerance = Tolerance)
         {
             Assert.Equal(expectedDistributions.Count(), predictedDistributions.Count());
-            var distributions = expectedDistributions.Zip(predictedDistributions, Pair.Create);
+            var distributions = expectedDistributions.Zip(predictedDistributions, ValueTuple.Create);
             foreach (var pair in distributions)
             {
-                Assert.Equal(pair.First.Dimension, pair.Second.Dimension);
-                for (var i = 0; i < pair.First.Dimension; ++i)
+                Assert.Equal(pair.Item1.Dimension, pair.Item2.Dimension);
+                for (var i = 0; i < pair.Item1.Dimension; ++i)
                 {
-                    Assert.Equal(pair.First[i], pair.Second[i], tolerance);
+                    Assert.Equal(pair.Item1[i], pair.Item2[i], tolerance);
                 }
             }
         }
@@ -4546,12 +4546,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             double tolerance = Tolerance)
         {
             Assert.Equal(expectedDistributions.Count(), predictedDistributions.Count());
-            var distributions = expectedDistributions.Zip(predictedDistributions, Pair.Create);
+            var distributions = expectedDistributions.Zip(predictedDistributions, ValueTuple.Create);
             foreach (var pair in distributions)
             {
-                Assert.Equal(pair.First.Count, pair.Second.Count);
-                Assert.Equal(pair.First["False"], pair.Second["False"], tolerance);
-                Assert.Equal(pair.First["True"], pair.Second["True"], tolerance);
+                Assert.Equal(pair.Item1.Count, pair.Item2.Count);
+                Assert.Equal(pair.Item1["False"], pair.Item2["False"], tolerance);
+                Assert.Equal(pair.Item1["True"], pair.Item2["True"], tolerance);
             }
         }
 
@@ -4567,13 +4567,13 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             double tolerance = Tolerance)
         {
             Assert.Equal(expectedDistributions.Count(), predictedDistributions.Count());
-            var distributions = expectedDistributions.Zip(predictedDistributions, Pair.Create);
+            var distributions = expectedDistributions.Zip(predictedDistributions, ValueTuple.Create);
             foreach (var pair in distributions)
             {
-                Assert.Equal(pair.First.Count, pair.Second.Count);
-                Assert.Equal(pair.First["A"], pair.Second["A"], tolerance);
-                Assert.Equal(pair.First["B"], pair.Second["B"], tolerance);
-                Assert.Equal(pair.First["C"], pair.Second["C"], tolerance);
+                Assert.Equal(pair.Item1.Count, pair.Item2.Count);
+                Assert.Equal(pair.Item1["A"], pair.Item2["A"], tolerance);
+                Assert.Equal(pair.Item1["B"], pair.Item2["B"], tolerance);
+                Assert.Equal(pair.Item1["C"], pair.Item2["C"], tolerance);
             }
         }
 

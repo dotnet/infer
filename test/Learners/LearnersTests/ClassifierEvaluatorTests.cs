@@ -15,7 +15,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
     using Microsoft.ML.Probabilistic.Math;
 
     using LabelDistribution = System.Collections.Generic.IDictionary<string, double>;
-    using Microsoft.ML.Probabilistic.Collections;
 
 
     /// <summary>
@@ -179,17 +178,17 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         public void RocCurveTest()
         {
             // Curve for perfect predictions
-            var expected = new[] { Pair.Create(0.0, 0.0), Pair.Create(0.0, 1.0), Pair.Create(1.0, 1.0) };
+            var expected = new[] { ValueTuple.Create(0.0, 0.0), ValueTuple.Create(0.0, 1.0), ValueTuple.Create(1.0, 1.0) };
             var actual = this.evaluator.ReceiverOperatingCharacteristicCurve(LabelSet[0], this.groundTruth, this.groundTruth).ToArray();
             AssertCurvesAreEqual(expected, actual);
 
             // Curve for imperfect predictions (one-versus-rest)
-            expected = new[] { Pair.Create(0.0, 0.0), Pair.Create(0.5, 0.0), Pair.Create(0.5, 1 / 3.0), Pair.Create(0.5, 2 / 3.0), Pair.Create(1.0, 1.0) };
+            expected = new[] { ValueTuple.Create(0.0, 0.0), ValueTuple.Create(0.5, 0.0), ValueTuple.Create(0.5, 1 / 3.0), ValueTuple.Create(0.5, 2 / 3.0), ValueTuple.Create(1.0, 1.0) };
             actual = this.evaluator.ReceiverOperatingCharacteristicCurve(LabelSet[0], this.groundTruth, this.predictions).ToArray();
             AssertCurvesAreEqual(expected, actual); // matches below AUC = 5/12
 
             // Curve for imperfect predictions (one-versus-another)
-            expected = new[] { Pair.Create(0.0, 0.0), Pair.Create(0.0, 1 / 3.0), Pair.Create(0.0, 2 / 3.0), Pair.Create(1.0, 1.0) };
+            expected = new[] { ValueTuple.Create(0.0, 0.0), ValueTuple.Create(0.0, 1 / 3.0), ValueTuple.Create(0.0, 2 / 3.0), ValueTuple.Create(1.0, 1.0) };
             actual = this.evaluator.ReceiverOperatingCharacteristicCurve(LabelSet[0], LabelSet[1], this.groundTruth, this.predictions).ToArray();
             AssertCurvesAreEqual(expected, actual); // matches below AUC = 5/6
 
@@ -218,17 +217,17 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         public void PrecisionRecallCurveTest()
         {
             // Curve for perfect predictions
-            var expected = new[] { Pair.Create(0.0, 1.0), Pair.Create(1 / 3.0, 1.0), Pair.Create(2 / 3.0, 1.0), Pair.Create(1.0, 1.0), Pair.Create(1.0, 0.75), Pair.Create(1.0, 0.6) };
+            var expected = new[] { ValueTuple.Create(0.0, 1.0), ValueTuple.Create(1 / 3.0, 1.0), ValueTuple.Create(2 / 3.0, 1.0), ValueTuple.Create(1.0, 1.0), ValueTuple.Create(1.0, 0.75), ValueTuple.Create(1.0, 0.6) };
             var actual = this.evaluator.PrecisionRecallCurve(LabelSet[0], this.groundTruth, this.groundTruth).ToArray();
             AssertCurvesAreEqual(expected, actual);
 
             // Curve for imperfect predictions (one-versus-rest)
-            expected = new[] { Pair.Create(0.0, 1.0), Pair.Create(0.0, 0.0), Pair.Create(1 / 3.0, 0.5), Pair.Create(2 / 3.0, 2 / 3.0), Pair.Create(1.0, 0.75), Pair.Create(1.0, 0.6) };
+            expected = new[] { ValueTuple.Create(0.0, 1.0), ValueTuple.Create(0.0, 0.0), ValueTuple.Create(1 / 3.0, 0.5), ValueTuple.Create(2 / 3.0, 2 / 3.0), ValueTuple.Create(1.0, 0.75), ValueTuple.Create(1.0, 0.6) };
             actual = this.evaluator.PrecisionRecallCurve(LabelSet[0], this.groundTruth, this.predictions).ToArray();
             AssertCurvesAreEqual(expected, actual);
 
             // Curve for imperfect predictions (one-versus-another)
-            expected = new[] { Pair.Create(0.0, 1.0), Pair.Create(1.0, 1.0), Pair.Create(1.0, 0.5) };
+            expected = new[] { ValueTuple.Create(0.0, 1.0), ValueTuple.Create(1.0, 1.0), ValueTuple.Create(1.0, 0.5) };
             actual = this.evaluator.PrecisionRecallCurve(LabelSet[1], LabelSet[2], this.groundTruth, this.predictions).ToArray();
             AssertCurvesAreEqual(expected, actual);
 
@@ -255,18 +254,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         public void CalibrationCurveTest()
         {
             // Curve for perfect predictions
-            var expected = new[] { Pair.Create(0.25, 0.0), Pair.Create(0.75, 1.0) };
+            var expected = new[] { ValueTuple.Create(0.25, 0.0), ValueTuple.Create(0.75, 1.0) };
             var actual = this.evaluator.CalibrationCurve(LabelSet[0], this.groundTruth, this.groundTruth).ToArray();
             AssertCurvesAreEqual(expected, actual);
 
             // Curve for imperfect predictions (one-versus-rest)
-            expected = new[] { Pair.Create(0.25, 0.75), Pair.Create(0.75, 0.0) };
+            expected = new[] { ValueTuple.Create(0.25, 0.75), ValueTuple.Create(0.75, 0.0) };
             actual = this.evaluator.CalibrationCurve(LabelSet[0], this.groundTruth, this.predictions).ToArray();
             AssertCurvesAreEqual(expected, actual);
 
             // Curve for imperfect predictions (3 bins)
             const int BinCount = 4;
-            expected = new[] { Pair.Create(1 / 8.0, 0.75), Pair.Create(7 / 8.0, 0.0) };
+            expected = new[] { ValueTuple.Create(1 / 8.0, 0.75), ValueTuple.Create(7 / 8.0, 0.0) };
             actual = this.evaluator.CalibrationCurve(LabelSet[0], this.groundTruth, this.predictions, BinCount).ToArray();
             AssertCurvesAreEqual(expected, actual);
 
@@ -380,7 +379,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         /// </summary>
         /// <param name="expected">The expected curve.</param>
         /// <param name="actual">The actual curve.</param>
-        private static void AssertCurvesAreEqual(IList<Pair<double, double>> expected, IList<Pair<double, double>> actual)
+        private static void AssertCurvesAreEqual(IList<ValueTuple<double, double>> expected, IList<ValueTuple<double, double>> actual)
         {
             Assert.Equal(expected.Count, actual.Count);
             for (int point = 0; point < actual.Count; point++)

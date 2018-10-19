@@ -700,7 +700,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             TThis result = ConstantOn(1.0, SequenceManipulator.ToSequence(new TElement[0]));
 
             // Build a list of all intermediate end states with their target ending weights while adding repetitions
-            var endStatesWithTargetWeights = new List<Pair<State, Weight>>();
+            var endStatesWithTargetWeights = new List<ValueTuple<State, Weight>>();
             int prevStateCount = 0;
             for (int i = 0; i <= maxTimes; ++i)
             {
@@ -711,7 +711,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         if (result.states[j].CanEnd)
                         {
-                            endStatesWithTargetWeights.Add(Pair.Create(
+                            endStatesWithTargetWeights.Add(ValueTuple.Create(
                                 result.states[j],
                                 Weight.Product(Weight.FromValue(repetitionNumberWeights[i]), result.states[j].EndWeight)));
                         }
@@ -729,7 +729,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // Set target ending weights
             for (int i = 0; i < endStatesWithTargetWeights.Count; ++i)
             {
-                endStatesWithTargetWeights[i].First.EndWeight = endStatesWithTargetWeights[i].Second;
+                endStatesWithTargetWeights[i].Item1.EndWeight = endStatesWithTargetWeights[i].Item2;
             }
 
             return result;

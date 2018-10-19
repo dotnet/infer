@@ -249,7 +249,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             TThis result = this.CopyNonSimplifiable(stateLabels);
             int firstNonCopiedStateIndex = result.States.Count;
 
-            IEnumerable<Pair<Simplification.GeneralizedSequence, Weight>> sequenceToLogWeight = this.BuildAcceptedSequenceList(stateLabels);
+            IEnumerable<ValueTuple<Simplification.GeneralizedSequence, Weight>> sequenceToLogWeight = this.BuildAcceptedSequenceList(stateLabels);
 
             // Before we rebuild the tree part, we prune out the low probability sequences
             if (this.PruneTransitionsWithLogWeightLessThan != null)
@@ -258,13 +258,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (!double.IsInfinity(logNorm))
                 {
                     sequenceToLogWeight = sequenceToLogWeight.Where(
-                        s => s.Second.LogValue - logNorm >= this.PruneTransitionsWithLogWeightLessThan.Value).ToList();
+                        s => s.Item2.LogValue - logNorm >= this.PruneTransitionsWithLogWeightLessThan.Value).ToList();
                 }
             }
 
-            foreach (Pair<Simplification.GeneralizedSequence, Weight> sequenceWithLogWeight in sequenceToLogWeight)
+            foreach (ValueTuple<Simplification.GeneralizedSequence, Weight> sequenceWithLogWeight in sequenceToLogWeight)
             {
-                result.AddGeneralizedSequence(firstNonCopiedStateIndex, sequenceWithLogWeight.First, sequenceWithLogWeight.Second);
+                result.AddGeneralizedSequence(firstNonCopiedStateIndex, sequenceWithLogWeight.Item1, sequenceWithLogWeight.Item2);
             }
 
             this.SwapWith(result);
@@ -563,9 +563,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="stateLabels">The state labels obtained from <see cref="LabelStatesForSimplification"/>.</param>
         /// <returns>The list of generalized sequences accepted by the simplifiable part of the automaton.</returns>
-        private List<Pair<Simplification.GeneralizedSequence, Weight>> BuildAcceptedSequenceList(ArrayDictionary<bool> stateLabels)
+        private List<ValueTuple<Simplification.GeneralizedSequence, Weight>> BuildAcceptedSequenceList(ArrayDictionary<bool> stateLabels)
         {
-            var sequenceToWeight = new List<Pair<Simplification.GeneralizedSequence, Weight>>();
+            var sequenceToWeight = new List<ValueTuple<Simplification.GeneralizedSequence, Weight>>();
             this.DoBuildAcceptedSequenceList(this.Start, stateLabels, sequenceToWeight, new List<Simplification.GeneralizedElement>(), Weight.One);
             return sequenceToWeight;
         }
@@ -617,7 +617,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private void DoBuildAcceptedSequenceList(
             State state,
             ArrayDictionary<bool> stateLabels,
-            List<Pair<Simplification.GeneralizedSequence, Weight>> weightedSequences,
+            List<ValueTuple<Simplification.GeneralizedSequence, Weight>> weightedSequences,
             List<Simplification.GeneralizedElement> currentSequenceElements,
             Weight currentWeight)
         {
@@ -673,7 +673,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     var sequence = new Simplification.GeneralizedSequence(currentSequenceElements);
                         // TODO: use immutable data structure instead of copying sequences
-                    weightedSequences.Add(Pair.Create(sequence, Weight.Product(currentWeight, state.EndWeight)));
+                    weightedSequences.Add(ValueTuple.Create(sequence, Weight.Product(currentWeight, state.EndWeight)));
                 }
 
                 // Traverse the outgoing transitions

@@ -5,7 +5,6 @@
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
-    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -30,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </p>
     /// </remarks>
     public abstract class PairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis> :
-        IDistribution<Pair<TElement1, TElement2>>, CanGetLogAverageOf<TThis>, SettableToProduct<TThis>, SettableToWeightedSumExact<TThis>, SettableToPartialUniform<TThis>
+        IDistribution<ValueTuple<TElement1, TElement2>>, CanGetLogAverageOf<TThis>, SettableToProduct<TThis>, SettableToWeightedSumExact<TThis>, SettableToPartialUniform<TThis>
         where TElementDistribution1 : class, IDistribution<TElement1>, CanGetLogAverageOf<TElementDistribution1>, SettableToProduct<TElementDistribution1>, SettableToPartialUniform<TElementDistribution1>, new()
         where TElementDistribution2 : class, IDistribution<TElement2>, CanGetLogAverageOf<TElementDistribution2>, SettableToProduct<TElementDistribution2>, SettableToPartialUniform<TElementDistribution2>, new()
         where TThis : PairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis>, new()
@@ -56,7 +55,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets or sets the point mass represented by the distribution.
         /// </summary>
-        public virtual Pair<TElement1, TElement2> Point
+        public virtual ValueTuple<TElement1, TElement2> Point
         {
             get
             {
@@ -65,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     throw new InvalidOperationException("This distribution is not a point mass.");
                 }
 
-                return new Pair<TElement1, TElement2>(this.First.Point, this.Second.Point);
+                return new ValueTuple<TElement1, TElement2>(this.First.Point, this.Second.Point);
             }
 
             set
@@ -75,14 +74,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     this.First = new TElementDistribution1();
                 }
 
-                this.First.Point = value.First;
+                this.First.Point = value.Item1;
 
                 if (this.Second == null)
                 {
                     this.Second = new TElementDistribution2();
                 }
 
-                this.Second.Point = value.Second;
+                this.Second.Point = value.Item2;
             }
         }
 
@@ -252,7 +251,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="pair">The pair to get the probability for.</param>
         /// <returns>The logarithm of the probability of the pair.</returns>
         /// <remarks>Not currently implemented.</remarks>
-        public virtual double GetLogProb(Pair<TElement1, TElement2> pair)
+        public virtual double GetLogProb(ValueTuple<TElement1, TElement2> pair)
         {
             throw new NotImplementedException();
         }

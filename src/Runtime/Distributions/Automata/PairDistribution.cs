@@ -4,8 +4,8 @@
 
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
+    using System;
     using System.Diagnostics;
-    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Math;
@@ -59,7 +59,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets or sets the point mass represented by the distribution.
         /// </summary>
-        public override Pair<TElement, TElement> Point
+        public override ValueTuple<TElement, TElement> Point
         {
             get
             {   

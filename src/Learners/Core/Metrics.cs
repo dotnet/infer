@@ -8,7 +8,6 @@ namespace Microsoft.ML.Probabilistic.Learners
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
 
@@ -416,7 +415,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <remarks>
         /// All instances not contained in <paramref name="positiveInstances"/> are assumed to belong to the 'negative' class.
         /// </remarks>
-        public static IEnumerable<Pair<double, double>> PrecisionRecallCurve<TInstance>(
+        public static IEnumerable<ValueTuple<double, double>> PrecisionRecallCurve<TInstance>(
             IEnumerable<TInstance> positiveInstances, IEnumerable<KeyValuePair<TInstance, double>> instanceScores)
         {
             if (positiveInstances == null)
@@ -448,7 +447,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             double recall = 0.0;
             double precision = 1.0;
 
-            var precisionRecallCurve = new List<Pair<double, double>> { Pair.Create(recall, precision) };
+            var precisionRecallCurve = new List<ValueTuple<double, double>> { ValueTuple.Create(recall, precision) };
 
             // Add further points to PR curve
             foreach (var instance in sortedInstanceScores)
@@ -464,7 +463,7 @@ namespace Microsoft.ML.Probabilistic.Learners
 
                 recall = truePositivesCount / (double)positivesCount;
                 precision = truePositivesCount / ((double)truePositivesCount + falsePositivesCount);
-                precisionRecallCurve.Add(Pair.Create(recall, precision));
+                precisionRecallCurve.Add(ValueTuple.Create(recall, precision));
             }
 
             return precisionRecallCurve;
@@ -487,7 +486,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <remarks>
         /// All instances not contained in <paramref name="positiveInstances"/> are assumed to belong to the 'negative' class.
         /// </remarks>
-        public static IEnumerable<Pair<double, double>> ReceiverOperatingCharacteristicCurve<TInstance>(
+        public static IEnumerable<ValueTuple<double, double>> ReceiverOperatingCharacteristicCurve<TInstance>(
             IEnumerable<TInstance> positiveInstances, IEnumerable<KeyValuePair<TInstance, double>> instanceScores)
         {
             if (positiveInstances == null)
@@ -523,7 +522,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             double falsePositiveRate;
             double truePositiveRate;
             double previousScore = double.NaN;
-            var rocCurve = new List<Pair<double, double>>();
+            var rocCurve = new List<ValueTuple<double, double>>();
 
             foreach (var instance in sortedInstanceScores)
             {
@@ -532,7 +531,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 {
                     falsePositiveRate = falsePositivesCount / (double)negativesCount;
                     truePositiveRate = truePositivesCount / (double)positivesCount;
-                    rocCurve.Add(Pair.Create(falsePositiveRate, truePositiveRate));
+                    rocCurve.Add(ValueTuple.Create(falsePositiveRate, truePositiveRate));
                     previousScore = score;
                 }
 
@@ -549,7 +548,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             // Add point for (1,1)
             falsePositiveRate = falsePositivesCount / (double)negativesCount;
             truePositiveRate = truePositivesCount / (double)positivesCount;
-            rocCurve.Add(Pair.Create(falsePositiveRate, truePositiveRate));
+            rocCurve.Add(ValueTuple.Create(falsePositiveRate, truePositiveRate));
 
             return rocCurve;
         }

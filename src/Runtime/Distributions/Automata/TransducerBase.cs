@@ -8,7 +8,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -246,7 +245,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfNotNull(transducer, "transducer");
 
-            var emptySequence = new List<Pair<TSrcElement, TDestElement>>();
+            var emptySequence = new List<ValueTuple<TSrcElement, TDestElement>>();
             return Sum(
                 transducer,
                 new TThis { sequencePairToWeight = PairListAutomaton.ConstantOnLog(0.0, emptySequence) });
@@ -555,7 +554,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Represents an automaton that maps lists of element pairs to real values. Such automata are used to represent transducers internally.
         /// </summary>
         protected class PairListAutomaton :
-            ListAutomaton<List<Pair<TSrcElement, TDestElement>>, Pair<TSrcElement, TDestElement>, TPairDistribution, PairListAutomaton>
+            ListAutomaton<List<ValueTuple<TSrcElement, TDestElement>>, ValueTuple<TSrcElement, TDestElement>, TPairDistribution, PairListAutomaton>
         {
             /// <summary>
             /// Computes a set of outgoing transitions from a given state of the determinization result.

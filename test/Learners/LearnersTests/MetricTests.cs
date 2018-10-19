@@ -13,7 +13,6 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
 
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
-    using Microsoft.ML.Probabilistic.Collections;
 
 
 
@@ -296,11 +295,11 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             // General
             var expectedCurve = new[]
                                     {
-                                        Pair.Create<double, double>(0, 1), 
-                                        Pair.Create<double, double>(0, 0),
-                                        Pair.Create<double, double>(0.5, 0.5), 
-                                        Pair.Create<double, double>(1, 2 / (double)3),
-                                        Pair.Create<double, double>(1, 0.5)
+                                        ValueTuple.Create<double, double>(0, 1), 
+                                        ValueTuple.Create<double, double>(0, 0),
+                                        ValueTuple.Create<double, double>(0.5, 0.5), 
+                                        ValueTuple.Create<double, double>(1, 2 / (double)3),
+                                        ValueTuple.Create<double, double>(1, 0.5)
                                     };
             var computedCurve = Metrics.PrecisionRecallCurve(new[] { 1, 2 }, new Dictionary<int, double> { { 3, 1 }, { 1, 0.5 }, { 2, 0.25 }, { 4, 0 } }).ToArray();
             Assert.Equal(expectedCurve.Length, computedCurve.Length);
@@ -310,7 +309,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             }
 
             // No instance scores
-            expectedCurve = new[] { Pair.Create<double, double>(0, 1) };
+            expectedCurve = new[] { ValueTuple.Create<double, double>(0, 1) };
             computedCurve = Metrics.PrecisionRecallCurve(new[] { 1 }, new Dictionary<int, double>()).ToArray();
             Assert.Equal(expectedCurve.Length, computedCurve.Length);
             for (int i = 0; i < expectedCurve.Length; i++)
@@ -319,7 +318,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             }
 
             // No negative instance scores
-            expectedCurve = new[] { Pair.Create<double, double>(0, 1), Pair.Create<double, double>(1, 1) };
+            expectedCurve = new[] { ValueTuple.Create<double, double>(0, 1), ValueTuple.Create<double, double>(1, 1) };
             computedCurve = Metrics.PrecisionRecallCurve(new[] { 1 }, new Dictionary<int, double> { { 1, 1 } }).ToArray();
             Assert.Equal(expectedCurve.Length, computedCurve.Length);
             for (int i = 0; i < expectedCurve.Length; i++)
@@ -352,9 +351,9 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             // Duplicate instance scores, duplicate positive instances
             var expectedCurve = new[]
                                     {
-                                        Pair.Create<double, double>(0, 0), 
-                                        Pair.Create<double, double>(0.5, 1), 
-                                        Pair.Create<double, double>(1, 1)
+                                        ValueTuple.Create<double, double>(0, 0), 
+                                        ValueTuple.Create<double, double>(0.5, 1), 
+                                        ValueTuple.Create<double, double>(1, 1)
                                     };
             var computedCurve = Metrics.ReceiverOperatingCharacteristicCurve(new[] { 1, 1, 2 }, new Dictionary<int, double> { { 1, 0.5 }, { 2, 0.5 }, { 3, 0.5 }, { 4, 0 } }).ToArray();
             foreach (var tuple in computedCurve)
