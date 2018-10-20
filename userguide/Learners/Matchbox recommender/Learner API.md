@@ -5,7 +5,7 @@ layout: default
 
 ## Learner API
 
-There are two ways in which you can use the Infer.NET Matchbox recommender. The first one, which is also the simplest, is through the command line. This is explained in detail in the [Command-line runners](Command-line runners.md) section. Here we will cover the other approach, which makes use of the developer API. For this to work you need to reference the `Microsoft.ML.Probabilistic.dll`, `Microsoft.ML.Probabilistic.Learners.dll`, `Microsoft.ML.Probabilistic.Learners.Recommender.dll` and include the `Microsoft.ML.Probabilistic.Learners` and `Microsoft.ML.Probabilistic.Learners.Mappings` namespaces. In this section we will cover an overview example of the recommender API, while more of the detail will be filled in the subsections.
+There are two ways in which you can use the Infer.NET Matchbox recommender. The first one, which is also the simplest, is through the command line. This is explained in detail in the [Command-line runners](Command-line runners.md) section. Here we will cover the other approach, which makes use of the developer API.  This API is part of the `Microsoft.ML.Probabilistic.Learners` package.  In this section we will cover an overview example of the recommender API, while more of the detail will be filled in the subsections.
 
 Before a recommender is created, a data mapping needs to be instantiated. This is simply an interface implementation which tells the recommender how to read data. This approach was preferred to passing fixed parameters to the system in order to avoid unnecessary data conversions. The mapping defines methods which the recommender will call during training or bulk prediction. Here is a sample implementation of a mapping which provides training instances from a comma-separated file; a single line of this file contains the rating that a user has given to an item - for example, "Person Name, Movie Name, 5".
 ```csharp
@@ -41,6 +41,7 @@ class  CsvMapping :  IStarRatingRecommenderMapping
  { throw  new  NotImplementedException(); }
 }
 ```
+This sample code can be found in [CsvMapping.cs](https://github.com/dotnet/infer/blob/master/test/Learners/LearnersTests/CsvMapping.cs).
 The `GetInstances` method will be invoked by the recommender to read the user-item-rating triples used for training. Then for each instance the recommender will obtain the corresponding object using the `GetUser`, `GetItem`, and `GetRating` methods. `GetRatingInfo` tells the system what the minimum and maximum rating values are. This is considered to be data dependent, and therefore was not designed as a setting. Finally, user and item features are not used in this simple example.
 
 Once we have the data mapping, we can create a recommender, set relevant settings, and train the system:
@@ -61,6 +62,17 @@ var recommender = MatchboxRecommender.Load<string, string, string, NoFeatureSour
 ```
 And finally, recommendations are made using the Recommend method. It takes as input the user to make recommendations to and the number of items to recommend:
 ```csharp
-recommender.Recommend("Person 1", 10);
+var recommendations = recommender.Recommend("Person 1", 10);
+```
+
+An example of a more complex data mapping, that includes user and item features, can be found in [Mappings.StarRatingRecommender](https://github.com/dotnet/infer/blob/master/src/Learners/Runners/Common/DataModel/Mappings.cs).  This is the mapping used by the command-line runner.  This mapping takes a [RecommenderDataset](https://github.com/dotnet/infer/blob/master/src/Learners/Runners/Common/DataModel/RecommenderDataset.cs) as its instance source.  A RecommenderDataset can be loaded from a file in the format used by the [command-line runner](Command-line runners.md).  
+Here is some example code using this mapping (also see [CsvMapping.cs](https://github.com/dotnet/infer/blob/master/test/Learners/LearnersTests/CsvMapping.cs)):
+```csharp
+RecommenderDataset trainingDataset = RecommenderDataset.Load("RatingsDataset.csv");
+var recommender = MatchboxRecommender.Create(Mappings.StarRatingRecommender);
+recommender.Settings.Training.TraitCount = 5;
+recommender.Settings.Training.IterationCount = 20;
+recommender.Train(trainingDataset);
+var recommendations = recommender.Recommend(new User("Person 1", Vector.FromArray(2.3)), 10);
 ```
 Subsections: [Data mappings](../Matchbox/API/Data mappings.md) | [Setting up](../Matchbox/API/Setting up a recommender.md) | [Training](../Matchbox/API/Training.md) | [Prediction](../Matchbox/API/Prediction.md) | [Evaluation](../Matchbox/API/Evaluation.md) | [Serialization](../Matchbox/API/Serialization.md)
