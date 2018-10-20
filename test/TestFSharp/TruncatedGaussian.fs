@@ -7,11 +7,8 @@
 namespace TruncatedGaussianTutorial
 
 open System
-open Microsoft.ML.Probabilistic
 open Microsoft.ML.Probabilistic.Models
 open Microsoft.ML.Probabilistic.Distributions
-open Microsoft.ML.Probabilistic.Factors
-open Microsoft.ML.Probabilistic.Math
 open Microsoft.ML.Probabilistic.FSharp
 
 //-----------------------------------------------------------------------------------
@@ -24,7 +21,7 @@ module truncated =
         Console.WriteLine("\n====================Running Truncated Gaussian Tutorial======================\n");
         let threshold = (Variable.New<float>()).Named("threshold")
         let x = Variable.GaussianFromMeanAndVariance(0.0,1.0).Named("x")
-        do Variable.ConstrainTrue( (x >> threshold))
+        do Variable.ConstrainTrue(x >> threshold)
 
         // The inference, looping over different thresholds
         let ie = InferenceEngine()
