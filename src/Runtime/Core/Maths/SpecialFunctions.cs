@@ -3527,7 +3527,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             if (length % 2 == 0)
             {
                 // average the two middle elements
-                return (a[middle - 1] + a[middle]) / 2;
+                return Average(a[middle - 1], a[middle]);
             }
             else
             {

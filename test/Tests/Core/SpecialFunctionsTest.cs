@@ -23599,5 +23599,13 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             };
             CheckFunctionValues("ulp", MMath.Ulp, Ulp_pairs);
         }
+
+        [Fact]
+        public void MedianTest()
+        {
+            Assert.Equal(double.MaxValue, MMath.Median(new[] { double.MaxValue }));
+            Assert.Equal(double.MaxValue, MMath.Median(new[] { double.MaxValue, double.MaxValue }));
+            Assert.Equal(3, MMath.Median(new[] { double.MaxValue, 3, double.MinValue }));
+        }
     }
 }
