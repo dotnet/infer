@@ -180,6 +180,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             [DataMember] private IDistribution<Vector[][]> vgaJ;
             [DataMember] private SparseGP sparseGp;
             [DataMember] private QuantileEstimator quantileEstimator;
+            [DataMember] private StringDistribution stringDistribution;
 
             public void Initialize()
             {
@@ -233,6 +234,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 this.quantileEstimator = new QuantileEstimator(0.01);
                 this.quantileEstimator.Add(5);
+
+                this.stringDistribution = StringDistribution.String("aa").Append(StringDistribution.OneOf("b", "ccc")).Append("dddd");
             }
 
             public void AssertEqualTo(MyClass that)
@@ -268,6 +271,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.Equal(0, vgaJ.MaxDiff(that.vgaJ));
                 Assert.Equal(0, this.sparseGp.MaxDiff(that.sparseGp));
                 Assert.True(this.quantileEstimator.ValueEquals(that.quantileEstimator));
+                Assert.Equal(0, this.stringDistribution.MaxDiff(that.stringDistribution));
             }
         }
 
