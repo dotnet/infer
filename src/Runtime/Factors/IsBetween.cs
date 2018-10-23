@@ -353,6 +353,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                         deltaOverDiffs = -deltaOverDiffs;
                         flip = true;
                     }
+                    if (double.IsNaN(zL)) throw new Exception($"zL is NaN when x={X}, lowerBound={lowerBound:r}, upperBound={upperBound:r}");
+                    if (double.IsNaN(zU)) throw new Exception($"zU is NaN when x={X}, lowerBound={lowerBound:r}, upperBound={upperBound:r}");
                     if (zU > 3.5)
                     {
                         // When zU > 0, X.GetMean() is inside the constraints and 
