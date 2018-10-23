@@ -259,33 +259,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>True if equal, false otherwise.</returns>
             public override bool Equals(object obj)
             {
-                if (!(obj is TransitionCharSegmentBound))
-                {
-                    return false;
-                }
-
-                TransitionCharSegmentBound that = (TransitionCharSegmentBound)obj;
-                if (this.DestinationStateId != that.DestinationStateId)
-                {
-                    return false;
-                }
-                
-                if (this.Bound != that.Bound)
-                {
-                    return false;
-                }
-
-                if (this.IsStart != that.IsStart)
-                {
-                    return false;
-                }
-
-                if (this.Weight != that.Weight)
-                {
-                    return false;
-                }
-
-                return true;
+                return
+                    obj is TransitionCharSegmentBound that &&
+                    this.DestinationStateId == that.DestinationStateId &&
+                    this.Bound == that.Bound &&
+                    this.IsStart == that.IsStart &&
+                    this.Weight == that.Weight;
             }
 
             /// <summary>
