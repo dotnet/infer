@@ -29,7 +29,3 @@ steps:
 - template: vstest-fast.yml
   parameters:
     Platform: 'x64'
-
-- template: vstest-fast.yml
-  parameters:
-    Platform: 'x86'
