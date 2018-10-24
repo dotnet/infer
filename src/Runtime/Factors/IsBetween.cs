@@ -339,7 +339,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                     // zU - zL = diffs
                     bool flip = false;
                     double zL = (lowerBound - mx) * sqrtPrec;
+                    if (zL < double.MinValue && double.IsPositiveInfinity(upperBound))
+                        return Gaussian.Uniform();
                     double zU = (upperBound - mx) * sqrtPrec;
+                    if (zU > double.MaxValue && double.IsNegativeInfinity(lowerBound))
+                        return Gaussian.Uniform();
                     double deltaOverDiffs = (-zL - zU) / 2;
                     if (deltaOverDiffs < 0)
                     {

@@ -100,11 +100,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Get the quantile rank of x.
         /// </summary>
-        /// <param name="x"></param>
+        /// <param name="x">Any real number.</param>
         /// <param name="quantiles">Cutpoints, sorted in increasing order, corresponding to probability i/(n+1)</param>
         /// <returns>A real number in [0,1]</returns>
         public static double GetProbLessThan(double x, double[] quantiles)
         {
+            if (double.IsNaN(x)) throw new ArgumentOutOfRangeException("x is NaN");
             int n = quantiles.Length;
             if (x < quantiles[0])
             {
