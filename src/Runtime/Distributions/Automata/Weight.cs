@@ -19,6 +19,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// <remarks>
     /// Weights are stored in log-domain so that weights of tiny magnitude can be handled without the loss of precision.
     /// </remarks>
+    [Serializable]
     [DataContract]
     public struct Weight
     {

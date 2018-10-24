@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.Serialization;
+
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
@@ -19,6 +21,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Serializable]
     public class StringAutomaton : Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>
     {
+        public StringAutomaton()
+        {
+        }
+
+        /// <summary>
+        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
+        /// </summary>
+        protected StringAutomaton(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
         /// <summary>
         /// Computes a set of outgoing transitions from a given state of the determinization result.
         /// </summary>

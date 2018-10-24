@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.Serialization;
+using Microsoft.ML.Probabilistic.Collections;
+
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
@@ -22,6 +25,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TThis : ListAutomaton<TList, TElement, TElementDistribution, TThis>, new()
     {
+        protected ListAutomaton()
+        {
+        }
+
+        /// <summary>
+        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
+        /// </summary>
+        protected ListAutomaton(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
     }
 
     /// <summary>
@@ -35,6 +49,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         where TList : class, IList<TElement>, new()
         where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
     {
+        public ListAutomaton()
+        {
+        }
+
+        /// <summary>
+        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
+        /// </summary>
+        protected ListAutomaton(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
         /// <summary>
         /// Computes a set of outgoing transitions from a given state of the determinization result.
         /// </summary>
@@ -62,6 +88,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>,
         CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
     {
+        public ListAutomaton()
+        {
+        }
+
+        /// <summary>
+        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
+        /// </summary>
+        protected ListAutomaton(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
         /// <summary>
         /// Computes a set of outgoing transitions from a given state of the determinization result.
         /// </summary>

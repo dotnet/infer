@@ -51,9 +51,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// <typeparam name="TSequenceManipulator">The type providing ways to manipulate sequences.</typeparam>
     /// <typeparam name="TThis">The type of a concrete automaton class.</typeparam>
     [Quality(QualityBand.Experimental)]
-    [DataContract]
     [Serializable]
-    public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
+    public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> : ISerializable
         where TSequence : class, IEnumerable<TElement>
         where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
@@ -2924,10 +2923,30 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
         #region Serialization
 
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext ctx)
+        /// <summary>
+        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
+        /// </summary>
+        /// <remarks>
+        /// To be serializable classes inherited from Automaton to implement constructor with the same signature
+        /// and delegate to this one.
+        /// </remarks>
+        protected Automaton(SerializationInfo info, StreamingContext context)
         {
-            states.Clear();
+            this.states = (List<State>)info.GetValue(nameof(this.states), typeof(List<State>));
+            foreach (var state in this.states)
+            {
+                state.Owner = (TThis)this;
+            }
+            this.statesReadOnly = new ReadOnlyList<State>(this.states);
+            this.startState = (State)info.GetValue(nameof(this.startState), typeof(State));
+            this.isEpsilonFree = (bool?)info.GetValue(nameof(this.isEpsilonFree), typeof(bool?));
+        }
+
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue(nameof(this.states), this.states);
+            info.AddValue(nameof(this.startState), this.startState);
+            info.AddValue(nameof(this.isEpsilonFree), this.isEpsilonFree);
         }
 
         /// <summary>
