@@ -9,9 +9,6 @@ name: 0.3.$(Date:yyMM).$(Date:dd)$(Rev:rr)
 resources:
 - repo: self
   clean: true
-
-queue:
-  timeoutInMinutes: 120
   
 trigger: none # disable CI build
 
