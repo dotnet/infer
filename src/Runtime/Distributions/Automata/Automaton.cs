@@ -2927,8 +2927,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
         /// </summary>
         /// <remarks>
-        /// To be serializable classes inherited from Automaton to implement constructor with the same signature
-        /// and delegate to this one.
+        /// To be (de)serializable, classes inherited from Automaton must constructor with the same signature.
         /// </remarks>
         protected Automaton(SerializationInfo info, StreamingContext context)
         {

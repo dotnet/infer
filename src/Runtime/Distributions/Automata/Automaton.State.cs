@@ -90,6 +90,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <remarks>
             /// Owner is not serialized to avoid circular references. It has to be restored manually upon deserialization.
             /// BinaryFormatter and Newtonsoft.Json handle circular references differently by default.
+            /// At the same time [DataMember] does the right thing, because IsReference=true property on State DataContract
+            /// makes DataContractSerializer handle circular references just fine.
             /// </remarks>
             [DataMember]
             [NonSerializedProperty]
