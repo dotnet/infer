@@ -15,3 +15,19 @@ The last version of the API documentation is in the `apiguide/` folder. If you w
 *   remove temporary folder `InferNet_Copy_Temp`,
 *   switch to gh-pages,
 *   commit and push the new changes.
+
+## Documenting Factors
+
+`Infer.NET` provides tool to automatically generate description text for factor classes, i.e. classes marked with `[FactorMethod]` attribute. Generated descriptions are written to `src/Runtime/Factors/FactorDocs.xml` file and referenced using `<include>` tags in source code triple comments. 
+
+It is important to have full and correct description of all factors, so when you change existing factor or add new one, please follow steps below.
+
+1. Add triple comment
+
+    ```/// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="FactorClassName"]/doc/*'/>```
+
+    before newly created factor classes. Replace  `FactorClassName` with actual class name without namespace.
+ 
+2. Run `BuildFactorDoc` project from Microsoft Visual Studio or .NET Core CLI.
+
+3. Commit updated `src/Runtime/Factors/FactorDocs.xml`. 
