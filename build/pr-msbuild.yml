@@ -11,7 +11,7 @@ resources:
 trigger: none # disable CI build
 
 jobs:
-- job: Windows # Hosted Windows agent, VS 2017
+- job: Win64 # Hosted Windows agent, VS 2017, testing on x64
   pool:
     vmImage: vs2017-win2016
   steps:
@@ -34,7 +34,7 @@ jobs:
     parameters:
       Platform: 'x64'
 
-- job: Windows # Hosted Windows agent, VS 2017
+- job: Win32 # Hosted Windows agent, VS 2017, testing on x86
   pool:
     vmImage: vs2017-win2016
   steps:
