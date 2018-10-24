@@ -293,7 +293,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableToProduct<DistributionType>
             where ItemType : IList<DistributionType>
         {
-            Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
+            if(items.Count != indices.Count)
+                throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetTo(array);
             for (int i = 0; i < indices.Count; i++)
             {
@@ -354,7 +355,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableToRatio<DistributionType>
         {
             int i = resultIndex;
-            Assert.IsTrue(result.Count == indices[i].Count, "result.Count != indices[i].Count");
+            if(result.Count != indices[i].Count)
+                throw new ArgumentException($"result.Count ({result.Count}) != indices[{i}].Count ({indices[i].Count})");
             // indices_i are all different
             var indices_i = indices[i];
             var indices_i_Count = indices_i.Count;
@@ -377,7 +379,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToProduct<DistributionType>
         {
-            Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
+            if(items.Count != indices.Count)
+                throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetToUniform();
             var indices_Count = indices.Count;
             for (int i = 0; i < indices_Count; i++)
@@ -406,7 +409,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<T>
             where DistributionType : HasPoint<T>
         {
-            Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
+            if (items.Count != indices.Count)
+                throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetToUniform();
             for (int i = 0; i < indices.Count; i++)
             {
@@ -454,7 +458,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>
         {
-            Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
+            if (items.Count != indices.Count)
+                throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetToUniform();
             for (int i = 0; i < indices.Count; i++)
             {
@@ -496,7 +501,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToProduct<DistributionType>, SettableToRatio<DistributionType>
         {
-            Assert.IsTrue(result.Count == indices.Count, "result.Count != indices.Count");
+            if(result.Count != indices.Count)
+                throw new ArgumentException($"result.Count ({result.Count}) != indices.Count ({indices.Count})");
             Dictionary<int, int[]> itemsOfArray = new Dictionary<int, int[]>();
             for (int i = 0; i < indices.Count; i++)
             {
@@ -815,7 +821,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableToProduct<DistributionType>
             where ItemType : IList<DistributionType>
         {
-            Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
+            if (items.Count != indices.Count)
+                throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetTo(array);
             for (int i = 0; i < indices.Count; i++)
             {
@@ -845,7 +852,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : HasPoint<T>
             where ItemType : IList<T>
         {
-            Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
+            if (items.Count != indices.Count)
+                throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetTo(array);
             for (int i = 0; i < indices.Count; i++)
             {
@@ -906,7 +914,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableToProduct<DistributionType>, SettableToRatio<DistributionType>
         {
             int i = resultIndex;
-            Assert.IsTrue(result.Count == indices[i].Count, "result.Count != indices[i].Count");
+            if(result.Count != indices[i].Count)
+                throw new ArgumentException($"result.Count ({result.Count}) != indices[{i}].Count ({indices[i].Count})");
             // indices_i are all different
             var indices_i = indices[i];
             var indices_i_Count = indices_i.Count;
@@ -952,7 +961,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<T>
             where DistributionType : HasPoint<T>
         {
-            Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
+            if (items.Count != indices.Count)
+                throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetToUniform();
             for (int i = 0; i < indices.Count; i++)
             {
@@ -1008,7 +1018,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>
         {
-            Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
+            if (items.Count != indices.Count)
+                throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetToUniform();
             for (int i = 0; i < indices.Count; i++)
             {
