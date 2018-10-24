@@ -10,22 +10,49 @@ resources:
   
 trigger: none # disable CI build
 
-steps:
-- task: NuGetToolInstaller@0
-  inputs:
-    versionSpec: '4.7.0'
+jobs:
+- job: Windows # Hosted Windows agent, VS 2017
+  pool:
+    vmImage: vs2017-win2016
+  steps:
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: '4.7.0'
 
-- task: NuGetCommand@2
-  inputs:
-    command: 'restore'
-    restoreSolution: '**/*.sln'
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
 
-- task: MSBuild@1
-  inputs:
-    solution: '**/*.sln'
-    clean: true
-    configuration: 'Release'
+  - task: MSBuild@1
+    inputs:
+      solution: '**/*.sln'
+      clean: true
+      configuration: 'Release'
 
-- template: vstest-fast.yml
-  parameters:
-    Platform: 'x64'
+  - template: vstest-fast.yml
+    parameters:
+      Platform: 'x64'
+
+- job: Windows # Hosted Windows agent, VS 2017
+  pool:
+    vmImage: vs2017-win2016
+  steps:
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: '4.7.0'
+
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
+
+  - task: MSBuild@1
+    inputs:
+      solution: '**/*.sln'
+      clean: true
+      configuration: 'Release'
+
+  - template: vstest-fast.yml
+    parameters:
+      Platform: 'x86'
