@@ -12,23 +12,29 @@ namespace Microsoft.ML.Probabilistic.Math
     {
         protected class QueueNode : IComparable<QueueNode>
         {
-            public Region Region;
-            public double UpperBound;
+            public readonly Region Region;
+            public readonly double UpperBound;
+            public readonly int SplitDim;
+
+            public QueueNode(Region region, double upperBound, int splitDim)
+            {
+                this.Region = region;
+                this.UpperBound = upperBound;
+                this.SplitDim = splitDim;
+            }
 
             public int CompareTo(QueueNode other)
             {
                 return other.UpperBound.CompareTo(UpperBound);
             }
+
+            public override string ToString()
+            {
+                return $"QueueNode({Region}, {UpperBound}, {SplitDim})";
+            }
         }
 
         public static bool Debug;
-        public enum SplitMethod
-        {
-            Random,
-            Cycle,
-            LowestChild
-        }
-        static SplitMethod splitMethod = SplitMethod.Cycle;
         static MeanVarianceAccumulator timeAccumulator = new MeanVarianceAccumulator();
 
         /// <summary>
@@ -37,17 +43,18 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="bounds">Bounds for the search.</param>
         /// <param name="Evaluate">The function to maximize.</param>
         /// <param name="GetUpperBound">Returns an upper bound to the function in a region.  Need not be tight, but must become tight as the region shrinks.</param>
-        /// <param name="xTolerance">Allowable error in the solution on any dimension.  Must be greater than zero.</param>
+        /// <param name="xTolerance">Allowable relative error in the solution on any dimension.  Must be greater than zero.</param>
         /// <returns>A Vector close to the global maximum of the function.</returns>
         public static Vector Search(Region bounds, Func<Vector, double> Evaluate, Func<Region, double> GetUpperBound, double xTolerance = 1e-4)
         {
-            if (xTolerance <= 0) throw new ArgumentException($"xTolerance <= 0");
+            if (xTolerance <= 0) throw new ArgumentOutOfRangeException($"xTolerance <= 0");
             int dim = bounds.Lower.Count;
             if (dim == 0) return Vector.Zero(dim);
             PriorityQueue<QueueNode> queue = new PriorityQueue<QueueNode>();
             double lowerBound = double.NegativeInfinity;
             Vector argmax = bounds.GetMidpoint();
-            Action<Region> addRegion = delegate (Region region)
+            long upperBoundCount = 0;
+            Action<Region,int> addRegion = delegate (Region region, int splitDim)
             {
                 Stopwatch watch = Stopwatch.StartNew();
                 double upperBoundF = GetUpperBound(region);
@@ -58,23 +65,20 @@ namespace Microsoft.ML.Probabilistic.Math
                         Trace.WriteLine($"GetUpperBound took {watch.ElapsedMilliseconds}ms");
                     timeAccumulator.Add(watch.ElapsedMilliseconds);
                 }
+                upperBoundCount++;
+                //if (upperBoundCount % 100 == 0) Trace.WriteLine($"lowerBound = {lowerBound}");
                 double upperBound = upperBoundF;
                 if (upperBound > lowerBound)
                 {
                     if (Debug)
                         Trace.WriteLine($"added region {region} with upperBoundF = {upperBoundF}");
-                    QueueNode node = new QueueNode()
-                    {
-                        Region = region,
-                        UpperBound = upperBound
-                    };
+                    QueueNode node = new QueueNode(region, upperBound, splitDim);
                     queue.Add(node);
                 }
                 else if (Debug)
                     Trace.WriteLine($"rejected region {region} with upperBound {upperBound} <= lowerBound {lowerBound}");
             };
-            addRegion(bounds);
-            int splitDim = 0;
+            addRegion(bounds, 0);
             while (queue.Count > 0)
             {
                 var node = queue.ExtractMinimum();  // gets the node with highest upper bound
@@ -93,7 +97,7 @@ namespace Microsoft.ML.Probabilistic.Math
                     timeAccumulator.Add(watch.ElapsedMilliseconds);
                 }
                 if (Debug)
-                    Trace.WriteLine($"expanding region {region} with upper bound = {node.UpperBound} lower bound = {nodeLowerBound}");
+                    Trace.WriteLine($"expanding {node} lower bound = {nodeLowerBound}");
                 if (nodeLowerBound > node.UpperBound) throw new Exception("nodeLowerBound > node.UpperBound");
                 if (nodeLowerBound > lowerBound)
                 {
@@ -101,61 +105,19 @@ namespace Microsoft.ML.Probabilistic.Math
                     lowerBound = nodeLowerBound;
                 }
 
-                if (splitMethod == SplitMethod.Cycle || dim == 1)
-                {
-                    // cycle the split dimension
-                    splitDim++;
-                    if (splitDim == dim)
-                        splitDim = 0;
-                }
-                else if (splitMethod == SplitMethod.Random)
-                {
-                    splitDim = Rand.Int(dim);
-                }
-                else if (splitMethod == SplitMethod.LowestChild)
-                {
-                    // find the best dimension to split on
-                    int bestSplitDim = 0;
-                    double bestSplitScore = double.PositiveInfinity;
-
-                    for (int i = 0; i < dim; i++)
-                    {
-                        if (region.Upper[i] - region.Lower[i] < xTolerance)
-                            continue;
-                        int splitDim2 = i;
-                        double splitValue2 = midpoint[i];
-                        Region leftRegion2 = new Region(region);
-                        leftRegion2.Upper[splitDim2] = splitValue2;
-                        double leftUpperBound = GetUpperBound(leftRegion2);
-                        Region rightRegion2 = new Region(region);
-                        rightRegion2.Lower[splitDim2] = splitValue2;
-                        double rightUpperBound = GetUpperBound(rightRegion2);
-                        double score = Math.Min(leftUpperBound, rightUpperBound);
-                        if (score < bestSplitScore)
-                        {
-                            bestSplitScore = score;
-                            bestSplitDim = i;
-                        }
-                    }
-                    if (bestSplitScore < double.MaxValue)
-                    {
-                        //Console.WriteLine("bestSplitValue = {0} (bestSplitScore = {1})", bestSplitValue, bestSplitScore);
-                        splitDim = bestSplitDim;
-                        //Console.WriteLine("argmaxGumbel = {0}  splitDim = {1}", argmaxGumbel, splitDim);
-                    }
-                    else
-                    {
-                        // use the previous splitDim
-                    }
-                }
-
-                // find a dimension to split on
+                // Find a dimension to split on.
+                // As a region gets split, this will cycle through the dimensions.
+                int splitDim = (node.SplitDim + 1) % dim;
+                // To avoid storing SplitDims, we could make a random choice.
+                // However, this takes much longer to converge.
+                //int splitDim = Rand.Int(dim);
                 bool foundSplit = false;
                 for (int i = 0; i < dim; i++)
                 {
-                    if (region.Upper[splitDim] - region.Lower[splitDim] < xTolerance)
+                    if (MMath.AbsDiff(region.Upper[splitDim], region.Lower[splitDim], 1e-10) < xTolerance)
                     {
-                        if (++splitDim == dim)
+                        splitDim++;
+                        if (splitDim == dim)
                             splitDim = 0;
                     }
                     else
@@ -169,17 +131,22 @@ namespace Microsoft.ML.Probabilistic.Math
                     break;
                 }
 
-                double splitValue = midpoint[splitDim];
-
                 // split the node
-                Region leftRegion = new Region(region);
-                leftRegion.Upper[splitDim] = splitValue;
-                Region rightRegion = new Region(region);
-                rightRegion.Lower[splitDim] = splitValue;
-
-                addRegion(leftRegion);
-                addRegion(rightRegion);
+                double splitValue = midpoint[splitDim];
+                if (region.Upper[splitDim] != splitValue)
+                {
+                    Region leftRegion = new Region(region);
+                    leftRegion.Upper[splitDim] = splitValue;
+                    addRegion(leftRegion, splitDim);
+                }
+                if (region.Lower[splitDim] != splitValue)
+                {
+                    Region rightRegion = new Region(region);
+                    rightRegion.Lower[splitDim] = splitValue;
+                    addRegion(rightRegion, splitDim);
+                }
             }
+            //Trace.WriteLine($"BranchAndBound.Search upperBoundCount = {upperBoundCount}");
             return argmax;
         }
     }

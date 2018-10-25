@@ -38,7 +38,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                           Sampleable<double>, CanGetMean<double>, CanGetVariance<double>,
                           CanGetMeanAndVarianceOut<double, double>, CanSetMeanAndVariance<double, double>,
                           CanGetLogAverageOf<Gamma>, CanGetLogAverageOfPower<Gamma>,
-                          CanGetAverageLog<Gamma>, CanGetLogNormalizer, CanGetMode<double>
+                          CanGetAverageLog<Gamma>, CanGetLogNormalizer, CanGetMode<double>,
+                          CanGetProbLessThan, CanGetQuantile
     {
         /// <summary>
         /// Rate parameter for the distribution
@@ -453,6 +454,34 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
                 return MMath.GammaLower(Shape, x * Rate);
+        }
+
+        /// <summary>
+        /// Returns the value x such that GetProbLessThan(x) == probability.
+        /// </summary>
+        /// <param name="probability">A real number in [0,1].</param>
+        /// <returns></returns>
+        public double GetQuantile(double probability)
+        {
+            if (probability < 0) throw new ArgumentOutOfRangeException("probability < 0");
+            if (probability > 1) throw new ArgumentOutOfRangeException("probability > 1");
+            if (this.IsPointMass)
+            {
+                return (probability == 1.0) ? MMath.NextDouble(this.Point) : this.Point;
+            }
+            else if (!IsProper())
+            {
+                throw new ImproperDistributionException(this);
+            }
+            else if (Shape == 1)
+            {
+                // cdf is 1 - exp(-x*rate)
+                return -Math.Log(1 - probability) / Rate;
+            }
+            else
+            {
+                throw new NotImplementedException("Shape != 1 is not implemented");
+            }
         }
 
         /// <summary>

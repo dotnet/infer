@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                          SettableToRatio<Beta>, SettableToPower<Beta>, SettableToWeightedSum<Beta>, CanGetLogAverageOf<Beta>, CanGetLogAverageOfPower<Beta>,
                          CanGetAverageLog<Beta>, CanGetLogNormalizer,
                          Sampleable<double>, CanGetMean<double>, CanGetVariance<double>, CanGetMeanAndVarianceOut<double, double>, CanSetMeanAndVariance<double, double>,
-                         CanGetMode<double>
+                         CanGetMode<double>, CanGetProbLessThan
     {
         /// <summary>
         /// True count

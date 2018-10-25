@@ -163,7 +163,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 {
                     // compute p(x > L) - p(x > U)
                     // must have mx <= center so delta <= 0
-                    if (diffs < 1e-3 || diffs < 0.7*Math.Abs(zU))
+                    if (diffs < 1e-3 || diffs < 0.7 * Math.Abs(zU))
                     {
                         // (Cdf(-zL) - Cdf(-zU))/N(zU) = R(-zL)*exp(-delta) - R(-zU)
                         // (Cdf(-zL) - Cdf(-zU))/N(zL) = R(-zL) - R(-zU)*exp(delta)
@@ -255,9 +255,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                     {
                         if (X.Point >= lowerBound && X.Point <= upperBound)
                         {
-                            double distanceToLower = X.Point - lowerBound;
-                            double distanceToUpper = upperBound - X.Point;
-                            if (distanceToLower < distanceToUpper)
+                            double center = MMath.Average(lowerBound, upperBound);
+                            if (X.Point == center)
+                            {
+                                return Gaussian.Uniform();
+                            }
+                            else if (X.Point < center)
                             {
                                 return Gaussian.PointMass(lowerBound);
                             }
@@ -324,19 +327,23 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double d_p = 2 * isBetween.GetProbTrue() - 1;
                 double mx, vx;
                 X.GetMeanAndVariance(out mx, out vx);
+                double center = MMath.Average(lowerBound, upperBound);
                 if (d_p == 1.0)
                 {
                     double diff = upperBound - lowerBound;
                     double sqrtPrec = Math.Sqrt(X.Precision);
                     double diffs = diff * sqrtPrec;
-                    double center = (lowerBound + upperBound) / 2;
                     // X.Prob(U) = X.Prob(L) * exp(delta)
                     // delta = diff*(mx - center)*prec = -diff*(zL+zU)/2*sqrtPrec = -diffs*(zL+zU)/2 = -(zU-zL)*(zL+zU)/2
                     // X.Prob(L) * exp(delta/2) = -l^2/2 -(u^2-l^2)/4 = -u^2/4 - l^2/4 = -(u^2+l^2)/4
                     // zU - zL = diffs
                     bool flip = false;
                     double zL = (lowerBound - mx) * sqrtPrec;
+                    if (zL < double.MinValue && double.IsPositiveInfinity(upperBound))
+                        return Gaussian.Uniform();
                     double zU = (upperBound - mx) * sqrtPrec;
+                    if (zU > double.MaxValue && double.IsNegativeInfinity(lowerBound))
+                        return Gaussian.Uniform();
                     double deltaOverDiffs = (-zL - zU) / 2;
                     if (deltaOverDiffs < 0)
                     {
@@ -350,6 +357,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                         deltaOverDiffs = -deltaOverDiffs;
                         flip = true;
                     }
+                    if (double.IsNaN(zL)) throw new Exception($"zL is NaN when x={X}, lowerBound={lowerBound:r}, upperBound={upperBound:r}");
+                    if (double.IsNaN(zU)) throw new Exception($"zU is NaN when x={X}, lowerBound={lowerBound:r}, upperBound={upperBound:r}");
                     if (zU > 3.5)
                     {
                         // When zU > 0, X.GetMean() is inside the constraints and 
@@ -357,23 +366,28 @@ namespace Microsoft.ML.Probabilistic.Factors
                         // If zU > 10, then the boundaries are many standard deviations away, and therefore have little effect.
                         // In this case, alpha and beta will be very small.
                         double logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
+                        if (logZ == 0) return Gaussian.Uniform();
                         double logPhiL = Gaussian.GetLogProb(lowerBound, mx, vx);
                         double alphaL = d_p * Math.Exp(logPhiL - logZ);
                         double logPhiU = Gaussian.GetLogProb(upperBound, mx, vx);
                         double alphaU = d_p * Math.Exp(logPhiU - logZ);
                         double alphaX = alphaL - alphaU;
                         double betaX = alphaX * alphaX;
-                        if (alphaU != 0.0)
-                            betaX += (upperBound - mx) / vx * alphaU;
-                        if (alphaL != 0.0)
-                            betaX -= (lowerBound - mx) / vx * alphaL;
-                        //Console.WriteLine($"alphaX = {alphaX} {alphaX2} betaX = {betaX} {betaX2} vp = {vp} {vp2}");
+                        double betaU;
+                        if (alphaU == 0.0) betaU = 0;
+                        else betaU = (upperBound * X.Precision - X.MeanTimesPrecision) * alphaU;   // (upperBound - mx) / vx * alphaU;
+                        double betaL;
+                        if (alphaL == 0.0) betaL = 0;
+                        else betaL = (X.MeanTimesPrecision - lowerBound * X.Precision) * alphaL; // -(lowerBound - mx) / vx * alphaL;
+                        if (Math.Abs(betaU) > Math.Abs(betaL)) betaX = (betaX + betaL) + betaU;
+                        else betaX = (betaX + betaU) + betaL;
                         return GaussianOp.GaussianFromAlphaBeta(X, alphaX, betaX, ForceProper);
                     }
                     // in the flipped case, (2*center-x - center) = (center - x) = abs(x - center)
                     //double delta = diff * Math.Abs(X.MeanTimesPrecision - X.Precision * center);
                     // this formula is more accurate than above
                     double delta = diffs * deltaOverDiffs;
+                    double deltaSqrtVx = diff * deltaOverDiffs; // delta / sqrtPrec
                     if (delta < 0) throw new Exception("delta < 0");
                     if (delta < 1e-16 && (mx <= lowerBound || mx >= upperBound))
                     {
@@ -437,12 +451,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                                     mp2 = upperBound + offset;
                                 }
                             }
-                            double vp2 =
-                                (r1U * expMinus1 * expMinus1RatioMinus1RatioMinusHalf
-                                + rU * diffs * (expMinus1RatioMinus1RatioMinusHalf - delta / 2 * (expMinus1RatioMinus1RatioMinusHalf + 1))
-                                + diffs * diffs / 4)
-                                / (expMinus1Ratio * expMinus1Ratio * X.Precision);
-                            return new Gaussian(mp2, vp2) / X;
+                            // Abs is needed to avoid some 32-bit oddities.
+                            double prec2 = (expMinus1Ratio * expMinus1Ratio) /
+                                Math.Abs(r1U / X.Precision * expMinus1 * expMinus1RatioMinus1RatioMinusHalf
+                                + rU / sqrtPrec * diff * (expMinus1RatioMinus1RatioMinusHalf - delta / 2 * (expMinus1RatioMinus1RatioMinusHalf + 1))
+                                + diff * diff / 4);
+                            return Gaussian.FromMeanAndPrecision(mp2, prec2) / X;
                         }
                     }
                     if (expMinus1 > 1e100) // cL < 1e-100, delta < 254
@@ -459,10 +473,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                         else mp2 = lowerBound + r1U / rU / sqrtPrec;
                         // This approach loses accuracy when r1U/(rU*rU) < 1e-3, which is zU > 3.5
                         if (zU > 3.5) throw new Exception("zU > 3.5");
-                        double vp2 = NormalCdfRatioSqrMinusDerivative(zU, rU, r1U, r3U);
-                        if (vp2 != 0) vp2 /= (rU * rU * X.Precision);  // avoid 0/0
+                        double prec2 = rU * rU * X.Precision;
+                        if (prec2 != 0) // avoid 0/0
+                            prec2 /= NormalCdfRatioSqrMinusDerivative(zU, rU, r1U, r3U);
                         //Console.WriteLine($"z = {zU:r} r = {rU:r} r1 = {r1U:r} r1U/rU = {r1U / rU:r} r1U/rU/sqrtPrec = {r1U / rU / sqrtPrec:r} sqrtPrec = {sqrtPrec:r} mp = {mp2:r}");
-                        return new Gaussian(mp2, vp2) / X;
+                        return Gaussian.FromMeanAndPrecision(mp2, prec2) / X;
                     }
                     // TODO: compute these more efficiently
                     double rL = MMath.NormalCdfRatio(zL);
@@ -471,7 +486,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     double r2U = MMath.NormalCdfMomentRatio(2, zU) * 2;
                     double r3L = MMath.NormalCdfMomentRatio(3, zL) * 6;
                     double drU, drU2, drU3, dr1U, dr1U2, dr1U3, dr2U, dr2U2;
-                    if (diffs < Math.Abs(zL)*0.7 || diffs <= 9.9)
+                    if (diffs < Math.Abs(zL) * 0.7 || diffs <= 9.9)
                     {
                         drU3 = MMath.NormalCdfRatioDiff(zL, diffs, 3);
                         //drU2 = MMath.NormalCdfRatioDiff(zL, diffs, 2);
@@ -501,7 +516,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         dr2U = r2U - r2L;
                         dr2U2 = dr2U / diffs - r3L;
                     }
-                    double alphaXcLprecDiffs = 1 / ((rU * deltaOverDiffs * expMinus1Ratio + r1L + drU2) * sqrtPrec);
+                    double alphaXcLprecDiff = 1 / (rU * deltaOverDiffs * expMinus1Ratio + r1L + drU2);
                     double mp;
                     if (delta < 10)
                     {
@@ -518,7 +533,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                             - deltaOverDiffs * expMinus1RatioMinus1RatioMinusHalf
                             + diffs / 4);
                         if (flip) numer = -numer;
-                        mp = center + numer * delta * alphaXcLprecDiffs;
+                        mp = center + numer * deltaSqrtVx * alphaXcLprecDiff;
                     }
                     else
                     {
@@ -530,43 +545,68 @@ namespace Microsoft.ML.Probabilistic.Factors
                             + diffs / 4);
                         if (flip)
                         {
-                            mp = lowerBound - numerLargezL8 * delta * alphaXcLprecDiffs;
+                            mp = lowerBound - numerLargezL8 * deltaSqrtVx * alphaXcLprecDiff;
                         }
                         else
                         {
-                            mp = upperBound + numerLargezL8 * delta * alphaXcLprecDiffs;
+                            mp = upperBound + numerLargezL8 * deltaSqrtVx * alphaXcLprecDiff;
                         }
                     }
                     // double vp = (1 - betaX / X.Precision) / X.Precision;
                     double drU2r1U = NormalCdfRatioSqrMinusDerivative(zU, rU, r1U, r3U);
-                    double q =
-                        delta * delta * (drU2r1U / diffs * expMinus1Ratio * deltaOverDiffs * expMinus1RatioMinus1RatioMinusHalf + (r2U / diffs - r1U / 2) * expMinus1RatioMinus1 / 2)
-                        + delta * delta * (dr2U / diffs - r1U / 2) / 2
-                        + rU * expMinus1 * (-(rU / 2 + (r1L + drU2) * zL) / 2 * delta - r1L / 2 * diffs / 2 + drU2 / diffs * delta + drU3)
-                        + delta * expMinus1RatioMinus1 * (dr2U / diffs - dr1U2 / diffs - r1U / 2)
-                        - delta / 2 * diffs / 2 * r2L
-                        + delta / 2 * (-dr1U - drU2 + 2 * dr2U2 - 2 * dr1U3)
-                        + (r1L + drU2) * (delta * delta * ((rU / diffs - 1) * expMinus1RatioMinus1RatioMinusHalf - rL * deltaOverDiffs / 2 + drU2 / 2)
-                            + diffs * (drU3 * (delta + 1) - diffs / 4 + r2L / 2 * delta
-                            + rL / 2 * diffs / 2 * diffs / 2
-                            - rL / 2 * delta * delta / 2));
-                    double vp = q * alphaXcLprecDiffs * alphaXcLprecDiffs;
+                    double qOverPrec =
+                        deltaSqrtVx * deltaSqrtVx * (expMinus1Ratio * deltaOverDiffs * expMinus1RatioMinus1RatioMinusHalf * drU2r1U / diffs + (r2U / diffs - r1U / 2) * expMinus1RatioMinus1 / 2)
+                        + deltaSqrtVx * deltaSqrtVx * (dr2U / diffs - r1U / 2) / 2
+                        + rU * expMinus1 / X.Precision * (-(rU / 2 + (r1L + drU2) * zL) / 2 * delta - r1L / 2 * diffs / 2 + drU2 / diffs * delta + drU3)
+                        + deltaSqrtVx * expMinus1RatioMinus1 / sqrtPrec * (dr2U / diffs - dr1U2 / diffs - r1U / 2)
+                        - deltaSqrtVx / 2 * diff / 2 * r2L
+                        + deltaSqrtVx / sqrtPrec / 2 * (-dr1U - drU2 + 2 * dr2U2 - 2 * dr1U3)
+                        + (r1L + drU2) * (deltaSqrtVx * deltaSqrtVx * ((rU / diffs - 1) * expMinus1RatioMinus1RatioMinusHalf - rL * deltaOverDiffs / 2 + drU2 / 2)
+                            + diff * (drU3 * (delta + 1) / sqrtPrec - diff / 4 + r2L / 2 * deltaSqrtVx
+                            + rL / 2 * diffs / 2 * diff / 2
+                            - rL / 2 * delta * deltaSqrtVx / 2));
+                    if (delta == 0) // avoid 0*infinity
+                        qOverPrec = (r1L + drU2) * diff * (drU3 / sqrtPrec - diff / 4 + rL / 2 * diffs / 2 * diff / 2);
+                    double vp = qOverPrec * alphaXcLprecDiff * alphaXcLprecDiff;
                     return new Gaussian(mp, vp) / X;
                 }
                 else
                 {
                     double logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
+                    if (d_p == -1.0 && logZ < double.MinValue)
+                    {
+                        if (mx == center)
+                        {
+                            // The posterior is two point masses.
+                            // Compute the moment-matched Gaussian and divide.
+                            double diff = upperBound - lowerBound;
+                            Gaussian result = Gaussian.FromMeanAndVariance(center, diff * diff / 4);
+                            result.SetToRatio(result, X, ForceProper);
+                            return result;
+                        }
+                        else if (mx < center)
+                        {
+                            return Gaussian.PointMass(lowerBound);
+                        }
+                        else
+                        {
+                            return Gaussian.PointMass(upperBound);
+                        }
+                    }
                     double logPhiL = Gaussian.GetLogProb(lowerBound, mx, vx);
                     double alphaL = d_p * Math.Exp(logPhiL - logZ);
                     double logPhiU = Gaussian.GetLogProb(upperBound, mx, vx);
                     double alphaU = d_p * Math.Exp(logPhiU - logZ);
                     double alphaX = alphaL - alphaU;
                     double betaX = alphaX * alphaX;
-                    if (alphaU != 0.0)
-                        betaX += (upperBound - mx) / vx * alphaU;
-                    if (alphaL != 0.0)
-                        betaX -= (lowerBound - mx) / vx * alphaL;
-                    double vp = (1 - betaX / X.Precision) / X.Precision;
+                    double betaU;
+                    if (alphaU == 0.0) betaU = 0;
+                    else betaU = (upperBound * X.Precision - X.MeanTimesPrecision) * alphaU;   // (upperBound - mx) / vx * alphaU;
+                    double betaL;
+                    if (alphaL == 0.0) betaL = 0;
+                    else betaL = (X.MeanTimesPrecision - lowerBound * X.Precision) * alphaL; // -(lowerBound - mx) / vx * alphaL;
+                    if (Math.Abs(betaU) > Math.Abs(betaL)) betaX = (betaX + betaL) + betaU;
+                    else betaX = (betaX + betaU) + betaL;
                     return GaussianOp.GaussianFromAlphaBeta(X, alphaX, betaX, ForceProper);
                 }
             }

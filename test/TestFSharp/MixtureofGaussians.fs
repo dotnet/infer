@@ -10,7 +10,6 @@ open System
 open Microsoft.ML.Probabilistic
 open Microsoft.ML.Probabilistic.Models
 open Microsoft.ML.Probabilistic.Distributions
-open Microsoft.ML.Probabilistic.Factors
 open Microsoft.ML.Probabilistic.Math
 open Microsoft.ML.Probabilistic.FSharp
 
@@ -31,7 +30,7 @@ module mixture =
         let truePi = 0.6
         let trueB = new Bernoulli(truePi) 
         Rand.Restart(12347) // Restart the infer.NET random number generator 
-        Array.init nData (fun j -> if trueB.Sample()then trueVG1.Sample() else trueVG2.Sample())
+        Array.init nData (fun j -> if trueB.Sample() then trueVG1.Sample() else trueVG2.Sample())
 
     //-----------------------------------
     // The model
@@ -80,6 +79,6 @@ module mixture =
 
         let meansPost = Inference.InferVectorGaussianArray(ie, means)
         let precsPost = Inference.InferWishartArray(ie,precs)
-        printfn "Distribution over vector Gaussian means = %A" meansPost
-        printfn "Distribution over vector Gaussian precisions = %A" precsPost
+        printfn "Distribution over vector Gaussian means =\n%A" meansPost
+        printfn "Distribution over vector Gaussian precisions =\n%A" precsPost
         ()
