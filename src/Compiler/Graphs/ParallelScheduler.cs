@@ -311,6 +311,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                     perThread[thread][stageIndex] = new int[0];
                 }
             }
+            CheckSchedulePerThread(perThread);
             return perThread;
         }
 
@@ -1279,6 +1280,27 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
                 }
             }
             return false;
+        }
+
+        // [thread][stage][item]
+        private void CheckSchedulePerThread(int[][][] schedule)
+        {
+            HashSet<int> allNodes = new HashSet<int>();
+            int stageCount = schedule[0].Length;
+            for (int stageIndex = 0; stageIndex < stageCount; stageIndex++)
+            {
+                for (int thread = 0; thread < schedule.Length; thread++)
+                {
+                    foreach(var node in schedule[thread][stageIndex])
+                    {
+                        if (allNodes.Contains(node))
+                            throw new Exception("duplicate node");
+                        allNodes.Add(node);
+                    }
+                }
+            }
+            if (allNodes.Count != g.Nodes.Count)
+                throw new Exception("schedule does not contain all nodes");
         }
 
         private void CheckSchedule(List<List<List<int>>> schedule)

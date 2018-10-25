@@ -339,7 +339,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                     // zU - zL = diffs
                     bool flip = false;
                     double zL = (lowerBound - mx) * sqrtPrec;
+                    if (zL < double.MinValue && double.IsPositiveInfinity(upperBound))
+                        return Gaussian.Uniform();
                     double zU = (upperBound - mx) * sqrtPrec;
+                    if (zU > double.MaxValue && double.IsNegativeInfinity(lowerBound))
+                        return Gaussian.Uniform();
                     double deltaOverDiffs = (-zL - zU) / 2;
                     if (deltaOverDiffs < 0)
                     {
@@ -353,6 +357,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                         deltaOverDiffs = -deltaOverDiffs;
                         flip = true;
                     }
+                    if (double.IsNaN(zL)) throw new Exception($"zL is NaN when x={X}, lowerBound={lowerBound:r}, upperBound={upperBound:r}");
+                    if (double.IsNaN(zU)) throw new Exception($"zU is NaN when x={X}, lowerBound={lowerBound:r}, upperBound={upperBound:r}");
                     if (zU > 3.5)
                     {
                         // When zU > 0, X.GetMean() is inside the constraints and 

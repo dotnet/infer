@@ -2487,6 +2487,8 @@ zL = (L - mx)*sqrt(prec)
         [Fact]
         public void GaussianIsBetweenCRCC_IsMonotonicInUpperBound()
         {
+            // Test the symmetric version of a corner case that is tested below.
+            DoubleIsBetweenOp.XAverageConditional(true, Gaussian.FromNatural(-1.7976931348623157E+308, 4.94065645841247E-324), double.NegativeInfinity, 0);
             double meanMaxUlpError = 0;
             double meanMaxUlpErrorLowerBound = 0;
             double meanMaxUlpErrorUpperBound = 0;
@@ -2502,9 +2504,6 @@ zL = (L - mx)*sqrt(prec)
                     Console.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
                     foreach (Gaussian x in Gaussians())
                     {
-                        double mx = x.GetMean();
-                        if (double.IsPositiveInfinity(mx)) continue;
-                        //Console.WriteLine($"x = {x}");
                         Gaussian toX = DoubleIsBetweenOp.XAverageConditional(true, x, lowerBound, upperBound);
                         Gaussian xPost;
                         double meanError;
@@ -2522,7 +2521,7 @@ zL = (L - mx)*sqrt(prec)
                         foreach (double delta in DoublesGreaterThanZero())
                         {
                             double upperBound2 = upperBound + delta;
-                            if (double.IsPositiveInfinity(delta)) upperBound2 = delta;
+                            if (delta > double.MaxValue) upperBound2 = delta;
                             if (upperBound2 == upperBound) continue;
                             Gaussian toX2 = DoubleIsBetweenOp.XAverageConditional(true, x, lowerBound, upperBound2);
                             Gaussian xPost2;
