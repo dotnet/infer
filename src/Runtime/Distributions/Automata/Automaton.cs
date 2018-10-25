@@ -87,23 +87,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// The collection of states.
         /// </summary>
+        [DataMember]
         private List<State> states = new List<State>();
 
         /// <summary>
         /// A read-only wrapper around the <see cref="states"/>.
         /// </summary>
-        [IgnoreDataMember]
         private ReadOnlyList<State> statesReadOnly;
 
         /// <summary>
         /// The start state.
         /// </summary>
+        [DataMember]
         private State startState;
 
         /// <summary>
         /// Whether the automaton is free of epsilon transition.
         /// If the value of this field is null, it means that the presence of epsilon transitions is unknown.
         /// </summary>
+        [DataMember]
         private bool? isEpsilonFree; // TODO: Isn't it always known?
 
         #endregion
@@ -150,6 +152,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// This should only be set non-null if this distribution is improper and there is 
         /// a need to override the actual automaton value. 
         /// </remarks>
+        [DataMember]
         public double? LogValueOverride
         {
             get;
@@ -164,6 +167,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>
         /// TODO: We need to develop more elegant automaton approximation methods, this is a simple placeholder for those.
         /// </remarks>
+        [DataMember]
         public double? PruneTransitionsWithLogWeightLessThan
         {
             get;
@@ -173,7 +177,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets or sets the maximum number of states an automaton can have.
         /// </summary>
-        [IgnoreDataMember]
         public static int MaxStateCount
         {
             get
@@ -210,7 +213,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Gets or sets the maximum number of "dead" states (states from which an end state cannot be reached)
         /// an automaton can have before the dead state removal procedure will be run.
         /// </summary>
-        [IgnoreDataMember]
         public static int MaxDeadStateCount
         {
             get
@@ -228,7 +230,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets the collection of the states of the automaton.
         /// </summary>
-        [IgnoreDataMember]
         public ReadOnlyList<State> States
         {
             get
@@ -243,7 +244,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>
         /// Only a state from <see cref="States"/> can be specified as the value of this property. 
         /// </remarks>
-        [IgnoreDataMember]
         public State Start
         {
             get

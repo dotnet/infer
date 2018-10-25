@@ -98,6 +98,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public TThis Owner { get; internal set; }
 
             /// <summary>
+            /// Helper method for Newtonsoft.Json to skip serialization of <see cref="Owner"/> property.
+            /// </summary>
+            public bool ShouldSerializeOwner() => false;
+
+            /// <summary>
             /// Gets the index of the state.
             /// </summary>
             [DataMember]
