@@ -120,6 +120,9 @@ Please, refer to our [building guide](BUILDING.md).
 
 We welcome contributions! Please review our [contribution guide](CONTRIBUTING.md).
 
+When submitting pull request with changed or added factor, please make sure you updated factor documentation as described [here](docs/README.md#Documenting-Factors). 
+
+
 ## License
 
 Infer&#46;NET is licensed under the [MIT license](LICENSE.txt).
