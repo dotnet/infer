@@ -3,14 +3,14 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.ML.Probabilistic.Math;
 using Xunit;
 using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 using Microsoft.ML.Probabilistic.Utilities;
-using System.Collections.Generic;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Distributions;
+using Microsoft.ML.Probabilistic.Math;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {

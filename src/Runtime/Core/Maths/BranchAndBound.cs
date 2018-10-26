@@ -14,13 +14,11 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             public readonly Region Region;
             public readonly double UpperBound;
-            public readonly int SplitDim;
 
-            public QueueNode(Region region, double upperBound, int splitDim)
+            public QueueNode(Region region, double upperBound)
             {
                 this.Region = region;
                 this.UpperBound = upperBound;
-                this.SplitDim = splitDim;
             }
 
             public int CompareTo(QueueNode other)
@@ -30,7 +28,7 @@ namespace Microsoft.ML.Probabilistic.Math
 
             public override string ToString()
             {
-                return $"QueueNode({Region}, {UpperBound}, {SplitDim})";
+                return $"QueueNode({Region}, {UpperBound})";
             }
         }
 
@@ -54,31 +52,35 @@ namespace Microsoft.ML.Probabilistic.Math
             double lowerBound = double.NegativeInfinity;
             Vector argmax = bounds.GetMidpoint();
             long upperBoundCount = 0;
-            Action<Region,int> addRegion = delegate (Region region, int splitDim)
+            if (Debug)
             {
-                Stopwatch watch = Stopwatch.StartNew();
-                double upperBoundF = GetUpperBound(region);
-                watch.Stop();
-                if (Debug)
+                Func<Region, double> GetUpperBound1 = GetUpperBound;
+                GetUpperBound = region =>
                 {
-                    if (Debug && timeAccumulator.Count > 10 && watch.ElapsedMilliseconds > timeAccumulator.Mean + 4 * Math.Sqrt(timeAccumulator.Variance))
+                    Stopwatch watch = Stopwatch.StartNew();
+                    double upperBound = GetUpperBound1(region);
+                    watch.Stop();
+                    if (timeAccumulator.Count > 10 && watch.ElapsedMilliseconds > timeAccumulator.Mean + 4 * Math.Sqrt(timeAccumulator.Variance))
                         Trace.WriteLine($"GetUpperBound took {watch.ElapsedMilliseconds}ms");
                     timeAccumulator.Add(watch.ElapsedMilliseconds);
-                }
-                upperBoundCount++;
-                //if (upperBoundCount % 100 == 0) Trace.WriteLine($"lowerBound = {lowerBound}");
-                double upperBound = upperBoundF;
+                    //if (upperBoundCount % 100 == 0) Trace.WriteLine($"lowerBound = {lowerBound}");
+                    return upperBound;
+                };
+            }
+            Action<Region, int, double> addRegion = delegate (Region region, int splitDim, double upperBound)
+            {
                 if (upperBound > lowerBound)
                 {
                     if (Debug)
-                        Trace.WriteLine($"added region {region} with upperBoundF = {upperBoundF}");
-                    QueueNode node = new QueueNode(region, upperBound, splitDim);
+                        Trace.WriteLine($"added region {region} with upperBound = {upperBound}");
+                    QueueNode node = new QueueNode(region, upperBound);
                     queue.Add(node);
                 }
                 else if (Debug)
                     Trace.WriteLine($"rejected region {region} with upperBound {upperBound} <= lowerBound {lowerBound}");
             };
-            addRegion(bounds, 0);
+            upperBoundCount++;
+            addRegion(bounds, 0, GetUpperBound(bounds));
             while (queue.Count > 0)
             {
                 var node = queue.ExtractMinimum();  // gets the node with highest upper bound
@@ -92,12 +94,11 @@ namespace Microsoft.ML.Probabilistic.Math
                 watch.Stop();
                 if (Debug)
                 {
-                    if (Debug && timeAccumulator.Count > 10 && watch.ElapsedMilliseconds > timeAccumulator.Mean + 4 * Math.Sqrt(timeAccumulator.Variance))
+                    if (timeAccumulator.Count > 10 && watch.ElapsedMilliseconds > timeAccumulator.Mean + 4 * Math.Sqrt(timeAccumulator.Variance))
                         Trace.WriteLine($"Evaluate took {watch.ElapsedMilliseconds}ms");
                     timeAccumulator.Add(watch.ElapsedMilliseconds);
-                }
-                if (Debug)
                     Trace.WriteLine($"expanding {node} lower bound = {nodeLowerBound}");
+                }
                 if (nodeLowerBound > node.UpperBound) throw new Exception("nodeLowerBound > node.UpperBound");
                 if (nodeLowerBound > lowerBound)
                 {
@@ -105,48 +106,100 @@ namespace Microsoft.ML.Probabilistic.Math
                     lowerBound = nodeLowerBound;
                 }
 
-                // Find a dimension to split on.
-                // As a region gets split, this will cycle through the dimensions.
-                int splitDim = (node.SplitDim + 1) % dim;
-                // To avoid storing SplitDims, we could make a random choice.
-                // However, this takes much longer to converge.
-                //int splitDim = Rand.Int(dim);
-                bool foundSplit = false;
-                for (int i = 0; i < dim; i++)
+                Func<int, bool> DimensionCanSplit = i => MMath.AbsDiff(region.Upper[i], region.Lower[i], 1e-10) >= xTolerance;
+
+                int splitDim;
+                bool lowestChild = false;
+                Region leftRegion = null;
+                double upperBoundLeft = default(double);
+                Region rightRegion = null;
+                double upperBoundRight = default(double);
+                if (lowestChild)
                 {
-                    if (MMath.AbsDiff(region.Upper[splitDim], region.Lower[splitDim], 1e-10) < xTolerance)
+                    splitDim = -1;
+                    double lowestUpperBound = double.PositiveInfinity;
+                    for (int i = 0; i < dim; i++)
                     {
-                        splitDim++;
-                        if (splitDim == dim)
-                            splitDim = 0;
+                        if (DimensionCanSplit(i))
+                        {
+                            double splitValue2 = midpoint[i];
+                            Region leftRegion2 = new Region(region);
+                            leftRegion2.Upper[i] = splitValue2;
+                            upperBoundCount++;
+                            double upperBoundLeft2 = GetUpperBound(leftRegion2);
+                            Region rightRegion2 = new Region(region);
+                            rightRegion2.Lower[i] = splitValue2;
+                            upperBoundCount++;
+                            double upperBoundRight2 = GetUpperBound(rightRegion2);
+                            double lowerUpperBound = Math.Min(upperBoundLeft2, upperBoundRight2);
+                            if (lowerUpperBound < lowestUpperBound)
+                            {
+                                lowestUpperBound = lowerUpperBound;
+                                upperBoundLeft = upperBoundLeft2;
+                                upperBoundRight = upperBoundRight2;
+                                leftRegion = leftRegion2;
+                                rightRegion = rightRegion2;
+                                splitDim = i;
+                            }
+                        }
                     }
-                    else
+                    if (splitDim < 0)
+                        break;
+                }
+                else
+                {
+                    // Find a dimension to split on.
+                    splitDim = Rand.Int(dim);
+                    bool foundSplit = false;
+                    for (int i = 0; i < dim; i++)
                     {
-                        foundSplit = true;
+                        if (!DimensionCanSplit(splitDim))
+                        {
+                            splitDim++;
+                            if (splitDim == dim)
+                                splitDim = 0;
+                        }
+                        else
+                        {
+                            foundSplit = true;
+                            break;
+                        }
+                    }
+                    if (!foundSplit)
+                    {
                         break;
                     }
-                }
-                if (!foundSplit)
-                {
-                    break;
                 }
 
                 // split the node
                 double splitValue = midpoint[splitDim];
+                if(Debug)
+                    Trace.WriteLine($"splitting dimension {splitDim}");
                 if (region.Upper[splitDim] != splitValue)
                 {
-                    Region leftRegion = new Region(region);
-                    leftRegion.Upper[splitDim] = splitValue;
-                    addRegion(leftRegion, splitDim);
+                    if(leftRegion == null)
+                    {
+                        leftRegion = new Region(region);
+                        leftRegion.Upper[splitDim] = splitValue;
+                        upperBoundCount++;
+                        upperBoundLeft = GetUpperBound(leftRegion);
+                    }
+                    addRegion(leftRegion, splitDim, upperBoundLeft);
                 }
                 if (region.Lower[splitDim] != splitValue)
                 {
-                    Region rightRegion = new Region(region);
-                    rightRegion.Lower[splitDim] = splitValue;
-                    addRegion(rightRegion, splitDim);
+                    if(rightRegion == null)
+                    {
+                        rightRegion = new Region(region);
+                        rightRegion.Lower[splitDim] = splitValue;
+                        upperBoundCount++;
+                        upperBoundRight = GetUpperBound(rightRegion);
+                    }
+                    addRegion(rightRegion, splitDim, upperBoundRight);
                 }
             }
-            //Trace.WriteLine($"BranchAndBound.Search upperBoundCount = {upperBoundCount}");
+            if(Debug)
+                Trace.WriteLine($"BranchAndBound.Search upperBoundCount = {upperBoundCount}");
             return argmax;
         }
     }
