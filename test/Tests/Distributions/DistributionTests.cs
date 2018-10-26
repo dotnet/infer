@@ -1400,6 +1400,17 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void GammaGetProbLessThanTest()
+        {
+            // exponential distribution with density exp(-x/m)/m and cdf 1-exp(-x/m)
+            double m = 2.3;
+            Gamma g = new Gamma(1.0, m);
+            double median = -m * System.Math.Log(0.5);
+            Assert.Equal(0.5, g.GetProbLessThan(median), 1e-4);
+            Assert.Equal(median, g.GetQuantile(0.5));
+        }
+
+        [Fact]
         public void GammaModeTest()
         {
             Gamma g = new Gamma();

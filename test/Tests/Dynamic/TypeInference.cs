@@ -15,27 +15,6 @@ using Assert = Xunit.Assert;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
-    /// <summary>
-    /// Help class of dynamically invoking methods.
-    /// </summary>
-    public class ListMethods
-    {
-        public static void StringListMethod(IList<string> list)
-        {
-        }
-
-        public static void ObjectListMethod(IList<object> list)
-        {
-        }
-
-        public static void GenericListMethod<T>(IList<T> list, T value)
-        {
-            Console.WriteLine("GenericListMethod T = {0}", typeof(T));
-        }
-    }
-
-
-
     public class TypeInferenceTests
     {
         [Fact]
@@ -863,6 +842,25 @@ namespace Microsoft.ML.Probabilistic.Tests
           {
             return t.arrayField;
           }
+        }
+
+        /// <summary>
+        /// Help class of dynamically invoking methods.
+        /// </summary>
+        public class ListMethods
+        {
+            public static void StringListMethod(IList<string> list)
+            {
+            }
+
+            public static void ObjectListMethod(IList<object> list)
+            {
+            }
+
+            public static void GenericListMethod<T>(IList<T> list, T value)
+            {
+                Console.WriteLine("GenericListMethod T = {0}", typeof(T));
+            }
         }
     }
 }

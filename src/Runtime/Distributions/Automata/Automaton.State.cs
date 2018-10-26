@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Represents a state of an automaton.
         /// </summary>
         [Serializable]
-        [DataContract]
+        [DataContract(IsReference = true)]
         public class State
         {
             //// This class has been made inner so that the user doesn't have to deal with a lot of generic parameters on it.
@@ -87,8 +87,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets the automaton which owns the state.
             /// </summary>
+            /// <remarks>
+            /// Owner is not serialized to avoid circular references. It has to be restored manually upon deserialization.
+            /// BinaryFormatter and Newtonsoft.Json handle circular references differently by default.
+            /// At the same time [DataMember] does the right thing, because IsReference=true property on State DataContract
+            /// makes DataContractSerializer handle circular references just fine.
+            /// </remarks>
             [DataMember]
+            [NonSerializedProperty]
             public TThis Owner { get; internal set; }
+
+            /// <summary>
+            /// Helper method for Newtonsoft.Json to skip serialization of <see cref="Owner"/> property.
+            /// </summary>
+            public bool ShouldSerializeOwner() => false;
 
             /// <summary>
             /// Gets the index of the state.

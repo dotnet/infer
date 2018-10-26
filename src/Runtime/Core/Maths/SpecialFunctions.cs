@@ -1755,7 +1755,7 @@ f = 1/gamma(x+1)-1
                 // however, this is less accurate because GammaUpper uses the Gamma function 
                 // which only gets 14 digits of accuracy.
                 double s = NormalCdfRatio(x);
-                s *= Math.Exp(-0.5 * x * x) * InvSqrt2PI;
+                s *= Math.Exp(-0.5 * x * x) / Sqrt2PI;
                 return s;
             }
         }
@@ -3527,7 +3527,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             if (length % 2 == 0)
             {
                 // average the two middle elements
-                return (a[middle - 1] + a[middle]) / 2;
+                return Average(a[middle - 1], a[middle]);
             }
             else
             {
@@ -3688,21 +3688,29 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             if (double.IsPositiveInfinity(ratio)) return ratio;
             // denominator > 0
             // avoid infinite bounds
-            double lowerBound = Math.Max(double.MinValue, denominator * PreviousDouble(ratio));
-            double upperBound = Math.Min(double.MaxValue, denominator * NextDouble(ratio));
-            if(double.IsNegativeInfinity(ratio))
+            double lowerBound = (double)Math.Max(double.MinValue, denominator * PreviousDouble(ratio));
+            if (lowerBound == 0 && ratio < 0) lowerBound = -denominator; // must have ratio > -1
+            if (double.IsPositiveInfinity(lowerBound)) lowerBound = denominator; // must have ratio > 1
+            // subnormal numbers are linearly spaced, which can lead to lowerBound being too large.  Set lowerBound to zero to avoid this.
+            const double maxSubnormal = 2.3e-308;
+            if (lowerBound > 0 && lowerBound < maxSubnormal) lowerBound = 0;
+            double upperBound = (double)Math.Min(double.MaxValue, denominator * NextDouble(ratio));
+            if (upperBound == 0 && ratio > 0) upperBound = denominator; // must have ratio < 1
+            if (double.IsNegativeInfinity(upperBound)) return upperBound; // must have ratio < -1 and denominator > 1
+            if (upperBound < 0 && upperBound > -maxSubnormal) upperBound = 0;
+            if (double.IsNegativeInfinity(ratio))
             {
-                lowerBound = PreviousDouble(upperBound);
+                if (AreEqual(upperBound / denominator, ratio)) return upperBound;
+                else return PreviousDouble(upperBound);
             }
             while (true)
             {
-                double value = (lowerBound + upperBound) / 2;
-                if (double.IsInfinity(value)) value = 0.5 * lowerBound + 0.5 * upperBound;
-                if (value < lowerBound || value > upperBound) throw new Exception();
-                if (value / denominator <= ratio)
+                double value = (double)Average(lowerBound, upperBound);
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                if ((double)(value / denominator) <= ratio)
                 {
                     double value2 = NextDouble(value);
-                    if (value2 == value || value2 / denominator > ratio)
+                    if (value2 == value || (double)(value2 / denominator) > ratio)
                     {
                         return value;
                     }
@@ -3710,14 +3718,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception();
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception();
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
                 }
             }
         }
@@ -3741,23 +3749,29 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 else return double.PositiveInfinity;
             }
             if (double.IsPositiveInfinity(sum)) return sum;
-            // denominator > 0
             double lowerBound = PreviousDouble(b + sum);
-            double upperBound = NextDouble(b) + NextDouble(sum);
-            upperBound = Math.Max(NextDouble(b) + sum, b + NextDouble(sum));
+            double upperBound;
+            if (Math.Abs(sum) > Math.Abs(b))
+            {
+                upperBound = b + NextDouble(sum);
+            }
+            else
+            {
+                upperBound = NextDouble(b) + sum;
+            }
             long iterCount = 0;
             while (true)
             {
                 iterCount++;
-                double value = (lowerBound + upperBound) / 2;
-                if (double.IsInfinity(value)) value = 0.5 * lowerBound + 0.5 * upperBound;
-                if (value < lowerBound || value > upperBound) throw new Exception();
+                double value = Average(lowerBound, upperBound);
+                //double value = RepresentationMidpoint(lowerBound, upperBound);
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
                 if (value - b <= sum)
                 {
                     double value2 = NextDouble(value);
                     if (value2 == value || value2 - b > sum)
                     {
-                        //if (iterCount > 10)
+                        //if (iterCount > 100)
                         //    throw new Exception();
                         return value;
                     }
@@ -3765,17 +3779,63 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception();
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception();
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
                 }
             }
         }
+
+        /// <summary>
+        /// Returns (a+b)/2, avoiding overflow.  The result is guaranteed to be between a and b.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static double Average(double a, double b)
+        {
+            double midpoint = (a + b) / 2;
+            if (double.IsInfinity(midpoint)) midpoint = 0.5 * a + 0.5 * b;
+            return midpoint;
+        }
+
+        /// <summary>
+        /// Returns (a+b)/2, avoiding overflow.  The result is guaranteed to be between a and b.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static long Average(long a, long b)
+        {
+            return a / 2 + b / 2 + ((a % 2) + (b % 2)) / 2;
+        }
+
+        private static double RepresentationMidpoint(double lower, double upper)
+        {
+            if (lower == 0)
+            {
+                if (upper < 0) return -RepresentationMidpoint(-lower, -upper);
+                else if (upper == 0) return lower;
+                // fall through
+            }
+            else if (lower < 0)
+            {
+                if (upper <= 0) return -RepresentationMidpoint(-lower, -upper);
+                else return 0; // upper > 0
+            }
+            else if (upper < 0) return 0; // lower > 0
+            // must have lower >= 0, upper >= 0
+            long lowerBits = BitConverter.DoubleToInt64Bits(lower);
+            long upperBits = BitConverter.DoubleToInt64Bits(upper);
+            long midpoint = MMath.Average(lowerBits, upperBits);
+            return BitConverter.Int64BitsToDouble(midpoint);
+        }
+
 
         #region Enumerations and constants
 
@@ -3846,16 +3906,15 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// </summary>
         private static readonly double[] c_normcdfln_series =
             {
-                -1, 5.0/2, -37.0/3, 353.0/4, -4081.0/5, 55205.0/6, - 854197.0/7
+                -1, 5.0/2, -37.0/3, 353.0/4, -4081.0/5, 55205.0/6, -854197.0/7
             };
 
         /// <summary>
         /// NormCdf(x)/NormPdf(x) for x = 0, -1, -2, -3, ..., -16
         /// </summary>
         private static readonly double[] c_normcdf_table = 
-            // the first entry must be set to 0.5/InvSqrt2PI so that when multiplied by InvSqrt2PI we get exactly 0.5 for NormalCdf(0)
             {
-                0.5/InvSqrt2PI, 0.655679542418798471543871, .421369229288054473, 0.30459029871010329573361254651, .236652382913560671,
+                Sqrt2PI/2, 0.655679542418798471543871, .421369229288054473, 0.30459029871010329573361254651, .236652382913560671,
                 0.1928081047153157648774657, .162377660896867462, 0.140104183453050241599534, .123131963257932296, 0.109787282578308291230, .0990285964717319214,
                 0.09017567550106468227978, .0827662865013691773, 0.076475761016248502993495, .0710695805388521071, 0.0663742358232501735, .0622586659950261958
             };

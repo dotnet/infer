@@ -9,6 +9,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Runtime.Serialization;
 
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
@@ -19,6 +20,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     [Serializable]
     public class StringAutomaton : Automaton<string, char, DiscreteChar, StringManipulator, StringAutomaton>
     {
+        public StringAutomaton()
+        {
+        }
+
+        /// <summary>
+        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
+        /// </summary>
+        protected StringAutomaton(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+
         /// <summary>
         /// Computes a set of outgoing transitions from a given state of the determinization result.
         /// </summary>
@@ -259,33 +272,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>True if equal, false otherwise.</returns>
             public override bool Equals(object obj)
             {
-                if (!(obj is TransitionCharSegmentBound))
-                {
-                    return false;
-                }
-
-                TransitionCharSegmentBound that = (TransitionCharSegmentBound)obj;
-                if (this.DestinationStateId != that.DestinationStateId)
-                {
-                    return false;
-                }
-                
-                if (this.Bound != that.Bound)
-                {
-                    return false;
-                }
-
-                if (this.IsStart != that.IsStart)
-                {
-                    return false;
-                }
-
-                if (this.Weight != that.Weight)
-                {
-                    return false;
-                }
-
-                return true;
+                return
+                    obj is TransitionCharSegmentBound that &&
+                    this.DestinationStateId == that.DestinationStateId &&
+                    this.Bound == that.Bound &&
+                    this.IsStart == that.IsStart &&
+                    this.Weight == that.Weight;
             }
 
             /// <summary>

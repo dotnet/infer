@@ -28,6 +28,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// and assumes that the number of constant-probability character ranges is small (1-10).
     /// </remarks>
     [Quality(QualityBand.Experimental)]
+    [Serializable]
     [DataContract]
     public sealed class DiscreteChar
         : IDistribution<char>, SettableTo<DiscreteChar>, SettableToProduct<DiscreteChar>, SettableToRatio<DiscreteChar>, SettableToPower<DiscreteChar>,
@@ -1149,6 +1150,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Represents a range of characters, with an associated probability.
         /// </summary>
+        [Serializable]
         [DataContract]
         public struct CharRange
         {

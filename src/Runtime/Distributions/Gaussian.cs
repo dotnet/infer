@@ -273,6 +273,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetQuantile(double probability)
         {
+            if (probability < 0) throw new ArgumentOutOfRangeException("probability < 0");
+            if (probability > 1) throw new ArgumentOutOfRangeException("probability > 1");
             if (this.IsPointMass)
             {
                 return (probability == 1.0) ? MMath.NextDouble(this.Point) : this.Point;
