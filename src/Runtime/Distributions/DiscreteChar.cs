@@ -29,12 +29,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// </remarks>
     [Quality(QualityBand.Experimental)]
     [Serializable]
-    [DataContract]
     public sealed class DiscreteChar
         : IDistribution<char>, SettableTo<DiscreteChar>, SettableToProduct<DiscreteChar>, SettableToRatio<DiscreteChar>, SettableToPower<DiscreteChar>,
         SettableToWeightedSumExact<DiscreteChar>, SettableToPartialUniform<DiscreteChar>,
         CanGetLogAverageOf<DiscreteChar>, CanGetLogAverageOfPower<DiscreteChar>, CanGetAverageLog<DiscreteChar>, CanGetMode<char>,
-        Sampleable<char>, CanEnumerateSupport<char>
+        Sampleable<char>, CanEnumerateSupport<char>, ISerializable
     {
         #region Constants
 
@@ -1176,19 +1175,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// Gets or sets the start of the range (inclusive).
             /// </summary>
             [DataMember]
-            public int StartInclusive { get; }
+            public int StartInclusive { get; private set; }
 
             /// <summary>
             /// Gets or sets the end of the range (exclusive).
             /// </summary>
             [DataMember]
-            public int EndExclusive { get; }
+            public int EndExclusive { get; private set; }
 
             /// <summary>
             /// Gets or sets the probability associated with the range.
             /// </summary>
             [DataMember]
-            public double Probability { get; }
+            public double Probability { get; private set; }
 
             /// <summary>
             /// Gets a string that represents this character range.
@@ -1482,11 +1481,29 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static DiscreteChar Read(Func<int> readInt32, Func<double> readDouble)
             => new DiscreteChar(Storage.Read(readInt32, readDouble));
 
+        /// <summary>
+        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter.
+        /// </summary>
+        private DiscreteChar(SerializationInfo info, StreamingContext context)
+        {
+            this.storage = (Storage)info.GetValue(nameof(this.storage), typeof(Storage));
+            if (this.storage.IsPointMass)
+            {
+                // reuse storage from cache
+                this.storage = Storage.CreatePoint((char)this.storage.Ranges[0].StartInclusive, this.storage.Ranges);
+            }
+        }
+
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context) =>
+            info.AddValue(nameof(this.storage), this.storage);
+
         #endregion
 
         /// <summary>
         /// Immutable class to hold DiscreteChar state
         /// </summary>
+        [Serializable]
+        [DataContract]
         internal sealed class Storage
         {
             #region State
@@ -1498,7 +1515,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// The character probabilities must be kept normalized by applying <see cref="StorageBuilder.NormalizeProbabilities"/> when necessary.
             /// </remarks>
             [DataMember]
-            public CharRange[] Ranges { get; } // TODO: use immutable array
+            public CharRange[] Ranges { get; private set; } // TODO: use immutable array
 
             /// <summary>
             /// The probability of a character outside character ranges defined by <see cref="Ranges"/>.
@@ -1507,7 +1524,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// The character probabilities must be kept normalized by applying <see cref="StorageBuilder.NormalizeProbabilities"/> when necessary.
             /// </remarks>
             [DataMember]
-            public double ProbabilityOutsideRanges { get; }
+            public double ProbabilityOutsideRanges { get; private set; }
 
             // Following 3 members are not immutable and can be recalculated on-demband
             [DataMember]
@@ -1518,6 +1535,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
             #endregion
 
             #region Constructor and factory methods
+
+            /// <summary>
+            /// Constructor for use by Newtonsoft.Json during deserialization.
+            /// </summary>
+            private Storage()
+            {
+            }
 
             private Storage(CharRange[] ranges, double probabilityOutsideRanges, CharClasses charClaasses, string regexRepresentation)
             {
