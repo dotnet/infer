@@ -2,7 +2,7 @@
  .SYNOPSIS
     Makes API documentation for current version of Infer.NET.
  .DESCRIPTION
-    Builds PrepareSource.csproj, creates API documentation using docfx for Infer to docs/apiguide/ folder.
+    Builds PrepareSource.csproj, creates API documentation using docfx for Infer.NET to the gh-pages branch.
 #>
 
 # Licensed to the .NET Foundation under one or more agreements.
