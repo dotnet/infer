@@ -18,10 +18,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
     /// </summary>
     public class TransformResults
     {
-        public List<TransformError> errorsAndWarnings = new List<TransformError>();
+        private List<TransformError> errorsAndWarnings = new List<TransformError>();
+        public IReadOnlyList<TransformError> ErrorsAndWarnings { get { return errorsAndWarnings.AsReadOnly(); } }
         protected Dictionary<object, List<TransformError>> errorMap = new Dictionary<object, List<TransformError>>(new IdentityComparer<object>());
-        public int ErrorCount = 0;
-        public int WarningCount = 0;
+        public int ErrorCount { get; private set; }
+        public int WarningCount { get; private set; }
         public ICodeTransform Transform;
 
         protected void TransformError(string msg, bool isWarning, Exception exception, object inputElement, object displayTag)

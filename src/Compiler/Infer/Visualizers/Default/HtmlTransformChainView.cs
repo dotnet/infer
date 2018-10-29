@@ -128,7 +128,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
 
                 if (transformer.Transform.Context.Results.ErrorCount > 0)
                 {
-                    foreach (var error in transformer.Transform.Context.Results.errorsAndWarnings)
+                    foreach (var error in transformer.Transform.Context.Results.ErrorsAndWarnings)
                     {
                         foreach(var line in StringUtil.Lines(error.ToString()))
                         {
