@@ -165,10 +165,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             CheckGetQuantile(inner, inner, (int)Math.Ceiling(100.0/8), (int)Math.Floor(100.0*7/8));
             var est = new QuantileEstimator(0.01);
             est.AddRange(x);
-            Assert.Equal(0.25, est.GetProbLessThan(middle));
             Assert.Equal(est.GetQuantile(0.3), middle);
             Assert.Equal(est.GetQuantile(0.5), middle);
-            Assert.Equal(est.GetQuantile(0.7), middle);
+            // InterpolationType==1 returns NextDouble(middle)
+            Assert.Equal(est.GetQuantile(0.7), middle, 1e-15);
             CheckGetQuantile(est, est);
         }
 
@@ -199,8 +199,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(0.0, est.GetProbLessThan(first));
             Assert.Equal(first, est.GetQuantile(0.0));
             Assert.Equal(0.5, est.GetProbLessThan(between));
-            Assert.Equal(between, est.GetQuantile(0.5));
-            Assert.Equal(2.0 / 3, est.GetProbLessThan(second));
             Assert.Equal(second, est.GetQuantile(2.0 / 3));
             Assert.Equal(1.0, est.GetProbLessThan(next));
             Assert.Equal(next, est.GetQuantile(1.0));
@@ -278,12 +276,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void QuantileEstimatorTest()
         {
-            foreach (int n in new[] { 20, 10000 })
+            foreach(double maximumError in new[] { 0.05, 0.01, 0.005, 0.001 })
             {
-                QuantileEstimator(0.05, n);
-                QuantileEstimator(0.01, n);
-                QuantileEstimator(0.005, n);
-                QuantileEstimator(0.001, n);
+                int n = (int)(2.0 / maximumError);
+                QuantileEstimator(maximumError, n);
             }
         }
 
@@ -302,7 +298,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 x.Add(sample);
                 est.Add(sample);
             }
-            CheckProbLessThan(est, x, (n < 40) ? 0 : maximumError);
+            CheckProbLessThan(est, x, maximumError);
         }
 
         private void CheckProbLessThan(CanGetProbLessThan canGetProbLessThan, List<double> x, double maximumError)
@@ -324,7 +320,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 maxError = System.Math.Max(maxError, error);
             }
             Console.WriteLine($"max rank error = {maxError}");
-            Assert.True(maxError <= 2 * maximumError);
+            Assert.True(maxError <= maximumError);
         }
 
         [Fact]

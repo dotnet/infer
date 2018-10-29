@@ -111,7 +111,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="upperItem"></param>
         /// <param name="n"></param>
         /// <returns></returns>
-        internal static double GetQuantile(double probability, long lowerIndex, double lowerItem, double upperItem, long n)
+        internal static double GetQuantile(double probability, double lowerIndex, double lowerItem, double upperItem, long n)
         {
             if (n == 1) throw new ArgumentOutOfRangeException("n == 1");
             double pos = MMath.LargestDoubleProduct(n - 1, probability);
