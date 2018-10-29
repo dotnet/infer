@@ -243,6 +243,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
                 engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
                 var ca = engine.Compiler.Compile(DefinitionInLoopErrors);
+                ca.Execute(1);
                 Assert.True(false, "Did not throw exception");
             }
             catch (CompilationFailedException tfe)

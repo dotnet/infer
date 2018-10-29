@@ -10,7 +10,7 @@ namespace Microsoft.ML.Probabilistic.Math
 
     public class BranchAndBound
     {
-        protected class QueueNode : IComparable<QueueNode>
+        private class QueueNode : IComparable<QueueNode>
         {
             public readonly Region Region;
             public readonly double UpperBound;
