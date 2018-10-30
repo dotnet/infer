@@ -52,7 +52,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);

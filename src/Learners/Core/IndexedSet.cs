@@ -52,7 +52,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         {
             if (elements == null)
             {
-                throw new ArgumentNullException("elements");
+                throw new ArgumentNullException(nameof(elements));
             }
 
             foreach (var element in elements)
@@ -70,7 +70,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);
@@ -139,7 +139,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             int index;
@@ -147,7 +147,7 @@ namespace Microsoft.ML.Probabilistic.Collections
             {
                 if (throwIfPresent)
                 {
-                    throw new ArgumentException("All elements must be unique.", "element");
+                    throw new ArgumentException("All elements must be unique.", nameof(element));
                 }
 
                 return index;
@@ -169,7 +169,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         {
             if (index < 0 && index >= this.Count)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             return this.indexToElement[index];
@@ -185,7 +185,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         {
             if (element == null)
             {
-                throw new ArgumentNullException("index");
+                throw new ArgumentNullException(nameof(index));
             }
 
             return this.elementToIndex.TryGetValue(element, out index);
@@ -200,7 +200,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         {
             if (element == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
             }
 
             return this.elementToIndex.ContainsKey(element);
@@ -223,7 +223,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             writer.Write(CustomSerializationVersion);
