@@ -775,7 +775,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="instanceSource">The instance source.</param>
         /// <param name="predictions">The predictions.</param>
         /// <returns>The computed empirical probability calibration curve.</returns>
-        public IEnumerable<EmpiricalAndPredictedProbability> CalibrationCurve(
+        public IEnumerable<CalibrationPair> CalibrationCurve(
             TLabel positiveClassLabel,
             TInstanceSource instanceSource,
             IEnumerable<IDictionary<TLabel, double>> predictions)
@@ -792,7 +792,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="binCount">The number of bins to use.</param>
         /// <param name="minBinInstanceCount">The minimal number of instances per bin. Defaults to 1.</param>
         /// <returns>The computed empirical probability calibration curve.</returns>
-        public IEnumerable<EmpiricalAndPredictedProbability> CalibrationCurve(
+        public IEnumerable<CalibrationPair> CalibrationCurve(
             TLabel positiveClassLabel,
             TInstanceSource instanceSource,
             IEnumerable<IDictionary<TLabel, double>> predictions,
@@ -810,7 +810,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="labelSource">The label source.</param>
         /// <param name="predictions">The predictions.</param>
         /// <returns>The computed empirical probability calibration curve.</returns>
-        public IEnumerable<EmpiricalAndPredictedProbability> CalibrationCurve(
+        public IEnumerable<CalibrationPair> CalibrationCurve(
             TLabel positiveClassLabel,
             TInstanceSource instanceSource,
             TLabelSource labelSource,
@@ -843,7 +843,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="binCount">The number of bins to use.</param>
         /// <param name="minBinInstanceCount">The minimal number of instances per bin. Defaults to 1.</param>
         /// <returns>The computed empirical probability calibration curve.</returns>
-        public IEnumerable<EmpiricalAndPredictedProbability> CalibrationCurve(
+        public IEnumerable<CalibrationPair> CalibrationCurve(
             TLabel positiveClassLabel, 
             TInstanceSource instanceSource,
             TLabelSource labelSource,
@@ -916,7 +916,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="groundTruthInstances">The ground truth instances.</param>
         /// <param name="minBinInstanceCount">The minimal number of instances per bin. Defaults to 1.</param>
         /// <returns>The computed empirical probability calibration curve.</returns>
-        private IEnumerable<EmpiricalAndPredictedProbability> CalibrationCurve(
+        private IEnumerable<CalibrationPair> CalibrationCurve(
             TLabel positiveClassLabel,
             TInstanceSource instanceSource,
             TLabelSource labelSource,
@@ -957,12 +957,12 @@ namespace Microsoft.ML.Probabilistic.Learners
                 }
             }
 
-            var calibrationCurve = new List<EmpiricalAndPredictedProbability>();
+            var calibrationCurve = new List<CalibrationPair>();
             for (int bin = 0; bin < binCount; bin++)
             {
                 if (predictedCount[bin] >= minBinInstanceCount)
                 {
-                    calibrationCurve.Add(new EmpiricalAndPredictedProbability(
+                    calibrationCurve.Add(new CalibrationPair(
                         (bin + 0.5) / binCount,
                         (double)positiveClassCount[bin] / predictedCount[bin]));
                 }

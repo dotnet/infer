@@ -6,14 +6,14 @@ namespace Microsoft.ML.Probabilistic.Collections
 {
     using Microsoft.ML.Probabilistic.Utilities;
 
-    public struct EmpiricalAndPredictedProbability
+    public struct CalibrationPair
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmpiricalAndPredictedProbability"/> struct.
+        /// Initializes a new instance of the <see cref="CalibrationPair"/> struct.
         /// </summary>
         /// <param name="empiricalProbability">The empirical probability</param>
         /// <param name="predictedProbability">The predicted probability</param>
-        public EmpiricalAndPredictedProbability(double empiricalProbability, double predictedProbability)
+        public CalibrationPair(double empiricalProbability, double predictedProbability)
             : this()
         {
             this.EmpiricalProbability = empiricalProbability;
@@ -31,9 +31,9 @@ namespace Microsoft.ML.Probabilistic.Collections
         public readonly double PredictedProbability;
         
         /// <summary>
-        /// Gets the string representation of this <see cref="EmpiricalAndPredictedProbability"/>.
+        /// Gets the string representation of this <see cref="CalibrationPair"/>.
         /// </summary>
-        /// <returns>The string representation of the <see cref="EmpiricalAndPredictedProbability"/>.</returns>
+        /// <returns>The string representation of the <see cref="CalibrationPair"/>.</returns>
         public override string ToString()
         {
             return $"{this.EmpiricalProbability}, {this.PredictedProbability}";
@@ -49,7 +49,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj is EmpiricalAndPredictedProbability calibrationPoint)
+            if (obj is CalibrationPair calibrationPoint)
             {
                 return object.Equals(this.EmpiricalProbability, calibrationPoint.EmpiricalProbability) && object.Equals(this.PredictedProbability, calibrationPoint.PredictedProbability);
             }
