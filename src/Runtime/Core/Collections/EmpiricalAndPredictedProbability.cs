@@ -6,14 +6,14 @@ namespace Microsoft.ML.Probabilistic.Collections
 {
     using Microsoft.ML.Probabilistic.Utilities;
 
-    public struct EmpiricalProbabilityCalibrationPoint
+    public struct EmpiricalAndPredictedProbability
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmpiricalProbabilityCalibrationPoint"/> struct.
+        /// Initializes a new instance of the <see cref="EmpiricalAndPredictedProbability"/> struct.
         /// </summary>
         /// <param name="empiricalProbability">The empirical probability</param>
         /// <param name="predictedProbability">The predicted probability</param>
-        public EmpiricalProbabilityCalibrationPoint(double empiricalProbability, double predictedProbability)
+        public EmpiricalAndPredictedProbability(double empiricalProbability, double predictedProbability)
             : this()
         {
             this.EmpiricalProbability = empiricalProbability;
@@ -31,9 +31,9 @@ namespace Microsoft.ML.Probabilistic.Collections
         public readonly double PredictedProbability;
         
         /// <summary>
-        /// Gets the string representation of this <see cref="EmpiricalProbabilityCalibrationPoint"/>.
+        /// Gets the string representation of this <see cref="EmpiricalAndPredictedProbability"/>.
         /// </summary>
-        /// <returns>The string representation of the <see cref="EmpiricalProbabilityCalibrationPoint"/>.</returns>
+        /// <returns>The string representation of the <see cref="EmpiricalAndPredictedProbability"/>.</returns>
         public override string ToString()
         {
             return $"{this.EmpiricalProbability}, {this.PredictedProbability}";
@@ -49,7 +49,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj is EmpiricalProbabilityCalibrationPoint calibrationPoint)
+            if (obj is EmpiricalAndPredictedProbability calibrationPoint)
             {
                 return object.Equals(this.EmpiricalProbability, calibrationPoint.EmpiricalProbability) && object.Equals(this.PredictedProbability, calibrationPoint.PredictedProbability);
             }

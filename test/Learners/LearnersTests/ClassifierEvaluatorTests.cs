@@ -252,18 +252,18 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         public void CalibrationCurveTest()
         {
             // Curve for perfect predictions
-            var expected = new[] { new EmpiricalProbabilityCalibrationPoint(0.25, 0.0), new EmpiricalProbabilityCalibrationPoint(0.75, 1.0) };
+            var expected = new[] { new EmpiricalAndPredictedProbability(0.25, 0.0), new EmpiricalAndPredictedProbability(0.75, 1.0) };
             var actual = this.evaluator.CalibrationCurve(LabelSet[0], this.groundTruth, this.groundTruth).ToArray();
             Xunit.Assert.Equal(expected, actual);
 
             // Curve for imperfect predictions (one-versus-rest)
-            expected = new[] { new EmpiricalProbabilityCalibrationPoint(0.25, 0.75), new EmpiricalProbabilityCalibrationPoint(0.75, 0.0) };
+            expected = new[] { new EmpiricalAndPredictedProbability(0.25, 0.75), new EmpiricalAndPredictedProbability(0.75, 0.0) };
             actual = this.evaluator.CalibrationCurve(LabelSet[0], this.groundTruth, this.predictions).ToArray();
             Xunit.Assert.Equal(expected, actual);
 
             // Curve for imperfect predictions (3 bins)
             const int BinCount = 4;
-            expected = new[] { new EmpiricalProbabilityCalibrationPoint(1 / 8.0, 0.75), new EmpiricalProbabilityCalibrationPoint(7 / 8.0, 0.0) };
+            expected = new[] { new EmpiricalAndPredictedProbability(1 / 8.0, 0.75), new EmpiricalAndPredictedProbability(7 / 8.0, 0.0) };
             actual = this.evaluator.CalibrationCurve(LabelSet[0], this.groundTruth, this.predictions, BinCount).ToArray();
             Xunit.Assert.Equal(expected, actual);
 
