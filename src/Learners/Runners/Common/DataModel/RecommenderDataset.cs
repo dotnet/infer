@@ -43,7 +43,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (starRatingInfo == null)
             {
-                throw new ArgumentNullException("starRatingInfo");
+                throw new ArgumentNullException(nameof(starRatingInfo));
             }
 
             this.StarRatingInfo = starRatingInfo;

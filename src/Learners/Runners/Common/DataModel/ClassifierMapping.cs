@@ -42,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (instanceSource == null)
             {
-                throw new ArgumentNullException("instanceSource");
+                throw new ArgumentNullException(nameof(instanceSource));
             }
 
             return instanceSource;
@@ -59,7 +59,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
 
             return instance.GetSparseFeatureVector(this.featureSet);
@@ -77,7 +77,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
 
             return instance.LabelDistribution.GetMode();
@@ -93,7 +93,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (instanceSource == null)
             {
-                throw new ArgumentNullException("instanceSource");
+                throw new ArgumentNullException(nameof(instanceSource));
             }
 
             return instanceSource.First().LabelDistribution.LabelSet.Elements;

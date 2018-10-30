@@ -23,7 +23,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentException("The identifier of the user can not be null or whitespace.", "id");
+                throw new ArgumentException("The identifier of the user can not be null or whitespace.", nameof(id));
             }
 
             this.Id = id;

@@ -23,12 +23,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (predictedRatings == null)
             {
-                throw new ArgumentNullException("predictedRatings");
+                throw new ArgumentNullException(nameof(predictedRatings));
             }
 
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException("A valid file name should be provided.", "fileName");
+                throw new ArgumentException("A valid file name should be provided.", nameof(fileName));
             }
             
             using (var writer = new StreamWriter(fileName))
@@ -53,7 +53,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException("A valid file name should be provided.", "fileName");
+                throw new ArgumentException("A valid file name should be provided.", nameof(fileName));
             }
             
             using (var reader = new StreamReader(fileName))
@@ -107,12 +107,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (recommendations == null)
             {
-                throw new ArgumentNullException("recommendations");
+                throw new ArgumentNullException(nameof(recommendations));
             }
 
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException("A valid file name should be provided.", "fileName");
+                throw new ArgumentException("A valid file name should be provided.", nameof(fileName));
             }
             
             SaveEntityLists(fileName, recommendations, u => u.Id, i => i.Id);
@@ -128,7 +128,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException("A valid file name should be provided.", "fileName");
+                throw new ArgumentException("A valid file name should be provided.", nameof(fileName));
             }
             
             return LoadEntityLists(id => new User(id, null), id => new Item(id, null), fileName);
@@ -143,12 +143,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (relatedUsers == null)
             {
-                throw new ArgumentNullException("relatedUsers");
+                throw new ArgumentNullException(nameof(relatedUsers));
             }
 
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException("A valid file name should be provided.", "fileName");
+                throw new ArgumentException("A valid file name should be provided.", nameof(fileName));
             }
             
             SaveEntityLists(fileName, relatedUsers, u => u.Id, u => u.Id);
@@ -164,7 +164,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException("A valid file name should be provided.", "fileName");
+                throw new ArgumentException("A valid file name should be provided.", nameof(fileName));
             }
             
             Func<string, User> userFactory = id => new User(id, null);
@@ -180,12 +180,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (relatedItems == null)
             {
-                throw new ArgumentNullException("relatedItems");
+                throw new ArgumentNullException(nameof(relatedItems));
             }
 
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException("A valid file name should be provided.", "fileName");
+                throw new ArgumentException("A valid file name should be provided.", nameof(fileName));
             }
             
             SaveEntityLists(fileName, relatedItems, i => i.Id, i => i.Id);
@@ -201,7 +201,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException("A valid file name should be provided.", "fileName");
+                throw new ArgumentException("A valid file name should be provided.", nameof(fileName));
             }
             
             Func<string, Item> itemFactory = id => new Item(id, null);
