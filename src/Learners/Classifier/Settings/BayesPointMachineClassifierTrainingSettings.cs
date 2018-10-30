@@ -83,7 +83,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             reader.VerifySerializationGuid(
@@ -134,7 +134,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", "The number of iterations of the training algorithm must be positive.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The number of iterations of the training algorithm must be positive.");
                 }
 
                 this.iterationCount = value;
@@ -155,7 +155,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", "The number of batches must be positive.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The number of batches must be positive.");
                 }
 
                 this.batchCount = value;

@@ -72,7 +72,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", "The number of iterations of the prediction algorithm must be positive.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The number of iterations of the prediction algorithm must be positive.");
                 }
 
                 this.iterationCount = value;
