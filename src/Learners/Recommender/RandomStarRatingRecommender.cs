@@ -64,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             this.capabilities = new RandomStarRatingRecommenderCapabilities();
@@ -117,7 +117,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 this.userSubset = value.ToArray();
@@ -138,7 +138,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 this.itemSubset = value.ToArray();
@@ -237,7 +237,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (recommendationCount <= 0)
             {
-                throw new ArgumentOutOfRangeException("recommendationCount", "The requested number of items to recommend should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(recommendationCount), "The requested number of items to recommend should be positive.");
             }
 
             Rand.Shuffle(this.itemSubset);
@@ -257,7 +257,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (users == null)
             {
-                throw new ArgumentNullException("users");
+                throw new ArgumentNullException(nameof(users));
             }
 
             return users.ToDictionary(u => u, u => this.Recommend(u, recommendationCount));
@@ -291,7 +291,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (users == null)
             {
-                throw new ArgumentNullException("users");
+                throw new ArgumentNullException(nameof(users));
             }
 
             return users.ToDictionary(u => u, u => this.RecommendDistribution(u, recommendationCount));
@@ -309,7 +309,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (relatedUserCount <= 0)
             {
-                throw new ArgumentOutOfRangeException("relatedUserCount", "The requested number of related users should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(relatedUserCount), "The requested number of related users should be positive.");
             }
             
             Rand.Shuffle(this.userSubset);
@@ -329,7 +329,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (users == null)
             {
-                throw new ArgumentNullException("users");
+                throw new ArgumentNullException(nameof(users));
             }
 
             return users.ToDictionary(u => u, u => this.GetRelatedUsers(u, relatedUserCount));
@@ -347,7 +347,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (relatedItemCount <= 0)
             {
-                throw new ArgumentOutOfRangeException("relatedItemCount", "The requested number of related users should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(relatedItemCount), "The requested number of related users should be positive.");
             }
             
             Rand.Shuffle(this.itemSubset);
@@ -366,7 +366,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (items == null)
             {
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
             }
 
             return items.ToDictionary(i => i, u => this.GetRelatedItems(u, relatedItemCount));

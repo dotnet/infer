@@ -40,7 +40,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
             if (leavesCount < 1)
             {
-                throw new ArgumentException("There given histogram must not be empty.", "histogram");
+                throw new ArgumentException("There given histogram must not be empty.", nameof(histogram));
             }
 
             this.firstLeafIndex = ComputeNextPowerOf2(leavesCount) - 1;
@@ -54,7 +54,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
                     throw new ArgumentException(
                         string.Format(
                             "All elements of the histogram must have non-negative values. Histogram element: {0}.", leaf),
-                        "histogram");
+                        nameof(histogram));
                 }
 
                 this.nodes.Add(leaf);
@@ -113,7 +113,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
                     this.nodes.Count - this.firstLeafIndex,
                     leaf);
 
-                throw new ArgumentOutOfRangeException("leaf", outOfRangeExceptionMessage);
+                throw new ArgumentOutOfRangeException(nameof(leaf), outOfRangeExceptionMessage);
             }
 
             int currentIndex = this.firstLeafIndex + leaf;

@@ -38,7 +38,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);

@@ -103,7 +103,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             this.mapping = mapping;
@@ -122,12 +122,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             this.mapping = mapping;

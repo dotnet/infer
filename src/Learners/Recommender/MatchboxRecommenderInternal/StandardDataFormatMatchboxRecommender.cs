@@ -204,7 +204,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 this.recommender.UserSubset = value.Select(u => this.indexedUserSet.GetId(u));
@@ -225,7 +225,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 this.recommender.ItemSubset = value.Select(i => this.indexedItemSet.GetId(i));
