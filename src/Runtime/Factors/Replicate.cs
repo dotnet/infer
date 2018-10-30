@@ -144,7 +144,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where T : SettableToRatio<T>, SettableToProduct<T>, SettableTo<T>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Count)
-                throw new ArgumentOutOfRangeException("resultIndex");
+                throw new ArgumentOutOfRangeException(nameof(resultIndex));
             if (Uses.Count == 1)
             {
                 result.SetTo(Def);
@@ -192,7 +192,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where T : SettableToRatio<T>, SettableToProduct<T>, SettableTo<T>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Length)
-                throw new ArgumentOutOfRangeException("resultIndex");
+                throw new ArgumentOutOfRangeException(nameof(resultIndex));
             if (Uses.Length == 1)
             {
                 result.SetTo(Def);
@@ -296,7 +296,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where T : SettableToRatio<T>, SettableToProduct<T>, SettableTo<T>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Count)
-                throw new ArgumentOutOfRangeException("resultIndex");
+                throw new ArgumentOutOfRangeException(nameof(resultIndex));
             if (Uses.Count == 1)
             {
                 result.SetTo(Def);
@@ -321,7 +321,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where T : SettableToRatio<T>, SettableToProduct<T>, SettableTo<T>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Length)
-                throw new ArgumentOutOfRangeException("resultIndex");
+                throw new ArgumentOutOfRangeException(nameof(resultIndex));
             if (Uses.Length == 1)
             {
                 result.SetTo(Def);
@@ -377,7 +377,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where T : SettableToProduct<T>, SettableTo<T>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Count)
-                throw new ArgumentOutOfRangeException("resultIndex");
+                throw new ArgumentOutOfRangeException(nameof(resultIndex));
             result.SetTo(Def);
             return Distribution.SetToProductWithAllExcept(result, Uses, resultIndex);
         }
@@ -390,7 +390,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where T : SettableToProduct<T>, SettableTo<T>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Length)
-                throw new ArgumentOutOfRangeException("resultIndex");
+                throw new ArgumentOutOfRangeException(nameof(resultIndex));
             result.SetTo(Def);
             return Distribution.SetToProductWithAllExcept(result, Uses, resultIndex);
         }

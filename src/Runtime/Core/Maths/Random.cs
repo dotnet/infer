@@ -366,7 +366,7 @@ namespace Microsoft.ML.Probabilistic.Math
             bool isPosDef = L.SetToCholesky(variance);
             if (!isPosDef)
             {
-                throw new ArgumentException("PROB.Random.Normal(Vector,Matrix,Vector): variance must be positive definite", "variance");
+                throw new ArgumentException("PROB.Random.Normal(Vector,Matrix,Vector): variance must be positive definite", nameof(variance));
             }
 
             NormalChol(mean, L, result);
@@ -385,7 +385,7 @@ namespace Microsoft.ML.Probabilistic.Math
             bool isPosDef = L.SetToCholesky(precision);
             if (!isPosDef)
             {
-                throw new ArgumentException("PROB.Random.NormalP(Vector,Matrix,Vector): precision must be positive definite", "precision");
+                throw new ArgumentException("PROB.Random.NormalP(Vector,Matrix,Vector): precision must be positive definite", nameof(precision));
             }
             UpperTriangularMatrix U = UpperTriangularMatrix.TransposeInPlace(L);
             NormalPChol(mean, U, result);

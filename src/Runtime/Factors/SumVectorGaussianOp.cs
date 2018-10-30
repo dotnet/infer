@@ -26,12 +26,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             if (result == null)
             {
-                throw new ArgumentNullException("result");
+                throw new ArgumentNullException(nameof(result));
             }
 
             if (array.Count < 1)
@@ -42,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             if (array.Any(element => element == null))
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             int dimension = result.Dimension;
@@ -307,7 +307,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (sum == null)
             {
-                throw new ArgumentNullException("sum");
+                throw new ArgumentNullException(nameof(sum));
             }
 
             VectorGaussian to_sum = SumAverageConditional(array, new VectorGaussian(sum.Count));
@@ -342,7 +342,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (sum == null)
             {
-                throw new ArgumentNullException("sum");
+                throw new ArgumentNullException(nameof(sum));
             }
 
             VectorGaussian to_sum = SumAverageConditional(array, new VectorGaussian(sum.Count));
@@ -354,12 +354,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (sum == null)
             {
-                throw new ArgumentNullException("sum");
+                throw new ArgumentNullException(nameof(sum));
             }
 
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             if (array.Count == 0)
@@ -513,22 +513,22 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (sum == null)
             {
-                throw new ArgumentNullException("sum");
+                throw new ArgumentNullException(nameof(sum));
             }
 
             if (to_sum == null)
             {
-                throw new ArgumentNullException("to_sum");
+                throw new ArgumentNullException(nameof(to_sum));
             }
 
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             if (result == null)
             {
-                throw new ArgumentNullException("result");
+                throw new ArgumentNullException(nameof(result));
             }
 
             if (array.Count != result.Count)
@@ -538,12 +538,12 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             if (array.Any(element => element == null))
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             if (result.Any(element => element == null))
             {
-                throw new ArgumentNullException("result");
+                throw new ArgumentNullException(nameof(result));
             }
 
             int dimension = sum.Dimension;

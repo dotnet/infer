@@ -273,15 +273,15 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (nRows < 0)
             {
-                throw new ArgumentOutOfRangeException("nRows",
+                throw new ArgumentOutOfRangeException(nameof(nRows),
                                                       nRows,
-                                                      "nRows cannot be negative");
+                                                      $"{nameof(nRows)} cannot be negative");
             }
             if (nCols < 0)
             {
-                throw new ArgumentOutOfRangeException("nCols",
+                throw new ArgumentOutOfRangeException(nameof(nCols),
                                                       nCols,
-                                                      "nCols cannot be negative");
+                                                      $"{nameof(nCols)} cannot be negative");
             }
 
             this.data = data;
@@ -337,7 +337,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (!ReferenceEquals(this, that))
             {
-                CheckCompatible(that, "that");
+                CheckCompatible(that, nameof(that));
                 Array.Copy(that.data, 0, data, 0, Count);
             }
         }
@@ -535,7 +535,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (rows != that.Cols || cols != that.Rows)
             {
-                throw new ArgumentException("Output matrix is not compatible with the transpose", "that");
+                throw new ArgumentException("Output matrix is not compatible with the transpose", nameof(that));
             }
             if (ReferenceEquals(this.SourceArray, that.SourceArray))
             {
@@ -837,8 +837,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public Matrix SetToElementwiseProduct(Matrix a, Matrix b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             for (int i = 0; i < Count; ++i)
             {
                 this[i] = a[i]*b[i];
@@ -858,8 +858,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public Matrix SetToElementwiseRatio(Matrix a, Matrix b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             for (int i = 0; i < Count; ++i)
             {
                 this[i] = a[i]/b[i];
@@ -877,7 +877,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public Matrix SetToProduct(Matrix m, double s)
         {
-            CheckCompatible(m, "m");
+            CheckCompatible(m, nameof(m));
             for (int i = 0; i < Count; ++i)
             {
                 this[i] = s*m[i];
@@ -925,19 +925,19 @@ namespace Microsoft.ML.Probabilistic.Math
 #else
             if(ReferenceEquals(this.SourceArray, A.SourceArray))
             {
-                throw new ArgumentException("A is the same object as this.");
+                throw new ArgumentException($"{nameof(A)} is the same object as this.");
             }
             if(ReferenceEquals(this.SourceArray, B.SourceArray))
             {
-                throw new ArgumentException("B is the same object as this.");
+                throw new ArgumentException($"{nameof(B)} is the same object as this.");
             }
             if (A.Cols != B.Rows)
             {
-                throw new ArgumentException("Incompatible operand dimensions", "A");
+                throw new ArgumentException("Incompatible operand dimensions", nameof(A));
             }
             if (rows != A.Rows || cols != B.Cols)
             {
-                throw new ArgumentException("Output matrix is not compatible with the product", "A");
+                throw new ArgumentException("Output matrix is not compatible with the product", nameof(A));
             }
             // data[row,col] = data[(row * cols) + col];
             int ACols = A.Cols;
@@ -981,11 +981,11 @@ namespace Microsoft.ML.Probabilistic.Math
 #else
             if(ReferenceEquals(this.SourceArray, A.SourceArray))
             {
-                throw new ArgumentException("A is the same object as this.");
+                throw new ArgumentException($"{nameof(A)} is the same object as this.");
             }
             if (rows != A.Rows || cols != A.Rows)
             {
-                throw new ArgumentException("Output matrix is not compatible with the product", "A");
+                throw new ArgumentException("Output matrix is not compatible with the product", nameof(A));
             }
 
             int ACols = A.Cols;
@@ -1037,11 +1037,11 @@ namespace Microsoft.ML.Probabilistic.Math
 #else
             if(ReferenceEquals(this.SourceArray, A.SourceArray))
             {
-                throw new ArgumentException("A is the same object as this.");
+                throw new ArgumentException($"{nameof(A)} is the same object as this.");
             }
             if (rows != A.Cols || cols != A.Cols)
             {
-                throw new ArgumentException("Output matrix is not compatible with the product", "A");
+                throw new ArgumentException("Output matrix is not compatible with the product", nameof(A));
             }
 
             int ACols = A.Cols;
@@ -1282,8 +1282,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public Matrix SetToSum(Matrix a, Matrix b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             int count = Count;
             double[] adata = a.data;
             double[] bdata = b.data;
@@ -1305,8 +1305,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks><c>this[i,j] = aScale*a[i,j] + bScale*b[i,j]</c>.</remarks>
         public Matrix SetToSum(double aScale, Matrix a, double bScale, Matrix b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             for (int i = 0; i < Count; ++i)
             {
                 this[i] = aScale*a[i] + bScale*b[i];
@@ -1339,8 +1339,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public Matrix SetToDifference(Matrix a, Matrix b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             for (int i = 0; i < Count; ++i)
             {
                 this[i] = a[i] - b[i];
@@ -1357,8 +1357,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public Matrix SetToDifference(Matrix a, double bScale, Matrix b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             for (int i = 0; i < Count; ++i)
             {
                 this[i] = a[i] - bScale*b[i];

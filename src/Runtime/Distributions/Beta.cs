@@ -283,11 +283,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else if (mean < 0.0 || mean > 1.0)
             {
-                throw new ArgumentException("Supplied mean is outside [0,1]", "mean");
+                throw new ArgumentException("Supplied mean is outside [0,1]", nameof(mean));
             }
             else if (variance < 0)
             {
-                throw new ArgumentException("Supplied variance is negative", "variance");
+                throw new ArgumentException("Supplied variance is negative", nameof(variance));
             }
             else
             {
@@ -320,7 +320,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 FalseCount = Double.PositiveInfinity;
                 TrueCount = value;
-                if (TrueCount < 0.0 || TrueCount > 1.0) throw new ArgumentException("Supplied value is outside [0,1]", "value");
+                if (TrueCount < 0.0 || TrueCount > 1.0) throw new ArgumentException("Supplied value is outside [0,1]", nameof(value));
             }
         }
 

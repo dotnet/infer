@@ -297,7 +297,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             var currDist = use * def;
             if (currDist.IsPointMass)
             {
-                if (double.IsInfinity(currDist.Point)) throw new ArgumentOutOfRangeException("use", "infinite point mass");
+                if (double.IsInfinity(currDist.Point)) throw new ArgumentOutOfRangeException(nameof(use), "infinite point mass");
                 bufferTG.nextPoint = currDist.Point;
                 return bufferTG;
             }

@@ -289,7 +289,7 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 if (index < 0 || index >= this.Count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 var k = this.GetSparseIndex(index);
@@ -305,7 +305,7 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 if (index < 0 || index >= this.Count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 var k = this.GetSparseIndex(index);
@@ -466,7 +466,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 return;
             }
             if (Object.ReferenceEquals(this, that)) return;
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double min = that.Min();
             SetAllElementsTo(min);
             for (int i = 0; i < that.Count; i++)
@@ -483,7 +483,7 @@ namespace Microsoft.ML.Probabilistic.Math
         public virtual void SetTo(SparseVector that)
         {
             if (Object.ReferenceEquals(this, that)) return;
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             CommonValue = that.CommonValue;
             SparseValues = new List<SparseElement>(that.SparseValues);
         }
@@ -742,7 +742,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public bool Any(SparseVector that, Func<double, double, bool> fun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             int sparseValueCount = 0;
             var ae = this.GetSparseEnumerator();
             var be = that.GetSparseEnumerator();
@@ -801,7 +801,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (fun == null)
             {
-                throw new ArgumentNullException("fun");
+                throw new ArgumentNullException(nameof(fun));
             }
 
             bool funIsTrueForCommonValue = fun(this.CommonValue);
@@ -836,7 +836,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (fun == null)
             {
-                throw new ArgumentNullException("fun");
+                throw new ArgumentNullException(nameof(fun));
             }
 
             int result = 0;
@@ -867,7 +867,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (fun == null)
             {
-                throw new ArgumentNullException("fun");
+                throw new ArgumentNullException(nameof(fun));
             }
 
             bool funIsTrueForCommonValue = fun(this.CommonValue);
@@ -907,7 +907,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (fun == null)
             {
-                throw new ArgumentNullException("fun");
+                throw new ArgumentNullException(nameof(fun));
             }
 
             bool funIsTrueForCommonValue = fun(this.CommonValue);
@@ -1241,7 +1241,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>The filtered and mapped sum</returns>
         public double Sum(Converter<double, double> fun, SparseVector that, Converter<double, bool> cond)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double sum = 0.0;
             int thisIndex = 0;
             int thatIndex = 0;
@@ -1510,7 +1510,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Their inner product.</returns>
         public double Inner(SparseVector that)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double sum = 0.0;
             int thisIndex = 0;
             int thatIndex = 0;
@@ -1572,7 +1572,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Their inner product.</returns>
         public double Inner(SparseVector that, Converter<double, double> fun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double sum = 0.0;
             int thisIndex = 0;
             int thatIndex = 0;
@@ -1640,7 +1640,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Their inner product.</returns>
         public double Inner(Converter<double, double> thisFun, SparseVector that, Converter<double, double> thatFun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double sum = 0.0;
             int thisIndex = 0;
             int thatIndex = 0;
@@ -1866,7 +1866,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public virtual SparseVector SetToFunction(SparseVector that, Converter<double, double> fun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             CommonValue = fun(that.CommonValue);
             SparseValues = that.SparseValues.ConvertAll(x => new SparseElement {Index = x.Index, Value = fun(x.Value)});
             return this;
@@ -1897,8 +1897,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public virtual SparseVector SetToFunction(SparseVector a, SparseVector b, Func<double, double, double> fun)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             List<SparseElement> newSparseValues;
             // SetToFunctionInPlace does an Insert which is expensive
             //if (ReferenceEquals(a, this) && !ReferenceEquals(b, this)) return SetToFunctionInPlace(b, fun);
@@ -1969,7 +1969,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public virtual SparseVector SetToFunctionInPlace(SparseVector b, Func<double, double, double> fun)
         {
-            CheckCompatible(b, "b");
+            CheckCompatible(b, nameof(b));
             if (ReferenceEquals(b, this))
             {
                 throw new NotSupportedException("b must not be equal to this");
@@ -2544,7 +2544,7 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 if (index < 0 || index >= this.Count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 var k = this.GetSparseIndex(index);
@@ -2560,7 +2560,7 @@ namespace Microsoft.ML.Probabilistic.Math
             {
                 if (index < 0 || index >= this.Count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 var k = this.GetSparseIndex(index);
@@ -2639,7 +2639,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 return;
             }
             if (Object.ReferenceEquals(this, that)) return;
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double min = that.Min();
             SetAllElementsTo(min);
             for (int i = 0; i < Count; i++)
@@ -2658,7 +2658,7 @@ namespace Microsoft.ML.Probabilistic.Math
         public void SetTo(ApproximateSparseVector that)
         {
             if (Object.ReferenceEquals(this, that)) return;
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             CommonValue = that.CommonValue;
             Sparsity = that.Sparsity;
             SparseValues = new List<SparseElement>(that.SparseValues);
@@ -2902,8 +2902,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public override SparseVector SetToFunction(SparseVector a, SparseVector b, Func<double, double, double> fun)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             if (ReferenceEquals(a, b)) return SetToFunction(a, x => fun(x, x));
             if (ReferenceEquals(a, this)) return SetToFunctionInPlace(b, fun);
             if (ReferenceEquals(b, this)) return SetToFunctionInPlace(a, (x, y) => fun(y, x));
@@ -2976,7 +2976,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public override SparseVector SetToFunctionInPlace(SparseVector b, Func<double, double, double> fun)
         {
-            CheckCompatible(b, "b");
+            CheckCompatible(b, nameof(b));
             if (ReferenceEquals(b, this))
             {
                 throw new NotSupportedException("b must not be equal to this");

@@ -649,7 +649,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double NormalVGMomentRatio(int n, int a, double m, double v)
         {
             if (a < 1)
-                throw new ArgumentException("a < 1", "a");
+                throw new ArgumentException($"{nameof(a)} < 1", nameof(a));
             if (a == 1)
             {
                 double sqrtV = Math.Sqrt(v);
@@ -728,7 +728,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             double[][] moments = new double[aMax][];
             if (aMax < 1)
-                throw new ArgumentException("aMax < 1", "aMax");
+                throw new ArgumentException($"{nameof(aMax)} < 1", nameof(aMax));
             // if (a == 1) {
             moments[0] = moments1;
             if (aMax >= 2)

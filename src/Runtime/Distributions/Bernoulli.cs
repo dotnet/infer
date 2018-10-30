@@ -53,7 +53,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public void SetProbTrue(double probTrue)
         {
-            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException("probTrue", String.Format("probTrue = {0} is not in [0,1]", probTrue));
+            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException(nameof(probTrue), String.Format("probTrue = {0} is not in [0,1]", probTrue));
             LogOdds = MMath.Logit(probTrue);
         }
 
@@ -71,7 +71,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public void SetProbFalse(double probFalse)
         {
-            if (probFalse < 0 || probFalse > 1) throw new ArgumentOutOfRangeException("probFalse", String.Format("probFalse = {0} is not in [0,1]", probFalse));
+            if (probFalse < 0 || probFalse > 1) throw new ArgumentOutOfRangeException(nameof(probFalse), String.Format("probFalse = {0} is not in [0,1]", probFalse));
             LogOdds = -MMath.Logit(probFalse);
         }
 
@@ -89,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public void SetLogProbTrue(double logProbTrue)
         {
-            if (logProbTrue > 0) throw new ArgumentOutOfRangeException("logProbTrue", String.Format("logProbTrue = {0} > 0", logProbTrue));
+            if (logProbTrue > 0) throw new ArgumentOutOfRangeException(nameof(logProbTrue), String.Format("logProbTrue = {0} > 0", logProbTrue));
             LogOdds = MMath.LogitFromLog(logProbTrue); //-MMath.LogExpMinus1(-logProbTrue);
         }
 
@@ -107,7 +107,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public void SetLogProbFalse(double logProbFalse)
         {
-            if (logProbFalse > 0) throw new ArgumentOutOfRangeException("logProbFalse", String.Format("logProbFalse = {0} > 0", logProbFalse));
+            if (logProbFalse > 0) throw new ArgumentOutOfRangeException(nameof(logProbFalse), String.Format("logProbFalse = {0} > 0", logProbFalse));
             LogOdds = -MMath.LogitFromLog(logProbFalse); //MMath.LogExpMinus1(-logProbFalse);
         }
 
@@ -260,7 +260,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         [Stochastic]
         public static bool Sample(double probTrue)
         {
-            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException("probTrue", String.Format("probTrue = {0} is not in [0,1]", probTrue));
+            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException(nameof(probTrue), String.Format("probTrue = {0} is not in [0,1]", probTrue));
             return (Rand.Double() < probTrue);
         }
 
@@ -324,7 +324,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="probTrue">p(true)</param>
         public Bernoulli(double probTrue)
         {
-            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException("probTrue", String.Format("probTrue = {0} is not in [0,1]", probTrue));
+            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException(nameof(probTrue), String.Format("probTrue = {0} is not in [0,1]", probTrue));
             LogOdds = MMath.Logit(probTrue);
         }
 

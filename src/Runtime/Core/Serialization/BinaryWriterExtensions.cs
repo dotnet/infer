@@ -28,12 +28,12 @@ namespace Microsoft.ML.Probabilistic.Serialization
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
 
             byte[] array = ObjectToByteArray(obj);
@@ -50,12 +50,12 @@ namespace Microsoft.ML.Probabilistic.Serialization
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             if (guid == null)
             {
-                throw new ArgumentNullException("guid");
+                throw new ArgumentNullException(nameof(guid));
             }
 
             writer.Write(guid.ToByteArray()); // A guid has 16 bytes
@@ -70,12 +70,12 @@ namespace Microsoft.ML.Probabilistic.Serialization
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             writer.Write(array.Count);
@@ -94,12 +94,12 @@ namespace Microsoft.ML.Probabilistic.Serialization
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             if (distribution == null)
             {
-                throw new ArgumentNullException("distribution");
+                throw new ArgumentNullException(nameof(distribution));
             }
 
             writer.Write(distribution.MeanTimesPrecision);
@@ -115,12 +115,12 @@ namespace Microsoft.ML.Probabilistic.Serialization
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
             
             writer.Write(array.Count);
@@ -139,12 +139,12 @@ namespace Microsoft.ML.Probabilistic.Serialization
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             if (gaussians == null)
             {
-                throw new ArgumentNullException("gaussians");
+                throw new ArgumentNullException(nameof(gaussians));
             }
 
             writer.Write(gaussians.Count);
@@ -163,12 +163,12 @@ namespace Microsoft.ML.Probabilistic.Serialization
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             if (distribution == null)
             {
-                throw new ArgumentNullException("distribution");
+                throw new ArgumentNullException(nameof(distribution));
             }
 
             writer.Write(distribution.Shape);
@@ -184,12 +184,12 @@ namespace Microsoft.ML.Probabilistic.Serialization
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             writer.Write(array.Count);
