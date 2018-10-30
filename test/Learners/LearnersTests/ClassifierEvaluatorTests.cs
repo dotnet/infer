@@ -215,17 +215,17 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         public void PrecisionRecallCurveTest()
         {
             // Curve for perfect predictions
-            var expected = new[] { Pair.Create(0.0, 1.0), Pair.Create(1 / 3.0, 1.0), Pair.Create(2 / 3.0, 1.0), Pair.Create(1.0, 1.0), Pair.Create(1.0, 0.75), Pair.Create(1.0, 0.6) };
+            var expected = new[] { new PrecisionRecall(1.0, 0.0), new PrecisionRecall(1.0, 1 / 3.0), new PrecisionRecall(1.0, 2 / 3.0), new PrecisionRecall(1.0, 1.0), new PrecisionRecall(0.75, 1.0), new PrecisionRecall(0.6, 1.0) };
             var actual = this.evaluator.PrecisionRecallCurve(LabelSet[0], this.groundTruth, this.groundTruth).ToArray();
             Xunit.Assert.Equal(expected, actual);
 
             // Curve for imperfect predictions (one-versus-rest)
-            expected = new[] { Pair.Create(0.0, 1.0), Pair.Create(0.0, 0.0), Pair.Create(1 / 3.0, 0.5), Pair.Create(2 / 3.0, 2 / 3.0), Pair.Create(1.0, 0.75), Pair.Create(1.0, 0.6) };
+            expected = new[] { new PrecisionRecall(1.0, 0.0), new PrecisionRecall(0.0, 0.0), new PrecisionRecall(0.5, 1 / 3.0), new PrecisionRecall(2 / 3.0, 2 / 3.0), new PrecisionRecall(0.75, 1.0), new PrecisionRecall(0.6, 1.0) };
             actual = this.evaluator.PrecisionRecallCurve(LabelSet[0], this.groundTruth, this.predictions).ToArray();
             Xunit.Assert.Equal(expected, actual);
 
             // Curve for imperfect predictions (one-versus-another)
-            expected = new[] { Pair.Create(0.0, 1.0), Pair.Create(1.0, 1.0), Pair.Create(1.0, 0.5) };
+            expected = new[] { new PrecisionRecall(1.0, 0.0), new PrecisionRecall(1.0, 1.0), new PrecisionRecall(0.5, 1.0) };
             actual = this.evaluator.PrecisionRecallCurve(LabelSet[1], LabelSet[2], this.groundTruth, this.predictions).ToArray();
             Xunit.Assert.Equal(expected, actual);
 
