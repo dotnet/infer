@@ -387,7 +387,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             {
                 if (instanceSource == null)
                 {
-                    throw new ArgumentNullException("instanceSource");
+                    throw new ArgumentNullException(nameof(instanceSource));
                 }
 
                 return instanceSource;
@@ -417,7 +417,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             {
                 if (instance == null)
                 {
-                    throw new ArgumentNullException("instance");
+                    throw new ArgumentNullException(nameof(instance));
                 }
 
                 // Use zero-one loss function to determine point estimate (mode of distribution)
@@ -445,7 +445,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             {
                 if (instanceSource == null)
                 {
-                    throw new ArgumentNullException("instanceSource");
+                    throw new ArgumentNullException(nameof(instanceSource));
                 }
 
                 return new HashSet<string>(instanceSource.SelectMany(instance => instance.Keys));
