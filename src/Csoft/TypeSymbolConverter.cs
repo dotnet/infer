@@ -23,7 +23,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         internal static Type ConvertTypeSymbolToType(ITypeSymbol typeSymbol, IAssemblySymbol compilationAssembly, Assembly originalAssembly)
         {
-            if (typeSymbol == null) throw new ArgumentNullException("typeSymbol");
+            if (typeSymbol == null) throw new ArgumentNullException(nameof(typeSymbol));
 
             if (typeSymbol is IDynamicTypeSymbol)
             {
