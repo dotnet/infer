@@ -2,10 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace Microsoft.ML.Probabilistic.Collections
+namespace Microsoft.ML.Probabilistic.Learners
 {
     using Microsoft.ML.Probabilistic.Utilities;
 
+    /// <summary>
+    /// Struct which holds empirical and predicted probabilities for use in calibration.
+    /// </summary>
     public struct CalibrationPair
     {
         /// <summary>
@@ -21,12 +24,12 @@ namespace Microsoft.ML.Probabilistic.Collections
         }
 
         /// <summary>
-        /// Gets or sets the empirical probability.
+        /// Gets the empirical probability.
         /// </summary>
         public readonly double EmpiricalProbability;
 
         /// <summary>
-        /// Gets or sets the predicted probability.
+        /// Gets the predicted probability.
         /// </summary>
         public readonly double PredictedProbability;
         
@@ -49,9 +52,9 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj is CalibrationPair calibrationPoint)
+            if (obj is CalibrationPair calibrationPair)
             {
-                return object.Equals(this.EmpiricalProbability, calibrationPoint.EmpiricalProbability) && object.Equals(this.PredictedProbability, calibrationPoint.PredictedProbability);
+                return object.Equals(this.EmpiricalProbability, calibrationPair.EmpiricalProbability) && object.Equals(this.PredictedProbability, calibrationPair.PredictedProbability);
             }
 
             return false;
