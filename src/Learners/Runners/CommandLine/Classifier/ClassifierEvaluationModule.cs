@@ -564,10 +564,10 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                 writer.WriteLine("#");
                 writer.WriteLine("# Class '" + positiveClassLabel + "'     (versus the rest)");
                 writer.WriteLine("#");
-                writer.WriteLine("# Recall (R), precision (P)");
+                writer.WriteLine("# precision (P), Recall (R)");
                 foreach (var point in precisionRecallCurve)
                 {
-                    writer.WriteLine("{0}, {1}", point.First, point.Second);
+                    writer.WriteLine(point);
                 }
             }
         }

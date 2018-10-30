@@ -316,7 +316,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="instanceSource">The instance source.</param>
         /// <param name="predictions">The predictions.</param>
         /// <returns>The computed precision-recall curve.</returns>
-        public IEnumerable<Pair<double, double>> PrecisionRecallCurve(
+        public IEnumerable<PrecisionRecall> PrecisionRecallCurve(
             TLabel positiveClassLabel,
             TInstanceSource instanceSource,
             IEnumerable<IDictionary<TLabel, double>> predictions)
@@ -333,7 +333,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="labelSource">The label source.</param>
         /// <param name="predictions">The predictions.</param>
         /// <returns>The computed precision-recall curve.</returns>
-        public IEnumerable<Pair<double, double>> PrecisionRecallCurve(
+        public IEnumerable<PrecisionRecall> PrecisionRecallCurve(
             TLabel positiveClassLabel,
             TInstanceSource instanceSource,
             TLabelSource labelSource,
@@ -351,7 +351,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="instanceSource">The instance source.</param>
         /// <param name="predictions">The predictions.</param>
         /// <returns>The computed precision-recall curve.</returns>
-        public IEnumerable<Pair<double, double>> PrecisionRecallCurve(
+        public IEnumerable<PrecisionRecall> PrecisionRecallCurve(
             TLabel positiveClassLabel,
             TLabel negativeClassLabel,
             TInstanceSource instanceSource,
@@ -370,7 +370,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="labelSource">The label source.</param>
         /// <param name="predictions">The predictions.</param>
         /// <returns>The computed precision-recall curve.</returns>
-        public IEnumerable<Pair<double, double>> PrecisionRecallCurve(
+        public IEnumerable<PrecisionRecall> PrecisionRecallCurve(
             TLabel positiveClassLabel,
             TLabel negativeClassLabel,
             TInstanceSource instanceSource,

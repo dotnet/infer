@@ -416,7 +416,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <remarks>
         /// All instances not contained in <paramref name="positiveInstances"/> are assumed to belong to the 'negative' class.
         /// </remarks>
-        public static IEnumerable<Pair<double, double>> PrecisionRecallCurve<TInstance>(
+        public static IEnumerable<PrecisionRecall> PrecisionRecallCurve<TInstance>(
             IEnumerable<TInstance> positiveInstances, IEnumerable<KeyValuePair<TInstance, double>> instanceScores)
         {
             if (positiveInstances == null)
@@ -448,7 +448,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             double recall = 0.0;
             double precision = 1.0;
 
-            var precisionRecallCurve = new List<Pair<double, double>> { Pair.Create(recall, precision) };
+            var precisionRecallCurve = new List<PrecisionRecall> { new PrecisionRecall(precision, recall) };
 
             // Add further points to PR curve
             foreach (var instance in sortedInstanceScores)
@@ -464,7 +464,7 @@ namespace Microsoft.ML.Probabilistic.Learners
 
                 recall = truePositivesCount / (double)positivesCount;
                 precision = truePositivesCount / ((double)truePositivesCount + falsePositivesCount);
-                precisionRecallCurve.Add(Pair.Create(recall, precision));
+                precisionRecallCurve.Add(new PrecisionRecall(precision, recall));
             }
 
             return precisionRecallCurve;
