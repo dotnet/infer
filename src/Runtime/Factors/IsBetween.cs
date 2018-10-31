@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static TruncatedGaussian UpperBoundAverageConditional(bool isBetween, double x)
         {
             if (!isBetween)
-                throw new ArgumentException($"{nameof(TruncatedGaussian)} requires isBetween=true", nameof(isBetween));
+                throw new ArgumentException($"{nameof(TruncatedGaussian)} requires {nameof(isBetween)}=true", nameof(isBetween));
             return new TruncatedGaussian(0, Double.PositiveInfinity, x, Double.PositiveInfinity);
         }
 
@@ -926,7 +926,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GaussianOp.GaussianFromAlphaBeta(lowerBound, alphaL, betaL, ForceProper);
             }
             if (Double.IsNaN(result.Precision) || Double.IsNaN(result.MeanTimesPrecision))
-                throw new InferRuntimeException($"result is NaN.  isBetween={isBetween}, x={X}, lowerBound={lowerBound}, upperBound={upperBound}, logZ={logZ}");
+                throw new InferRuntimeException($"{nameof(result)} is NaN.  {nameof(isBetween)}={isBetween}, x={X}, {nameof(lowerBound)}={lowerBound}, {nameof(upperBound)}={upperBound}, {nameof(logZ)}={logZ}");
             return result;
         }
 
@@ -1058,7 +1058,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GaussianOp.GaussianFromAlphaBeta(upperBound, alphaU, betaU, ForceProper);
             }
             if (Double.IsNaN(result.Precision) || Double.IsNaN(result.MeanTimesPrecision))
-                throw new InferRuntimeException($"result is NaN.  isBetween={isBetween}, x={X}, lowerBound={lowerBound}, upperBound={upperBound}, logZ={logZ}");
+                throw new InferRuntimeException($"{nameof(result)} is NaN.  {nameof(isBetween)}={isBetween}, {nameof(X)}={X}, {nameof(lowerBound)}={lowerBound}, {nameof(upperBound)}={upperBound}, {nameof(logZ)}={logZ}");
             return result;
         }
 

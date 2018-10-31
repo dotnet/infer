@@ -53,7 +53,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public void SetProbTrue(double probTrue)
         {
-            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException(nameof(probTrue), String.Format("probTrue = {0} is not in [0,1]", probTrue));
+            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException(nameof(probTrue), $"{nameof(probTrue)} = {probTrue} is not in [0,1]");
             LogOdds = MMath.Logit(probTrue);
         }
 
@@ -71,7 +71,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public void SetProbFalse(double probFalse)
         {
-            if (probFalse < 0 || probFalse > 1) throw new ArgumentOutOfRangeException(nameof(probFalse), String.Format("probFalse = {0} is not in [0,1]", probFalse));
+            if (probFalse < 0 || probFalse > 1) throw new ArgumentOutOfRangeException(nameof(probFalse), $"{nameof(probFalse)} = {probFalse} is not in [0,1]");
             LogOdds = -MMath.Logit(probFalse);
         }
 
@@ -89,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public void SetLogProbTrue(double logProbTrue)
         {
-            if (logProbTrue > 0) throw new ArgumentOutOfRangeException(nameof(logProbTrue), String.Format("logProbTrue = {0} > 0", logProbTrue));
+            if (logProbTrue > 0) throw new ArgumentOutOfRangeException(nameof(logProbTrue), $"{nameof(logProbTrue)} = {logProbTrue} > 0");
             LogOdds = MMath.LogitFromLog(logProbTrue); //-MMath.LogExpMinus1(-logProbTrue);
         }
 
@@ -107,7 +107,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public void SetLogProbFalse(double logProbFalse)
         {
-            if (logProbFalse > 0) throw new ArgumentOutOfRangeException(nameof(logProbFalse), String.Format("logProbFalse = {0} > 0", logProbFalse));
+            if (logProbFalse > 0) throw new ArgumentOutOfRangeException(nameof(logProbFalse), $"{nameof(logProbFalse)} = {logProbFalse} > 0");
             LogOdds = -MMath.LogitFromLog(logProbFalse); //MMath.LogExpMinus1(-logProbFalse);
         }
 
@@ -260,7 +260,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         [Stochastic]
         public static bool Sample(double probTrue)
         {
-            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException(nameof(probTrue), String.Format("probTrue = {0} is not in [0,1]", probTrue));
+            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException(nameof(probTrue), $"{nameof(probTrue)} = {probTrue} is not in [0,1]");
             return (Rand.Double() < probTrue);
         }
 
@@ -324,7 +324,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="probTrue">p(true)</param>
         public Bernoulli(double probTrue)
         {
-            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException(nameof(probTrue), String.Format("probTrue = {0} is not in [0,1]", probTrue));
+            if (probTrue < 0 || probTrue > 1) throw new ArgumentOutOfRangeException(nameof(probTrue), $"{nameof(probTrue)} = {probTrue} is not in [0,1]");
             LogOdds = MMath.Logit(probTrue);
         }
 
@@ -451,7 +451,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else
             {
                 if (exponent < 0 && dist.IsPointMass)
-                    throw new DivideByZeroException("The exponent is negative and the distribution is a point mass");
+                    throw new DivideByZeroException($"The {nameof(exponent)} is negative and the distribution is a point mass");
                 LogOdds = dist.LogOdds*exponent;
             }
         }
@@ -491,7 +491,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (weight1 + weight2 == 0) SetToUniform();
             else if (weight1 + weight2 < 0)
-                throw new ArgumentException("weight1 (" + weight1 + ") + weight2 (" + weight2 + ") < 0");
+                throw new ArgumentException($"{nameof(weight1)} ({weight1}) + {nameof(weight2)} ({weight2}) < 0");
             else if (weight1 == 0) SetTo(dist2);
             else if (weight2 == 0) SetTo(dist1);
                 // if dist1 == dist2 then we must return dist1, with no roundoff error
