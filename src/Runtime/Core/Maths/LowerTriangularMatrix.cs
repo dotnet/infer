@@ -290,12 +290,12 @@ namespace Microsoft.ML.Probabilistic.Math
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "0#")]
         public bool SetToCholesky(Matrix A)
         {
-            A.CheckSymmetry("A");
+            A.CheckSymmetry(nameof(A));
 #if LAPACK
             SetTo(A);
             bool isPosDef = Lapack.CholeskyInPlace(this);
 #else
-            CheckCompatible(A, "A");
+            CheckCompatible(A, nameof(A));
 
             bool isPosDef = true;
             LowerTriangularMatrix L = this;

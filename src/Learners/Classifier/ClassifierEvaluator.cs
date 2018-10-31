@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             this.mapping = mapping;
@@ -84,12 +84,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (predictions == null)
             {
-                throw new ArgumentNullException("predictions");
+                throw new ArgumentNullException(nameof(predictions));
             }
 
             if (performanceMetric == null)
             {
-                throw new ArgumentNullException("performanceMetric");
+                throw new ArgumentNullException(nameof(performanceMetric));
             }
 
             double sum = 0;
@@ -101,7 +101,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                     if (!predictionIterator.MoveNext())
                     {
                         throw new ArgumentException(
-                            "There must be a prediction for each ground truth instance.", "predictions");
+                            "There must be a prediction for each ground truth instance.", nameof(predictions));
                     }
 
                     TPrediction prediction = predictionIterator.Current;
@@ -151,17 +151,17 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (positiveClassLabel == null)
             {
-                throw new ArgumentNullException("positiveClassLabel");
+                throw new ArgumentNullException(nameof(positiveClassLabel));
             }
 
             if (predictions == null)
             {
-                throw new ArgumentNullException("predictions");
+                throw new ArgumentNullException(nameof(predictions));
             }
 
             if (performanceMetric == null)
             {
-                throw new ArgumentNullException("performanceMetric");
+                throw new ArgumentNullException(nameof(performanceMetric));
             }
 
             // Get positive instances
@@ -216,22 +216,22 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (positiveClassLabel == null)
             {
-                throw new ArgumentNullException("positiveClassLabel");
+                throw new ArgumentNullException(nameof(positiveClassLabel));
             }
 
             if (negativeClassLabel == null)
             {
-                throw new ArgumentNullException("negativeClassLabel");
+                throw new ArgumentNullException(nameof(negativeClassLabel));
             }
 
             if (predictions == null)
             {
-                throw new ArgumentNullException("predictions");
+                throw new ArgumentNullException(nameof(predictions));
             }
 
             if (performanceMetric == null)
             {
-                throw new ArgumentNullException("performanceMetric");
+                throw new ArgumentNullException(nameof(performanceMetric));
             }
 
             if (positiveClassLabel.Equals(negativeClassLabel))
@@ -278,7 +278,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (predictions == null)
             {
-                throw new ArgumentNullException("predictions");
+                throw new ArgumentNullException(nameof(predictions));
             }
             
             var confusionMatrix = new ConfusionMatrix<TLabel>(this.mapping.GetClassLabelsSafe(instanceSource, labelSource));
@@ -291,7 +291,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                     if (!predictionIterator.MoveNext())
                     {
                         throw new ArgumentException(
-                            "There must be a prediction for each ground truth instance.", "predictions");
+                            "There must be a prediction for each ground truth instance.", nameof(predictions));
                     }
 
                     TLabel groundTruthLabel = this.mapping.GetLabelSafe(instance, instanceSource, labelSource);
@@ -605,7 +605,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (predictions == null)
             {
-                throw new ArgumentNullException("predictions");
+                throw new ArgumentNullException(nameof(predictions));
             }
 
             // Get class labels
@@ -692,7 +692,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (predictions == null)
             {
-                throw new ArgumentNullException("predictions");
+                throw new ArgumentNullException(nameof(predictions));
             }
 
             // Get class labels
@@ -818,12 +818,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (positiveClassLabel == null)
             {
-                throw new ArgumentNullException("positiveClassLabel");
+                throw new ArgumentNullException(nameof(positiveClassLabel));
             }
 
             if (predictions == null)
             {
-                throw new ArgumentNullException("predictions");
+                throw new ArgumentNullException(nameof(predictions));
             }
 
             var groundTruthInstances = this.mapping.GetInstancesSafe(instanceSource).ToArray();
@@ -853,22 +853,22 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (positiveClassLabel == null)
             {
-                throw new ArgumentNullException("positiveClassLabel");
+                throw new ArgumentNullException(nameof(positiveClassLabel));
             }
 
             if (predictions == null)
             {
-                throw new ArgumentNullException("predictions");
+                throw new ArgumentNullException(nameof(predictions));
             }
 
             if (binCount <= 0)
             {
-                throw new ArgumentOutOfRangeException("binCount", "The number of bins must be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(binCount), "The number of bins must be greater than 0.");
             }
 
             if (minBinInstanceCount <= 0)
             {
-                throw new ArgumentOutOfRangeException("minBinInstanceCount", "The minimal number of instance per bin must be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(minBinInstanceCount), "The minimal number of instance per bin must be greater than 0.");
             }
 
             var groundTruthInstances = this.mapping.GetInstancesSafe(instanceSource);
@@ -942,7 +942,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                     if (!predictionIterator.MoveNext())
                     {
                         throw new ArgumentException(
-                            "There must be a prediction for each ground truth instance.", "predictions");
+                            "There must be a prediction for each ground truth instance.", nameof(predictions));
                     }
 
                     var groundTruthLabel = this.mapping.GetLabelSafe(instance, instanceSource, labelSource);
@@ -1055,7 +1055,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                     if (!predictionIterator.MoveNext())
                     {
                         throw new ArgumentException(
-                            "There must be a prediction for each ground truth instance.", "predictions");
+                            "There must be a prediction for each ground truth instance.", nameof(predictions));
                     }
 
                     TLabel groundTruthLabel = this.mapping.GetLabelSafe(instance, instanceSource, labelSource);

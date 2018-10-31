@@ -545,13 +545,13 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (label == null)
             {
-                throw new ArgumentNullException("label");
+                throw new ArgumentNullException(nameof(label));
             }
 
             int labelIndex;
             if (!this.ClassLabelSet.TryGetIndex(label, out labelIndex))
             {
-                throw new ArgumentOutOfRangeException("label", "The class label '" + label + "' is unknown.");
+                throw new ArgumentOutOfRangeException(nameof(label), "The class label '" + label + "' is unknown.");
             }
 
             return labelIndex;
@@ -568,22 +568,22 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (trueLabel == null)
             {
-                throw new ArgumentNullException("trueLabel");
+                throw new ArgumentNullException(nameof(trueLabel));
             }
 
             if (predictedLabel == null)
             {
-                throw new ArgumentNullException("predictedLabel");
+                throw new ArgumentNullException(nameof(predictedLabel));
             }
 
             if (!this.ClassLabelSet.TryGetIndex(trueLabel, out trueLabelIndex))
             {
-                throw new ArgumentOutOfRangeException("trueLabel", "The class label '" + trueLabel + "' is unknown.");
+                throw new ArgumentOutOfRangeException(nameof(trueLabel), "The class label '" + trueLabel + "' is unknown.");
             }
 
             if (!this.ClassLabelSet.TryGetIndex(predictedLabel, out predictedLabelIndex))
             {
-                throw new ArgumentOutOfRangeException("predictedLabel", "The class label '" + predictedLabel + "' is unknown.");
+                throw new ArgumentOutOfRangeException(nameof(predictedLabel), "The class label '" + predictedLabel + "' is unknown.");
             }
         }
 

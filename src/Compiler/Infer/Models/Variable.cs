@@ -1602,7 +1602,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// contains more than two <c>Range</c> objects.</exception>
         public static IVariableArray Array<T>(IList<Range> ranges)
         {
-            if (ranges.Count == 0) throw new ArgumentException("Range list is empty.", "ranges");
+            if (ranges.Count == 0) throw new ArgumentException("Range list is empty.",nameof(ranges));
             else if (ranges.Count == 1) return Variable.Array<T>(ranges[0]);
             else if (ranges.Count == 2) return Variable.Array<T>(ranges[0], ranges[1]);
             else throw new NotSupportedException("More than two ranges were specified, high rank arrays are not yet supported.");

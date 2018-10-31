@@ -1563,7 +1563,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             {
                 if (reader == null)
                 {
-                    throw new ArgumentNullException("reader");
+                    throw new ArgumentNullException(nameof(reader));
                 }
 
                 // Nothing to deserialize
@@ -1841,7 +1841,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             {
                 if (instance.Item3 == null)
                 {
-                    throw new ArgumentException("Rating is not contained in the given instance", "instance");
+                    throw new ArgumentException("Rating is not contained in the given instance", nameof(instance));
                 }
 
                 return instance.Item3.Value + MinStarRating;

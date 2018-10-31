@@ -36,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new CompoundBinaryNativeDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource>(mapping);
@@ -56,7 +56,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new CompoundMulticlassNativeDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource>(mapping);
@@ -77,7 +77,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new CompoundBinaryStandardDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(mapping);
@@ -98,7 +98,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new CompoundMulticlassStandardDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(mapping);
@@ -308,12 +308,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new CompoundBinaryNativeDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource>(reader, mapping);
@@ -334,7 +334,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
@@ -358,7 +358,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
@@ -382,12 +382,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new CompoundMulticlassNativeDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource>(reader, mapping);
@@ -408,7 +408,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
@@ -432,7 +432,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
@@ -457,12 +457,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new CompoundBinaryStandardDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(reader, mapping);
@@ -484,7 +484,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
@@ -509,7 +509,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
@@ -534,12 +534,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new CompoundMulticlassStandardDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(reader, mapping);
@@ -561,7 +561,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
@@ -586,7 +586,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
@@ -614,7 +614,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new GaussianBinaryNativeDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource>(mapping);
@@ -635,7 +635,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new GaussianMulticlassNativeDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource>(mapping);
@@ -657,7 +657,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new GaussianBinaryStandardDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(mapping);
@@ -679,7 +679,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new GaussianMulticlassStandardDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(mapping);
@@ -779,12 +779,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new GaussianBinaryNativeDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource>(reader, mapping);
@@ -806,7 +806,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
@@ -831,7 +831,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
@@ -856,12 +856,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new GaussianMulticlassNativeDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource>(reader, mapping);
@@ -883,7 +883,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
@@ -908,7 +908,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
@@ -934,12 +934,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new GaussianBinaryStandardDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(reader, mapping);
@@ -962,7 +962,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
@@ -988,7 +988,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
@@ -1014,12 +1014,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new GaussianMulticlassStandardDataFormatBayesPointMachineClassifier<TInstanceSource, TInstance, TLabelSource, TLabel>(reader, mapping);
@@ -1042,7 +1042,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
@@ -1068,7 +1068,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))

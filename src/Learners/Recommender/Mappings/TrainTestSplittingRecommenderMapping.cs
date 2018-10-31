@@ -154,15 +154,15 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
-            CheckFraction(trainingOnlyUserFraction, "trainingOnlyUserFraction");
-            CheckFraction(testUserRatingTrainingFraction, "testUserRatingTrainingFraction");
-            CheckFraction(coldUserFraction, "coldUserFraction");
-            CheckFraction(coldItemFraction, "coldItemFraction");
-            CheckFraction(ignoredUserFraction, "ignoredUserFraction");
-            CheckFraction(ignoredItemFraction, "ignoredItemFraction");
+            CheckFraction(trainingOnlyUserFraction, nameof(trainingOnlyUserFraction));
+            CheckFraction(testUserRatingTrainingFraction, nameof(testUserRatingTrainingFraction));
+            CheckFraction(coldUserFraction, nameof(coldUserFraction));
+            CheckFraction(coldItemFraction, nameof(coldItemFraction));
+            CheckFraction(ignoredUserFraction, nameof(ignoredUserFraction));
+            CheckFraction(ignoredItemFraction, nameof(ignoredItemFraction));
 
             if (ignoredUserFraction + coldUserFraction + trainingOnlyUserFraction > 1)
             {
@@ -195,7 +195,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (instanceSource == null)
             {
-                throw new ArgumentNullException("instanceSource");
+                throw new ArgumentNullException(nameof(instanceSource));
             }
             
             this.UpdateCachedInstances(instanceSource.InstanceSource);
@@ -212,7 +212,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (instanceSource == null)
             {
-                throw new ArgumentNullException("instanceSource");
+                throw new ArgumentNullException(nameof(instanceSource));
             }
             
             return this.mapping.GetUser(instanceSource.InstanceSource, instance);
@@ -228,7 +228,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (instanceSource == null)
             {
-                throw new ArgumentNullException("instanceSource");
+                throw new ArgumentNullException(nameof(instanceSource));
             }
             
             return this.mapping.GetItem(instanceSource.InstanceSource, instance);

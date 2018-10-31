@@ -1722,7 +1722,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         public static int NormalCdfMomentRatioConFracCount(int n, double x)
         {
             if (x >= 0)
-                throw new ArgumentException("x >= 0", "x");
+                throw new ArgumentException("x >= 0", nameof(x));
             double invX = 1 / x;
             double invX2 = invX * invX;
             double numer = -invX;

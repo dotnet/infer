@@ -306,7 +306,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (that.Sparsity == Sparsity.Dense)
                 return Any((DenseVector) that, fun);
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             IEnumerator<double> thatEnum = that.GetEnumerator();
             int i = start;
             while (thatEnum.MoveNext())
@@ -319,7 +319,7 @@ namespace Microsoft.ML.Probabilistic.Math
 
         public bool Any(DenseVector that, Func<double, double, bool> fun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             int end = start + count;
             for (int i = start, j = that.start; i < end; ++i, j++)
             {
@@ -338,7 +338,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (fun == null)
             {
-                throw new ArgumentNullException("fun");
+                throw new ArgumentNullException(nameof(fun));
             }
 
             int end = this.start + this.count;
@@ -360,7 +360,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (fun == null)
             {
-                throw new ArgumentNullException("fun");
+                throw new ArgumentNullException(nameof(fun));
             }
 
             int end = this.start + this.count;
@@ -634,7 +634,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="values">An array whose length matches <c>this.Count</c>.</param>
         public override void SetTo(double[] values)
         {
-            if (count != values.Length) throw new ArgumentException("array does not match the Vector length", "values");
+            if (count != values.Length) throw new ArgumentException("array does not match the Vector length", nameof(values));
             SetToSubarray(values, 0);
         }
 
@@ -652,7 +652,7 @@ namespace Microsoft.ML.Probabilistic.Math
 
             if (!Object.ReferenceEquals(this, that))
             {
-                CheckCompatible(that, "that");
+                CheckCompatible(that, nameof(that));
                 IEnumerator<double> thatEnum = that.GetEnumerator();
                 int i = start;
                 while (thatEnum.MoveNext())
@@ -668,7 +668,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (!Object.ReferenceEquals(this, that))
             {
-                CheckCompatible(that, "that");
+                CheckCompatible(that, nameof(that));
                 Array.Copy(that.data, that.start, data, start, count);
             }
         }
@@ -787,7 +787,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (that.Sparsity == Sparsity.Dense)
                 return SetToFunction((DenseVector) that, fun);
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             IEnumerator<double> thatEnum = that.GetEnumerator();
             int i = start;
             while (thatEnum.MoveNext())
@@ -805,7 +805,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public DenseVector SetToFunction(DenseVector that, Converter<double, double> fun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             int end = start + count;
             for (int i = start, j = that.start; i < end; i++)
                 this.data[i] = fun(that.data[j++]);
@@ -825,8 +825,8 @@ namespace Microsoft.ML.Probabilistic.Math
             if (a.Sparsity == Sparsity.Dense && b.Sparsity == Sparsity.Dense)
                 return SetToFunction((DenseVector) a, (DenseVector) b, fun);
 
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             IEnumerator<double> aEnum = a.GetEnumerator();
             IEnumerator<double> bEnum = b.GetEnumerator();
             int i = start;
@@ -846,8 +846,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public DenseVector SetToFunction(DenseVector a, DenseVector b, Func<double, double, double> fun)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             int end = start + count;
             for (int i = start, j = a.start, k = b.start; i < end; i++)
                 this.data[i] = fun(a.data[j++], b.data[k++]);
@@ -871,7 +871,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 return;
             }
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             IEnumerator<double> aEnum = that.GetEnumerator();
             int i = start;
             while (aEnum.MoveNext())
@@ -889,7 +889,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public void SetToPower(DenseVector that, double exponent)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             int end = start + count;
             DenseVector thatd = (DenseVector) that;
             for (int i = start, j = that.start; i < end; i++)
@@ -911,8 +911,8 @@ namespace Microsoft.ML.Probabilistic.Math
                 SetToProduct((DenseVector) a, (DenseVector) b);
                 return;
             }
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             IEnumerator<double> aEnum = a.GetEnumerator();
             IEnumerator<double> bEnum = b.GetEnumerator();
             int i = start;
@@ -930,8 +930,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public void SetToProduct(DenseVector a, DenseVector b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             int end = start + count;
             for (int i = start, j = a.start, k = b.start; i < end; i++)
                 this.data[i] = a.data[j++]*b.data[k++];
@@ -951,8 +951,8 @@ namespace Microsoft.ML.Probabilistic.Math
                 SetToSum(aScale, (DenseVector) a, bScale, (DenseVector) b);
                 return;
             }
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             IEnumerator<double> aEnum = a.GetEnumerator();
             IEnumerator<double> bEnum = b.GetEnumerator();
             int i = start;
@@ -969,8 +969,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="b">Vector b</param>
         public void SetToSum(double aScale, DenseVector a, double bScale, DenseVector b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             int end = start + count;
             for (int i = start, j = a.start, k = b.start; i < end; i++)
                 this.data[i] = aScale*a.data[j++] + bScale*b.data[k++];
@@ -991,8 +991,8 @@ namespace Microsoft.ML.Probabilistic.Math
             if (a.Sparsity == Sparsity.Dense && b.Sparsity == Sparsity.Dense)
                 return SetToSum((DenseVector) a, (DenseVector) b);
 
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             IEnumerator<double> aEnum = a.GetEnumerator();
             IEnumerator<double> bEnum = b.GetEnumerator();
             int i = start;
@@ -1014,8 +1014,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public DenseVector SetToSum(DenseVector a, DenseVector b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             int end = start + count;
             for (int i = start, j = a.start, k = b.start; i < end; i++)
                 this.data[i] = a.data[j++] + b.data[k++];
@@ -1036,7 +1036,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (a.Sparsity == Sparsity.Dense)
                 return SetToSum((DenseVector) a, b);
 
-            CheckCompatible(a, "a");
+            CheckCompatible(a, nameof(a));
             IEnumerator<double> aEnum = a.GetEnumerator();
             int i = start;
             while (aEnum.MoveNext())
@@ -1055,7 +1055,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public DenseVector SetToSum(DenseVector a, double b)
         {
-            CheckCompatible(a, "a");
+            CheckCompatible(a, nameof(a));
             int end = start + count;
             for (int i = start, j = a.start; i < end; i++)
                 this.data[i] = a.data[j++] + b;
@@ -1077,8 +1077,8 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (a.Sparsity == Sparsity.Dense && b.Sparsity == Sparsity.Dense)
                 return SetToDifference((DenseVector) a, (DenseVector) b);
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             IEnumerator<double> aEnum = a.GetEnumerator();
             IEnumerator<double> bEnum = b.GetEnumerator();
             int i = start;
@@ -1101,8 +1101,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public DenseVector SetToDifference(DenseVector a, DenseVector b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             int end = start + count;
             for (int i = start, j = a.start, k = 0; i < end; i++)
                 this.data[i] = a.data[j++] - b[k++];
@@ -1121,7 +1121,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (a.Sparsity == Sparsity.Dense)
                 return SetToDifference((DenseVector) a, b);
 
-            CheckCompatible(a, "a");
+            CheckCompatible(a, nameof(a));
             IEnumerator<double> aEnum = a.GetEnumerator();
             int i = start;
             while (aEnum.MoveNext())
@@ -1138,7 +1138,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public DenseVector SetToDifference(DenseVector a, double b)
         {
-            CheckCompatible(a, "a");
+            CheckCompatible(a, nameof(a));
             int end = start + count;
             for (int i = start, j = a.start; i < end; i++)
                 this.data[i] = a.data[j++] - b;
@@ -1157,7 +1157,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (b.Sparsity == Sparsity.Dense)
                 return SetToDifference(a, (DenseVector) b);
 
-            CheckCompatible(b, "b");
+            CheckCompatible(b, nameof(b));
             IEnumerator<double> bEnum = b.GetEnumerator();
             int i = start;
             while (bEnum.MoveNext())
@@ -1174,7 +1174,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public DenseVector SetToDifference(double a, DenseVector b)
         {
-            CheckCompatible(b, "b");
+            CheckCompatible(b, nameof(b));
             int end = start + count;
             for (int i = start, j = b.start; i < end; i++)
                 this.data[i] = a - b.data[j++];
@@ -1195,7 +1195,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (a.Sparsity == Sparsity.Dense)
                 return SetToProduct((DenseVector) a, b);
 
-            CheckCompatible(a, "a");
+            CheckCompatible(a, nameof(a));
             IEnumerator<double> aEnum = a.GetEnumerator();
             int i = start;
             while (aEnum.MoveNext())
@@ -1214,7 +1214,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public DenseVector SetToProduct(DenseVector a, double b)
         {
-            CheckCompatible(a, "a");
+            CheckCompatible(a, nameof(a));
             int end = start + count;
             for (int i = start, j = a.start; i < end; i++)
                 this.data[i] = a.data[j++]*b;
@@ -1238,11 +1238,11 @@ namespace Microsoft.ML.Probabilistic.Math
             Assert.IsTrue(!object.ReferenceEquals(this, x));
             if (x.Count != A.Rows)
             {
-                throw new ArgumentException("Incompatible matrix/vector dimensions", "x");
+                throw new ArgumentException("Incompatible matrix/vector dimensions", nameof(x));
             }
             if (count != A.Cols)
             {
-                throw new ArgumentException("Output vector is incompatible with the product", "A");
+                throw new ArgumentException("Output vector is incompatible with the product", nameof(A));
             }
 
             for (int i = 0; i < A.Cols; ++i)
@@ -1271,11 +1271,11 @@ namespace Microsoft.ML.Probabilistic.Math
             Assert.IsTrue(!object.ReferenceEquals(this, x));
             if (x.Count != A.Rows)
             {
-                throw new ArgumentException("Incompatible matrix/vector dimensions", "x");
+                throw new ArgumentException("Incompatible matrix/vector dimensions", nameof(x));
             }
             if (count != A.Cols)
             {
-                throw new ArgumentException("Output vector is incompatible with the product", "A");
+                throw new ArgumentException("Output vector is incompatible with the product", nameof(A));
             }
 
             for (int i = 0; i < A.Cols; ++i)
@@ -1304,14 +1304,14 @@ namespace Microsoft.ML.Probabilistic.Math
             if (x.Sparsity == Sparsity.Dense)
                 return SetToProduct(A, (DenseVector) x);
 
-            if (object.ReferenceEquals(this, x)) throw new ArgumentException("x is the same object as this", "x");
+            if (object.ReferenceEquals(this, x)) throw new ArgumentException("x is the same object as this", nameof(x));
             if (x.Count != A.Cols)
             {
-                throw new ArgumentException("Incompatible matrix/vector dimensions", "x");
+                throw new ArgumentException("Incompatible matrix/vector dimensions", nameof(x));
             }
             if (count != A.Rows)
             {
-                throw new ArgumentException("Output vector is incompatible with the product", "A");
+                throw new ArgumentException("Output vector is incompatible with the product", nameof(A));
             }
 
             for (int i = 0; i < A.Rows; ++i)
@@ -1337,14 +1337,14 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public DenseVector SetToProduct(Matrix A, DenseVector x)
         {
-            if (object.ReferenceEquals(this, x)) throw new ArgumentException("x is the same object as this", "x");
+            if (object.ReferenceEquals(this, x)) throw new ArgumentException("x is the same object as this", nameof(x));
             if (x.Count != A.Cols)
             {
-                throw new ArgumentException("Incompatible matrix/vector dimensions", "x");
+                throw new ArgumentException("Incompatible matrix/vector dimensions", nameof(x));
             }
             if (count != A.Rows)
             {
-                throw new ArgumentException("Output vector is incompatible with the product", "A");
+                throw new ArgumentException("Output vector is incompatible with the product", nameof(A));
             }
 
             for (int i = 0; i < A.Rows; ++i)
@@ -1373,8 +1373,8 @@ namespace Microsoft.ML.Probabilistic.Math
             if (a.Sparsity == Sparsity.Dense && b.Sparsity == Sparsity.Dense)
                 return SetToRatio((DenseVector) a, (DenseVector) b);
 
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             IEnumerator<double> aEnum = a.GetEnumerator();
             IEnumerator<double> bEnum = b.GetEnumerator();
             int i = start;
@@ -1395,8 +1395,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// </remarks>
         public DenseVector SetToRatio(DenseVector a, DenseVector b)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             int end = start + count;
             if (b.Sparsity == Sparsity.Dense)
             {
@@ -1516,7 +1516,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (that.Sparsity == Sparsity.Dense)
                 return Sum(fun, (DenseVector) that, cond);
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double sum = 0.0;
 
             IEnumerator<double> thatEnum = that.GetEnumerator();
@@ -1539,7 +1539,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>The filtered and mapped sum</returns>
         public double Sum(Converter<double, double> fun, DenseVector that, Converter<double, bool> cond)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double sum = 0.0;
             int end = start + count;
             for (int i = start, j = that.start; i < end; i++)
@@ -1728,7 +1728,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (that.Sparsity == Sparsity.Dense)
                 return Inner((DenseVector) that);
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double inner = 0.0;
 
             IEnumerator<double> thatEnum = that.GetEnumerator();
@@ -1746,7 +1746,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Their inner product.</returns>
         public double Inner(DenseVector that)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double inner = 0.0;
             int end = start + count;
             for (int i = start, j = that.start; i < end; i++)
@@ -1765,7 +1765,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (that.Sparsity == Sparsity.Dense)
                 return Inner((DenseVector) that, fun);
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double inner = 0.0;
 
             IEnumerator<double> thatEnum = that.GetEnumerator();
@@ -1784,7 +1784,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Their inner product.</returns>
         public double Inner(DenseVector that, Converter<double, double> fun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double inner = 0.0;
             int end = start + count;
             for (int i = start, j = that.start; i < end; i++)
@@ -1804,7 +1804,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (that.Sparsity == Sparsity.Dense)
                 return Inner(thisFun, (DenseVector) that, thatFun);
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             IEnumerator<double> thatEnum = that.GetEnumerator();
             double inner = 0.0;
             int i = start;
@@ -1823,7 +1823,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Their inner product.</returns>
         public double Inner(Converter<double, double> thisFun, DenseVector that, Converter<double, double> thatFun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double inner = 0.0;
             int end = start + count;
             for (int i = start, j = that.start; i < end; i++)
@@ -2000,7 +2000,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (that.Sparsity == Sparsity.Dense)
                 return GreaterThan((DenseVector) that);
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             IEnumerator<double> thatEnum = that.GetEnumerator();
             int i = start;
             while (thatEnum.MoveNext())
@@ -2036,7 +2036,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (that.Sparsity == Sparsity.Dense)
                 return LessThan((DenseVector) that);
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             IEnumerator<double> thatEnum = that.GetEnumerator();
             int i = start;
             while (thatEnum.MoveNext())
@@ -2102,7 +2102,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (that.Sparsity == Sparsity.Dense)
                 return GreaterThanOrEqual((DenseVector) that);
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             IEnumerator<double> thatEnum = that.GetEnumerator();
             int i = start;
             while (thatEnum.MoveNext())
@@ -2138,7 +2138,7 @@ namespace Microsoft.ML.Probabilistic.Math
             if (that.Sparsity == Sparsity.Dense)
                 return LessThanOrEqual((DenseVector) that);
 
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             IEnumerator<double> thatEnum = that.GetEnumerator();
             int i = start;
             while (thatEnum.MoveNext())
@@ -2424,7 +2424,7 @@ namespace Microsoft.ML.Probabilistic.Math
 
             if (A.Rows != b.count)
             {
-                throw new ArgumentException("matrix dimensions incompatible", "A");
+                throw new ArgumentException("matrix dimensions incompatible", nameof(A));
             }
 
             for (int i = A.Rows - 1; i >= 0; i--)
@@ -2502,7 +2502,7 @@ namespace Microsoft.ML.Probabilistic.Math
 
             if (A.Rows != b.count)
             {
-                throw new ArgumentException("matrix and vector dimensions incompatible", "A");
+                throw new ArgumentException("matrix and vector dimensions incompatible", nameof(A));
             }
 
             for (int i = 0; i < A.Rows; i++)

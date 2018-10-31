@@ -63,7 +63,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             reader.VerifySerializationGuid(
@@ -96,7 +96,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             {
                 if (customLossFunction == null)
                 {
-                    throw new ArgumentNullException("customLossFunction");
+                    throw new ArgumentNullException(nameof(customLossFunction));
                 }
             }
             else

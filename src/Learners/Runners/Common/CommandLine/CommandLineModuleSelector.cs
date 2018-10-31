@@ -32,22 +32,22 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (string.IsNullOrEmpty(moduleName))
             {
-                throw new ArgumentException("Valid module name should be specified.", "moduleName");
+                throw new ArgumentException("Valid module name should be specified.", nameof(moduleName));
             }
 
             if (moduleName.Contains(' ') || moduleName.Contains('\t'))
             {
-                throw new ArgumentException("Module name should not contains spaces or tabs.", "moduleName");
+                throw new ArgumentException("Module name should not contains spaces or tabs.", nameof(moduleName));
             }
 
             if (this.registeredModulesDictionary.ContainsKey(moduleName))
             {
-                throw new ArgumentException("A module with the given name has already been registered.", "moduleName");
+                throw new ArgumentException("A module with the given name has already been registered.", nameof(moduleName));
             }
 
             if (module == null)
             {
-                throw new ArgumentNullException("module");
+                throw new ArgumentNullException(nameof(module));
             }
             
             this.registeredModulesDictionary.Add(moduleName, module);
@@ -64,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (args == null)
             {
-                throw new ArgumentNullException("args");
+                throw new ArgumentNullException(nameof(args));
             }
             
             if (args.Length == 0)

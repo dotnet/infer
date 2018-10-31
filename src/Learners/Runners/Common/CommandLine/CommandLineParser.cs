@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (args == null)
             {
-                throw new ArgumentNullException("args");
+                throw new ArgumentNullException(nameof(args));
             }
 
             var encounteredParameters = new HashSet<string>();
@@ -99,7 +99,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (handler == null)
             {
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
             }
 
             Func<string, bool> handlerWrapper = parameterValueString =>
@@ -125,7 +125,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (handler == null)
             {
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
             }
 
             Func<string, bool> handlerWrapper = parameterValueString =>
@@ -151,7 +151,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (handler == null)
             {
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
             }
 
             Func<string, bool> handlerWrapper = parameterValueString =>
@@ -183,7 +183,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (handler == null)
             {
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
             }
 
             Func<string, bool> handlerWrapper = parameterValueString =>
@@ -264,27 +264,27 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             
             if (string.IsNullOrEmpty(parameterName))
             {
-                throw new ArgumentException("A parameter name should be a valid non-empty string.", "parameterName");
+                throw new ArgumentException("A parameter name should be a valid non-empty string.", nameof(parameterName));
             }
 
             if (this.parameterDescriptions.ContainsKey(parameterName))
             {
-                throw new ArgumentException("Given parameter was already registered.", "parameterName");
+                throw new ArgumentException("Given parameter was already registered.", nameof(parameterName));
             }
 
             if (!isFlag && string.IsNullOrEmpty(valueDescriptionString))
             {
-                throw new ArgumentException("A parameter value description should be a valid non-empty string.", "valueDescriptionString");
+                throw new ArgumentException("A parameter value description should be a valid non-empty string.", nameof(valueDescriptionString));
             }
             
             if (string.IsNullOrEmpty(descriptionString))
             {
-                throw new ArgumentException("A parameter description should be a valid non-empty string.", "descriptionString");
+                throw new ArgumentException("A parameter description should be a valid non-empty string.", nameof(descriptionString));
             }
             
             if (handler == null)
             {
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
             }
 
             this.parameterDescriptions.Add(

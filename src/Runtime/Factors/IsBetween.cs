@@ -26,7 +26,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static TruncatedGaussian LowerBoundAverageConditional(bool isBetween, double x)
         {
             if (!isBetween)
-                throw new ArgumentException("TruncatedGaussian requires isBetween=true", "isBetween");
+                throw new ArgumentException($"{nameof(TruncatedGaussian)} requires {nameof(isBetween)}=true", nameof(isBetween));
             return new TruncatedGaussian(0, Double.PositiveInfinity, Double.NegativeInfinity, x);
         }
 
@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static TruncatedGaussian UpperBoundAverageConditional(bool isBetween, double x)
         {
             if (!isBetween)
-                throw new ArgumentException("TruncatedGaussian requires isBetween=true", "isBetween");
+                throw new ArgumentException($"{nameof(TruncatedGaussian)} requires {nameof(isBetween)}=true", nameof(isBetween));
             return new TruncatedGaussian(0, Double.PositiveInfinity, x, Double.PositiveInfinity);
         }
 
@@ -45,7 +45,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return XAverageConditional(isBetween, X, lowerBound.Point, upperBound.Point);
             }
             else
-                throw new NotImplementedException("lowerBound is not a point mass");
+                throw new NotImplementedException($"{nameof(lowerBound)} is not a point mass");
         }
 
         public static TruncatedGaussian LowerBoundAverageConditional([SkipIfUniform] Bernoulli isBetween, [RequiredArgument] Gaussian X, [RequiredArgument] TruncatedGaussian lowerBound, [RequiredArgument] TruncatedGaussian upperBound, double logZ)
@@ -56,7 +56,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return new TruncatedGaussian(result1, lowerBound.LowerBound, lowerBound.UpperBound);
             }
             else
-                throw new NotImplementedException("lowerBound is not a point mass");
+                throw new NotImplementedException($"{nameof(lowerBound)} is not a point mass");
         }
 
         public static TruncatedGaussian UpperBoundAverageConditional([SkipIfUniform] Bernoulli isBetween, [RequiredArgument] Gaussian X, [RequiredArgument] TruncatedGaussian lowerBound, [RequiredArgument] TruncatedGaussian upperBound, double logZ)
@@ -67,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return new TruncatedGaussian(result1, upperBound.LowerBound, upperBound.UpperBound);
             }
             else
-                throw new NotImplementedException("lowerBound is not a point mass");
+                throw new NotImplementedException($"{nameof(lowerBound)} is not a point mass");
         }
 
         //-- Constant bounds --------------------------------------------------------------------------------
@@ -926,7 +926,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GaussianOp.GaussianFromAlphaBeta(lowerBound, alphaL, betaL, ForceProper);
             }
             if (Double.IsNaN(result.Precision) || Double.IsNaN(result.MeanTimesPrecision))
-                throw new InferRuntimeException($"result is NaN.  isBetween={isBetween}, x={X}, lowerBound={lowerBound}, upperBound={upperBound}, logZ={logZ}");
+                throw new InferRuntimeException($"{nameof(result)} is NaN.  {nameof(isBetween)}={isBetween}, x={X}, {nameof(lowerBound)}={lowerBound}, {nameof(upperBound)}={upperBound}, {nameof(logZ)}={logZ}");
             return result;
         }
 
@@ -1058,7 +1058,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GaussianOp.GaussianFromAlphaBeta(upperBound, alphaU, betaU, ForceProper);
             }
             if (Double.IsNaN(result.Precision) || Double.IsNaN(result.MeanTimesPrecision))
-                throw new InferRuntimeException($"result is NaN.  isBetween={isBetween}, x={X}, lowerBound={lowerBound}, upperBound={upperBound}, logZ={logZ}");
+                throw new InferRuntimeException($"{nameof(result)} is NaN.  {nameof(isBetween)}={isBetween}, {nameof(X)}={X}, {nameof(lowerBound)}={lowerBound}, {nameof(upperBound)}={upperBound}, {nameof(logZ)}={logZ}");
             return result;
         }
 
@@ -1651,7 +1651,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static Gaussian XAverageLogarithm(bool isBetween, [Stochastic] Gaussian X, double lowerBound, double upperBound, Gaussian to_X)
         {
             if (!isBetween)
-                throw new ArgumentException("TruncatedGaussian requires isBetween=true", "isBetween");
+                throw new ArgumentException($"{nameof(TruncatedGaussian)} requires {nameof(isBetween)}=true", nameof(isBetween));
             var prior = X / to_X;
             var tg = new TruncatedGaussian(prior);
             tg.LowerBound = lowerBound;
@@ -1664,7 +1664,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double AverageLogFactor(bool isBetween, [Stochastic] Gaussian X, double lowerBound, double upperBound, Gaussian to_X)
         {
             if (!isBetween)
-                throw new ArgumentException("TruncatedGaussian requires isBetween=true", "isBetween");
+                throw new ArgumentException($"{nameof(TruncatedGaussian)} requires {nameof(isBetween)}=true", nameof(isBetween));
             var prior = X / to_X;
             var tg = new TruncatedGaussian(prior);
             tg.LowerBound = lowerBound;
@@ -1717,7 +1717,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static TruncatedGaussian XAverageConditional(bool isBetween, double lowerBound, double upperBound)
         {
             if (!isBetween)
-                throw new ArgumentException("TruncatedGaussian requires isBetween=true", "isBetween");
+                throw new ArgumentException($"{nameof(TruncatedGaussian)} requires {nameof(isBetween)}=true", nameof(isBetween));
             return new TruncatedGaussian(0, Double.PositiveInfinity, lowerBound, upperBound);
         }
 

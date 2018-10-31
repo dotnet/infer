@@ -489,12 +489,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         {
             if (a <= 0.0)
             {
-                throw new ArgumentOutOfRangeException("a", "The parameter a needs to be strictly positive.");
+                throw new ArgumentOutOfRangeException(nameof(a), $"The parameter {nameof(a)} needs to be strictly positive.");
             }
 
             if (b <= 0.0)
             {
-                throw new ArgumentOutOfRangeException("b", "The parameter b needs to be strictly positive.");
+                throw new ArgumentOutOfRangeException(nameof(b), $"The parameter {nameof(b)} needs to be strictly positive.");
             }
 
             return (truth, estimate) =>

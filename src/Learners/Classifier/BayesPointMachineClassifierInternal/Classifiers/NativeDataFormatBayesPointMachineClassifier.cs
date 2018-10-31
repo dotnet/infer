@@ -252,7 +252,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
 
             // Retrieve the data through the mapping and check consistency (through mapping)
@@ -281,7 +281,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 
             if (instanceSource == null)
             {
-                throw new ArgumentNullException("instanceSource");
+                throw new ArgumentNullException(nameof(instanceSource));
             }
 
             // Retrieve the data through the mapping and check consistency
@@ -333,7 +333,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         {
             if (instanceSource == null)
             {
-                throw new ArgumentNullException("instanceSource");
+                throw new ArgumentNullException(nameof(instanceSource));
             }
 
             if (this.Settings.Training.BatchCount == 1)

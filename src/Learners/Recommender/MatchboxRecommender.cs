@@ -36,7 +36,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new NativeDataFormatMatchboxRecommender<TInstanceSource, TFeatureSource>(mapping);
@@ -59,7 +59,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new StandardDataFormatMatchboxRecommender<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource>(mapping);
@@ -120,12 +120,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new NativeDataFormatMatchboxRecommender<TInstanceSource, TFeatureSource>(reader, mapping);
@@ -145,7 +145,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
@@ -168,7 +168,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
@@ -195,12 +195,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return new StandardDataFormatMatchboxRecommender<TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource>(reader, mapping);
@@ -224,7 +224,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true))
@@ -251,7 +251,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))

@@ -236,7 +236,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         {
             if (instanceSource == null)
             {
-                throw new ArgumentNullException("instanceSource");
+                throw new ArgumentNullException(nameof(instanceSource));
             }
 
             if (!this.Classifier.IsTrained)

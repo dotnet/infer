@@ -343,7 +343,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where TDist : IDistribution<T>, Sampleable<T>, SettableTo<TDist>, SettableToProduct<TDist>, SettableToRatio<TDist>
         {
             if (resultIndex < 0 || resultIndex >= Uses.Count)
-                throw new ArgumentOutOfRangeException("resultIndex");
+                throw new ArgumentOutOfRangeException(nameof(resultIndex));
             if (Uses.Count > 1)
                 throw new ArgumentException("Uses.Count > 1");
             result.SetTo(Def);

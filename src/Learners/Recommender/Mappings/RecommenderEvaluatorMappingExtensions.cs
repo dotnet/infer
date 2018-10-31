@@ -34,7 +34,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
             
             return GetEntitiesWithCommonRatedEntities(
@@ -64,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             return GetEntitiesWithCommonRatedEntities(

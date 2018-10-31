@@ -370,7 +370,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         public void SetTo(SparseList<T> that)
         {
             if (Object.ReferenceEquals(this, that)) return;
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             CommonValue = that.CommonValue;
             SparseValues = new List<ValueAtIndex<T>>(that.SparseValues);
         }
@@ -1011,7 +1011,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <remarks>Assumes the lists are the same length</remarks>
         public SparseList<T> SetToFunction<T2>(SparseList<T2> that, Func<T2, T> fun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             CommonValue = fun(that.CommonValue);
             SparseValues = that.SparseValues.ConvertAll(x => new ValueAtIndex<T> {Index = x.Index, Value = fun(x.Value)});
             return this;
@@ -1027,7 +1027,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         public SparseList<T> SetToFunction<T2>(ISparseEnumerable<T2> that, Func<T2, T> fun)
         {
             if (that is IList<T2>)
-                CheckCompatible((IList<T2>) that, "that");
+                CheckCompatible((IList<T2>) that, nameof(that));
 
             ISparseEnumerable<T> res = fun.Map(that) as ISparseEnumerable<T>; // Lazy
             var rese = res.GetSparseEnumerator();
@@ -1071,8 +1071,8 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <remarks>Assumes the lists are all the same length</remarks>
         public SparseList<T> SetToFunction<T1, T2>(SparseList<T1> a, SparseList<T2> b, Func<T1, T2, T> fun)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             List<ValueAtIndex<T>> newSparseValues;
             if (ReferenceEquals(a, this) && !ReferenceEquals(b, this)) return SetToFunctionInPlace<T2>(b, (x, y) => fun((T1) (object) x, y));
             if (ReferenceEquals(a, this) || ReferenceEquals(b, this))
@@ -1143,9 +1143,9 @@ namespace Microsoft.ML.Probabilistic.Collections
             ISparseEnumerable<T1> a, ISparseEnumerable<T2> b, Func<T1, T2, T> fun)
         {
             if (a is IList<T1>)
-                CheckCompatible((IList<T1>) a, "a");
+                CheckCompatible((IList<T1>) a, nameof(a));
             if (b is IList<T2>)
-                CheckCompatible((IList<T2>) b, "b");
+                CheckCompatible((IList<T2>) b, nameof(b));
 
             ISparseEnumerable<T> res = fun.Map(a, b) as ISparseEnumerable<T>; // Lazy
             var rese = res.GetSparseEnumerator();
@@ -1201,11 +1201,11 @@ namespace Microsoft.ML.Probabilistic.Collections
             ISparseEnumerable<T1> a, ISparseEnumerable<T2> b, ISparseEnumerable<T3> c, Func<T1, T2, T3, T> fun)
         {
             if (a is IList<T1>)
-                CheckCompatible((IList<T1>) a, "a");
+                CheckCompatible((IList<T1>) a, nameof(a));
             if (b is IList<T2>)
-                CheckCompatible((IList<T2>) b, "b");
+                CheckCompatible((IList<T2>) b, nameof(b));
             if (c is IList<T3>)
-                CheckCompatible((IList<T3>) c, "c");
+                CheckCompatible((IList<T3>) c, nameof(c));
             ISparseEnumerable<T> res = fun.Map(a, b, c) as ISparseEnumerable<T>; // Lazy
             var rese = res.GetSparseEnumerator();
             List<ValueAtIndex<T>> newSparseValues;
@@ -1257,13 +1257,13 @@ namespace Microsoft.ML.Probabilistic.Collections
             ISparseList<T1> a, ISparseList<T2> b, ISparseList<T3> c, ISparseList<T4> d, Func<T1, T2, T3, T4, T> fun)
         {
             if (a is IList<T1>)
-                CheckCompatible((IList<T1>) a, "a");
+                CheckCompatible((IList<T1>) a, nameof(a));
             if (b is IList<T2>)
-                CheckCompatible((IList<T2>) b, "b");
+                CheckCompatible((IList<T2>) b, nameof(b));
             if (c is IList<T3>)
-                CheckCompatible((IList<T3>) c, "c");
+                CheckCompatible((IList<T3>) c, nameof(c));
             if (d is IList<T4>)
-                CheckCompatible((IList<T4>) d, "d");
+                CheckCompatible((IList<T4>) d, nameof(d));
 
             ISparseEnumerable<T> res = fun.Map(a, b, c, d) as ISparseEnumerable<T>; // Lazy
             var rese = res.GetSparseEnumerator();
@@ -1314,10 +1314,10 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <remarks>Assumes the lists are the same length</remarks>
         public virtual SparseList<T> SetToFunctionInPlace<T1>(SparseList<T1> b, Func<T, T1, T> fun)
         {
-            CheckCompatible(b, "b");
+            CheckCompatible(b, nameof(b));
             if (ReferenceEquals(b, this))
             {
-                throw new NotSupportedException("b must not be equal to this");
+                throw new NotSupportedException($"{nameof(b)} must not be equal to this");
             }
             // TODO: consider changing to use enumerators
             int aIndex = 0;
@@ -1673,7 +1673,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         public void SetTo(ApproximateSparseList<T> that)
         {
             if (Object.ReferenceEquals(this, that)) return;
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             CommonValue = that.CommonValue;
             SparseValues = new List<ValueAtIndex<T>>(that.SparseValues);
             Sparsity = that.Sparsity;

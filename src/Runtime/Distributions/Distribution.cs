@@ -1104,7 +1104,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static T SetToProductOfAllExcept<T, U>(T result, IList<U> dists, int count, int index)
             where T : SettableToProduct<U>, SettableTo<U>, SettableToUniform, U
         {
-            if (index < 0 || index > count) throw new ArgumentOutOfRangeException("index");
+            if (index < 0 || index > count) throw new ArgumentOutOfRangeException(nameof(index));
             if ((object.ReferenceEquals(result, null) || result.Equals(default(T)))
                 && count > 0) result = (T)((ICloneable)dists[0]).Clone();
             if (count == 0)

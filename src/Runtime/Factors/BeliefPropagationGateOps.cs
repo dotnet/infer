@@ -26,7 +26,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (selector == null)
             {
-                throw new ArgumentNullException("selector");
+                throw new ArgumentNullException(nameof(selector));
             }
 
             double logProbSum = selector.GetLogProb(index);
@@ -75,12 +75,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (enter == null)
             {
-                throw new ArgumentNullException("enter");
+                throw new ArgumentNullException(nameof(enter));
             }
 
             if (selector == null)
             {
-                throw new ArgumentNullException("selector");
+                throw new ArgumentNullException(nameof(selector));
             }
 
             if (selector.Dimension != enter.Count)
@@ -148,17 +148,17 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (enterPartial == null)
             {
-                throw new ArgumentNullException("enterPartial");
+                throw new ArgumentNullException(nameof(enterPartial));
             }
 
             if (selector == null)
             {
-                throw new ArgumentNullException("selector");
+                throw new ArgumentNullException(nameof(selector));
             }
 
             if (indices == null)
             {
-                throw new ArgumentNullException("indices");
+                throw new ArgumentNullException(nameof(indices));
             }
 
             if (indices.Length != enterPartial.Count)
@@ -242,12 +242,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (enterPartial == null)
             {
-                throw new ArgumentNullException("enterPartial");
+                throw new ArgumentNullException(nameof(enterPartial));
             }
 
             if (indices == null)
             {
-                throw new ArgumentNullException("indices");
+                throw new ArgumentNullException(nameof(indices));
             }
 
             if (indices.Length != enterPartial.Count)
@@ -341,12 +341,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (enterPartialTwo == null)
             {
-                throw new ArgumentNullException("enterPartialTwo");
+                throw new ArgumentNullException(nameof(enterPartialTwo));
             }
 
             if (indices == null)
             {
-                throw new ArgumentNullException("indices");
+                throw new ArgumentNullException(nameof(indices));
             }
 
             if (indices.Length != enterPartialTwo.Count)
@@ -414,12 +414,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (cases == null)
             {
-                throw new ArgumentNullException("cases");
+                throw new ArgumentNullException(nameof(cases));
             }
 
             if (values == null)
             {
-                throw new ArgumentNullException("values");
+                throw new ArgumentNullException(nameof(values));
             }
 
             if (cases.Count != values.Count)
@@ -514,7 +514,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (values == null)
             {
-                throw new ArgumentNullException("values");
+                throw new ArgumentNullException(nameof(values));
             }
 
             if (values.Count != 2)

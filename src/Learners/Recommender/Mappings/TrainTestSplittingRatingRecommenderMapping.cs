@@ -62,7 +62,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (instanceSource == null)
             {
-                throw new ArgumentNullException("instanceSource");
+                throw new ArgumentNullException(nameof(instanceSource));
             }
 
             return this.mapping.GetRating(instanceSource.InstanceSource, instance);
