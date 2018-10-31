@@ -352,9 +352,9 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             // Duplicate instance scores, duplicate positive instances
             var expectedCurve = new[]
                                     {
-                                        Pair.Create<double, double>(0, 0), 
-                                        Pair.Create<double, double>(0.5, 1), 
-                                        Pair.Create<double, double>(1, 1)
+                                        new ReceiverOperatingCharacteristic(0, 0), 
+                                        new ReceiverOperatingCharacteristic(1, 0.5),
+                                        new ReceiverOperatingCharacteristic(1, 1)
                                     };
             var computedCurve = Metrics.ReceiverOperatingCharacteristicCurve(new[] { 1, 1, 2 }, new Dictionary<int, double> { { 1, 0.5 }, { 2, 0.5 }, { 3, 0.5 }, { 4, 0 } }).ToArray();
             foreach (var tuple in computedCurve)
@@ -362,11 +362,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
                 Console.WriteLine(tuple);
             }
 
-            Assert.Equal(expectedCurve.Length, computedCurve.Length);
-            for (int i = 0; i < expectedCurve.Length; i++)
-            {
-                Assert.Equal(expectedCurve[i], computedCurve[i]);
-            }
+            Xunit.Assert.Equal(expectedCurve, computedCurve);
 
             // No positive instance scores
             Assert.Throws<ArgumentException>(() => Metrics.ReceiverOperatingCharacteristicCurve(new int[] { }, new Dictionary<int, double> { { 1, 1 } }));
