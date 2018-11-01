@@ -46,9 +46,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The computed condensation.</returns>
         public Condensation ComputeCondensation(State root, Func<Transition, bool> transitionFilter, bool useApproximateClosure)
         {
-            Argument.CheckIfNotNull(root, "root");
-            Argument.CheckIfNotNull(transitionFilter, "transitionFilter");
-            Argument.CheckIfValid(ReferenceEquals(root.Owner, this), "root", "The given node belongs to a different automaton.");
+            Argument.CheckIfValid(!root.IsNull, nameof(root));
+            Argument.CheckIfNotNull(transitionFilter, nameof(transitionFilter));
+            Argument.CheckIfValid(ReferenceEquals(root.Owner, this), nameof(root), "The given node belongs to a different automaton.");
 
             return new Condensation(root, transitionFilter, useApproximateClosure);
         }
@@ -108,7 +108,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </param>
             internal Condensation(State root, Func<Transition, bool> transitionFilter, bool useApproximateClosure)
             {
-                Debug.Assert(root != null, "A valid root node must be provided.");
+                Debug.Assert(!root.IsNull, "A valid root node must be provided.");
                 Debug.Assert(transitionFilter != null, "A valid transition filter must be provided.");
                 
                 this.Root = root;
@@ -164,7 +164,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The computed total weight.</returns>
             public Weight GetWeightToEnd(State state)
             {
-                Argument.CheckIfNotNull(state, "state");
+                Argument.CheckIfValid(!state.IsNull, nameof(state));
                 Argument.CheckIfValid(ReferenceEquals(state.Owner, this.Root.Owner), "state", "The given state belongs to a different automaton.");
 
                 if (!this.weightsToEndComputed)
@@ -189,7 +189,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The computed total weight.</returns>
             public Weight GetWeightFromRoot(State state)
             {
-                Argument.CheckIfNotNull(state, "state");
+                Argument.CheckIfValid(!state.IsNull, nameof(state));
                 Argument.CheckIfValid(ReferenceEquals(state.Owner, this.Root.Owner), "state", "The given state belongs to a different automaton.");
 
                 if (!this.weightsFromRootComputed)
@@ -241,7 +241,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (!stateIdToStateInfo.TryGetValue(transition.DestinationStateIndex, out destinationStateInfo))
                     {
                         this.FindStronglyConnectedComponents(
-                            this.Root.Owner.states[transition.DestinationStateIndex], ref traversalIndex, stateIdToStateInfo, stateIdStack);
+                            this.Root.Owner.States[transition.DestinationStateIndex], ref traversalIndex, stateIdToStateInfo, stateIdStack);
                         stateInfo.Lowlink = Math.Min(stateInfo.Lowlink, stateIdToStateInfo[transition.DestinationStateIndex].Lowlink);
                     }
                     else if (destinationStateInfo.InStack)
@@ -288,7 +288,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         for (int transitionIndex = 0; transitionIndex < state.TransitionCount; ++transitionIndex)
                         {
                             Transition transition = state.GetTransition(transitionIndex);
-                            State destState = state.Owner.states[transition.DestinationStateIndex];
+                            State destState = state.Owner.States[transition.DestinationStateIndex];
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {
                                 weightToAdd = Weight.Sum(
@@ -367,7 +367,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         for (int transitionIndex = 0; transitionIndex < srcState.TransitionCount; ++transitionIndex)
                         {
                             Transition transition = srcState.GetTransition(transitionIndex);
-                            State destState = srcState.Owner.states[transition.DestinationStateIndex];
+                            State destState = srcState.Owner.States[transition.DestinationStateIndex];
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {
                                 CondensationStateInfo destStateInfo = this.stateIdToInfo[destState.Index];

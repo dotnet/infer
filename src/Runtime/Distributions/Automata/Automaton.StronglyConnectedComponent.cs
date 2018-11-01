@@ -77,7 +77,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     "There must be at least one state in the strongly connected component.");
                 Debug.Assert(
                     statesInComponent.All(s => s != null && ReferenceEquals(s.Owner, statesInComponent[0].Owner)),
-                    "All the states must be valid and belong to the same automaton.");
+                    "All the statesData must be valid and belong to the same automaton.");
 
                 this.transitionFilter = transitionFilter;
                 this.statesInComponent = statesInComponent;
@@ -114,7 +114,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </returns>
             public bool HasState(State state)
             {
-                Argument.CheckIfNotNull(state, "state");
+                Argument.CheckIfValid(!state.IsNull, nameof(state));
 
                 return this.GetIndexByState(state) != -1;
             }
@@ -128,12 +128,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </returns>
             public int GetIndexByState(State state)
             {
-                Argument.CheckIfNotNull(state, "state");
+                Argument.CheckIfValid(!state.IsNull, nameof(state));
                 Argument.CheckIfValid(ReferenceEquals(state.Owner, this.statesInComponent[0].Owner), "state", "The given state belongs to other automaton.");
 
                 if (this.statesInComponent.Count == 1)
                 {
-                    return ReferenceEquals(this.statesInComponent[0], state) ? 0 : -1;
+                    return this.statesInComponent[0].Index == state.Index ? 0 : -1;
                 }
 
                 if (this.stateIdToIndexInComponent == null)

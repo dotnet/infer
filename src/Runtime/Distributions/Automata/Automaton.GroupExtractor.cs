@@ -25,7 +25,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 Dictionary<int, HashSet<int>> subGraphs;
                 var order = ComputeTopologicalOrderAndGroupSubgraphs(automaton, out subGraphs);
-                return BuildSubautomata(automaton.states, order, subGraphs);
+                return BuildSubautomata(automaton.States.ToList(), order, subGraphs);
             }
 
             private static Dictionary<int, TThis> BuildSubautomata(
@@ -69,7 +69,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var weightFromRoot = newSourceState.TransitionCount > 0 ? weightsFromRoot[stateIndex] : Weight.Zero;
                     if (!weightFromRoot.IsZero)
                     {
-                        subautomaton.startState.AddEpsilonTransition(weightFromRoot, newSourceState);
+                        subautomaton.Start.AddEpsilonTransition(weightFromRoot, newSourceState);
                     }
 
                     // consider end states
@@ -84,7 +84,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 if (!correctionFactor.IsZero) throw new Exception("Write a unit test for this case. Code should be fine.");
                 var epsilonWeight = Weight.AbsoluteDifference(weightsToEnd[topologicalOrder[0].Index], correctionFactor);
-                subautomaton.startState.EndWeight = epsilonWeight;
+                subautomaton.Start.SetEndWeight(epsilonWeight);
 
                 return subautomaton;
             }
@@ -106,12 +106,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             private static List<State> ComputeTopologicalOrderAndGroupSubgraphs(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton, out Dictionary<int, HashSet<int>> groupSubGraphs)
             {
                 var topologicalOrder = new Stack<int>();
-                var states = automaton.states;
+                var states = automaton.States.ToList();
                 var temporary = new BitArray(states.Count);
                 var permanent = new BitArray(states.Count);
                 groupSubGraphs = new Dictionary<int, HashSet<int>>();
 
-                VisitNode(states, automaton.startState.Index, temporary, permanent, groupSubGraphs, topologicalOrder);
+                VisitNode(states, automaton.Start.Index, temporary, permanent, groupSubGraphs, topologicalOrder);
                 return topologicalOrder.Select(idx => states[idx]).ToList();
             }
 

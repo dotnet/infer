@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Diagnostics;
+
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System.Collections.Generic;
@@ -40,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="state">The state, which epsilon closure this instance will represent.</param>
             internal EpsilonClosure(State state)
             {
-                Argument.CheckIfNotNull(state, "state");
+                Argument.CheckIfValid(!state.IsNull, nameof(state));
 
                 // Optimize for a very common case: a single-node closure
                 bool singleNodeClosure = true;
