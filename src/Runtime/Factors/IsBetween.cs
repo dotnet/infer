@@ -357,8 +357,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                         deltaOverDiffs = -deltaOverDiffs;
                         flip = true;
                     }
-                    if (double.IsNaN(zL)) throw new Exception($"zL is NaN when x={X}, lowerBound={lowerBound:r}, upperBound={upperBound:r}");
-                    if (double.IsNaN(zU)) throw new Exception($"zU is NaN when x={X}, lowerBound={lowerBound:r}, upperBound={upperBound:r}");
+                    if (double.IsNaN(zL)) throw new Exception($"{nameof(zL)} is NaN when {nameof(X)}={X}, {nameof(lowerBound)}={lowerBound:r}, {nameof(upperBound)}={upperBound:r}");
+                    if (double.IsNaN(zU)) throw new Exception($"{nameof(zU)} is NaN when {nameof(X)}={X}, {nameof(lowerBound)}={lowerBound:r}, {nameof(upperBound)}={upperBound:r}");
                     if (zU > 3.5)
                     {
                         // When zU > 0, X.GetMean() is inside the constraints and 
@@ -388,7 +388,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     // this formula is more accurate than above
                     double delta = diffs * deltaOverDiffs;
                     double deltaSqrtVx = diff * deltaOverDiffs; // delta / sqrtPrec
-                    if (delta < 0) throw new Exception("delta < 0");
+                    if (delta < 0) throw new Exception($"{nameof(delta)} < 0");
                     if (delta < 1e-16 && (mx <= lowerBound || mx >= upperBound))
                     {
                         double variance = diff * diff / 12;
@@ -926,7 +926,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GaussianOp.GaussianFromAlphaBeta(lowerBound, alphaL, betaL, ForceProper);
             }
             if (Double.IsNaN(result.Precision) || Double.IsNaN(result.MeanTimesPrecision))
-                throw new InferRuntimeException($"{nameof(result)} is NaN.  {nameof(isBetween)}={isBetween}, x={X}, {nameof(lowerBound)}={lowerBound}, {nameof(upperBound)}={upperBound}, {nameof(logZ)}={logZ}");
+                throw new InferRuntimeException($"{nameof(result)} is NaN.  {nameof(isBetween)}={isBetween}, {nameof(X)}={X}, {nameof(lowerBound)}={lowerBound}, {nameof(upperBound)}={upperBound}, {nameof(logZ)}={logZ}");
             return result;
         }
 
