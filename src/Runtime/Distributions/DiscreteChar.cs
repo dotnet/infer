@@ -127,7 +127,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Initializes a new instance of the <see cref="DiscreteChar"/> class
         /// by setting it to a uniform distribution.
         /// </summary>
-        public DiscreteChar() => this.storage = StorageCache.Uniform.Value;
+        public DiscreteChar() => this.storage = StorageCache.Uniform;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscreteChar"/> class
@@ -250,61 +250,61 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <returns>The created distribution.</returns>
         [Construction(UseWhen = "IsUniform")]
-        public static DiscreteChar Uniform() => new DiscreteChar();
+        public static DiscreteChar Uniform() => new DiscreteChar(StorageCache.Uniform);
 
         /// <summary>
         /// Creates a uniform distribution over digits '0'..'9'.
         /// </summary>
         /// <returns>The created distribution.</returns>
         [Construction(UseWhen = "IsDigit")]
-        public static DiscreteChar Digit() => new DiscreteChar(StorageCache.Digit.Value);
+        public static DiscreteChar Digit() => new DiscreteChar(StorageCache.Digit);
 
         /// <summary>
         /// Creates a uniform distribution over lowercase letters.
         /// </summary>
         /// <returns>The created distribution.</returns>
         [Construction(UseWhen = "IsLower")]
-        public static DiscreteChar Lower() => new DiscreteChar(StorageCache.Lower.Value);
+        public static DiscreteChar Lower() => new DiscreteChar(StorageCache.Lower);
 
         /// <summary>
         /// Creates a uniform distribution over uppercase letters.
         /// </summary>
         /// <returns>The created distribution.</returns>
         [Construction(UseWhen = "IsUpper")]
-        public static DiscreteChar Upper() => new DiscreteChar(StorageCache.Upper.Value);
+        public static DiscreteChar Upper() => new DiscreteChar(StorageCache.Upper);
 
         /// <summary>
         /// Creates a uniform distribution over letters.
         /// </summary>
         /// <returns>The created distribution.</returns>
         [Construction(UseWhen = "IsLetter")]
-        public static DiscreteChar Letter() => new DiscreteChar(StorageCache.Letter.Value);
+        public static DiscreteChar Letter() => new DiscreteChar(StorageCache.Letter);
 
         /// <summary>
         /// Creates a uniform distribution over letters and '0'..'9'.
         /// </summary>
         /// <returns>The created distribution.</returns>
         [Construction(UseWhen = "IsLetterOrDigit")]
-        public static DiscreteChar LetterOrDigit() => new DiscreteChar(StorageCache.LetterOrDigit.Value);
+        public static DiscreteChar LetterOrDigit() => new DiscreteChar(StorageCache.LetterOrDigit);
 
         /// <summary>
         /// Creates a uniform distribution over word characters (letter, digit and '_').
         /// </summary>
         /// <returns>The created distribution.</returns>
         [Construction(UseWhen = "IsWordChar")]
-        public static DiscreteChar WordChar() => new DiscreteChar(StorageCache.WordChar.Value);
+        public static DiscreteChar WordChar() => new DiscreteChar(StorageCache.WordChar);
 
         /// <summary>
         /// Creates a uniform distribution over all characters except (letter, digit and '_').
         /// </summary>
         /// <returns>The created distribution.</returns>
-        public static DiscreteChar NonWordChar() => new DiscreteChar(StorageCache.NonWordChar.Value);
+        public static DiscreteChar NonWordChar() => new DiscreteChar(StorageCache.NonWordChar);
 
         /// <summary>
         /// Creates a uniform distribution over whitespace characters ('\t'..'\r', ' ').
         /// </summary>
         /// <returns>The created distribution.</returns>
-        public static DiscreteChar Whitespace() => new DiscreteChar(StorageCache.Whitespace.Value);
+        public static DiscreteChar Whitespace() => new DiscreteChar(StorageCache.Whitespace);
 
         /// <summary>
         /// Creates a uniform distribution over all characters.
@@ -481,7 +481,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Sets this distribution to a uniform distribution over all characters.
         /// </summary>
-        public void SetToUniform() => this.storage = StorageCache.Uniform.Value;
+        public void SetToUniform() => this.storage = StorageCache.Uniform;
 
         /// <summary>
         /// Checks whether this distribution is a uniform distribution over all characters.
@@ -1897,34 +1897,31 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         internal sealed class StorageCache
         {
-            public static Lazy<Storage> Uniform = new Lazy<Storage>(
-                () => Storage.CreateUncached(new CharRange[] { }, UniformProb, CharClasses.Uniform, UniformRegexRepresentation));
+            public static readonly Storage Uniform;
+            public static readonly Storage Digit;
+            public static readonly Storage Lower;
+            public static readonly Storage Upper;
+            public static readonly Storage Letter;
+            public static readonly Storage LetterOrDigit;
+            public static readonly Storage WordChar;
+            public static readonly Storage NonWordChar;
+            public static readonly Storage Whitespace;
 
-            public static Lazy<Storage> Digit = new Lazy<Storage>(
-                () => Storage.CreateUniformInRanges("09", CharClasses.Digit, DigitRegexRepresentation));
+            private static readonly Storage[] PointMasses;
 
-            public static Lazy<Storage> Lower = new Lazy<Storage>(
-                () => Storage.CreateUniformInRanges(LowerCaseCharacterRanges, CharClasses.Lower, LowerRegexRepresentation));
-
-            public static Lazy<Storage> Upper = new Lazy<Storage>(
-                () => Storage.CreateUniformInRanges(UpperCaseCharacterRanges, CharClasses.Upper, UpperRegexRepresentation));
-
-            public static Lazy<Storage> Letter = new Lazy<Storage>(
-                () => Storage.CreateUniformInRanges(LetterCharacterRanges, CharClasses.Letter, LetterRegexRepresentation));
-
-            public static Lazy<Storage> LetterOrDigit = new Lazy<Storage>(
-                () => Storage.CreateUniformInRanges(LetterCharacterRanges + "09", CharClasses.LetterOrDigit, LetterOrDigitRegexRepresentation));
-
-            public static Lazy<Storage> WordChar = new Lazy<Storage>(
-                () => Storage.CreateUniformInRanges(LetterCharacterRanges + "09__", CharClasses.WordChar, WordCharRegexRepresentation));
-
-            public static Lazy<Storage> NonWordChar = new Lazy<Storage>(
-                () => WordChar.Value.Complement());
-
-            public static Lazy<Storage> Whitespace = new Lazy<Storage>(
-                () => Storage.CreateUniformInRanges("\t\r  ", CharClasses.Unknown, null));
-
-            private static readonly Storage[] PointMasses = new Storage[CharRangeEndExclusive];
+            static StorageCache()
+            {
+                Uniform = Storage.CreateUncached(new CharRange[] { }, UniformProb, CharClasses.Uniform, UniformRegexRepresentation);
+                Digit = Storage.CreateUniformInRanges("09", CharClasses.Digit, DigitRegexRepresentation);
+                Lower = Storage.CreateUniformInRanges(LowerCaseCharacterRanges, CharClasses.Lower,LowerRegexRepresentation);
+                Upper = Storage.CreateUniformInRanges(UpperCaseCharacterRanges, CharClasses.Upper, UpperRegexRepresentation);
+                Letter = Storage.CreateUniformInRanges(LetterCharacterRanges, CharClasses.Letter, LetterRegexRepresentation);
+                LetterOrDigit = Storage.CreateUniformInRanges(LetterCharacterRanges + "09", CharClasses.LetterOrDigit, LetterOrDigitRegexRepresentation);
+                WordChar = Storage.CreateUniformInRanges(LetterCharacterRanges + "09__", CharClasses.WordChar, WordCharRegexRepresentation);
+                NonWordChar = WordChar.Complement();
+                Whitespace = Storage.CreateUniformInRanges("\t\r  ", CharClasses.Unknown, null);
+                PointMasses = new Storage[CharRangeEndExclusive];
+            }
 
             public static Storage GetPointMass(char point, CharRange[] ranges)
             {
@@ -1989,9 +1986,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
         #endregion
 
         /// <summary>
-        /// Helper class for building Storage using builder pattern.
+        /// Helper struct for building Storage using builder pattern.
         /// </summary>
-        private sealed class StorageBuilder
+        /// <remarks>
+        /// It is a mutable struct instead of class for performance reasons - we want ot avoid
+        /// allocations which aren't necessary. StorageBuilder is always created on stack and
+        /// not shared with outer code. Which means we don't get to experience drawbacks
+        /// of mutable structs.
+        /// </remarks>
+        private struct StorageBuilder
         {
 
             #region State
