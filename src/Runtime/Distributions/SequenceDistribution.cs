@@ -647,7 +647,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </list>
         /// </remarks>
         /// <returns>The distribution over the concatenations of sequences and the element.</returns>
-        public TThis Append(TElement element, byte group = 0)
+        public TThis Append(TElement element, int group = 0)
         {
             return this.Append(SingleElement(element), group);
         }
@@ -673,7 +673,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </list>
         /// </remarks>
         /// <returns>The distribution over the concatenations of sequences and elements.</returns>
-        public TThis Append(TElementDistribution elementDistribution, byte group = 0)
+        public TThis Append(TElementDistribution elementDistribution, int group = 0)
         {
             return this.Append(SingleElement(elementDistribution), group);
         }
@@ -695,7 +695,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </list>
         /// </remarks>
         /// <returns>The distribution over the concatenations of sequences.</returns>
-        public TThis Append(TSequence sequence, byte group = 0)
+        public TThis Append(TSequence sequence, int group = 0)
         {
             return this.Append(PointMass(sequence), group);
         }
@@ -721,7 +721,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </list>
         /// </remarks>
         /// <returns>The distribution over the concatenations of sequences.</returns>
-        public TThis Append(TThis dist, byte group = 0)
+        public TThis Append(TThis dist, int group = 0)
         {
             Argument.CheckIfNotNull(dist, "dist");
             
@@ -747,7 +747,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </description></item>
         /// </list>
         /// </remarks>
-        public void AppendInPlace(TElement element, byte group = 0)
+        public void AppendInPlace(TElement element, int group = 0)
         {
             this.AppendInPlace(SingleElement(element), group);
         }
@@ -772,7 +772,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </description></item>
         /// </list>
         /// </remarks>
-        public void AppendInPlace(TElementDistribution elementDistribution, byte group = 0)
+        public void AppendInPlace(TElementDistribution elementDistribution, int group = 0)
         {
             Argument.CheckIfNotNull(elementDistribution, "elementDistribution");
             
@@ -796,7 +796,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </description></item>
         /// </list>
         /// </remarks>
-        public void AppendInPlace(TSequence sequence, byte group = 0)
+        public void AppendInPlace(TSequence sequence, int group = 0)
         {
             Argument.CheckIfNotNull(sequence, "sequence");
             
@@ -823,7 +823,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </description></item>
         /// </list>
         /// </remarks>
-        public void AppendInPlace(TThis dist, byte group = 0)
+        public void AppendInPlace(TThis dist, int group = 0)
         {
             Argument.CheckIfNotNull(dist, "dist");
 
@@ -1029,7 +1029,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region Groups
 
-        public bool HasGroup(byte group)
+        public bool HasGroup(int group)
         {
             if (this.IsPointMass)
             {
@@ -1039,11 +1039,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return this.sequenceToWeight.HasGroup(group);
         }
    
-        public Dictionary<byte, TThis> GetGroups()
+        public Dictionary<int, TThis> GetGroups()
         {
             if (this.IsPointMass)
             {
-                return new Dictionary<byte, TThis>(); // TODO: get rid of groups or do something about groups + point mass combo
+                return new Dictionary<int, TThis>(); // TODO: get rid of groups or do something about groups + point mass combo
             }
 
             return this.sequenceToWeight.GetGroups().ToDictionary(x => x.Key, x => FromWorkspace(x.Value));

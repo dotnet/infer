@@ -200,7 +200,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 else
                 {
-                    var argumentGroup = (byte)(i + 1);
+                    var argumentGroup = i + 1;
                     StringDistribution group;
                     if (!groups.TryGetValue(argumentGroup, out group))
                     {
@@ -420,7 +420,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
 
                 // Replace the placeholder by the argument
-                result.AppendInPlace(allowedArgs[argumentIndex], (byte)(withGroups ? argumentIndex + 1 : 0));
+                result.AppendInPlace(allowedArgs[argumentIndex], withGroups ? argumentIndex + 1 : 0);
 
                 // Mark the argument as 'seen'
                 argumentSeen[argumentIndex] = true;
@@ -467,7 +467,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 if (!forBackwardMessage)
                 {
                     alternative = StringTransducer.Consume(argNames[argumentIndex]);
-                    alternative.AppendInPlace(StringTransducer.Produce(args[argumentIndex]), (byte)(withGroups ? argumentIndex + 1 : 0));
+                    alternative.AppendInPlace(StringTransducer.Produce(args[argumentIndex]), withGroups ? argumentIndex + 1 : 0);
                 }
                 else
                 {

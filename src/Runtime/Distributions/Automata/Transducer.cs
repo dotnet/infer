@@ -107,7 +107,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="automaton">The automaton to weight the sequence.</param>
         /// <param name="group">The group.</param>
         /// <returns>The created transducer.</returns>
-        public static TThis Copy(TAutomaton automaton, byte group = 0)
+        public static TThis Copy(TAutomaton automaton, int group = 0)
         {
             Argument.CheckIfNotNull(automaton, "automaton");
 
@@ -119,6 +119,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         if (transitionElementDistribution == null)
                         {
+
                             return Tuple.Create<PairDistribution<TElement, TElementDistribution>, Weight>(null, transitionWeight);
                         }
 

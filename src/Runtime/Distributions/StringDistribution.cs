@@ -22,7 +22,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     {
         /// <summary>
         /// Concatenates the weighted regular languages defined by given distributions
-        /// (see <see cref="SequenceDistribution{TSequence,TElement,TElementDistribution,TSequenceManipulator,TWeightFunction,TThis}.Append(TThis, byte)"/>).
+        /// (see <see cref="SequenceDistribution{TSequence,TElement,TElementDistribution,TSequenceManipulator,TWeightFunction,TThis}.Append(TThis, int)"/>).
         /// </summary>
         /// <param name="first">The first distribution.</param>
         /// <param name="second">The second distribution.</param>
