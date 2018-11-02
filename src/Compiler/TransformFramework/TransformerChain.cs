@@ -81,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 tr.ThrowIfErrors(name + " failed", treatWarningsAsErrors);
                 if (tr.WarningCount > 0)
                 {
-                    foreach (TransformError te in tr.errorsAndWarnings)
+                    foreach (TransformError te in tr.ErrorsAndWarnings)
                     {
                         if(te.IsWarning) warnings.Add(te);
                     }

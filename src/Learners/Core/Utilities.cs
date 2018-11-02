@@ -30,12 +30,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (learner == null)
             {
-                throw new ArgumentNullException("learner");
+                throw new ArgumentNullException(nameof(learner));
             }
 
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Create))
@@ -55,17 +55,17 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (learner == null)
             {
-                throw new ArgumentNullException("learner");
+                throw new ArgumentNullException(nameof(learner));
             }
 
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (formatter == null)
             {
-                throw new ArgumentNullException("formatter");
+                throw new ArgumentNullException(nameof(formatter));
             }
 
             AppendVersionMetadata(learner.GetType(), stream, formatter);
@@ -83,12 +83,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
 
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, fileMode))
@@ -107,12 +107,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                throw new ArgumentNullException(nameof(obj));
             }
 
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
@@ -136,12 +136,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             if (formatter == null)
             {
-                throw new ArgumentNullException("formatter");
+                throw new ArgumentNullException(nameof(formatter));
             }
 
             CheckVersion(stream, formatter);
@@ -158,7 +158,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             using (Stream stream = File.Open(fileName, FileMode.Open))
@@ -186,22 +186,22 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
 
             if (totalBatchCount < 1)
             {
-                throw new ArgumentOutOfRangeException("totalBatchCount", "The total number of batches must be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(totalBatchCount), "The total number of batches must be greater than 0.");
             }
 
             if (batch < 0)
             {
-                throw new ArgumentOutOfRangeException("batch", "The requested batch number must not be negative.");
+                throw new ArgumentOutOfRangeException(nameof(batch), "The requested batch number must not be negative.");
             }
 
             if (batch >= totalBatchCount)
             {
-                throw new ArgumentOutOfRangeException("batch", "The requested batch number must not be greater than the total number of batches.");
+                throw new ArgumentOutOfRangeException(nameof(batch), "The requested batch number must not be greater than the total number of batches.");
             }
 
             // Avoid the batching performance overhead when the data is not batched.
@@ -261,7 +261,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (formatter == null)
             {
-                throw new ArgumentNullException("formatter");
+                throw new ArgumentNullException(nameof(formatter));
             }
 
             // Reconstructing type by its serialized assembly qualified name

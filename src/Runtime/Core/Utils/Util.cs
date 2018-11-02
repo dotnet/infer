@@ -437,7 +437,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
         {
             if (k < 0)
             {
-                throw new ArgumentOutOfRangeException("k", "The number of elements to get must not be negative.");
+                throw new ArgumentOutOfRangeException(nameof(k), "The number of elements to get must not be negative.");
             }
 
             if (k == 0)

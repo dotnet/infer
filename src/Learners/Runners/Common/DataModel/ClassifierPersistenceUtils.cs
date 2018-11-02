@@ -27,7 +27,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentException("The name of the file must not be null or whitespace.", "fileName");
+                throw new ArgumentException("The name of the file must not be null or whitespace.", nameof(fileName));
             }
 
             var labels = new List<LabelDistribution>();
@@ -78,7 +78,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentException("The name of the file must not be null or whitespace.", "fileName");
+                throw new ArgumentException("The name of the file must not be null or whitespace.", nameof(fileName));
             }
 
             var labeledFeatureValues = new List<LabeledFeatureValues>();
@@ -126,12 +126,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             if (labelDistributions == null)
             {
-                throw new ArgumentNullException("labelDistributions");
+                throw new ArgumentNullException(nameof(labelDistributions));
             }
 
             using (var writer = new StreamWriter(fileName))
@@ -162,12 +162,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         {
             if (fileName == null)
             {
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
             }
 
             if (vectors == null)
             {
-                throw new ArgumentNullException("vectors");
+                throw new ArgumentNullException(nameof(vectors));
             }
 
             using (var writer = new StreamWriter(fileName))

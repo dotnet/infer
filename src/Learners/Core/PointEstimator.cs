@@ -183,7 +183,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (lossFunction == null)
             {
-                throw new ArgumentNullException("lossFunction");
+                throw new ArgumentNullException(nameof(lossFunction));
             }
 
             bool argminRisk = false;
@@ -225,12 +225,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (distribution == null)
             {
-                throw new ArgumentNullException("distribution");
+                throw new ArgumentNullException(nameof(distribution));
             }
 
             if (lossFunction == null)
             {
-                throw new ArgumentNullException("lossFunction");
+                throw new ArgumentNullException(nameof(lossFunction));
             }
 
             int argminRisk = 0;
@@ -271,17 +271,17 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (distribution == null)
             {
-                throw new ArgumentNullException("distribution");
+                throw new ArgumentNullException(nameof(distribution));
             }
 
             if (lossFunction == null)
             {
-                throw new ArgumentNullException("lossFunction");
+                throw new ArgumentNullException(nameof(lossFunction));
             }
 
             if (distribution.Count < 2)
             {
-                throw new ArgumentException("The distribution must contain at least two elements", "distribution");
+                throw new ArgumentException("The distribution must contain at least two elements", nameof(distribution));
             }
 
             TLabel argminRisk = distribution.Keys.First();
@@ -321,12 +321,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (distribution == null)
             {
-                throw new ArgumentNullException("distribution");
+                throw new ArgumentNullException(nameof(distribution));
             }
 
             if (distribution.Count < 2)
             {
-                throw new ArgumentException("The distribution must contain at least two elements", "distribution");
+                throw new ArgumentException("The distribution must contain at least two elements", nameof(distribution));
             }
 
             TLabel modeLabel = distribution.Keys.First();

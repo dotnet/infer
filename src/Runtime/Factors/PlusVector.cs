@@ -124,7 +124,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (result == null)
             {
-                throw new ArgumentNullException("result");
+                throw new ArgumentNullException(nameof(result));
             }
 
             int dimension = result.Dimension;
@@ -145,7 +145,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (result == null)
             {
-                throw new ArgumentNullException("result");
+                throw new ArgumentNullException(nameof(result));
             }
 
             int dimension = result.Dimension;

@@ -45,12 +45,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (groundTruth == null)
             {
-                throw new ArgumentNullException("groundTruth");
+                throw new ArgumentNullException(nameof(groundTruth));
             }
 
             if (prediction == null)
             {
-                throw new ArgumentNullException("prediction");
+                throw new ArgumentNullException(nameof(prediction));
             }
 
             return prediction.Equals(groundTruth) ? 0.0 : 1.0;
@@ -177,7 +177,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (prediction == null)
             {
-                throw new ArgumentNullException("prediction");
+                throw new ArgumentNullException(nameof(prediction));
             }
             
             return -prediction.GetLogProb(groundTruth);
@@ -194,27 +194,27 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (groundTruth == null)
             {
-                throw new ArgumentNullException("groundTruth");
+                throw new ArgumentNullException(nameof(groundTruth));
             }
 
             if (prediction == null)
             {
-                throw new ArgumentNullException("prediction");
+                throw new ArgumentNullException(nameof(prediction));
             }
 
             if (prediction.Count < 2)
             {
-                throw new ArgumentException("The predicted distribution over labels must contain at least two entries.", "prediction");
+                throw new ArgumentException("The predicted distribution over labels must contain at least two entries.", nameof(prediction));
             }
 
             if (Math.Abs(prediction.Values.Sum() - 1) > Tolerance)
             {
-                throw new ArgumentException("The predicted distribution over labels must sum to 1.", "prediction");
+                throw new ArgumentException("The predicted distribution over labels must sum to 1.", nameof(prediction));
             }
 
             if (prediction.Values.Any(p => p < 0.0 || p > 1.0))
             {
-                throw new ArgumentException("The label probability must be between 0 and 1.", "prediction");
+                throw new ArgumentException("The label probability must be between 0 and 1.", nameof(prediction));
             }
 
             double probability;
@@ -241,12 +241,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (orderedGains == null)
             {
-                throw new ArgumentNullException("orderedGains");
+                throw new ArgumentNullException(nameof(orderedGains));
             }
 
             if (discountFunc == null)
             {
-                throw new ArgumentNullException("discountFunc");
+                throw new ArgumentNullException(nameof(discountFunc));
             }
 
             int index = 0;
@@ -292,17 +292,17 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (orderedGains == null)
             {
-                throw new ArgumentNullException("orderedGains");
+                throw new ArgumentNullException(nameof(orderedGains));
             }
 
             if (bestOrderedGains == null)
             {
-                throw new ArgumentNullException("bestOrderedGains");
+                throw new ArgumentNullException(nameof(bestOrderedGains));
             }
 
             if (discountFunc == null)
             {
-                throw new ArgumentNullException("discountFunc");
+                throw new ArgumentNullException(nameof(discountFunc));
             }
             
             List<double> orderedGainList = orderedGains.ToList();
@@ -372,7 +372,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (orderedRelevances == null)
             {
-                throw new ArgumentNullException("orderedRelevances");
+                throw new ArgumentNullException(nameof(orderedRelevances));
             }
 
             int outerIndex = 0;
@@ -416,17 +416,17 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <remarks>
         /// All instances not contained in <paramref name="positiveInstances"/> are assumed to belong to the 'negative' class.
         /// </remarks>
-        public static IEnumerable<Pair<double, double>> PrecisionRecallCurve<TInstance>(
+        public static IEnumerable<PrecisionRecall> PrecisionRecallCurve<TInstance>(
             IEnumerable<TInstance> positiveInstances, IEnumerable<KeyValuePair<TInstance, double>> instanceScores)
         {
             if (positiveInstances == null)
             {
-                throw new ArgumentNullException("positiveInstances");
+                throw new ArgumentNullException(nameof(positiveInstances));
             }
 
             if (instanceScores == null)
             {
-                throw new ArgumentNullException("instanceScores");
+                throw new ArgumentNullException(nameof(instanceScores));
             }
 
             // Compute the number of instances with positive ground truth labels
@@ -448,7 +448,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             double recall = 0.0;
             double precision = 1.0;
 
-            var precisionRecallCurve = new List<Pair<double, double>> { Pair.Create(recall, precision) };
+            var precisionRecallCurve = new List<PrecisionRecall> { new PrecisionRecall(precision, recall) };
 
             // Add further points to PR curve
             foreach (var instance in sortedInstanceScores)
@@ -464,7 +464,7 @@ namespace Microsoft.ML.Probabilistic.Learners
 
                 recall = truePositivesCount / (double)positivesCount;
                 precision = truePositivesCount / ((double)truePositivesCount + falsePositivesCount);
-                precisionRecallCurve.Add(Pair.Create(recall, precision));
+                precisionRecallCurve.Add(new PrecisionRecall(precision, recall));
             }
 
             return precisionRecallCurve;
@@ -492,12 +492,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (positiveInstances == null)
             {
-                throw new ArgumentNullException("positiveInstances");
+                throw new ArgumentNullException(nameof(positiveInstances));
             }
 
             if (instanceScores == null)
             {
-                throw new ArgumentNullException("instanceScores");
+                throw new ArgumentNullException(nameof(instanceScores));
             }
 
             // Compute the number of instances with positive and negative ground truth labels
@@ -576,12 +576,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (positiveInstances == null)
             {
-                throw new ArgumentNullException("positiveInstances");
+                throw new ArgumentNullException(nameof(positiveInstances));
             }
 
             if (instanceScores == null)
             {
-                throw new ArgumentNullException("instanceScores");
+                throw new ArgumentNullException(nameof(instanceScores));
             }
 
             // Compute the number of instances with positive and negative ground truth labels
@@ -752,12 +752,12 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (vector1 == null)
             {
-                throw new ArgumentNullException("vector1");
+                throw new ArgumentNullException(nameof(vector1));
             }
 
             if (vector2 == null)
             {
-                throw new ArgumentNullException("vector2");
+                throw new ArgumentNullException(nameof(vector2));
             }
 
             int count1 = vector1.Count;

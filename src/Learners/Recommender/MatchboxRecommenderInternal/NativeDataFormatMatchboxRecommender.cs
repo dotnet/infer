@@ -250,7 +250,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 int[] valueArray = value.ToArray();
@@ -293,7 +293,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 int[] valueArray = value.ToArray();
@@ -540,7 +540,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         {
             if (recommendationCount < 0)
             {
-                throw new ArgumentOutOfRangeException("recommendationCount", "The number of items to recommend must be non-negative.");
+                throw new ArgumentOutOfRangeException(nameof(recommendationCount), "The number of items to recommend must be non-negative.");
             }
 
             var itemMeanRatingPairs = new List<KeyValuePair<int, double>>(this.itemSubset.Length);
@@ -569,12 +569,12 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         {
             if (users == null)
             {
-                throw new ArgumentNullException("users");
+                throw new ArgumentNullException(nameof(users));
             }
 
             if (recommendationCount < 0)
             {
-                throw new ArgumentOutOfRangeException("recommendationCount", "The number of items to recommend must be non-negative.");
+                throw new ArgumentOutOfRangeException(nameof(recommendationCount), "The number of items to recommend must be non-negative.");
             }
 
             IDictionary<int, IEnumerable<int>> result = new Dictionary<int, IEnumerable<int>>();
@@ -602,7 +602,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         {
             if (recommendationCount < 0)
             {
-                throw new ArgumentOutOfRangeException("recommendationCount", "The number of items to recommend must be non-negative.");
+                throw new ArgumentOutOfRangeException(nameof(recommendationCount), "The number of items to recommend must be non-negative.");
             }
 
             var itemMeanRatingPairs = new List<KeyValuePair<int, double>>(this.itemSubset.Length);
@@ -631,12 +631,12 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         {
             if (users == null)
             {
-                throw new ArgumentNullException("users");
+                throw new ArgumentNullException(nameof(users));
             }
 
             if (recommendationCount < 0)
             {
-                throw new ArgumentOutOfRangeException("recommendationCount", "The number of items to recommend must be non-negative.");
+                throw new ArgumentOutOfRangeException(nameof(recommendationCount), "The number of items to recommend must be non-negative.");
             }
 
             var result = new Dictionary<int, IEnumerable<Tuple<int, Discrete>>>();
@@ -664,7 +664,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         {
             if (relatedUserCount < 0)
             {
-                throw new ArgumentOutOfRangeException("relatedUserCount", "The number of related users to find must be non-negative.");
+                throw new ArgumentOutOfRangeException(nameof(relatedUserCount), "The number of related users to find must be non-negative.");
             }
 
             return this.GetRelatedEntities(
@@ -687,12 +687,12 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         {
             if (users == null)
             {
-                throw new ArgumentNullException("users");
+                throw new ArgumentNullException(nameof(users));
             }
 
             if (relatedUserCount < 0)
             {
-                throw new ArgumentOutOfRangeException("relatedUserCount", "The number of related users to find must be non-negative.");
+                throw new ArgumentOutOfRangeException(nameof(relatedUserCount), "The number of related users to find must be non-negative.");
             }
 
             IDictionary<int, IEnumerable<int>> result = new Dictionary<int, IEnumerable<int>>();
@@ -723,7 +723,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         {
             if (relatedItemCount < 0)
             {
-                throw new ArgumentOutOfRangeException("relatedItemCount", "The number of related items to find must be non-negative.");
+                throw new ArgumentOutOfRangeException(nameof(relatedItemCount), "The number of related items to find must be non-negative.");
             }
 
             return this.GetRelatedEntities(
@@ -746,12 +746,12 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         {
             if (items == null)
             {
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
             }
 
             if (relatedItemCount < 0)
             {
-                throw new ArgumentOutOfRangeException("relatedItemCount", "The number of related items to find must be non-negative.");
+                throw new ArgumentOutOfRangeException(nameof(relatedItemCount), "The number of related items to find must be non-negative.");
             }
 
             IDictionary<int, IEnumerable<int>> result = new Dictionary<int, IEnumerable<int>>();

@@ -1487,7 +1487,7 @@ f = 1/gamma(x+1)-1
             const double small = 0.0485, large = 1.9515;
             // check for boundary cases
             if (y < 0 || y > 2)
-                throw new ArgumentOutOfRangeException("y",
+                throw new ArgumentOutOfRangeException(nameof(y),
                                                       y,
                                                       "function not defined outside [0,2].");
 

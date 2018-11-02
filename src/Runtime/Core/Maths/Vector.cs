@@ -823,7 +823,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>The filtered and mapped sum</returns>
         public virtual double Sum(Converter<double, double> fun, Vector that, Converter<double, bool> cond)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double sum = 0.0;
             IEnumerator<double> thisEnum = GetEnumerator();
             IEnumerator<double> thatEnum = that.GetEnumerator();
@@ -943,7 +943,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Their inner product.</returns>
         public virtual double Inner(Vector that)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double sum = 0.0;
             IEnumerator<double> thisEnum = GetEnumerator();
             IEnumerator<double> thatEnum = that.GetEnumerator();
@@ -960,7 +960,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Their inner product.</returns>
         public virtual double Inner(Vector that, Converter<double, double> fun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double sum = 0.0;
             IEnumerator<double> thisEnum = GetEnumerator();
             IEnumerator<double> thatEnum = that.GetEnumerator();
@@ -978,7 +978,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns>Their inner product.</returns>
         public virtual double Inner(Converter<double, double> thisFun, Vector that, Converter<double, double> thatFun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double sum = 0.0;
             IEnumerator<double> thisEnum = GetEnumerator();
             IEnumerator<double> thatEnum = that.GetEnumerator();
@@ -1039,7 +1039,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public virtual Vector SetToFunction(Vector that, Converter<double, double> fun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             double[] fdata = Array.ConvertAll<double, double>(that.ToArray(), x => fun(x));
             SetTo(fdata);
             return this;
@@ -1055,8 +1055,8 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public virtual Vector SetToFunction(Vector a, Vector b, Func<double, double, double> fun)
         {
-            CheckCompatible(a, "a");
-            CheckCompatible(b, "b");
+            CheckCompatible(a, nameof(a));
+            CheckCompatible(b, nameof(b));
             double[] fdata = new double[a.Count];
             IEnumerator<double> aEnum = a.GetEnumerator();
             IEnumerator<double> bEnum = b.GetEnumerator();

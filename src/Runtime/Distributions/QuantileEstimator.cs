@@ -54,6 +54,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public readonly double MaximumError;
 
         /// <summary>
+        /// 0 = point mass on each data point (i/n)
+        /// 1 = interpolate (i/n + (i+1)/n)/2 = (i+0.5)/n
+        /// 2 = interpolate i/(n-1)
+        /// </summary>
+        private static int InterpolationType = 0;
+
+        /// <summary>
         /// Creates a new QuantileEstimator.
         /// </summary>
         /// <param name="maximumError">The allowed error in the return value of GetProbLessThan.  Must be greater than 0 and less than 1.  As a rule of thumb, set this to the reciprocal of the number of desired quantiles.</param>
@@ -79,15 +86,32 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             double lowerItem;
             double upperItem;
-            long lowerIndex;
+            long lowerRank;
             long lowerWeight, minLowerWeight, upperWeight, minUpperWeight;
             long itemCount;
-            GetAdjacentItems(x, out lowerItem, out upperItem, out lowerIndex, out lowerWeight, out upperWeight, out minLowerWeight, out minUpperWeight, out itemCount);
-            if (lowerIndex < 0) return 0;
-            if (x == lowerItem) return (double)(lowerIndex - lowerWeight + 1) / (itemCount - 1);
-            // interpolate between the ranks of lowerItem and upperItem
-            double frac = (x - lowerItem) / (upperItem - lowerItem);
-            return (lowerIndex + frac) / (itemCount - 1);
+            GetAdjacentItems(x, out lowerItem, out upperItem, out lowerRank, out lowerWeight, out upperWeight, out minLowerWeight, out minUpperWeight, out itemCount);
+            if (lowerRank == 0) return 0;
+            if (lowerRank == itemCount) return 1;
+            if (InterpolationType == 0)
+            {
+                return (double)lowerRank / itemCount;
+            }
+            else if (InterpolationType == 1)
+            {
+                // interpolate between the ranks of lowerItem and upperItem
+                // lowerItem has rank (lowerRank - 0.5) from above
+                // upperItem has rank (lowerRank + 0.5) from below
+                double frac = (x - lowerItem) / (upperItem - lowerItem);
+                return (lowerRank - 0.5 + frac) / itemCount;
+            }
+            else
+            {
+                // interpolate between the ranks of lowerItem and upperItem
+                // lowerItem has rank (lowerRank - 1)/(itemCount-1)  from above
+                // upperItem has rank lowerRank/(itemCount-1) from below
+                double frac = (x - lowerItem) / (upperItem - lowerItem);
+                return (lowerRank - 1 + frac) / (itemCount - 1);
+            }
         }
 
         /// <summary>
@@ -113,6 +137,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
             }
             if (probability == 1.0) return MMath.NextDouble(upperBound);
+            if (probability == 0.0) return lowerBound;
             if (double.IsPositiveInfinity(lowerBound)) throw new Exception("QuantileEstimator has no data");
             if (lowerBound == upperBound) return upperBound;
             // use bisection
@@ -121,32 +146,83 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double x = (lowerBound + upperBound) / 2;
                 double lowerItem;
                 double upperItem;
-                long lowerIndex;
+                long lowerRank;
                 long lowerWeight, minLowerWeight, upperWeight, minUpperWeight;
                 long itemCount;
-                GetAdjacentItems(x, out lowerItem, out upperItem, out lowerIndex, out lowerWeight, out upperWeight, out minLowerWeight, out minUpperWeight, out itemCount);
-                double scaledProbability = MMath.LargestDoubleProduct(itemCount - 1, probability);
-                // probability of lowerItem ranges from (lowerIndex - lowerWeight + 1) / (itemCount - 1)
-                // to lowerIndex / (itemCount - 1).
-                if ((scaledProbability >= lowerIndex - lowerWeight + 1) && (scaledProbability < lowerIndex))
-                    return lowerItem;
-                // probability of upperItem ranges from (lowerIndex + 1) / (itemCount - 1)
-                // to (lowerIndex + upperWeight) / (itemCount - 1)
-                if ((scaledProbability >= lowerIndex + 1) && (scaledProbability <= lowerIndex + upperWeight))
-                    return upperItem;
-                // solve for frac in (lowerIndex + frac) / (itemCount - 1) == probability
-                double frac = scaledProbability - lowerIndex;
-                if (frac < 0)
+                GetAdjacentItems(x, out lowerItem, out upperItem, out lowerRank, out lowerWeight, out upperWeight, out minLowerWeight, out minUpperWeight, out itemCount);
+                if (InterpolationType == 0)
                 {
-                    upperBound = x;
+                    double probabilityLessThanLowerItem = (double)(lowerRank - lowerWeight) / itemCount;
+                    if (probability < probabilityLessThanLowerItem)
+                    {
+                        upperBound = lowerItem;
+                    }
+                    else
+                    {
+                        double probabilityLessThanUpperItem = (double)lowerRank / itemCount;
+                        if (probability < probabilityLessThanUpperItem) return lowerItem;
+                        double probabilityLessThanOrEqualUpperItem = (double)(lowerRank + upperWeight) / itemCount;
+                        if (probability < probabilityLessThanOrEqualUpperItem) return upperItem;
+                        lowerBound = upperItem;
+                    }
                 }
-                else if (frac > 1)
+                else if (InterpolationType == 1)
                 {
-                    lowerBound = x;
+                    // Find frac such that (lowerRank - 0.5 + frac) / itemCount == probability
+                    double scaledProbability = MMath.LargestDoubleProduct(itemCount, probability);
+                    if (scaledProbability < 0.5) return lowerBound;
+                    if (scaledProbability >= itemCount - 0.5) return upperBound;
+                    // probability of lowerItem ranges from (lowerRank-lowerWeight+0.5) / itemCount
+                    // to (lowerRank - 0.5) / itemCount
+                    //if (scaledProbability == lowerRank - lowerWeight + 0.5) return lowerItem;
+                    if ((scaledProbability > lowerRank - lowerWeight + 0.5) && (scaledProbability < lowerRank - 0.5))
+                        return lowerItem;
+                    // probability of upperItem ranges from (lowerRank + 0.5) / itemCount
+                    // to (lowerRank + upperWeight - 0.5) / itemCount
+                    if (scaledProbability == lowerRank+0.5) return upperItem;
+                    if ((scaledProbability > lowerRank+0.5) && (scaledProbability < lowerRank + upperWeight - 0.5))
+                        return upperItem;
+                    double frac = scaledProbability - (lowerRank - 0.5);
+                    if (frac < 0)
+                    {
+                        upperBound = x;
+                    }
+                    else if (frac > 1)
+                    {
+                        lowerBound = x;
+                    }
+                    else
+                    {
+                        return OuterQuantiles.GetQuantile(probability, lowerRank - 0.5, lowerItem, upperItem, itemCount+1);
+                    }
                 }
                 else
                 {
-                    return OuterQuantiles.GetQuantile(probability, lowerIndex, lowerItem, upperItem, itemCount);
+                    double scaledProbability = MMath.LargestDoubleProduct(itemCount - 1, probability);
+                    // probability of lowerItem ranges from (lowerRank-lowerWeight) / (itemCount - 1)
+                    // to (lowerRank - 1) / (itemCount - 1).
+                    if (scaledProbability == lowerRank - lowerWeight) return lowerItem;
+                    if ((scaledProbability > lowerRank - lowerWeight) && (scaledProbability < lowerRank - 1))
+                        return lowerItem;
+                    // probability of upperItem ranges from lowerRank / (itemCount - 1)
+                    // to (lowerRank + upperWeight-1) / (itemCount - 1)
+                    if (scaledProbability == lowerRank) return upperItem;
+                    if ((scaledProbability > lowerRank) && (scaledProbability < lowerRank + upperWeight - 1))
+                        return upperItem;
+                    // solve for frac in (lowerRank-1 + frac) / (itemCount - 1) == probability
+                    double frac = scaledProbability - (lowerRank - 1);
+                    if (frac < 0)
+                    {
+                        upperBound = x;
+                    }
+                    else if (frac > 1)
+                    {
+                        lowerBound = x;
+                    }
+                    else
+                    {
+                        return OuterQuantiles.GetQuantile(probability, lowerRank - 1, lowerItem, upperItem, itemCount);
+                    }
                 }
             }
         }
@@ -255,17 +331,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// 
         /// </summary>
         /// <param name="x"></param>
-        /// <param name="lowerItem">The largest item that is less than or equal to x.</param>
-        /// <param name="upperItem">The smallest item that is greater than x.</param>
-        /// <param name="lowerIndex"></param>
-        /// <param name="lowerWeight">The total weight of items equal to lowerItem, excluding the item with lowest weight.</param>
+        /// <param name="lowerItem">The largest item that is less than x.</param>
+        /// <param name="upperItem">The smallest item that is greater than or equal to x.</param>
+        /// <param name="lowerRank">The total weight of items less than x.</param>
+        /// <param name="lowerWeight">The total weight of items equal to lowerItem.</param>
         /// <param name="upperWeight">The total weight of items equal to upperItem.</param>
         /// <param name="minLowerWeight">The smallest weight of items equal to lowerItem.</param>
         /// <param name="minUpperWeight">The smallest weight of items equal to upperItem.</param>
         /// <param name="itemCount"></param>
-        private void GetAdjacentItems(double x, out double lowerItem, out double upperItem, out long lowerIndex, out long lowerWeight, out long upperWeight, out long minLowerWeight, out long minUpperWeight, out long itemCount)
+        private void GetAdjacentItems(double x, out double lowerItem, out double upperItem, out long lowerRank, out long lowerWeight, out long upperWeight, out long minLowerWeight, out long minUpperWeight, out long itemCount)
         {
-            long lowerRank = 0;
+            lowerRank = 0;
             long weight = (1L << lowestBufferHeight);
             itemCount = 0;
             lowerItem = double.NegativeInfinity;
@@ -282,7 +358,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 for (int i = 0; i < count; i++)
                 {
                     double item = buffer[i];
-                    if (item <= x)
+                    if (item < x)
                     {
                         lowerRank += weight;
                         if (item > lowerItem)
@@ -316,7 +392,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 if (bufferIndex == lowestBufferIndex) break;
             }
             if (itemCount == 0) throw new Exception("QuantileEstimator has no data");
-            lowerIndex = lowerRank - 1;
         }
 
         private void AddToBuffer(int bufferIndex, double item)

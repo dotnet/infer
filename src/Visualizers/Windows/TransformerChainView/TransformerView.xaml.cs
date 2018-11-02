@@ -97,7 +97,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
             CodeElementInspector.attributes = attributes;
             // MyDeclarationView will fill in this dictionary for the CodeElementInspector to use
             CodeElementInspector.parentOfLine = MyDeclarationView.parentOfLine;
-            var errors = transformer.Transform.Context.Results.errorsAndWarnings;
+            var errors = transformer.Transform.Context.Results.ErrorsAndWarnings;
             ErrorsTable.ItemsSource = errors;
             bool showErrors = errors.Count>0;
             ErrorsSplitter.Visibility = showErrors ? Visibility.Visible: Visibility.Collapsed;

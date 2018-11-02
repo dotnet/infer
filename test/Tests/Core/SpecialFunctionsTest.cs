@@ -3,14 +3,14 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.ML.Probabilistic.Math;
 using Xunit;
 using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 using Microsoft.ML.Probabilistic.Utilities;
-using System.Collections.Generic;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Distributions;
+using Microsoft.ML.Probabilistic.Math;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -1722,7 +1722,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         public static int NormalCdfMomentRatioConFracCount(int n, double x)
         {
             if (x >= 0)
-                throw new ArgumentException("x >= 0", "x");
+                throw new ArgumentException("x >= 0", nameof(x));
             double invX = 1 / x;
             double invX2 = invX * invX;
             double numer = -invX;

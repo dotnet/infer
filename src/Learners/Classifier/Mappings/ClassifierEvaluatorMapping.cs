@@ -61,7 +61,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             this.classifierMapping = mapping;
@@ -83,7 +83,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (instanceSource == null)
             {
-                throw new ArgumentNullException("instanceSource");
+                throw new ArgumentNullException(nameof(instanceSource));
             }
 
             if (!this.IsInstanceSourceCached(instanceSource))
@@ -111,7 +111,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Mappings
         {
             if (instance == null)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
 
             TLabel label;

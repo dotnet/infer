@@ -323,7 +323,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 string constructorName = "the constructor";
                 message += " Perhaps you omitted " + index + " as an argument to " + constructorName + "?";
             }
-            throw new ArgumentException(message, "index");
+            throw new ArgumentException(message, nameof(index));
         }
 
         /// <summary>

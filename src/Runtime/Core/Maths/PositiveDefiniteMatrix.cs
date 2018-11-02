@@ -251,7 +251,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <exception cref="PositiveDefiniteMatrixException">If <paramref name="A"/> is not positive definite.</exception>
         public PositiveDefiniteMatrix SetToInverse(PositiveDefiniteMatrix A, LowerTriangularMatrix L)
         {
-            CheckCompatible(L, "L");
+            CheckCompatible(L, nameof(L));
             // Algorithm:
             // A = L*L'
             // inv(A) = inv(L')*inv(L)

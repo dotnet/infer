@@ -39,7 +39,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (mapping == null)
             {
-                throw new ArgumentNullException("mapping");
+                throw new ArgumentNullException(nameof(mapping));
             }
 
             this.mapping = mapping;
@@ -69,17 +69,17 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (recommender == null)
             {
-                throw new ArgumentNullException("recommender");
+                throw new ArgumentNullException(nameof(recommender));
             }
 
             if (maxRecommendedItemCount <= 0)
             {
-                throw new ArgumentOutOfRangeException("maxRecommendedItemCount", "The number of items to recommend should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(maxRecommendedItemCount), "The number of items to recommend should be positive.");
             }
 
             if (minRecommendationPoolSize <= 0)
             {
-                throw new ArgumentOutOfRangeException("minRecommendationPoolSize", "The minimum size of the recommendation pool should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(minRecommendationPoolSize), "The minimum size of the recommendation pool should be positive.");
             }
 
             IDictionary<TUser, IEnumerable<TItem>> recommendations = new Dictionary<TUser, IEnumerable<TItem>>();
@@ -124,22 +124,22 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (recommender == null)
             {
-                throw new ArgumentNullException("recommender");
+                throw new ArgumentNullException(nameof(recommender));
             }
 
             if (maxRelatedUserCount <= 0)
             {
-                throw new ArgumentOutOfRangeException("maxRelatedUserCount", "The maximum number of related users should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(maxRelatedUserCount), "The maximum number of related users should be positive.");
             }
 
             if (minCommonRatingCount <= 0)
             {
-                throw new ArgumentOutOfRangeException("minCommonRatingCount", "The minimum number of common ratings should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(minCommonRatingCount), "The minimum number of common ratings should be positive.");
             }
 
             if (minRelatedUserPoolSize <= 0)
             {
-                throw new ArgumentOutOfRangeException("minRelatedUserPoolSize", "The minimum size of the related users pool should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(minRelatedUserPoolSize), "The minimum size of the related users pool should be positive.");
             }
 
             return FindRelatedEntitiesWhichRatedTheSame(
@@ -181,22 +181,22 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             if (recommender == null)
             {
-                throw new ArgumentNullException("recommender");
+                throw new ArgumentNullException(nameof(recommender));
             }
 
             if (maxRelatedItemCount <= 0)
             {
-                throw new ArgumentOutOfRangeException("maxRelatedItemCount", "The maximum number of related items should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(maxRelatedItemCount), "The maximum number of related items should be positive.");
             }
 
             if (minCommonRatingCount <= 0)
             {
-                throw new ArgumentOutOfRangeException("minCommonRatingCount", "The minimum number of common ratings should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(minCommonRatingCount), "The minimum number of common ratings should be positive.");
             }
 
             if (minRelatedItemPoolSize <= 0)
             {
-                throw new ArgumentOutOfRangeException("minRelatedItemPoolSize", "The minimum size of the related items pool should be positive.");
+                throw new ArgumentOutOfRangeException(nameof(minRelatedItemPoolSize), "The minimum size of the related items pool should be positive.");
             }
 
             return FindRelatedEntitiesWhichRatedTheSame(

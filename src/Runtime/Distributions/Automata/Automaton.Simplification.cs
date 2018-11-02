@@ -249,7 +249,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             TThis result = this.CopyNonSimplifiable(stateLabels);
             int firstNonCopiedStateIndex = result.States.Count;
 
-            IEnumerable<Pair<Simplification.GeneralizedSequence, Weight>> sequenceToLogWeight = this.BuildAcceptedSequenceList(stateLabels);
+            IEnumerable<Simplification.WeightedSequence> sequenceToLogWeight = this.BuildAcceptedSequenceList(stateLabels);
 
             // Before we rebuild the tree part, we prune out the low probability sequences
             if (this.PruneTransitionsWithLogWeightLessThan != null)
@@ -258,13 +258,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (!double.IsInfinity(logNorm))
                 {
                     sequenceToLogWeight = sequenceToLogWeight.Where(
-                        s => s.Second.LogValue - logNorm >= this.PruneTransitionsWithLogWeightLessThan.Value).ToList();
+                        s => s.Weight.LogValue - logNorm >= this.PruneTransitionsWithLogWeightLessThan.Value).ToList();
                 }
             }
 
-            foreach (Pair<Simplification.GeneralizedSequence, Weight> sequenceWithLogWeight in sequenceToLogWeight)
+            foreach (Simplification.WeightedSequence weightedSequence in sequenceToLogWeight)
             {
-                result.AddGeneralizedSequence(firstNonCopiedStateIndex, sequenceWithLogWeight.First, sequenceWithLogWeight.Second);
+                result.AddGeneralizedSequence(firstNonCopiedStateIndex, weightedSequence.Sequence, weightedSequence.Weight);
             }
 
             this.SwapWith(result);
@@ -563,9 +563,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="stateLabels">The state labels obtained from <see cref="LabelStatesForSimplification"/>.</param>
         /// <returns>The list of generalized sequences accepted by the simplifiable part of the automaton.</returns>
-        private List<Pair<Simplification.GeneralizedSequence, Weight>> BuildAcceptedSequenceList(ArrayDictionary<bool> stateLabels)
+        private List<Simplification.WeightedSequence> BuildAcceptedSequenceList(ArrayDictionary<bool> stateLabels)
         {
-            var sequenceToWeight = new List<Pair<Simplification.GeneralizedSequence, Weight>>();
+            var sequenceToWeight = new List<Simplification.WeightedSequence>();
             this.DoBuildAcceptedSequenceList(this.Start, stateLabels, sequenceToWeight, new List<Simplification.GeneralizedElement>(), Weight.One);
             return sequenceToWeight;
         }
@@ -617,7 +617,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private void DoBuildAcceptedSequenceList(
             State state,
             ArrayDictionary<bool> stateLabels,
-            List<Pair<Simplification.GeneralizedSequence, Weight>> weightedSequences,
+            List<Simplification.WeightedSequence> weightedSequences,
             List<Simplification.GeneralizedElement> currentSequenceElements,
             Weight currentWeight)
         {
@@ -673,7 +673,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     var sequence = new Simplification.GeneralizedSequence(currentSequenceElements);
                         // TODO: use immutable data structure instead of copying sequences
-                    weightedSequences.Add(Pair.Create(sequence, Weight.Product(currentWeight, state.EndWeight)));
+                    weightedSequences.Add(new Simplification.WeightedSequence(sequence, Weight.Product(currentWeight, state.EndWeight)));
                 }
 
                 // Traverse the outgoing transitions
@@ -1127,7 +1127,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <param name="loopWeight">
                 /// The loop weight associated with the generalized element, <see langword="null"/> if the element does not represent a self-loop.
                 /// </param>
-                public GeneralizedElement(TElementDistribution elementDistribution, byte group, Weight? loopWeight)
+                public GeneralizedElement(TElementDistribution elementDistribution, int group, Weight? loopWeight)
                     : this()
                 {
                     Debug.Assert(
@@ -1155,7 +1155,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Gets the group associated with the generalized element.
                 /// </summary>
-                public byte Group { get; private set; }
+                public int Group { get; private set; }
 
                 /// <summary>
                 /// Gets the loop weight associated with the generalized element,
@@ -1230,6 +1230,72 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
 
                     return stringBuilder.ToString();
+                }
+            }
+
+            public struct WeightedSequence
+            {
+                /// <summary>
+                /// Initializes a new instance of the <see cref="WeightedSequence"/> struct.
+                /// </summary>
+                /// <param name="sequence">The <see cref="GeneralizedSequence"/></param>
+                /// <param name="weight">The <see cref="Weight"/> for the specified sequence</param>
+                public WeightedSequence(GeneralizedSequence sequence, Weight weight)
+                    : this()
+                {
+                    this.Sequence = sequence;
+                    this.Weight = weight;
+                }
+
+                /// <summary>
+                /// Gets or sets the <see cref="GeneralizedSequence"/>.
+                /// </summary>
+                public readonly GeneralizedSequence Sequence;
+
+                /// <summary>
+                /// Gets or sets the predicted probability.
+                /// </summary>
+                public readonly Weight Weight;
+
+                /// <summary>
+                /// Gets the string representation of this <see cref="WeightedSequence"/>.
+                /// </summary>
+                /// <returns>The string representation of the <see cref="WeightedSequence"/>.</returns>
+                public override string ToString()
+                {
+                    return $"[{this.Sequence},{this.Weight}]";
+                }
+
+                /// <summary>
+                /// Checks if this object is equal to <paramref name="obj"/>.
+                /// </summary>
+                /// <param name="obj">The object to compare this object with.</param>
+                /// <returns>
+                /// <see langword="true"/> if this object is equal to <paramref name="obj"/>,
+                /// <see langword="false"/> otherwise.
+                /// </returns>
+                public override bool Equals(object obj)
+                {
+                    if (obj is WeightedSequence weightedSequence)
+                    {
+                        return object.Equals(this.Sequence, weightedSequence.Sequence) && object.Equals(this.Weight, weightedSequence.Weight);
+                    }
+
+                    return false;
+                }
+
+                /// <summary>
+                /// Computes the hash code of this object.
+                /// </summary>
+                /// <returns>The computed hash code.</returns>
+                public override int GetHashCode()
+                {
+                    int result = Hash.Start;
+
+                    result = Hash.Combine(result, this.Sequence.GetHashCode());
+                    result = Hash.Combine(result, this.Weight.GetHashCode());
+
+                    return result;
                 }
             }
         }

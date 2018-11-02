@@ -60,7 +60,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         {
             if (reader == null)
             {
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
             }
 
             reader.VerifySerializationGuid(
@@ -92,17 +92,17 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("value", "The variance of the prior distributions over weights must not be negative.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The variance of the prior distributions over weights must not be negative.");
                 }
 
                 if (double.IsPositiveInfinity(value))
                 {
-                    throw new ArgumentOutOfRangeException("value", "The variance of the prior distributions over weights must not be infinite.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The variance of the prior distributions over weights must not be infinite.");
                 }
 
                 if (double.IsNaN(value))
                 {
-                    throw new ArgumentOutOfRangeException("value", "The variance of the prior distributions over weights must be a number.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The variance of the prior distributions over weights must be a number.");
                 }
 
                 this.weightPriorVariance = value;

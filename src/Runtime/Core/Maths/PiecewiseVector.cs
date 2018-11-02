@@ -459,7 +459,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="func"></param>
         protected int ApplyRangeFunction(PiecewiseVector b, RangeFunc func)
         {
-            CheckCompatible(b, "b");
+            CheckCompatible(b, nameof(b));
             var r1 = new ConstantVector();
             var r2 = new ConstantVector();
             int commonCount = 0;
@@ -604,7 +604,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 return;
             }
             if (Object.ReferenceEquals(this, that)) return;
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             // todo: make efficient
             SetTo(that.ToArray());
         }
@@ -616,7 +616,7 @@ namespace Microsoft.ML.Probabilistic.Math
         public virtual void SetTo(PiecewiseVector that)
         {
             if (Object.ReferenceEquals(this, that)) return;
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             CommonValue = that.CommonValue;
             pieces = new List<ConstantVector>(that.pieces);
         }
@@ -950,7 +950,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (fun == null)
             {
-                throw new ArgumentNullException("fun");
+                throw new ArgumentNullException(nameof(fun));
             }
 
             bool funIsTrueForCommonValue = fun(this.CommonValue);
@@ -988,7 +988,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (fun == null)
             {
-                throw new ArgumentNullException("fun");
+                throw new ArgumentNullException(nameof(fun));
             }
 
             int totalPieceLength = 0;
@@ -1020,7 +1020,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (fun == null)
             {
-                throw new ArgumentNullException("fun");
+                throw new ArgumentNullException(nameof(fun));
             }
 
             bool funIsTrueForCommonValue = fun(this.CommonValue);
@@ -1060,7 +1060,7 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (fun == null)
             {
-                throw new ArgumentNullException("fun");
+                throw new ArgumentNullException(nameof(fun));
             }
 
             bool funIsTrueForCommonValue = fun(this.CommonValue);
@@ -1657,7 +1657,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public virtual PiecewiseVector SetToFunction(PiecewiseVector that, Converter<double, double> fun)
         {
-            CheckCompatible(that, "that");
+            CheckCompatible(that, nameof(that));
             CommonValue = fun(that.CommonValue);
             pieces = that.pieces.ConvertAll(x =>
                                             new ConstantVector(x.Start, x.End, fun(x.Value)));
@@ -1689,7 +1689,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public virtual PiecewiseVector SetToFunction(PiecewiseVector a, PiecewiseVector b, Func<double, double, double> fun)
         {
-            CheckCompatible(a, "a");
+            CheckCompatible(a, nameof(a));
             var newVectors = new List<ConstantVector>();
             double newCommonValue = fun(a.CommonValue, b.CommonValue);
             a.ApplyRangeFunction(b, (start, end, value1, value2) =>
@@ -1720,7 +1720,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <remarks>Assumes the vectors are compatible</remarks>
         public virtual PiecewiseVector SetToFunctionInPlace(PiecewiseVector b, Func<double, double, double> fun)
         {
-            CheckCompatible(b, "b");
+            CheckCompatible(b, nameof(b));
             if (ReferenceEquals(b, this))
             {
                 throw new NotSupportedException("b must not be equal to this");
