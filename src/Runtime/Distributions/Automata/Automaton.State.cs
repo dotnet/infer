@@ -37,7 +37,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// The default capacity of the <see cref="transitions"/>.
             /// </summary>
-            private const int DefaultTransitionArrayCapacity = 3;
+            private const int DefaultTransitionArrayCapacity = 1;
 
             /// <summary>
             /// The array of outgoing transitions.
