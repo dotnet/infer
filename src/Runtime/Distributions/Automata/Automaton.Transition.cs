@@ -45,7 +45,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="destinationStateIndex">The index of the destination state of the transition.</param>
             /// <param name="group">The group this transition belongs to.</param>
             [Construction("ElementDistribution", "Weight", "DestinationStateIndex", "Group")]
-            public Transition(TElementDistribution elementDistribution, Weight weight, int destinationStateIndex, byte group = 0)
+            public Transition(TElementDistribution elementDistribution, Weight weight, int destinationStateIndex, int group = 0)
                 : this()
             {
                 Argument.CheckIfInRange(destinationStateIndex >= 0, "destinationStateIndex", "A destination state index cannot be negative.");
@@ -63,6 +63,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public int DestinationStateIndex { get; set; }
 
             /// <summary>
+            /// Gets or sets the group this transition belongs to.
+            /// </summary>
+            [DataMember]
+            public int Group { get; set; }
+
+            /// <summary>
             /// Gets or sets the element distribution for this transition.
             /// </summary>
             [DataMember]
@@ -73,12 +79,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             [DataMember]
             public Weight Weight { get; set; }
-            
-            /// <summary>
-            /// Gets or sets the group this transition belongs to.
-            /// </summary>
-            [DataMember]
-            public byte Group { get; set; }
 
             /// <summary>
             /// Gets a value indicating whether this transition is an epsilon transition.
@@ -155,7 +155,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     res.ElementDistribution = readElementDistribution();
                 }
-                res.Group = (byte)(groupAndHasElementDistribution >> 1);
+                res.Group = groupAndHasElementDistribution >> 1;
                 res.Weight = Weight.Read(readDouble);
                 return res;
             }

@@ -302,7 +302,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="transducer">The transducer to append.</param>
         /// <param name="group">The group.</param>
-        public void AppendInPlace(TThis transducer, byte group = 0)
+        public void AppendInPlace(TThis transducer, int group = 0)
         {
             Argument.CheckIfNotNull(transducer, "transducer");
 

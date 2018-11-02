@@ -855,7 +855,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="group">The specified group.</param>
         /// <returns>True if it the automaton has this group, false otherwise.</returns>
-        public bool HasGroup(byte group)
+        public bool HasGroup(int group)
         {
             for (int stateIndex = 0; stateIndex < this.states.Count; stateIndex++)
             {
@@ -895,7 +895,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return false;
         }
 
-        public Dictionary<byte, TThis> GetGroups() => GroupExtractor.ExtractGroups(this);
+        public Dictionary<int, TThis> GetGroups() => GroupExtractor.ExtractGroups(this);
 
         /// <summary>
         /// Clears the group for all transitions.
@@ -909,7 +909,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Sets all transitions to have the specified group.
         /// </summary>
         /// <param name="group">The specified group.</param>
-        public void SetGroup(byte group)
+        public void SetGroup(int group)
         {
             for (int stateIndex = 0; stateIndex < this.states.Count; stateIndex++)
             {
@@ -1188,7 +1188,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="sequence">The sequence.</param>
         /// <param name="group">The group.</param>
         /// <returns>The created automaton.</returns>
-        public TThis Append(TSequence sequence, byte group = 0)
+        public TThis Append(TSequence sequence, int group = 0)
         {
             return this.Append(ConstantOn(1.0, sequence), group);
         }
@@ -1201,7 +1201,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="automaton">The automaton to append.</param>
         /// <param name="group">The group.</param>
         /// <returns>The created automaton.</returns>
-        public TThis Append(TThis automaton, byte group = 0)
+        public TThis Append(TThis automaton, int group = 0)
         {
             TThis result = this.Clone();
             result.AppendInPlace(automaton, group);
@@ -1214,7 +1214,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <param name="group">The group.</param>
-        public void AppendInPlace(TSequence sequence, byte group = 0)
+        public void AppendInPlace(TSequence sequence, int group = 0)
         {
             this.AppendInPlace(ConstantOn(1.0, sequence), group);
         }
@@ -1226,7 +1226,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="automaton">The automaton to append.</param>
         /// <param name="group">The group.</param>
-        public void AppendInPlace(TThis automaton, byte group = 0)
+        public void AppendInPlace(TThis automaton, int group = 0)
         {
             Argument.CheckIfNotNull(automaton, "automaton");
 
@@ -1646,7 +1646,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="transitionTransform">The transition transformation.</param>
         public void SetToFunction<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>(
             Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton> sourceAutomaton,
-            Func<TSrcElementDistribution, Weight, byte, Tuple<TElementDistribution, Weight>> transitionTransform)
+            Func<TSrcElementDistribution, Weight, int, Tuple<TElementDistribution, Weight>> transitionTransform)
             where TSrcElementDistribution : class, IDistribution<TSrcElement>, CanGetLogAverageOf<TSrcElementDistribution>, SettableToProduct<TSrcElementDistribution>, SettableToWeightedSumExact<TSrcElementDistribution>, SettableToPartialUniform<TSrcElementDistribution>, new()
             where TSrcSequence : class, IEnumerable<TSrcElement>
             where TSrcSequenceManipulator : ISequenceManipulator<TSrcSequence, TSrcElement>, new()
@@ -2110,7 +2110,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// A version of <see cref="AppendInPlace(TThis, byte)"/> that is guaranteed to preserve
+        /// A version of <see cref="AppendInPlace(TThis, int)"/> that is guaranteed to preserve
         /// the states of both the original automaton and the automaton being appended in the result.
         /// </summary>
         /// <param name="automaton">The automaton to append.</param>
@@ -2581,7 +2581,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="statesToAdd">The states to add.</param>
         /// <param name="group">The group for the transitions of the states being added.</param>
-        private void AddStates(IEnumerable<State> statesToAdd, byte group = 0)
+        private void AddStates(IEnumerable<State> statesToAdd, int group = 0)
         {
             Debug.Assert(statesToAdd != null, "A valid state collection must be provided.");
 

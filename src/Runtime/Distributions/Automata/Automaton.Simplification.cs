@@ -1127,7 +1127,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <param name="loopWeight">
                 /// The loop weight associated with the generalized element, <see langword="null"/> if the element does not represent a self-loop.
                 /// </param>
-                public GeneralizedElement(TElementDistribution elementDistribution, byte group, Weight? loopWeight)
+                public GeneralizedElement(TElementDistribution elementDistribution, int group, Weight? loopWeight)
                     : this()
                 {
                     Debug.Assert(
@@ -1155,7 +1155,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Gets the group associated with the generalized element.
                 /// </summary>
-                public byte Group { get; private set; }
+                public int Group { get; private set; }
 
                 /// <summary>
                 /// Gets the loop weight associated with the generalized element,
