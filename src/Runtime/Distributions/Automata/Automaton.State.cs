@@ -355,7 +355,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The logarithm of the value on the sequence.</returns>
             public double GetLogValue(TSequence sequence)
             {
-                var valueCache = new Dictionary<IntPair, Weight>(IntPair.DefaultEqualityComparer);
+                var valueCache = new Dictionary<(int, int), Weight>();
                 return this.DoGetValue(sequence, 0, valueCache).LogValue;
             }
 
@@ -483,9 +483,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="valueCache">A lookup table for memoization.</param>
             /// <returns>The value computed from the current state.</returns>
             private Weight DoGetValue(
-                TSequence sequence, int sequencePosition, Dictionary<IntPair, Weight> valueCache)
+                TSequence sequence, int sequencePosition, Dictionary<(int, int), Weight> valueCache)
             {
-                var stateIndexPair = new IntPair(this.Index, sequencePosition);
+                var stateIndexPair = (this.Index, sequencePosition);
                 Weight cachedValue;
                 if (valueCache.TryGetValue(stateIndexPair, out cachedValue))
                 {
