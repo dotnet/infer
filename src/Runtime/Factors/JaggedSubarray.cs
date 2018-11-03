@@ -354,7 +354,10 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToRatio<DistributionType>
         {
+<<<<<<< avishar/Debugging
             var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
+=======
+>>>>>>> local
             int i = resultIndex;
             if(result.Count != indices[i].Count)
                 throw new ArgumentException($"result.Count ({result.Count}) != indices[{i}].Count ({indices[i].Count})");
@@ -380,8 +383,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToProduct<DistributionType>
         {
+<<<<<<< avishar/Debugging
             var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
             if (items.Count != indices.Count)
+=======
+            if(items.Count != indices.Count)
+>>>>>>> local
                 throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetToUniform();
             var indices_Count = indices.Count;
@@ -411,7 +418,10 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<T>
             where DistributionType : HasPoint<T>
         {
+<<<<<<< avishar/Debugging
             var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
+=======
+>>>>>>> local
             if (items.Count != indices.Count)
                 throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetToUniform();

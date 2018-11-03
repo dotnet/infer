@@ -248,8 +248,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableTo<DistributionType>
         {
+<<<<<<< avishar/Debugging
             var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
 
+=======
+>>>>>>> local
             int i = resultIndex;
             Assert.IsTrue(result.Count == indices[i].Count, "result.Count != indices[i].Count");
             // indices_i are all different
@@ -272,8 +275,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : SettableTo<DistributionType>
         {
+<<<<<<< avishar/Debugging
             var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
 
+=======
+>>>>>>> local
             Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
             result.SetToUniform();
             var indices_Count = indices.Count;
@@ -301,8 +307,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : HasPoint<T>
         {
+<<<<<<< avishar/Debugging
             var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
 
+=======
+>>>>>>> local
             Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
             result.SetToUniform();
             var indices_Count = indices.Count;
