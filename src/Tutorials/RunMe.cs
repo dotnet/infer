@@ -21,8 +21,8 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             ExamplesBrowser.RunBrowser();
 
             //Choose one of the algorithms
-            //InferenceEngine.DefaultEngine.Algorithm = new ExpectationPropagation();
-            InferenceEngine.DefaultEngine.Algorithm = new VariationalMessagePassing();
+            InferenceEngine.DefaultEngine.Algorithm = new ExpectationPropagation();
+            //InferenceEngine.DefaultEngine.Algorithm = new VariationalMessagePassing();
             //InferenceEngine.DefaultEngine.Algorithm = new GibbsSampling();
 
             //Options
@@ -35,7 +35,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             //Tutorials
             //Uncomment one of these lines to run a particular tutorial in console application
 
-            //new FirstExample().Run();
+            new FirstExample().Run();
             //new TruncatedGaussian().Run();
             //new TruncatedGaussianEfficient().Run();
             //new LearningAGaussian().Run();
@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
 
             //Applications
 
-            new BayesianPCA().Run();
+            //new BayesianPCA().Run();
             //new BugsRats().Run();
             //new ChessAnalysis().Run();
             //new ClickModel().Run();
