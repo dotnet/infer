@@ -333,6 +333,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType2 : IList<DistributionType>
             where ItemType : IList<ItemType2>
         {
+            var genericType = result.GetType().MakeGenericType(typeof(IList<IList<DistributionType>>));
+
             int i = resultIndex;
             var indices_i = indices[i];
             var indices_i_Count = indices_i.Count;
