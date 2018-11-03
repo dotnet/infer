@@ -93,7 +93,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ResultType : IList<DistributionType>
             where DistributionType : SettableTo<DistributionType>
         {
-            var genericType = typeof(ResultType).MakeGenericType(typeof(IList<DistributionType>));
+            // Vijay
+            if (result != null && !(typeof(ResultType).IsAssignableFrom(result.GetType())))
+            {
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ResultType)}");
+            }
+
 
             Assert.IsTrue(result.Count == indices.Count, "result.Count != indices.Count");
             for (int i = 0; i < indices.Count; i++)
@@ -150,8 +155,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : SettableTo<DistributionType>
         {
-            Console.WriteLine($"result is: {result.GetType()}");
-            Console.WriteLine($"ArrayType is: {typeof(ArrayType)}");
+            // Vijay
             if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");

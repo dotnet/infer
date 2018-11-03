@@ -335,8 +335,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType2 : IList<DistributionType>
             where ItemType : IList<ItemType2>
         {
-            Console.WriteLine($"result is: {result.GetType()}");
-            Console.WriteLine($"ItemType is: {typeof(ItemType)}");
+            // Vijay
             if (result != null && !(typeof(ItemType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ItemType)}");

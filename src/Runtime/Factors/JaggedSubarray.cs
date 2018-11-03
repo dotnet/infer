@@ -356,8 +356,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToRatio<DistributionType>
         {
-            Console.WriteLine($"result is: {result.GetType()}");
-            Console.WriteLine($"ItemType is: {typeof(ItemType)}");
+            // Vijay
             if (result != null && !(typeof(ItemType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ItemType)}");
@@ -389,8 +388,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToProduct<DistributionType>
         {
-            Console.WriteLine($"result is: {result.GetType()}");
-            Console.WriteLine($"ArrayType is: {typeof(ArrayType)}");
+            // Vijay
             if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
@@ -426,8 +424,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<T>
             where DistributionType : HasPoint<T>
         {
-            Console.WriteLine($"result is: {result.GetType()}");
-            Console.WriteLine($"ArrayType is: {typeof(ArrayType)}");
+            // Vijay
             if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
@@ -482,8 +479,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>
         {
-            Console.WriteLine($"result is: {result.GetType()}");
-            Console.WriteLine($"ArrayType is: {typeof(ArrayType)}");
+            // Vijay
             if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");

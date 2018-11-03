@@ -250,8 +250,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableTo<DistributionType>
         {
-            Console.WriteLine($"result is: {result.GetType()}");
-            Console.WriteLine($"ItemType is: {typeof(ItemType)}");
+            // Vijay
             if (result != null && !(typeof(ItemType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ItemType)}");
@@ -279,8 +278,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : SettableTo<DistributionType>
         {
-            Console.WriteLine($"result is: {result.GetType()}");
-            Console.WriteLine($"ArrayType is: {typeof(ArrayType)}");
+            // Vijay
             if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
@@ -313,8 +311,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : HasPoint<T>
         {
-            Console.WriteLine($"result is: {result.GetType()}");
-            Console.WriteLine($"ArrayType is: {typeof(ArrayType)}");
+            // Vijay
             if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
