@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+
 namespace Microsoft.ML.Probabilistic.Factors
 {
     using System;
@@ -248,7 +250,10 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableTo<DistributionType>
         {
-            var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
+            if (result != null && !(result is IList))
+            {
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ItemType)}");
+            }
 
             int i = resultIndex;
             Assert.IsTrue(result.Count == indices[i].Count, "result.Count != indices[i].Count");
@@ -272,7 +277,10 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : SettableTo<DistributionType>
         {
-            var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
+            if (result != null && !(result is IList))
+            {
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
+            }
 
             Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
             result.SetToUniform();
@@ -301,7 +309,10 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ArrayType : IList<DistributionType>, SettableToUniform
             where DistributionType : HasPoint<T>
         {
-            var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
+            if (result != null && !(result is IList))
+            {
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
+            }
 
             Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
             result.SetToUniform();

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+
 namespace Microsoft.ML.Probabilistic.Factors
 {
     using System;
@@ -354,7 +356,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToRatio<DistributionType>
         {
-            var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
+            if (result != null && !(result is IList))
+            {
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ItemType)}");
+            }
+            
             int i = resultIndex;
             if(result.Count != indices[i].Count)
                 throw new ArgumentException($"result.Count ({result.Count}) != indices[{i}].Count ({indices[i].Count})");
@@ -380,7 +386,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToProduct<DistributionType>
         {
-            var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
+            if (result != null && !(result is IList))
+            {
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ItemType)}");
+            }
+
             if (items.Count != indices.Count)
                 throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetToUniform();
@@ -411,7 +421,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<T>
             where DistributionType : HasPoint<T>
         {
-            var genericType = result.GetType().MakeGenericType(typeof(IList<DistributionType>));
+            if (result != null && !(result is IList))
+            {
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
+            }
+
             if (items.Count != indices.Count)
                 throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
             result.SetToUniform();
