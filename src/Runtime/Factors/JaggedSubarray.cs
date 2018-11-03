@@ -356,11 +356,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToRatio<DistributionType>
         {
-            if (result != null && !(result is IList))
+            Console.WriteLine($"result is: {result.GetType()}");
+            Console.WriteLine($"ItemType is: {typeof(ItemType)}");
+            if (result != null && !(typeof(ItemType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ItemType)}");
             }
-            
+
+
             int i = resultIndex;
             if(result.Count != indices[i].Count)
                 throw new ArgumentException($"result.Count ({result.Count}) != indices[{i}].Count ({indices[i].Count})");
@@ -386,9 +389,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToProduct<DistributionType>
         {
-            if (result != null && !(result is IList))
+            Console.WriteLine($"result is: {result.GetType()}");
+            Console.WriteLine($"ArrayType is: {typeof(ArrayType)}");
+            if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
             {
-                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ItemType)}");
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
             }
 
             if (items.Count != indices.Count)
@@ -421,7 +426,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<T>
             where DistributionType : HasPoint<T>
         {
-            if (result != null && !(result is IList))
+            Console.WriteLine($"result is: {result.GetType()}");
+            Console.WriteLine($"ArrayType is: {typeof(ArrayType)}");
+            if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
             }
@@ -475,8 +482,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : IList<DistributionType>
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>
         {
-            if (items.Count != indices.Count)
-                throw new ArgumentException($"items.Count ({items.Count}) != indices.Count ({indices.Count})");
+            Console.WriteLine($"result is: {result.GetType()}");
+            Console.WriteLine($"ArrayType is: {typeof(ArrayType)}");
+            if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
+            {
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
+            }
+
             result.SetToUniform();
             for (int i = 0; i < indices.Count; i++)
             {
