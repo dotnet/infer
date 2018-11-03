@@ -102,4 +102,4 @@ We can also identify the most discriminative words in each class by normalizing 
 
 These word clouds shows that the words "beautiful" and "perfect" are more discriminative for positive tweets, while the words “stayinghometweet” and “dammit” are more likely to occur in negative tweets. Notice that the word clouds of the neutral and "not related class" mostly contain random words and are thus not related to a particular sentiment class. We also found that some words like “complain”, “snowstorm” and “warm” do not necessarily imply a particular positive or negative sentiment as their interpretation is highly context dependent and therefore most of the annotators classified the relative tweets as "unknown". You can find out more about the classification accuracy of BCCWords and its ability to exploit the language model to predict labels for the entire set of tweets in the paper. 
 
-The source code is now available [here](CodeSamples/BCCWords.cs).
+The source code is in the [CrowdsourcingWithWords](https://github.com/dotnet/infer/blob/master/src/Examples/CrowdsourcingWithWords/CrowdsourcingWithWords.cs) project.

@@ -18,25 +18,24 @@ The _MatrixMultiply_ factor multiplies the _`Z`_ with _`W`_; as this factor take
 The full code for this example provides a class (_`BayesianPCA`_) for constructing a general Bayesian PCA model for which we can specify priors and data at inference time. There is also some example code for running inference and extracting marginals. One important aspect of running inference on this model is that we initially need to break symmetries in the model by initialising the _`W`_ marginals to random values using the _`InitialiseTo()`_ method - for another example of this see the Mixture of Gaussians tutorial. The key aspects of the model are captured in the following few lines of C# code which, as you can hopefully see, directly matches the factor graph. 
 ```csharp
 // Mixing matrix  
-vAlpha = Variable.Array<double>(rM).Named("Alpha");  
-vW = Variable.Array<double>(rM, rD).Named("W");  
-vAlpha[rM] = Variable.Random<double, Gamma>(priorAlpha).ForEach(rM);  
-vW[rM, rD] = Variable.GaussianFromMeanAndPrecision(0, vAlpha[rM]).ForEach(rD);  
-// Latent variables are drawn from a standard Gaussian  
-vZ = Variable.Array<double>(rN, rM).Named("Z");  
-vZ[rN, rM] = Variable.GaussianFromMeanAndPrecision(0.0, 1.0).ForEach(rN, rM);  
-// Multiply the latent variables with the mixing matrix... 
-vT = Variable.MatrixMultiply(vZ, vW).Named("T");  
-// ... add in a bias ... 
-vMu = Variable.Array<double>(rD).Named("mu");  
-vMu[rD] = Variable.Random<double, Gaussian>(priorMu).ForEach(rD);  
-vU = Variable.Array<double>(rN, rD).Named("U");  
-vU[rN, rD] = vT[rN, rD] + vMu[rD];  
-// ... and add in some observation noise ... 
-vPi = Variable.Array<double>(rD).Named("pi");  
-vPi[rD] = Variable.Random<double, Gamma>(priorPi).ForEach(rD);  
-// ... to give the likelihood of observing the data  
-vData[rN, rD] = Variable.GaussianFromMeanAndPrecision(vU[rN, rD], vPi[rD]);
+alpha[component] = Variable<double>.Random(priorAlpha).ForEach(component);
+W[component, feature] = Variable.GaussianFromMeanAndPrecision(0, alpha[component]).ForEach(feature);
+
+// Latent variables are drawn from a standard Gaussian
+Z[observation, component] = Variable.GaussianFromMeanAndPrecision(0.0, 1.0).ForEach(observation, component);
+
+// Multiply the latent variables with the mixing matrix...
+T = Variable.MatrixMultiply(Z, W).Named(nameof(T));
+
+// ... add in a bias ...
+mu[feature] = Variable<double>.Random(priorMu).ForEach(feature);
+U[observation, feature] = T[observation, feature] + mu[feature];
+
+// ... and add in some observation noise ...
+pi[feature] = Variable<double>.Random(priorPi).ForEach(feature);
+
+// ... to give the likelihood of observing the data
+data[observation, feature] = Variable.GaussianFromMeanAndPrecision(U[observation, feature], pi[feature]);
 ```
 In order to test out this model, the test program generates 1000 data points from a model with _`M`_=3, _`D`_= 10\. _`M`_ is given a value of 6 to see if the inference could correctly determine the number of components. Here is the print-out from a run. Only three of the rows of _`W`_ have significant non-zero entries, and the bias and noise vectors are successfully inferred.
 
@@ -48,4 +47,4 @@ In order to test out this model, the test program generates 1000 data points fro
 | True noise: | 8.00  | 9.00 | 10.00 | 11.00 | 10.00 | 9.00  | 8.00 | 9.00 | 10.00 | 11.00 |
 | Inferred:   | 7.93  | 9.16 | 10.67 | 10.30 | 10.19 | 8.54  | 7.54 | 7.97 | 10.50 | 9.20  |
 
-​The full C# code can be viewed in the [file](Bayesian PCA.md).
+​The full C# code is in [BayesianPCA.cs](https://github.com/dotnet/infer/blob/master/src/Tutorials/BayesianPCA.cs).
