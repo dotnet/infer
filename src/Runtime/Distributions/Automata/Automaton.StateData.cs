@@ -40,13 +40,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// We don't use <see cref="List{T}"/> here for performance reasons.
             /// </remarks>
             [DataMember]
-            private Transition[] transitions = new Transition[DefaultTransitionArrayCapacity];
+            internal Transition[] transitions = new Transition[DefaultTransitionArrayCapacity];
 
             /// <summary>
             /// The number of outgoing transitions from the state.
             /// </summary>
             [DataMember]
-            private int transitionCount;
+            internal int transitionCount;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="StateData"/> class.

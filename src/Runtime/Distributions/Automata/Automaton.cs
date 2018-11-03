@@ -1305,45 +1305,45 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="tryDeterminize">When to try to dterminize the product.</param>
         public void SetToProduct(TThis automaton1, TThis automaton2, bool tryDeterminize)
         {
-            Argument.CheckIfNotNull(automaton1, "automaton1");
-            Argument.CheckIfNotNull(automaton2, "automaton2");
+            Argument.CheckIfNotNull(automaton1, "left");
+            Argument.CheckIfNotNull(automaton2, "right");
 
-            TThis result = Zero();
-            if (!automaton1.IsCanonicZero() && !automaton2.IsCanonicZero())
+            if (automaton1.IsCanonicZero() || automaton2.IsCanonicZero())
             {
-                if (automaton1.UsesGroups())
-                {
-                    // We cannot swap automaton 1 and automaton 2 as groups from first are used.
-                    if (!automaton2.IsEpsilonFree)
-                    {
-                        automaton2.MakeEpsilonFree();
-                    }
-                }
-                else
-                {
-                    // The second argument of BuildProduct must be epsilon-free
-                    if (!automaton1.IsEpsilonFree && !automaton2.IsEpsilonFree)
-                    {
-                        automaton2.MakeEpsilonFree();
-                    }
-                    else if (automaton1.IsEpsilonFree && !automaton2.IsEpsilonFree)
-                    {
-                        Util.Swap(ref automaton1, ref automaton2);
-                    }
-                }
+                SetToZero();
+                return;
+            }
 
-                var stateCache = new Dictionary<(int, int), State>(automaton1.States.Count + automaton2.States.Count);
-                result.Start = result.BuildProduct(automaton1.Start, automaton2.Start, stateCache);
-
+            if (automaton1.UsesGroups())
+            {
+                // We cannot swap automaton 1 and automaton 2 as groups from first are used.
+                if (!automaton2.IsEpsilonFree)
+                {
+                    automaton2.MakeEpsilonFree();
+                }
+            }
+            else
+            {
+                // The second argument of BuildProduct must be epsilon-free
+                if (!automaton1.IsEpsilonFree && !automaton2.IsEpsilonFree)
+                {
+                    automaton2.MakeEpsilonFree();
+                }
+                else if (automaton1.IsEpsilonFree && !automaton2.IsEpsilonFree)
+                {
+                    Util.Swap(ref automaton1, ref automaton2);
+                }
+            }
+            
+            var result = BuildProduct(automaton1, automaton2);
                 result.RemoveDeadStates(); // Product can potentially create dead states
-                result.PruneTransitionsWithLogWeightLessThan = this.MergePruningWeights(automaton1, automaton2);
-                result.SimplifyIfNeeded();
-                result.LogValueOverride = this.MergeLogValueOverrides(automaton1, automaton2);
+            result.PruneTransitionsWithLogWeightLessThan = this.MergePruningWeights(automaton1, automaton2);
+            result.SimplifyIfNeeded();
+            result.LogValueOverride = this.MergeLogValueOverrides(automaton1, automaton2);
 
-                if (this is StringAutomaton && tryDeterminize)
-                {
-                    result.TryDeterminize();
-                }
+            if (this is StringAutomaton && tryDeterminize)
+            {
+                result.TryDeterminize();
             }
 
             this.SwapWith(result);
@@ -1445,8 +1445,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="automaton2">The second automaton.</param>
         public void SetToSumLog(double logWeight1, TThis automaton1, double logWeight2, TThis automaton2)
         {
-            Argument.CheckIfNotNull(automaton1, "automaton1");
-            Argument.CheckIfNotNull(automaton2, "automaton2");
+            Argument.CheckIfNotNull(automaton1, "left");
+            Argument.CheckIfNotNull(automaton2, "right");
             Argument.CheckIfValid(
                 !double.IsPositiveInfinity(logWeight1) && !double.IsPositiveInfinity(logWeight2),
                 "Weights must not be infinite.");
@@ -2393,74 +2393,82 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Recursively builds an automaton representing the product of two given automata.
         /// The second automaton must be epsilon-free.
         /// </summary>
-        /// <param name="state1">The currently traversed state of the first automaton.</param>
-        /// <param name="state2">The currently traversed state of the second automaton.</param>
-        /// <param name="productStateCache">
-        /// The mapping from a pair of argument state indices to an index of the corresponding product state.
-        /// </param>
+        /// <param name="left">The currently traversed state of the first automaton.</param>
+        /// <param name="right">The currently traversed state of the second automaton.</param>
         /// <returns>The index of the product state corresponding to the given pair of state.</returns>
-        private State BuildProduct(
-            State state1,
-            State state2,
-            Dictionary<(int, int), State> productStateCache)
+        private static TThis BuildProduct(TThis left, TThis right)
         {
-            Debug.Assert(state1 != null && state2 != null, "Valid states must be provided.");
-            Debug.Assert(!ReferenceEquals(state1.Owner, this) && !ReferenceEquals(state2.Owner, this), "Cannot build product in place.");
-            Debug.Assert(state2.Owner.IsEpsilonFree, "The second argument of the product operation must be epsilon-free.");
+            var sumStates = left.statesData.Count + right.statesData.Count;
+            var productStateCache = new Dictionary<(int Left, int Right), int>(sumStates);
+            var jobStack = new Stack<((int Left, int Right) Factors, int Product)>();
+            var result = Zero();
 
-            // State already exists, return its index
-            var statePair = (state1.Index, state2.Index);
-            State productState;
-            if (productStateCache.TryGetValue(statePair, out productState))
+            productStateCache.Add((left.startStateIndex, right.startStateIndex), result.startStateIndex);
+            jobStack.Push(((left.startStateIndex, right.startStateIndex), result.startStateIndex));
+
+            // Cache fields in locals, it speeds up access
+            var leftStates = left.statesData;
+            var rightStates = right.statesData;
+            var productStates = result.statesData;
+
+            while (jobStack.Count > 0)
             {
-                return productState;
-            }
+                var indexes = jobStack.Pop();
 
-            // Create a new state
-            productState = this.AddState();
-            productStateCache.Add(statePair, productState);
+                var leftState = leftStates[indexes.Factors.Left];
+                var rightState = rightStates[indexes.Factors.Right];
+                var productState = productStates[indexes.Product];
 
-            // Iterate over transitions in state1
-            for (int transition1Index = 0; transition1Index < state1.TransitionCount; transition1Index++)
-            {
-                Transition transition1 = state1.GetTransition(transition1Index);
-                State destState1 = state1.Owner.States[transition1.DestinationStateIndex];
+                productState.EndWeight = Weight.Product(leftState.EndWeight, rightState.EndWeight);
 
-                if (transition1.IsEpsilon)
+                // Iterate over transitions in state1
+                for (int leftTransitionIndex = 0; leftTransitionIndex < leftState.TransitionCount; leftTransitionIndex++)
                 {
-                    // Epsilon transition case
-                    State destProductState = this.BuildProduct(destState1, state2, productStateCache);
-                    productState.AddEpsilonTransition(transition1.Weight, destProductState, transition1.Group);
-                    continue;
-                }
-
-                // Iterate over transitions in state2
-                for (int transition2Index = 0; transition2Index < state2.TransitionCount; transition2Index++)
-                {
-                    Transition transition2 = state2.GetTransition(transition2Index);
-                    Debug.Assert(!transition2.IsEpsilon, "The second argument of the product operation must be epsilon-free.");
-                    State destState2 = state2.Owner.States[transition2.DestinationStateIndex];
-
-                    TElementDistribution product;
-                    double productLogNormalizer = Distribution<TElement>.GetLogAverageOf(
-                        transition1.ElementDistribution, transition2.ElementDistribution, out product);
-                    ////if (product is StringDistribution)
-                    ////{
-                    ////    Console.WriteLine(transition1.ElementDistribution+" x "+transition2.ElementDistribution+" = "+product+" "+productLogNormalizer+" "+transition1.ElementDistribution.Equals(transition1.ElementDistribution)+" "+transition1.ElementDistribution.Equals(transition2.ElementDistribution));
-                    ////}
-                    if (double.IsNegativeInfinity(productLogNormalizer))
+                    var leftTransition = leftState.GetTransition(leftTransitionIndex);
+                    
+                    if (leftTransition.IsEpsilon)
                     {
+                        var nextPair = (leftTransition.DestinationStateIndex, indexes.Factors.Right);
+                        if (!productStateCache.TryGetValue(nextPair, out var nextProductState))
+                        {
+                            nextProductState = result.AddState().Index;
+                            productStateCache.Add(nextPair, nextProductState);
+                            jobStack.Push((nextPair, nextProductState));
+                        }
+
+                        productState.AddTransition(new Transition(null, leftTransition.Weight, nextProductState, leftTransition.Group));
+                        result.isEpsilonFree = false;
                         continue;
                     }
 
-                    Weight productWeight = Weight.Product(transition1.Weight, transition2.Weight, Weight.FromLogValue(productLogNormalizer));
-                    State destProductState = this.BuildProduct(destState1, destState2, productStateCache);
-                    productState.AddTransition(product, productWeight, destProductState, transition1.Group);
+                    // Iterate over transitions in state2
+                    for (int rightTransitionIndex = 0; rightTransitionIndex < rightState.TransitionCount; rightTransitionIndex++)
+                    {
+                        var rightTransition = rightState.GetTransition(rightTransitionIndex);
+                        Debug.Assert(!rightTransition.IsEpsilon, "The second argument of the product operation must be epsilon-free.");
+
+                        var productLogNormalizer = Distribution<TElement>.GetLogAverageOf(
+                            leftTransition.ElementDistribution, rightTransition.ElementDistribution, out var product);
+
+                        if (!double.IsNegativeInfinity(productLogNormalizer))
+                        {
+                            var nextPair = (leftTransition.DestinationStateIndex, rightTransition.DestinationStateIndex);
+                            if (!productStateCache.TryGetValue(nextPair, out var nextProductState))
+                            {
+                                nextProductState = result.AddState().Index;
+                                productStateCache.Add(nextPair, nextProductState);
+                                jobStack.Push((nextPair, nextProductState));
+                            }
+
+                            var productWeight = Weight.Product(
+                                leftTransition.Weight, rightTransition.Weight, Weight.FromLogValue(productLogNormalizer));
+                            productState.AddTransition(new Transition(product, productWeight, nextProductState, leftTransition.Group));
+                        }
+                    }
                 }
             }
 
-            productState.SetEndWeight(Weight.Product(state1.EndWeight, state2.EndWeight));
-            return productState;
+            return result;
         }
 
         /// <summary>
