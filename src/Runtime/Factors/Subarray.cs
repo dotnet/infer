@@ -94,9 +94,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableTo<DistributionType>
         {
             // Vijay
-            if (result != null && !(typeof(ResultType).IsAssignableFrom(result.GetType())))
+            if (result != null && !(typeof(IList<DistributionType>).IsAssignableFrom(result.GetType())))
             {
-                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ResultType)}");
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(IList<DistributionType>)}");
             }
 
 
@@ -156,9 +156,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableTo<DistributionType>
         {
             // Vijay
-            if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
+            if (result != null && !(typeof(IList<DistributionType>).IsAssignableFrom(result.GetType())))
             {
-                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(IList<DistributionType>)}");
             }
 
             Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");

@@ -251,9 +251,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableTo<DistributionType>
         {
             // Vijay
-            if (result != null && !(typeof(ItemType).IsAssignableFrom(result.GetType())))
+            if (result != null && !(typeof(IList<DistributionType>).IsAssignableFrom(result.GetType())))
             {
-                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ItemType)}");
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(IList<DistributionType>)}");
             }
 
             int i = resultIndex;
@@ -279,9 +279,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableTo<DistributionType>
         {
             // Vijay
-            if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
+            if (result != null && !(typeof(IList<DistributionType>).IsAssignableFrom(result.GetType())))
             {
-                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(IList<DistributionType>)}");
             }
 
             Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");
@@ -312,9 +312,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : HasPoint<T>
         {
             // Vijay
-            if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
+            if (result != null && !(typeof(IList<DistributionType>).IsAssignableFrom(result.GetType())))
             {
-                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(IList<DistributionType>)}");
             }
 
             Assert.IsTrue(items.Count == indices.Count, "items.Count != indices.Count");

@@ -357,9 +357,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableToRatio<DistributionType>
         {
             // Vijay
-            if (result != null && !(typeof(ItemType).IsAssignableFrom(result.GetType())))
+            if (result != null && !(typeof(IList<DistributionType>).IsAssignableFrom(result.GetType())))
             {
-                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ItemType)}");
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(IList<DistributionType>)}");
             }
 
 
@@ -389,9 +389,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableToProduct<DistributionType>
         {
             // Vijay
-            if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
+            if (result != null && !(typeof(IList<DistributionType>).IsAssignableFrom(result.GetType())))
             {
-                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(IList<DistributionType>)}");
             }
 
             if (items.Count != indices.Count)
@@ -425,9 +425,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : HasPoint<T>
         {
             // Vijay
-            if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
+            if (result != null && !(typeof(IList<DistributionType>).IsAssignableFrom(result.GetType())))
             {
-                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(IList<DistributionType>)}");
             }
 
             if (items.Count != indices.Count)
@@ -480,9 +480,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where DistributionType : SettableToUniform, SettableToProduct<DistributionType>
         {
             // Vijay
-            if (result != null && !(typeof(ArrayType).IsAssignableFrom(result.GetType())))
+            if (result != null && !(typeof(IList<DistributionType>).IsAssignableFrom(result.GetType())))
             {
-                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(ArrayType)}");
+                throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(IList<DistributionType>)}");
             }
 
             result.SetToUniform();
