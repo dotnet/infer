@@ -118,7 +118,7 @@ namespace MotifFinder
                 motifPositionPosterior);
 
             //// Keep the application alive until the user enters a keystroke
-            
+            Console.WriteLine("Done.  Press enter to exit.");
             Console.ReadKey();
         }
 

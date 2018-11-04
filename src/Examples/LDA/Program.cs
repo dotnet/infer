@@ -97,6 +97,7 @@ namespace LDAExample
                     vocabulary);
             }
 
+            Console.WriteLine("Done.  Press enter to exit.");
             Console.ReadLine();
         }
 

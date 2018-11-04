@@ -84,6 +84,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 InferenceEngine engine = new InferenceEngine(new VariationalMessagePassing());
                 engine.Compiler.DeclarationProvider = RoslynDeclarationProvider.Instance;
                 var ca = engine.Compiler.Compile(LoopStartError);
+                ca.Execute(50);
                 Assert.True(false, "Did not throw exception");
             }
             catch (CompilationFailedException tfe)
@@ -97,8 +98,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private void LoopStartError()
         {
-            double[] array = new double[4]; // invalid number of dims
-            for (int l = 1; l < 4; l++)
+            double[] array = new double[4]; 
+            for (int l = 1; l < 4; l++) // loop starts at 1 instead of 0
             {
                 array[l] = Factor.Random(Gamma.FromShapeAndScale(1, 1));
             }

@@ -127,7 +127,7 @@ In Runtime project settings > Build:
 
 You can also use other BLAS/LAPACK libraries compatible with MKL.  If your library is not called "mkl_rt.dll", change the `dllName` string in [Lapack.cs](https://github.com/dotnet/infer/blob/master/src/Runtime/Core/Maths/Lapack.cs).
 
-When using use this special build of Infer.NET, you must tell your code where to find the MKL dynamic libraries.
+When using this special build of Infer.NET, you must tell your code where to find the MKL dynamic libraries.
 1. Download [Intel MKL](https://software.intel.com/en-us/mkl/) which includes redistributables. Typically, this is installed in  `C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\redist\intel64_win`. We'll reference this folder as *MKL_DIR*.
 1. (Optional) Add *MKL_DIR* to the environment variable PATH.  If you do this, the remaining steps are unnecessary, but your code will only run on machines where this has been done.
 1. Add the MKL dynamic libraries as items to your project that uses Infer.NET.
