@@ -326,8 +326,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // The projected automaton must be epsilon-free
                 srcAutomaton.MakeEpsilonFree();
 
-                var destStateCache = new Dictionary<IntPair, Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State>(
-                    IntPair.DefaultEqualityComparer);
+                var destStateCache = new Dictionary<(int, int), Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State>();
                 result.Start = this.BuildProjectionOfAutomaton(result, this.sequencePairToWeight.Start, srcAutomaton.Start, destStateCache);
                 result.RemoveDeadStates();
                 result.SimplifyIfNeeded();
@@ -354,8 +353,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             if (!this.sequencePairToWeight.IsCanonicZero())
             {
-                var destStateCache = new Dictionary<IntPair, Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State>(
-                    IntPair.DefaultEqualityComparer);
+                var destStateCache = new Dictionary<(int, int), Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State>();
                 result.Start = this.BuildProjectionOfSequence(result, this.sequencePairToWeight.Start, srcSequence, 0, destStateCache);
                 result.RemoveDeadStates();
                 result.SimplifyIfNeeded();
@@ -414,7 +412,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             PairListAutomaton.State mappingState,
             TSrcSequence srcSequence,
             int srcSequenceIndex,
-            Dictionary<IntPair, Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State> destStateCache)
+            Dictionary<(int, int), Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State> destStateCache)
         {
             //// The code of this method has a lot in common with the code of Automaton<>.BuildProduct.
             //// Unfortunately, it's not clear how to avoid the duplication in the current design.
@@ -422,7 +420,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var sourceSequenceManipulator =
                 Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.SequenceManipulator;
 
-            var statePair = new IntPair(mappingState.Index, srcSequenceIndex);
+            var statePair = (mappingState.Index, srcSequenceIndex);
             Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State destState;
             if (destStateCache.TryGetValue(statePair, out destState))
             {
@@ -487,7 +485,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             TDestAutomaton destAutomaton,
             PairListAutomaton.State mappingState,
             Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.State srcState,
-            Dictionary<IntPair, Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State> destStateCache)
+            Dictionary<(int, int), Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State> destStateCache)
         {
             Debug.Assert(mappingState != null && srcState != null, "Valid states must be provided.");
             Debug.Assert(!ReferenceEquals(srcState.Owner, destAutomaton), "Cannot build a projection in place.");
@@ -496,7 +494,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             //// Unfortunately, it's not clear how to avoid the duplication in the current design.
 
             // State already exists, return its index
-            var statePair = new IntPair(mappingState.Index, srcState.Index);
+            var statePair = (mappingState.Index, srcState.Index);
             Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State destState;
             if (destStateCache.TryGetValue(statePair, out destState))
             {

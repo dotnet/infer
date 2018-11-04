@@ -1355,7 +1355,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
-                var stateCache = new Dictionary<IntPair, State>(automaton1.States.Count + automaton2.States.Count, IntPair.DefaultEqualityComparer);
+                var stateCache = new Dictionary<(int, int), State>(automaton1.States.Count + automaton2.States.Count);
                 result.Start = result.BuildProduct(automaton1.Start, automaton2.Start, stateCache);
 
                 result.RemoveDeadStates(); // Product can potentially create dead states
@@ -2426,14 +2426,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private State BuildProduct(
             State state1,
             State state2,
-            Dictionary<IntPair, State> productStateCache)
+            Dictionary<(int, int), State> productStateCache)
         {
             Debug.Assert(state1 != null && state2 != null, "Valid states must be provided.");
             Debug.Assert(!ReferenceEquals(state1.Owner, this) && !ReferenceEquals(state2.Owner, this), "Cannot build product in place.");
             Debug.Assert(state2.Owner.IsEpsilonFree, "The second argument of the product operation must be epsilon-free.");
 
             // State already exists, return its index
-            var statePair = new IntPair(state1.Index, state2.Index);
+            var statePair = (state1.Index, state2.Index);
             State productState;
             if (productStateCache.TryGetValue(statePair, out productState))
             {
