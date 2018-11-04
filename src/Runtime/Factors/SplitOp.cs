@@ -79,7 +79,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             where ItemType : SettableTo<ItemType>
         {
             // Vijay
-            if (result != null && !(typeof(IList<SettableTo<ItemType>>).IsAssignableFrom(result.GetType())))
+            if (result != null && !(
+                    typeof(IList<ItemType>).IsAssignableFrom(result.GetType())
+                    || typeof(IList<SettableTo<ItemType>>).IsAssignableFrom(result.GetType())))
             {
                 throw new InvalidOperationException($"result is {result.GetType()}, but expecting: {typeof(IList<SettableTo<ItemType>>)}");
             }
