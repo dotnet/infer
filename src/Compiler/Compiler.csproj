@@ -51,7 +51,7 @@
     <PackageReference Condition="$(DefineConstants.Contains('ROSLYN'))" Include="Microsoft.CodeAnalysis.CSharp" version="2.0.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
     <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
-    <PackageReference Condition="$(DefineConstants.Contains('CODEDOM'))" Include="System.CodeDom" Version="4.4.0" />
+    <PackageReference Condition="$(DefineConstants.Contains('CODEDOM'))" Include="System.CodeDom" Version="4.5.0" />
   </ItemGroup>
   
   <ItemGroup>
