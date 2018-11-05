@@ -24,6 +24,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// of the state. <see cref="State"/> struct should be used in public APIs.
         /// </summary>
         [Serializable]
+        [DataContract]
         internal class StateData
         {
             /// <summary>

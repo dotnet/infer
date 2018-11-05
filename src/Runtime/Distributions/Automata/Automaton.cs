@@ -2592,7 +2592,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </remarks>
         private void RemoveState(int index, int? replaceIndex = null)
         {
-            //// TODO: see remarkss
+            //// TODO: see remarks
 
             Debug.Assert(index >= 0 && index < this.statesData.Count, "An invalid state index provided.");
             Debug.Assert(index != this.Start.Index, "Cannot remove the start state.");
@@ -2894,16 +2894,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </remarks>
         protected Automaton(SerializationInfo info, StreamingContext context)
         {
-            // FIXME: maintain compatibility?
             this.statesData = (List<StateData>)info.GetValue(nameof(this.statesData), typeof(List<StateData>));
-            this.startStateIndex = (int)info.GetValue("startIndex", typeof(int));
+            this.startStateIndex = (int)info.GetValue(nameof(this.startStateIndex), typeof(int));
             this.isEpsilonFree = (bool?)info.GetValue(nameof(this.isEpsilonFree), typeof(bool?));
         }
 
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue(nameof(this.statesData), this.statesData);
-            info.AddValue("startIndex", this.Start.Index);
             info.AddValue(nameof(this.startStateIndex), this.startStateIndex);
             info.AddValue(nameof(this.isEpsilonFree), this.isEpsilonFree);
         }
@@ -2938,7 +2936,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 this.Start.Write(writeInt32, writeDouble, writeElementDistribution);
             }
 
-            writeInt32(statesData.Count);
+            writeInt32(this.statesData.Count);
             foreach (var state in this.States)
             {
                 state.Write(writeInt32, writeDouble, writeElementDistribution);

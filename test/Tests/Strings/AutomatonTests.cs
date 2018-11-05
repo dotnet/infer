@@ -916,7 +916,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ConvertToString4()
         {
             StringAutomaton automaton = StringAutomaton.Zero();
-            automaton.Start.AddTransitionsForSequence("hello").SetEndWeight(Weight.One);
+            automaton.Start.AddTransitionsForSequence("hello").SetEndWeight(Weight.Zero);
             Assert.Equal("Ø", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("Ø", automaton.ToString(AutomatonFormats.Regexp));
         }
