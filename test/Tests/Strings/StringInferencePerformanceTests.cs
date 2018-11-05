@@ -38,8 +38,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringAutomaton automaton = StringAutomaton.Zero();
                 var nextState = automaton.Start.AddTransitionsForSequence("abc");
                 nextState.AddSelfTransition('d', Weight.FromValue(0.1));
-                nextState.AddTransitionsForSequence("efg").EndWeight = Weight.One;
-                nextState.AddTransitionsForSequence("hejfhoenmf").EndWeight = Weight.One;
+                nextState.AddTransitionsForSequence("efg").SetEndWeight(Weight.One);
+                nextState.AddTransitionsForSequence("hejfhoenmf").SetEndWeight(Weight.One);
 
                 ProfileAction(() => automaton.GetLogNormalizer(), 100000);
             }, 10000);
@@ -57,13 +57,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 StringAutomaton automaton = StringAutomaton.Zero();
                 var nextState = automaton.Start.AddTransitionsForSequence("abc");
-                nextState.EndWeight = Weight.One;
+                nextState.SetEndWeight(Weight.One);
                 nextState.AddSelfTransition('d', Weight.FromValue(0.1));
                 nextState = nextState.AddTransitionsForSequence("efg");
-                nextState.EndWeight = Weight.One;
+                nextState.SetEndWeight(Weight.One);
                 nextState.AddSelfTransition('h', Weight.FromValue(0.2));
                 nextState = nextState.AddTransitionsForSequence("grlkhgn;lk3rng");
-                nextState.EndWeight = Weight.One;
+                nextState.SetEndWeight(Weight.One);
                 nextState.AddSelfTransition('h', Weight.FromValue(0.3));
 
                 ProfileAction(() => automaton.GetLogNormalizer(), 100000);
@@ -82,10 +82,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 StringAutomaton automaton = StringAutomaton.Zero();
                 automaton.Start.AddSelfTransition('a', Weight.FromValue(0.5));
-                automaton.Start.EndWeight = Weight.One;
+                automaton.Start.SetEndWeight(Weight.One);
                 var nextState = automaton.Start.AddTransitionsForSequence("aa");
                 nextState.AddSelfTransition('a', Weight.FromValue(0.5));
-                nextState.EndWeight = Weight.One;
+                nextState.SetEndWeight(Weight.One);
 
                 for (int i = 0; i < 3; ++i)
                 {

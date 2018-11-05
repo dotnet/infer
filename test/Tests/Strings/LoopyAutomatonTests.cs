@@ -109,7 +109,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton f = StringAutomaton.Zero();
             AddEpsilonLoop(f.Start, 5, 0.5);
-            f.Start.AddTransitionsForSequence("abc").EndWeight = Weight.One;
+            f.Start.AddTransitionsForSequence("abc").SetEndWeight(Weight.One);
             Assert.Equal("abc", f.TryComputePoint());
         }
 
@@ -122,7 +122,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton f = StringAutomaton.Zero();
             f.Start.AddTransition('a', Weight.FromValue(0.5)).AddTransition('b', Weight.Zero, f.Start);
-            f.Start.AddTransitionsForSequence("abc").EndWeight = Weight.One;
+            f.Start.AddTransitionsForSequence("abc").SetEndWeight(Weight.One);
             Assert.Equal("abc", f.TryComputePoint());
         }
 
@@ -135,7 +135,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton f = StringAutomaton.Zero();
             f.Start.AddTransition('a', Weight.FromValue(0.5)).AddSelfTransition('a', Weight.FromValue(0.5)).AddTransition('b', Weight.One);
-            f.Start.AddTransition('b', Weight.FromValue(0.5)).EndWeight = Weight.One;
+            f.Start.AddTransition('b', Weight.FromValue(0.5)).SetEndWeight(Weight.One);
             Assert.Equal("b", f.TryComputePoint());
         }
 
@@ -147,7 +147,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void NoPoint1()
         {
             StringAutomaton f = StringAutomaton.Zero();
-            f.Start.AddTransition('a', Weight.FromValue(0.5)).AddTransition('b', Weight.FromValue(0.5), f.Start).EndWeight = Weight.One;
+            f.Start.AddTransition('a', Weight.FromValue(0.5)).AddTransition('b', Weight.FromValue(0.5), f.Start).SetEndWeight(Weight.One);
             Assert.Null(f.TryComputePoint());
         }
 
@@ -160,7 +160,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton f = StringAutomaton.Zero();
             var state = f.Start.AddTransition('a', Weight.FromValue(0.5));
-            state.EndWeight = Weight.One;
+            state.SetEndWeight(Weight.One);
             state.AddTransition('b', Weight.FromValue(0.5), f.Start);
             Assert.Null(f.TryComputePoint());
         }
@@ -216,7 +216,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton f = StringAutomaton.Zero();
             f.Start.AddSelfTransition('x', Weight.Zero);
-            f.Start.AddTransition('y', Weight.Zero).EndWeight = Weight.One;
+            f.Start.AddTransition('y', Weight.Zero).SetEndWeight(Weight.One);
             Assert.True(f.IsZero());
         }
         
@@ -232,10 +232,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void LoopyArithmetic()
         {
             StringAutomaton automaton1 = StringAutomaton.Zero();
-            automaton1.Start.AddTransition('a', Weight.FromValue(4.0)).AddTransition('b', Weight.One, automaton1.Start).EndWeight = Weight.One;
+            automaton1.Start.AddTransition('a', Weight.FromValue(4.0)).AddTransition('b', Weight.One, automaton1.Start).SetEndWeight(Weight.One);
 
             StringAutomaton automaton2 = StringAutomaton.Zero();
-            automaton2.Start.AddSelfTransition('a', Weight.FromValue(2)).AddSelfTransition('b', Weight.FromValue(3)).EndWeight = Weight.One;
+            automaton2.Start.AddSelfTransition('a', Weight.FromValue(2)).AddSelfTransition('b', Weight.FromValue(3)).SetEndWeight(Weight.One);
 
             StringAutomaton sum = automaton1.Sum(automaton2);
             StringInferenceTestUtilities.TestValue(sum, 2.0, string.Empty);
@@ -272,7 +272,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton automaton = StringAutomaton.Zero();
             automaton.Start.AddSelfTransition('a', Weight.FromValue(0.7));
-            automaton.Start.EndWeight = Weight.FromValue(0.3);
+            automaton.Start.SetEndWeight(Weight.FromValue(0.3));
 
             AssertStochastic(automaton);
             Assert.Equal(0.0, automaton.GetLogNormalizer(), 1e-6);
@@ -289,11 +289,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton automaton = StringAutomaton.Zero();
             var state = automaton.Start;
-            state.EndWeight = Weight.FromValue(0.1);
+            state.SetEndWeight(Weight.FromValue(0.1));
             state.AddSelfTransition('a', Weight.FromValue(0.7));
             state = state.AddTransition('b', Weight.FromValue(0.2));
             state.AddSelfTransition('a', Weight.FromValue(0.4));
-            state.EndWeight = Weight.FromValue(0.6);
+            state.SetEndWeight(Weight.FromValue(0.6));
 
             AssertStochastic(automaton);
             Assert.Equal(0.0, automaton.GetLogNormalizer(), 1e-6);
@@ -311,14 +311,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton automaton = StringAutomaton.Zero();
 
             automaton.Start.AddSelfTransition('a', Weight.FromValue(0.7));
-            automaton.Start.EndWeight = Weight.FromValue(0.1);
+            automaton.Start.SetEndWeight(Weight.FromValue(0.1));
 
             var state1 = automaton.Start.AddTransition('b', Weight.FromValue(0.15));
             state1.AddSelfTransition('a', Weight.FromValue(0.4));
-            state1.EndWeight = Weight.FromValue(0.6);
+            state1.SetEndWeight(Weight.FromValue(0.6));
 
             var state2 = automaton.Start.AddTransition('c', Weight.FromValue(0.05));
-            state2.EndWeight = Weight.One;
+            state2.SetEndWeight(Weight.One);
 
             AssertStochastic(automaton);
             Assert.Equal(0.0, automaton.GetLogNormalizer(), 1e-6);
@@ -336,11 +336,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton automaton = StringAutomaton.Zero();
 
             var state = automaton.Start.AddTransition('a', Weight.FromValue(0.9));
-            state.AddTransition('a', Weight.FromValue(0.1)).EndWeight = Weight.One;
+            state.AddTransition('a', Weight.FromValue(0.1)).SetEndWeight(Weight.One);
             state = state.AddTransition('a', Weight.FromValue(0.9));
-            state.AddTransition('a', Weight.FromValue(0.1)).EndWeight = Weight.One;
+            state.AddTransition('a', Weight.FromValue(0.1)).SetEndWeight(Weight.One);
             state = state.AddTransition('a', Weight.FromValue(0.9), automaton.Start);
-            state.AddTransition('a', Weight.FromValue(0.1)).EndWeight = Weight.One;
+            state.AddTransition('a', Weight.FromValue(0.1)).SetEndWeight(Weight.One);
 
             AssertStochastic(automaton);
             Assert.Equal(0.0, automaton.GetLogNormalizer(), 1e-6);
@@ -358,7 +358,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton automaton = StringAutomaton.Zero();
 
             var endState = automaton.Start.AddTransition('a', Weight.FromValue(2.0));
-            endState.EndWeight = Weight.FromValue(5.0);
+            endState.SetEndWeight(Weight.FromValue(5.0));
             endState.AddTransition('b', Weight.FromValue(0.25), automaton.Start);
             endState.AddTransition('c', Weight.FromValue(0.2), automaton.Start);
 
@@ -377,7 +377,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton automaton = StringAutomaton.Zero();
 
             var endState = automaton.Start.AddTransition('a', Weight.FromValue(2.0));
-            endState.EndWeight = Weight.FromValue(5.0);
+            endState.SetEndWeight(Weight.FromValue(5.0));
             endState.AddTransition('b', Weight.FromValue(0.1), automaton.Start);
             endState.AddTransition('c', Weight.FromValue(0.05), automaton.Start);
             endState.AddSelfTransition('!', Weight.FromValue(0.5));
@@ -407,13 +407,13 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             AddEpsilonLoop(automaton.Start, 3, 0.2);
             AddEpsilonLoop(automaton.Start, 5, 0.3);
-            automaton.Start.EndWeight = Weight.FromValue(0.1);
+            automaton.Start.SetEndWeight(Weight.FromValue(0.1));
             var nextState = automaton.Start.AddTransition('a', Weight.FromValue(0.4));
-            nextState.EndWeight = Weight.FromValue(0.6);
+            nextState.SetEndWeight(Weight.FromValue(0.6));
             AddEpsilonLoop(nextState, 0, 0.3);
             nextState = nextState.AddTransition('b', Weight.FromValue(0.1));
             AddEpsilonLoop(nextState, 1, 0.9);
-            nextState.EndWeight = Weight.FromValue(0.1);
+            nextState.SetEndWeight(Weight.FromValue(0.1));
 
             AssertStochastic(automaton);
             Assert.Equal(0.0, automaton.GetLogNormalizer(), 1e-6);
@@ -433,21 +433,21 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             automaton.States[0].AddEpsilonTransition(Weight.FromValue(0.2), automaton.States[1]);
             automaton.States[0].AddEpsilonTransition(Weight.FromValue(0.5), automaton.States[3]);
-            automaton.States[0].EndWeight = Weight.FromValue(0.3);
+            automaton.States[0].SetEndWeight(Weight.FromValue(0.3));
             automaton.States[1].AddEpsilonTransition(Weight.FromValue(0.8), automaton.States[0]);
             automaton.States[1].AddEpsilonTransition(Weight.FromValue(0.1), automaton.States[2]);
-            automaton.States[1].EndWeight = Weight.FromValue(0.1);
-            automaton.States[2].EndWeight = Weight.FromValue(1.0);
+            automaton.States[1].SetEndWeight(Weight.FromValue(0.1));
+            automaton.States[2].SetEndWeight(Weight.FromValue(1.0));
             automaton.States[3].AddEpsilonTransition(Weight.FromValue(0.2), automaton.States[4]);
             automaton.States[3].AddEpsilonTransition(Weight.FromValue(0.1), automaton.States[5]);
-            automaton.States[3].EndWeight = Weight.FromValue(0.7);
+            automaton.States[3].SetEndWeight(Weight.FromValue(0.7));
             automaton.States[4].AddEpsilonTransition(Weight.FromValue(0.5), automaton.States[2]);
             automaton.States[4].AddEpsilonTransition(Weight.FromValue(0.5), automaton.States[6]);
-            automaton.States[4].EndWeight = Weight.FromValue(0.0);
+            automaton.States[4].SetEndWeight(Weight.FromValue(0.0));
             automaton.States[5].AddEpsilonTransition(Weight.FromValue(0.1), automaton.States[3]);
             automaton.States[5].AddEpsilonTransition(Weight.FromValue(0.9), automaton.States[6]);
-            automaton.States[5].EndWeight = Weight.Zero;
-            automaton.States[6].EndWeight = Weight.One;
+            automaton.States[5].SetEndWeight(Weight.Zero);
+            automaton.States[6].SetEndWeight(Weight.One);
 
             AssertStochastic(automaton);
             Assert.Equal(0.0, automaton.GetLogNormalizer(), 1e-6);
@@ -465,7 +465,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton automaton = StringAutomaton.Zero();
 
             var endState = automaton.Start.AddTransition('a', Weight.FromValue(3.5));
-            endState.EndWeight = Weight.FromValue(5.0);
+            endState.SetEndWeight(Weight.FromValue(5.0));
             endState.AddTransition('b', Weight.FromValue(0.1), automaton.Start);
             endState.AddTransition('c', Weight.FromValue(0.05), automaton.Start);
             endState.AddSelfTransition('!', Weight.FromValue(0.5));
@@ -486,7 +486,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton automaton = StringAutomaton.Zero();
 
             var endState = automaton.Start.AddTransition('a', Weight.FromValue(2.0));
-            endState.EndWeight = Weight.FromValue(5.0);
+            endState.SetEndWeight(Weight.FromValue(5.0));
             endState.AddTransition('b', Weight.FromValue(0.1), automaton.Start);
             endState.AddTransition('c', Weight.FromValue(0.05), automaton.Start);
             endState.AddSelfTransition('!', Weight.FromValue(0.75));
@@ -506,7 +506,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton automaton = StringAutomaton.Zero();
             automaton.Start.AddTransition('a', Weight.FromValue(2.0), automaton.Start);
-            automaton.Start.EndWeight = Weight.FromValue(5.0);
+            automaton.Start.SetEndWeight(Weight.FromValue(5.0));
 
             StringAutomaton copyOfAutomaton = automaton.Clone();
             Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues());
@@ -525,9 +525,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             automaton.Start.AddSelfTransition('a', Weight.FromValue(0.1));
             var branch1 = automaton.Start.AddTransition('a', Weight.FromValue(2.0));
             branch1.AddSelfTransition('a', Weight.FromValue(2.0));
-            branch1.EndWeight = Weight.One;
+            branch1.SetEndWeight(Weight.One);
             var branch2 = automaton.Start.AddTransition('a', Weight.FromValue(2.0));
-            branch2.EndWeight = Weight.One;
+            branch2.SetEndWeight(Weight.One);
             
             StringAutomaton copyOfAutomaton = automaton.Clone();
             Assert.Throws<InvalidOperationException>(() => automaton.NormalizeValues());
@@ -543,7 +543,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void NormalizeWithInfiniteEpsilon1()
         {
             StringAutomaton automaton = StringAutomaton.Zero();
-            automaton.Start.AddTransition('a', Weight.One).AddSelfTransition(null, Weight.FromValue(3)).EndWeight = Weight.One;
+            automaton.Start.AddTransition('a', Weight.One).AddSelfTransition(null, Weight.FromValue(3)).SetEndWeight(Weight.One);
 
             // The automaton takes an infinite value on "a", and yet the normalization must work
             Assert.True(automaton.TryNormalizeValues());
@@ -559,8 +559,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void NormalizeWithInfiniteEpsilon2()
         {
             StringAutomaton automaton = StringAutomaton.Zero();
-            automaton.Start.AddTransition('a', Weight.One).AddSelfTransition(null, Weight.FromValue(2)).EndWeight = Weight.One;
-            automaton.Start.AddTransition('b', Weight.One).AddSelfTransition(null, Weight.FromValue(1)).EndWeight = Weight.One;
+            automaton.Start.AddTransition('a', Weight.One).AddSelfTransition(null, Weight.FromValue(2)).SetEndWeight(Weight.One);
+            automaton.Start.AddTransition('b', Weight.One).AddSelfTransition(null, Weight.FromValue(1)).SetEndWeight(Weight.One);
 
             // "a" branch infinitely dominates over the "b" branch
             Assert.True(automaton.TryNormalizeValues());
@@ -583,7 +583,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             automaton.Start.AddEpsilonTransition(Weight.FromValue(0.5), automaton.Start);
             var nextState = automaton.Start.AddEpsilonTransition(Weight.FromValue(0.4));
             nextState.AddEpsilonTransition(Weight.One).AddEpsilonTransition(Weight.One, automaton.Start);
-            automaton.Start.EndWeight = Weight.FromValue(0.1);
+            automaton.Start.SetEndWeight(Weight.FromValue(0.1));
 
             AssertStochastic(automaton);
 
@@ -614,7 +614,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var middleNode = automaton.Start.AddTransition('a', Weight.One);
             middleNode.AddTransitionsForSequence("bbb", automaton.Start);
             middleNode.AddTransition('c', Weight.One, automaton.Start);
-            automaton.Start.EndWeight = Weight.One;
+            automaton.Start.SetEndWeight(Weight.One);
 
             Assert.Equal("(a(c|bbb))*", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("(a(c|bbb))*", automaton.ToString(AutomatonFormats.Regexp));
@@ -630,7 +630,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton automaton = StringAutomaton.Zero();
             automaton.Start.AddSelfTransition('a', Weight.One);
             automaton.Start.AddSelfTransition('b', Weight.One);
-            automaton.Start.EndWeight = Weight.One;
+            automaton.Start.SetEndWeight(Weight.One);
 
             Assert.Equal("(a|b)*", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("(a|b)*", automaton.ToString(AutomatonFormats.Regexp));
@@ -649,8 +649,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             automaton.Start.AddTransition('y', Weight.One, state);
             state.AddSelfTransition('a', Weight.One);
             state.AddSelfTransition('b', Weight.One);
-            state.EndWeight = Weight.One;
-            state.AddTransitionsForSequence("zzz").EndWeight = Weight.One;
+            state.SetEndWeight(Weight.One);
+            state.AddTransitionsForSequence("zzz").SetEndWeight(Weight.One);
 
             Assert.Equal("(x|y)(a|b)*[zzz]", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("(x|y)(a|b)*(|zzz)", automaton.ToString(AutomatonFormats.Regexp));
@@ -665,7 +665,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton automaton = StringAutomaton.Zero();
             automaton.Start.AddTransitionsForSequence("xyz", automaton.Start);
-            automaton.Start.AddTransition('!', Weight.One).EndWeight = Weight.One;
+            automaton.Start.AddTransition('!', Weight.One).SetEndWeight(Weight.One);
             Assert.Equal("(xyz)*!", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("(xyz)*!", automaton.ToString(AutomatonFormats.Regexp));
         }
@@ -681,7 +681,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var state = automaton.Start.AddTransition('x', Weight.One);
             automaton.Start.AddTransition('y', Weight.Zero, state);
             state.AddSelfTransition('a', Weight.One);
-            state.EndWeight = Weight.One;
+            state.SetEndWeight(Weight.One);
 
             Assert.Equal("xa*", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("xa*", automaton.ToString(AutomatonFormats.Regexp));
@@ -696,7 +696,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton automaton = StringAutomaton.Zero();
             automaton.Start.AddSelfTransition('x', Weight.Zero);
-            automaton.Start.AddTransition('y', Weight.Zero).EndWeight = Weight.One;
+            automaton.Start.AddTransition('y', Weight.Zero).SetEndWeight(Weight.One);
 
             Assert.Equal("Ø", automaton.ToString(AutomatonFormats.Friendly));
             Assert.Equal("Ø", automaton.ToString(AutomatonFormats.Regexp));
@@ -766,7 +766,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 currentState = currentState.AddEpsilonTransition(
                     i == 0 ? Weight.FromValue(loopWeight) : Weight.One,
-                    i == loopSize ? state : null);
+                    i == loopSize ? state : default(StringAutomaton.State));
             }
         }
 

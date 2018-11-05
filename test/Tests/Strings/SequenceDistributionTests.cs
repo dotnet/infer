@@ -579,7 +579,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             // The length of sequences sampled from this distribution must follow a geometric distribution
             StringAutomaton automaton = StringAutomaton.Zero();
             automaton.Start = automaton.AddState();
-            automaton.Start.EndWeight = Weight.FromValue(StoppingProbability);
+            automaton.Start.SetEndWeight(Weight.FromValue(StoppingProbability));
             automaton.Start.AddTransition('a', Weight.FromValue(1 - StoppingProbability), automaton.Start);
             StringDistribution dist = StringDistribution.FromWeightFunction(automaton);
 

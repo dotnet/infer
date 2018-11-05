@@ -226,7 +226,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             var func = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Zero();
             var end = func.Start.AddTransition(elementDistribution, Weight.One);
-            end.EndWeight = Weight.One;
+            end.SetEndWeight(Weight.One);
             return FromWorkspace(func);
         }
 
@@ -431,7 +431,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             for (int i = 0; i <= iterationBound; i++)
             {
                 bool isLengthAllowed = i >= minTimes;
-                state.EndWeight = isLengthAllowed ? Weight.One : Weight.Zero;
+                state.SetEndWeight(isLengthAllowed ? Weight.One : Weight.Zero);
                 if (i < iterationBound)
                 {
                     state = state.AddTransition(allowedElements, weight); // todo: clone set?    
