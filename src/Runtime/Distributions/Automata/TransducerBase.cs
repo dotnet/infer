@@ -565,7 +565,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// The first two elements of a tuple define the element distribution and the weight of a transition.
             /// The third element defines the outgoing state.
             /// </returns>
-            protected override IEnumerable<Tuple<TPairDistribution, Weight, Determinization.WeightedStateSet>> GetOutgoingTransitionsForDeterminization(
+            protected override IEnumerable<ValueTuple<TPairDistribution, Weight, Determinization.WeightedStateSet>> GetOutgoingTransitionsForDeterminization(
                 Determinization.WeightedStateSet sourceState)
             {
                 throw new NotImplementedException("Determinization is not yet supported for this type of automata.");

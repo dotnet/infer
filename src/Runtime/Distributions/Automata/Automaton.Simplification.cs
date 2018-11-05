@@ -144,11 +144,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var currentState = weightedStateSetToNewState[currentWeightedStateSet];
 
                 // Find out what transitions we should add for this state
-                IEnumerable<Tuple<TElementDistribution, Weight, Determinization.WeightedStateSet>> outgoingTransitionInfos =
+                IEnumerable<ValueTuple<TElementDistribution, Weight, Determinization.WeightedStateSet>> outgoingTransitionInfos =
                     this.GetOutgoingTransitionsForDeterminization(currentWeightedStateSet);
 
                 // For each transition to add
-                foreach (Tuple<TElementDistribution, Weight, Determinization.WeightedStateSet> outgoingTransitionInfo in outgoingTransitionInfos)
+                foreach (ValueTuple<TElementDistribution, Weight, Determinization.WeightedStateSet> outgoingTransitionInfo in outgoingTransitionInfos)
                 {
                     TElementDistribution elementDistribution = outgoingTransitionInfo.Item1;
                     Weight weight = outgoingTransitionInfo.Item2;
@@ -398,7 +398,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// The first two elements of a tuple define the element distribution and the weight of a transition.
         /// The third element defines the outgoing state.
         /// </returns>
-        protected abstract IEnumerable<Tuple<TElementDistribution, Weight, Determinization.WeightedStateSet>> GetOutgoingTransitionsForDeterminization(
+        protected abstract IEnumerable<ValueTuple<TElementDistribution, Weight, Determinization.WeightedStateSet>> GetOutgoingTransitionsForDeterminization(
             Determinization.WeightedStateSet sourceState);
 
         /// <summary>
