@@ -169,12 +169,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         weightedStateSetQueue.Enqueue(destWeightedStateSet);
 
                         // Compute its ending weight
-                        destinationState.EndWeight = Weight.Zero;
+                        destinationState.SetEndWeight(Weight.Zero);
                         foreach (KeyValuePair<int, Weight> stateIdWithWeight in destWeightedStateSet)
                         {
-                            destinationState.EndWeight = Weight.Sum(
+                            destinationState.SetEndWeight(Weight.Sum(
                                 destinationState.EndWeight,
-                                Weight.Product(stateIdWithWeight.Value, this.States[stateIdWithWeight.Key].EndWeight));
+                                Weight.Product(stateIdWithWeight.Value, this.States[stateIdWithWeight.Key].EndWeight)));
                         }
                     }
 
@@ -349,7 +349,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 State oldState = this.States[i];
                 State newState = funcWithoutStates.States[oldToNewStateIdMapping[i]];
-                newState.EndWeight = oldState.EndWeight;
+                newState.SetEndWeight(oldState.EndWeight);
                 for (int transitionIndex = 0; transitionIndex < oldState.TransitionCount; ++transitionIndex)
                 {
                     Transition transition = oldState.GetTransition(transitionIndex);
@@ -541,7 +541,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             copiedState = this.AddState();
-            copiedState.EndWeight = stateToCopy.EndWeight;
+            copiedState.SetEndWeight(stateToCopy.EndWeight);
             copiedStateCache.Add(stateToCopy.Index, copiedState);
 
             for (int i = 0; i < stateToCopy.TransitionCount; ++i)
@@ -784,7 +784,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
-                state.EndWeight = Weight.Sum(state.EndWeight, weight);
+                state.SetEndWeight(Weight.Sum(state.EndWeight, weight));
                 return true;
             }
 

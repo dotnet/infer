@@ -77,7 +77,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     "There must be at least one state in the strongly connected component.");
                 Debug.Assert(
                     statesInComponent.All(s => s != null && ReferenceEquals(s.Owner, statesInComponent[0].Owner)),
-                    "All the statesData must be valid and belong to the same automaton.");
+                    "All the states must be valid and belong to the same automaton.");
 
                 this.transitionFilter = transitionFilter;
                 this.statesInComponent = statesInComponent;

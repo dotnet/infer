@@ -468,7 +468,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            destState.EndWeight = srcSequenceIndex == srcSequenceLength ? mappingState.EndWeight : Weight.Zero;
+            destState.SetEndWeight(srcSequenceIndex == srcSequenceLength ? mappingState.EndWeight : Weight.Zero);
             return destState;
         }
 
@@ -541,7 +541,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            destState.EndWeight = Weight.Product(mappingState.EndWeight, srcState.EndWeight);
+            destState.SetEndWeight(Weight.Product(mappingState.EndWeight, srcState.EndWeight));
             return destState;
         }
 

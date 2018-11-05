@@ -23,7 +23,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>
         /// Is a thin wrapper around Automaton.stateData. Wraps each <see cref="StateData"/> into <see cref="State"/> on demand.
         /// </remarks>
-        public struct StateCollection : IEnumerable<State>
+        public struct StateCollection : IReadOnlyList<State>
         {
             /// <summary>
             /// Owner automaton of all states in collection.
@@ -59,8 +59,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public IEnumerator<State> GetEnumerator()
             {
-                var this_ = this;
-                return this.statesData.Select((data, index) => new State(this_.owner, index, data)).GetEnumerator();
+                var owner = this.owner;
+                return this.statesData.Select((data, index) => new State(owner, index, data)).GetEnumerator();
             }
 
             /// <summary>

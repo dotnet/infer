@@ -6,6 +6,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Runtime.Serialization;
 
     using Microsoft.ML.Probabilistic.Distributions;
@@ -50,10 +51,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Initializes a new instance of the <see cref="StateData"/> class.
             /// </summary>
-            public StateData()
-            {
-                this.EndWeight = Weight.Zero;
-            }
+            public StateData() => this.EndWeight = Weight.Zero;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="StateData"/> class.
@@ -125,7 +123,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The transition.</returns>
             public Transition GetTransition(int index)
             {
-                //Argument.CheckIfInRange(index >= 0 && index < this.transitionCount, "index", "An invalid transition index given.");
+                Debug.Assert(index >= 0 && index < this.transitionCount, nameof(index), "An invalid transition index given.");
                 return this.transitions[index];
             }
 
@@ -134,10 +132,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             /// <param name="index">The index of the transition to replace.</param>
             /// <param name="updatedTransition">The transition to replace with.</param>
-            public void SetTransition(int index, Transition updatedTransition)
-            {
+            public void SetTransition(int index, Transition updatedTransition) =>
                 this.transitions[index] = updatedTransition;
-            }
 
             /// <summary>
             /// Removes the transition with a given index.

@@ -32,7 +32,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// We don't store them in <see cref="StateData"/> to save some memoty. C# compiler and .NET jitter are good
         /// at optimizing wrapping where it is not needed.
         /// </remarks>
-        public struct State
+        public struct State : IEquatable<State>
         {
             internal readonly StateData Data;
 
@@ -87,20 +87,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// To overcome this issue special <see cref="SetEndWeight"/> method is added calling which is equivalent
             /// to calling property setter but is not rejected by compiler.
             /// </remarks>
-            public Weight EndWeight
-            {
-                get => this.Data.EndWeight;
-                set => this.Data.EndWeight = value;
-            }
+            public Weight EndWeight => this.Data.EndWeight;
 
             /// <summary>
-            /// Sets the <see cref="EndWeight"/> property of State. See <see cref="EndWeight"/> remarks on to
-            /// why property setter can not always be used.
+            /// Sets the <see cref="EndWeight"/> property of State.
+            ///
+            /// Because <see cref="State"/> is a struct, trying to set <see cref="EndWeight"/> on it
+            /// (if property setter was provided) would result in compilation error. Compiler isn't
+            /// smart enough to see that setting property just updates the value in referenced <see cref="Data"/>.
+            /// Having a method call doesn't create this problem.
             /// </summary>
             /// <param name="weight">New end weight.</param>
             public void SetEndWeight(Weight weight)
             {
-                this.EndWeight = weight;
+                this.Data.EndWeight = weight;
             }
 
             /// <summary>
@@ -127,12 +127,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Compares 2 states for inequality.
             /// </summary>
-            public static bool operator !=(State a, State b) => a.Data != b.Data;
+            public static bool operator !=(State a, State b) => !(a == b);
 
             /// <summary>
             /// Compares 2 states for equality.
             /// </summary>
-            public override bool Equals(object obj) => obj is State that && this.Data == that.Data;
+            public bool Equals(State that) => this == that;
+
+            /// <summary>
+            /// Compares 2 states for equality.
+            /// </summary>
+            public override bool Equals(object obj) => obj is State that && this.Equals(that);
 
             /// <summary>
             /// Returns HashCode of this state.
