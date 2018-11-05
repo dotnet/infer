@@ -12,7 +12,7 @@
     <NoWarn>1591</NoWarn>
     <RootNamespace>Microsoft.ML.Probabilistic</RootNamespace>
 		<RoslynSupport>true</RoslynSupport>
-		<CodeDomSupport>true</CodeDomSupport>
+		<CodeDomSupport>false</CodeDomSupport>
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
