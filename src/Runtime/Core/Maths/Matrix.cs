@@ -99,7 +99,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// Gets/sets the matrix's source array
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
-        [NonSerializedProperty]
+        [IgnoreDataMember]
         public double[] SourceArray
         {
             get { return data; }

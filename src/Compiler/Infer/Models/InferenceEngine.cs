@@ -644,7 +644,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         internal void OnProgressChanged(object sender, ProgressChangedEventArgs progress)
         {
-            if (ProgressChanged != null) ProgressChanged(this, new InferenceProgressEventArgs() { Iteration = progress.Iteration, Algorithm = (IGeneratedAlgorithm)sender });
+            ProgressChanged?.Invoke(this, new InferenceProgressEventArgs() { Iteration = progress.Iteration, Algorithm = (IGeneratedAlgorithm)sender });
             if (!ShowProgress) return;
             int iteration = progress.Iteration + 1;
             if (iteration == 1) Console.WriteLine("Iterating: ");
@@ -663,7 +663,7 @@ namespace Microsoft.ML.Probabilistic.Models
 
         internal void OnMessageUpdated(object sender, MessageUpdatedEventArgs messageEvent)
         {
-            if (MessageUpdated != null) MessageUpdated(sender as IGeneratedAlgorithm, messageEvent);
+            MessageUpdated?.Invoke(sender as IGeneratedAlgorithm, messageEvent);
         }
 
         /// <summary>

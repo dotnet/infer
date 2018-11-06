@@ -5,6 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Math;
@@ -166,7 +167,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Gets or sets the distribution as a point value integer array. This is a sparse method - the integers specify
         /// the indices where elements are true - all other elements are false.
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public IList<int> Point
         {
             get
@@ -188,7 +189,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Gets a value indicating whether this is a point mass or not.
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get
@@ -200,7 +201,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Gets a value representing the size of the discrete domain.
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public int Dimension
         {
             get

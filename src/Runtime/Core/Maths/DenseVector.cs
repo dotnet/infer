@@ -195,7 +195,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// Gets/sets source array for the vector
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
-        [NonSerializedProperty]
+        [IgnoreDataMember]
         public double[] SourceArray
         {
             get { return data; }
@@ -412,7 +412,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <summary>
         /// Gets/sets the start index in the source array
         /// </summary>
-        [NonSerializedProperty]
+        [IgnoreDataMember]
         public int Start
         {
             get { return start; }

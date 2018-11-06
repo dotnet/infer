@@ -42,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// The dimension of this discrete distribution.
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public int Dimension
         {
             get { return disc.Dimension; }
@@ -284,7 +284,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Point property
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public T Point
         {
             get { return ConvertFromInt(disc.Point); }
@@ -294,7 +294,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Returns true if the distribution is a point mass.
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { return disc.IsPointMass; }

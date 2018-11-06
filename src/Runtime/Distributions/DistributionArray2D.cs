@@ -294,7 +294,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Sets/gets the 2-D distribution array as a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public DomainType[,] Point
         {
             get
@@ -328,7 +328,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// True if the distribution is a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get

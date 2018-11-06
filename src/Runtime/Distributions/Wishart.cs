@@ -302,7 +302,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Asks whether the instance is a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get
@@ -323,7 +323,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Sets/gets this instance as a point-mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public PositiveDefiniteMatrix Point
         {
             get
@@ -342,7 +342,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Dimension of this distribution
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public int Dimension
         {
             get
@@ -1058,7 +1058,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// contiguously in the SourceArray as Rate matrix followed by shape
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays")]
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public double[] SourceArray
         {
             get
