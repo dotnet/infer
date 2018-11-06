@@ -937,7 +937,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// It is essentially a set of (stateId, weight) pairs of the source automaton, where each state id is unique.
             /// Supports a quick lookup of the weight by state id.
             /// </summary>
-            public class WeightedStateSet : IEnumerable<KeyValuePair<int, Weight>>
+            public class WeightedStateSet : IReadOnlyCollection<KeyValuePair<int, Weight>>
             {
                 /// <summary>
                 /// A mapping from state ids to weights.
@@ -1080,7 +1080,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return builder.ToString();
                 }
 
-                #region IEnumerable implementation
+                #region IReadOnlyCollection implementation
 
                 /// <summary>
                 /// Gets the enumerator.
@@ -1103,6 +1103,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     return this.GetEnumerator();
                 }
+
+                public int Count => this.stateIdToWeight.Count;
 
                 #endregion
             }

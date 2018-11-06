@@ -919,10 +919,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// See <see cref="ProbabilityOutsideRanges"/> for the probability of characters not covered by the returned ranges.
         /// </remarks>
         /// <returns>An array of character ranges with associated probabilities.</returns>
-        public CharRange[] GetRanges()
+        public IReadOnlyList<CharRange> GetRanges()
         {
             // TODO: use immutable arrays and get rid of clone
-            return (CharRange[])this.storage.Ranges.Clone();
+            return this.storage.Ranges.AsReadOnly();
         }
 
         /// <summary>

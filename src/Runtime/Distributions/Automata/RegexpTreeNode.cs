@@ -307,13 +307,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static void AppendRangesForDiscreteChar(StringBuilder resultBuilder, DiscreteChar discreteChar)
         {
             var ranges = discreteChar.GetRanges();
-            if (ranges.Length > 1)
+            if (ranges.Count > 1)
             {
                 resultBuilder.Append('[');
                 ranges.ForEach(range => AppendCharacterRange(resultBuilder, range));
                 resultBuilder.Append(']');
             }
-            else if (ranges.Length == 1)
+            else if (ranges.Count == 1)
             {
                 AppendCharacterRange(resultBuilder, ranges.Single());
             }
