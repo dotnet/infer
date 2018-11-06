@@ -34,10 +34,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="sequence">The list.</param>
         /// <returns>The length of the list.</returns>
-        public int GetLength(TList sequence)
-        {
-            return sequence.Count;
-        }
+        public int GetLength(TList sequence) => sequence.Count;
 
         /// <summary>
         /// Gets the element at a given position in a given list.
@@ -45,10 +42,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="sequence">The list.</param>
         /// <param name="index">The position.</param>
         /// <returns>The element at the given position in the list.</returns>
-        public TElement GetElement(TList sequence, int index)
-        {
-            return sequence[index];
-        }
+        public TElement GetElement(TList sequence, int index) => sequence[index];
 
         /// <summary>
         /// Checks if given lists are equal.
@@ -57,10 +51,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="sequence1">The first list.</param>
         /// <param name="sequence2">The second list.</param>
         /// <returns><see langword="true"/> if the lists are equal, <see langword="false"/> otherwise.</returns>
-        public bool SequencesAreEqual(TList sequence1, TList sequence2)
-        {
-            return Util.ValueEquals(sequence1, sequence2);
-        }
+        public bool SequencesAreEqual(TList sequence1, TList sequence2) => Util.ValueEquals(sequence1, sequence2);
 
         /// <summary>
         /// Creates a list by copying the first list and then appending the second list to it.

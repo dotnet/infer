@@ -10,6 +10,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Distributions.Automata;
     using Microsoft.ML.Probabilistic.Math;
+    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Contains a set of tests for automata with non-trivial loops,
@@ -543,7 +544,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void NormalizeWithInfiniteEpsilon1()
         {
             StringAutomaton automaton = StringAutomaton.Zero();
-            automaton.Start.AddTransition('a', Weight.One).AddSelfTransition(null, Weight.FromValue(3)).SetEndWeight(Weight.One);
+            automaton.Start.AddTransition('a', Weight.One).AddSelfTransition(Option.None, Weight.FromValue(3)).SetEndWeight(Weight.One);
 
             // The automaton takes an infinite value on "a", and yet the normalization must work
             Assert.True(automaton.TryNormalizeValues());
@@ -559,8 +560,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void NormalizeWithInfiniteEpsilon2()
         {
             StringAutomaton automaton = StringAutomaton.Zero();
-            automaton.Start.AddTransition('a', Weight.One).AddSelfTransition(null, Weight.FromValue(2)).SetEndWeight(Weight.One);
-            automaton.Start.AddTransition('b', Weight.One).AddSelfTransition(null, Weight.FromValue(1)).SetEndWeight(Weight.One);
+            automaton.Start.AddTransition('a', Weight.One).AddSelfTransition(Option.None, Weight.FromValue(2)).SetEndWeight(Weight.One);
+            automaton.Start.AddTransition('b', Weight.One).AddSelfTransition(Option.None, Weight.FromValue(1)).SetEndWeight(Weight.One);
 
             // "a" branch infinitely dominates over the "b" branch
             Assert.True(automaton.TryNormalizeValues());
@@ -715,7 +716,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         private static double GetLogNormalizerByGetValue(StringAutomaton automaton)
         {
             var epsilonAutomaton = new StringAutomaton();
-            epsilonAutomaton.SetToFunction(automaton, (dist, weight, group) => Tuple.Create<DiscreteChar, Weight>(null, weight)); // Convert all the edges to epsilon edges
+            epsilonAutomaton.SetToFunction(automaton, (dist, weight, group) => Tuple.Create<Option<DiscreteChar>, Weight>(Option.None, weight)); // Convert all the edges to epsilon edges
             return epsilonAutomaton.GetLogValue(string.Empty); // Now this will be exactly the normalizer
         }
 

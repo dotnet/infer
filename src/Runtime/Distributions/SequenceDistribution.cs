@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         Sampleable<TSequence>
         where TSequence : class, IEnumerable<TElement>
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
         where TWeightFunction : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>, new()
         where TThis : SequenceDistribution<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis>, new()
     {
@@ -397,7 +397,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created distribution.</returns>
         public static TThis Repeat(TElementDistribution allowedElements, int minTimes = 1, int? maxTimes = null, DistributionKind uniformity = DistributionKind.UniformOverValue)
         {
-            Argument.CheckIfNotNull(allowedElements, "allowedElements");
+            Argument.CheckIfNotNull(allowedElements, nameof(allowedElements));
             Argument.CheckIfInRange(minTimes >= 0, "minTimes", "The minimum number of times to repeat must be non-negative.");
             Argument.CheckIfInRange(!maxTimes.HasValue || maxTimes.Value >= 0, "maxTimes", "The maximum number of times to repeat must be non-negative.");
             Argument.CheckIfValid(!maxTimes.HasValue || minTimes <= maxTimes.Value, "The minimum length cannot be greater than the maximum length.");
@@ -774,7 +774,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public void AppendInPlace(TElementDistribution elementDistribution, int group = 0)
         {
-            Argument.CheckIfNotNull(elementDistribution, "elementDistribution");
+            Argument.CheckIfValid(elementDistribution != null, nameof(elementDistribution));
             
             this.AppendInPlace(SingleElement(elementDistribution), group);
         }
@@ -1453,7 +1453,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     {
                         if (!transition.IsEpsilon)
                         {
-                            sampledElements.Add(transition.ElementDistribution.Sample());
+                            sampledElements.Add(transition.ElementDistribution.Value.Sample());
                         }
 
                         currentState = dist.sequenceToWeight.States[transition.DestinationStateIndex];

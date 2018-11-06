@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// </remarks>
     [Quality(QualityBand.Experimental)]
     [Serializable]
-    public sealed class DiscreteChar
+    public struct DiscreteChar
         : IDistribution<char>, SettableTo<DiscreteChar>, SettableToProduct<DiscreteChar>, SettableToRatio<DiscreteChar>, SettableToPower<DiscreteChar>,
         SettableToWeightedSumExact<DiscreteChar>, SettableToPartialUniform<DiscreteChar>,
         CanGetLogAverageOf<DiscreteChar>, CanGetLogAverageOfPower<DiscreteChar>, CanGetAverageLog<DiscreteChar>, CanGetMode<char>,
@@ -122,12 +122,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         [DataMember]
         private Storage storage;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscreteChar"/> class
-        /// by setting it to a uniform distribution.
-        /// </summary>
-        public DiscreteChar() => this.storage = StorageCache.Uniform;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscreteChar"/> class
@@ -492,6 +486,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </returns>
         public bool IsUniform()
         {
+            if (this.storage == null)
+            {
+                return false;
+            }
+
             foreach (var range in this.storage.Ranges)
             {
                 if (Math.Abs(range.Probability - UniformProb) > Eps)
@@ -520,8 +519,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="distribution2">The second distribution.</param>
         public void SetToProduct(DiscreteChar distribution1, DiscreteChar distribution2)
         {
-            Argument.CheckIfNotNull(distribution1, "distribution1");
-            Argument.CheckIfNotNull(distribution2, "distribution2");
+            Argument.CheckIfNotNull(distribution1.storage, nameof(distribution1));
+            Argument.CheckIfNotNull(distribution2.storage, nameof(distribution2));
 
             var probabilityOutsideRanges = distribution1.storage.ProbabilityOutsideRanges * distribution2.storage.ProbabilityOutsideRanges;
             var builder = new StorageBuilder(probabilityOutsideRanges);
@@ -546,8 +545,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="distribution2">The second distribution.</param>
         public void SetToSum(double weight1, DiscreteChar distribution1, double weight2, DiscreteChar distribution2)
         {
-            Argument.CheckIfNotNull(distribution1, "distribution1");
-            Argument.CheckIfNotNull(distribution2, "distribution2");
+            Argument.CheckIfNotNull(distribution1.storage, nameof(distribution1));
+            Argument.CheckIfNotNull(distribution2.storage, nameof(distribution2));
 
             if (weight1 + weight2 == 0)
             {
@@ -599,7 +598,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The logarithm of the probability that distributions would draw the same sample.</returns>
         public double GetLogAverageOf(DiscreteChar distribution)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
+            Argument.CheckIfNotNull(distribution.storage, nameof(distribution));
 
             var result = CharRangePair.CombinedRanges(this, distribution)
                 .Sum(pair => pair.Probability1 * pair.Probability2 * (pair.EndExclusive - pair.StartInclusive));
@@ -618,7 +617,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="distribution">The distribution which support will be used to setup the current distribution.</param>
         public void SetToPartialUniformOf(DiscreteChar distribution)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
+            Argument.CheckIfNotNull(distribution.storage, nameof(distribution));
 
             var builder = new StorageBuilder(distribution.storage.ProbabilityOutsideRanges > Eps ? 1 : 0);
             foreach (var range in distribution.storage.Ranges)
@@ -670,8 +669,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="forceProper">Specifies whether the ratio must be proper.</param>
         public void SetToRatio(DiscreteChar numerator, DiscreteChar denominator, bool forceProper = false)
         {
-            Argument.CheckIfNotNull(numerator, "numerator");
-            Argument.CheckIfNotNull(denominator, "denominator");
+            Argument.CheckIfNotNull(numerator.storage, nameof(numerator));
+            Argument.CheckIfNotNull(denominator.storage, nameof(denominator));
 
             var probabilityOutsideRanges = DivideProb(numerator.storage.ProbabilityOutsideRanges, denominator.storage.ProbabilityOutsideRanges);
             var builder = new StorageBuilder(probabilityOutsideRanges);
@@ -695,7 +694,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="power">The power.</param>
         public void SetToPower(DiscreteChar distribution, double power)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
+            Argument.CheckIfNotNull(distribution.storage, nameof(distribution));
 
             var builder = new StorageBuilder(0);
 
@@ -739,7 +738,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public double GetLogAverageOfPower(DiscreteChar distribution, double power)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
+            Argument.CheckIfNotNull(distribution.storage, nameof(distribution));
 
             double result = 0;
             foreach (var pair in CharRangePair.CombinedRanges(this, distribution))
@@ -763,7 +762,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <remarks>This is also known as the cross entropy.</remarks>
         public double GetAverageLog(DiscreteChar distribution)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
+            Argument.CheckIfNotNull(distribution.storage, nameof(distribution));
 
             double result = 0;
             foreach (var pair in CharRangePair.CombinedRanges(this, distribution, true))
@@ -866,7 +865,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="distribution">The distribution to set this distribution to.</param>
         public void SetTo(DiscreteChar distribution)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
+            Argument.CheckIfNotNull(distribution.storage, nameof(distribution));
             this.storage = distribution.storage;
         }
 
@@ -994,7 +993,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="distribution">The distribution to swap this distribution with.</param>
         public void SwapWith(DiscreteChar distribution)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
+            Argument.CheckIfNotNull(distribution.storage, nameof(distribution));
             Util.Swap(ref this.storage, ref distribution.storage);
         }
 
@@ -1478,8 +1477,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Reads a discrete character.
         /// </summary>
-        public static DiscreteChar Read(Func<int> readInt32, Func<double> readDouble)
-            => new DiscreteChar(Storage.Read(readInt32, readDouble));
+        public static DiscreteChar Read(Func<int> readInt32, Func<double> readDouble) =>
+            new DiscreteChar(Storage.Read(readInt32, readDouble));
 
         /// <summary>
         /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter.
@@ -1487,7 +1486,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         private DiscreteChar(SerializationInfo info, StreamingContext context)
         {
             this.storage = (Storage)info.GetValue(nameof(this.storage), typeof(Storage));
-            if (this.storage.IsPointMass)
+            if (this.storage != null && this.storage.IsPointMass)
             {
                 // reuse storage from cache
                 this.storage = Storage.CreatePoint((char)this.storage.Ranges[0].StartInclusive, this.storage.Ranges);
@@ -1702,7 +1701,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public static Storage Read(Func<int> readInt32, Func<double> readDouble)
             {
                 var propertyMask = new BitVector32(readInt32());
-                var res = new DiscreteChar();
                 var idx = 0;
                 var hasRanges = propertyMask[1 << idx++];
                 CharRange[] ranges = null;

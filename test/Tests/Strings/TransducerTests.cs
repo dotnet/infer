@@ -10,6 +10,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Distributions.Automata;
+    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Tests for transducers.
@@ -26,8 +27,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringAutomaton.MaxStateCount = 1200000; // Something big
             StringAutomaton bigAutomaton = StringAutomaton.Zero();
             bigAutomaton.AddStates(StringAutomaton.MaxStateCount - bigAutomaton.States.Count);
-            Func<DiscreteChar, Weight, Tuple<PairDistribution<char, DiscreteChar>, Weight>> transitionConverter =
-                (dist, weight) => Tuple.Create(PairDistribution<char, DiscreteChar>.FromFirstSecond(dist, dist), weight);
+            Func<DiscreteChar, Weight, Tuple<Option<PairDistribution<char, DiscreteChar>>, Weight>> transitionConverter =
+                (dist, weight) => Tuple.Create(Option.Some(PairDistribution<char, DiscreteChar>.FromFirstSecond(dist, dist)), weight);
             
             Assert.Throws<AutomatonTooLargeException>(() => StringTransducer.FromAutomaton(bigAutomaton, transitionConverter));
 

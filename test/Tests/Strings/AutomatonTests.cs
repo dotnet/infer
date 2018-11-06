@@ -16,6 +16,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Distributions.Automata;
     using Microsoft.ML.Probabilistic.Math;
+    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Tests for weighted finite state automata.
@@ -26,7 +27,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// Tests cloning an automaton.
         /// </summary>
         [Fact]
-        [Trait("Category", "BadTest")] // Element distributions aren't currently being cloned 
         [Trait("Category", "StringInference")]
         public void Clone()
         {
@@ -36,9 +36,15 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             Assert.Equal(automaton, clone);
 
-            // 'clone' must have its own copy of the element distribution
-            automaton.Start.GetTransition(0).ElementDistribution.SetTo(DiscreteChar.OneOf('a', 'b'));
+            // since DiscreteChar is a struct, the only possible way for updating it on some
+            // transition is copying stuff out, changing, and the copying in
+            var transition = automaton.Start.GetTransition(0);
+            var dist = transition.ElementDistribution.Value;
+            dist.SetTo(DiscreteChar.OneOf('a', 'b'));
+            transition.ElementDistribution = dist;
+            automaton.Start.SetTransition(0, transition);
 
+            // 'clone' must have its own copy of the element distribution
             Assert.NotEqual(automaton, clone);
         }
 
@@ -857,8 +863,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () =>
                 StringAutomaton.FromStates(
                     new[]
-        {
-                            new StringAutomaton.State(0, new[] { new StringAutomaton.Transition(null, Weight.One, 2) }, Weight.One),
+                        {
+                            new StringAutomaton.State(0, new[] { new StringAutomaton.Transition(Option.None, Weight.One, 2) }, Weight.One),
                             new StringAutomaton.State(1, new StringAutomaton.Transition[0], Weight.One)
                         },
                     new StringAutomaton.State(1, new StringAutomaton.Transition[0], Weight.One)));

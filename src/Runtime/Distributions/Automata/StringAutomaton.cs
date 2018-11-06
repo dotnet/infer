@@ -137,7 +137,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static void AddTransitionCharSegmentBounds(
             Transition transition, Weight sourceStateResidualWeight, List<Tuple<int, TransitionCharSegmentBound>> bounds)
         {
-            var probs = (PiecewiseVector)transition.ElementDistribution.GetProbs();
+            var probs = (PiecewiseVector)transition.ElementDistribution.Value.GetProbs();
             int commonValueStart = char.MinValue;
             Weight commonValue = Weight.FromValue(probs.CommonValue);
             Weight weightBase = Weight.Product(transition.Weight, sourceStateResidualWeight);
