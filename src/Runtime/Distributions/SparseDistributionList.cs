@@ -68,7 +68,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Gets or sets the instance as a point mass.
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public ISparseList<TDomain> Point
         {
             get
@@ -111,7 +111,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Gets a value indicating whether the instance is a point mass.
         /// </summary>
         /// <returns>True if all elements of the list are point masses, false otherwise.</returns>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get

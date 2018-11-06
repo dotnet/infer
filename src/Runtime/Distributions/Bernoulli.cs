@@ -115,7 +115,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Whether the distribution is a point mass (true with probability 1 or false
         /// with probability 1)
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { return Double.IsInfinity(LogOdds); }
@@ -124,7 +124,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Gets/sets the distribution as a point
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool Point
         {
             get { return Double.IsPositiveInfinity(LogOdds); }

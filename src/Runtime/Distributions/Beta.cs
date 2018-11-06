@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// The sum of TrueCount and FalseCount.
         /// </summary>
-        [NonSerializedProperty]
+        [IgnoreDataMember]
         public double TotalCount
         {
             get { return TrueCount + FalseCount; }
@@ -312,7 +312,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Gets/sets the instance as a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public double Point
         {
             get { return TrueCount; }
@@ -327,7 +327,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Whether the instance is a point mass beta distribution
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { return Double.IsPositiveInfinity(FalseCount); }

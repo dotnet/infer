@@ -229,7 +229,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Alpha - along with beta, this encodes the posterior means
         /// and covariances of the Sparse GP
         /// </summary>
-        [NonSerializedProperty]
+        [IgnoreDataMember]
         public Vector Alpha
         {
             get
@@ -252,7 +252,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Beta - along with alpha, this encodes the posterior means
         /// and covariances of the Sparse GP
         /// </summary>
-        [NonSerializedProperty]
+        [IgnoreDataMember]
         public PositiveDefiniteMatrix Beta
         {
             get
@@ -280,7 +280,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// m(B). This is a calculated Vector maintained
         /// by the class
         /// </summary>
-        [NonSerializedProperty]
+        [IgnoreDataMember]
         public Vector Mean_B
         {
             get
@@ -313,7 +313,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// var(B, B). This is a calculated matrix maintained
         /// by the class
         /// </summary>
-        [NonSerializedProperty]
+        [IgnoreDataMember]
         public PositiveDefiniteMatrix Var_B_B
         {
             get
@@ -808,7 +808,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Sets or Gets a point. If not a point function,
         /// the get returns the mean function of the sparse GP
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public IFunction Point
         {
             get { return pointFunc; }
@@ -822,7 +822,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Asks the distribution whether it is a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { return (pointFunc == null ? false : true); }

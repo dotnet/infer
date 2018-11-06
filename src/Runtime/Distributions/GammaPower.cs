@@ -290,7 +290,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Asks whether the instance is a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { return (Shape == Double.PositiveInfinity); }
@@ -308,7 +308,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Sets/gets the instance as a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public double Point
         {
             get

@@ -85,7 +85,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Dimension of the unnormalised discrete distribution
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public int Dimension
         {
             get { return logProb.Count; }
@@ -95,7 +95,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Sets/gets this distribution as a point distribution
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public int Point
         {
             get
@@ -116,7 +116,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Whether or not this instance is a point mass.
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { return (Dimension <= 1) || Double.IsPositiveInfinity(logProb[0]); }

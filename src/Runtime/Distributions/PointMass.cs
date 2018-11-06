@@ -67,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Always returns true.
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { return true; }

@@ -533,7 +533,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Sets/gets this distribution as a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public Vector Point
         {
             get { return PseudoCount; }
@@ -547,7 +547,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Whether this Dirichlet is a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { return Double.IsPositiveInfinity(TotalCount); }

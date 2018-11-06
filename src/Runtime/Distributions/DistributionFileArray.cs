@@ -14,6 +14,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using Factors.Attributes;
     using Utilities;
     using Microsoft.ML.Probabilistic.Serialization;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// A distribution over an array of type <typeparamref name="DomainType"/>, where each element is independent and has distribution of type <typeparamref name="T"/>, all stored in a file.
@@ -134,14 +135,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return this.All(item => item.IsUniform());
         }
 
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public DomainType[] Point
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
 
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { throw new NotImplementedException(); }

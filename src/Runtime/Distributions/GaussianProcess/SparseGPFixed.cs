@@ -38,7 +38,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Prior distribution to which basis points are added.
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public IGaussianProcess Prior
         {
             get { return prior; }
@@ -98,7 +98,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// List of basis vectors
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public IList<Vector> Basis
         {
             get { return basis; }
