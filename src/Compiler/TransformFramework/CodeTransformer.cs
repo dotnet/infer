@@ -106,6 +106,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         protected string language = "C#";
         protected bool runningOnNetCore = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription.StartsWith(".NET Core", StringComparison.OrdinalIgnoreCase);
         protected bool runningOnMono = Type.GetType("Mono.Runtime") != null;
+        protected bool isBuilding = Assembly.GetEntryAssembly().GetName().Name == "TrueSkill.Models.Generator";
 
         /// <summary>
         /// If true, source code files are written out for each transformed class.
@@ -297,10 +298,14 @@ namespace Microsoft.ML.Probabilistic.Compiler
                         cr = CompileWithRoslyn(filenames, sources, referencedAssemblies);
                         break;
                     case CompilerChoice.Auto:
-                        if (runningOnNetCore || runningOnMono)
+                        if (runningOnNetCore || runningOnMono || isBuilding)
+                        {
                             cr = CompileWithRoslyn(filenames, sources, referencedAssemblies);
+                        }
                         else
+                        {
                             cr = CompileWithCodeDom(filenames, sources, referencedAssemblies);
+                        }
                         break;
                     default:
                         throw new NotSupportedException($"Compiler choice {compilerChoice} is not supported.");
