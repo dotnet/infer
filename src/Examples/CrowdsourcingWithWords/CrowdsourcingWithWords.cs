@@ -4,7 +4,8 @@
 
 /* Language Understanding in the Wild: Combining Crowdsourcing and Machine Learning
 * 
-* Software to run the experiment presented in the paper "Language Understanding in the Wind: Combining Crowdsourcing and Machine Learning" by Simpson et. al, WWW15
+* Software to run the experiment presented in the paper "Language Understanding in the Wind: Combining Crowdsourcing and Machine Learning" by Simpson et. al, WWW15.
+* The data in this example comes from https://data.world/crowdflower/weather-sentiment, licensed as "Public Domain".
 * To run it on your data:
 * - Replace Data/weatherTweets.tsv with tab-separated fields <WorkerId, TaskId, Worker label, Text, Gold label (optional)>
 * - Replace Data/stopwords.txt with the list of stop words, one for each line
