@@ -36,7 +36,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public struct Transition
         {
             //// This class has been made inner so that the user doesn't have to deal with a lot of generic parameters on it.
-            
+
+            /// Note the order of fields. This struct is densely packed and should take only
+            /// 24 bytes to store all its fields in case of StringAutomaton.Transition.
+            /// Think wisely before you decide to reorder fields or change their types.
+
+            [DataMember]
+            private int destinationStateIndex;
+
+            [DataMember]
+            private short group;
+
+            [DataMember]
+            private short hasElementDistribution;
+
+            [DataMember]
+            private TElementDistribution elementDistribution;
+
+            [DataMember]
+            private Weight weight;
+
             /// <summary>
             /// Initializes a new instance of the <see cref="Transition"/> struct.
             /// </summary>
@@ -64,33 +83,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets or sets the destination state index.
             /// </summary>
-            [DataMember]
-            public int DestinationStateIndex { get; set; }
+            public int DestinationStateIndex
+            {
+                get => this.destinationStateIndex;
+                set => this.destinationStateIndex = value;
+            }
 
             /// <summary>
             /// Gets or sets the group this transition belongs to.
             /// </summary>
-            [DataMember]
-            private short group;
-
             public int Group
             {
                 get => this.group;
                 set => this.group = (short)value;
             }
-
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <remarks>
-            /// Chosen type `short` because we want this field to take 2 bytes for structure padding reasons.
-            /// `bool` takes 4 bytes in CLR!
-            /// </remarks>
-            [DataMember]
-            private short hasElementDistribution;
-
-            [DataMember]
-            private TElementDistribution elementDistribution;
 
             /// <summary>
             /// Gets the element distribution for this transition.
@@ -113,8 +119,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets or sets the weight associated with this transition.
             /// </summary>
-            [DataMember]
-            public Weight Weight { get; set; }
+            public Weight Weight
+            {
+                get => this.weight;
+                set => this.weight = value;
+            }
 
             /// <summary>
             /// Replaces the configuration of this transition with the configuration of a given transition.
