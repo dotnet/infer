@@ -6,7 +6,7 @@
 * 
 * Software to run the experiment presented in the paper "Language Understanding in the Wind: Combining Crowdsourcing and Machine Learning" by Simpson et. al, WWW15
 * To run it on your data:
-* - Replace Data/labels.tsv with tab-separated fields <WorkerId, TaskId, Worker label, Text, Gold label (optional)>
+* - Replace Data/weatherTweets.tsv with tab-separated fields <WorkerId, TaskId, Worker label, Text, Gold label (optional)>
 * - Replace Data/stopwords.txt with the list of stop words, one for each line
 */
 
@@ -23,7 +23,7 @@ namespace CrowdsourcingWithWords
         /// </summary>
         public static void Main()
         {
-			var data = Datum.LoadData(Path.Combine("Data", "weatherTweets.tsv"));
+			var data = Datum.LoadData(Path.Combine("Data", "weatherTweets.tsv.gz"));
 
 			// Run model and get results
 			var VocabularyOnSubData = ResultsWords.BuildVocabularyOnSubdata((List<Datum>)data);

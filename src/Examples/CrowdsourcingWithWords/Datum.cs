@@ -2,23 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-/* Language Understanding in the Wild: Combining Crowdsourcing and Machine Learning
-* 
-* Software to run the experiment presented in the paper "Language Understanding in the Wind: Combining Crowdsourcing and Machine Learning" by Simpson et. al, WWW15
-* To run it on your data:
-* - Replace Data/labels.tsv with tab-separated fields <WorkerId, TaskId, Worker label, Text, Gold label (optional)>
-* - Replace Data/stopwords.txt with the list of stop words, one for each line
-*/
-
 namespace CrowdsourcingWithWords
 {
-	using System.Collections.Generic;
-	using System.IO;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Linq;
 
-	/// <summary>
-	/// This class represents a single datum, and has methods to read in data.
-	/// </summary>
-	public class Datum
+    /// <summary>
+    /// This class represents a single datum, and has methods to read in data.
+    /// </summary>
+    public class Datum
     {
         /// <summary>
         /// The worker id.
@@ -54,32 +48,46 @@ namespace CrowdsourcingWithWords
         public static IList<Datum> LoadData(string filename, int maxLength = short.MaxValue)
         {
             var result = new List<Datum>();
-            using (var reader = new StreamReader(filename))
+            foreach (string line in ReadLinesGzip(filename).Take(maxLength))
             {
-                string line;
-                while ((line = reader.ReadLine()) != null && result.Count < maxLength)
+                var strarr = line.Split('\t');
+                int length = strarr.Length;
+
+                var datum = new Datum
                 {
-                    var strarr = line.Split('\t');
-                    int length = strarr.Length;
+                    WorkerId = strarr[0],
+                    TaskId = strarr[1],
+                    WorkerLabel = int.Parse(strarr[2]),
+                    BodyText = strarr[3]
+                };
 
-                    var datum = new Datum
-                    {
-                        WorkerId = strarr[0],
-                        TaskId = strarr[1],
-                        WorkerLabel = int.Parse(strarr[2]),
-                        BodyText = strarr[3]
-                    };
+                if (length >= 5)
+                    datum.GoldLabel = int.Parse(strarr[4]);
+                else
+                    datum.GoldLabel = null;
 
-                    if (length >= 5)
-                        datum.GoldLabel = int.Parse(strarr[4]);
-                    else
-                        datum.GoldLabel = null;
-
-                    result.Add(datum);
-                }
+                result.Add(datum);
             }
 
             return result;
+        }
+
+        public static IEnumerable<string> ReadLinesGzip(string fileName)
+        {
+            using (Stream stream = File.Open(fileName, FileMode.Open))
+            {
+                Stream gz = (Path.GetExtension(fileName) == ".gz") ? new GZipStream(stream, CompressionMode.Decompress) : stream;
+                using (var streamReader = new StreamReader(gz))
+                {
+                    while (true)
+                    {
+                        string line = streamReader.ReadLine();
+                        if (line == null)
+                            break;
+                        yield return line;
+                    }
+                }
+            }
         }
     }
 }

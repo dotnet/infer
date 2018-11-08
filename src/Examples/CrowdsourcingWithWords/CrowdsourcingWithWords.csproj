@@ -68,13 +68,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\labels.tsv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Data\stopwords.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\weatherTweets.tsv">
+    <None Update="Data\weatherTweets.tsv.gz">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
