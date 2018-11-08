@@ -18,44 +18,50 @@ namespace ImageClassifier
         VariableArray<Vector> trainingItems, testItems;
         Variable<Vector> weights;
         Variable<VectorGaussian> weightPosterior;
-        InferenceEngine trainEngine, testEngine;
-        bool singleModel = false;
+        InferenceEngine engine;
+        /// <summary>
+        /// If true, train and test data will be part of a single model.  This is less efficient, but simpler.
+        /// </summary>
+        const bool singleModel = false;
 
         public BayesPointMachine(int nFeatures, double noise)
         {
             // Training model
-            nTrain = Variable.New<int>().Named("nTrain");
-            Range trainItem = new Range(nTrain).Named("trainItem");
-            trainingLabels = Variable.Array<bool>(trainItem).Named("trainingLabels");
-            trainingItems = Variable.Array<Vector>(trainItem).Named("trainingItems");
-            weights = Variable.Random(new VectorGaussian(Vector.Zero(nFeatures), PositiveDefiniteMatrix.Identity(nFeatures))).Named("weights");
+            nTrain = Variable.Observed(default(int)).Named(nameof(nTrain));
+            Range trainItem = new Range(nTrain);
+            trainItem.Name = nameof(trainItem);
+            trainingLabels = Variable.Observed(default(bool[]), trainItem).Named(nameof(trainingLabels));
+            trainingItems = Variable.Observed(default(Vector[]), trainItem).Named(nameof(trainingItems));
+            weights = Variable.Random(new VectorGaussian(Vector.Zero(nFeatures), PositiveDefiniteMatrix.Identity(nFeatures))).Named(nameof(weights));
             trainingLabels[trainItem] = Variable.IsPositive(Variable.GaussianFromMeanAndVariance(Variable.InnerProduct(weights, trainingItems[trainItem]), noise));
 
             // Testing model
-            nTest = Variable.New<int>().Named("nTest");
-            Range testItem = new Range(nTest).Named("testItem");
-            testItems = Variable.Array<Vector>(testItem).Named("testItems");
-            testLabels = Variable.Array<bool>(testItem).Named("testLabels");
+            nTest = Variable.Observed(default(int)).Named(nameof(nTest));
+            Range testItem = new Range(nTest);
+            testItem.Name = nameof(testItem);
+            testItems = Variable.Observed(default(Vector[]), testItem).Named(nameof(testItems));
+            testLabels = Variable.Array<bool>(testItem).Named(nameof(testLabels));
+            engine = new InferenceEngine();
+            engine.ShowProgress = false;
+            engine.Compiler.WriteSourceFiles = false;
+            engine.NumberOfIterations = 5;
             if (singleModel)
             {
                 testLabels[testItem] = Variable.IsPositive(Variable.GaussianFromMeanAndVariance(Variable.InnerProduct(weights, testItems[testItem]), noise));
-
-                testEngine = new InferenceEngine();
-                testEngine.NumberOfIterations = 2;
             }
             else
             {
-                weightPosterior = Variable.New<VectorGaussian>().Named("weightPosterior");
+                weightPosterior = Variable.Observed(default(VectorGaussian)).Named(nameof(weightPosterior));
                 Variable<Vector> testWeights = Variable<Vector>.Random(weightPosterior);
                 testLabels[testItem] = Variable.IsPositive(Variable.GaussianFromMeanAndVariance(Variable.InnerProduct(testWeights, testItems[testItem]), noise));
 
-                trainEngine = new InferenceEngine();
-                trainEngine.ShowProgress = false;
-                trainEngine.NumberOfIterations = 5;
-                testEngine = new InferenceEngine();
-                testEngine.ShowProgress = false;
-                testEngine.NumberOfIterations = 1;
+                // Force compilation of the training model.
+                engine.GetCompiledInferenceAlgorithm(weights);
             }
+            // Force compilation of the testing model.
+            // This also defines the variables to be inferred, obviating OptimizeForVariables.
+            // This requires observed variables to have values, but they can be null.
+            engine.GetCompiledInferenceAlgorithm(testLabels);
         }
 
         public void Train(Vector[] data, bool[] labels)
@@ -64,14 +70,14 @@ namespace ImageClassifier
             trainingItems.ObservedValue = data;
             trainingLabels.ObservedValue = labels;
             if (!singleModel)
-                weightPosterior.ObservedValue = trainEngine.Infer<VectorGaussian>(weights);
+                weightPosterior.ObservedValue = engine.Infer<VectorGaussian>(weights);
         }
 
         public double[] Test(Vector[] data)
         {
             nTest.ObservedValue = data.Length;
             testItems.ObservedValue = data;
-            Bernoulli[] labelPosteriors = testEngine.Infer<Bernoulli[]>(testLabels);
+            Bernoulli[] labelPosteriors = engine.Infer<Bernoulli[]>(testLabels);
             double[] probs = new double[data.Length];
             for (int i = 0; i < probs.Length; i++)
             {

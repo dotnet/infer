@@ -31,23 +31,17 @@ namespace Microsoft.ML.Probabilistic.Compiler
     public class CodeTransformer
     {
         public Dictionary<ITypeDeclaration, ITypeDeclaration> transformMap = new Dictionary<ITypeDeclaration, ITypeDeclaration>();
-
-        private readonly ICodeTransform transform;
+        public ICodeTransform Transform { get; }
 
         public bool TrackTransform
         {
-            get { return ((BasicTransformContext)transform.Context).trackTransform; }
-            set { ((BasicTransformContext)transform.Context).trackTransform = value; }
+            get { return ((BasicTransformContext)Transform.Context).trackTransform; }
+            set { ((BasicTransformContext)Transform.Context).trackTransform = value; }
         }
 
         public CodeTransformer(ICodeTransform t)
         {
-            transform = t;
-        }
-
-        public ICodeTransform Transform
-        {
-            get { return transform; }
+            Transform = t;
         }
 
         public string GetFriendlyName()
@@ -73,11 +67,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
             while (typesToTransform.Count > 0)
             {
                 ITypeDeclaration itd = typesToTransform.Pop();
-                ITypeDeclaration td = transform.Transform(itd);
+                ITypeDeclaration td = Transform.Transform(itd);
                 transformMap[itd] = td;
                 typeDeclarations.Add(td);
                 typesTransformed.Add(itd);
-                foreach (ITypeDeclaration t2 in transform.Context.TypesToTransform)
+                foreach (ITypeDeclaration t2 in Transform.Context.TypesToTransform)
                     if (!typesTransformed.Contains(t2))
                         typesToTransform.Push(t2);
             }
@@ -297,6 +291,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                         cr = CompileWithRoslyn(filenames, sources, referencedAssemblies);
                         break;
                     case CompilerChoice.Auto:
+                        // Use CodeDom whenever possible because Roslyn takes a long time to load the first time.
+                        // The load time could be reduced by running NGen on Roslyn (and its dependencies), 
+                        // but that is complicated and requires administrator permission.
                         if (runningOnNetCore || runningOnMono)
                             cr = CompileWithRoslyn(filenames, sources, referencedAssemblies);
                         else
