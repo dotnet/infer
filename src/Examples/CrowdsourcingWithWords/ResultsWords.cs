@@ -139,13 +139,23 @@ namespace CrowdsourcingWithWords
             }
         }
 
-        /// <summary>
-        /// Select high TFIDF terms
-        /// </summary>
-        /// <param name="corpus">array of terms</param>
-        /// <param name="tfidf_threshold">TFIDF threshold</param>
-        /// <returns></returns>
-        private static List<string> BuildVocabularyFromCorpus(string[] corpus, double tfidf_threshold = 0.8)
+		protected override void UpdateResults(BCCPosteriors posteriors, RunMode mode)
+		{
+			base.UpdateResults(posteriors, mode);
+			var wordsPosteriors = posteriors as BCCWordsPosteriors;
+			if (wordsPosteriors?.ProbWordPosterior != null)
+			{
+				this.ProbWords = wordsPosteriors.ProbWordPosterior;
+			}
+		}
+
+		/// <summary>
+		/// Select high TFIDF terms
+		/// </summary>
+		/// <param name="corpus">array of terms</param>
+		/// <param name="tfidf_threshold">TFIDF threshold</param>
+		/// <returns></returns>
+		private static List<string> BuildVocabularyFromCorpus(string[] corpus, double tfidf_threshold = 0.8)
         {
             List<string> vocabulary;
             double[][] inputs = TFIDFClass.Transform(corpus, out vocabulary, 0);
@@ -158,8 +168,9 @@ namespace CrowdsourcingWithWords
                 var sortedTerms = inputs[index].Select((x, i) => new KeyValuePair<string, double>(vocabulary[i], x)).OrderByDescending(x => x.Value).ToList();
                 vocabularyTfidf.AddRange(sortedTerms.Where(entry => entry.Value > tfidf_threshold).Select(k => k.Key).ToList());
             }
-            return vocabulary.Distinct().ToList();
-        }
+			var filteredVocabulary = vocabularyTfidf.Distinct().ToList();
+	        return filteredVocabulary.Count>=10 ? filteredVocabulary : vocabulary;
+		}
 
         protected override void ClearResults()
         {
@@ -197,22 +208,51 @@ namespace CrowdsourcingWithWords
             if (writeProbWords && this.ProbWords != null)
             {
                 int NumClasses = ProbWords.Length;
+				var classifiedWords = new Dictionary<string, KeyValuePair<string, double>>();
                 for (int c = 0; c < NumClasses; c++)
                 {
-                    if (MappingWords != null && MappingWords.WorkerCount > 300) // Assume it's CF
-                        writer.WriteLine("Class {0}", MappingWords.CFLabelName[c]);
-                    else
-                        if (MappingWords != null)
-                        writer.WriteLine("Class {0}", MappingWords.SPLabelName[c]);
+	                string className = string.Empty;
+	                if (MappingWords != null)
+	                {
+		                if (MappingWords.WorkerCount > 100) // Assume it's CF
+						{
+			                className = MappingWords.CFLabelName[c];
+		                }
+		                else
+		                {
+							className = MappingWords.SPLabelName[c];
+						}
+		                writer.WriteLine($"Class {className}");
+	                }
 
                     Vector probs = ProbWords[c].GetMean();
                     var probsDictionary = probs.Select((value, index) => new KeyValuePair<string, double>(MappingWords.Vocabulary[index], Math.Log(value))).OrderByDescending(x => x.Value).ToArray();
-
+	                topWords = Math.Min(topWords, probsDictionary.Length);
                     for (int w = 0; w < topWords; w++)
                     {
                         writer.WriteLine($"\t{probsDictionary[w].Key}: \t{probsDictionary[w].Value:0.000}");
+	                    if (!string.IsNullOrEmpty(className))
+	                    {
+		                    KeyValuePair<string, double> classifiedWord ;
+		                    if (!classifiedWords.TryGetValue(probsDictionary[w].Key,out classifiedWord)
+								|| classifiedWord.Value< probsDictionary[w].Value)
+		                    {
+			                    classifiedWords[probsDictionary[w].Key] = new KeyValuePair<string, double>(className, probsDictionary[w].Value);
+		                    }
+	                    }
                     }
                 }
+	            writer.WriteLine();
+				writer.WriteLine($"Main classes:");
+				foreach (var wordByClass in classifiedWords.GroupBy(classified=>classified.Value.Key))
+	            {
+		            writer.WriteLine($"Class {wordByClass.Key}:");
+		            foreach (var word in wordByClass.OrderByDescending(w=>w.Value.Value))
+		            {
+			            writer.WriteLine($"\t{word.Key}");
+					}
+					
+				}
             }
         }
 
