@@ -291,6 +291,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 switch (compilerChoice)
                 {
+#if !CODEDOM
+#if !ROSLYN
+    throw new Exception("BOTH FLAGS DISABLED...?");
+#endif
+#endif
                     case CompilerChoice.CodeDom:
                         cr = CompileWithCodeDom(filenames, sources, referencedAssemblies);
                         break;
