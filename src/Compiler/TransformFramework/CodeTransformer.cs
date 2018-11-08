@@ -106,7 +106,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
         protected string language = "C#";
         protected bool runningOnNetCore = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription.StartsWith(".NET Core", StringComparison.OrdinalIgnoreCase);
         protected bool runningOnMono = Type.GetType("Mono.Runtime") != null;
-        protected bool isBuilding = Assembly.GetEntryAssembly() == null || Assembly.GetEntryAssembly().GetName().Name == "TrueSkill.Models.Generator";
 
         /// <summary>
         /// If true, source code files are written out for each transformed class.
@@ -291,12 +290,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 switch (compilerChoice)
                 {
-#if !CODEDOM
-#if !ROSLYN
-    throw new Exception("BOTH FLAGS DISABLED...?");
-#endif
-#endif
-                    
                     case CompilerChoice.CodeDom:
                         cr = CompileWithCodeDom(filenames, sources, referencedAssemblies);
                         break;
@@ -304,14 +297,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                         cr = CompileWithRoslyn(filenames, sources, referencedAssemblies);
                         break;
                     case CompilerChoice.Auto:
-                        if (runningOnNetCore || runningOnMono || isBuilding)
-                        {
+                        if (runningOnNetCore || runningOnMono)
                             cr = CompileWithRoslyn(filenames, sources, referencedAssemblies);
-                        }
                         else
-                        {
                             cr = CompileWithCodeDom(filenames, sources, referencedAssemblies);
-                        }
                         break;
                     default:
                         throw new NotSupportedException($"Compiler choice {compilerChoice} is not supported.");
