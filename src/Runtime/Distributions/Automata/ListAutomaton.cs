@@ -20,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     public abstract class ListAutomaton<TList, TElement, TElementDistribution, TThis>
         : Automaton<TList, TElement, TElementDistribution, ListManipulator<TList, TElement>, TThis>
         where TList : class, IList<TElement>, new()
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TThis : ListAutomaton<TList, TElement, TElementDistribution, TThis>, new()
     {
         protected ListAutomaton()
@@ -45,7 +45,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     public class ListAutomaton<TList, TElement, TElementDistribution>
         : ListAutomaton<TList, TElement, TElementDistribution, ListAutomaton<TList, TElement, TElementDistribution>>
         where TList : class, IList<TElement>, new()
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
     {
         public ListAutomaton()
         {
@@ -83,7 +83,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// <typeparam name="TElementDistribution">The type of a distribution over a list element.</typeparam>
     public class ListAutomaton<TElement, TElementDistribution>
         : ListAutomaton<List<TElement>, TElement, TElementDistribution, ListAutomaton<TElement, TElementDistribution>>
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>,
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>,
         CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
     {
         public ListAutomaton()
@@ -182,7 +182,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Transition transition, Weight sourceStateResidualWeight, 
             Dictionary<TElement, List<TransitionElement>> elements, List<TransitionElement> uniformList)
         {
-            var dist = transition.ElementDistribution;
+            var dist = transition.ElementDistribution.Value;
             Weight weightBase = Weight.Product(transition.Weight, sourceStateResidualWeight);
             if (dist.IsPointMass)
             {

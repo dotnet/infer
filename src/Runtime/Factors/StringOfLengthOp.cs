@@ -21,7 +21,6 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="StringOfLengthOp"]/message_doc[@name="StrAverageConditional(DiscreteChar, int)"]/*'/>
         public static StringDistribution StrAverageConditional(DiscreteChar allowedChars, int length)
         {
-            Argument.CheckIfNotNull(allowedChars, "allowedChars");
             Argument.CheckIfValid(allowedChars.IsPartialUniform(), "allowedChars", "The set of allowed characters must be passed as a partial uniform distribution.");
             
             return StringDistribution.Repeat(allowedChars, length, length);
@@ -30,7 +29,6 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="StringOfLengthOp"]/message_doc[@name="StrAverageConditional(DiscreteChar, Discrete)"]/*'/>
         public static StringDistribution StrAverageConditional(DiscreteChar allowedChars, Discrete length)
         {
-            Argument.CheckIfNotNull(allowedChars, "allowedChars");
             Argument.CheckIfNotNull(length, "length");
             Argument.CheckIfValid(allowedChars.IsPartialUniform(), "allowedChars", "The set of allowed characters must be passed as a partial uniform distribution.");
 

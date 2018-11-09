@@ -1413,7 +1413,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </returns>
         public static double GetLogAverageOf<T, TDistribution>(
             TDistribution distribution1, TDistribution distribution2, out TDistribution product)
-            where TDistribution : class, IDistribution<T>, SettableToProduct<TDistribution>, CanGetLogAverageOf<TDistribution>, new()
+            where TDistribution : IDistribution<T>, SettableToProduct<TDistribution>, CanGetLogAverageOf<TDistribution>, new()
         {
             if (distribution2.IsPointMass)
             {
@@ -1439,6 +1439,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             return logNormalizer;
+        }
+
+        /// <summary>
+        /// Helper method that creates new distribution that is equal to product of 2 given distributions.
+        /// </summary>
+        public static TDistribution Product<T, TDistribution>(TDistribution distribution1, TDistribution distribution2)
+            where TDistribution : IDistribution<T>, SettableToProduct<TDistribution>, new()
+        {
+            var result = new TDistribution();
+            result.SetToProduct(distribution1, distribution2);
+            return result;
         }
 
         /// <summary>
@@ -1600,7 +1611,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// The log-probability that two distributions would draw the same sample.
         /// </returns>
         public static double GetLogAverageOf<TDistribution>(TDistribution distribution1, TDistribution distribution2, out TDistribution product)
-            where TDistribution : class, IDistribution<T>, SettableToProduct<TDistribution>, CanGetLogAverageOf<TDistribution>, new()
+            where TDistribution : IDistribution<T>, SettableToProduct<TDistribution>, CanGetLogAverageOf<TDistribution>, new()
         {
             return Distribution.GetLogAverageOf<T, TDistribution>(distribution1, distribution2, out product);
         }

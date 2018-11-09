@@ -18,8 +18,13 @@ namespace Microsoft.ML.Probabilistic.Utilities
         /// <typeparam name="T">The type of the argument.</typeparam>
         /// <param name="argument">The argument.</param>
         /// <param name="argumentName">The name of the argument.</param>
+        /// <remarks>
+        /// There is no "class" restriction on T because in generic code it may be convinient to pass
+        /// value types into <see cref="Argument.CheckIfNotNull{T}(T, string)"/>.
+        /// Even if it is a no-op for them.
+        /// </remarks>
         [DebuggerStepThrough]
-        public static void CheckIfNotNull<T>(T argument, string argumentName) where T : class
+        public static void CheckIfNotNull<T>(T argument, string argumentName)
         {
             if (argument == null)
             {
@@ -34,8 +39,13 @@ namespace Microsoft.ML.Probabilistic.Utilities
         /// <param name="argument">The argument.</param>
         /// <param name="argumentName">The name of the argument.</param>
         /// <param name="message">The exception message.</param>
+        /// <remarks>
+        /// There is no "class" restriction on T because in generic code it may be convinient to pass
+        /// value types into <see cref="Argument.CheckIfNotNull{T}(T, string, string)"/>.
+        /// Even if it is a no-op for them.
+        /// </remarks>
         [DebuggerStepThrough]
-        public static void CheckIfNotNull<T>(T argument, string argumentName, string message) where T : class
+        public static void CheckIfNotNull<T>(T argument, string argumentName, string message)
         {
             if (argument == null)
             {

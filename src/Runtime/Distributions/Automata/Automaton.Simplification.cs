@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
         where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
@@ -63,7 +63,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     for (int transitionIndex2 = transitionIndex1 + 1; transitionIndex2 < state.TransitionCount; ++transitionIndex2)
                     {
                         var transition2 = state.GetTransition(transitionIndex2);
-                        double logProductNormalizer = transition1.ElementDistribution.GetLogAverageOf(transition2.ElementDistribution);
+                        double logProductNormalizer = transition1.ElementDistribution.Value.GetLogAverageOf(transition2.ElementDistribution.Value);
                         if (!double.IsNegativeInfinity(logProductNormalizer))
                         {
                             return false;
@@ -478,11 +478,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 var newElementDistribution = new TElementDistribution();
                                 if (double.IsInfinity(transition1.Weight.Value) && double.IsInfinity(transition1.Weight.Value))
                                 {
-                                    newElementDistribution.SetToSum(1.0, transition1.ElementDistribution, 1.0, transition2.ElementDistribution);
+                                    newElementDistribution.SetToSum(1.0, transition1.ElementDistribution.Value, 1.0, transition2.ElementDistribution.Value);
                                 }
                                 else
                                 {
-                                    newElementDistribution.SetToSum(transition1.Weight.Value, transition1.ElementDistribution, transition2.Weight.Value, transition2.ElementDistribution);
+                                    newElementDistribution.SetToSum(transition1.Weight.Value, transition1.ElementDistribution.Value, transition2.Weight.Value, transition2.ElementDistribution.Value);
                                 }
 
                                 transition1.ElementDistribution = newElementDistribution;
@@ -1127,11 +1127,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <param name="loopWeight">
                 /// The loop weight associated with the generalized element, <see langword="null"/> if the element does not represent a self-loop.
                 /// </param>
-                public GeneralizedElement(TElementDistribution elementDistribution, int group, Weight? loopWeight)
+                public GeneralizedElement(Option<TElementDistribution> elementDistribution, int group, Weight? loopWeight)
                     : this()
                 {
                     Debug.Assert(
-                        elementDistribution != null || loopWeight.HasValue,
+                        elementDistribution.HasValue || loopWeight.HasValue,
                         "Epsilon elements are only allowed in combination with self-loops.");
 
                     this.ElementDistribution = elementDistribution;
@@ -1142,15 +1142,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Gets the element distribution associated with the generalized element.
                 /// </summary>
-                public TElementDistribution ElementDistribution { get; private set; }
+                public Option<TElementDistribution> ElementDistribution { get; }
 
                 /// <summary>
                 /// Gets a value indicating whether this element corresponds to an epsilon self-loop.
                 /// </summary>
-                public bool IsEpsilonSelfLoop
-                {
-                    get { return this.ElementDistribution == null && this.LoopWeight.HasValue; }
-                }
+                public bool IsEpsilonSelfLoop => !this.ElementDistribution.HasValue && this.LoopWeight.HasValue;
 
                 /// <summary>
                 /// Gets the group associated with the generalized element.
@@ -1169,7 +1166,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <returns>The string representation of the generalized element.</returns>
                 public override string ToString()
                 {
-                    string elementDistributionAsString = this.ElementDistribution.IsPointMass ? this.ElementDistribution.Point.ToString() : this.ElementDistribution.ToString();
+                    string elementDistributionAsString = this.ElementDistribution.Value.IsPointMass ? this.ElementDistribution.Value.Point.ToString() : this.ElementDistribution.ToString();
                     string groupString = this.Group == 0 ? string.Empty : string.Format("#{0}", this.Group);
                     if (this.LoopWeight.HasValue)
                     {

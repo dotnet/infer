@@ -26,7 +26,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         string ConvertToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>(
             Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton> automaton)
             where TSequence : class, IEnumerable<TElement>
-            where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>,
+            where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>,
                 SettableToPartialUniform<TElementDistribution>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new();

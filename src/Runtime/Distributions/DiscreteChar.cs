@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// </remarks>
     [Quality(QualityBand.Experimental)]
     [Serializable]
-    public sealed class DiscreteChar
+    public struct DiscreteChar
         : IDistribution<char>, SettableTo<DiscreteChar>, SettableToProduct<DiscreteChar>, SettableToRatio<DiscreteChar>, SettableToPower<DiscreteChar>,
         SettableToWeightedSumExact<DiscreteChar>, SettableToPartialUniform<DiscreteChar>,
         CanGetLogAverageOf<DiscreteChar>, CanGetLogAverageOfPower<DiscreteChar>, CanGetAverageLog<DiscreteChar>, CanGetMode<char>,
@@ -90,11 +90,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         private const double UniformProb = 1.0 / CharRangeEndExclusive;
 
-        /// <summary>
-        /// The index value used by <see cref="GetRangeIndexForCharacter"/> to indicate that no range has been found.
-        /// </summary>
-        private const int UnknownRange = -1;
-
         private const string DigitRegexRepresentation = @"\d";
         private const string DigitSymbolRepresentation = @"#";
 
@@ -120,14 +115,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region Constructors
 
+        /// <summary>
+        /// Stores reference to <see cref="Storage"/> for this distribution.
+        /// </summary>
+        /// <remarks>
+        /// Can be null and shouldn't be used directly. Use <see cref="Data"/> property.
+        /// </remarks>
         [DataMember]
-        private Storage storage;
+        private Storage data_;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DiscreteChar"/> class
-        /// by setting it to a uniform distribution.
+        /// Gets or sets reference to <see cref="Storage"/> for this distribution.
+        /// Getter always returns non-null reference.
         /// </summary>
-        public DiscreteChar() => this.storage = StorageCache.Uniform;
+        private Storage Data
+        {
+            get => this.data_ ?? StorageCache.Uniform;
+            set => this.data_ = value;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscreteChar"/> class
@@ -141,9 +146,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// The created objects takes ownership of the character range list.
         /// </remarks>
         private DiscreteChar(double probabilityOutsideRanges, CharRange[] ranges, int rangeCount) =>
-            this.storage = Storage.Create(ranges, probabilityOutsideRanges);
+            this.data_ = Storage.Create(ranges, probabilityOutsideRanges);
 
-        private DiscreteChar(Storage storage) => this.storage = storage;
+        private DiscreteChar(Storage storage) => this.data_ = storage;
 
         #endregion
 
@@ -154,32 +159,32 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Gets a value indicating whether this distribution equals the distribution created by <see cref="Digit"/>.
         /// </summary>
-        public bool IsDigit => this.storage.IsDigit;
+        public bool IsDigit => this.Data.IsDigit;
 
         /// <summary>
         /// Gets a value indicating whether this distribution equals the distribution created by <see cref="Lower"/>.
         /// </summary>
-        public bool IsLower => this.storage.IsLower;
+        public bool IsLower => this.Data.IsLower;
 
         /// <summary>
         /// Gets a value indicating whether this distribution equals the distribution created by <see cref="Upper"/>.
         /// </summary>
-        public bool IsUpper => this.storage.IsUpper;
+        public bool IsUpper => this.Data.IsUpper;
 
         /// <summary>
         /// Gets a value indicating whether this distribution equals the distribution created by <see cref="Letter"/>.
         /// </summary>
-        public bool IsLetter => this.storage.IsLetter;
+        public bool IsLetter => this.Data.IsLetter;
 
         /// <summary>
         /// Gets a value indicating whether this distribution equals the distribution created by <see cref="LetterOrDigit"/>.
         /// </summary>
-        public bool IsLetterOrDigit => this.storage.IsLetterOrDigit;
+        public bool IsLetterOrDigit => this.Data.IsLetterOrDigit;
 
         /// <summary>
         /// Gets a value indicating whether this distribution equals the distribution created by <see cref="WordChar"/>.
         /// </summary>
-        public bool IsWordChar => this.storage.IsWordChar;
+        public bool IsWordChar => this.Data.IsWordChar;
 
         #endregion
 
@@ -188,21 +193,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Gets the probability assigned to characters outside ranges returned by <see cref="GetRanges"/>.
         /// </summary>
-        public double ProbabilityOutsideRanges => this.storage.ProbabilityOutsideRanges;
+        public double ProbabilityOutsideRanges => this.Data.ProbabilityOutsideRanges;
 
         /// <summary>
         /// Gets or sets the point mass represented by the distribution.
         /// </summary>
         public char Point
         {
-            get => this.storage.Point;
-            set => this.storage = StorageCache.GetPointMass(value, null);
+            get => this.Data.Point;
+            set => this.Data = StorageCache.GetPointMass(value, null);
         }
 
         /// <summary>
         /// Gets a value indicating whether this distribution represents a point mass.
         /// </summary>
-        public bool IsPointMass => this.storage.IsPointMass;
+        public bool IsPointMass => this.Data.IsPointMass;
 
         /// <summary>
         /// Gets the probability of a given character under this distribution.
@@ -213,8 +218,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             get
             {
-                int index = this.GetRangeIndexForCharacter(value);
-                return index == UnknownRange ? this.storage.ProbabilityOutsideRanges : this.storage.Ranges[index].Probability;
+                var data = this.Data;
+                foreach (var range in data.Ranges)
+                {
+                    if (range.StartInclusive <= value && range.EndExclusive > value)
+                    {
+                        return range.Probability;
+                    }
+                }
+
+                return data.ProbabilityOutsideRanges;
             }
         }
 
@@ -463,7 +476,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Creates a copy of this distribution.
         /// </summary>
         /// <returns>The created copy.</returns>
-        public DiscreteChar Clone() => new DiscreteChar(this.storage);
+        public DiscreteChar Clone() => new DiscreteChar(this.Data);
 
         /// <summary>
         /// Gets the maximum difference between the character probabilities under this distribution and a given one.
@@ -474,14 +487,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Argument.CheckIfNotNull(distribution, "distribution");
             return distribution is DiscreteChar thatDist
-                ? this.storage.MaxDiff(thatDist.storage)
+                ? this.Data.MaxDiff(thatDist.Data)
                 : double.PositiveInfinity;
         }
 
         /// <summary>
         /// Sets this distribution to a uniform distribution over all characters.
         /// </summary>
-        public void SetToUniform() => this.storage = StorageCache.Uniform;
+        public void SetToUniform() => this.Data = StorageCache.Uniform;
 
         /// <summary>
         /// Checks whether this distribution is a uniform distribution over all characters.
@@ -492,7 +505,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </returns>
         public bool IsUniform()
         {
-            foreach (var range in this.storage.Ranges)
+            foreach (var range in this.Data.Ranges)
             {
                 if (Math.Abs(range.Probability - UniformProb) > Eps)
                 {
@@ -520,10 +533,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="distribution2">The second distribution.</param>
         public void SetToProduct(DiscreteChar distribution1, DiscreteChar distribution2)
         {
-            Argument.CheckIfNotNull(distribution1, "distribution1");
-            Argument.CheckIfNotNull(distribution2, "distribution2");
-
-            var probabilityOutsideRanges = distribution1.storage.ProbabilityOutsideRanges * distribution2.storage.ProbabilityOutsideRanges;
+            var probabilityOutsideRanges = distribution1.Data.ProbabilityOutsideRanges * distribution2.Data.ProbabilityOutsideRanges;
             var builder = new StorageBuilder(probabilityOutsideRanges);
             foreach (var pair in CharRangePair.CombinedRanges(distribution1, distribution2))
             {
@@ -534,7 +544,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
             }
 
-            this.storage = builder.GetResult();
+            this.Data = builder.GetResult();
         }
 
         /// <summary>
@@ -546,9 +556,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="distribution2">The second distribution.</param>
         public void SetToSum(double weight1, DiscreteChar distribution1, double weight2, DiscreteChar distribution2)
         {
-            Argument.CheckIfNotNull(distribution1, "distribution1");
-            Argument.CheckIfNotNull(distribution2, "distribution2");
-
             if (weight1 + weight2 == 0)
             {
                 this.SetToUniform();
@@ -577,7 +584,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 weight1 *= invW;
                 weight2 *= invW;
                 var probabilityOutsideRanges =
-                    (weight1 * distribution1.storage.ProbabilityOutsideRanges) + (weight2 * distribution2.storage.ProbabilityOutsideRanges);
+                    (weight1 * distribution1.Data.ProbabilityOutsideRanges) + (weight2 * distribution2.Data.ProbabilityOutsideRanges);
                 var builder = new StorageBuilder(probabilityOutsideRanges);
                 foreach (var pair in CharRangePair.CombinedRanges(distribution1, distribution2, false))
                 {
@@ -588,7 +595,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     }
                 }
 
-                this.storage = builder.GetResult();
+                this.Data = builder.GetResult();
             }
         }
 
@@ -599,8 +606,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The logarithm of the probability that distributions would draw the same sample.</returns>
         public double GetLogAverageOf(DiscreteChar distribution)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
-
             var result = CharRangePair.CombinedRanges(this, distribution)
                 .Sum(pair => pair.Probability1 * pair.Probability2 * (pair.EndExclusive - pair.StartInclusive));
 
@@ -618,15 +623,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="distribution">The distribution which support will be used to setup the current distribution.</param>
         public void SetToPartialUniformOf(DiscreteChar distribution)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
-
-            var builder = new StorageBuilder(distribution.storage.ProbabilityOutsideRanges > Eps ? 1 : 0);
-            foreach (var range in distribution.storage.Ranges)
+            var builder = new StorageBuilder(distribution.Data.ProbabilityOutsideRanges > Eps ? 1 : 0);
+            foreach (var range in distribution.Data.Ranges)
             {
                 builder.AddRange(new CharRange(range.StartInclusive, range.EndExclusive, range.Probability > Eps ? 1 : 0));
             }
 
-            this.storage = builder.GetResult();
+            this.Data = builder.GetResult();
         }
 
         /// <summary>
@@ -638,9 +641,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             double? commonProb = null;
             bool hasCommonValues = false;
             int prevRangeEnd = 0;
-            for (int i = 0; i < this.storage.Ranges.Length; ++i)
+            var data = this.Data;
+            foreach (var range in data.Ranges)
             {
-                var range = this.storage.Ranges[i];
                 if (commonProb.HasValue && range.Probability > Eps && Math.Abs(commonProb.Value - range.Probability) > Eps)
                 {
                     return false;
@@ -653,8 +656,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             hasCommonValues |= prevRangeEnd < CharRangeEndExclusive;
 
-            if (hasCommonValues && commonProb.HasValue && this.storage.ProbabilityOutsideRanges > Eps &&
-                Math.Abs(commonProb.Value - this.storage.ProbabilityOutsideRanges) > Eps)
+            if (hasCommonValues && commonProb.HasValue && data.ProbabilityOutsideRanges > Eps &&
+                Math.Abs(commonProb.Value - data.ProbabilityOutsideRanges) > Eps)
             {
                 return false;
             }
@@ -670,10 +673,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="forceProper">Specifies whether the ratio must be proper.</param>
         public void SetToRatio(DiscreteChar numerator, DiscreteChar denominator, bool forceProper = false)
         {
-            Argument.CheckIfNotNull(numerator, "numerator");
-            Argument.CheckIfNotNull(denominator, "denominator");
-
-            var probabilityOutsideRanges = DivideProb(numerator.storage.ProbabilityOutsideRanges, denominator.storage.ProbabilityOutsideRanges);
+            var probabilityOutsideRanges = DivideProb(numerator.Data.ProbabilityOutsideRanges, denominator.Data.ProbabilityOutsideRanges);
             var builder = new StorageBuilder(probabilityOutsideRanges);
 
             foreach (var pair in CharRangePair.CombinedRanges(numerator, denominator))
@@ -685,7 +685,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
             }
 
-            this.storage = builder.GetResult();
+            this.Data = builder.GetResult();
         }
 
         /// <summary>
@@ -695,13 +695,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="power">The power.</param>
         public void SetToPower(DiscreteChar distribution, double power)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
-
             var builder = new StorageBuilder(0);
 
             bool hasCommonValues = false;
             int prevRangeEnd = 0;
-            foreach (var range in distribution.storage.Ranges)
+            foreach (var range in distribution.Data.Ranges)
             {
                 if (range.Probability < Eps && power < 0)
                 {
@@ -717,15 +715,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
             hasCommonValues |= prevRangeEnd < CharRangeEndExclusive;
             if (hasCommonValues)
             {
-                if (distribution.storage.ProbabilityOutsideRanges < Eps && power < 0)
+                if (distribution.Data.ProbabilityOutsideRanges < Eps && power < 0)
                 {
                     throw new DivideByZeroException();
                 }
 
-                builder.ProbabilityOutsideRanges = Math.Pow(distribution.storage.ProbabilityOutsideRanges, power);
+                builder.ProbabilityOutsideRanges = Math.Pow(distribution.Data.ProbabilityOutsideRanges, power);
             }
 
-            this.storage = builder.GetResult();
+            this.Data = builder.GetResult();
         }
 
         /// <summary>
@@ -739,8 +737,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public double GetLogAverageOfPower(DiscreteChar distribution, double power)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
-
             double result = 0;
             foreach (var pair in CharRangePair.CombinedRanges(this, distribution))
             {
@@ -763,8 +759,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <remarks>This is also known as the cross entropy.</remarks>
         public double GetAverageLog(DiscreteChar distribution)
         {
-            Argument.CheckIfNotNull(distribution, "distribution");
-
             double result = 0;
             foreach (var pair in CharRangePair.CombinedRanges(this, distribution, true))
             {
@@ -791,9 +785,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             char mode = '\0';
             char charOutOfRanges = '\0';
             double maxProb = 0;
-            for (int i = 0; i < this.storage.Ranges.Length; ++i)
+            var data = this.Data;
+            foreach (var range in data.Ranges)
             {
-                var range = this.storage.Ranges[i];
                 if (range.Probability > maxProb)
                 {
                     mode = (char)range.StartInclusive;
@@ -815,7 +809,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 charOutOfRanges = (char)prevRangeEnd;
             }
 
-            return hasCommonValues && this.storage.ProbabilityOutsideRanges > maxProb ? charOutOfRanges : mode;
+            return hasCommonValues && data.ProbabilityOutsideRanges > maxProb ? charOutOfRanges : mode;
         }
 
         /// <summary>
@@ -843,14 +837,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
         private IEnumerable<CharRange> EnumerateCharRanges()
         {
             var prevRangeEnd = 0;
-            foreach (var range in this.storage.Ranges)
+            var data = this.Data;
+            var probabilityOutsideRanges = data.ProbabilityOutsideRanges;
+            foreach (var range in data.Ranges)
             {
-                yield return new CharRange(prevRangeEnd, range.StartInclusive, this.storage.ProbabilityOutsideRanges);
+                yield return new CharRange(prevRangeEnd, range.StartInclusive, probabilityOutsideRanges);
                 yield return new CharRange(range.StartInclusive, range.EndExclusive, range.Probability);
                 prevRangeEnd = range.EndExclusive;
             }
 
-            yield return new CharRange(prevRangeEnd, CharRangeEndExclusive, this.storage.ProbabilityOutsideRanges);
+            yield return new CharRange(prevRangeEnd, CharRangeEndExclusive, probabilityOutsideRanges);
         }
 
         /// <summary>
@@ -864,11 +860,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Sets this distribution to be equal to a given distribution.
         /// </summary>
         /// <param name="distribution">The distribution to set this distribution to.</param>
-        public void SetTo(DiscreteChar distribution)
-        {
-            Argument.CheckIfNotNull(distribution, "distribution");
-            this.storage = distribution.storage;
-        }
+        public void SetTo(DiscreteChar distribution) => this.Data = distribution.Data;
 
         /// <summary>
         /// Enumerates over the support of the distribution instance.
@@ -878,10 +870,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             int prevRangeEnd = 0;
 
-            for (int i = 0; i < this.storage.Ranges.Length; ++i)
+            var data = this.Data;
+            var probabilityOutsideRanges = data.ProbabilityOutsideRanges;
+
+            foreach (var range in data.Ranges)
             {
-                var range = this.storage.Ranges[i];
-                if (this.storage.ProbabilityOutsideRanges > 0.0)
+                if (probabilityOutsideRanges > 0.0)
                 {
                     for (int j = prevRangeEnd; j < range.StartInclusive; j++)
                     {
@@ -900,7 +894,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 prevRangeEnd = range.EndExclusive;
             }
 
-            if (this.storage.ProbabilityOutsideRanges > 0.0)
+            if (probabilityOutsideRanges > 0.0)
             {
                 for (int j = prevRangeEnd; j < CharRangeEndExclusive; j++)
                 {
@@ -922,7 +916,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public CharRange[] GetRanges()
         {
             // TODO: use immutable arrays and get rid of clone
-            return (CharRange[])this.storage.Ranges.Clone();
+            return (CharRange[])this.Data.Ranges.Clone();
         }
 
         /// <summary>
@@ -935,14 +929,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// e.g. not a letter or not a word character.
         /// </remarks>
         /// <returns>The created distribution.</returns>
-        public DiscreteChar Complement() => new DiscreteChar(this.storage.Complement());
+        public DiscreteChar Complement() => new DiscreteChar(this.Data.Complement());
 
         public static DiscreteChar ToLower(DiscreteChar unnormalizedCharDist)
         {
-            switch (unnormalizedCharDist.storage.CharClasses)
+            switch (unnormalizedCharDist.Data.CharClasses)
             {
                 case CharClasses.Unknown:
-                    var ranges = unnormalizedCharDist.storage.Ranges;
+                    var ranges = unnormalizedCharDist.Data.Ranges;
                     var probVector = PiecewiseVector.Zero(CharRangeEndExclusive);
                     foreach (var range in ranges)
                     {
@@ -979,8 +973,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>A vector of character probabilities.</returns>
         public PiecewiseVector GetProbs()
         {
-            var result = PiecewiseVector.Constant(CharRangeEndExclusive, this.storage.ProbabilityOutsideRanges);
-            foreach (var range in this.storage.Ranges)
+            var data = this.Data;
+            var result = PiecewiseVector.Constant(CharRangeEndExclusive, data.ProbabilityOutsideRanges);
+            foreach (var range in data.Ranges)
             {
                 result.Pieces.Add(new ConstantVector(range.StartInclusive, range.EndExclusive - 1, range.Probability));
             }
@@ -992,11 +987,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Swaps this distribution with a given one.
         /// </summary>
         /// <param name="distribution">The distribution to swap this distribution with.</param>
-        public void SwapWith(DiscreteChar distribution)
-        {
-            Argument.CheckIfNotNull(distribution, "distribution");
-            Util.Swap(ref this.storage, ref distribution.storage);
-        }
+        public void SwapWith(DiscreteChar distribution) => Util.Swap(ref this.data_, ref distribution.data_);
 
         #endregion
 
@@ -1008,9 +999,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>
         /// A string that represents this distribution.
         /// </returns>
-        public override string ToString() => this.storage.ToString();
+        public override string ToString() => this.Data.ToString();
 
-        public void AppendToString(StringBuilder stringBuilder) => this.storage.AppendToString(stringBuilder);
+        public void AppendToString(StringBuilder stringBuilder) => this.Data.AppendToString(stringBuilder);
 
         /// <summary>
         /// Appends a regex expression that represents this character to the supplied string builder.
@@ -1018,20 +1009,20 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="stringBuilder">The string builder to append to</param>
         /// <param name="useFriendlySymbols">Whether to use friendly symbols."</param>
         public void AppendRegex(StringBuilder stringBuilder, bool useFriendlySymbols = false) =>
-            this.storage.AppendRegex(stringBuilder, useFriendlySymbols);
+            this.Data.AppendRegex(stringBuilder, useFriendlySymbols);
 
         /// <summary>
         /// Checks if <paramref name="obj"/> equals to this distribution (i.e. represents the same distribution over characters).
         /// </summary>
         /// <param name="obj">The object to compare this distribution with.</param>
         /// <returns><see langword="true"/> if this distribution is equal to <paramref name="obj"/>, false otherwise.</returns>
-        public override bool Equals(object obj) => obj is DiscreteChar other && this.storage.Equals(other.storage);
+        public override bool Equals(object obj) => obj is DiscreteChar other && this.Data.Equals(other.Data);
 
         /// <summary>
         /// Gets the hash code of this distribution.
         /// </summary>
         /// <returns>The hash code.</returns>
-        public override int GetHashCode() => this.storage.GetHashCode();
+        public override int GetHashCode() => this.Data.GetHashCode();
 
         #endregion
 
@@ -1082,27 +1073,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets the index of the character range containing a given character, if any.
-        /// </summary>
-        /// <param name="value">The character.</param>
-        /// <returns>
-        /// The index of the character range containing <paramref name="value"/>,
-        /// or <see cref="UnknownRange"/> if no range has been found.
-        /// </returns>
-        private int GetRangeIndexForCharacter(char value)
-        {
-            for (int i = 0; i < this.storage.Ranges.Length; ++i)
-            {
-                if (this.storage.Ranges[i].StartInclusive <= value && this.storage.Ranges[i].EndExclusive > value)
-                {
-                    return i;
-                }
-            }
-
-            return UnknownRange;
-        }
 
         #endregion
 
@@ -1306,7 +1276,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <param name="excludeZeroProb">Whether to exclude non-intersectng ranges in the case where both distibrutions have zero probability outside their ranges.</param>
             /// <returns></returns>
             public static IEnumerable<CharRangePair> CombinedRanges(DiscreteChar distribution1, DiscreteChar distribution2, bool excludeZeroProb = true) =>
-                CombinedRanges(distribution1.storage, distribution2.storage, excludeZeroProb);
+                CombinedRanges(distribution1.Data, distribution2.Data, excludeZeroProb);
 
             internal static IEnumerable<CharRangePair> CombinedRanges(Storage state1, Storage state2, bool excludeZeroProb)
             {
@@ -1473,29 +1443,29 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Writes a discrete character.
         /// </summary>
         public void Write(Action<int> writeInt32, Action<double> writeDouble) =>
-            this.storage.Write(writeInt32, writeDouble);
+            this.Data.Write(writeInt32, writeDouble);
 
         /// <summary>
         /// Reads a discrete character.
         /// </summary>
-        public static DiscreteChar Read(Func<int> readInt32, Func<double> readDouble)
-            => new DiscreteChar(Storage.Read(readInt32, readDouble));
+        public static DiscreteChar Read(Func<int> readInt32, Func<double> readDouble) =>
+            new DiscreteChar(Storage.Read(readInt32, readDouble));
 
         /// <summary>
         /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter.
         /// </summary>
         private DiscreteChar(SerializationInfo info, StreamingContext context)
         {
-            this.storage = (Storage)info.GetValue(nameof(this.storage), typeof(Storage));
-            if (this.storage.IsPointMass)
+            this.data_ = (Storage)info.GetValue(nameof(this.Data), typeof(Storage));
+            if (this.data_?.IsPointMass ?? false)
             {
                 // reuse storage from cache
-                this.storage = Storage.CreatePoint((char)this.storage.Ranges[0].StartInclusive, this.storage.Ranges);
+                this.data_ = Storage.CreatePoint((char)this.Data.Ranges[0].StartInclusive, this.Data.Ranges);
             }
         }
 
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context) =>
-            info.AddValue(nameof(this.storage), this.storage);
+            info.AddValue(nameof(this.Data), this.Data);
 
         #endregion
 
@@ -1655,7 +1625,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             private bool IsCharClass(CharClasses charClass, Func<DiscreteChar> classConstructor)
             {
                 // TODO: optimize via reuse
-                if (CharClasses == CharClasses.Unknown && this.Equals(classConstructor().storage))
+                if (CharClasses == CharClasses.Unknown && this.Equals(classConstructor().Data))
                 {
                     this.CharClasses = charClass;
                 }
@@ -1702,7 +1672,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public static Storage Read(Func<int> readInt32, Func<double> readDouble)
             {
                 var propertyMask = new BitVector32(readInt32());
-                var res = new DiscreteChar();
                 var idx = 0;
                 var hasRanges = propertyMask[1 << idx++];
                 CharRange[] ranges = null;
