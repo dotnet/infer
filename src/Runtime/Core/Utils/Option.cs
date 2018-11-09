@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.Generic;
+
 namespace Microsoft.ML.Probabilistic.Utilities
 {
     using System;
@@ -20,7 +22,8 @@ namespace Microsoft.ML.Probabilistic.Utilities
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Option{T}"/> structure.
-        /// If T is reference type and <see cref="value"/> is null then empty option is crated.
+        /// If T is reference type and <paramref cref="value"/> is null then
+        /// object without data is created (<see cref="HasValue"/> will be false).
         /// </summary>
         [Construction("Value")]
         public Option(T value)
@@ -78,14 +81,28 @@ namespace Microsoft.ML.Probabilistic.Utilities
         /// </summary>
         public static explicit operator T(Option<T> value) => value.value;
 
-        public override bool Equals(object other) =>
-            this.HasValue
-                ? other != null && this.value.Equals(other)
+        public static bool operator ==(Option<T> a, Option<T> b) =>
+            a.HasValue
+                ? b.HasValue && EqualityComparer<T>.Default.Equals(a.Value, b.Value)
+                : !b.HasValue;
+
+        public static bool operator !=(Option<T> a, Option<T> b) => !(a == b);
+
+        public override bool Equals(object other)
+        {
+            if (other is Option<T> that)
+            {
+                return this == that;
+            }
+
+            return this.HasValue
+                ? this.Value.Equals(other)
                 : other == null;
+        }
 
         public override int GetHashCode() => this.HasValue ? this.value.GetHashCode() : 0;
 
-        public override string ToString() => this.HasValue ? this.value.ToString() : string.Empty;
+        public override string ToString() => this.HasValue ? this.value.ToString() : "(null)";
     }
 
     /// <summary>
