@@ -1465,7 +1465,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context) =>
-            info.AddValue(nameof(this.data_), this.data_);
+            info.AddValue(nameof(this.Data), this.Data);
 
         #endregion
 
