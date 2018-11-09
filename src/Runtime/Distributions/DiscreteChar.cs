@@ -2,11 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.CompilerServices;
+
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
+    using System.Diagnostics;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Text;
@@ -16,17 +19,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using Math;
     using Utilities;
     using Factors.Attributes;
+
+    using Microsoft.ML.Probabilistic.Core.Collections;
+
     using Serialization;
 
     /// <summary>
     /// Represents a distribution over characters.
     /// </summary>
-    /// <remarks>
-    /// This is an optimized version of an earlier version of this class.
-    /// It doesn't use <see cref="PiecewiseVector"/> and <see cref="GenericDiscreteBase{T, TThis}"/>,
-    /// tries to avoid non-inlineable calls at all costs,
-    /// and assumes that the number of constant-probability character ranges is small (1-10).
-    /// </remarks>
     [Quality(QualityBand.Experimental)]
     [Serializable]
     public struct DiscreteChar
@@ -76,14 +76,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public const string LetterCharacterRanges = OnlyUpperCaseCharacterRanges + OnlyLowerCaseCharacterRanges + MixedCaseCharacterRanges;
 
         /// <summary>
+        /// The (exclusive) end of the character range.
+        /// </summary>
+        public const int CharRangeEndExclusive = char.MaxValue + 1;
+
+        /// <summary>
         /// The tolerance value for probability comparisons.
         /// </summary>
         private const double Eps = 1e-15;
-
-        /// <summary>
-        /// The (exclusive) end of the character range.
-        /// </summary>
-        private const int CharRangeEndExclusive = char.MaxValue + 1;
 
         /// <summary>
         /// The probability of a character under a uniform distribution over characters.
@@ -145,7 +145,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// The probabilities need to be normalized. The character ranges need to be sorted.
         /// The created objects takes ownership of the character range list.
         /// </remarks>
-        private DiscreteChar(double probabilityOutsideRanges, CharRange[] ranges, int rangeCount) =>
+        private DiscreteChar(double probabilityOutsideRanges, ReadOnlyArray<CharRange> ranges, int rangeCount) =>
             this.data_ = Storage.Create(ranges, probabilityOutsideRanges);
 
         private DiscreteChar(Storage storage) => this.data_ = storage;
@@ -191,7 +191,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         #region Distribution properties
 
         /// <summary>
-        /// Gets the probability assigned to characters outside ranges returned by <see cref="GetRanges"/>.
+        /// Gets the probability assigned to characters outside ranges returned by <see cref="Ranges"/>.
         /// </summary>
         public double ProbabilityOutsideRanges => this.Data.ProbabilityOutsideRanges;
 
@@ -244,7 +244,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="ranges">The constant-probability character ranges.</param>
         /// <remarks>The probabilities do not need to be normalized. The character ranges do not need to be sorted.</remarks>
         /// <returns>The created distribution.</returns>
-        [Construction("ProbabilityOutsideRanges", "GetRanges")]
+        [Construction("ProbabilityOutsideRanges", "Ranges")]
         public static DiscreteChar Create(double probabilityOutsideRanges, IEnumerable<CharRange> ranges)
         {
             Argument.CheckIfNotNull(ranges, "ranges");
@@ -912,12 +912,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <remarks>
         /// See <see cref="ProbabilityOutsideRanges"/> for the probability of characters not covered by the returned ranges.
         /// </remarks>
-        /// <returns>An array of character ranges with associated probabilities.</returns>
-        public CharRange[] GetRanges()
-        {
-            // TODO: use immutable arrays and get rid of clone
-            return (CharRange[])this.Data.Ranges.Clone();
-        }
+        /// <value>An array of character ranges with associated probabilities.</value>
+        public ReadOnlyArray<CharRange> Ranges => this.Data.Ranges;
 
         /// <summary>
         /// Creates a distribution which is uniform over all characters
@@ -1282,7 +1278,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 if (excludeZeroProb && state1.ProbabilityOutsideRanges == 0.0 && state2.ProbabilityOutsideRanges == 0.0)
                 {
-                    if (state1.Ranges.Length == 0 || state2.Ranges.Length == 0)
+                    if (state1.Ranges.Count == 0 || state2.Ranges.Count == 0)
                     {
                         yield break;
                     }
@@ -1290,7 +1286,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     int rangeIndex1 = 0;
                     int rangeIndex2 = 0;
 
-                    while (rangeIndex1 < state1.Ranges.Length && rangeIndex2 < state2.Ranges.Length)
+                    while (rangeIndex1 < state1.Ranges.Count && rangeIndex2 < state2.Ranges.Count)
                     {
                         var range1 = state1.Ranges[rangeIndex1];
                         var range2 = state2.Ranges[rangeIndex2];
@@ -1374,19 +1370,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
                             yield break;
                         }
 
-                        if (rangeIndex1 < state1.Ranges.Length &&
+                        if (rangeIndex1 < state1.Ranges.Count &&
                             state1.Ranges[rangeIndex1].EndExclusive == currentStartInclusive)
                         {
                             ++rangeIndex1;
                         }
 
-                        if (rangeIndex2 < state2.Ranges.Length &&
+                        if (rangeIndex2 < state2.Ranges.Count &&
                             state2.Ranges[rangeIndex2].EndExclusive == currentStartInclusive)
                         {
                             ++rangeIndex2;
                         }
 
-                        if (rangeIndex1 < state1.Ranges.Length)
+                        if (rangeIndex1 < state1.Ranges.Count)
                         {
                             if (state1.Ranges[rangeIndex1].StartInclusive > currentStartInclusive)
                             {
@@ -1405,7 +1401,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                             currentEndExclusive = CharRangeEndExclusive;
                         }
 
-                        if (rangeIndex2 < state2.Ranges.Length)
+                        if (rangeIndex2 < state2.Ranges.Count)
                         {
                             if (state2.Ranges[rangeIndex2].StartInclusive > currentStartInclusive)
                             {
@@ -1454,26 +1450,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter.
         /// </summary>
-        private DiscreteChar(SerializationInfo info, StreamingContext context)
-        {
-            this.data_ = (Storage)info.GetValue(nameof(this.Data), typeof(Storage));
-            if (this.data_?.IsPointMass ?? false)
-            {
-                // reuse storage from cache
-                this.data_ = Storage.CreatePoint((char)this.Data.Ranges[0].StartInclusive, this.Data.Ranges);
-            }
-        }
+        private DiscreteChar(SerializationInfo info, StreamingContext context) =>
+            this.data_ = Storage.FromSerializationInfo(info);
 
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context) =>
-            info.AddValue(nameof(this.Data), this.Data);
+            this.Data.GetObjectData(info);
 
         #endregion
 
         /// <summary>
         /// Immutable class to hold DiscreteChar state
         /// </summary>
-        [Serializable]
-        [DataContract]
+        /// <remarks>
+        /// This class is serializable but is not marked with <see cref="SerializableAttribute"/> and
+        /// <see cref="DataContractAttribute"/> because we have to implement serialization manually
+        /// due to Newtonsoft.Json not deserializing <see cref="ReadOnlyArray{T}"/> properly without
+        /// "JsonObjectAttribute". Which can't be added because Infer.NET has no explicit dependency
+        /// on Newtonsoft.Json.
+        /// </remarks>
         internal sealed class Storage
         {
             #region State
@@ -1484,8 +1478,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <remarks>
             /// The character probabilities must be kept normalized by applying <see cref="StorageBuilder.NormalizeProbabilities"/> when necessary.
             /// </remarks>
-            [DataMember]
-            public CharRange[] Ranges { get; private set; } // TODO: use immutable array
+            public ReadOnlyArray<CharRange> Ranges { get; private set; }
 
             /// <summary>
             /// The probability of a character outside character ranges defined by <see cref="Ranges"/>.
@@ -1493,11 +1486,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <remarks>
             /// The character probabilities must be kept normalized by applying <see cref="StorageBuilder.NormalizeProbabilities"/> when necessary.
             /// </remarks>
-            [DataMember]
             public double ProbabilityOutsideRanges { get; private set; }
 
-            // Following 3 members are not immutable and can be recalculated on-demband
-            [DataMember]
+            // Following 3 members are not immutable and can be recalculated on-demand
             public CharClasses CharClasses { get; private set; }
             private string regexRepresentation = null;
             private string symbolRepresentation = null;
@@ -1506,26 +1497,29 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             #region Constructor and factory methods
 
-            /// <summary>
-            /// Constructor for use by Newtonsoft.Json during deserialization.
-            /// </summary>
-            private Storage()
-            {
-            }
-
-            private Storage(CharRange[] ranges, double probabilityOutsideRanges, CharClasses charClaasses, string regexRepresentation)
+            private Storage(
+                ReadOnlyArray<CharRange> ranges,
+                double probabilityOutsideRanges,
+                CharClasses charClasses,
+                string regexRepresentation)
             {
                 this.Ranges = ranges;
                 this.ProbabilityOutsideRanges = probabilityOutsideRanges;
-                this.CharClasses = charClaasses;
+                this.CharClasses = charClasses;
                 this.regexRepresentation = regexRepresentation;
             }
 
-            public static Storage CreateUncached(CharRange[] ranges, double probabilityOutsideRanges, CharClasses charClaasses = CharClasses.Unknown, string regexRepresentation = null) =>
-                new Storage(ranges, probabilityOutsideRanges, charClaasses, regexRepresentation);
+            public static Storage CreateUncached(
+                ReadOnlyArray<CharRange> ranges,
+                double probabilityOutsideRanges,
+                CharClasses charClasses = CharClasses.Unknown,
+                string regexRepresentation = null)
+            {
+                return new Storage(ranges, probabilityOutsideRanges, charClasses, regexRepresentation);
+            }
 
             public static Storage Create(
-                CharRange[] ranges,
+                ReadOnlyArray<CharRange> ranges,
                 double probabilityOutsideRanges,
                 CharClasses charClaasses = CharClasses.Unknown,
                 string regexRepresentation = null)
@@ -1535,8 +1529,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     : CreateUncached(ranges, probabilityOutsideRanges, charClaasses, regexRepresentation);
             }
 
-            public static Storage CreatePoint(char point, CharRange[] ranges = null) =>
+            public static Storage CreatePoint(char point, ReadOnlyArray<CharRange> ranges) =>
                 StorageCache.GetPointMass(point, ranges);
+
+            public static Storage CreatePoint(char point) =>
+                StorageCache.GetPointMass(point, new ReadOnlyArray<CharRange>(null));
 
             public static Storage CreateUniformInRanges(IEnumerable<char> startEndPairs, CharClasses charClasses, string regexRepresentation)
             {
@@ -1610,8 +1607,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             // TODO: also assumes that a point is not represented by zero-probability ranges and a non-zero value outside of ranges
             public bool IsPointMass => IsRangesPointMass(this.Ranges);
 
-            private static bool IsRangesPointMass(CharRange[] ranges) =>
-                ranges.Length > 0 && Math.Abs(ranges[0].Probability - 1) < Eps;
+            private static bool IsRangesPointMass(ReadOnlyArray<CharRange> ranges) =>
+                ranges.Count > 0 && Math.Abs(ranges[0].Probability - 1) < Eps;
 
             public char Point =>
                 IsPointMass
@@ -1624,7 +1621,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// </summary>
             private bool IsCharClass(CharClasses charClass, Func<DiscreteChar> classConstructor)
             {
-                // TODO: optimize via reuse
                 if (CharClasses == CharClasses.Unknown && this.Equals(classConstructor().Data))
                 {
                     this.CharClasses = charClass;
@@ -1649,21 +1645,30 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             #region Serialization
 
+            public static Storage FromSerializationInfo(SerializationInfo info) =>
+                Storage.Create(
+                    (CharRange[]) info.GetValue(nameof(Ranges), typeof(CharRange[])),
+                    (double) info.GetValue(nameof(ProbabilityOutsideRanges), typeof(double)),
+                    (CharClasses) info.GetValue(nameof(CharClasses), typeof(CharClasses)));
+
+            public void GetObjectData(SerializationInfo info)
+            {
+                info.AddValue(nameof(this.Ranges), this.Ranges.CloneArray());
+                info.AddValue(nameof(this.ProbabilityOutsideRanges), this.ProbabilityOutsideRanges);
+                info.AddValue(nameof(this.CharClasses), this.CharClasses);
+            }
+
             public void Write(Action<int> writeInt32, Action<double> writeDouble)
             {
                 var propertyMask = new BitVector32();
                 var idx = 0;
-                propertyMask[1 << idx++] = Ranges != null;
+                propertyMask[1 << idx++] = true; // ranges can never be null
                 writeInt32(propertyMask.Data);
-                if (Ranges != null)
-                {
-                    writeInt32(Ranges.Length);
-                    Ranges.ForEach(range => range.Write(writeInt32, writeDouble));
-                }
-
-                writeInt32(Ranges.Length); // For compatibility with old readers
-                writeInt32((int)CharClasses);
-                writeDouble(ProbabilityOutsideRanges);
+                writeInt32(this.Ranges.Count);
+                this.Ranges.ForEach(range => range.Write(writeInt32, writeDouble));
+                writeInt32(this.Ranges.Count); // For compatibility with old readers
+                writeInt32((int)this.CharClasses);
+                writeDouble(this.ProbabilityOutsideRanges);
             }
 
             /// <summary>
@@ -1846,7 +1851,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             private void AppendRanges(StringBuilder representation, bool escape)
             {
-                if (this.Ranges.Length >= 1)
+                if (this.Ranges.Count >= 1)
                 {
                     representation.Append('[');
                     foreach (var range in this.Ranges)
@@ -1892,11 +1897,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 PointMasses = new Storage[CharRangeEndExclusive];
             }
 
-            public static Storage GetPointMass(char point, CharRange[] ranges)
+            public static Storage GetPointMass(char point, ReadOnlyArray<CharRange> ranges)
             {
                 if (PointMasses[point] == null)
                 {
-                    PointMasses[point] = Storage.CreateUncached(ranges ?? new[] { new CharRange(point, point + 1, 1) }, 0);
+                    PointMasses[point] = Storage.CreateUncached(
+                        ranges.IsNull
+                            ? new ReadOnlyArray<CharRange>(new[] { new CharRange(point, point + 1, 1) })
+                            : ranges,
+                        0);
                 }
 
                 return PointMasses[point];

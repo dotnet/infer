@@ -12,6 +12,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Text;
 
     using Microsoft.ML.Probabilistic.Collections;
+    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
@@ -306,14 +307,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="discreteChar">The Discrete distribution over characters.</param>
         private static void AppendRangesForDiscreteChar(StringBuilder resultBuilder, DiscreteChar discreteChar)
         {
-            var ranges = discreteChar.GetRanges();
-            if (ranges.Length > 1)
+            var ranges = discreteChar.Ranges;
+            if (ranges.Count > 1)
             {
                 resultBuilder.Append('[');
                 ranges.ForEach(range => AppendCharacterRange(resultBuilder, range));
                 resultBuilder.Append(']');
             }
-            else if (ranges.Length == 1)
+            else if (ranges.Count == 1)
             {
                 AppendCharacterRange(resultBuilder, ranges.Single());
             }

@@ -77,22 +77,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created distribution.</returns>
         public static StringDistribution CaseInvariant(string template)
         {
-            StringDistribution result = StringDistribution.Empty();
+            var result = StringAutomaton.Builder.Zero();
+            var last = result.Start;
             foreach (var ch in template)
             {
                 var upper = char.ToUpperInvariant(ch);
                 var lower = char.ToLowerInvariant(ch);
-                if (upper == lower)
-                {
-                    result.AppendInPlace(ch);
-                }
-                else
-                {
-                    result.AppendInPlace(DiscreteChar.OneOf(lower, upper));
-                }
+                var elem =
+                    upper == lower
+                        ? DiscreteChar.PointMass(lower)
+                        : DiscreteChar.OneOf(lower, upper);
+                last = last.AddTransition(elem, Weight.One);
             }
             
-            return result;
+            last.SetEndWeight(Weight.One);
+            return StringDistribution.FromWorkspace(result.GetAutomaton());
         }
 
         /// <summary>

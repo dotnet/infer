@@ -5,23 +5,17 @@
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
-    using System.Collections.Generic;
     using System.Runtime.Serialization;
     using System.Text;
 
-    using Microsoft.ML.Probabilistic.Distributions;
-    using Microsoft.ML.Probabilistic.Math;
+    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Serialization;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <content>
-    /// Contains the class used to represent a transition in an automaton.
+    /// Contains the class used to represent a transition in an automaton.#
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
-        where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
-        where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
-        where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
         /// <summary>
         /// Represents a transition in an automaton.
@@ -154,7 +148,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 sb.Append('[');
-                sb.Append(this.ElementDistribution.HasValue ? "eps" : this.ElementDistribution.ToString());
+                sb.Append(this.ElementDistribution.HasValue ? this.ElementDistribution.ToString() : "eps");
                 sb.Append(']');
                 sb.Append(" " + this.Weight.Value);
                 sb.Append(" -> " + this.DestinationStateIndex);

@@ -7,6 +7,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System;
     using System.Collections.Generic;
 
+    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -49,7 +50,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             var result = new TThat();
             result.sequencePairToWeight.SetToFunction(
-                transducer.sequencePairToWeight, (dist, weight, group) => Tuple.Create(dist.HasValue ? Option.Some(dist.Value.Transpose()) : Option.None, weight));
+                transducer.sequencePairToWeight, (dist, weight, group) => ValueTuple.Create(dist.HasValue ? Option.Some(dist.Value.Transpose()) : Option.None, weight));
             return result;
         }
     }
@@ -120,13 +121,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         if (!transitionElementDistribution.HasValue)
                         {
 
-                            return Tuple.Create<Option<PairDistribution<TElement, TElementDistribution>>, Weight>(Option.None, transitionWeight);
+                            return ValueTuple.Create<Option<PairDistribution<TElement, TElementDistribution>>, Weight>(Option.None, transitionWeight);
                         }
 
                         if ((group == 0) || (transitionGroup == group))
                         {
                             // If a target group is specified: copy if this group is the target group
-                            return Tuple.Create(
+                            return ValueTuple.Create(
                                 Option.Some(
                                     PairDistribution<TElement, TElementDistribution>.Constrained(
                                         transitionElementDistribution.Value,
@@ -135,7 +136,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         // Otherwise consume but don't copy
-                        return Tuple.Create(
+                        return ValueTuple.Create(
                             Option.Some(PairDistribution<TElement, TElementDistribution>.FromFirst(transitionElementDistribution.Value)),
                             transitionWeight);
                     });
@@ -177,9 +178,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created transducer.</returns>
         public static TThis Transpose(TThis transducer)
         {
-            TThis result = transducer.Clone();
-            result.TransposeInPlace();
-            return result;
+            Argument.CheckIfNotNull(transducer, nameof(transducer));
+
+            // Copy state parameters and transitions
+            var builder = PairListAutomaton.Builder.FromAutomaton(transducer.sequencePairToWeight);
+
+            // transpose element distributions in transitions
+            for (var stateIndex = 0; stateIndex < builder.StatesCount; stateIndex++)
+            {
+                for (var iterator = builder[stateIndex].TransitionIterator; iterator.Ok; iterator.Next())
+                {
+                    var transition = iterator.Value;
+                    if (transition.ElementDistribution.HasValue)
+                    {
+                        transition.ElementDistribution = transition.ElementDistribution.Value.Transpose();
+                        iterator.Value = transition;
+                    }
+                }
+            }
+
+            return new TThis() { sequencePairToWeight = builder.GetAutomaton() };
         }
 
         /// <summary>
@@ -190,35 +208,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created transducer.</returns>
         public static TThis FromAutomaton(
             TAutomaton automaton,
-            Func<TElementDistribution, Weight, Tuple<Option<PairDistribution<TElement, TElementDistribution>>, Weight>> transitionTransform)
+            Func<Option<TElementDistribution>, Weight, ValueTuple<Option<PairDistribution<TElement, TElementDistribution>>, Weight>> transitionTransform)
         {
             Argument.CheckIfNotNull(transitionTransform, "transitionTransform");
             
             var result = new TThis();
             result.sequencePairToWeight.SetToFunction(
                 automaton,
-                (elementDist, weight, group) => transitionTransform(elementDist.Value, weight));
+                (elementDist, weight, group) => transitionTransform(elementDist, weight));
             return result;
-        }
-
-        /// <summary>
-        /// Replaces the current transducer with its transpose (see <see cref="Transpose"/>).
-        /// </summary>
-        public void TransposeInPlace()
-        {
-            for (int i = 0; i < this.sequencePairToWeight.States.Count; ++i)
-            {
-                var state = this.sequencePairToWeight.States[i];
-                for (int j = 0; j < state.TransitionCount; ++j)
-                {
-                    var transition = state.GetTransition(j);
-                    if (transition.ElementDistribution.HasValue)
-                    {
-                        transition.ElementDistribution = transition.ElementDistribution.Value.Transpose();
-                        state.SetTransition(j, transition);
-                    }
-                }
-            }
         }
     }
 }

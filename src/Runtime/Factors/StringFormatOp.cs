@@ -341,8 +341,8 @@ namespace Microsoft.ML.Probabilistic.Factors
         private static StringDistribution StrAverageConditionalImpl(
             StringDistribution format, IList<StringAutomaton> allowedArgs, IList<string> argNames, bool withGroups, bool noValidation)
         {
-            StringDistribution resultDist;
-            if (TryOptimizedStrAverageConditionalImpl(format, allowedArgs, argNames, withGroups, out resultDist))
+            StringDistribution resultDist = TryOptimizedStrAverageConditionalImpl(format, allowedArgs, argNames, withGroups);
+            if (resultDist != null)
             {
                 return resultDist;
             }
@@ -369,34 +369,30 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="allowedArgs">The message from <c>args</c>, truncated to allowed values and converted to automata.</param>
         /// <param name="argNames">The names of the arguments.</param>
         /// <param name="withGroups">Whether the result should mark different arguments with groups.</param>
-        /// <param name="resultDist">The computed result.</param>
         /// <returns>
-        /// <see langword="true"/> if there is an optimized implementation available for the provided parameters,
-        /// and <paramref name="resultDist"/> has been computed using it.
-        /// <see langword="false"/> otherwise.
+        /// Result distribution if there is an optimized implementation available for the provided parameters.
+        /// <see langword="null"/> otherwise.
         /// </returns>
         /// <remarks>
         /// Supports the case of point mass <paramref name="format"/>.
         /// </remarks>
-        private static bool TryOptimizedStrAverageConditionalImpl(
-            StringDistribution format, IList<StringAutomaton> allowedArgs, IList<string> argNames, bool withGroups, out StringDistribution resultDist)
+        private static StringDistribution TryOptimizedStrAverageConditionalImpl(
+            StringDistribution format, IList<StringAutomaton> allowedArgs, IList<string> argNames, bool withGroups)
         {
-            resultDist = null;
-
             if (!format.IsPointMass)
             {
                 // Fall back to the general case
-                return false;
+                return null;
             }
             
             // Check braces for correctness & replace placeholders with arguments simultaneously
-            StringAutomaton result = StringAutomaton.ConstantOn(1.0, string.Empty);
+            var result = StringAutomaton.Builder.ConstantOn(Weight.One, string.Empty);
             bool[] argumentSeen = new bool[allowedArgs.Count];
             int openingBraceIndex = format.Point.IndexOf("{", StringComparison.Ordinal), closingBraceIndex = -1;
             while (openingBraceIndex != -1)
             {
                 // Add the part of the format before the placeholder
-                result.AppendInPlace(format.Point.Substring(closingBraceIndex + 1, openingBraceIndex - closingBraceIndex - 1));
+                result.Append(StringAutomaton.ConstantOn(1.0, format.Point.Substring(closingBraceIndex + 1, openingBraceIndex - closingBraceIndex - 1)));
                 
                 // Find next opening and closing braces
                 closingBraceIndex = format.Point.IndexOf("}", openingBraceIndex + 1, StringComparison.Ordinal);
@@ -405,8 +401,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // Opening brace must be followed by a closing brace
                 if (closingBraceIndex == -1 || (nextOpeningBraceIndex != -1 && nextOpeningBraceIndex < closingBraceIndex))
                 {
-                    resultDist = StringDistribution.Zero();
-                    return true;
+                    return StringDistribution.Zero();
                 }
 
                 string argumentName = format.Point.Substring(openingBraceIndex + 1, closingBraceIndex - openingBraceIndex - 1);
@@ -415,12 +410,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // Unknown or previously seen argument found
                 if (argumentIndex == -1 || argumentSeen[argumentIndex])
                 {
-                    resultDist = StringDistribution.Zero();
-                    return true;
+                    return StringDistribution.Zero();
                 }
 
                 // Replace the placeholder by the argument
-                result.AppendInPlace(allowedArgs[argumentIndex], withGroups ? argumentIndex + 1 : 0);
+                result.Append(allowedArgs[argumentIndex], withGroups ? argumentIndex + 1 : 0);
 
                 // Mark the argument as 'seen'
                 argumentSeen[argumentIndex] = true;
@@ -431,22 +425,19 @@ namespace Microsoft.ML.Probabilistic.Factors
             // There should be no closing braces after the last opening brace
             if (format.Point.IndexOf('}', closingBraceIndex + 1) != -1)
             {
-                resultDist = StringDistribution.Zero();
-                return true;
+                return StringDistribution.Zero();
             }
 
             if (RequirePlaceholderForEveryArgument && argumentSeen.Any(seen => !seen))
             {
                 // Some argument wasn't present although it was required
-                resultDist = StringDistribution.Zero();
-                return true;
+                return StringDistribution.Zero();
             }
 
             // Append the part of the format after the last placeholder
-            result.AppendInPlace(format.Point.Substring(closingBraceIndex + 1, format.Point.Length - closingBraceIndex - 1));
+            result.Append(StringAutomaton.ConstantOn(1.0, format.Point.Substring(closingBraceIndex + 1, format.Point.Length - closingBraceIndex - 1)));
 
-            resultDist = StringDistribution.FromWorkspace(result);
-            return true;
+            return StringDistribution.FromWorkspace(result.GetAutomaton());
         }
 
         /// <summary>
@@ -490,7 +481,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             if (forBackwardMessage)
             {
-                result.TransposeInPlace();
+                result = StringTransducer.Transpose(result);
             }
 
             return result;

@@ -2,24 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
-
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System.Collections.Generic;
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Distributions;
-    using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <content>
     /// Contains the class used to represent the epsilon closure of a state of an automaton.
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
-        where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
-        where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
-        where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
         /// <summary>
         /// Represents the epsilon closure of a state.
@@ -42,14 +34,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="state">The state, which epsilon closure this instance will represent.</param>
             internal EpsilonClosure(State state)
             {
-                Argument.CheckIfValid(!state.IsNull, nameof(state));
-
                 // Optimize for a very common case: a single-node closure
                 bool singleNodeClosure = true;
                 Weight selfLoopWeight = Weight.Zero;
-                for (int i = 0; i < state.TransitionCount; ++i)
+                foreach (var transition in state.Transitions)
                 {
-                    Transition transition = state.GetTransition(i);
                     if (transition.IsEpsilon)
                     {
                         if (transition.DestinationStateIndex != state.Index)
@@ -81,7 +70,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
                     }
 
-                    this.EndWeight = condensation.GetWeightToEnd(state);
+                    this.EndWeight = condensation.GetWeightToEnd(state.Index);
                 }
             }
 

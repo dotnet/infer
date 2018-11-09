@@ -6,6 +6,9 @@ namespace Microsoft.ML.Probabilistic.Tests
 {
     using System;
     using System.Linq;
+
+    using Microsoft.ML.Probabilistic.Core.Collections;
+
     using Xunit;
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
     using Microsoft.ML.Probabilistic.Distributions;
@@ -25,10 +28,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void LargeTransducer()
         {
             StringAutomaton.MaxStateCount = 1200000; // Something big
-            StringAutomaton bigAutomaton = StringAutomaton.Zero();
-            bigAutomaton.AddStates(StringAutomaton.MaxStateCount - bigAutomaton.States.Count);
-            Func<DiscreteChar, Weight, Tuple<Option<PairDistribution<char, DiscreteChar>>, Weight>> transitionConverter =
-                (dist, weight) => Tuple.Create(Option.Some(PairDistribution<char, DiscreteChar>.FromFirstSecond(dist, dist)), weight);
+            var bigAutomatonBuilder = StringAutomaton.Builder.Zero();
+            bigAutomatonBuilder.AddStates(StringAutomaton.MaxStateCount - bigAutomatonBuilder.StatesCount);
+            Func<Option<DiscreteChar>, Weight, ValueTuple<Option<PairDistribution<char, DiscreteChar>>, Weight>> transitionConverter =
+                (dist, weight) => ValueTuple.Create(Option.Some(PairDistribution<char, DiscreteChar>.FromFirstSecond(dist, dist)), weight);
+
+            var bigAutomaton = bigAutomatonBuilder.GetAutomaton();
             
             Assert.Throws<AutomatonTooLargeException>(() => StringTransducer.FromAutomaton(bigAutomaton, transitionConverter));
 
@@ -514,8 +519,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringTransducer transducer = StringTransducer.Consume(StringAutomaton.Constant(3.0));
             StringTransducer transpose1 = StringTransducer.Transpose(transducer);
-            StringTransducer transpose2 = transducer.Clone();
-            transpose2.TransposeInPlace();
 
             var pairs = new[]
             {
@@ -529,11 +532,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 double referenceValue1 = transducer.GetValue(valuePair[0], valuePair[1]);
                 Assert.Equal(referenceValue1, transpose1.GetValue(valuePair[1], valuePair[0]));
-                Assert.Equal(referenceValue1, transpose2.GetValue(valuePair[1], valuePair[0]));
 
                 double referenceValue2 = transducer.GetValue(valuePair[1], valuePair[0]);
                 Assert.Equal(referenceValue2, transpose1.GetValue(valuePair[0], valuePair[1]));
-                Assert.Equal(referenceValue2, transpose2.GetValue(valuePair[0], valuePair[1]));
             }
         }
     }
