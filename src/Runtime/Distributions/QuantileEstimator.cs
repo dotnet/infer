@@ -143,7 +143,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             // use bisection
             while (true)
             {
-                double x = (lowerBound + upperBound) / 2;
+                double x = MMath.Average(lowerBound, upperBound);
                 double lowerItem;
                 double upperItem;
                 long lowerRank;
@@ -155,7 +155,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     double probabilityLessThanLowerItem = (double)(lowerRank - lowerWeight) / itemCount;
                     if (probability < probabilityLessThanLowerItem)
                     {
-                        upperBound = lowerItem;
+                        upperBound = MMath.PreviousDouble(lowerItem);
                     }
                     else
                     {
@@ -163,7 +163,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         if (probability < probabilityLessThanUpperItem) return lowerItem;
                         double probabilityLessThanOrEqualUpperItem = (double)(lowerRank + upperWeight) / itemCount;
                         if (probability < probabilityLessThanOrEqualUpperItem) return upperItem;
-                        lowerBound = upperItem;
+                        lowerBound = MMath.NextDouble(upperItem);
                     }
                 }
                 else if (InterpolationType == 1)
@@ -185,11 +185,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     double frac = scaledProbability - (lowerRank - 0.5);
                     if (frac < 0)
                     {
-                        upperBound = x;
+                        upperBound = MMath.PreviousDouble(x);
                     }
                     else if (frac > 1)
                     {
-                        lowerBound = x;
+                        lowerBound = MMath.NextDouble(x);
                     }
                     else
                     {
@@ -213,11 +213,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     double frac = scaledProbability - (lowerRank - 1);
                     if (frac < 0)
                     {
-                        upperBound = x;
+                        upperBound = MMath.PreviousDouble(x);
                     }
                     else if (frac > 1)
                     {
-                        lowerBound = x;
+                        lowerBound = MMath.NextDouble(x);
                     }
                     else
                     {
