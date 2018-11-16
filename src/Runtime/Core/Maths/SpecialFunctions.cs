@@ -2089,19 +2089,36 @@ f = 1/gamma(x+1)-1
                 // leave N(ymrx;0,1) in the confrac
                 scale = Math.Exp(Gaussian.GetLogProb(ymrx, 0, 1));
             }
+            // This threshold is set using SpecialFunctionsTests.NormalCdf2Test2
             // For debugging, see SpecialFunctionsTests.NormalCdf2Test3
-            if (x < -1.7)
+            if (x < -2 || (x < -1 && omr2 <= 1 - 0.48 * 0.48))
             {
                 exponent -= Math.Log(-x);
                 return NormalCdfRatioConFrac(x, y, r, scale);
             }
-            else if (omr2 > 0.75 || (omr2 > 1 - 0.56 * 0.56 && x > -0.5))
+            else if ((omr2 > 1 - 0.55 * 0.55) || (omr2 > 1 - 0.6 * 0.6 && x > -0.5))
             {
+                // Empirical results from SpecialFunctionsTests.NormalCdf2Test2:
+                // Should never be used for x < -2
+                // For x == -2, this should not be used when omr2 < 1 - 0.48 * 0.48
+                // For x == -1.8, this should not be used when omr2 < 1 - 0.5 * 0.5
+                // For x == -1.6, this should not be used when omr2 < 1 - 0.52 * 0.52
+                // For x == -1, this should not be used when omr2 < 1 - 0.59 * 0.59
                 return NormalCdfRatioTaylor(x, y, r) * scale;
                 //return NormalCdfRatioConFrac3(x, y, r, scale);
             }
             else
             {
+                // For x == -1.0, this should not be used when omr2 > 1 - 0.48 * 0.48
+                // For x == -0.9, this should not be used when omr2 > 1 - 0.51 * 0.51
+                // For x == -0.8, this should not be used when omr2 > 1 - 0.51 * 0.51
+                // For x == -0.7, this should not be used when omr2 > 1 - 0.52 * 0.52
+                // For x == -0.6, this should not be used when omr2 > 1 - 0.52 * 0.52
+                // For x == -0.5, this should not be used when omr2 > 1 - 0.53 * 0.53
+                // For x == -0.4, this should not be used when omr2 > 1 - 0.53 * 0.53
+                // For x == -0.3, this should not be used when omr2 > 1 - 0.54 * 0.54
+                // For x == -0.1, this should not be used when omr2 > 1 - 0.6 * 0.6
+                // For x == -0.01, this should not be used when omr2 > 1 - 0.6 * 0.6
                 return NormalCdfRatioConFrac2b(x, y, r, scale);
             }
         }
@@ -3912,7 +3929,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <summary>
         /// NormCdf(x)/NormPdf(x) for x = 0, -1, -2, -3, ..., -16
         /// </summary>
-        private static readonly double[] c_normcdf_table = 
+        private static readonly double[] c_normcdf_table =
             {
                 Sqrt2PI/2, 0.655679542418798471543871, .421369229288054473, 0.30459029871010329573361254651, .236652382913560671,
                 0.1928081047153157648774657, .162377660896867462, 0.140104183453050241599534, .123131963257932296, 0.109787282578308291230, .0990285964717319214,

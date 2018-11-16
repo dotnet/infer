@@ -1036,70 +1036,10 @@ gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
             CheckFunctionValues("GammaUpper", MMath.GammaUpper, gammaUpper_pairs);
         }
 
-        private static void CheckFunctionValues(string name, MathFcn fcn, double[,] pairs, double assertTolerance = 1e-11)
-        {
-            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
-        }
-
-        private static void CheckFunctionValues(string name, MathFcn2 fcn, double[,] pairs, double assertTolerance = 1e-11)
-        {
-            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
-        }
-
-        private static void CheckFunctionValues(string name, MathFcn3 fcn, double[,] pairs, double assertTolerance = 1e-11)
-        {
-            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
-        }
-
-        private static void CheckFunctionValues(string name, Delegate fcn, double[,] pairs, double assertTolerance)
-        {
-            Vector x = Vector.Zero(pairs.GetLength(1) - 1);
-            object[] args = new object[x.Count];
-            for (int i = 0; i < pairs.GetLength(0); i++)
-            {
-                for (int k = 0; k < x.Count; k++)
-                {
-                    x[k] = pairs[i, k];
-                    args[k] = x[k];
-                }
-                double fx = pairs[i, x.Count];
-                double result = (double)Util.DynamicInvoke(fcn, args);
-                if (!double.IsNaN(result) && System.Math.Sign(result) != System.Math.Sign(fx) && fx != 0)
-                {
-                    string strMsg = string.Format("{0}({1})\t has wrong sign (result = {2})", name, x.ToString("r"), result);
-                    Console.WriteLine(strMsg);
-                    Assert.True(false, strMsg);
-                }
-                double err = System.Math.Abs(result - fx);
-                if (fx != 0)
-                    err /= System.Math.Abs(fx);
-                if (Double.IsInfinity(fx))
-                {
-                    err = (result == fx) ? 0 : Double.PositiveInfinity;
-                }
-                if (Double.IsNaN(fx))
-                {
-                    err = Double.IsNaN(result) ? 0 : Double.NaN;
-                }
-                if (err < TOLERANCE)
-                {
-                    Console.WriteLine("{0}({1})\t ok", name, x.ToString("r"));
-                }
-                else
-                {
-                    string strMsg = String.Format("{0}({1})\t wrong by {2}", name, x.ToString("r"), err.ToString("g2"));
-                    Console.WriteLine(strMsg);
-                    //Console.WriteLine("{0}({1}) = {2} should be {3}", name, x.ToString("r"), result.ToString("r"), fx.ToString("r"));
-                    if (err > assertTolerance || double.IsNaN(err))
-                        Assert.True(false, strMsg);
-                }
-            }
-        }
-
         [Fact]
         public void NormalCdfRatioTest()
         {
-            double r0 = MMath.Sqrt2PI/2;
+            double r0 = MMath.Sqrt2PI / 2;
             Assert.Equal(r0, MMath.NormalCdfRatio(0));
             Assert.Equal(r0, MMath.NormalCdfRatio(6.6243372842224754E-170));
             Assert.Equal(r0, MMath.NormalCdfRatio(-6.6243372842224754E-170));
@@ -1829,19 +1769,21 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         }
 
         /// <summary>
-        /// Used to debug MMath.NormalCdfLn
+        /// Used to tune MMath.NormalCdfLn.  The best tuning minimizes the number of messages printed.
         /// </summary>
         internal void NormalCdf2Test2()
         {
+            // Call both routines now to speed up later calls.
             MMath.NormalCdf(-2, -2, -0.5);
             NormalCdf_Quadrature(-2, -2, -0.5);
             Stopwatch watch = new Stopwatch();
-            double xmin = -1.6;
-            double xmax = -1.5;
-            double n = 100;
+            double xmin = -1;
+            double xmax = -1;
+            double n = 200;
             double xinc = (xmax - xmin) / (n - 1);
             for (int xi = 0; xi < n; xi++)
             {
+                if (xinc == 0 && xi > 0) break;
                 double x = xmin + xi * xinc;
                 double ymin = x;
                 double ymax = -ymin;
@@ -1851,6 +1793,8 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     double y = ymin + yi * yinc;
                     double rmin = -0.999999;
                     double rmax = -0.000001;
+                    rmin = -0.6;
+                    rmax = -0.4;
                     double rinc = (rmax - rmin) / (n - 1);
                     for (int ri = 0; ri < n; ri++)
                     {
@@ -2002,6 +1946,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     { -1.64500313412819, 1.2645625117081, -0.05405423834462, 0.0437792307578264 },
                     { -2,1.3,-0.5, 0.0125543619945072},
                     {-2,1.5,-0.5, 0.0145466302871907},
+                    {-3,3,-0.404040595959596, 0.0013030754478730753 },
                     {x, y, 0, MMath.NormalCdf(x)*MMath.NormalCdf(y)},
                     {x, y, 1, MMath.NormalCdf(System.Math.Min(x, y))},
                     {x, y, -1, xy1},
@@ -2055,9 +2000,16 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     {-1, 0.6, -1, double.NegativeInfinity},
                     {-1, -1, -1, double.NegativeInfinity},
                     {1, y2, r2, System.Math.Log(0.841344746068543)},
+                    {-0.01,0.00175879396984925,-0.590954773869347, -1.9123400906813246 },
+                    {-0.5,0.5,-0.4, -1.83113711376467 },
+                    {-0.5,0.464824120603015,-0.523618090452261, -1.990034060610423},
+                    {-0.6,0.6,-0.4, -1.8931285572857055 },
+                    {-0.6,0.6,-0.488442211055276, -1.977994514649918 },
+                    {-0.7,0.7,-0.456281407035176, -2.0179010527218026 },
                     {-1.999999999999, 0, -9.9999999999950042E-07, -4.47633340779343 },
                     {-2.9,-2.9,-0.49, System.Math.Log(3.55239065152386E-10)},
                     {-2, -2, -0.9, -47.0355622406161041990406706314832},
+                    {-2,2,-0.484848515151515, -3.9692750279327953 },
                     {-3, -3.5, -0.72, -44.175239867478986},
                     {-4.5, -4.5, -0.6, -57.1114368213654},
                     //{ 8,y2,r2, 0 },
@@ -23612,6 +23564,65 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             Assert.Equal(double.MaxValue, MMath.Median(new[] { double.MaxValue }));
             Assert.Equal(double.MaxValue, MMath.Median(new[] { double.MaxValue, double.MaxValue }));
             Assert.Equal(3, MMath.Median(new[] { double.MaxValue, 3, double.MinValue }));
+        }
+
+        private static void CheckFunctionValues(string name, MathFcn fcn, double[,] pairs, double assertTolerance = 1e-11)
+        {
+            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
+        }
+
+        private static void CheckFunctionValues(string name, MathFcn2 fcn, double[,] pairs, double assertTolerance = 1e-11)
+        {
+            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
+        }
+
+        private static void CheckFunctionValues(string name, MathFcn3 fcn, double[,] pairs, double assertTolerance = 1e-11)
+        {
+            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
+        }
+
+        private static void CheckFunctionValues(string name, Delegate fcn, double[,] pairs, double assertTolerance)
+        {
+            Vector x = Vector.Zero(pairs.GetLength(1) - 1);
+            object[] args = new object[x.Count];
+            for (int i = 0; i < pairs.GetLength(0); i++)
+            {
+                for (int k = 0; k < x.Count; k++)
+                {
+                    x[k] = pairs[i, k];
+                    args[k] = x[k];
+                }
+                double fx = pairs[i, x.Count];
+                double result = (double)Util.DynamicInvoke(fcn, args);
+                if (!double.IsNaN(result) && System.Math.Sign(result) != System.Math.Sign(fx) && fx != 0)
+                {
+                    string strMsg = $"{name}({x:r})\t has wrong sign (result = {result:r})";
+                    Console.WriteLine(strMsg);
+                    Assert.True(false, strMsg);
+                }
+                double err = System.Math.Abs(result - fx);
+                if (fx != 0)
+                    err /= System.Math.Abs(fx);
+                if (Double.IsInfinity(fx))
+                {
+                    err = (result == fx) ? 0 : Double.PositiveInfinity;
+                }
+                if (Double.IsNaN(fx))
+                {
+                    err = Double.IsNaN(result) ? 0 : Double.NaN;
+                }
+                if (err < TOLERANCE)
+                {
+                    Console.WriteLine("{0}({1})\t ok", name, x.ToString("r"));
+                }
+                else
+                {
+                    string strMsg = $"{name}({x:r})\t wrong by {err.ToString("g2")} (result = {result:r})";
+                    Console.WriteLine(strMsg);
+                    if (err > assertTolerance || double.IsNaN(err))
+                        Assert.True(false, strMsg);
+                }
+            }
         }
     }
 }
