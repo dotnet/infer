@@ -2090,7 +2090,7 @@ f = 1/gamma(x+1)-1
                 scale = Math.Exp(Gaussian.GetLogProb(ymrx, 0, 1));
             }
             // For debugging, see SpecialFunctionsTests.NormalCdf2Test3
-            if (x < -1.5)
+            if (x < -1.7)
             {
                 exponent -= Math.Log(-x);
                 return NormalCdfRatioConFrac(x, y, r, scale);
@@ -2200,12 +2200,12 @@ f = 1/gamma(x+1)-1
                 result = numer / denom;
                 //Console.WriteLine("iter {0}: {1} {2}", i, result.ToString("r"), c.ToString("g4"));
                 if ((result > double.MaxValue) || double.IsNaN(result) || result < 0)
-                    throw new Exception($"not converging for x={x}, y={y}, r={r}");
+                    throw new Exception($"not converging for x={x:r}, y={y:r}, r={r:r}");
                 if (AreEqual(result, resultPrev))
                     return result;
                 resultPrev = result;
             }
-            throw new Exception($"not converging for x={x}, y={y}, r={r}");
+            throw new Exception($"not converging for x={x:r}, y={y:r}, r={r:r}");
         }
 
         // Helper function for NormalCdfRatioConFrac

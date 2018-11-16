@@ -19,6 +19,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// Static flag to force a proper distribution
         /// </summary>
         public static bool ForceProper = true;
+        public static double LowPrecisionThreshold = 1e-10;
 
         //-- TruncatedGaussian bounds ------------------------------------------------------------------------------
 
@@ -733,6 +734,10 @@ namespace Microsoft.ML.Probabilistic.Factors
                     return Double.NegativeInfinity;
                 }
             }
+            else if(!X.IsProper())
+            {
+                return double.NegativeInfinity;
+            }
             else
             {
                 // at this point, X is not uniform
@@ -849,7 +854,18 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             else
             {
-                //double logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
+                bool precisionWasZero = false;
+                if (Double.IsNegativeInfinity(logZ))
+                {
+                    if (X.Precision < LowPrecisionThreshold)
+                    {
+                        precisionWasZero = true;
+                        X.Precision = LowPrecisionThreshold;
+                        logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
+                    }
+                    if (Double.IsNegativeInfinity(logZ))
+                        throw new AllZeroException();
+                }
                 double d_p = 2 * isBetween.GetProbTrue() - 1;
                 if (lowerBound.IsPointMass)
                 {
@@ -917,7 +933,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 // (mx - ml) / (vl + vx) = yl*invSqrtVxl
                 double betaL = alphaL * (alphaL - yl * invSqrtVxl);
-                if (r > -1 && r != 0)
+                if (r > -1 && r != 0 && !precisionWasZero)
                 {
                     double logPhiR = -2 * MMath.LnSqrt2PI - 0.5 * Math.Log(1 - r * r) - 0.5 * (yl * yl + yu * (yu - 2 * r * yl)) / (1 - r * r);
                     double c = d_p * r * Math.Exp(logPhiR - logZ);
@@ -982,7 +998,18 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             else
             {
-                //double logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
+                bool precisionWasZero = false;
+                if (Double.IsNegativeInfinity(logZ))
+                {
+                    if (X.Precision < LowPrecisionThreshold)
+                    {
+                        precisionWasZero = true;
+                        X.Precision = LowPrecisionThreshold;
+                        logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
+                    }
+                    if (Double.IsNegativeInfinity(logZ))
+                        throw new AllZeroException();
+                }
                 double d_p = 2 * isBetween.GetProbTrue() - 1;
                 if (upperBound.IsPointMass)
                 {
@@ -1049,7 +1076,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 // (mu - mx) / (vx + vu) = yu*invSqrtVxu
                 double betaU = alphaU * (alphaU + yu * invSqrtVxu);
-                if (r > -1 && r != 0)
+                if (r > -1 && r != 0 && !precisionWasZero)
                 {
                     double logPhiR = -2 * MMath.LnSqrt2PI - 0.5 * Math.Log(1 - r * r) - 0.5 * (yu * yu + yl * (yl - 2 * r * yu)) / (1 - r * r);
                     double c = d_p * r * Math.Exp(logPhiR - logZ);
@@ -1120,9 +1147,18 @@ namespace Microsoft.ML.Probabilistic.Factors
             else
             {
                 // X is not a point mass or uniform
-                //double logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
+                bool precisionWasZero = false;
                 if (Double.IsNegativeInfinity(logZ))
-                    throw new AllZeroException();
+                {
+                    if(X.Precision < LowPrecisionThreshold)
+                    {
+                        precisionWasZero = true;
+                        X.Precision = LowPrecisionThreshold;
+                        logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
+                    }
+                    if (Double.IsNegativeInfinity(logZ))
+                        throw new AllZeroException();
+                }
                 double d_p = 2 * isBetween.GetProbTrue() - 1;
                 double yl, yu, r, invSqrtVxl, invSqrtVxu;
                 GetDiffMeanAndVariance(X, lowerBound, upperBound, out yl, out yu, out r, out invSqrtVxl, out invSqrtVxu);
@@ -1166,7 +1202,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 {
                     betaX += alphaU * (yu * invSqrtVxu);
                 }
-                if (r > -1 && r != 0 && !Double.IsInfinity(yl) && !Double.IsInfinity(yu))
+                if (r > -1 && r != 0 && !Double.IsInfinity(yl) && !Double.IsInfinity(yu) && !precisionWasZero)
                 {
                     double logPhiR = -2 * MMath.LnSqrt2PI - 0.5 * Math.Log(1 - r * r) - 0.5 * (yl * yl + yu * yu - 2 * r * yl * yu) / (1 - r * r);
                     double c = d_p * r * Math.Exp(logPhiR - logZ);

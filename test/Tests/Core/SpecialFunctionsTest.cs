@@ -1836,9 +1836,9 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             MMath.NormalCdf(-2, -2, -0.5);
             NormalCdf_Quadrature(-2, -2, -0.5);
             Stopwatch watch = new Stopwatch();
-            double xmin = -1;
-            double xmax = 0;
-            double n = 10;
+            double xmin = -1.6;
+            double xmax = -1.5;
+            double n = 100;
             double xinc = (xmax - xmin) / (n - 1);
             for (int xi = 0; xi < n; xi++)
             {
@@ -1851,8 +1851,6 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     double y = ymin + yi * yinc;
                     double rmin = -0.999999;
                     double rmax = -0.000001;
-                    rmin = -0.6;
-                    rmax = -0.5;
                     double rinc = (rmax - rmin) / (n - 1);
                     for (int ri = 0; ri < n; ri++)
                     {
@@ -1905,7 +1903,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         }
 
         // Used to debug MMath.NormalCdf
-        internal static void NormalCdf2Test3()
+        internal void NormalCdf2Test3()
         {
             double x, y, r;
             bool first = true;
@@ -1935,6 +1933,10 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 x = -1.5;
                 y = 1.5;
                 r = -0.49;
+
+                x = -1.6450031341281908;
+                y = 1.2645625117080999;
+                r = -0.054054238344620031;
                 Console.WriteLine(1 - r * r);
 
                 Console.WriteLine("NormalCdfBrute: {0}", NormalCdfBrute(0, x, y, r));
@@ -1944,8 +1946,9 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 //Console.WriteLine("NormalCdfTaylor: {0}", NormalCdfTaylor(x, y, r));
                 Console.WriteLine("NormalCdfConFrac3: {0}", NormalCdfConFrac3(x, y, r));
                 //Console.WriteLine("NormalCdfConFrac4: {0}", NormalCdfConFrac4(x, y, r));
-                //Console.WriteLine("NormalCdfConFrac5: {0}", NormalCdfConFrac5(x, y, r));
+                Console.WriteLine("NormalCdfConFrac5: {0}", NormalCdfConFrac5(x, y, r));
                 Console.WriteLine("MMath.NormalCdf: {0}", MMath.NormalCdf(x, y, r));
+                Console.WriteLine("MMath.NormalCdfLn: {0}", MMath.NormalCdfLn(x, y, r));
                 for (int i = 1; i < 50; i++)
                 {
                     //Console.WriteLine("{0}: {1}", i, NormalCdfBrute(i, x, y, r));
@@ -1995,7 +1998,9 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     {-10,-0.5,-0.5, 5.94859187434255E-34},
                     {10,1,0.5, System.Math.Exp(-0.17275377902345) },
                     {-17.16232660642066, 13.435028842544401, -0.67419986246324193, 2.5244995486068114E-66 },
-                    {-2,1.3,-0.5, 0.0125543619945072},
+                    { -1.5235871609407412, 0.069296909625515962, -0.027053117898400668, 0.0323181622672724 },
+                    { -1.64500313412819, 1.2645625117081, -0.05405423834462, 0.0437792307578264 },
+                    { -2,1.3,-0.5, 0.0125543619945072},
                     {-2,1.5,-0.5, 0.0145466302871907},
                     {x, y, 0, MMath.NormalCdf(x)*MMath.NormalCdf(y)},
                     {x, y, 1, MMath.NormalCdf(System.Math.Min(x, y))},
@@ -2032,6 +2037,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             // log(integrate(1/(2*pi*sqrt(1-t*t))*exp(-(2*1.5*1.5 + 2*t*1.5*1.5)/(2*(1-t*t))),t,-1,-0.5))
             double[,] normalcdfln2_pairs = new double[,]
                 {
+                    { -1.5235871609407412, 0.069296909625515962, -0.027053117898400668, -3.43212590748818 },
                     { -63, 63, -0.4637494637494638, -1989.56232505372569173398 },
                     {-0.1,-0.1, -0.999999, -10018.30269574383335648},
                     {-0.1,-0.1, -0.99999, -1014.8501635587853745},

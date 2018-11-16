@@ -708,17 +708,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                     }
                 }
             }
-#if KeepLastMessage
-      if (LastPrecisionMessage != null) {
-        if (Stepsize != 1 && Stepsize != 0) {
-          LastPrecisionMessage.SetToPower(LastPrecisionMessage, 1 - Stepsize);
-          result.SetToPower(result, Stepsize);
-          result.SetToProduct(result, LastPrecisionMessage);
-        }
-      }
-      // FIXME: this is not entirely safe since the caller could overwrite result.
-      LastPrecisionMessage = result;
-#endif
             return result;
         }
 
@@ -789,17 +778,6 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <param name="logWeights">Place to put the log-weights</param>
         public static void QuadratureNodesAndWeights(Gamma precision, double[] nodes, double[] logWeights)
         {
-#if KeepLastMessage
-      if (LastPrecisionMessage != null) {
-        Gamma PrecisionPosterior = precision * LastPrecisionMessage;
-        Quadrature.GammaNodesAndWeights(PrecisionPosterior.Precision, PrecisionPosterior.PrecisionOverMean, nodes, weights);
-        // modify the weights to include q(prec)/Ga(prec;a,b)
-        for (int i = 0; i < weights.Length; i++) {
-          weights[i] *= Math.Exp(precision.EvaluateLn(nodes[i]) - Gamma.EvaluateLn(nodes[i], PrecisionPosterior.Precision, PrecisionPosterior.PrecisionOverMean));
-        }
-        return;
-      }
-#endif
             Quadrature.GammaNodesAndWeights(precision.Shape - 1, precision.Rate, nodes, logWeights);
         }
 
