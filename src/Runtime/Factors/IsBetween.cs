@@ -734,7 +734,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     return Double.NegativeInfinity;
                 }
             }
-            else if(!X.IsProper())
+            else if (!X.IsProper())
             {
                 return double.NegativeInfinity;
             }
@@ -863,8 +863,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                         X.Precision = LowPrecisionThreshold;
                         logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
                     }
-                    if (Double.IsNegativeInfinity(logZ))
-                        throw new AllZeroException();
                 }
                 double d_p = 2 * isBetween.GetProbTrue() - 1;
                 if (lowerBound.IsPointMass)
@@ -916,12 +914,22 @@ namespace Microsoft.ML.Probabilistic.Factors
                         }
                     }
                 }
+                if (X.IsPointMass)
+                {
+                    if (upperBound.IsPointMass && upperBound.Point < X.Point)
+                    {
+                        return IsPositiveOp.XAverageConditional(false, DoublePlusOp.AAverageConditional(lowerBound, upperBound.Point));
+                    }
+                    else
+                    {
+                        return IsPositiveOp.XAverageConditional(false, DoublePlusOp.AAverageConditional(lowerBound, X.Point));
+                    }
+                }
                 double yl, yu, r, invSqrtVxl, invSqrtVxu;
                 GetDiffMeanAndVariance(X, lowerBound, upperBound, out yl, out yu, out r, out invSqrtVxl, out invSqrtVxu);
                 // if we get here, we know that -1 < r <= 0 and invSqrtVxl is finite
                 // since lowerBound is not uniform and X is not uniform, invSqrtVxl > 0
                 // yl is always finite.  yu may be +/-infinity, in which case r = 0.
-                double logPhiL = Gaussian.GetLogProb(yl, 0, 1) + MMath.NormalCdfLn((yu - r * yl) / Math.Sqrt(1 - r * r));
                 double alphaL;
                 if (r == 0)
                 {
@@ -929,6 +937,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 else
                 {
+                    double logPhiL = Gaussian.GetLogProb(yl, 0, 1) + MMath.NormalCdfLn((yu - r * yl) / Math.Sqrt(1 - r * r));
                     alphaL = -d_p * invSqrtVxl * Math.Exp(logPhiL - logZ);
                 }
                 // (mx - ml) / (vl + vx) = yl*invSqrtVxl
@@ -1007,8 +1016,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                         X.Precision = LowPrecisionThreshold;
                         logZ = LogAverageFactor(isBetween, X, lowerBound, upperBound);
                     }
-                    if (Double.IsNegativeInfinity(logZ))
-                        throw new AllZeroException();
                 }
                 double d_p = 2 * isBetween.GetProbTrue() - 1;
                 if (upperBound.IsPointMass)
@@ -1059,12 +1066,22 @@ namespace Microsoft.ML.Probabilistic.Factors
                         }
                     }
                 }
+                if (X.IsPointMass)
+                {
+                    if (lowerBound.IsPointMass && lowerBound.Point > X.Point)
+                    {
+                        return IsPositiveOp.XAverageConditional(true, DoublePlusOp.AAverageConditional(upperBound, lowerBound.Point));
+                    }
+                    else
+                    {
+                        return IsPositiveOp.XAverageConditional(true, DoublePlusOp.AAverageConditional(upperBound, X.Point));
+                    }
+                }
                 double yl, yu, r, invSqrtVxl, invSqrtVxu;
                 GetDiffMeanAndVariance(X, lowerBound, upperBound, out yl, out yu, out r, out invSqrtVxl, out invSqrtVxu);
                 // if we get here, -1 < r <= 0 and invSqrtVxu is finite
                 // since upperBound is not uniform and X is not uniform, invSqrtVxu > 0
                 // yu is always finite.  yl may be infinity, in which case r = 0.
-                double logPhiU = Gaussian.GetLogProb(yu, 0, 1) + MMath.NormalCdfLn((yl - r * yu) / Math.Sqrt(1 - r * r));
                 double alphaU;
                 if (r == 0)
                 {
@@ -1072,6 +1089,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
                 else
                 {
+                    double logPhiU = Gaussian.GetLogProb(yu, 0, 1) + MMath.NormalCdfLn((yl - r * yu) / Math.Sqrt(1 - r * r));
                     alphaU = d_p * invSqrtVxu * Math.Exp(logPhiU - logZ);
                 }
                 // (mu - mx) / (vx + vu) = yu*invSqrtVxu
@@ -1150,7 +1168,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 bool precisionWasZero = false;
                 if (Double.IsNegativeInfinity(logZ))
                 {
-                    if(X.Precision < LowPrecisionThreshold)
+                    if (X.Precision < LowPrecisionThreshold)
                     {
                         precisionWasZero = true;
                         X.Precision = LowPrecisionThreshold;

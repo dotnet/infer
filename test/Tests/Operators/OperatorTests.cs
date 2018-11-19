@@ -1180,25 +1180,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(IsPositiveOp.XAverageConditional(false, new Gaussian(-127, 11)).Equals(uniform));
             Assert.True(IsPositiveOp.XAverageConditional(true, new Gaussian(-1e5, 10)).IsProper());
             Assert.True(IsPositiveOp.XAverageConditional(false, new Gaussian(1e5, 10)).IsProper());
-
-            try
-            {
-                IsPositiveOp.XAverageConditional(true, Gaussian.FromNatural(1, 0));
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ImproperMessageException)
-            {
-                Console.WriteLine("Correctly threw ImproperMessageException");
-            }
-            try
-            {
-                IsPositiveOp.XAverageConditional(false, Gaussian.FromNatural(-1, 0));
-                Assert.True(false, "Did not throw exception");
-            }
-            catch (ImproperMessageException)
-            {
-                Console.WriteLine("Correctly threw ImproperMessageException");
-            }
         }
 
         [Fact]
@@ -2902,15 +2883,27 @@ weight * (tau + alphaX) + alphaX
                 //Assert.True(Xpost.MaxDiff(new Gaussian(m+lowerBounds[i], v)) < 1e-8);
             }
 
-            //Gaussian upperBound = new Gaussian(3,4);
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0.0), lowerBound, Gaussian.PointMass(0.0));
-            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0.0), lowerBound, Gaussian.PointMass(1.0));
-            Assert.True(Lpost.MaxDiff(IsPositiveOp.XAverageConditional(false, lowerBound)) < 1e-10);
+
+            Gaussian Lexpected = IsPositiveOp.XAverageConditional(false, lowerBound);
+            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.FromMeanAndVariance(0, 1e-10), lowerBound, Gaussian.FromMeanAndVariance(-1, 1));
+            Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
+            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.FromMeanAndVariance(-1, 1));
+            Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
+            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(1), lowerBound, Gaussian.PointMass(0));
+            Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
+            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.PointMass(0));
+            Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
+            Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), lowerBound, Gaussian.PointMass(1));
+            Assert.True(Lpost.MaxDiff(Lexpected) < 1e-10);
             //Lpost = DoubleIsBetweenOp.LowerBoundAverageConditional(true,Gaussian.Uniform(),lowerBound,0);
             //Assert.True(Lpost.MaxDiff(IsPositiveOp.XAverageConditional(false,lowerBound)) < 1e-3);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(-1), Gaussian.PointMass(0.0), upperBound);
-            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0.0), Gaussian.PointMass(0.0), upperBound);
-            Assert.True(Upost.MaxDiff(IsPositiveOp.XAverageConditional(true, upperBound)) < 1e-10);
+            Gaussian Uexpected = IsPositiveOp.XAverageConditional(true, upperBound);
+            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(-1), Gaussian.PointMass(0), upperBound);
+            Assert.True(Upost.MaxDiff(Uexpected) < 1e-10);
+            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), Gaussian.PointMass(0), upperBound);
+            Assert.True(Upost.MaxDiff(Uexpected) < 1e-10);
+            Upost = DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.PointMass(0), Gaussian.PointMass(-1), upperBound);
+            Assert.True(Upost.MaxDiff(Uexpected) < 1e-10);
             //Upost = DoubleIsBetweenOp.UpperBoundAverageConditional(true,Gaussian.Uniform(),0,upperBound);
             //Assert.True(Upost.MaxDiff(IsPositiveOp.XAverageConditional(true,upperBound)) < 1e-3);
         }

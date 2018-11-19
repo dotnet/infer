@@ -482,43 +482,6 @@ namespace Microsoft.ML.Probabilistic.Factors
             return SampleAverageConditional(mean, sample, precision, to_precision);
         }
 
-#if false
-    /// <summary>
-    /// EP message to 'precision'
-    /// </summary>
-    /// <param name="sample">Constant value for 'sample'.</param>
-    /// <param name="mean">Incoming message from 'mean'. Must be a proper distribution.  If uniform, the result will be uniform.</param>
-    /// <param name="precision">Incoming message from 'precision'. Must be a proper distribution.  If uniform, the result will be uniform.</param>
-    /// <returns>The outgoing EP message to the 'precision' argument</returns>
-    /// <remarks><para>
-    /// The outgoing message is a distribution matching the moments of 'precision' as the random arguments are varied.
-    /// The formula is <c>proj[p(precision) sum_(mean) p(mean) factor(sample,mean,precision)]/p(precision)</c>.
-    /// </para></remarks>
-    /// <exception cref="ImproperMessageException"><paramref name="mean"/> is not a proper distribution</exception>
-    /// <exception cref="ImproperMessageException"><paramref name="precision"/> is not a proper distribution</exception>
-    public static Gamma PrecisionAverageConditional(double sample, [SkipIfUniform] Gaussian mean, [SkipIfUniform] Gamma precision, Gamma to_precision)
-    {
-      return PrecisionAverageConditional(Gaussian.PointMass(sample), mean, precision, to_precision);
-    }
-    /// <summary>
-    /// EP message to 'precision'
-    /// </summary>
-    /// <param name="sample">Incoming message from 'sample'. Must be a proper distribution.  If uniform, the result will be uniform.</param>
-    /// <param name="mean">Constant value for 'mean'.</param>
-    /// <param name="precision">Incoming message from 'precision'. Must be a proper distribution.  If uniform, the result will be uniform.</param>
-    /// <returns>The outgoing EP message to the 'precision' argument</returns>
-    /// <remarks><para>
-    /// The outgoing message is a distribution matching the moments of 'precision' as the random arguments are varied.
-    /// The formula is <c>proj[p(precision) sum_(sample) p(sample) factor(sample,mean,precision)]/p(precision)</c>.
-    /// </para></remarks>
-    /// <exception cref="ImproperMessageException"><paramref name="sample"/> is not a proper distribution</exception>
-    /// <exception cref="ImproperMessageException"><paramref name="precision"/> is not a proper distribution</exception>
-    public static Gamma PrecisionAverageConditional([SkipIfUniform] Gaussian sample, double mean, [SkipIfUniform] Gamma precision, Gamma to_precision)
-    {
-      return PrecisionAverageConditional(sample, Gaussian.PointMass(mean), precision, to_precision);
-    }
-#endif
-
         public static Gamma PrecisionAverageConditional_slow([SkipIfUniform] Gaussian sample, [SkipIfUniform] Gaussian mean, [SkipIfUniform] Gamma precision)
         {
             return PrecisionAverageConditional(sample, mean, precision);
@@ -531,17 +494,20 @@ namespace Microsoft.ML.Probabilistic.Factors
             // log f(r) = -0.5*log(xv+mv+1/r) - 0.5*(xm-mm)^2/(xv+mv+1/r)
             // (log f)' = (-0.5/(yv + 1/r) + 0.5*ym^2/(yv+1/r)^2)*(-1/r^2)
             // (log f)'' = (-0.5/(yv + 1/r) + 0.5*ym^2/(yv+1/r)^2)*(2/r^3) + (0.5/(yv+1/r)^2 - ym^2/(yv+1/r)^3)*(1/r^4)
-            double v = 1 / precision;
-            double v2 = v * v;
-            double denom = 1 / (yv + v);
-            double ymdenom = ym * denom;
-            double ym2denom2 = ymdenom * ymdenom;
-            double dlogf = (-0.5 * denom + 0.5 * ym2denom2) * (-v2);
-            // This method is slightly more accurate.
+            // r (log f)' = 0.5/(yv*r + 1) - 0.5*r*ym^2/(yv*r+1)^2
+            // r^2 (log f)'' = -1/(yv*r + 1) + r*ym^2/(yv*r+1)^2) + 0.5/(yv*r+1)^2 - r*ym^2/(yv*r+1)^3
+            double vdenom = 1 / (yv * precision + 1);
+            double ymvdenom = ym * vdenom;
+            double ymvdenom2 = precision * ymvdenom * ymvdenom;
+            //dlogf = (-0.5 * denom + 0.5 * ym2denom2) * (-v2);
             //dlogf = 0.5 * (1 - ym * ymdenom) * denom * v2;
             //dlogf = 0.5 * (v - ym * ym/(yv*precision+1))/(yv*precision + 1);
-            //dlogf = 0.5 * (yv+v - ym * ym) / (yv * precision + 1) / (yv * precision + 1);
-            double ddlogf = dlogf * (-2 * v) + (0.5 * denom - ym2denom2) * denom * v2 * v2;
+            //double dlogf = 0.5 * (v * vdenom - ymvdenom2);
+            //double xdlogf = precision * dlogf;
+            double xdlogf = 0.5 * (vdenom - ymvdenom2);
+            //double ddlogf = dlogf * (-2 * v) + (0.5 * denom - ym2denom2) * denom * v2 * v2;
+            //double ddlogf = v * (-2 * dlogf + (0.5 * v * vdenom - ym*ym*vdenom*vdenom) * vdenom);
+            double x2ddlogf = -2 * xdlogf + (0.5 * vdenom - ymvdenom2) * vdenom;
             bool checkDerivatives = false;
             if(checkDerivatives)
             {
@@ -554,12 +520,53 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double ulp = MMath.Ulp(logf);
                 if (logfd - logf > ulp && logf - logfd2 > ulp)
                 {
+                    double v = 1 / precision;
+                    double dlogf = v * xdlogf;
+                    double ddlogf = v * v * x2ddlogf;
                     Console.WriteLine($"dlogf={dlogf} check={dlogf2} ddlogf={ddlogf} check={ddlogf2}");
                     if (Math.Abs(dlogf2 - dlogf) > 1e-4) throw new Exception();
                     if (Math.Abs(ddlogf2 - ddlogf) > 1e-4) throw new Exception();
                 }
             }
-            return Gamma.FromDerivatives(precision, dlogf, ddlogf, ForceProper);
+            return GammaFromDerivatives(precision, xdlogf, x2ddlogf, ForceProper);
+        }
+
+        /// <summary>
+        /// Construct a Gamma distribution whose pdf has the given derivatives at a point.
+        /// </summary>
+        /// <param name="x">Must be positive</param>
+        /// <param name="xdLogP">Desired derivative of log-density at x, times x</param>
+        /// <param name="x2ddLogP">Desired second derivative of log-density at x, times x*x</param>
+        /// <param name="forceProper">If true and both derivatives cannot be matched by a proper distribution, match only the first.</param>
+        /// <returns></returns>
+        internal static Gamma GammaFromDerivatives(double x, double xdLogP, double x2ddLogP, bool forceProper)
+        {
+            if (x <= 0)
+                throw new ArgumentException("x <= 0");
+            double a = -x2ddLogP;
+            if (forceProper)
+            {
+                if (xdLogP < 0)
+                {
+                    if (a < 0)
+                        a = 0;
+                }
+                else
+                {
+                    double amin = xdLogP;
+                    if (a < amin)
+                        a = amin;
+                }
+            }
+            double b = (a - xdLogP) / x;
+            if (forceProper)
+            {
+                // correct roundoff errors that might make b negative
+                b = Math.Max(b, 0);
+            }
+            if (double.IsNaN(a) || double.IsNaN(b))
+                throw new InferRuntimeException($"result is NaN.  x={x}, xdlogf={xdLogP}, x2ddlogf={x2ddLogP}");
+            return Gamma.FromShapeAndRate(a+1, b);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianOp"]/message_doc[@name="PrecisionAverageConditional(Gaussian, Gaussian, Gamma)"]/*'/>
@@ -636,7 +643,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     Z = mva.Count;
                     if (double.IsNaN(Z))
                         throw new Exception("Z is nan");
-                    if (Z > 2)
+                    if (Z > 2 && mva.Variance > 0)
                         break;
                     // one quadrature node dominates the answer.  must re-try with a different weight function.
                     double delta = (argmax == 0) ? (nodes[argmax + 1] - nodes[argmax]) : (nodes[argmax] - nodes[argmax - 1]);
