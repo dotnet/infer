@@ -2759,6 +2759,7 @@ weight * (tau + alphaX) + alphaX
         [Fact]
         public void GaussianIsBetweenTest2()
         {
+            DoubleIsBetweenOp.UpperBoundAverageConditional_Slow(Bernoulli.PointMass(true), Gaussian.FromNatural(1.2, 1E-13), Gaussian.FromNatural(-200, 100), Gaussian.FromNatural(255, 147));
             Assert.True(!double.IsNaN(DoubleIsBetweenOp.XAverageConditional(Bernoulli.PointMass(true), new Gaussian(1, 2), double.PositiveInfinity, double.PositiveInfinity).MeanTimesPrecision));
             Bernoulli isBetween = new Bernoulli(1);
             Gaussian x = new Gaussian(0, 1);
