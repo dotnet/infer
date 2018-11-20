@@ -1096,7 +1096,43 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double betaU = alphaU * (alphaU + yu * invSqrtVxu);
                 if (r > -1 && r != 0 && !precisionWasZero)
                 {
-                    double logPhiR = -2 * MMath.LnSqrt2PI - 0.5 * Math.Log(1 - r * r) - 0.5 * (yu * yu + yl * (yl - 2 * r * yu)) / (1 - r * r);
+                    // (yu * yu + yl * (yl - 2 * r * yu))
+                    // ((mu-mx)*(mu-mx)/(vx+vu) + (mx-ml)*invSqrtVxl * ((mx-ml)*invSqrtVxl - 2 * r * (mu-mx)*invSqrtVxu))
+                    // ((mu-mx)*(mu-mx)/(vx+vu) + (mx-ml) * ((mx-ml) + 2 *vx * invSqrtVxu* (mu-mx)*invSqrtVxu)/(vx+vl))
+                    // ((mu-mx)*(mu-mx)/(vx+vu) + (mx-ml) * ((mx-ml) + 2 *vx * (mu-mx)/(vx+vu))/(vx+vl))
+                    // (mu-mx)*(mu-mx)/(vx+vu) + (mx-ml) * ((mx-ml)*(vx+vu) + (2*vx*mu-2*vx*mx))/(vx+vu)/(vx+vl)
+                    // (mu-mx)*(mu-mx) + (mx-ml) * ((mx-ml)*(vx+vu) + (2*vx*mu-2*vx*mx))/(vx+vl)
+                    // (mu-mx)*(mu-mx) + (mx-ml) * ((mx-ml)*vu + (2*mu-ml-mx)*vx)/(vx+vl)
+                    // (mu-mx)*(mu-mx)*(vx+vl) + (mx-ml) * ((mx-ml)*vu + (2*mu-ml-mx)*vx)
+                    // ((mu-mx)*(mu-mx) + (mx-ml)*(2*mu-ml-mx))*vx + (mu-mx)*(mu-mx)*vl + (mx-ml)*(mx-ml)*vu
+                    // (mu-ml)*(mu-ml)*vx + (mu-mx)*(mu-mx)*vl + (mx-ml)*(mx-ml)*vu
+                    double logPhiR = -2 * MMath.LnSqrt2PI - 0.5 * Math.Log(1 - r * r);
+                    if (r > -0.99)
+                    {
+                        logPhiR -= 0.5 * (yu * yu + yl * (yl - 2 * r * yu)) / (1 - r * r);
+                    }
+                    else
+                    {
+                        // (yu * yu + yl * (yl - 2 * r * yu)) =
+                        // ((mu-mx)*(mu-mx)/(vx+vu) + (mx-ml)*invSqrtVxl * ((mx-ml)*invSqrtVxl - 2 * r * (mu-mx)*invSqrtVxu))
+                        // ((mu-mx)*(mu-mx)/(vx+vu) + (mx-ml) * ((mx-ml) + 2 *vx * invSqrtVxu* (mu-mx)*invSqrtVxu)/(vx+vl))
+                        // ((mu-mx)*(mu-mx)/(vx+vu) + (mx-ml) * ((mx-ml) + 2 *vx * (mu-mx)/(vx+vu))/(vx+vl))
+                        // (mu-mx)*(mu-mx)/(vx+vu) + (mx-ml) * ((mx-ml)*(vx+vu) + (2*vx*mu-2*vx*mx))/(vx+vu)/(vx+vl)
+                        // ((mu-mx)*(mu-mx) + (mx-ml) * ((mx-ml)*(vx+vu) + (2*vx*mu-2*vx*mx))/(vx+vl))/(vx+vu)
+                        // ((mu-mx)*(mu-mx) + (mx-ml) * ((mx-ml)*vu + (2*mu-ml-mx)*vx)/(vx+vl))/(vx+vu)
+                        // ((mu-mx)*(mu-mx)*(vx+vl) + (mx-ml) * ((mx-ml)*vu + (2*mu-ml-mx)*vx))/(vx+vl)/(vx+vu)
+                        // (((mu-mx)*(mu-mx) + (mx-ml)*(2*mu-ml-mx))*vx + (mu-mx)*(mu-mx)*vl + (mx-ml)*(mx-ml)*vu)/(vx+vl)/(vx+vu)
+                        // ((mu-ml)*(mu-ml)*vx + (mu-mx)*(mu-mx)*vl + (mx-ml)*(mx-ml)*vu)/(vx+vl)/(vx+vu)
+                        // (1-r*r) = 1 - vx*vx/(vx+vl)/(vx+vu) = (vx*vl + vx*vu + vl*vu)/(vx+vl)/(vx+vu)
+                        double mx, vx, ml, vl, mu, vu;
+                        X.GetMeanAndVariance(out mx, out vx);
+                        lowerBound.GetMeanAndVariance(out ml, out vl);
+                        upperBound.GetMeanAndVariance(out mu, out vu);
+                        double dmul = mu - ml;
+                        double dmux = mu - mx; // yu/invSqrtVxu
+                        double dmxl = mx - ml;
+                        logPhiR -= 0.5 * (dmul * dmul * vx + dmux * dmux * vl + dmxl * dmxl * vu) / (vx*vl + vx*vu + vl*vu);
+                    }
                     double c = d_p * r * Math.Exp(logPhiR - logZ);
                     betaU += c * invSqrtVxu * invSqrtVxu;
                 }
