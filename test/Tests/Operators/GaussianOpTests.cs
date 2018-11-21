@@ -14,7 +14,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Assert = Xunit.Assert;
     using System.Diagnostics;
 
-    
+
     public class GaussianOpTests
     {
         // There are 27 cases to test, for each method of the operator.
@@ -23,7 +23,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Gaussian uniform = new Gaussian();
             Gaussian X0 = Gaussian.FromMeanAndVariance(3, 0.5);
-            Gaussian Mean0 = Gaussian.FromMeanAndVariance(7, 1.0/3);
+            Gaussian Mean0 = Gaussian.FromMeanAndVariance(7, 1.0 / 3);
             Gamma Precision0 = Gamma.FromShapeAndScale(3, 3);
 
             // Fixed precision
@@ -206,7 +206,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             watch.Start();
             for (int i = 0; i < n; i++)
             {
-                GaussianOp_Laplace.Q(X, Mean, Precision, q);                
+                GaussianOp_Laplace.Q(X, Mean, Precision, q);
             }
             watch.Stop();
             Console.WriteLine("Q = {0}", watch.ElapsedTicks);
@@ -341,7 +341,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GaussianOpMean()
         {
             Gaussian result = new Gaussian();
-            Gaussian X0 = Gaussian.FromMeanAndVariance(7, 1.0/3);
+            Gaussian X0 = Gaussian.FromMeanAndVariance(7, 1.0 / 3);
             Gaussian Mean0 = Gaussian.FromMeanAndVariance(3, 0.5);
             Gamma Precision0 = Gamma.FromShapeAndScale(3, 3);
 
@@ -358,10 +358,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             Mean = Gaussian.PointMass(0);
             Precision = Gamma.FromShapeAndRate(3, 1);
             Gaussian xPostExpected = Gaussian.FromMeanAndVariance(0.178378819440295, 0.365796599498963);
-            Console.WriteLine(GaussianOp.SampleAverageConditional_slow(X, Mean, Precision)*X);
-            Assert.True(GaussianOp.SampleAverageConditional_slow(X, Mean, Precision).MaxDiff(xPostExpected/X) < 5e-7);
-            Console.WriteLine(GaussianOp_Slow.SampleAverageConditional(X, Mean, Precision)*X);
-            Assert.True(GaussianOp_Slow.SampleAverageConditional(X, Mean, Precision).MaxDiff(xPostExpected/X) < 5e-7);
+            Console.WriteLine(GaussianOp.SampleAverageConditional_slow(X, Mean, Precision) * X);
+            Assert.True(GaussianOp.SampleAverageConditional_slow(X, Mean, Precision).MaxDiff(xPostExpected / X) < 5e-7);
+            Console.WriteLine(GaussianOp_Slow.SampleAverageConditional(X, Mean, Precision) * X);
+            Assert.True(GaussianOp_Slow.SampleAverageConditional(X, Mean, Precision).MaxDiff(xPostExpected / X) < 5e-7);
         }
 
         /// <summary>
@@ -395,6 +395,15 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gaussian X, Mean;
             Gamma Precision;
 
+            X = Gaussian.FromNatural(-1.5098177152950143E-09, 1.061649960537027E-168);
+            Mean = Gaussian.FromNatural(-3.6177299471249587, 0.11664740799025652);
+            Precision = Gamma.FromShapeAndRate(306.39423695125572, 1.8326832031565403E+170);
+            precMsg = Gamma.PointMass(0);
+            precMsg2 = GaussianOp_Slow.PrecisionAverageConditional(X, Mean, Precision);
+            Assert.True(precMsg.MaxDiff(precMsg2) < 1e-4);
+            precMsg2 = GaussianOp.PrecisionAverageConditional(X, Mean, Precision);
+            Assert.True(precMsg.MaxDiff(precMsg2) < 1e-4);
+
             X = Gaussian.FromNatural(-0.55657497231637854, 6.6259783218464713E-141);
             Mean = Gaussian.FromNatural(-2.9330116542965374, 0.07513822741674292);
             Precision = Gamma.FromShapeAndRate(308.8184220331475, 4.6489382805051884E+142);
@@ -426,7 +435,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(!double.IsNaN(precMsg.Rate));
 
             Gaussian X0 = Gaussian.FromMeanAndVariance(3, 0.5);
-            Gaussian Mean0 = Gaussian.FromMeanAndVariance(7, 1.0/3);
+            Gaussian Mean0 = Gaussian.FromMeanAndVariance(7, 1.0 / 3);
             Gamma Precision0 = Gamma.FromShapeAndScale(3, 3);
 
             precMsg = GaussianOp_Slow.PrecisionAverageConditional(Gaussian.FromNatural(0.010158033515400506, 0.0041117304509528533),
@@ -530,7 +539,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                 }
                 count++;
-                if(count % 100 == 0)
+                if (count % 100 == 0)
                     Console.WriteLine("{0}", count);
             }
         }

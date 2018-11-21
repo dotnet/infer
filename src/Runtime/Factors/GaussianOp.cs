@@ -238,6 +238,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             else if (sample.Precision == 0)
             {
                 // for large vx, Z =approx N(mx; mm, vx+vm+E[1/prec])
+                if (mean.Precision == 0) return mean;
                 double mm, mv;
                 mean.GetMeanAndVariance(out mm, out mv);
                 // NOTE: this error may happen because sample didn't receive any message yet under the schedule.
@@ -355,14 +356,14 @@ namespace Microsoft.ML.Probabilistic.Factors
                         Assert.IsTrue(prec > 0);
                         if ((prec > lowerBound && prec < upperBound) != precisionIsBetween)
                             continue;
-                        double ivr = prec / (v*prec + 1);
+                        double ivr = prec / (v * prec + 1);
                         double dlogf = -m * ivr;
                         double ddlogf = dlogf * dlogf - ivr;
                         double lp = 0.5 * Math.Log(ivr) - 0.5 * m * m * ivr;
                         if (double.IsPositiveInfinity(lp))
                             throw new Exception("overflow");
                         if (!double.IsNegativeInfinity(lp) && shift == 0)
-                            shift = logWeights[i]+lp;
+                            shift = logWeights[i] + lp;
                         double f = Math.Exp(logWeights[i] + lp - shift);
                         Z += f;
                         sum1 += dlogf * f;
@@ -377,7 +378,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         throw new Exception("Quadrature found zero mass");
                     }
                     double alpha = sum1 / Z;
-                    double beta = alpha*alpha -sum2 / Z;
+                    double beta = alpha * alpha - sum2 / Z;
                     return GaussianOp.GaussianFromAlphaBeta(sample, alpha, beta, GaussianOp.ForceProper);
                 }
                 else
@@ -408,7 +409,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         }
                         double lp = Gaussian.GetLogProb(xm, mm, xv + mv + 1.0 / prec);
                         if (i == 0)
-                            shift = logWeights[i]+lp;
+                            shift = logWeights[i] + lp;
                         double f = Math.Exp(logWeights[i] + lp - shift);
                         est.Add(Gaussian.FromMeanAndVariance(newMean, newVar), f);
                     }
@@ -443,7 +444,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 }
             }
         }
-        
+
         public static Gaussian SampleAverageConditional_slow(Gaussian sample, [SkipIfUniform] Gaussian mean, [SkipIfUniform] Gamma precision)
         {
             if (precision.IsUniform())
@@ -451,12 +452,12 @@ namespace Microsoft.ML.Probabilistic.Factors
             Gamma to_precision = PrecisionAverageConditional_slow(sample, mean, precision);
             return SampleAverageConditional(sample, mean, precision, to_precision);
         }
-        
+
         public static Gaussian MeanAverageConditional_slow([SkipIfUniform] Gaussian sample, Gaussian mean, [SkipIfUniform] Gamma precision)
         {
             return SampleAverageConditional_slow(mean, sample, precision);
         }
-        
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianOp"]/message_doc[@name="SampleAverageConditional(Gaussian, double, Gamma, Gamma)"]/*'/>
         public static Gaussian SampleAverageConditional([NoInit] Gaussian sample, double mean, [SkipIfUniform] Gamma precision, [NoInit] Gamma to_precision)
         {
@@ -489,6 +490,11 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         public static Gamma PrecisionAverageConditional_Point(double ym, double yv, double precision)
         {
+            // xdlogf = 0.5*(1/(yv*r+1) - r*ym*ym/(yv*r+1)^2) = 0.5*(yv*r+1-r*ym*ym)/(yv*r+1)^2
+            // x2ddlogf = (-yv*r-0.5+r*ym*ym)/(yv*r+1)^2 - r*ym*ym/(yv*r+1)^3
+            // xdlogf + x2ddlogf = (-0.5*yv*r + 0.5*r*ym*ym)/(yv*r+1)^2 - r*ym*ym/(yv*r+1)^3
+            // as r->0: -0.5*r*(yv + ym*ym)
+            if (precision == 0) return Gamma.FromShapeAndRate(1.5, 0.5 * (yv + ym * ym));
             // point mass case
             // f(r) = N(xm;mm, xv+mv+1/r)
             // log f(r) = -0.5*log(xv+mv+1/r) - 0.5*(xm-mm)^2/(xv+mv+1/r)
@@ -509,7 +515,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             //double ddlogf = v * (-2 * dlogf + (0.5 * v * vdenom - ym*ym*vdenom*vdenom) * vdenom);
             double x2ddlogf = -2 * xdlogf + (0.5 * vdenom - ymvdenom2) * vdenom;
             bool checkDerivatives = false;
-            if(checkDerivatives)
+            if (checkDerivatives)
             {
                 double delta = precision * 1e-6;
                 double logf = Gaussian.GetLogProb(0, ym, yv + 1 / precision);
@@ -566,7 +572,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             if (double.IsNaN(a) || double.IsNaN(b))
                 throw new InferRuntimeException($"result is NaN.  x={x}, xdlogf={xdLogP}, x2ddlogf={x2ddLogP}");
-            return Gamma.FromShapeAndRate(a+1, b);
+            return Gamma.FromShapeAndRate(a + 1, b);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianOp"]/message_doc[@name="PrecisionAverageConditional(Gaussian, Gaussian, Gamma)"]/*'/>
@@ -680,12 +686,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                         else  // nodes[i] is small
                         {
                             double r = nodes[i];
-                            double vdenom = 1 / (r*yv + 1);
+                            double vdenom = 1 / (r * yv + 1);
                             double v2denom2 = vdenom * vdenom;
-                            double vdlogf1 = -0.5 * vdenom + 0.5 * ym2 * v2denom2*r;
+                            double vdlogf1 = -0.5 * vdenom + 0.5 * ym2 * v2denom2 * r;
                             // dlogfr = r f'/f
                             double dlogfr = -vdlogf1;
-                            double v2dlogf2 = (0.5 - ym2 * vdenom*r) * v2denom2;
+                            double v2dlogf2 = (0.5 - ym2 * vdenom * r) * v2denom2;
                             // ddfrr = r^2 f''/f
                             // f''/f = d(f'/f) + (f'/f)^2
                             double ddfrr = dlogfr * dlogfr + v2dlogf2 + 2 * vdlogf1;
@@ -846,7 +852,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             return MMath.LogSumExp(logWeights);
         }
-        
+
         public static double LogAverageFactor_slow([SkipIfUniform] Gaussian sample, [SkipIfUniform] Gaussian mean, [SkipIfUniform] Gamma precision)
         {
             if (precision.IsUniform())
@@ -871,7 +877,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return LogAverageFactor(sample, mean, precision, to_precision)
               - sample.GetLogAverageOf(to_sample);
         }
-        
+
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianOp"]/message_doc[@name="LogEvidenceRatio(Gaussian, double, Gamma, Gaussian, Gamma)"]/*'/>
         public static double LogEvidenceRatio(
             [SkipIfUniform] Gaussian sample, double mean, [SkipIfUniform] Gamma precision, [Fresh] Gaussian to_sample, Gamma to_precision)
@@ -1195,7 +1201,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     for (int i = 0; i < n; i++)
                     {
                         double logr = logrmin + i * inc;
-                        double ivr = 1/(v + Math.Exp(-logr));
+                        double ivr = 1 / (v + Math.Exp(-logr));
                         double dlogf = -m * ivr;
                         double ddlogf = dlogf * dlogf - ivr;
                         double diff = LogLikelihoodRatio(logr, logr0, m, v, a, b);
@@ -1213,7 +1219,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         sum2 += ddlogf * f;
                     }
                     double alpha = sum1 / Z;
-                    double beta = alpha*alpha -sum2 / Z;
+                    double beta = alpha * alpha - sum2 / Z;
                     return GaussianOp.GaussianFromAlphaBeta(sample, alpha, beta, GaussianOp.ForceProper);
                 }
                 else
@@ -1438,16 +1444,16 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static void GetIntegrationBoundsForPrecision(double m, double v, double a, double b, out double logrmin, out double logrmax, out double logrmode)
         {
             // compute stationary points and inflection points
-            double v2 = v*v;
+            double v2 = v * v;
             double m2 = m * m;
-            double[] coeffs = { -b*v2, (a*v2 - 2*b*v), (0.5*v-0.5*m2+2*a*v-b), (0.5+a) };
+            double[] coeffs = { -b * v2, (a * v2 - 2 * b * v), (0.5 * v - 0.5 * m2 + 2 * a * v - b), (0.5 + a) };
             List<double> stationaryPoints;
-            Predicate<double> isPositive = (r => r>0.0);
+            Predicate<double> isPositive = (r => r > 0.0);
             GetRealRoots(coeffs, out stationaryPoints, isPositive);
             //Console.WriteLine("stationary points = {0}", StringUtil.CollectionToString(stationaryPoints, " "));
             stationaryPoints = stationaryPoints.ConvertAll(x => Math.Log(x));
-            double v3 = v*v2;
-            double[] coeffs2 = { -b*v3, -b*3*v2, (-b*3*v-0.5*v2+0.5*m2*v), (-0.5*v-b-0.5*m2) };
+            double v3 = v * v2;
+            double[] coeffs2 = { -b * v3, -b * 3 * v2, (-b * 3 * v - 0.5 * v2 + 0.5 * m2 * v), (-0.5 * v - b - 0.5 * m2) };
             List<double> inflectionPoints;
             GetRealRoots(coeffs2, out inflectionPoints, isPositive);
             //Console.WriteLine("inflection points = {0}", StringUtil.CollectionToString(inflectionPoints, " "));
@@ -1458,21 +1464,22 @@ namespace Microsoft.ML.Probabilistic.Factors
                 if (double.IsInfinity(logx))
                     return double.NegativeInfinity;
                 double x = Math.Exp(logx);
-                double vx = v + 1/x;
+                double vx = v + 1 / x;
                 return a * logx - b * x - 0.5 * Math.Log(vx) - 0.5 * m2 / vx;
             };
             var stationaryValues = stationaryPoints.ConvertAll(logx => like(logx));
             double max = MMath.Max(stationaryValues);
             double logx0 = stationaryPoints[stationaryValues.IndexOf(max)];
             logrmode = logx0;
-            Func<double,double> func = logx =>
+            Func<double, double> func = logx =>
+             {
+                 return LogLikelihoodRatio(logx, logx0, m, v, a, b) + 50;
+             };
+            Func<double, double> deriv = logx =>
             {
-                return LogLikelihoodRatio(logx, logx0, m, v, a, b) + 50;
-            };
-            Func<double,double> deriv = logx => {
                 double x = Math.Exp(logx);
-                double vx = v*x + 1;
-                return a - b*x + 0.5*(vx - m*m*x)/(vx*vx);
+                double vx = v * x + 1;
+                return a - b * x + 0.5 * (vx - m * m * x) / (vx * vx);
             };
             // find where the likelihood matches the bound value
             List<double> zeroes = FindZeroes(func, deriv, stationaryPoints, inflectionPoints);
@@ -1489,7 +1496,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double vx = v + Math.Exp(-logx);
             double vx0 = v + Math.Exp(-logx0);
             double diff = MMath.DifferenceOfExp(logx, logx0);
-            return a * (logx - logx0) - b * diff - 0.5 * Math.Log(vx/vx0) - 0.5 * m*m * (1 / vx - 1 / vx0);
+            return a * (logx - logx0) - b * diff - 0.5 * Math.Log(vx / vx0) - 0.5 * m * m * (1 / vx - 1 / vx0);
         }
 
         /// <summary>
@@ -1610,7 +1617,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                                 zeroes.Add(lowerBound);
                             else if (x > upperBound)
                                 zeroes.Add(upperBound);
-                            else 
+                            else
                                 throw new Exception(string.Format("could not find a zero between {0} and {1}", lowerBound, upperBound));
                         }
                     }
@@ -1632,12 +1639,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (double.IsInfinity(lowerBound) || double.IsInfinity(upperBound))
                 throw new ArgumentException("infinite bound");
-            while(true)
+            while (true)
             {
                 double x = (lowerBound + upperBound) / 2;
                 double f = func(x);
                 bool isPositive = (f > 0);
-                if (isPositive == wantPositive) 
+                if (isPositive == wantPositive)
                 {
                     if (double.IsInfinity(f))
                     {
@@ -1716,7 +1723,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     break;
                 }
             }
-            int n = coeffs.Count-1 - firstNonZero;
+            int n = coeffs.Count - 1 - firstNonZero;
             if (n <= 0)
             {
                 rootsReal = new double[0];
@@ -1724,7 +1731,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return;
             }
             Matrix m = new Matrix(n, n);
-            for (int i = 0; i < n-1; i++)
+            for (int i = 0; i < n - 1; i++)
             {
                 m[i + 1, i] = 1;
             }
@@ -1813,7 +1820,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 v = 0;
             }
         }
-        
+
         // same as LaplaceMoments but where the arguments have been multiplied by x (the mean of q)
         public static void LaplaceMoments2(Gamma q, double[] xg, double[] xdlogf, out double m, out double v)
         {
@@ -1990,7 +1997,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (precision.IsPointMass || sample.Precision == 0 || mean.Precision == 0)
                 return precision;
-            
+
             // Find the maximum of the integrand over precision
             double mx, vx;
             sample.GetMeanAndVariance(out mx, out vx);
@@ -2131,7 +2138,18 @@ namespace Microsoft.ML.Probabilistic.Factors
             double xdlogf = xdlogfss[0];
             double xxddlogf = xdlogfss[1];
             a = precision.Shape - xxddlogf;
-            b = precision.Rate - (xdlogf + xxddlogf)/x;
+            if (x == 0)
+            {
+                // xdlogf = 0.5/(v*x+1) - 0.5*x*m*m/(v*x+1)^2
+                // xxddlogf = -1/(v*x+1) + x*m*m/(v*x+1)^2 + 0.5/(v*x+1)^2 - x*m*m/(v*x+1)^3
+                // xdlogf + xxddlogf = -0.5*x*v/(v*x+1)^2 + 0.5*x*m*m/(v*x+1)^2 - x*m*m/(v*x+1)^3
+                // limit x->0: x*(-0.5*v - 0.5*m*m)
+                b = precision.Rate + 0.5 * (v + m * m);
+            }
+            else
+            {
+                b = precision.Rate - (xdlogf + xxddlogf) / x;
+            }
             if (a <= 0 || b <= 0)
                 throw new InferRuntimeException();
             if (double.IsNaN(a) || double.IsNaN(b))
@@ -2184,22 +2202,25 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (double.IsPositiveInfinity(v))
                 return new double[4];
+            if (x == 0)
+                return new double[] { double.PositiveInfinity, double.NegativeInfinity, double.PositiveInfinity, double.NegativeInfinity };
             // log f(x) = -0.5*log(v+1/x) -0.5*m^2/(v+1/x)
-            double m2 = m * m;
             double x2 = x * x;
             double x3 = x * x2;
             double x4 = x * x3;
-            double p = 1 / (v + 1 / x);
-            double p2 = p * p;
-            double p3 = p * p2;
-            double dlogf1 = -0.5 * p + 0.5 * m2 * p2;
-            double dlogf = dlogf1 * (-1 / x2);
-            double ddlogf1 = 0.5 * p2 - m2 * p3;
-            double ddlogf = dlogf1 * 2 / x3 + ddlogf1 / x4;
-            double dddlogf1 = -p3 + 3 * m2 * p * p3;
-            double dddlogf = dlogf1 * (-6) / x4 + ddlogf1 * (-6) / (x * x4) + dddlogf1 * (-1) / (x2 * x4);
-            double d4logf1 = 3 * p * p3 - 12 * m2 * p2 * p3;
-            double d4logf = dlogf1 * (24) / (x2 * x3) + ddlogf1 * 36 / (x3 * x3) + dddlogf1 * (12) / (x4 * x3) + d4logf1 / (x4 * x4);
+            double pix = 1 / (v * x + 1);
+            double pix2 = pix / x;
+            double p2ix2 = pix * pix;
+            double p3ix3 = p2ix2 * pix;
+            double m2p2ix2 = p2ix2 * m * m;
+            double dlogf1ix2 = -0.5 * pix2 + 0.5 * m2p2ix2;
+            double dlogf = dlogf1ix2 * (-1);
+            double ddlogf1ix3 = 0.5 * pix * pix2 - m2p2ix2 * pix;
+            double ddlogf = (dlogf1ix2 * 2 + ddlogf1ix3) / x;
+            double dddlogf1ix4 = -p2ix2 * pix2 + 3 * m2p2ix2 * p2ix2;
+            double dddlogf = (dlogf1ix2 * (-6) + ddlogf1ix3 * (-6) + dddlogf1ix4 * (-1)) / x2;
+            double d4logf1ix5 = 3 * pix2 * p3ix3 - 12 * m2p2ix2 * p3ix3;
+            double d4logf = (dlogf1ix2 * 24 + ddlogf1ix3 * 36 + dddlogf1ix4 * 12 + d4logf1ix5) / x3;
             return new double[] { dlogf, ddlogf, dddlogf, d4logf };
         }
 
@@ -2215,9 +2236,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (double.IsPositiveInfinity(v))
                 return new double[4];
             // log f(x) = -0.5*log(v+1/x) -0.5*m^2/(v+1/x)
-            double m2 = m * m;
-            if (x*v > 1)
+            if (x * v > 1)
             {
+                double m2 = m * m;
                 double x2 = x * x;
                 double x3 = x * x2;
                 double x4 = x * x3;
@@ -2236,19 +2257,22 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             else  // x is small
             {
+                double m2x = x * m * m;
                 double x2 = x * x;
                 double x3 = x * x2;
                 double x4 = x * x3;
-                double p = 1 / (v*x + 1);
+                double p = 1 / (v * x + 1);
                 double p2 = p * p;
                 double p3 = p * p2;
-                double ixdlogf1 = -0.5 * p + 0.5 * m2 * p2*x;
+                // xdlogf = 0.5/(v*x+1) - 0.5*x*m*m/(v*x+1)^2
+                double ixdlogf1 = -0.5 * p + 0.5 * m2x * p2;
                 double xdlogf = -ixdlogf1;
-                double ix2ddlogf1 = 0.5 * p2 - m2 * p3*x;
+                double ix2ddlogf1 = 0.5 * p2 - m2x * p3;
+                // xxddlogf = -1/(v*x+1) + x*m*m/(v*x+1)^2 + 0.5/(v*x+1)^2 - x*m*m/(v*x+1)^3
                 double xxddlogf = ixdlogf1 * 2 + ix2ddlogf1;
-                double ix3dddlogf1 = -p3 + 3 * m2 * p * p3*x;
+                double ix3dddlogf1 = -p3 + 3 * m2x * p * p3;
                 double xxxdddlogf = ixdlogf1 * (-6) + ix2ddlogf1 * (-6) + ix3dddlogf1 * (-1);
-                double ix4d4logf1 = 3 * p * p3 - 12 * m2 * p2 * p3*x;
+                double ix4d4logf1 = 3 * p * p3 - 12 * m2x * p2 * p3;
                 double x4d4logf = ixdlogf1 * (24) + ix2ddlogf1 * 36 + ix3dddlogf1 * (12) + ix4d4logf1;
                 return new double[] { xdlogf, xxddlogf, xxxdddlogf, x4d4logf };
             }
@@ -2526,7 +2550,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             Gaussian diffPost = diffPrior * diffLike;
             double md, vd;
             diffPost.GetMeanAndVariance(out md, out vd);
-            result.Rate = 0.5 * (vd + md*md);
+            result.Rate = 0.5 * (vd + md * md);
             return result;
         }
 
