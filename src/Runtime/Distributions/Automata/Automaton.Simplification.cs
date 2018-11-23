@@ -476,7 +476,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             else if (!transition1.IsEpsilon && !transition2.IsEpsilon)
                             {
                                 var newElementDistribution = new TElementDistribution();
-                                if (double.IsInfinity(transition1.Weight.Value) && double.IsInfinity(transition1.Weight.Value))
+                                if (double.IsInfinity(transition1.Weight.Value) && double.IsInfinity(transition2.Weight.Value))
                                 {
                                     newElementDistribution.SetToSum(1.0, transition1.ElementDistribution.Value, 1.0, transition2.ElementDistribution.Value);
                                 }
