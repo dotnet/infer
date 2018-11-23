@@ -15,25 +15,24 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
         where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
         private static class GroupExtractor
         {           
-            internal static Dictionary<byte, TThis> ExtractGroups(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton)
+            internal static Dictionary<int, TThis> ExtractGroups(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton)
             {
-                Dictionary<byte, HashSet<int>> subGraphs;
-                var order = ComputeTopologicalOrderAndGroupSubgraphs(automaton, out subGraphs);
-                return BuildSubautomata(automaton.states, order, subGraphs);
+                var order = ComputeTopologicalOrderAndGroupSubgraphs(automaton, out var subGraphs);
+                return BuildSubautomata(automaton.States, order, subGraphs);
             }
 
-            private static Dictionary<byte, TThis> BuildSubautomata(
-                List<State> states,
-                List<State> topologicalOrder,
-                Dictionary<byte, HashSet<int>> groupSubGraphs) => groupSubGraphs.ToDictionary(g => g.Key, g => BuildSubautomaton(states, topologicalOrder, g.Key, g.Value));
+            private static Dictionary<int, TThis> BuildSubautomata(
+                IReadOnlyList<State> states,
+                IReadOnlyList<State> topologicalOrder,
+                Dictionary<int, HashSet<int>> groupSubGraphs) => groupSubGraphs.ToDictionary(g => g.Key, g => BuildSubautomaton(states, topologicalOrder, g.Key, g.Value));
 
-            private static TThis BuildSubautomaton(List<State> states, List<State> topologicalOrder, byte group, HashSet<int> subgraph)
+            private static TThis BuildSubautomaton(IReadOnlyList<State> states, IReadOnlyList<State> topologicalOrder, int group, HashSet<int> subgraph)
             {
                 var weightsFromRoot = ComputeWeightsFromRoot(states.Count, topologicalOrder, group);
                 var weightsToEnd = ComputeWeightsToEnd(states.Count, topologicalOrder, group);
@@ -69,14 +68,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var weightFromRoot = newSourceState.TransitionCount > 0 ? weightsFromRoot[stateIndex] : Weight.Zero;
                     if (!weightFromRoot.IsZero)
                     {
-                        subautomaton.startState.AddEpsilonTransition(weightFromRoot, newSourceState);
+                        subautomaton.Start.AddEpsilonTransition(weightFromRoot, newSourceState);
                     }
 
                     // consider end states
                     var weightToEnd = !hasNoIncomingTransitions.Contains(stateIndex) ? weightsToEnd[stateIndex] : Weight.Zero;
                     if (!weightToEnd.IsZero)
                     {
-                        newSourceState.EndWeight = weightToEnd;
+                        newSourceState.SetEndWeight(weightToEnd);
                     }
 
                     correctionFactor = Weight.Sum(correctionFactor, Weight.Product(weightFromRoot, weightToEnd));
@@ -84,7 +83,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 if (!correctionFactor.IsZero) throw new Exception("Write a unit test for this case. Code should be fine.");
                 var epsilonWeight = Weight.AbsoluteDifference(weightsToEnd[topologicalOrder[0].Index], correctionFactor);
-                subautomaton.startState.EndWeight = epsilonWeight;
+                subautomaton.Start.SetEndWeight(epsilonWeight);
 
                 return subautomaton;
             }
@@ -103,19 +102,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return weights;
             }
 
-            private static List<State> ComputeTopologicalOrderAndGroupSubgraphs(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton, out Dictionary<byte, HashSet<int>> groupSubGraphs)
+            private static List<State> ComputeTopologicalOrderAndGroupSubgraphs(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton, out Dictionary<int, HashSet<int>> groupSubGraphs)
             {
                 var topologicalOrder = new Stack<int>();
-                var states = automaton.states;
-                var temporary = new BitArray(states.Count);
-                var permanent = new BitArray(states.Count);
-                groupSubGraphs = new Dictionary<byte, HashSet<int>>();
+                var temporary = new BitArray(automaton.States.Count);
+                var permanent = new BitArray(automaton.States.Count);
+                groupSubGraphs = new Dictionary<int, HashSet<int>>();
 
-                VisitNode(states, automaton.startState.Index, temporary, permanent, groupSubGraphs, topologicalOrder);
-                return topologicalOrder.Select(idx => states[idx]).ToList();
+                VisitNode(automaton.States, automaton.Start.Index, temporary, permanent, groupSubGraphs, topologicalOrder);
+                return topologicalOrder.Select(idx => automaton.States[idx]).ToList();
             }
 
-            private static void VisitNode(List<State> states, int stateIdx, BitArray temporary, BitArray permanent, Dictionary<byte, HashSet<int>> groupSubGraphs, Stack<int> topologicalOrder)
+            private static void VisitNode(IReadOnlyList<State> states, int stateIdx, BitArray temporary, BitArray permanent, Dictionary<int, HashSet<int>> groupSubGraphs, Stack<int> topologicalOrder)
             {
                 if (temporary[stateIdx])
                 {
@@ -158,7 +156,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Ending weights are taken into account.
             /// </summary>
             /// <remarks>The weights are computed using dynamic programming, going up from leafs to the root.</remarks>
-            private static Weight[] ComputeWeightsToEnd(int nStates, List<State> topologicalOrder, byte group)
+            private static Weight[] ComputeWeightsToEnd(int nStates, IReadOnlyList<State> topologicalOrder, int group)
             {
                 var weights = CreateZeroWeights(nStates);
                 // Iterate in the reverse topological order
@@ -190,7 +188,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// and ending at that state. Ending weights are not taken into account.
             /// </summary>
             /// <remarks>The weights are computed using dynamic programming, going down from the root to leafs.</remarks>
-            private static Weight[] ComputeWeightsFromRoot(int nStates, List<State> topologicalOrder, byte group)
+            private static Weight[] ComputeWeightsFromRoot(int nStates, IReadOnlyList<State> topologicalOrder, int group)
             {
                 var weights = CreateZeroWeights(nStates);
                 weights[topologicalOrder[0].Index] = Weight.One;

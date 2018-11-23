@@ -27,7 +27,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public string ConvertToString<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>(
             Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton> automaton)
             where TSequence : class, IEnumerable<TElement>
-            where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>,
+            where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>,
                 SettableToPartialUniform<TElementDistribution>, new()
             where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
             where TAutomaton : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton>, new()
@@ -53,13 +53,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var transition = state.GetTransition(i);
                     
                     string transitionLabel;
-                    if (transition.ElementDistribution == null)
+                    if (transition.IsEpsilon)
                     {
                         transitionLabel = "eps";
                     }
-                    else if (transition.ElementDistribution.IsPointMass)
+                    else if (transition.ElementDistribution.Value.IsPointMass)
                     {
-                        transitionLabel = EscapeLabel(transition.ElementDistribution.Point.ToString());
+                        transitionLabel = EscapeLabel(transition.ElementDistribution.Value.Point.ToString());
                     }
                     else
                     {

@@ -253,7 +253,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return result;
         }
 
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public int Point
         {
             get
@@ -281,7 +281,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
         }
 
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { return double.IsInfinity(LogOdds) || double.IsInfinity(A) || double.IsInfinity(B); }

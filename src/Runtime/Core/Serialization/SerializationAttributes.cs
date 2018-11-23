@@ -14,14 +14,6 @@ namespace Microsoft.ML.Probabilistic.Serialization
 #endif
 
     /// <summary>
-    /// Attribute that can be attached to properties to signal
-    /// that the property should not be serialised
-    /// </summary>
-    public class NonSerializedPropertyAttribute : Attribute
-    {
-    }
-
-    /// <summary>
     /// Attribute that can be attached to a constructor or factory method, to provide information about
     /// how to set the parameters of the constructor/method to copy an instance of the object.
     /// For example, it can indicate that the parameters correspond to properties of the object.

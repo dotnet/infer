@@ -3,9 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;
+using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {
@@ -15,33 +19,34 @@ namespace Microsoft.ML.Probabilistic.Tutorials
     public class BayesianPCAModel
     {
         // Inference engine
-        public InferenceEngine engine = null;
+        public InferenceEngine engine;
 
         // Model variables
-        public Variable<int> vN = null;
-        public Variable<int> vD = null;
-        public Variable<int> vM = null;
-        public VariableArray2D<double> vData = null;
-        public VariableArray2D<double> vW = null;
-        public VariableArray2D<double> vZ = null;
-        public VariableArray2D<double> vT = null;
-        public VariableArray2D<double> vU = null;
-        public VariableArray<double> vMu = null;
-        public VariableArray<double> vPi = null;
-        public VariableArray<double> vAlpha = null;
+        public Variable<int> observationCount;
+        public Variable<int> featureCount;
+        public Variable<int> componentCount;
+        public VariableArray2D<double> data;
+        public VariableArray2D<double> W;
+        public VariableArray2D<Gaussian> initW;
+        public VariableArray2D<double> Z;
+        public VariableArray2D<double> T;
+        public VariableArray2D<double> U;
+        public VariableArray<double> mu;
+        public VariableArray<double> pi;
+        public VariableArray<double> alpha;
 
         // Priors - these are declared as distribution variables
         // so that we can set them at run-time. They are variables
         // from the perspective of the 'Random' factor which takes
         // a distribution as an argument.
-        public Variable<Gamma> priorAlpha = null;
-        public Variable<Gaussian> priorMu = null;
-        public Variable<Gamma> priorPi = null;
+        public Variable<Gamma> priorAlpha;
+        public Variable<Gaussian> priorMu;
+        public Variable<Gamma> priorPi;
 
         // Model ranges
-        public Range rN = null;
-        public Range rD = null;
-        public Range rM = null;
+        public Range observation;
+        public Range feature;
+        public Range component;
 
         /// <summary>
         /// Model constructor
@@ -49,53 +54,55 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         public BayesianPCAModel()
         {
             // The various dimensions will be set externally...
-            vN = Variable.New<int>().Named("NumObs");
-            vD = Variable.New<int>().Named("NumFeats");
-            vM = Variable.New<int>().Named("MaxComponents");
-            rN = new Range(vN).Named("N");
-            rD = new Range(vD).Named("D");
-            rM = new Range(vM).Named("M");
+            observationCount = Variable.New<int>().Named(nameof(observationCount));
+            featureCount = Variable.New<int>().Named(nameof(featureCount));
+            componentCount = Variable.New<int>().Named(nameof(componentCount));
+            observation = new Range(observationCount).Named(nameof(observation));
+            feature = new Range(featureCount).Named(nameof(feature));
+            component = new Range(componentCount).Named(nameof(component));
 
             // ... as will the data
-            vData = Variable.Array<double>(rN, rD).Named("data");
+            data = Variable.Array<double>(observation, feature).Named(nameof(data));
 
             // ... and the priors
-            priorAlpha = Variable.New<Gamma>().Named("PriorAlpha");
-            priorMu = Variable.New<Gaussian>().Named("PriorMu");
-            priorPi = Variable.New<Gamma>().Named("PriorPi");
+            priorAlpha = Variable.New<Gamma>().Named(nameof(priorAlpha));
+            priorMu = Variable.New<Gaussian>().Named(nameof(priorMu));
+            priorPi = Variable.New<Gamma>().Named(nameof(priorPi));
 
             // Mixing matrix. Each row is drawn from a Gaussian with zero mean and
             // a precision which will be learnt. This is a form of Automatic
             // Relevance Determination (ARD). The larger the precisions become, the
             // less important that row in the mixing matrix is in explaining the data
-            vAlpha = Variable.Array<double>(rM).Named("Alpha");
-            vW = Variable.Array<double>(rM, rD).Named("W");
-            vAlpha[rM] = Variable.Random<double, Gamma>(priorAlpha).ForEach(rM);
-            vW[rM, rD] = Variable.GaussianFromMeanAndPrecision(0, vAlpha[rM]).ForEach(rD);
+            alpha = Variable.Array<double>(component).Named(nameof(alpha));
+            W = Variable.Array<double>(component, feature).Named(nameof(W));
+            alpha[component] = Variable<double>.Random(priorAlpha).ForEach(component);
+            W[component, feature] = Variable.GaussianFromMeanAndPrecision(0, alpha[component]).ForEach(feature);
+            // Initialize the W marginal to break symmetry
+            initW = Variable.Array<Gaussian>(component, feature).Named(nameof(initW));
+            W[component, feature].InitialiseTo(initW[component, feature]);
 
             // Latent variables are drawn from a standard Gaussian
-            vZ = Variable.Array<double>(rN, rM).Named("Z");
-            vZ[rN, rM] = Variable.GaussianFromMeanAndPrecision(0.0, 1.0).ForEach(rN, rM);
+            Z = Variable.Array<double>(observation, component).Named(nameof(Z));
+            Z[observation, component] = Variable.GaussianFromMeanAndPrecision(0.0, 1.0).ForEach(observation, component);
 
             // Multiply the latent variables with the mixing matrix...
-            vT = Variable.MatrixMultiply(vZ, vW).Named("T");
+            T = Variable.MatrixMultiply(Z, W).Named(nameof(T));
 
             // ... add in a bias ...
-            vMu = Variable.Array<double>(rD).Named("mu");
-            vMu[rD] = Variable.Random<double, Gaussian>(priorMu).ForEach(rD);
-            vU = Variable.Array<double>(rN, rD).Named("U");
-            vU[rN, rD] = vT[rN, rD] + vMu[rD];
+            mu = Variable.Array<double>(feature).Named(nameof(mu));
+            mu[feature] = Variable<double>.Random(priorMu).ForEach(feature);
+            U = Variable.Array<double>(observation, feature).Named(nameof(U));
+            U[observation, feature] = T[observation, feature] + mu[feature];
 
             // ... and add in some observation noise ...
-            vPi = Variable.Array<double>(rD).Named("pi");
-            vPi[rD] = Variable.Random<double, Gamma>(priorPi).ForEach(rD);
+            pi = Variable.Array<double>(feature).Named(nameof(pi));
+            pi[feature] = Variable<double>.Random(priorPi).ForEach(feature);
 
             // ... to give the likelihood of observing the data
-            vData[rN, rD] = Variable.GaussianFromMeanAndPrecision(vU[rN, rD], vPi[rD]);
+            data[observation, feature] = Variable.GaussianFromMeanAndPrecision(U[observation, feature], pi[feature]);
 
             // Inference engine
             engine = new InferenceEngine();
-            return;
         }
     }
 
@@ -113,32 +120,32 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 Console.WriteLine("This example only runs with Variational Message Passing");
                 return;
             }
-    
+
             // Set a stable random number seed for repeatable runs
             Rand.Restart(12347);
             double[,] data = generateData(1000);
 
             // Set the data
-            bpca.vData.ObservedValue = data;
+            bpca.data.ObservedValue = data;
 
             // Set the dimensions
-            bpca.vN.ObservedValue = data.GetLength(0);
-            bpca.vD.ObservedValue = data.GetLength(1);
-            bpca.vM.ObservedValue = 6;
+            bpca.observationCount.ObservedValue = data.GetLength(0);
+            bpca.featureCount.ObservedValue = data.GetLength(1);
+            bpca.componentCount.ObservedValue = 6;
 
             // Set the priors
             bpca.priorMu.ObservedValue = Gaussian.FromMeanAndPrecision(0.0, 0.01);
             bpca.priorPi.ObservedValue = Gamma.FromShapeAndRate(2.0, 2.0);
             bpca.priorAlpha.ObservedValue = Gamma.FromShapeAndRate(2.0, 2.0);
 
-            // Initialize the W marginal to break symmetry
-            bpca.vW.InitialiseTo(randomGaussianArray(bpca.vM.ObservedValue, bpca.vD.ObservedValue));
+            // Set the initialization
+            bpca.initW.ObservedValue = randomGaussianArray(bpca.componentCount.ObservedValue, bpca.featureCount.ObservedValue);
 
             // Infer the marginals
             bpca.engine.NumberOfIterations = 200;
-            Gaussian[,] inferredW = bpca.engine.Infer<Gaussian[,]>(bpca.vW);
-            Gaussian[] inferredMu = bpca.engine.Infer<Gaussian[]>(bpca.vMu);
-            Gamma[] inferredPi = bpca.engine.Infer<Gamma[]>(bpca.vPi);
+            var inferredW = bpca.engine.Infer<IArray2D<Gaussian>>(bpca.W);
+            var inferredMu = bpca.engine.Infer<IReadOnlyList<Gaussian>>(bpca.mu);
+            var inferredPi = bpca.engine.Infer<IReadOnlyList<Gamma>>(bpca.pi);
 
             // Print out the results
             Console.WriteLine("Inferred W:");
@@ -148,18 +155,18 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             Console.Write("    True bias: ");
             printVectorToConsole(trueMu);
             Console.Write("Inferred bias: ");
-            printVectorToConsole(inferredMu);
+            printVectorToConsole(inferredMu.Select(d => d.GetMean()));
             Console.Write("    True noise:");
             printVectorToConsole(truePi);
             Console.Write("Inferred noise:");
-            printVectorToConsole(inferredPi);
+            printVectorToConsole(inferredPi.Select(d => d.GetMean()));
             Console.WriteLine();
         }
 
         /// <summary>
         /// True W. Inference will find a different basis
         /// </summary>
-        static double[,] trueW = 
+        static double[,] trueW =
         {
           { -0.30, 0.40, 0.20, -0.15, 0.20, -0.25, -0.50, -0.10, -0.25, 0.10 },
           { -0.10, -0.20, 0.40, 0.50, 0.15, -0.35, 0.05, 0.20, 0.20, -0.15 },
@@ -206,7 +213,6 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                     data[i, j] = Gaussian.Sample(u, truePi[j]);
                 }
             }
-
             return data;
         }
 
@@ -216,18 +222,9 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         /// <param name="row">Number of rows</param>
         /// <param name="col">Number of columns</param>
         /// <returns>The array as a distribution over a 2-D double array domain</returns>
-        private static IDistribution<double[,]> randomGaussianArray(int row, int col)
+        private static Gaussian[,] randomGaussianArray(int row, int col)
         {
-            Gaussian[,] array = new Gaussian[row, col];
-            for (int i = 0; i < row; i++)
-            {
-                for (int j = 0; j < col; j++)
-                {
-                    array[i, j] = Gaussian.FromMeanAndVariance(Rand.Normal(), 1);
-                }
-            }
-
-            return Distribution<double>.Array(array);
+            return Util.ArrayInit(row, col, (i, j) => Gaussian.FromMeanAndVariance(Rand.Normal(), 1));
         }
 
         /// <summary>
@@ -235,7 +232,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        private static double[] meanAbsoluteRowMeans(Gaussian[,] matrix)
+        private static double[] meanAbsoluteRowMeans(IArray2D<Gaussian> matrix)
         {
             double[] mam = new double[matrix.GetLength(0)];
             double mult = 1.0 / ((double)matrix.GetLength(1));
@@ -246,10 +243,8 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 {
                     sum += System.Math.Abs(matrix[i, j].GetMean());
                 }
-
                 mam[i] = mult * sum;
             }
-
             return mam;
         }
 
@@ -257,7 +252,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         /// Print the means of a 2-D array of Gaussians to the console
         /// </summary>
         /// <param name="matrix"></param>
-        private static void printMatrixToConsole(Gaussian[,] matrix)
+        private static void printMatrixToConsole(IArray2D<Gaussian> matrix)
         {
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
@@ -265,67 +260,20 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 {
                     Console.Write("{0,5:0.00}\t", matrix[i, j].GetMean());
                 }
-
                 Console.WriteLine("");
             }
-        }
-
-        /// <summary>
-        /// Print a 2-D double array to the console
-        /// </summary>
-        /// <param name="matrix"></param>
-        private static void printMatrixToConsole(double[,] matrix)
-        {
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++)
-                {
-                    Console.Write("{0,5:0.00}\t", matrix[i, j]);
-                }
-
-                Console.WriteLine("");
-            }
-        }
-
-        /// <summary>
-        /// Print the means of a 1-D array of Gaussians to the console
-        /// </summary>
-        /// <param name="vector"></param>
-        private static void printVectorToConsole(Gaussian[] vector)
-        {
-            for (int i = 0; i < vector.GetLength(0); i++)
-            {
-                Console.Write("{0,5:0.00}\t", vector[i].GetMean());
-            }
-
-            Console.WriteLine("");
-        }
-
-        /// <summary>
-        /// Print the means of a 1-D array of Gammas to the console
-        /// </summary>
-        /// <param name="vector"></param>
-        private static void printVectorToConsole(Gamma[] vector)
-        {
-            for (int i = 0; i < vector.GetLength(0); i++)
-            {
-                Console.Write("{0,5:0.00}\t", vector[i].GetMean());
-            }
-
-            Console.WriteLine("");
         }
 
         /// <summary>
         /// Print a 1-D double array to the console
         /// </summary>
         /// <param name="vector"></param>
-        private static void printVectorToConsole(double[] vector)
+        private static void printVectorToConsole(IEnumerable<double> vector)
         {
-            for (int i = 0; i < vector.GetLength(0); i++)
+            foreach (var item in vector)
             {
-                Console.Write("{0,5:0.00}\t", vector[i]);
+                Console.Write("{0,5:0.00}\t", item);
             }
-
             Console.WriteLine("");
         }
     }

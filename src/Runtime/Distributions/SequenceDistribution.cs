@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         Sampleable<TSequence>
         where TSequence : class, IEnumerable<TElement>
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, Sampleable<TElement>, new()
         where TWeightFunction : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>, new()
         where TThis : SequenceDistribution<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TThis>, new()
     {
@@ -226,7 +226,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             var func = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Zero();
             var end = func.Start.AddTransition(elementDistribution, Weight.One);
-            end.EndWeight = Weight.One;
+            end.SetEndWeight(Weight.One);
             return FromWorkspace(func);
         }
 
@@ -397,7 +397,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created distribution.</returns>
         public static TThis Repeat(TElementDistribution allowedElements, int minTimes = 1, int? maxTimes = null, DistributionKind uniformity = DistributionKind.UniformOverValue)
         {
-            Argument.CheckIfNotNull(allowedElements, "allowedElements");
+            Argument.CheckIfNotNull(allowedElements, nameof(allowedElements));
             Argument.CheckIfInRange(minTimes >= 0, "minTimes", "The minimum number of times to repeat must be non-negative.");
             Argument.CheckIfInRange(!maxTimes.HasValue || maxTimes.Value >= 0, "maxTimes", "The maximum number of times to repeat must be non-negative.");
             Argument.CheckIfValid(!maxTimes.HasValue || minTimes <= maxTimes.Value, "The minimum length cannot be greater than the maximum length.");
@@ -431,7 +431,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             for (int i = 0; i <= iterationBound; i++)
             {
                 bool isLengthAllowed = i >= minTimes;
-                state.EndWeight = isLengthAllowed ? Weight.One : Weight.Zero;
+                state.SetEndWeight(isLengthAllowed ? Weight.One : Weight.Zero);
                 if (i < iterationBound)
                 {
                     state = state.AddTransition(allowedElements, weight); // todo: clone set?    
@@ -647,7 +647,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </list>
         /// </remarks>
         /// <returns>The distribution over the concatenations of sequences and the element.</returns>
-        public TThis Append(TElement element, byte group = 0)
+        public TThis Append(TElement element, int group = 0)
         {
             return this.Append(SingleElement(element), group);
         }
@@ -673,7 +673,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </list>
         /// </remarks>
         /// <returns>The distribution over the concatenations of sequences and elements.</returns>
-        public TThis Append(TElementDistribution elementDistribution, byte group = 0)
+        public TThis Append(TElementDistribution elementDistribution, int group = 0)
         {
             return this.Append(SingleElement(elementDistribution), group);
         }
@@ -695,7 +695,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </list>
         /// </remarks>
         /// <returns>The distribution over the concatenations of sequences.</returns>
-        public TThis Append(TSequence sequence, byte group = 0)
+        public TThis Append(TSequence sequence, int group = 0)
         {
             return this.Append(PointMass(sequence), group);
         }
@@ -721,7 +721,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </list>
         /// </remarks>
         /// <returns>The distribution over the concatenations of sequences.</returns>
-        public TThis Append(TThis dist, byte group = 0)
+        public TThis Append(TThis dist, int group = 0)
         {
             Argument.CheckIfNotNull(dist, "dist");
             
@@ -747,7 +747,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </description></item>
         /// </list>
         /// </remarks>
-        public void AppendInPlace(TElement element, byte group = 0)
+        public void AppendInPlace(TElement element, int group = 0)
         {
             this.AppendInPlace(SingleElement(element), group);
         }
@@ -772,9 +772,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </description></item>
         /// </list>
         /// </remarks>
-        public void AppendInPlace(TElementDistribution elementDistribution, byte group = 0)
+        public void AppendInPlace(TElementDistribution elementDistribution, int group = 0)
         {
-            Argument.CheckIfNotNull(elementDistribution, "elementDistribution");
+            Argument.CheckIfValid(elementDistribution != null, nameof(elementDistribution));
             
             this.AppendInPlace(SingleElement(elementDistribution), group);
         }
@@ -796,7 +796,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </description></item>
         /// </list>
         /// </remarks>
-        public void AppendInPlace(TSequence sequence, byte group = 0)
+        public void AppendInPlace(TSequence sequence, int group = 0)
         {
             Argument.CheckIfNotNull(sequence, "sequence");
             
@@ -823,7 +823,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </description></item>
         /// </list>
         /// </remarks>
-        public void AppendInPlace(TThis dist, byte group = 0)
+        public void AppendInPlace(TThis dist, int group = 0)
         {
             Argument.CheckIfNotNull(dist, "dist");
 
@@ -1029,7 +1029,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region Groups
 
-        public bool HasGroup(byte group)
+        public bool HasGroup(int group)
         {
             if (this.IsPointMass)
             {
@@ -1039,11 +1039,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return this.sequenceToWeight.HasGroup(group);
         }
    
-        public Dictionary<byte, TThis> GetGroups()
+        public Dictionary<int, TThis> GetGroups()
         {
             if (this.IsPointMass)
             {
-                return new Dictionary<byte, TThis>(); // TODO: get rid of groups or do something about groups + point mass combo
+                return new Dictionary<int, TThis>(); // TODO: get rid of groups or do something about groups + point mass combo
             }
 
             return this.sequenceToWeight.GetGroups().ToDictionary(x => x.Key, x => FromWorkspace(x.Value));
@@ -1453,7 +1453,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     {
                         if (!transition.IsEpsilon)
                         {
-                            sampledElements.Add(transition.ElementDistribution.Sample());
+                            sampledElements.Add(transition.ElementDistribution.Value.Sample());
                         }
 
                         currentState = dist.sequenceToWeight.States[transition.DestinationStateIndex];

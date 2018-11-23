@@ -30,33 +30,32 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </p>
     /// </remarks>
     public abstract class PairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis> :
-        IDistribution<Pair<TElement1, TElement2>>, CanGetLogAverageOf<TThis>, SettableToProduct<TThis>, SettableToWeightedSumExact<TThis>, SettableToPartialUniform<TThis>
-        where TElementDistribution1 : class, IDistribution<TElement1>, CanGetLogAverageOf<TElementDistribution1>, SettableToProduct<TElementDistribution1>, SettableToPartialUniform<TElementDistribution1>, new()
-        where TElementDistribution2 : class, IDistribution<TElement2>, CanGetLogAverageOf<TElementDistribution2>, SettableToProduct<TElementDistribution2>, SettableToPartialUniform<TElementDistribution2>, new()
+        IDistribution<Pair<Option<TElement1>, Option<TElement2>>>, CanGetLogAverageOf<TThis>, SettableToProduct<TThis>, SettableToWeightedSumExact<TThis>, SettableToPartialUniform<TThis>
+        where TElementDistribution1 : IDistribution<TElement1>, CanGetLogAverageOf<TElementDistribution1>, SettableToProduct<TElementDistribution1>, SettableToPartialUniform<TElementDistribution1>, new()
+        where TElementDistribution2 : IDistribution<TElement2>, CanGetLogAverageOf<TElementDistribution2>, SettableToProduct<TElementDistribution2>, SettableToPartialUniform<TElementDistribution2>, new()
         where TThis : PairDistributionBase<TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis>, new()
     {
         /// <summary>
         /// Gets or sets the marginal distribution over the first element in a pair.
         /// </summary>
-        public TElementDistribution1 First { get; protected set; }
+        public Option<TElementDistribution1> First { get; protected set; }
 
         /// <summary>
         /// Gets or sets the marginal distribution over the second element in a pair.
         /// </summary>
-        public TElementDistribution2 Second { get; protected set; }
+        public Option<TElementDistribution2> Second { get; protected set; }
 
         /// <summary>
         /// Gets a value indicating whether the current distribution represents a point mass.
         /// </summary>
-        public bool IsPointMass
-        {
-            get { return this.First != null && this.First.IsPointMass && this.Second != null && this.Second.IsPointMass; }
-        }
+        public bool IsPointMass =>
+            this.First.HasValue && this.First.Value.IsPointMass &&
+            this.Second.HasValue && this.Second.Value.IsPointMass;
 
         /// <summary>
         /// Gets or sets the point mass represented by the distribution.
         /// </summary>
-        public virtual Pair<TElement1, TElement2> Point
+        public virtual Pair<Option<TElement1>, Option<TElement2>> Point
         {
             get
             {
@@ -65,24 +64,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     throw new InvalidOperationException("This distribution is not a point mass.");
                 }
 
-                return new Pair<TElement1, TElement2>(this.First.Point, this.Second.Point);
+                return new Pair<Option<TElement1>, Option<TElement2>>(this.First.Value.Point, this.Second.Value.Point);
             }
 
             set
             {
-                if (this.First == null)
-                {
-                    this.First = new TElementDistribution1();
-                }
-
-                this.First.Point = value.First;
-
-                if (this.Second == null)
-                {
-                    this.Second = new TElementDistribution2();
-                }
-
-                this.Second.Point = value.Second;
+                this.First = new TElementDistribution1 { Point = value.First.Value };
+                this.Second = new TElementDistribution2 { Point = value.Second.Value };
             }
         }
 
@@ -91,30 +79,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="first">The element distribution to weight the input element.</param>
         /// <returns>The created distribution.</returns>
-        public static TThis FromFirst(TElementDistribution1 first)
-        {
-            if (first == null)
-            {
-                return null;
-            }
-
-            return new TThis { First = first, Second = null };
-        }
+        public static TThis FromFirst(Option<TElementDistribution1> first) =>
+            first.HasValue ? new TThis { First = first } : null;
 
         /// <summary>
         /// Creates a pair distribution for an epsilon input transducer transition.
         /// </summary>
         /// <param name="second">The element distribution to weight the output element.</param>
         /// <returns>The created distribution.</returns>
-        public static TThis FromSecond(TElementDistribution2 second)
-        {
-            if (second == null)
-            {
-                return null;
-            }
-
-            return new TThis { First = null, Second = second };
-        }
+        public static TThis FromSecond(Option<TElementDistribution2> second) =>
+            second.HasValue ? new TThis { Second = second } : null;
 
         /// <summary>
         /// Creates a pair distribution for a transducer transition.
@@ -126,10 +100,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// to encode an epsilon input or an epsilon output transducer transition, but not both.
         /// </remarks>
         /// <returns>The created distribution.</returns>
-        public static TThis FromFirstSecond(TElementDistribution1 first, TElementDistribution2 second)
+        public static TThis FromFirstSecond(Option<TElementDistribution1> first, Option<TElementDistribution2> second)
         {
             Argument.CheckIfValid(
-                first != null || second != null,
+                first.HasValue || second.HasValue,
                 "At least one of the distributions must not be null.");
             
             return new TThis { First = first, Second = second };
@@ -142,15 +116,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="first">The element to project.</param>
         /// <param name="result">The normalized projection result.</param>
         /// <returns>The logarithm of the scale for the projection result.</returns>
-        public virtual double ProjectFirst(TElement1 first, out TElementDistribution2 result)
+        public virtual double ProjectFirst(TElement1 first, out Option<TElementDistribution2> result)
         {
-            if (this.First == null)
+            if (!this.First.HasValue)
             {
                 throw new InvalidOperationException("Cannot project on an epsilon transition.");
             }
 
-            double logAverageOf = this.First.GetLogProb(first);
-            result = double.IsNegativeInfinity(logAverageOf) ? default(TElementDistribution2) : this.Second;
+            var logAverageOf = this.First.Value.GetLogProb(first);
+            result = double.IsNegativeInfinity(logAverageOf) ? Option.None: this.Second;
             return logAverageOf;
         }
 
@@ -161,15 +135,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="first">The element distribution to project.</param>
         /// <param name="result">The normalized projection result.</param>
         /// <returns>The logarithm of the scale for the projection result.</returns>
-        public virtual double ProjectFirst(TElementDistribution1 first, out TElementDistribution2 result)
+        public virtual double ProjectFirst(TElementDistribution1 first, out Option<TElementDistribution2> result)
         {
-            if (this.First == null)
+            if (!this.First.HasValue)
             {
                 throw new InvalidOperationException("Cannot project on an epsilon transition.");
             }
             
-            double logAverageOf = first.GetLogAverageOf(this.First);
-            result = double.IsNegativeInfinity(logAverageOf) ? default(TElementDistribution2) : this.Second;
+            var logAverageOf = first.GetLogAverageOf(this.First.Value);
+            result = double.IsNegativeInfinity(logAverageOf) ? new TElementDistribution2() : this.Second;
             return logAverageOf;
         }
 
@@ -177,28 +151,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Checks whether the current distribution is uniform.
         /// </summary>
         /// <returns><see langword="true"/> if the current distribution is uniform, <see langword="false"/> otherwise.</returns>
-        public virtual bool IsUniform()
-        {
-            return this.First.IsUniform() && this.Second.IsUniform();
-        }
+        public virtual bool IsUniform() => this.First.Value.IsUniform() && this.Second.Value.IsUniform();
 
         /// <summary>
         /// Replaces the current distribution with a uniform distribution.
         /// </summary>
         public virtual void SetToUniform()
         {
-            if (this.First == null)
-            {
-                this.First = new TElementDistribution1();
-            }
-
-            if (this.Second == null)
-            {
-                this.Second = new TElementDistribution2();
-            }
-
-            this.First.SetToUniform();
-            this.Second.SetToUniform();
+            this.First = Distribution.CreateUniform<TElementDistribution1>();
+            this.Second = Distribution.CreateUniform<TElementDistribution2>();
         }
 
         /// <summary>
@@ -209,12 +170,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </returns>
         public override string ToString()
         {
-            if (this.First == null)
+            if (!this.First.HasValue)
             {
                 return ">" + this.Second;
             }
 
-            if (this.Second == null)
+            if (!this.Second.HasValue)
             {
                 return this.First + ">";
             }
@@ -230,8 +191,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             return new TThis
             {
-                First = this.First == null ? null : (TElementDistribution1)this.First.Clone(),
-                Second = this.Second == null ? null : (TElementDistribution2)this.Second.Clone()
+                First =
+                    this.First.HasValue
+                        ? Option.Some((TElementDistribution1)this.First.Value.Clone())
+                        : Option.None,
+                Second =
+                    this.Second.HasValue
+                        ? Option.Some((TElementDistribution2)this.Second.Value.Clone())
+                        : Option.None,
             };
         }
 
@@ -252,7 +219,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="pair">The pair to get the probability for.</param>
         /// <returns>The logarithm of the probability of the pair.</returns>
         /// <remarks>Not currently implemented.</remarks>
-        public virtual double GetLogProb(Pair<TElement1, TElement2> pair)
+        public virtual double GetLogProb(Pair<Option<TElement1>, Option<TElement2>> pair)
         {
             throw new NotImplementedException();
         }
@@ -266,22 +233,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public virtual double GetLogAverageOf(TThis that)
         {
             Argument.CheckIfValid(
-                !(this.First == null ^ that.First == null),
+                this.First.HasValue == that.First.HasValue,
                 "The first element distribution must be either present or absent in both the argument and the current distribution.");
             Argument.CheckIfValid(
-                !(this.Second == null ^ that.Second == null),
+                this.Second.HasValue == that.Second.HasValue,
                 "The first element distribution must be either present or absent in both the argument and the current distribution.");
             
             double result = 0;
 
-            if (this.First != null)
+            if (this.First.HasValue)
             {
-                result += this.First.GetLogAverageOf(that.First);
+                result += this.First.Value.GetLogAverageOf(that.First.Value);
             }
 
-            if (this.Second != null)
+            if (this.Second.HasValue)
             {
-                result += this.Second.GetLogAverageOf(that.Second);
+                result += this.Second.Value.GetLogAverageOf(that.Second.Value);
             }
 
             return result;
@@ -327,8 +294,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfNotNull(distribution, "distribution");
 
-            this.First = distribution.First != null ? Distribution.CreatePartialUniform(distribution.First) : null;
-            this.Second = distribution.Second != null ? Distribution.CreatePartialUniform(distribution.Second) : null;
+            this.First =
+                distribution.First.HasValue
+                    ? Option.Some(Distribution.CreatePartialUniform(distribution.First.Value))
+                    : Option.None;
+            this.Second =
+                distribution.Second.HasValue
+                    ? Option.Some(Distribution.CreatePartialUniform(distribution.Second.Value))
+                    : Option.None;
         }
 
         /// <summary>
@@ -338,8 +311,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public virtual bool IsPartialUniform()
         {
             return
-                (this.First == null || this.First.IsPartialUniform()) &&
-                (this.Second == null || this.Second.IsPartialUniform());
+                (!this.First.HasValue || this.First.Value.IsPartialUniform()) &&
+                (!this.Second.HasValue || this.Second.Value.IsPartialUniform());
         }
     }
 }

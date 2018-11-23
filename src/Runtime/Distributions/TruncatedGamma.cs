@@ -222,7 +222,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Set this distribution to a point mass, or get its location
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public double Point
         {
             get { return Gamma.Point; }
@@ -232,7 +232,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// True if the distribution is a point mass. 
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get { return Gamma.IsPointMass; }

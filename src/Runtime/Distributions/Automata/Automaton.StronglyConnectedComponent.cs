@@ -18,7 +18,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
         where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
@@ -114,7 +114,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </returns>
             public bool HasState(State state)
             {
-                Argument.CheckIfNotNull(state, "state");
+                Argument.CheckIfValid(!state.IsNull, nameof(state));
 
                 return this.GetIndexByState(state) != -1;
             }
@@ -128,12 +128,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </returns>
             public int GetIndexByState(State state)
             {
-                Argument.CheckIfNotNull(state, "state");
+                Argument.CheckIfValid(!state.IsNull, nameof(state));
                 Argument.CheckIfValid(ReferenceEquals(state.Owner, this.statesInComponent[0].Owner), "state", "The given state belongs to other automaton.");
 
                 if (this.statesInComponent.Count == 1)
                 {
-                    return ReferenceEquals(this.statesInComponent[0], state) ? 0 : -1;
+                    return this.statesInComponent[0].Index == state.Index ? 0 : -1;
                 }
 
                 if (this.stateIdToIndexInComponent == null)

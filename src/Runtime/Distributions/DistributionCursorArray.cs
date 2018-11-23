@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Serialization;
@@ -53,7 +54,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// True if all elements are constant.
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get
@@ -74,7 +75,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
         }
 
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public DomainType[] Point
         {
             get

@@ -284,7 +284,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Asks whether the instance is a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public bool IsPointMass
         {
             get
@@ -305,7 +305,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Sets/gets the instance as a point mass
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public Vector Point
         {
             get
@@ -324,7 +324,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// The dimension of the VectorGaussian domain
         /// </summary>
-        [NonSerializedProperty, System.Xml.Serialization.XmlIgnore]
+        [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
         public int Dimension
         {
             get { return mean.Count; }
