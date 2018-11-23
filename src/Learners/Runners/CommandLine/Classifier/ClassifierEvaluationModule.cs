@@ -599,7 +599,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                 writer.WriteLine("#");
                 writer.WriteLine("# Class '" + positiveClassLabel + "'     (versus the rest)");
                 writer.WriteLine("#");
-                writer.WriteLine("# True positive rate (TPR), False positive rate (FPR)");
+                writer.WriteLine("# False positive rate (FPR), True positive rate (TPR)");
                 foreach (var point in rocCurve)
                 {
                     writer.WriteLine(point);
