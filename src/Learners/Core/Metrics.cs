@@ -487,7 +487,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <remarks>
         /// All instances not contained in <paramref name="positiveInstances"/> are assumed to belong to the 'negative' class.
         /// </remarks>
-        public static IEnumerable<ReceiverOperatingCharacteristic> ReceiverOperatingCharacteristicCurve<TInstance>(
+        public static IEnumerable<FalseAndTruePositiveRate> ReceiverOperatingCharacteristicCurve<TInstance>(
             IEnumerable<TInstance> positiveInstances, IEnumerable<KeyValuePair<TInstance, double>> instanceScores)
         {
             if (positiveInstances == null)
@@ -523,7 +523,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             double falsePositiveRate;
             double truePositiveRate;
             double previousScore = double.NaN;
-            var rocCurve = new List<ReceiverOperatingCharacteristic>();
+            var rocCurve = new List<FalseAndTruePositiveRate>();
 
             foreach (var instance in sortedInstanceScores)
             {
@@ -532,7 +532,7 @@ namespace Microsoft.ML.Probabilistic.Learners
                 {
                     falsePositiveRate = falsePositivesCount / (double)negativesCount;
                     truePositiveRate = truePositivesCount / (double)positivesCount;
-                    rocCurve.Add(new ReceiverOperatingCharacteristic(truePositiveRate, falsePositiveRate));
+                    rocCurve.Add(new FalseAndTruePositiveRate(falsePositiveRate, truePositiveRate));
                     previousScore = score;
                 }
 
@@ -549,7 +549,7 @@ namespace Microsoft.ML.Probabilistic.Learners
             // Add point for (1,1)
             falsePositiveRate = falsePositivesCount / (double)negativesCount;
             truePositiveRate = truePositivesCount / (double)positivesCount;
-            rocCurve.Add(new ReceiverOperatingCharacteristic(truePositiveRate, falsePositiveRate));
+            rocCurve.Add(new FalseAndTruePositiveRate(falsePositiveRate, truePositiveRate));
 
             return rocCurve;
         }

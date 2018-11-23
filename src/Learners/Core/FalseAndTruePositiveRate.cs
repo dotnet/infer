@@ -7,26 +7,21 @@ namespace Microsoft.ML.Probabilistic.Learners
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
-    /// Struct which holds a single receiver operating characteristic (ROC)
+    /// Struct which holds both the FPR and TPR
     /// </summary>
-    public struct ReceiverOperatingCharacteristic
+    public struct FalseAndTruePositiveRate
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReceiverOperatingCharacteristic"/> struct.
+        /// Initializes a new instance of the <see cref="FalseAndTruePositiveRate"/> struct.
         /// </summary>
+        /// <param name="falsePositiveRate">The false positive rate (FPR)</param>
         /// <param name="truePositiveRate">The true positive rate (TPR)</param>
-        /// /// <param name="falsePositiveRate">The false positive rate (FPR)</param>
-        public ReceiverOperatingCharacteristic(double truePositiveRate, double falsePositiveRate)
+        public FalseAndTruePositiveRate(double falsePositiveRate, double truePositiveRate)
             : this()
         {
-            this.TruePositiveRate = truePositiveRate;
             this.FalsePositiveRate = falsePositiveRate;
+            this.TruePositiveRate = truePositiveRate;
         }
-
-        /// <summary>
-        /// Gets the <see cref="TruePositiveRate"/>
-        /// </summary>
-        public readonly double TruePositiveRate;
 
         /// <summary>
         /// Gets the <see cref="FalsePositiveRate"/>.
@@ -34,12 +29,17 @@ namespace Microsoft.ML.Probabilistic.Learners
         public readonly double FalsePositiveRate;
 
         /// <summary>
-        /// Gets the string representation of this <see cref="ReceiverOperatingCharacteristic"/>.
+        /// Gets the <see cref="TruePositiveRate"/>
         /// </summary>
-        /// <returns>The string representation of the <see cref="ReceiverOperatingCharacteristic"/>.</returns>
+        public readonly double TruePositiveRate;
+
+        /// <summary>
+        /// Gets the string representation of this <see cref="FalseAndTruePositiveRate"/>.
+        /// </summary>
+        /// <returns>The string representation of the <see cref="FalseAndTruePositiveRate"/>.</returns>
         public override string ToString()
         {
-            return $"{this.TruePositiveRate}, {this.FalsePositiveRate}";
+            return $"{this.FalsePositiveRate}, {this.TruePositiveRate}";
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj is ReceiverOperatingCharacteristic receiverOperatingCharacteristic)
+            if (obj is FalseAndTruePositiveRate receiverOperatingCharacteristic)
             {
-                return object.Equals(this.TruePositiveRate, receiverOperatingCharacteristic.TruePositiveRate) && object.Equals(this.FalsePositiveRate, receiverOperatingCharacteristic.FalsePositiveRate);
+                return object.Equals(this.FalsePositiveRate, receiverOperatingCharacteristic.FalsePositiveRate) && object.Equals(this.TruePositiveRate, receiverOperatingCharacteristic.TruePositiveRate);
             }
 
             return false;
@@ -67,8 +67,8 @@ namespace Microsoft.ML.Probabilistic.Learners
         {
             int result = Hash.Start;
 
-            result = Hash.Combine(result, this.TruePositiveRate.GetHashCode());
             result = Hash.Combine(result, this.FalsePositiveRate.GetHashCode());
+            result = Hash.Combine(result, this.TruePositiveRate.GetHashCode());
 
             return result;
         }

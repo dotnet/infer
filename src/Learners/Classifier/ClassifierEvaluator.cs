@@ -393,7 +393,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="instanceSource">The instance source.</param>
         /// <param name="predictions">The predictions.</param>
         /// <returns>The computed receiver operating characteristic curve.</returns>
-        public IEnumerable<ReceiverOperatingCharacteristic> ReceiverOperatingCharacteristicCurve(
+        public IEnumerable<FalseAndTruePositiveRate> ReceiverOperatingCharacteristicCurve(
             TLabel positiveClassLabel,
             TInstanceSource instanceSource,
             IEnumerable<IDictionary<TLabel, double>> predictions)
@@ -410,7 +410,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="labelSource">The label source.</param>
         /// <param name="predictions">The predictions.</param>
         /// <returns>The computed receiver operating characteristic curve.</returns>
-        public IEnumerable<ReceiverOperatingCharacteristic> ReceiverOperatingCharacteristicCurve(
+        public IEnumerable<FalseAndTruePositiveRate> ReceiverOperatingCharacteristicCurve(
             TLabel positiveClassLabel,
             TInstanceSource instanceSource,
             TLabelSource labelSource,
@@ -429,7 +429,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="instanceSource">The instance source.</param>
         /// <param name="predictions">The predictions.</param>
         /// <returns>The computed receiver operating characteristic curve.</returns>
-        public IEnumerable<ReceiverOperatingCharacteristic> ReceiverOperatingCharacteristicCurve(
+        public IEnumerable<FalseAndTruePositiveRate> ReceiverOperatingCharacteristicCurve(
             TLabel positiveClassLabel,
             TLabel negativeClassLabel,
             TInstanceSource instanceSource,
@@ -448,7 +448,7 @@ namespace Microsoft.ML.Probabilistic.Learners
         /// <param name="labelSource">The label source.</param>
         /// <param name="predictions">The predictions.</param>
         /// <returns>The computed receiver operating characteristic curve.</returns>
-        public IEnumerable<ReceiverOperatingCharacteristic> ReceiverOperatingCharacteristicCurve(
+        public IEnumerable<FalseAndTruePositiveRate> ReceiverOperatingCharacteristicCurve(
             TLabel positiveClassLabel,
             TLabel negativeClassLabel,
             TInstanceSource instanceSource,

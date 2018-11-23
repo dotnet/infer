@@ -352,9 +352,9 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
             // Duplicate instance scores, duplicate positive instances
             var expectedCurve = new[]
                                     {
-                                        new ReceiverOperatingCharacteristic(0, 0), 
-                                        new ReceiverOperatingCharacteristic(1, 0.5),
-                                        new ReceiverOperatingCharacteristic(1, 1)
+                                        new FalseAndTruePositiveRate(0, 0), 
+                                        new FalseAndTruePositiveRate(0.5, 1),
+                                        new FalseAndTruePositiveRate(1, 1)
                                     };
             var computedCurve = Metrics.ReceiverOperatingCharacteristicCurve(new[] { 1, 1, 2 }, new Dictionary<int, double> { { 1, 0.5 }, { 2, 0.5 }, { 3, 0.5 }, { 4, 0 } }).ToArray();
             foreach (var tuple in computedCurve)
