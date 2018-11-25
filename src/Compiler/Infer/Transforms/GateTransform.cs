@@ -664,7 +664,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                             if (Recognizer.IsStaticMethod(index2, new Func<int>(GateAnalysisTransform.AnyIndex)))
                             {
                                 bracket.Add(index1);
-
                             }
                             else if (!index1.Equals(index2))
                             {
