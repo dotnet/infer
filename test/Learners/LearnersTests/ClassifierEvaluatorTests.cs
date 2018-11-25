@@ -176,17 +176,17 @@ namespace Microsoft.ML.Probabilistic.Learners.Tests
         public void RocCurveTest()
         {
             // Curve for perfect predictions
-            var expected = new[] { Pair.Create(0.0, 0.0), Pair.Create(0.0, 1.0), Pair.Create(1.0, 1.0) };
+            var expected = new[] { new FalseAndTruePositiveRate(0.0, 0.0), new FalseAndTruePositiveRate(0.0, 1.0), new FalseAndTruePositiveRate(1.0, 1.0) };
             var actual = this.evaluator.ReceiverOperatingCharacteristicCurve(LabelSet[0], this.groundTruth, this.groundTruth).ToArray();
             Xunit.Assert.Equal(expected, actual);
 
             // Curve for imperfect predictions (one-versus-rest)
-            expected = new[] { Pair.Create(0.0, 0.0), Pair.Create(0.5, 0.0), Pair.Create(0.5, 1 / 3.0), Pair.Create(0.5, 2 / 3.0), Pair.Create(1.0, 1.0) };
+            expected = new[] { new FalseAndTruePositiveRate(0.0, 0.0), new FalseAndTruePositiveRate(0.5, 0.0), new FalseAndTruePositiveRate(0.5, 1 / 3.0), new FalseAndTruePositiveRate(0.5, 2 / 3.0), new FalseAndTruePositiveRate(1.0, 1.0) };
             actual = this.evaluator.ReceiverOperatingCharacteristicCurve(LabelSet[0], this.groundTruth, this.predictions).ToArray();
             Xunit.Assert.Equal(expected, actual); // matches below AUC = 5/12
 
             // Curve for imperfect predictions (one-versus-another)
-            expected = new[] { Pair.Create(0.0, 0.0), Pair.Create(0.0, 1 / 3.0), Pair.Create(0.0, 2 / 3.0), Pair.Create(1.0, 1.0) };
+            expected = new[] { new FalseAndTruePositiveRate(0.0, 0.0), new FalseAndTruePositiveRate(0.0, 1 / 3.0), new FalseAndTruePositiveRate(0.0, 2 / 3.0), new FalseAndTruePositiveRate(1.0, 1.0) };
             actual = this.evaluator.ReceiverOperatingCharacteristicCurve(LabelSet[0], LabelSet[1], this.groundTruth, this.predictions).ToArray();
             Xunit.Assert.Equal(expected, actual); // matches below AUC = 5/6
 
