@@ -67,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public Transition(Option<TElementDistribution> elementDistribution, Weight weight, int destinationStateIndex, int group = 0)
                 : this()
             {
-                Argument.CheckIfInRange(destinationStateIndex >= 0, "destinationStateIndex", "A destination state index cannot be negative.");
+                Argument.CheckIfInRange(destinationStateIndex >= 0, nameof(destinationStateIndex), "A destination state index cannot be negative.");
 
                 this.hasElementDistribution = (short)(elementDistribution.HasValue ? 1 : 0);
                 if (elementDistribution.HasValue)
