@@ -38,7 +38,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Initializes instance of <see cref="StateCollection"/>.
             /// </summary>
-            internal StateCollection(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> owner, List<StateData> states)
+            internal StateCollection(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> owner)
             {
                 this.owner = owner;
                 this.statesData = owner.statesData;

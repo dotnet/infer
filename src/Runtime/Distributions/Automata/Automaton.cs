@@ -204,7 +204,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets the collection of the states of the automaton.
         /// </summary>
-        public StateCollection States => new StateCollection(this, this.statesData);
+        public StateCollection States => new StateCollection(this);
 
         /// <summary>
         /// Gets or sets the start state of the automaton.
