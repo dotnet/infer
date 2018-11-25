@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="maxEnumerationCount">The maximum enumeration count that has been exceeded.</param>
         public AutomatonEnumerationCountException(int maxEnumerationCount)
-            : this(string.Format("An enumeration across the paths of an automaton has exceeded its limit of {0}", maxEnumerationCount))
+            : this($"An enumeration across the paths of an automaton has exceeded its limit of {maxEnumerationCount}")
         {
         }
 
