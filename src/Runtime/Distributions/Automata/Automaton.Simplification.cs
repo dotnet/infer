@@ -154,8 +154,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     Weight weight = outgoingTransitionInfo.Item2;
                     Determinization.WeightedStateSet destWeightedStateSet = outgoingTransitionInfo.Item3;
 
-                    State destinationState;
-                    if (!weightedStateSetToNewState.TryGetValue(destWeightedStateSet, out destinationState))
+                    if (!weightedStateSetToNewState.TryGetValue(destWeightedStateSet, out State destinationState))
                     {
                         if (result.States.Count == maxStatesBeforeStop)
                         {
@@ -534,8 +533,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Debug.Assert(!lookAtLabels || !stateLabels[stateToCopy.Index], "States that are not supposed to be copied should not be visited.");
 
-            State copiedState;
-            if (copiedStateCache.TryGetValue(stateToCopy.Index, out copiedState))
+            if (copiedStateCache.TryGetValue(stateToCopy.Index, out State copiedState))
             {
                 return copiedState;
             }
@@ -627,9 +625,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             while (stack.Count > 0)
             {
                 var stackItem = stack.Pop();
-                var elementItem = stackItem as ElementItem;
 
-                if (elementItem != null)
+                if (stackItem is ElementItem elementItem)
                 {
                     if (elementItem.Element != null)
                         currentSequenceElements.Add(elementItem.Element.Value);
@@ -1035,8 +1032,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     foreach (KeyValuePair<int, Weight> pair in this.stateIdToWeight)
                     {
                         // TODO: Should we allow for some tolerance? But what about hashing then?
-                        Weight otherWeight;
-                        if (!other.stateIdToWeight.TryGetValue(pair.Key, out otherWeight) || otherWeight != pair.Value)
+                        if (!other.stateIdToWeight.TryGetValue(pair.Key, out Weight otherWeight) || otherWeight != pair.Value)
                         {
                             return false;
                         }
@@ -1152,13 +1148,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Gets the group associated with the generalized element.
                 /// </summary>
-                public int Group { get; private set; }
+                public int Group { get; }
 
                 /// <summary>
                 /// Gets the loop weight associated with the generalized element,
                 /// <see langword="null"/> if the element does not represent a self-loop.
                 /// </summary>
-                public Weight? LoopWeight { get; private set; }
+                public Weight? LoopWeight { get; }
 
                 /// <summary>
                 /// Gets the string representation of the generalized element.
@@ -1167,13 +1163,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 public override string ToString()
                 {
                     string elementDistributionAsString = this.ElementDistribution.Value.IsPointMass ? this.ElementDistribution.Value.Point.ToString() : this.ElementDistribution.ToString();
-                    string groupString = this.Group == 0 ? string.Empty : string.Format("#{0}", this.Group);
+                    string groupString = this.Group == 0 ? string.Empty : $"#{this.Group}";
                     if (this.LoopWeight.HasValue)
                     {
-                        return string.Format("{0}{1}*({2})", groupString, elementDistributionAsString, this.LoopWeight.Value);
+                        return $"{groupString}{elementDistributionAsString}*({this.LoopWeight.Value})";
                     }
 
-                    return string.Format("{0}{1}", groupString, elementDistributionAsString);
+                    return $"{groupString}{elementDistributionAsString}";
                 }
             }
 
