@@ -5560,43 +5560,18 @@ namespace Microsoft.ML.Probabilistic.Models
                 MethodInfo method = type.GetMethod("CreateVariableArrayFromItem", BindingFlags.NonPublic | BindingFlags.Static);
                 return (IVariableArray)Util.Invoke(method, null, array, headRanges);
             }
-            IVariableArray result;
+            
             Variable<T> itemPrototype = (Variable<T>)item.Clone();
-            if (ranges.Count == 1)
+
+            VariableArray<T> variableArray = new VariableArray<T>(itemPrototype, ranges[0]);
+            variableArray.timestamp = item.timestamp;
+            if (Variable.AutoNaming)
             {
-                VariableArray<T> array = new VariableArray<T>(itemPrototype, ranges[0]);
-                array.timestamp = item.timestamp;
-                if (Variable.AutoNaming)
-                {
-                    array.Name = item.StripIndexers().ToString();
-                }
-                item.MakeItem(array, ranges[0]);
-                result = array;
+                variableArray.Name = item.StripIndexers().ToString();
             }
-            else if (ranges.Count == 2)
-            {
-                VariableArray2D<T> array = new VariableArray2D<T>(itemPrototype, ranges[0], ranges[1]);
-                array.timestamp = item.timestamp;
-                if (Variable.AutoNaming)
-                {
-                    array.Name = item.StripIndexers().ToString();
-                }
-                item.MakeItem(array, ranges[0], ranges[1]);
-                result = array;
-            }
-            else if (ranges.Count == 3)
-            {
-                VariableArray3D<T> array = new VariableArray3D<T>(itemPrototype, ranges[0], ranges[1], ranges[2]);
-                array.timestamp = item.timestamp;
-                if (Variable.AutoNaming)
-                {
-                    array.Name = item.StripIndexers().ToString();
-                }
-                item.MakeItem(array, ranges[0], ranges[1], ranges[2]);
-                result = array;
-            }
-            else throw new NotSupportedException("arrays of rank higher than 3 are not supported yet");
-            return result;
+            item.MakeItem(variableArray, ranges[0]);
+
+            return variableArray;
         }
 
         /// <summary>
