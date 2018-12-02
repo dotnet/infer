@@ -115,11 +115,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             loop = null;
             if (expr is ILiteralExpression) return true;
-            IVariableReferenceExpression loopRef = expr as IVariableReferenceExpression;
-            if (loopRef == null) return false;
-            CodeRecognizer recognizer = CodeRecognizer.Instance;
-            loop = recognizer.GetLoopForVariable(context, loopRef);
-            return (loop != null);
+            if (!(expr is IVariableReferenceExpression loopRef)) return false;
+
+            loop = Recognizer.GetLoopForVariable(context, loopRef);
+            return loop != null;
         }
 
         internal static ConditionBinding GetConditionBinding(IExpression condition, BasicTransformContext context,
