@@ -512,6 +512,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             Console.WriteLine(engine.Infer(numSessions));
         }
 
+        /// <summary>
+        /// Runs the MixtureOfGaussians tutorial, with assertions.
+        /// </summary>
         [Fact]
         public void MixtureOfMultivariateGaussians()
         {
@@ -549,11 +552,24 @@ namespace Microsoft.ML.Probabilistic.Tests
             double truePi = 0.6;
             data.ObservedValue = GenerateData(n.SizeAsInt, truePi);
 
-            // Initialise messages randomly so as to break symmetry
-            Discrete[] zinit = new Discrete[n.SizeAsInt];
-            for (int i = 0; i < zinit.Length; i++)
-                zinit[i] = Discrete.PointMass(Rand.Int(k.SizeAsInt), k.SizeAsInt);
-            z.InitialiseTo(Distribution<int>.Array(zinit));
+            // Initialise messages randomly to break symmetry
+            VariableArray<Discrete> zInit = Variable.Array<Discrete>(n).Named("zInit");
+            bool useObservedValue = true;
+            if (useObservedValue)
+            {
+                zInit.ObservedValue = Util.ArrayInit(n.SizeAsInt, i => Discrete.PointMass(Rand.Int(k.SizeAsInt), k.SizeAsInt));
+            }
+            else
+            {
+                // This approach doesn't work, because Infer.NET notices that Rand.Int is stochastic and thinks that it should perform message-passing here.
+                using (Variable.ForEach(n))
+                {
+                    var randk = Variable<int>.Factor(new Func<int, int>(Rand.Int), (Variable<int>)k.Size);
+                    randk.SetValueRange(k);
+                    zInit[n] = Variable<Discrete>.Factor(Discrete.PointMass, randk, (Variable<int>)k.Size);
+                }
+            }
+            z[n].InitialiseTo(zInit[n]);
 
             // The inference
             InferenceEngine ie = new InferenceEngine();
