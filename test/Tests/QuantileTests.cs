@@ -17,6 +17,22 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class QuantileTests
     {
         [Fact]
+        public void IrregularQuantilesTest()
+        {
+            var iq = new IrregularQuantiles(new double[] { 0, 0.4, 1 }, new double[] { 3, 4, 5 });
+            Assert.Equal(3.25, iq.GetQuantile(0.1));
+            Assert.Equal(0.1, iq.GetProbLessThan(3.25));
+        }
+
+        [Fact]
+        public void IrregularQuantiles_InfinityTest()
+        {
+            var iq = new IrregularQuantiles(new double[] { 0, 0.4, 1 }, new double[] { double.NegativeInfinity, 4, double.PositiveInfinity });
+            Assert.Equal(3.25, iq.GetQuantile(0.1));
+            Assert.Equal(0.1, iq.GetProbLessThan(3.25));
+        }
+
+        [Fact]
         public void QuantileEstimator_SinglePointIsMedian()
         {
             QuantileEstimator est = new QuantileEstimator(0.1);
