@@ -27,9 +27,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void IrregularQuantiles_InfinityTest()
         {
-            var iq = new IrregularQuantiles(new double[] { 0, 0.4, 1 }, new double[] { double.NegativeInfinity, 4, double.PositiveInfinity });
-            Assert.Equal(3.25, iq.GetQuantile(0.1));
-            Assert.Equal(0.1, iq.GetProbLessThan(3.25));
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                var iq = new IrregularQuantiles(new double[] { 0, 0.4, 1 }, new double[] { double.NegativeInfinity, 4, double.PositiveInfinity });
+                Assert.Equal(3.25, iq.GetQuantile(0.1));
+                Assert.Equal(0.1, iq.GetProbLessThan(3.25));
+            });
         }
 
         [Fact]

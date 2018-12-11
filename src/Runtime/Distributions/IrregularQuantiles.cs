@@ -17,44 +17,27 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             AssertIncreasing(probabilities, nameof(probabilities));
             AssertInRange(probabilities, nameof(probabilities));
-            AssertNondecreasing(quantiles, nameof(quantiles));
-            AssertFinite(quantiles, nameof(quantiles));
+            OuterQuantiles.AssertNondecreasing(quantiles, nameof(quantiles));
+            OuterQuantiles.AssertFinite(quantiles, nameof(quantiles));
             this.probabilities = probabilities;
             this.quantiles = quantiles;
-        }
-
-        private void AssertNondecreasing(double[] array, string paramName)
-        {
-            for (int i = 1; i < array.Length; i++)
-            {
-                if (array[i] < array[i - 1]) throw new ArgumentException($"Invalid array: [{i}] {array[i]} < [{i - 1}] {array[i - 1]}", paramName);
-            }
-        }
-
-        internal static void AssertFinite(double[] array, string paramName)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (double.IsInfinity(array[i])) throw new ArgumentException($"Array element is infinite: [{i}] {array[i]}", paramName);
-                if (double.IsNaN(array[i])) throw new ArgumentException($"Array element is NaN: [{i}] {array[i]}", paramName);
-            }
         }
 
         private void AssertIncreasing(double[] array, string paramName)
         {
             for (int i = 1; i < array.Length; i++)
             {
-                if (array[i] <= array[i - 1]) throw new ArgumentException($"Invalid array: [{i}] {array[i]} <= [{i - 1}] {array[i - 1]}", paramName);
+                if (array[i] <= array[i - 1]) throw new ArgumentException($"Array is not increasing: {paramName}[{i}] {array[i]} <= {paramName}[{i - 1}] {array[i - 1]}", paramName);
             }
         }
 
-        internal static void AssertInRange(double[] array, string paramName)
+        private static void AssertInRange(double[] array, string paramName)
         {
             for (int i = 0; i < array.Length; i++)
             {
-                if (array[i] < 0) throw new ArgumentException($"Array[{i}] {array[i]} < 0", paramName);
-                if (array[i] > 1) throw new ArgumentException($"Array[{i}] {array[i]} > 1", paramName);
-                if (double.IsNaN(array[i])) throw new ArgumentException($"Array element is NaN: [{i}] {array[i]}", paramName);
+                if (array[i] < 0) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]} < 0");
+                if (array[i] > 1) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]} > 1");
+                if (double.IsNaN(array[i])) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]}");
             }
         }
 

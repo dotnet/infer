@@ -32,8 +32,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             for (int i = 0; i < array.Length; i++)
             {
-                if (double.IsInfinity(array[i])) throw new ArgumentException($"Array element is infinite: [{i}] {array[i]}", paramName);
-                if (double.IsNaN(array[i])) throw new ArgumentException($"Array element is NaN: [{i}] {array[i]}", paramName);
+                if (double.IsInfinity(array[i])) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]}");
+                if (double.IsNaN(array[i])) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]}");
             }
         }
 
@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             for (int i = 1; i < array.Length; i++)
             {
-                if (array[i] < array[i - 1]) throw new ArgumentException($"Invalid array: [{i}] {array[i]} < [{i - 1}] {array[i - 1]}", paramName);
+                if (array[i] < array[i - 1]) throw new ArgumentException($"Array is not non-decreasing: {paramName}[{i}] {array[i]} < {paramName}[{i - 1}] {array[i - 1]}", paramName);
             }
         }
 
