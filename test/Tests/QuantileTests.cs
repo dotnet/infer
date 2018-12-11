@@ -22,6 +22,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var iq = new IrregularQuantiles(new double[] { 0, 0.4, 1 }, new double[] { 3, 4, 5 });
             Assert.Equal(3.25, iq.GetQuantile(0.1));
             Assert.Equal(0.1, iq.GetProbLessThan(3.25));
+            CheckGetQuantile(iq, iq);
         }
 
         [Fact]
@@ -298,11 +299,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             foreach(double maximumError in new[] { 0.05, 0.01, 0.005, 0.001 })
             {
                 int n = (int)(2.0 / maximumError);
-                QuantileEstimator(maximumError, n);
+                QuantileEstimatorTester(maximumError, n);
             }
         }
 
-        private void QuantileEstimator(double maximumError, int n)
+        private void QuantileEstimatorTester(double maximumError, int n)
         {
             // draw many samples from N(m,v)
             Rand.Restart(0);

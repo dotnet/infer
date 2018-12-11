@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.ML.Probabilistic.Math;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Microsoft.ML.Probabilistic.Distributions
 {
+    /// <summary>
+    /// Represents a distribution using the quantiles at arbitrary probabilities.
+    /// </summary>
     public class IrregularQuantiles : CanGetQuantile, CanGetProbLessThan
     {
         /// <summary>
@@ -41,6 +45,37 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
         }
 
+        /// <summary>
+        /// Returns the quantile rank of x.  This is a probability such that GetQuantile(probability) == x, whenever x is inside the support of the distribution.  May be discontinuous due to duplicates.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns>A real number in [0,1]</returns>
+        public double GetProbLessThan(double x)
+        {
+            int index = Array.BinarySearch(quantiles, x);
+            if (index >= 0)
+            {
+                // In case of duplicates, find the smallest copy.
+                while (index > 0 && quantiles[index - 1] == x) index--;
+                return probabilities[index];
+            }
+            else
+            {
+                // Linear interpolation
+                int largerIndex = ~index;
+                if (largerIndex == 0) return 0;
+                if (largerIndex == quantiles.Length) return 1;
+                int smallerIndex = largerIndex - 1;
+                double slope = (quantiles[largerIndex] - quantiles[smallerIndex]) / (probabilities[largerIndex] - probabilities[smallerIndex]);
+                return probabilities[smallerIndex] + (x - quantiles[smallerIndex]) / slope;
+            }
+        }
+
+        /// <summary>
+        /// Returns the largest value x such that GetProbLessThan(x) &lt;= probability.
+        /// </summary>
+        /// <param name="probability">A real number in [0,1].</param>
+        /// <returns></returns>
         public double GetQuantile(double probability)
         {
             if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
@@ -61,28 +96,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 int smallerIndex = largerIndex - 1;
                 if (largerIndex == probabilities.Length) return quantiles[smallerIndex];
                 double slope = (quantiles[largerIndex] - quantiles[smallerIndex]) / (probabilities[largerIndex] - probabilities[smallerIndex]);
-                return quantiles[smallerIndex] + (probability - probabilities[smallerIndex]) * slope;
-            }
-        }
-
-        public double GetProbLessThan(double x)
-        {
-            int index = Array.BinarySearch(quantiles, x);
-            if (index >= 0)
-            {
-                // In case of duplicates, find the smallest copy.
-                while (index > 0 && quantiles[index - 1] == x) index--;
-                return probabilities[index];
-            }
-            else
-            {
-                // Linear interpolation
-                int largerIndex = ~index;
-                if (largerIndex == 0) return 0;
-                if (largerIndex == quantiles.Length) return 1;
-                int smallerIndex = largerIndex - 1;
-                double slope = (probabilities[largerIndex] - probabilities[smallerIndex]) / (quantiles[largerIndex] - quantiles[smallerIndex]);
-                return probabilities[smallerIndex] + (x - quantiles[smallerIndex]) * slope;
+                // Solve for the largest x such that probabilities[smallerIndex] + (x - quantiles[smallerIndex]) / slope <= probability.
+                double frac = MMath.LargestDoubleSum(-probabilities[smallerIndex], probability);
+                double offset = MMath.LargestDoubleProduct(slope, frac);
+                return MMath.LargestDoubleSum(quantiles[smallerIndex], offset);
             }
         }
     }
