@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="automatonFormat">The underlying automaton format.</param>
         protected AutomatonBasedSequenceDistributionFormatBase(IAutomatonFormat automatonFormat)
         {
-            Argument.CheckIfNotNull(automatonFormat, "automatonFormat");
+            Argument.CheckIfNotNull(automatonFormat, nameof(automatonFormat));
 
             this.AutomatonFormat = automatonFormat;
         }

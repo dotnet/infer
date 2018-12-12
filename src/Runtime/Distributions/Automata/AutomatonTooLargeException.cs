@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="maxStateCount">The state count threshold that has been exceeded.</param>
         public AutomatonTooLargeException(int maxStateCount)
-            : this(string.Format("An automaton has become inadvisably large. The maximum number of states an automaton can have is {0}", maxStateCount))
+            : this($"An automaton has become inadvisably large. The maximum number of states an automaton can have is {maxStateCount}")
         {
         }
 

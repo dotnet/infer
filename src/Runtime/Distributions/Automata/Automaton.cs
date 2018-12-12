@@ -204,7 +204,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets the collection of the states of the automaton.
         /// </summary>
-        public StateCollection States => new StateCollection(this, this.statesData);
+        public StateCollection States => new StateCollection(this);
 
         /// <summary>
         /// Gets or sets the start state of the automaton.
@@ -2756,8 +2756,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
                 else
                 {
-                    var supportEnumerator = transition.ElementDistribution.Value as CanEnumerateSupport<TElement>;
-                    if (supportEnumerator == null)
+                    if (!(transition.ElementDistribution.Value is CanEnumerateSupport<TElement> supportEnumerator))
                     {
                         throw new NotImplementedException("Only point mass element distributions or distributions for which we can enumerate support are currently implemented");
                     }

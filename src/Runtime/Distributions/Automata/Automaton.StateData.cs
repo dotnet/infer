@@ -62,7 +62,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public StateData(IEnumerable<Transition> transitions, Weight endWeight)
                 : this()
             {
-                Argument.CheckIfNotNull(transitions, "transitions");
+                Argument.CheckIfNotNull(transitions, nameof(transitions));
 
                 this.EndWeight = endWeight;
 
@@ -141,7 +141,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="index">The index of the transition to remove.</param>
             public void RemoveTransition(int index)
             {
-                Argument.CheckIfInRange(index >= 0 && index < this.transitionCount, "index", "An invalid transition index given.");
+                Argument.CheckIfInRange(index >= 0 && index < this.transitionCount, nameof(index), "An invalid transition index given.");
                 this.transitions[index] = this.transitions[--this.transitionCount];
             }
         }

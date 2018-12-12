@@ -76,7 +76,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     statesInComponent.Count > 0,
                     "There must be at least one state in the strongly connected component.");
                 Debug.Assert(
-                    statesInComponent.All(s => s != null && ReferenceEquals(s.Owner, statesInComponent[0].Owner)),
+                    statesInComponent.All(s => ReferenceEquals(s.Owner, statesInComponent[0].Owner)),
                     "All the states must be valid and belong to the same automaton.");
 
                 this.transitionFilter = transitionFilter;
@@ -159,11 +159,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 Argument.CheckIfInRange(
                     srcStateIndexInComponent >= 0 && srcStateIndexInComponent < this.Size,
-                    "srcStateIndexInComponent",
+                    nameof(srcStateIndexInComponent),
                     "The given index is out of range.");
                 Argument.CheckIfInRange(
                     destStateIndexInComponent >= 0 && destStateIndexInComponent < this.Size,
-                    "destStateIndexInComponent",
+                    nameof(destStateIndexInComponent),
                     "The given index is out of range.");
 
                 if (this.Size == 1)

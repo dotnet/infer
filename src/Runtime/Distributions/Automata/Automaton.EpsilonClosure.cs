@@ -89,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Gets the total weight for ending inside the closure,
             /// if following epsilon transitions only
             /// </summary>
-            public Weight EndWeight { get; private set; }
+            public Weight EndWeight { get; }
 
             /// <summary>
             /// Gets the number of states in the closure.
