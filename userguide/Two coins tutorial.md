@@ -36,7 +36,7 @@ Here, **bothHeads** is true only if both **firstCoin** and **secondCoin** are tr
 
 ### Inferring distributions
 
-The primary purpose of Infer.NET is to perform inference, in other words, to infer the posterior distribution of a particular random variable. In this example, we have created a variable **bothHeads**which is random**,** and would like to find out its distribution. To do this, we need to use an Infer.NET _inference engine_. All inference in Infer.NET is achieved through the use of an inference engine, using its **Infer()** method. This code creates an inference engine with default settings and uses it to infer the distribution over **bothHeads**.
+The primary purpose of Infer.NET is to perform inference, in other words, to infer the posterior distribution of a particular random variable. In this example, we have created a variable **bothHeads** which is random, and would like to find out its distribution. To do this, we need to use an Infer.NET _inference engine_. All inference in Infer.NET is achieved through the use of an inference engine, using its **Infer()** method. This code creates an inference engine with default settings and uses it to infer the distribution over **bothHeads**.
 
 ```csharp
 InferenceEngine engine = new InferenceEngine();  
