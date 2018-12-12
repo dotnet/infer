@@ -6,6 +6,7 @@ using System;
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
+using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {
@@ -50,14 +51,10 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             // Attach some generated data
             data.ObservedValue = GenerateData(n.SizeAsInt);
 
-            // Initialise messages randomly so as to break symmetry
-            Discrete[] zinit = new Discrete[n.SizeAsInt];
-            for (int i = 0; i < zinit.Length; i++)
-            {
-                zinit[i] = Discrete.PointMass(Rand.Int(k.SizeAsInt), k.SizeAsInt);
-            }
-
-            z.InitialiseTo(Distribution<int>.Array(zinit)); 
+            // Initialise messages randomly to break symmetry
+            VariableArray<Discrete> zInit = Variable.Array<Discrete>(n).Named("zInit");
+            zInit.ObservedValue = Util.ArrayInit(n.SizeAsInt, i => Discrete.PointMass(Rand.Int(k.SizeAsInt), k.SizeAsInt));
+            z[n].InitialiseTo(zInit[n]); 
 
             // The inference
             InferenceEngine ie = new InferenceEngine();
