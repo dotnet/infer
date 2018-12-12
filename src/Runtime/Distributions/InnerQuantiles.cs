@@ -33,6 +33,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (quantiles == null) throw new ArgumentNullException(nameof(quantiles));
             if (quantiles.Length == 0) throw new ArgumentException("quantiles array is empty", nameof(quantiles));
+            OuterQuantiles.AssertFinite(quantiles, nameof(quantiles));
+            OuterQuantiles.AssertNondecreasing(quantiles, nameof(quantiles));
             this.quantiles = quantiles;
             lowerGaussian = GetLowerGaussian(quantiles);
             upperGaussian = GetUpperGaussian(quantiles);

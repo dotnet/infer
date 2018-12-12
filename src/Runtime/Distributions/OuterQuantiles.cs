@@ -19,11 +19,30 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Numbers in increasing order.
         /// </summary>
-        private double[] quantiles;
+        private readonly double[] quantiles;
 
         public OuterQuantiles(double[] quantiles)
         {
+            AssertNondecreasing(quantiles, nameof(quantiles));
+            AssertFinite(quantiles, nameof(quantiles));
             this.quantiles = quantiles;
+        }
+
+        internal static void AssertFinite(double[] array, string paramName)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (double.IsInfinity(array[i])) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]}");
+                if (double.IsNaN(array[i])) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]}");
+            }
+        }
+
+        internal static void AssertNondecreasing(double[] array, string paramName)
+        {
+            for (int i = 1; i < array.Length; i++)
+            {
+                if (array[i] < array[i - 1]) throw new ArgumentException($"Array is not non-decreasing: {paramName}[{i}] {array[i]} < {paramName}[{i - 1}] {array[i - 1]}", paramName);
+            }
         }
 
         public OuterQuantiles(int quantileCount, CanGetQuantile canGetQuantile)
@@ -99,7 +118,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             double pos = MMath.LargestDoubleProduct(n - 1, probability);
             int lower = (int)Math.Floor(pos);
             if (lower == n - 1) return quantiles[lower];
-            return GetQuantile(probability, lower, quantiles[lower], quantiles[lower+1], n);
+            return GetQuantile(probability, lower, quantiles[lower], quantiles[lower + 1], n);
         }
 
         /// <summary>
