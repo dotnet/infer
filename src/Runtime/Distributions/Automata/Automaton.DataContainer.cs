@@ -16,6 +16,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Immutable container for automaton data - states and transitions.
         /// </summary>
+        [Serializable]
         public struct DataContainer : ISerializable
         {
             /// <summary>
