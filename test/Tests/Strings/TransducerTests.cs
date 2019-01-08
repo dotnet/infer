@@ -2,18 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Microsoft.ML.Probabilistic.Collections;
+
 namespace Microsoft.ML.Probabilistic.Tests
 {
     using System;
     using System.Linq;
 
-    using Microsoft.ML.Probabilistic.Core.Collections;
-
     using Xunit;
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Distributions.Automata;
-    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Tests for transducers.
