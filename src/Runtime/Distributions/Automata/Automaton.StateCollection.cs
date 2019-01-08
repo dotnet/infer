@@ -9,7 +9,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Linq;
 
-    using Microsoft.ML.Probabilistic.Core.Collections;
+    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Utilities;
 
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>

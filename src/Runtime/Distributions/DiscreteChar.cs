@@ -20,8 +20,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using Utilities;
     using Factors.Attributes;
 
-    using Microsoft.ML.Probabilistic.Core.Collections;
-
     using Serialization;
 
     /// <summary>

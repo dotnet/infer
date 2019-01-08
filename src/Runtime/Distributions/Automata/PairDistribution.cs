@@ -6,7 +6,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System.Diagnostics;
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Core.Collections;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Math;
