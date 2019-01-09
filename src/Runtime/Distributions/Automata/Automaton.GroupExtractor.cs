@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 var weightsFromRoot = ComputeWeightsFromRoot(states.Count, topologicalOrder, group);
                 var weightsToEnd = ComputeWeightsToEnd(states.Count, topologicalOrder, group);
-                var subautomaton = Builder.Zero();
+                var subautomaton = new Builder();
                 var stateMapping = subgraph.ToDictionary(x => x, _ => subautomaton.AddState());
                 var hasNoIncomingTransitions = new HashSet<int>(subgraph);
 

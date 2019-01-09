@@ -77,7 +77,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The created distribution.</returns>
         public static StringDistribution CaseInvariant(string template)
         {
-            var result = StringAutomaton.Builder.Zero();
+            var result = new StringAutomaton.Builder();
             var last = result.Start;
             foreach (var ch in template)
             {

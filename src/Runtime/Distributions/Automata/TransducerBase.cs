@@ -322,7 +322,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfNotNull(srcAutomaton, "srcAutomaton");
 
-            var result = Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder.Zero();
+            var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
 
             if (srcAutomaton.IsCanonicZero() || this.sequencePairToWeight.IsCanonicZero())
             {
@@ -415,7 +415,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfNotNull(srcSequence, "srcSequence");
 
-            var result = Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder.Zero();
+            var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
 
             if (this.sequencePairToWeight.IsCanonicZero())
             {

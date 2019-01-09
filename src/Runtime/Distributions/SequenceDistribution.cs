@@ -224,7 +224,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public static TThis SingleElement(TElementDistribution elementDistribution)
         {
-            var func = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder.Zero();
+            var func = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
             var end = func.Start.AddTransition(elementDistribution, Weight.One);
             end.SetEndWeight(Weight.One);
             return FromWorkspace(func.GetAutomaton());
@@ -424,7 +424,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 ? Weight.One
                 : Weight.FromLogValue(distLogNormalizer);
 
-            var func = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder.Zero();
+            var func = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
             var state = func.Start;
 
             int iterationBound = maxTimes.HasValue ? maxTimes.Value : minTimes;

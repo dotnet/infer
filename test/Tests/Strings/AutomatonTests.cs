@@ -32,7 +32,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Clone()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.One).SetEndWeight(Weight.One);
 
             var automaton = builder.GetAutomaton();
@@ -88,14 +88,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(zero7.IsCanonicZero());
             StringInferenceTestUtilities.TestValue(zero7, 0.0, "abc", "ab", "a", string.Empty);
 
-            var zero8Builder = StringAutomaton.Builder.Zero();
+            var zero8Builder = new StringAutomaton.Builder();
             zero8Builder.Start.AddTransition('a', Weight.One);
             var zero8 = zero8Builder.GetAutomaton();
             Assert.True(zero8.IsZero());
             Assert.False(zero8.IsCanonicZero());
             StringInferenceTestUtilities.TestValue(zero8, 0.0, "abc", "ab", "a", string.Empty);
 
-            var zero9Builder = StringAutomaton.Builder.Zero();
+            var zero9Builder = new StringAutomaton.Builder();
             zero9Builder.Start.AddTransition('a', Weight.One);
             zero9Builder.Start.AddTransition('b', Weight.One, zero9Builder.StartStateIndex);
             zero9Builder.Start.AddTransitionsForSequence("abc");
@@ -390,7 +390,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ProductNoDeadBranches()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.One).AddTransition('b', Weight.One).SetEndWeight(Weight.One);
             builder.Start.AddTransition('a', Weight.One).AddTransition('c', Weight.One).SetEndWeight(Weight.One);
             var automaton = builder.GetAutomaton();
@@ -462,7 +462,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Reverse2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             var otherState = builder.Start.AddSelfTransition('a', Weight.FromValue(0.5)).AddTransition('b', Weight.FromValue(0.7));
             builder.Start.SetEndWeight(Weight.FromValue(0.3));
             otherState.SetEndWeight(Weight.FromValue(0.8));
@@ -617,7 +617,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NormalizeValuesDeadBranch()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransitionsForSequence("abc");
             builder.Start.AddTransitionsForSequence("def").SetEndWeight(Weight.FromValue(4.0));
             var automaton = builder.GetAutomaton();
@@ -640,7 +640,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             const double TransitionProbability = 0.7;
             const double EndWeight = 10.0;
 
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddSelfTransition('a', Weight.FromValue(TransitionProbability));
             builder.Start.SetEndWeight(Weight.FromValue(EndWeight));
             var automaton = builder.GetAutomaton();
@@ -677,7 +677,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             TestNonNormalizable(StringAutomaton.ConstantLog(Math.Log(0.87)), false);
             TestNonNormalizable(StringAutomaton.ConstantLog(Math.Log(0.01), DiscreteChar.PointMass('a')), false);
 
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddSelfTransition('a', Weight.FromValue(1.01));
             builder.Start.SetEndWeight(Weight.One);
             TestNonNormalizable(builder.GetAutomaton(), false);
@@ -719,7 +719,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void EpsilonClosure2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             var state = builder.Start;
             const int ChainLength = 16;
             for (int i = 0; i < ChainLength; ++i)
@@ -772,7 +772,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             int stateCount = Environment.Is64BitProcess  ? 600 : 1500; // Stack frames are larger on 64bit
             Debug.Assert(stateCount <= StringAutomaton.MaxStateCount, "MaxStateCount must be adjusted first.");
 
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             var state = builder.Start;
             
             for (int i = 1; i < stateCount; ++i)
@@ -866,7 +866,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.One).AddSelfTransition('b', Weight.One).AddTransition('c', Weight.One).SetEndWeight(Weight.One);
             var automaton = builder.GetAutomaton();
             Assert.Equal("ab*c", automaton.ToString(AutomatonFormats.Friendly));
@@ -881,7 +881,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             var middleState = builder.Start.AddTransition('b', Weight.One).AddTransition('c', Weight.One);
             builder.Start.AddTransition('a', Weight.One, middleState.Index);
             middleState.AddTransition('d', Weight.One).SetEndWeight(Weight.One);
@@ -897,7 +897,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString3()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransitionsForSequence("hello").SetEndWeight(Weight.One);
             var automaton = builder.GetAutomaton();
             Assert.Equal("hello", automaton.ToString(AutomatonFormats.Friendly));
@@ -911,7 +911,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString4()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransitionsForSequence("hello").SetEndWeight(Weight.Zero);
             var automaton = builder.GetAutomaton();
             Assert.Equal("Ø", automaton.ToString(AutomatonFormats.Friendly));
@@ -925,7 +925,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToString5()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransitionsForSequence("hello").SetEndWeight(Weight.One);
             builder.Start.AddEpsilonTransition(Weight.One).AddTransitionsForSequence("hi").SetEndWeight(Weight.One);
             builder.Start.AddEpsilonTransition(Weight.One).AddTransitionsForSequence("hey").SetEndWeight(Weight.One);
@@ -1029,7 +1029,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void RegexForAutomatonWithNonTrivialComponent()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.AddStates(7);
 
             builder[0].AddTransition('a', Weight.FromValue(1), 1);
@@ -1074,7 +1074,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void RegexForAutomatonWithNonTrivialComponent2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.AddStates(7);
 
             builder[0].AddTransition('a', Weight.FromValue(1), 1);
@@ -1177,7 +1177,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Equality3()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.SetEndWeight(Weight.One);
             builder.Start.AddSelfTransition(DiscreteChar.Lower(), Weight.FromLogValue(26 + 1e-3));
             var automaton = builder.GetAutomaton();
@@ -1193,7 +1193,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Equality4()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.SetEndWeight(Weight.One);
             builder.Start.AddSelfTransition('a', Weight.FromLogValue(1.0 - 1e-3));
             var automaton = builder.GetAutomaton();
@@ -1212,7 +1212,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             AssertEquals(StringAutomaton.Zero(), StringAutomaton.Zero());
             AssertNotEquals(StringAutomaton.Zero(), StringAutomaton.Constant(1.0));
 
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.One);
             var automaton = builder.GetAutomaton();
 
@@ -1228,7 +1228,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringAutomaton func1 = StringAutomaton.Constant(1.0, DiscreteChar.OneOf('a', 'b'));
 
-            var func2Builder = StringAutomaton.Builder.Zero();
+            var func2Builder = new StringAutomaton.Builder();
             func2Builder.Start.AddSelfTransition('a', Weight.One).AddSelfTransition('b', Weight.One).SetEndWeight(Weight.One);
             var func2 = func2Builder.GetAutomaton();
 
@@ -1242,11 +1242,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Equality7()
         {
-            var func1Builder = StringAutomaton.Builder.Zero();
+            var func1Builder = new StringAutomaton.Builder();
             func1Builder.Start.AddSelfTransition(DiscreteChar.PointMass('a'), Weight.One).SetEndWeight(Weight.One);
             var func1 = func1Builder.GetAutomaton();
 
-            var func2Builder = StringAutomaton.Builder.Zero();
+            var func2Builder = new StringAutomaton.Builder();
             func2Builder.Start
                 .AddEpsilonTransition(Weight.One)
                 .AddTransition(DiscreteChar.PointMass('a'), Weight.One, func2Builder.StartStateIndex)
@@ -1267,7 +1267,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Simplify1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.One).AddTransition('b', Weight.One).SetEndWeight(
                 Weight.FromValue(2.0));
             builder.Start.AddTransition('a', Weight.One).AddSelfTransition('d', Weight.One).AddTransition('c', Weight.One).SetEndWeight(
@@ -1291,7 +1291,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Simplify2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.One).AddSelfTransition('d', Weight.One).AddTransition('c', Weight.One).SetEndWeight(
                 Weight.FromValue(3.0));
             builder.Start.AddTransition('a', Weight.One).AddTransition('b', Weight.One).SetEndWeight(
@@ -1315,7 +1315,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Simplify3()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.One).AddTransition('d', Weight.One).AddTransition('c', Weight.One).SetEndWeight(
                 Weight.FromValue(2.0));
             builder.Start.AddTransition('a', Weight.One).AddSelfTransition('d', Weight.One).AddTransition('c', Weight.One).SetEndWeight(
@@ -1338,7 +1338,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Simplify4()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddEpsilonTransition(Weight.One).AddSelfTransition('a', Weight.One)
                            .AddEpsilonTransition(Weight.One).AddSelfTransition('b', Weight.One).SetEndWeight(Weight.FromValue(2.0));
             builder.Start.AddEpsilonTransition(Weight.One).AddSelfTransition('a', Weight.One)
@@ -1365,7 +1365,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Simplify5()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             const string AcceptedSequence = "aaaaaaaaaa";
             var state = builder.Start;
             for (int i = 0; i < AcceptedSequence.Length; ++i)
@@ -1400,7 +1400,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Simplify6()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.AddStates(5);
             builder[0].AddTransition('a', Weight.FromValue(1.0), 1);
             builder[0].AddTransition('a', Weight.FromValue(4.0), 4);
@@ -1433,7 +1433,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             DiscreteChar lowerEnglish = DiscreteChar.UniformInRange('a', 'z');
             DiscreteChar upperEnglish = DiscreteChar.UniformInRange('A', 'Z');
 
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             var branch1 = builder.Start.AddEpsilonTransition(Weight.FromValue(0.5)).AddTransition('a', Weight.FromValue(1.0 / 3.0)).AddTransition('B', Weight.FromValue(1.0 / 4.0));
             branch1.SetEndWeight(Weight.FromValue(3.0));
             branch1.AddTransition('X', Weight.FromValue(1.0 / 6.0)).SetEndWeight(Weight.FromValue(5.0));
@@ -1463,7 +1463,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Simplify8()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.AddStates(10);
 
             builder[0].AddTransition('a', Weight.One, 0);
@@ -1538,7 +1538,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Determinize1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.FromValue(2)).AddTransition('b', Weight.FromValue(3)).SetEndWeight(Weight.FromValue(4));
             builder.Start.AddTransition('a', Weight.FromValue(5)).AddTransition('c', Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7));
             builder.Start.SetEndWeight(Weight.FromValue(17));
@@ -1568,7 +1568,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Determinize2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(2)).AddTransition('b', Weight.FromValue(3)).SetEndWeight(Weight.FromValue(4));
             builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(5)).AddTransition('c', Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7));
             builder.Start.SetEndWeight(Weight.FromValue(17));
@@ -1598,7 +1598,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Determinize3()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition(DiscreteChar.Uniform(), Weight.FromValue(2)).AddTransition('b', Weight.FromValue(3)).SetEndWeight(Weight.FromValue(4));
             builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(5)).AddTransition('c', Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7));
             builder.Start.AddTransition(DiscreteChar.UniformInRange('x', 'z'), Weight.FromValue(8)).AddTransition('d', Weight.FromValue(9)).SetEndWeight(Weight.FromValue(10));
@@ -1633,7 +1633,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Determinize4()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.FromValue(2)).AddSelfTransition('b', Weight.FromValue(0.5)).AddTransition('c', Weight.FromValue(3.0)).SetEndWeight(Weight.FromValue(4));
             builder.Start.AddTransition('a', Weight.FromValue(5)).AddSelfTransition('b', Weight.FromValue(0.5)).AddTransition('d', Weight.FromValue(6.0)).SetEndWeight(Weight.FromValue(7));
 
@@ -1665,7 +1665,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Determinize5()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.FromValue(2)).AddSelfTransition('b', Weight.FromValue(0.5)).AddTransition('c', Weight.FromValue(3.0)).SetEndWeight(Weight.FromValue(4));
             builder.Start.AddTransition('a', Weight.FromValue(5)).AddSelfTransition('b', Weight.FromValue(0.5)).AddTransition('c', Weight.FromValue(6.0)).SetEndWeight(Weight.FromValue(7));
 
@@ -1694,7 +1694,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Determinize6()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'c'), Weight.FromValue(2)).SetEndWeight(Weight.FromValue(3.0));
             builder.Start.AddTransition(DiscreteChar.UniformInRange('b', 'c'), Weight.FromValue(4)).SetEndWeight(Weight.FromValue(5.0));
             builder.Start.AddTransition(DiscreteChar.UniformInRange('b', 'd'), Weight.FromValue(6)).SetEndWeight(Weight.FromValue(7.0));
@@ -1728,7 +1728,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Determinize7()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.AddStates(4);
 
             builder[0].AddTransition('a', Weight.FromValue(3), 1);
@@ -1771,7 +1771,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Determinize8()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             var state = builder.Start;
 
             const int AcceptedSequenceLength = 20;
@@ -1809,7 +1809,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Determinize9()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
 
             const int TransitionsPerCharacter = 3;
             for (int i = 0; i < TransitionsPerCharacter; ++i)
@@ -1845,7 +1845,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void Determinize10()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.AddStates(4);
 
             builder[0].AddTransition('a', Weight.FromValue(3), 1);
@@ -1886,7 +1886,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NonDeterminizable1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.FromValue(2)).AddSelfTransition('b', Weight.FromValue(0.5)).AddTransition('c', Weight.FromValue(3.0)).SetEndWeight(Weight.FromValue(4));
             builder.Start.AddTransition('a', Weight.FromValue(5)).AddSelfTransition('b', Weight.FromValue(0.1)).AddTransition('c', Weight.FromValue(6.0)).SetEndWeight(Weight.FromValue(7));
 
@@ -1925,7 +1925,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         internal void DeterminizeList()
         {
-            var builder = ListAutomaton<string, StringDistribution>.Builder.Zero();
+            var builder = new Automaton<List<string>, string, StringDistribution, ListManipulator<List<string>, string>, ListAutomaton<string, StringDistribution>>.Builder();
 
             const int TransitionsPerCharacter = 3;
             for (int i = 0; i < TransitionsPerCharacter; ++i)
@@ -1961,7 +1961,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         internal void DeterminizeList2()
         {
-            var builder = ListAutomaton<string, StringDistribution>.Builder.Zero();
+            var builder = new Automaton<List<string>, string, StringDistribution, ListManipulator<List<string>, string>, ListAutomaton<string, StringDistribution>>.Builder();
             var unif = StringDistribution.Uniform();
             var scaledUniform = StringDistribution.FromWorkspace(unif.GetWorkspaceOrPoint().Scale(1.0 / 1000));
    
@@ -2001,7 +2001,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void EnumerateSupport()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.AddStates(6);
 
             builder[0].AddTransition(DiscreteChar.UniformOver('a', 'b'), Weight.FromValue(1), 1);
@@ -2038,7 +2038,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void TryEnumerateSupportPerfTest()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.AddStates(6);
 
             builder[0].AddTransition(DiscreteChar.UniformOver('a', 'b'), Weight.FromValue(1), 1);

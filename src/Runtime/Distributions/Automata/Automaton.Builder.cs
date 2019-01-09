@@ -43,10 +43,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Creates a new empty <see cref="Builder"/>.
             /// </summary>
-            public Builder()
+            public Builder(int startStateCount = 1)
             {
                 this.states = new List<StateData>();
                 this.transitions = new List<LinkedTransitionNode>();
+                this.AddStates(startStateCount);
             }
 
             #region Properties
@@ -81,22 +82,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             # region Factory methods
 
             /// <summary>
-            /// Factory method which creates <see cref="Builder"/> with single state.
-            /// </summary>
-            public static Builder Zero()
-            {
-                var builder = new Builder();
-                builder.SetToZero();
-                return builder;
-            }
-
-            /// <summary>
             /// Factory method which creates <see cref="Builder"/> which contains all states and transitions
             /// from given <paramref name="automaton"/>.
             /// </summary>
             public static Builder FromAutomaton(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> automaton)
             {
-                var result = new Builder();
+                var result = new Builder(0);
                 result.AddStates(automaton.States);
                 result.StartStateIndex = automaton.Start.Index;
                 return result;
@@ -108,7 +99,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public static Builder ConstantOn(Weight weight, TSequence sequence)
             {
-                var result = Builder.Zero();
+                var result = new Builder();
                 result.Start.AddTransitionsForSequence(sequence).SetEndWeight(weight);
                 return result;
             }
@@ -227,7 +218,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (this.StartStateIndex == -1)
                 {
                     // Cannot reach any end state from the start state => the automaton is zero everywhere
-                    this.SetToZero();
+                    this.Clear();
+                    this.AddState();
                     return deadStateCount;
                 }
 
@@ -431,13 +423,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// 
             /// </summary>
-            public void SetToZero()
+            public void Clear()
             {
                 this.states.Clear();
                 this.transitions.Clear();
                 this.numRemovedTransitions = 0;
                 this.StartStateIndex = 0;
-                this.AddState();
             }
 
             #endregion

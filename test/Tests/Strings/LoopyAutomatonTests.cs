@@ -109,7 +109,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void PointMassDetectionWithEpsilonLoop()
         {
-            var f = StringAutomaton.Builder.Zero();
+            var f = new StringAutomaton.Builder();
             AddEpsilonLoop(f.Start, 5, 0.5);
             f.Start.AddTransitionsForSequence("abc").SetEndWeight(Weight.One);
             Assert.Equal("abc", f.GetAutomaton().TryComputePoint());
@@ -122,7 +122,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void PointMassDetectionWithDeadLoop()
         {
-            var f = StringAutomaton.Builder.Zero();
+            var f = new StringAutomaton.Builder();
             f.Start.AddTransition('a', Weight.FromValue(0.5)).AddTransition('b', Weight.Zero, f.Start.Index);
             f.Start.AddTransitionsForSequence("abc").SetEndWeight(Weight.One);
             Assert.Equal("abc", f.GetAutomaton().TryComputePoint());
@@ -135,7 +135,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void PointMassDetectionLoopInDeadEnd()
         {
-            var f = StringAutomaton.Builder.Zero();
+            var f = new StringAutomaton.Builder();
             f.Start.AddTransition('a', Weight.FromValue(0.5)).AddSelfTransition('a', Weight.FromValue(0.5)).AddTransition('b', Weight.One);
             f.Start.AddTransition('b', Weight.FromValue(0.5)).SetEndWeight(Weight.One);
             Assert.Equal("b", f.GetAutomaton().TryComputePoint());
@@ -148,7 +148,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NoPoint1()
         {
-            var f = StringAutomaton.Builder.Zero();
+            var f = new StringAutomaton.Builder();
             f.Start.AddTransition('a', Weight.FromValue(0.5)).AddTransition('b', Weight.FromValue(0.5), f.Start.Index).SetEndWeight(Weight.One);
             Assert.Null(f.GetAutomaton().TryComputePoint());
         }
@@ -160,7 +160,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NoPoint2()
         {
-            var f = StringAutomaton.Builder.Zero();
+            var f = new StringAutomaton.Builder();
             var state = f.Start.AddTransition('a', Weight.FromValue(0.5));
             state.SetEndWeight(Weight.One);
             state.AddTransition('b', Weight.FromValue(0.5), f.Start.Index);
@@ -189,7 +189,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ZeroDetectionWithEpsilonLoop1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             AddEpsilonLoop(builder.Start, 5, 0);
 
             var f = builder.GetAutomaton();
@@ -204,7 +204,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ZeroDetectionWithEpsilonLoop2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             AddEpsilonLoop(builder.Start, 5, 2.0);
             builder.Start.AddTransition('a', Weight.One);
 
@@ -220,7 +220,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ZeroDetectionWithDeadSelfLoop()
         {
-            var f = StringAutomaton.Builder.Zero();
+            var f = new StringAutomaton.Builder();
             f.Start.AddSelfTransition('x', Weight.Zero);
             f.Start.AddTransition('y', Weight.Zero).SetEndWeight(Weight.One);
             Assert.True(f.GetAutomaton().IsZero());
@@ -237,14 +237,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void LoopyArithmetic()
         {
-            var builder1 = StringAutomaton.Builder.Zero();
+            var builder1 = new StringAutomaton.Builder();
             builder1.Start
                 .AddTransition('a', Weight.FromValue(4.0))
                 .AddTransition('b', Weight.One, builder1.Start.Index)
                 .SetEndWeight(Weight.One);
             var automaton1 = builder1.GetAutomaton();
 
-            var builder2 = StringAutomaton.Builder.Zero();
+            var builder2 = new StringAutomaton.Builder();
             builder2.Start
                 .AddSelfTransition('a', Weight.FromValue(2))
                 .AddSelfTransition('b', Weight.FromValue(3))
@@ -284,7 +284,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ComputeNormalizerSimple1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddSelfTransition('a', Weight.FromValue(0.7));
             builder.Start.SetEndWeight(Weight.FromValue(0.3));
             var automaton = builder.GetAutomaton();
@@ -302,7 +302,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ComputeNormalizerSimple2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             var state = builder.Start;
             state.SetEndWeight(Weight.FromValue(0.1));
             state.AddSelfTransition('a', Weight.FromValue(0.7));
@@ -324,7 +324,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ComputeNormalizerSimple3()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
 
             builder.Start.AddSelfTransition('a', Weight.FromValue(0.7));
             builder.Start.SetEndWeight(Weight.FromValue(0.1));
@@ -351,7 +351,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ComputeNormalizerWithNonTrivialLoop1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
 
             var state = builder.Start.AddTransition('a', Weight.FromValue(0.9));
             state.AddTransition('a', Weight.FromValue(0.1)).SetEndWeight(Weight.One);
@@ -375,7 +375,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ComputeNormalizerWithNonTrivialLoop2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
 
             var endState = builder.Start.AddTransition('a', Weight.FromValue(2.0));
             endState.SetEndWeight(Weight.FromValue(5.0));
@@ -396,7 +396,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NormalizeValuesWithNonTrivialLoop()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
 
             var endState = builder.Start.AddTransition('a', Weight.FromValue(2.0));
             endState.SetEndWeight(Weight.FromValue(5.0));
@@ -427,7 +427,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ComputeNormalizerWithManyNonTrivialLoops1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
 
             AddEpsilonLoop(builder.Start, 3, 0.2);
             AddEpsilonLoop(builder.Start, 5, 0.3);
@@ -454,7 +454,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ComputeNormalizerWithManyNonTrivialLoops2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.AddStates(6);
 
             builder[0].AddEpsilonTransition(Weight.FromValue(0.2), 1);
@@ -490,7 +490,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NonNormalizableLoop1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
 
             var endState = builder.Start.AddTransition('a', Weight.FromValue(3.5));
             endState.SetEndWeight(Weight.FromValue(5.0));
@@ -513,7 +513,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NonNormalizableLoop2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
 
             var endState = builder.Start.AddTransition('a', Weight.FromValue(2.0));
             endState.SetEndWeight(Weight.FromValue(5.0));
@@ -536,7 +536,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NonNormalizableLoop3()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.FromValue(2.0), builder.Start.Index);
             builder.Start.SetEndWeight(Weight.FromValue(5.0));
 
@@ -555,7 +555,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NonNormalizableLoop4()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddSelfTransition('a', Weight.FromValue(0.1));
             var branch1 = builder.Start.AddTransition('a', Weight.FromValue(2.0));
             branch1.AddSelfTransition('a', Weight.FromValue(2.0));
@@ -578,7 +578,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NormalizeWithInfiniteEpsilon1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.One).AddSelfTransition(Option.None, Weight.FromValue(3)).SetEndWeight(Weight.One);
 
             var automaton = builder.GetAutomaton();
@@ -596,7 +596,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void NormalizeWithInfiniteEpsilon2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('a', Weight.One).AddSelfTransition(Option.None, Weight.FromValue(2)).SetEndWeight(Weight.One);
             builder.Start.AddTransition('b', Weight.One).AddSelfTransition(Option.None, Weight.FromValue(1)).SetEndWeight(Weight.One);
 
@@ -619,7 +619,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void LoopyEpsilonClosure1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddEpsilonTransition(Weight.FromValue(0.5), builder.Start.Index);
             var nextState = builder.Start.AddEpsilonTransition(Weight.FromValue(0.4));
             nextState.AddEpsilonTransition(Weight.One).AddEpsilonTransition(Weight.One, builder.Start.Index);
@@ -652,7 +652,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToStringWithLoops1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             var middleNode = builder.Start.AddTransition('a', Weight.One);
             middleNode.AddTransitionsForSequence("bbb", builder.Start.Index);
             middleNode.AddTransition('c', Weight.One, builder.Start.Index);
@@ -671,7 +671,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToStringWithLoops2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddSelfTransition('a', Weight.One);
             builder.Start.AddSelfTransition('b', Weight.One);
             builder.Start.SetEndWeight(Weight.One);
@@ -690,7 +690,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToStringWithLoops3()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             var state = builder.Start.AddTransition('x', Weight.One);
             builder.Start.AddTransition('y', Weight.One, state.Index);
             state.AddSelfTransition('a', Weight.One);
@@ -711,7 +711,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToStringWithLoops4()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransitionsForSequence("xyz", builder.Start.Index);
             builder.Start.AddTransition('!', Weight.One).SetEndWeight(Weight.One);
             var automaton = builder.GetAutomaton();
@@ -726,7 +726,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToStringWithDeadTransitions1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             var state = builder.Start.AddTransition('x', Weight.One);
             builder.Start.AddTransition('y', Weight.Zero, state.Index);
             state.AddSelfTransition('a', Weight.One);
@@ -745,7 +745,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void ConvertToStringWithDeadTransitions2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddSelfTransition('x', Weight.Zero);
             builder.Start.AddTransition('y', Weight.Zero).SetEndWeight(Weight.One);
 

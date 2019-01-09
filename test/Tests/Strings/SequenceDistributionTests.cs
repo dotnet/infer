@@ -581,7 +581,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             const double StoppingProbability = 0.7;
 
             // The length of sequences sampled from this distribution must follow a geometric distribution
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.StartStateIndex = builder.AddState().Index;
             builder.Start.SetEndWeight(Weight.FromValue(StoppingProbability));
             builder.Start.AddTransition('a', Weight.FromValue(1 - StoppingProbability), builder.Start.Index);

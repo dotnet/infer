@@ -309,7 +309,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfNotNull(allowedElements, nameof(allowedElements));
 
-            var result = Builder.Zero();
+            var result = new Builder();
             if (!double.IsNegativeInfinity(logValue))
             {
                 allowedElements = Distribution.CreatePartialUniform(allowedElements);
@@ -361,7 +361,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfNotNull(sequences, "sequences");
 
-            var result = Builder.Zero();
+            var result = new Builder();
             if (!double.IsNegativeInfinity(logValue))
             {
                 foreach (var sequence in sequences)
@@ -436,7 +436,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 throw new NotImplementedException("Negative values are not yet supported.");
             }
 
-            var result = Builder.Zero();
+            var result = new Builder();
             result.Start.SetEndWeight(Weight.FromLogValue(Math.Log(value)));
             return result.GetAutomaton();
         }
@@ -533,7 +533,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             Argument.CheckIfNotNull(automata, "automata");
 
-            var result = Builder.Zero();
+            var result = new Builder();
             foreach (var automaton in automata)
             {
                 if (automaton.IsCanonicZero())
@@ -1097,7 +1097,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The created automaton.</returns>
         public TThis Reverse()
         {
-            var result = Builder.Zero();
+            var result = new Builder();
 
             // Result already has 1 state, we add the remaining Count-1 states
             result.AddStates(this.States.Count - 1);
@@ -1256,7 +1256,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            var builder = new Builder();
+            var builder = new Builder(0);
             var productStateCache = new Dictionary<(int, int), int>(automaton1.States.Count + automaton2.States.Count);
             builder.StartStateIndex = BuildProduct(automaton1.Start, automaton2.Start);
 
@@ -1433,7 +1433,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 !double.IsPositiveInfinity(logWeight1) && !double.IsPositiveInfinity(logWeight2),
                 "Weights must not be infinite.");
 
-            var result = Builder.Zero();
+            var result = new Builder();
 
             bool hasFirstTerm = !automaton1.IsCanonicZero() && !double.IsNegativeInfinity(logWeight1);
             bool hasSecondTerm = !automaton2.IsCanonicZero() && !double.IsNegativeInfinity(logWeight2);
@@ -1567,7 +1567,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Argument.CheckIfNotNull(allowedElements, "allowedElements");
 
             allowedElements = Distribution.CreatePartialUniform(allowedElements);
-            var builder = Builder.Zero();
+            var builder = new Builder();
             if (!double.IsNegativeInfinity(logValue))
             {
                 builder.Start.SetEndWeight(Weight.FromLogValue(logValue));
@@ -1612,7 +1612,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Argument.CheckIfNotNull(sourceAutomaton, "sourceAutomaton");
             Argument.CheckIfNotNull(transitionTransform, "transitionTransform");
 
-            var builder = Builder.Zero();
+            var builder = new Builder();
 
             // Add states
             builder.AddStates(sourceAutomaton.States.Count - 1);
@@ -1940,7 +1940,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return;
             }
 
-            var builder = Builder.Zero();
+            var builder = new Builder();
             var oldToNewState = new ArrayDictionary<int>(automaton.States.Count);
             builder.StartStateIndex = BuildEpsilonClosure(automaton.Start);
 
@@ -2070,7 +2070,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // An automaton, product with which will make every self-loop converging
             var uniformDist = new TElementDistribution();
             uniformDist.SetToUniform();
-            var theConverger = Builder.Zero();
+            var theConverger = new Builder();
             Weight transitionWeight = Weight.Product(
                 Weight.FromLogValue(-uniformDist.GetLogAverageOf(uniformDist)),
                 Weight.FromLogValue(-maxLogTransitionWeightSum),
@@ -2649,13 +2649,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 res.PruneTransitionsWithLogWeightLessThan = readDouble();
             }
 
-            var builder = new Builder();
+            var builder = new Builder(0);
 
             if (hasStartState)
             {
                 // Start state is also present in the list of all states, so read it into temp builder where
                 // it will get index 0. But keep real deserialized start state index to be used in real builder
-                var tempBuilder = new Builder();
+                var tempBuilder = new Builder(0);
                 builder.StartStateIndex =
                     State.ReadTo(ref tempBuilder, readInt32, readDouble, readElementDistribution, checkIndex: false);
             }

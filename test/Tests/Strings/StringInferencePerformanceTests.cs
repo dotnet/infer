@@ -35,7 +35,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Assert.Timeout(() =>
             {
-                var builder = StringAutomaton.Builder.Zero();
+                var builder = new StringAutomaton.Builder();
                 var nextState = builder.Start.AddTransitionsForSequence("abc");
                 nextState.AddSelfTransition('d', Weight.FromValue(0.1));
                 nextState.AddTransitionsForSequence("efg").SetEndWeight(Weight.One);
@@ -57,7 +57,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Assert.Timeout(() =>
             {
-                var builder = StringAutomaton.Builder.Zero();
+                var builder = new StringAutomaton.Builder();
                 var nextState = builder.Start.AddTransitionsForSequence("abc");
                 nextState.SetEndWeight(Weight.One);
                 nextState.AddSelfTransition('d', Weight.FromValue(0.1));
@@ -84,7 +84,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Assert.Timeout(() =>
             {
-                var builder = StringAutomaton.Builder.Zero();
+                var builder = new StringAutomaton.Builder();
                 builder.Start.AddSelfTransition('a', Weight.FromValue(0.5));
                 builder.Start.SetEndWeight(Weight.One);
                 var nextState = builder.Start.AddTransitionsForSequence("aa");

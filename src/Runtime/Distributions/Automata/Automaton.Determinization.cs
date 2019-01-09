@@ -68,7 +68,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // Such pairs correspond to states of the resulting automaton.
             var weightedStateSetQueue = new Queue<Determinization.WeightedStateSet>();
             var weightedStateSetToNewState = new Dictionary<Determinization.WeightedStateSet, int>();
-            var builder = Builder.Zero();
+            var builder = new Builder();
 
             var startWeightedStateSet = new Determinization.WeightedStateSet { { this.Start.Index, Weight.One } };
             weightedStateSetQueue.Enqueue(startWeightedStateSet);

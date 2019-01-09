@@ -27,7 +27,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void LargeTransducer()
         {
             StringAutomaton.MaxStateCount = 1200000; // Something big
-            var bigAutomatonBuilder = StringAutomaton.Builder.Zero();
+            var bigAutomatonBuilder = new StringAutomaton.Builder();
             bigAutomatonBuilder.AddStates(StringAutomaton.MaxStateCount - bigAutomatonBuilder.StatesCount);
             Func<Option<DiscreteChar>, Weight, ValueTuple<Option<PairDistribution<char, DiscreteChar>>, Weight>> transitionConverter =
                 (dist, weight) => ValueTuple.Create(Option.Some(PairDistribution<char, DiscreteChar>.FromFirstSecond(dist, dist)), weight);

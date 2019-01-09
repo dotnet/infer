@@ -30,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void GetOutgoingTransitionsForDeterminization1()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition(DiscreteChar.Uniform(), Weight.FromValue(2));
 
             var wrapper = new StringAutomatonWrapper(builder);
@@ -54,7 +54,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void GetOutgoingTransitionsForDeterminization2()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(2));
             builder.Start.AddTransition(DiscreteChar.UniformInRanges('a', 'z', 'A', 'Z'), Weight.FromValue(3));
 
@@ -81,7 +81,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void GetOutgoingTransitionsForDeterminization3()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
 
             builder.Start.AddTransition(DiscreteChar.UniformInRange('a', 'b'), Weight.FromValue(2));
             builder.Start.AddTransition(DiscreteChar.UniformInRanges('b', 'd'), Weight.FromValue(3));
@@ -127,7 +127,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void GetOutgoingTransitionsForDeterminization4()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition(DiscreteChar.UniformInRange(char.MinValue, char.MaxValue), Weight.FromValue(2));
             builder.Start.AddTransition(DiscreteChar.UniformInRange('a', char.MaxValue), Weight.FromValue(3));
             builder.Start.AddTransition(DiscreteChar.UniformInRanges('z', char.MaxValue), Weight.FromValue(4));
@@ -175,7 +175,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void GetOutgoingTrainsitionsForDeterminization5()
         {
-            var builder = StringAutomaton.Builder.Zero();
+            var builder = new StringAutomaton.Builder();
             builder.Start.AddTransition('A', Weight.FromValue(2.49999999999995));
             builder.Start.AddTransition('A', Weight.FromValue(4.49999999999959));
             builder.Start.AddTransition('D', Weight.FromValue(2.49999999999996));
