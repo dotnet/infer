@@ -1945,6 +1945,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             builder.StartStateIndex = BuildEpsilonClosure(automaton.Start);
 
             this.Data = builder.GetData();
+            this.LogValueOverride = automaton.LogValueOverride;
+            this.PruneTransitionsWithLogWeightLessThan = automaton.LogValueOverride;
 
             // Recursively builds an automaton representing the epsilon closure of a given automaton.
             // Returns the state index of state representing the closure
@@ -2175,7 +2177,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 if (!double.IsInfinity(logNormalizer))
                 {
-                    this.SwapWith(PushWeights());
+                    this.Data = PushWeights();
                 }
             }
 
@@ -2183,7 +2185,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             // Re-distributes weights of the states and transitions so that the underlying automaton becomes stochastic
             // (i.e. sum of weights of all the outgoing transitions and the ending weight is 1 for every node).
-            TThis PushWeights()
+            DataContainer PushWeights()
             {
                 var builder = Builder.FromAutomaton(noEpsilonTransitions);
                 for (int i = 0; i < builder.StatesCount; ++i)
@@ -2209,7 +2211,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     state.SetEndWeight(Weight.Product(state.EndWeight, weightToEndInv));
                 }
 
-                return builder.GetAutomaton();
+                return builder.GetData();
             }
         }
 

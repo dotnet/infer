@@ -10,6 +10,7 @@ namespace Microsoft.ML.Probabilistic.Collections
     using System.Runtime.Serialization;
 
     using Microsoft.ML.Probabilistic.Serialization;
+    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Represents a read only array.
@@ -59,16 +60,16 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <remarks>
         /// This is value-type non-virtual version of enumerator that is used by compiler in foreach loops.
         /// </remarks>
-        public ReadOnlySegmentEnumerator<T> GetEnumerator() =>
-            new ReadOnlySegmentEnumerator<T>(this, 0, this.array.Length);
+        public ReadOnlyArraySegmentEnumerator<T> GetEnumerator() =>
+            new ReadOnlyArraySegmentEnumerator<T>(this, 0, this.array.Length);
 
         /// <inheritdoc/>
         IEnumerator<T> IEnumerable<T>.GetEnumerator() =>
-            new ReadOnlySegmentEnumerator<T>(this, 0, this.array.Length);
+            new ReadOnlyArraySegmentEnumerator<T>(this, 0, this.array.Length);
 
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator() =>
-            new ReadOnlySegmentEnumerator<T>(this, 0, this.array.Length);
+            new ReadOnlyArraySegmentEnumerator<T>(this, 0, this.array.Length);
 
         /// <summary>
         /// Helper method which allows to cast regular arrays to read only versions implicitly.
@@ -101,6 +102,10 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// </summary>
         public ReadOnlyArraySegment(ReadOnlyArray<T> array, int begin, int end)
         {
+            Argument.CheckIfValid(array.IsNull, nameof(array));
+            Argument.CheckIfInRange(end >= 0 && end <= array.Count, nameof(end), "Segment end should be in the range [0, array.Count]");
+            Argument.CheckIfInRange(begin >= 0 && begin <= end, nameof(begin), "Segment begin should be in the range [0, end]");
+
             this.array = array;
             this.begin = begin;
             this.end = end;
@@ -118,22 +123,22 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <remarks>
         /// This is value-type non-virtual version of enumerator that is used by compiler in foreach loops.
         /// </remarks>
-        public ReadOnlySegmentEnumerator<T> GetEnumerator() =>
-            new ReadOnlySegmentEnumerator<T>(this.array, this.begin, this.end);
+        public ReadOnlyArraySegmentEnumerator<T> GetEnumerator() =>
+            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.end);
 
         /// <inheritdoc/>
         IEnumerator<T> IEnumerable<T>.GetEnumerator() =>
-            new ReadOnlySegmentEnumerator<T>(this.array, this.begin, this.end);
+            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.end);
 
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator() =>
-            new ReadOnlySegmentEnumerator<T>(this.array, this.begin, this.end);
+            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.end);
     }
 
     /// <summary>
     /// Enumerator for read only arrays and read only array segments.
     /// </summary>
-    public struct ReadOnlySegmentEnumerator<T> : IEnumerator<T>
+    public struct ReadOnlyArraySegmentEnumerator<T> : IEnumerator<T>
     {
         /// <summary>
         /// Underlying read-only array.
@@ -158,7 +163,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <summary>
         /// Initializes a new instance of <see cref="ReadOnlyArraySegment{T}"/> structure.
         /// </summary>
-        public ReadOnlySegmentEnumerator(ReadOnlyArray<T> array, int begin, int end)
+        internal ReadOnlyArraySegmentEnumerator(T[] array, int begin, int end)
         {
             this.array = array;
             this.begin = begin;
