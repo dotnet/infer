@@ -163,7 +163,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <summary>
         /// Initializes a new instance of <see cref="ReadOnlyArraySegment{T}"/> structure.
         /// </summary>
-        internal ReadOnlyArraySegmentEnumerator(T[] array, int begin, int end)
+        internal ReadOnlyArraySegmentEnumerator(ReadOnlyArray<T> array, int begin, int end)
         {
             this.array = array;
             this.begin = begin;

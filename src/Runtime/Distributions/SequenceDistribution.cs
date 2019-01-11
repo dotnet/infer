@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.InteropServices.ComTypes;
+
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
@@ -239,6 +241,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             var sequence = SequenceManipulator.ToSequence(new List<TElement> { element });
             return PointMass(sequence);
+        }
+
+        /// <summary>
+        /// Creates a distribution over sequences induced by a given list of distributions over sequence elements.
+        /// </summary>
+        /// <param name="sequence">Enumerable of distributions over sequence elements.</param>
+        /// <returns>The created distribution.</returns>
+        public static TThis Consecutive(IEnumerable<TElementDistribution> sequence)
+        {
+            var result = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
+            var last = result.Start;
+            foreach (var elem in sequence)
+            {
+                last = last.AddTransition(elem, Weight.One);
+            }
+            
+            last.SetEndWeight(Weight.One);
+            return FromWorkspace(result.GetAutomaton());
         }
 
         /// <summary>

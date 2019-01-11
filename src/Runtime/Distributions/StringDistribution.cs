@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Linq;
+
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
@@ -69,30 +71,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             return StringDistribution.SingleElement(characterDist);
         }
-        
+
         /// <summary>
         /// Creates a uniform distribution over all strings that are case-invariant matches of the specified string.
         /// </summary>
         /// <param name="template">The string to match.</param>
         /// <returns>The created distribution.</returns>
-        public static StringDistribution CaseInvariant(string template)
-        {
-            var result = new StringAutomaton.Builder();
-            var last = result.Start;
-            foreach (var ch in template)
-            {
-                var upper = char.ToUpperInvariant(ch);
-                var lower = char.ToLowerInvariant(ch);
-                var elem =
-                    upper == lower
-                        ? DiscreteChar.PointMass(lower)
-                        : DiscreteChar.OneOf(lower, upper);
-                last = last.AddTransition(elem, Weight.One);
-            }
-            
-            last.SetEndWeight(Weight.One);
-            return StringDistribution.FromWorkspace(result.GetAutomaton());
-        }
+        public static StringDistribution CaseInvariant(string template) =>
+            StringDistribution.Consecutive(
+                template.Select(
+                    ch =>
+                    {
+                        var upper = char.ToUpperInvariant(ch);
+                        var lower = char.ToLowerInvariant(ch);
+                        return
+                            upper == lower
+                                ? DiscreteChar.PointMass(lower)
+                                : DiscreteChar.OneOf(lower, upper);
+                    }));
 
         /// <summary>
         /// Creates a uniform distribution over strings of lowercase letters, with length within the given bounds.

@@ -421,7 +421,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             #region Helpers
 
             /// <summary>
-            /// 
+            /// Removes all states and transitions from builder returning it to empty state.
             /// </summary>
             public void Clear()
             {
@@ -659,7 +659,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             /// <summary>
-            /// Helper struct for 
+            /// Helper struct for iterating over currently constructed list of transitions for state.
+            /// Unlike standard enumerator pattern through this iterator elements can be changed and removed.
             /// </summary>
             /// <remarks>
             /// Implemented as a value type to minimize amount of GC.
@@ -777,8 +778,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             /// <summary>
-            /// Wrapper aro
+            /// Linked list node for representing transitions for state.
             /// </summary>
+            /// <remarks>
+            /// Fields are mutable, because they are changed during automaton construction.
+            /// </remarks>
             private struct LinkedTransitionNode
             {
                 /// <summary>

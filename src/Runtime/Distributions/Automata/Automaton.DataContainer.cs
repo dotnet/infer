@@ -35,7 +35,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public readonly ReadOnlyArray<StateData> States;
 
             /// <summary>
-            /// All automaton transitions. Transitions for the same state are organizes
+            /// All automaton transitions. Transitions for the same state are stored as a contiguous block
+            /// inside this array.
             /// </summary>
             public readonly ReadOnlyArray<Transition> Transitions;
 
