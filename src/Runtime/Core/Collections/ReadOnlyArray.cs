@@ -102,7 +102,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// </summary>
         public ReadOnlyArraySegment(ReadOnlyArray<T> array, int begin, int end)
         {
-            Argument.CheckIfValid(array.IsNull, nameof(array));
+            Argument.CheckIfValid(!array.IsNull, nameof(array));
             Argument.CheckIfInRange(end >= 0 && end <= array.Count, nameof(end), "Segment end should be in the range [0, array.Count]");
             Argument.CheckIfInRange(begin >= 0 && begin <= end, nameof(begin), "Segment begin should be in the range [0, end]");
 
