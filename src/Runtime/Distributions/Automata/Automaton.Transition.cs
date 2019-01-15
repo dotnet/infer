@@ -19,7 +19,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
         where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
@@ -36,7 +36,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public struct Transition
         {
             //// This class has been made inner so that the user doesn't have to deal with a lot of generic parameters on it.
-            
+
+            /// Note the order of fields. This struct is densely packed and should take only
+            /// 24 bytes to store all its fields in case of StringAutomaton.Transition.
+            /// Think wisely before you decide to reorder fields or change their types.
+
+            [DataMember]
+            private int destinationStateIndex;
+
+            [DataMember]
+            private short group;
+
+            [DataMember]
+            private short hasElementDistribution;
+
+            [DataMember]
+            private TElementDistribution elementDistribution;
+
+            [DataMember]
+            private Weight weight;
+
             /// <summary>
             /// Initializes a new instance of the <see cref="Transition"/> struct.
             /// </summary>
@@ -45,61 +64,80 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="destinationStateIndex">The index of the destination state of the transition.</param>
             /// <param name="group">The group this transition belongs to.</param>
             [Construction("ElementDistribution", "Weight", "DestinationStateIndex", "Group")]
-            public Transition(TElementDistribution elementDistribution, Weight weight, int destinationStateIndex, int group = 0)
+            public Transition(Option<TElementDistribution> elementDistribution, Weight weight, int destinationStateIndex, int group = 0)
                 : this()
             {
-                Argument.CheckIfInRange(destinationStateIndex >= 0, "destinationStateIndex", "A destination state index cannot be negative.");
+                Argument.CheckIfInRange(destinationStateIndex >= 0, nameof(destinationStateIndex), "A destination state index cannot be negative.");
 
-                this.ElementDistribution = elementDistribution;
+                this.hasElementDistribution = (short)(elementDistribution.HasValue ? 1 : 0);
+                if (elementDistribution.HasValue)
+                {
+                    this.elementDistribution = elementDistribution.Value;
+                }
+
                 this.DestinationStateIndex = destinationStateIndex;
                 this.Weight = weight;
-                this.Group = group;
+                this.Group = (short)group;
             }
 
             /// <summary>
             /// Gets or sets the destination state index.
             /// </summary>
-            [DataMember]
-            public int DestinationStateIndex { get; set; }
+            public int DestinationStateIndex
+            {
+                get => this.destinationStateIndex;
+                set => this.destinationStateIndex = value;
+            }
 
             /// <summary>
             /// Gets or sets the group this transition belongs to.
             /// </summary>
-            [DataMember]
-            public int Group { get; set; }
+            public int Group
+            {
+                get => this.group;
+                set => this.group = (short)value;
+            }
 
             /// <summary>
-            /// Gets or sets the element distribution for this transition.
+            /// Gets the element distribution for this transition.
             /// </summary>
-            [DataMember]
-            public TElementDistribution ElementDistribution { get; set; }
-
-            /// <summary>
-            /// Gets or sets the weight associated with this transition.
-            /// </summary>
-            [DataMember]
-            public Weight Weight { get; set; }
+            public Option<TElementDistribution> ElementDistribution
+            {
+                get => this.hasElementDistribution == 0 ? Option.None : Option.Some(this.elementDistribution);
+                set
+                {
+                    this.hasElementDistribution = (short)(value.HasValue ? 1 : 0);
+                    this.elementDistribution = value.HasValue ? value.Value : default(TElementDistribution);
+                }
+            }
 
             /// <summary>
             /// Gets a value indicating whether this transition is an epsilon transition.
             /// </summary>
-            public bool IsEpsilon
+            public bool IsEpsilon => this.hasElementDistribution == 0;
+
+            /// <summary>
+            /// Gets or sets the weight associated with this transition.
+            /// </summary>
+            public Weight Weight
             {
-                get { return this.ElementDistribution == null; }
+                get => this.weight;
+                set => this.weight = value;
             }
 
             /// <summary>
             /// Replaces the configuration of this transition with the configuration of a given transition.
             /// </summary>
-            /// <param name="transition">
+            /// <param name="that">
             /// The transition which configuration would be used to replace the configuration of the current transition.
             /// </param>
-            public void SetTo(Transition transition)
+            public void SetTo(Transition that)
             {
-                this.ElementDistribution = transition.ElementDistribution;
-                this.Weight = transition.Weight;
-                this.DestinationStateIndex = transition.DestinationStateIndex;
-                this.Group = transition.Group;
+                this.hasElementDistribution = that.hasElementDistribution;
+                this.elementDistribution = that.elementDistribution;
+                this.Weight = that.Weight;
+                this.DestinationStateIndex = that.DestinationStateIndex;
+                this.Group = that.Group;
             }
 
             /// <summary>
@@ -116,7 +154,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 sb.Append('[');
-                sb.Append(this.ElementDistribution == null ? "eps" : this.ElementDistribution.ToString());
+                sb.Append(this.ElementDistribution.HasValue ? "eps" : this.ElementDistribution.ToString());
                 sb.Append(']');
                 sb.Append(" " + this.Weight.Value);
                 sb.Append(" -> " + this.DestinationStateIndex);
@@ -130,14 +168,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public void Write(Action<int> writeInt32, Action<double> writeDouble, Action<TElementDistribution> writeElementDistribution)
             {
                 writeInt32(this.DestinationStateIndex);
-                var hasElementDistribution = this.ElementDistribution != null;
 
-                var groupAndHasElementDistribution = this.Group << 1 | (hasElementDistribution ? 1 : 0);
+                var groupAndHasElementDistribution = this.Group << 1 | (this.hasElementDistribution != 0 ? 1 : 0);
                 writeInt32(groupAndHasElementDistribution);
 
-                if (hasElementDistribution)
+                if (this.hasElementDistribution != 0)
                 {
-                    writeElementDistribution(this.ElementDistribution);
+                    writeElementDistribution(this.elementDistribution);
                 }
 
                 this.Weight.Write(writeDouble);

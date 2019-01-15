@@ -4,6 +4,7 @@
 
 namespace Microsoft.ML.Probabilistic.Math
 {
+    using Microsoft.ML.Probabilistic.Utilities;
     using System;
 
     /// <summary>
@@ -11,7 +12,7 @@ namespace Microsoft.ML.Probabilistic.Math
     /// </summary>
     public class Region
     {
-        public Vector Lower, Upper;
+        public readonly Vector Lower, Upper;
 
         public int Dimension
         {
@@ -112,6 +113,36 @@ namespace Microsoft.ML.Probabilistic.Math
         public string ToString(string format)
         {
             return string.Format("[{0},{1}]", Lower.ToString(format), Upper.ToString(format));
+        }
+
+        public override bool Equals(object obj)
+        {
+            Region that = obj as Region;
+            if (that == null) return false;
+            return (that.Lower == this.Lower) && (that.Upper == this.Upper);
+        }
+
+        public override int GetHashCode()
+        {
+            return Hash.Combine(Lower.GetHashCode(), Upper.GetHashCode());
+        }
+
+        public int CompareTo(Region other)
+        {
+            int result = CompareTo(Lower, other.Lower);
+            if (result == 0) result = CompareTo(Upper, other.Upper);
+            return result;
+        }
+
+        public int CompareTo(Vector a, Vector b)
+        {
+            int result = 0;
+            for (int i = 0; i < a.Count; i++)
+            {
+                result = a[i].CompareTo(b[i]);
+                if (result != 0) return result;
+            }
+            return result;
         }
     }
 }

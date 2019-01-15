@@ -19,7 +19,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
         where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
@@ -199,7 +199,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The destination state of the added transition.</returns>
             public State AddEpsilonTransition(Weight weight, State destinationState = default(State), int group = 0)
             {
-                return this.AddTransition(null, weight, destinationState, group);
+                return this.AddTransition(Option.None, weight, destinationState, group);
             }
 
             /// <summary>
@@ -215,7 +215,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// If the value of this parameter is <see langword="null"/>, a new state will be created.</param>
             /// <param name="group">The group of the added transition.</param>
             /// <returns>The destination state of the added transition.</returns>
-            public State AddTransition(TElementDistribution elementDistribution, Weight weight, State destinationState = default(State), int group = 0)
+            public State AddTransition(Option<TElementDistribution> elementDistribution, Weight weight, State destinationState = default(State), int group = 0)
             {
                 if (destinationState.IsNull)
                 {
@@ -270,7 +270,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="weight">The transition weight.</param>
             /// <param name="group">The group of the added transition.</param>
             /// <returns>The current state.</returns>
-            public State AddSelfTransition(TElementDistribution elementDistribution, Weight weight, byte group = 0)
+            public State AddSelfTransition(Option<TElementDistribution> elementDistribution, Weight weight, byte group = 0)
             {
                 return this.AddTransition(elementDistribution, weight, this, group);
             }
@@ -503,7 +503,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             }
 
                             var destState = this.Owner.States[transition.DestinationStateIndex];
-                            var distWeight = Weight.FromLogValue(transition.ElementDistribution.GetLogProb(element));
+                            var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
                             if (!distWeight.IsZero && !transition.Weight.IsZero)
                             {
                                 var destValue = destState.DoGetValue(sequence, sequencePosition + 1, valueCache);

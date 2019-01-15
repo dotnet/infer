@@ -85,6 +85,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             VariableArray<bool> observedBlue = Variable.Array<bool>(draw).Named("observedBlue");
             using (Variable.ForEach(draw))
             {
+                // cannot use Variable.DiscreteUniform(numBalls) here since ballIndex will get the wrong range.
                 Variable<int> ballIndex = Variable.DiscreteUniform(ball, numBalls).Named("ballIndex");
                 using (Variable.Switch(ballIndex))
                 {
@@ -100,10 +101,10 @@ namespace Microsoft.ML.Probabilistic.Tests
             // 16 iters with good schedule
             // 120 iters with bad schedule
             engine.NumberOfIterations = 150;
-            Discrete numUsersActual = engine.Infer<Discrete>(numBalls);
-            Console.WriteLine("numBalls = {0}", numUsersActual);
-            Discrete numUsersExpected = new Discrete(0, 0.5079, 0.3097, 0.09646, 0.03907, 0.02015, 0.01225, 0.008336, 0.006133);
-            Assert.True(numUsersExpected.MaxDiff(numUsersActual) < 1e-4);
+            Discrete numBallsActual = engine.Infer<Discrete>(numBalls);
+            Console.WriteLine("numBalls = {0}", numBallsActual);
+            Discrete numBallsExpected = new Discrete(0, 0.5079, 0.3097, 0.09646, 0.03907, 0.02015, 0.01225, 0.008336, 0.006133);
+            Assert.True(numBallsExpected.MaxDiff(numBallsActual) < 1e-4);
             numBalls.ObservedValue = 1;
             Console.WriteLine(engine.Infer(isBlue));
         }

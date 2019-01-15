@@ -17,7 +17,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
         where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : class, IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
+        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
         where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
         where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
@@ -172,8 +172,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     this.ComputeWeightsToEnd();
                 }
 
-                CondensationStateInfo info;
-                if (!this.stateIdToInfo.TryGetValue(state.Index, out info))
+                if (!this.stateIdToInfo.TryGetValue(state.Index, out var info))
                 {
                     return Weight.Zero;
                 }
@@ -197,8 +196,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     this.ComputeWeightsFromRoot();
                 }
 
-                CondensationStateInfo info;
-                if (!this.stateIdToInfo.TryGetValue(state.Index, out info))
+                if (!this.stateIdToInfo.TryGetValue(state.Index, out CondensationStateInfo info))
                 {
                     return Weight.Zero;
                 }
@@ -237,8 +235,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         continue;
                     }
 
-                    TarjanStateInfo destinationStateInfo;
-                    if (!stateIdToStateInfo.TryGetValue(transition.DestinationStateIndex, out destinationStateInfo))
+                    if (!stateIdToStateInfo.TryGetValue(transition.DestinationStateIndex, out TarjanStateInfo destinationStateInfo))
                     {
                         this.FindStronglyConnectedComponents(
                             this.Root.Owner.States[transition.DestinationStateIndex], ref traversalIndex, stateIdToStateInfo, stateIdStack);

@@ -4,8 +4,6 @@
 
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
-    using System;
-
     /// <summary>
     /// A collection of automaton formats.
     /// </summary>
@@ -38,16 +36,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets a format for converting an automaton to a GraphViz representation.
         /// </summary>
-        public static GraphVizAutomatonFormat GraphViz { get; private set; }
+        public static GraphVizAutomatonFormat GraphViz { get; }
 
         /// <summary>
         /// Gets a format for converting an automaton to a regular expression representing its support.
         /// </summary>
-        public static RegexpAutomatonFormat Regexp { get; private set; }
+        public static RegexpAutomatonFormat Regexp { get; }
 
         /// <summary>
         /// Gets a format for converting an automaton to a friendly regular expression like string representing its support.
         /// </summary>
-        public static RegexpAutomatonFormat Friendly { get; private set; }
+        public static RegexpAutomatonFormat Friendly { get; }
     }
 }
