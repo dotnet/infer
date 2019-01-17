@@ -155,11 +155,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double p1 = (i + 1.0) / (n + 1);
                 double mean, stddev;
                 GetGaussianFromQuantiles(quantiles[0], p0, quantiles[i], p1, out mean, out stddev);
-                if (double.IsNaN(mean) || double.IsInfinity(mean))
+                Gaussian result = Gaussian.FromMeanAndVariance(mean, stddev * stddev);
+                if (!result.IsProper() || double.IsNaN(result.GetMean()) || double.IsInfinity(result.GetMean()))
                 {
                     return Gaussian.PointMass(quantiles[0]);
                 }
-                return Gaussian.FromMeanAndVariance(mean, stddev * stddev);
+                return result;
             }
         }
 
@@ -183,11 +184,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double p1 = (i + 1.0) / (n + 1);
                 double mean, stddev;
                 GetGaussianFromQuantiles(quantiles[n - 1], p0, quantiles[i], p1, out mean, out stddev);
-                if (double.IsNaN(mean) || double.IsInfinity(mean))
+                Gaussian result = Gaussian.FromMeanAndVariance(mean, stddev * stddev);
+                if (!result.IsProper() || double.IsNaN(result.GetMean()) || double.IsInfinity(result.GetMean()))
                 {
                     return Gaussian.PointMass(quantiles[n - 1]);
                 }
-                return Gaussian.FromMeanAndVariance(mean, stddev * stddev);
+                return result;
             }
         }
 
