@@ -75,7 +75,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (bufferCount < 2) throw new Exception("bufferCount < 2");
             int bufferLength = (int)Math.Ceiling(invError * Math.Sqrt(bufferCount - 1));
             if (bufferLength % 2 == 1) bufferLength++;
-            buffers = Util.ArrayInit(bufferCount, i => new double[bufferLength]);
+            buffers = Util.ArrayInit(bufferCount, i => (i == 0) ? new double[bufferLength] : null);
             countInBuffer = new int[bufferCount];
         }
 
@@ -394,9 +394,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (itemCount == 0) throw new Exception("QuantileEstimator has no data");
         }
 
-        private void AddToBuffer(int bufferIndex, double item)
+        private double[] GetBuffer(int bufferIndex)
         {
             double[] buffer = buffers[bufferIndex];
+            if (buffer == null)
+            {
+                buffers[bufferIndex] = buffer = new double[buffers[0].Length];
+            }
+            return buffer;
+        }
+
+        private void AddToBuffer(int bufferIndex, double item)
+        {
+            double[] buffer = GetBuffer(bufferIndex);
             int count = countInBuffer[bufferIndex];
             if (count == buffer.Length)
             {
@@ -524,7 +534,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 // find the buffer with same height 
                 int bufferIndex = (lowestBufferIndex + heightDifference) % buffers.Length;
-                double[] buffer = buffers[bufferIndex];
+                double[] buffer = GetBuffer(bufferIndex);
                 int count = countInBuffer[bufferIndex];
                 // Make room in the buffer.
                 if (count == buffer.Length)
@@ -569,11 +579,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         private void MaintainInvariant()
         {
             int bufferIndex = (lowestBufferIndex + buffers.Length - 1) % buffers.Length;
-            double[] buffer = buffers[bufferIndex];
             int count = countInBuffer[bufferIndex];
-            if (count > buffer.Length / 2)
+            if (count > 0)
             {
-                RaiseLowestHeight();
+                double[] buffer = buffers[bufferIndex];
+                if (count > buffer.Length / 2)
+                {
+                    RaiseLowestHeight();
+                }
             }
         }
 
