@@ -97,7 +97,7 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public static uint Sum(this IEnumerable<uint> source)
         {
-            return source.Aggregate((a, b) => a + b);
+            return source.Aggregate(0U, (a, b) => a + b);
         }
 
         public static uint Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, uint> selector)
@@ -107,7 +107,7 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public static ulong Sum(this IEnumerable<ulong> source)
         {
-            return source.Aggregate((a, b) => a + b);
+            return source.Aggregate(0UL, (a, b) => a + b);
         }
 
         public static ulong Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, ulong> selector)
