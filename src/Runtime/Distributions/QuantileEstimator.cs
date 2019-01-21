@@ -121,6 +121,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetQuantile(double probability)
         {
+            if (double.IsNaN(probability)) throw new ArgumentOutOfRangeException(nameof(probability), "probability is NaN");
             if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
             if (probability > 1.0) throw new ArgumentOutOfRangeException(nameof(probability), "probability > 1.0");
             // compute the min and max of the retained items
@@ -165,6 +166,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         if (probability < probabilityLessThanOrEqualUpperItem) return upperItem;
                         lowerBound = MMath.NextDouble(upperItem);
                     }
+                    if (lowerBound > upperBound) throw new Exception("lowerBound > upperBound");
                 }
                 else if (InterpolationType == 1)
                 {
@@ -179,8 +181,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         return lowerItem;
                     // probability of upperItem ranges from (lowerRank + 0.5) / itemCount
                     // to (lowerRank + upperWeight - 0.5) / itemCount
-                    if (scaledProbability == lowerRank+0.5) return upperItem;
-                    if ((scaledProbability > lowerRank+0.5) && (scaledProbability < lowerRank + upperWeight - 0.5))
+                    if (scaledProbability == lowerRank + 0.5) return upperItem;
+                    if ((scaledProbability > lowerRank + 0.5) && (scaledProbability < lowerRank + upperWeight - 0.5))
                         return upperItem;
                     double frac = scaledProbability - (lowerRank - 0.5);
                     if (frac < 0)
@@ -193,7 +195,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     }
                     else
                     {
-                        return OuterQuantiles.GetQuantile(probability, lowerRank - 0.5, lowerItem, upperItem, itemCount+1);
+                        return OuterQuantiles.GetQuantile(probability, lowerRank - 0.5, lowerItem, upperItem, itemCount + 1);
                     }
                 }
                 else
