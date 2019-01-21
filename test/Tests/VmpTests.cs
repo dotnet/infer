@@ -2025,21 +2025,43 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Vector.FromArray(0.15, 0.2, 0.35, 0.3),
                 Vector.FromArray(0.15, 0.3, 0.4, 0.15)
             };
-            var priorMean = Variable.VectorGaussianFromMeanAndPrecision(Vector.Constant(4, 0.0), PositiveDefiniteMatrix.IdentityScaledBy(4, 100)).Named("priorMean");
-            var priorCov = Variable.WishartFromShapeAndRate(7.0, PositiveDefiniteMatrix.Identity(4)).Named("priorCov");
-            var prior = Variable.VectorGaussianFromMeanAndPrecision(priorMean, priorCov).Named("prior");
+            var mean = Variable.VectorGaussianFromMeanAndPrecision(Vector.Constant(4, 0.0), PositiveDefiniteMatrix.IdentityScaledBy(4, 100)).Named("mean");
+            var prec = Variable.WishartFromShapeAndRate(7.0, PositiveDefiniteMatrix.Identity(4)).Named("prec");
+            var x = Variable.VectorGaussianFromMeanAndPrecision(mean, prec).Named("x");
             var numDocs = Variable.New<int>().Named("numDocs");
-            var docR = new Range(numDocs);
-            var arrvals = Variable.Array<Vector>(docR).Named("arrvals");
-            arrvals[docR] = Variable.Softmax(prior).ForEach(docR);
+            var doc = new Range(numDocs);
+            var probs = Variable.Array<Vector>(doc).Named("probs");
+            probs[doc] = Variable.Softmax(x).ForEach(doc);
 
             // Observations
             numDocs.ObservedValue = data.Length;
-            arrvals.ObservedValue = data;
+            probs.ObservedValue = data;
 
             var alg = new VariationalMessagePassing();
-            var ieng = new InferenceEngine(alg);
-            Assert.Throws<ArgumentException>(() => ieng.Infer(priorMean));
+            var engine = new InferenceEngine(alg);
+            Assert.Throws<ArgumentException>(() => engine.Infer(mean));
+        }
+
+        [Fact]
+        public void VectorSoftmax_PointSoftmax_WithConstraint()
+        {
+            var xExpected = Vector.FromArray(1, 3, 5, 1);
+            var data = MMath.Softmax(xExpected);
+            var mean = Vector.Zero(4);
+            var prec = PositiveDefiniteMatrix.IdentityScaledBy(4, 2);
+            mean[0] = xExpected[0];
+            prec[0, 0] = double.PositiveInfinity;
+            var x = Variable.VectorGaussianFromMeanAndPrecision(mean, prec).Named("x");
+            var probs = Variable.Softmax(x);
+
+            // Observations
+            probs.ObservedValue = data;
+
+            var alg = new VariationalMessagePassing();
+            var engine = new InferenceEngine(alg);
+            var xActual = engine.Infer<VectorGaussian>(x);
+            Assert.True(xActual.IsPointMass);
+            Assert.Equal(xExpected, xActual.Point);
         }
 
         [Fact]

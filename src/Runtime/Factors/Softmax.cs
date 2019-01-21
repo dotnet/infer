@@ -1349,15 +1349,35 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Dirichlet.Uniform(x.Dimension);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VectorSoftmaxOp_KM11"]/message_doc[@name="XAverageLogarithm(Dirichlet, VectorGaussian, VectorGaussian, Vector)"]/*'/>
-        public static VectorGaussian XAverageLogarithm([SkipIfUniform] Dirichlet softmax, [SkipIfUniform] VectorGaussian x, VectorGaussian to_x, Vector a)
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VectorSoftmaxOp_KM11"]/message_doc[@name="XAverageLogarithm(Dirichlet, VectorGaussian, Vector, VectorGaussian)"]/*'/>
+        public static VectorGaussian XAverageLogarithm([SkipIfUniform] Dirichlet softmax, [SkipIfUniform] VectorGaussian x, Vector a, VectorGaussian result)
         {
-            VectorGaussian result = to_x;
             int K = x.Dimension;
-            var m = Vector.Zero(x.Dimension);
-            var v = new PositiveDefiniteMatrix(x.Dimension, x.Dimension);
-            x.GetMeanAndVariance(m, v);
-            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
+            if (softmax.IsPointMass)
+            {
+                // Check if any dimension of x is a point mass.
+                for (int i = 0; i < K; i++)
+                {
+                    if(double.IsPositiveInfinity(x.Precision[i,i]))
+                    {
+                        Vector point = softmax.Point;
+                        double xi = x.MeanTimesPrecision[i];
+                        // We know that softmax[i] = exp(x[i])/sum_j exp(x[j]).
+                        // Therefore sum_j exp(x[j]) = exp(x[i])/softmax[i]
+                        double sum = Math.Exp(xi) / point[i];
+                        for (int j = 0; j < K; j++)
+                        {
+                            if (j == i)
+                                result.MeanTimesPrecision[j] = xi;
+                            else
+                                result.MeanTimesPrecision[j] = Math.Log(point[j] * sum);
+                        }
+                        result.Point = result.MeanTimesPrecision;
+                        return result;
+                    }
+                }
+                throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
+            }
             var counts = softmax.PseudoCount - 1;
             double sum_n = counts.Sum();
             for (int k = 0; k < K; k++)
@@ -1372,6 +1392,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     }
                 }
             }
+            var m = x.GetMean();
             result.MeanTimesPrecision.SetToSum(result.MeanTimesPrecision, result.Precision * m);
             return result;
         }
