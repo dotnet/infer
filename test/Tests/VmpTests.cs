@@ -1930,7 +1930,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             repeats = 1;
             bool fixFirstElementToZero = true;
             bool withPredictions = false;
-            Console.WriteLine("K RMSE probTruth Evidence probTest");
+            //Console.WriteLine("K RMSE probTruth Evidence probTest");
             foreach (int K in Ks)
             {
                 var ev = Variable.Bernoulli(.5).Named("ev");
@@ -2006,15 +2006,62 @@ namespace Microsoft.ML.Probabilistic.Tests
                     //Console.WriteLine("P(test|inferred): " + test.Select(z => predictiveProb.GetLogProb(z)).Sum() / (double)Ntest);
                     DistributionArray<Gaussian> xPostIndep = (DistributionArray<Gaussian>) Distribution<double>.Array(VectorSoftmaxOp_KM11.VectorGaussianToGaussianList(xPost));
                     double error = NonconjugateVMP2Tests.RMSE(xPostIndep, trueX);
-                    Console.Write("{0} {1} {2} {3}",
-                                  K,
-                                  error,
-                                  LogProb(xPostIndep, trueX),
-                                  logEvidence);
-                    Console.WriteLine(withPredictions ? " " + test.Select(z => predictiveProb.GetLogProb(z)).Sum()/(double) Ntest : "");
+                    double logProb = LogProb(xPostIndep, trueX);
+                    Console.Write($"K={K} error={error} logProb={logProb} logEvidence={logEvidence}");
+                    Console.WriteLine(withPredictions ? " " + test.Select(z => predictiveProb.GetLogProb(z)).Average() : "");
                     Assert.True(error < 0.1);
                 }
             }
+        }
+
+        [Fact]
+        public void VectorSoftmax_PointSoftmax_Throws()
+        {
+            var data = new Vector[]
+            {
+                Vector.FromArray(0.1, 0.3, 0.5, 0.1),
+                Vector.FromArray(0.05, 0.5, 0.2, 0.25),
+                Vector.FromArray(0.2, 0.4, 0.3, 0.1),
+                Vector.FromArray(0.15, 0.2, 0.35, 0.3),
+                Vector.FromArray(0.15, 0.3, 0.4, 0.15)
+            };
+            var mean = Variable.VectorGaussianFromMeanAndPrecision(Vector.Constant(4, 0.0), PositiveDefiniteMatrix.IdentityScaledBy(4, 100)).Named("mean");
+            var prec = Variable.WishartFromShapeAndRate(7.0, PositiveDefiniteMatrix.Identity(4)).Named("prec");
+            var x = Variable.VectorGaussianFromMeanAndPrecision(mean, prec).Named("x");
+            var numDocs = Variable.New<int>().Named("numDocs");
+            var doc = new Range(numDocs);
+            var probs = Variable.Array<Vector>(doc).Named("probs");
+            probs[doc] = Variable.Softmax(x).ForEach(doc);
+
+            // Observations
+            numDocs.ObservedValue = data.Length;
+            probs.ObservedValue = data;
+
+            var alg = new VariationalMessagePassing();
+            var engine = new InferenceEngine(alg);
+            Assert.Throws<ArgumentException>(() => engine.Infer(mean));
+        }
+
+        [Fact]
+        public void VectorSoftmax_PointSoftmax_WithConstraint()
+        {
+            var xExpected = Vector.FromArray(1, 3, 5, 1);
+            var data = MMath.Softmax(xExpected);
+            var mean = Vector.Zero(4);
+            var prec = PositiveDefiniteMatrix.IdentityScaledBy(4, 2);
+            mean[0] = xExpected[0];
+            prec[0, 0] = double.PositiveInfinity;
+            var x = Variable.VectorGaussianFromMeanAndPrecision(mean, prec).Named("x");
+            var probs = Variable.Softmax(x);
+
+            // Observations
+            probs.ObservedValue = data;
+
+            var alg = new VariationalMessagePassing();
+            var engine = new InferenceEngine(alg);
+            var xActual = engine.Infer<VectorGaussian>(x);
+            Assert.True(xActual.IsPointMass);
+            Assert.Equal(xExpected, xActual.Point);
         }
 
         [Fact]
