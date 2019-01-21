@@ -96,6 +96,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double AverageLogFactor<GaussianList>([SkipIfAnyUniform] GaussianList x, Dirichlet softmax, Dirichlet to_softmax, double a)
             where GaussianList : IList<Gaussian>
         {
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             int K = softmax.Dimension;
             Func<Gaussian, double, double> f = (i, j) => i.GetMean() * (j - 1.0);
             double innerProduct = f.Map(x, softmax.PseudoCount).EnumerableSum(i => i);
@@ -131,6 +132,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             double step = 1.0;
             int K = x.Count;
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             double total = softmax.PseudoCount.Sum() - K;
             Func<Gaussian, double, Gaussian> f = (i, j) =>
                 {
@@ -236,6 +238,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 logSumExp += (m[k] - a - t[k]) / 2.0 - MMath.LogisticLn(-t[k]);
             }
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             var ns = softmax.PseudoCount - 1.0;
             double innerProduct = ns.Inner(Vector.FromArray(m));
             double sum_n = ns.Sum();
@@ -277,6 +280,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             [SkipIfUniform] Dirichlet softmax, [SkipIfAllUniform] GaussianList x, double a, GaussianList result)
             where GaussianList : IList<Gaussian>
         {
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             int K = x.Count;
             double total = softmax.TotalCount - K;
             double[] m, v;
@@ -312,10 +316,10 @@ namespace Microsoft.ML.Probabilistic.Factors
             double[] ms, vs;
             GetMeanAndVariance(x, out ms, out vs);
             double logSumExp = LogSumExpMPlusHalfV(ms, vs);
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             var ns = softmax.PseudoCount - 1.0;
             double sum_n = ns.Sum();
             return ns.Inner(Vector.FromArray(ms)) - sum_n * logSumExp - softmax.GetLogNormalizer() - to_softmax.GetAverageLog(softmax);
-            ;
         }
 
         /// <summary>
@@ -450,6 +454,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             GetMeanAndVariance(prior, out mu, out s2);
             double[] m, v;
             GetMeanAndVariance(x, out m, out v);
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             var counts = softmax.PseudoCount - 1;
             int evalCounter = 0;
             // z[1..K]: posterior means, z[K+1..2K]: log posterior variances
@@ -526,6 +531,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double AverageLogFactor<GaussianList>([SkipIfAnyUniform] GaussianList x, Dirichlet softmax, Dirichlet to_softmax)
             where GaussianList : IList<Gaussian>
         {
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             // this formula is based on the following bound, which resembles a second-order Taylor approximation:
             // E[log(sum_k exp(x_k))] <= log(sum_k exp(m_k)) + 0.5 trace(V H)
             // where V is the (diagonal) covariance matrix of x and H is Bohning's bound on the Hessian matrix of log-sum-exp
@@ -595,6 +601,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static GaussianList XAverageLogarithm<GaussianList>([SkipIfUniform] Dirichlet softmax, [SkipIfAnyUniform] IList<Gaussian> x, GaussianList result)
             where GaussianList : IList<Gaussian>
         {
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             int K = x.Count;
             double c = softmax.TotalCount - K;
             double prec = c * 0.5 * (1 - 1.0 / K);
@@ -625,6 +632,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double AverageLogFactor<GaussianList>([SkipIfAnyUniform] GaussianList x, Dirichlet softmax, Dirichlet to_softmax)
             where GaussianList : IList<Gaussian>
         {
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             // this formula is based on the following second-order Taylor approximation:
             // E[log(sum_k exp(x_k))] =approx log(sum_k exp(m_k)) + 0.5 trace(V H)
             // where V is the (diagonal) covariance matrix of x and H is the Hessian matrix of log-sum-exp
@@ -708,6 +716,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             GaussianList result = to_x;
             int K = x.Count;
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             double c = softmax.TotalCount - K;
             double lse = double.NegativeInfinity;
             for (int i = 0; i < K; i++)
@@ -805,6 +814,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             int K = x.Count;
             double[] m, v;
             SoftmaxOp_BL06_LBFGS.GetMeanAndVariance(x, out m, out v);
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             var counts = softmax.PseudoCount - 1;
             double sum_n = softmax.TotalCount - K;
 
@@ -1141,6 +1151,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double AverageLogFactor<GaussianList>([SkipIfAnyUniform] GaussianList x, IList<double> a, Dirichlet softmax, Dirichlet to_softmax)
             where GaussianList : IList<Gaussian>
         {
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             double sum_n = softmax.PseudoCount.EnumerableSum(i => i - 1.0);
 
             Func<Gaussian, double, double> f = (i, j) => i.GetMean() * (j - 1.0);
@@ -1177,6 +1188,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static GaussianList XAverageLogarithm<GaussianList>([SkipIfUniform, Trigger] Dirichlet softmax, [SkipIfAnyUniform] GaussianList x, GaussianList to_x, IList<double> a)
             where GaussianList : IList<Gaussian>
         {
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             double sum_n = softmax.PseudoCount.EnumerableSum(i => i - 1.0);
             double step = (LogisticOp_SJ99.global_step == 0.0) ? 1.0 : (LogisticOp_SJ99.global_step * Rand.Double());
             // random damping helps convergence, especially with parallel updates
@@ -1231,6 +1243,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static double AverageLogFactor<GaussianList>([SkipIfAnyUniform] GaussianList x, Dirichlet softmax, Dirichlet to_softmax)
             where GaussianList : IList<Gaussian>
         {
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             double sum_n = softmax.PseudoCount.EnumerableSum(i => i - 1.0);
             double logSumExp = ExpectationLogSumExp_Helper(x);
             Func<Gaussian, double, double> f = (i, j) => i.GetMean() * (j - 1.0);
@@ -1256,6 +1269,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static GaussianList XAverageLogarithm<GaussianList>([SkipIfUniform] Dirichlet softmax, [SkipIfUniform] GaussianList x, GaussianList to_x)
             where GaussianList : IList<Gaussian>
         {
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             double sum_n = softmax.PseudoCount.EnumerableSum(i => i - 1.0);
             double step = Rand.Double() * 0.5; // random damping helps convergence, especially with parallel updates
             double logSumExp = ExpectationLogSumExp_Helper(x);
@@ -1343,17 +1357,20 @@ namespace Microsoft.ML.Probabilistic.Factors
             var m = Vector.Zero(x.Dimension);
             var v = new PositiveDefiniteMatrix(x.Dimension, x.Dimension);
             x.GetMeanAndVariance(m, v);
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             var counts = softmax.PseudoCount - 1;
             double sum_n = counts.Sum();
             for (int k = 0; k < K; k++)
             {
-                result.Precision[k, k] = sum_n * a[k] * (1.0 - a[k]);
                 result.MeanTimesPrecision[k] = counts[k] - sum_n * a[k];
+                result.Precision[k, k] = sum_n * a[k] * (1.0 - a[k]);
                 for (int l = 0; l < K; l++)
+                {
                     if (l != k)
                     {
                         result.Precision[k, l] = -sum_n * a[k] * a[l] * (a[l] + a[k]);
                     }
+                }
             }
             result.MeanTimesPrecision.SetToSum(result.MeanTimesPrecision, result.Precision * m);
             return result;
@@ -1377,6 +1394,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             Vector ms, vs;
             SoftmaxOp_BL06_LBFGS.GetMeanAndVariance(x, out ms, out vs);
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             var ns = softmax.PseudoCount - 1.0;
             double sum_n = ns.Sum();
             double logSumExp = ExpectationLogSumExp_Helper(ms, vs, a);
@@ -1514,6 +1532,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             SoftmaxOp_BL06_LBFGS.GetMeanAndVariance(prior, out mu, out s2);
             double[] m, v;
             SoftmaxOp_BL06_LBFGS.GetMeanAndVariance(x, out m, out v);
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             var counts = softmax.PseudoCount - 1;
             int evalCounter = 0;
             // z[1..K]: posterior means, z[K+1..2K]: log posterior variances
@@ -1712,6 +1731,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                                                                    GaussianList result)
             where GaussianList : IList<Gaussian>
         {
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             int K = x.Count;
             IList<Gaussian> prior = x.IsSparse() ? (IList<Gaussian>)SparseList<Gaussian>.FromSize(K) : (IList<Gaussian>)(new List<Gaussian>());
             prior.SetTo(new Func<Gaussian, Gaussian, Gaussian>((p, q) => p / q).Map(x, result));
@@ -1871,6 +1891,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             var a = new double[K];
             var b = new double[K];
             GetShapeAndRate(x, ref a, ref b);
+            if (softmax.IsPointMass) throw new ArgumentException("softmax is a point mass.  The softmax factor under VMP does not support a fixed output.", nameof(softmax));
             var counts = softmax.PseudoCount - 1;
             int evalCounter = 0;
             //z[1..K]: posterior means, z[K+1..2K]: log posterior variances
