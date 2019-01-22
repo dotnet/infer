@@ -140,6 +140,33 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void QuantileEstimatorInflationTest()
+        {
+            double maximumError = 0.05;
+            int n = 1000;
+            // g1 has weight 2/3, g2 has weight 1/3
+            Gaussian g1 = new Gaussian(2, 3);
+            Gaussian g2 = new Gaussian(5, 1);
+            var est = new QuantileEstimator(maximumError);
+            List<double> x = new List<double>();
+            for (int i = 0; i < n; i++)
+            {
+                double sample = g1.Sample();
+                x.Add(sample);
+                x.Add(sample);
+                est.Add(sample);
+            }
+            est.Inflate();
+            for (int i = 0; i < n; i++)
+            {
+                double sample = g2.Sample();
+                x.Add(sample);
+                est.Add(sample);
+            }
+            CheckProbLessThan(est, x, maximumError);
+        }
+
+        [Fact]
         public void QuantileEstimatorMergingTest()
         {
             double maximumError = 0.05;

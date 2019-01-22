@@ -288,6 +288,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
             reservoirCount /= 2;
         }
 
+        /// <summary>
+        /// Multiply all sample weights by 2.
+        /// </summary>
+        public void Inflate()
+        {
+            if (lowestBufferHeight >= 30) throw new InvalidOperationException($"Cannot inflate when lowestBufferHeight = {lowestBufferHeight}");
+            lowestBufferHeight++;
+            reservoirCount *= 2;
+        }
+
         public override string ToString()
         {
             return $"QuantileEstimator({MaximumError}, lowestBufferHeight = {lowestBufferHeight}, buffer sizes = {StringUtil.CollectionToString(countInBuffer, ",")})";
