@@ -88,9 +88,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         private static void GetGaussianFromQuantiles(double x0, double p0, double x1, double p1, out double mean, out double deviation)
         {
+            // solve for the Gaussian mean and stddev that yield:
+            // x0 = mean + stddev * NormalCdfInv(p0)
             double z0 = MMath.NormalCdfInv(p0);
             double z1 = MMath.NormalCdfInv(p1);
-            // solve for the equivalent Gaussian mean and stddev
             Matrix Z = new Matrix(new double[,] { { 1, z0 }, { 1, z1 } });
             DenseVector X = DenseVector.FromArray(x0, x1);
             DenseVector A = DenseVector.Zero(2);
@@ -154,7 +155,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double p1 = (i + 1.0) / (n + 1);
                 double mean, stddev;
                 GetGaussianFromQuantiles(quantiles[0], p0, quantiles[i], p1, out mean, out stddev);
-                return Gaussian.FromMeanAndVariance(mean, stddev * stddev);
+                Gaussian result = Gaussian.FromMeanAndVariance(mean, stddev * stddev);
+                if (!result.IsProper() || double.IsNaN(result.GetMean()) || double.IsInfinity(result.GetMean()))
+                {
+                    return Gaussian.PointMass(quantiles[0]);
+                }
+                return result;
             }
         }
 
@@ -178,7 +184,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double p1 = (i + 1.0) / (n + 1);
                 double mean, stddev;
                 GetGaussianFromQuantiles(quantiles[n - 1], p0, quantiles[i], p1, out mean, out stddev);
-                return Gaussian.FromMeanAndVariance(mean, stddev * stddev);
+                Gaussian result = Gaussian.FromMeanAndVariance(mean, stddev * stddev);
+                if (!result.IsProper() || double.IsNaN(result.GetMean()) || double.IsInfinity(result.GetMean()))
+                {
+                    return Gaussian.PointMass(quantiles[n - 1]);
+                }
+                return result;
             }
         }
 
