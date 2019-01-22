@@ -78,7 +78,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="template">The string to match.</param>
         /// <returns>The created distribution.</returns>
         public static StringDistribution CaseInvariant(string template) =>
-            StringDistribution.Consecutive(
+            StringDistribution.Concatenate(
                 template.Select(
                     ch =>
                     {

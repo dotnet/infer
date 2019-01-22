@@ -248,7 +248,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="sequence">Enumerable of distributions over sequence elements.</param>
         /// <returns>The created distribution.</returns>
-        public static TThis Consecutive(IEnumerable<TElementDistribution> sequence)
+        public static TThis Concatenate(IEnumerable<TElementDistribution> sequence)
         {
             var result = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
             var last = result.Start;
