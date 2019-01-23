@@ -109,7 +109,7 @@ Common questions and answers about the Infer.NET framework.
 
 *   **Can I learn the parameters of a Beta distribution, or the shape parameter of a Gamma distribution?**
 
-    No. The inference algorithms in Infer.NET can theoretically learn these parameters, but only at great expense. Therefore Infer.NET doesn't include these operations, in order to encourage people to use better modelling options that allow efficient inference. For modelling numbers between zero and one, consider putting a Gaussian distribution through a logistic transformation. For modelling number between zero and infinity, consider putting a Gaussian through an exponential transformation. These choices are not only better from the point of view of inference, but give more modelling options since the input Gaussian can have its own sophisticated model. 
+    No. The inference algorithms in Infer.NET can theoretically learn these parameters, but only at great expense. Therefore Infer.NET doesn't include these operations, in order to encourage people to use better modelling options that allow efficient inference. For modelling a number between zero and one, consider putting a Gaussian distribution through a logistic transformation. For modelling a number between zero and infinity, consider putting a Gaussian through an exponential transformation. These choices are not only better from the point of view of inference, but give more modelling options since the input Gaussian can have its own sophisticated model. 
 
 
 ### Troubleshooting
@@ -136,7 +136,7 @@ Common questions and answers about the Infer.NET framework.
 
 *   **AllZeroException during inference**
 
-    A current limitation of Infer.NET is that this exception will be thrown if _any_ branch in your model is impossible. For example, if your model has an If statement that makes x equal to true in one case and false in the other, and you observe that x is false, then you will get an AllZeroException when the first branch is visited. To workaround this, avoid using point masses in your model definition. For example, the first branch can generate x from a Bernoulli(0.99999) distribution, which is effectively equivalent to true but avoids the exception.
+    A current limitation of Infer.NET is that this exception will be thrown if _any_ branch in your model is impossible. For example, if your model has an If statement that makes x equal to true in one case and false in the other, and you observe that x is false, then you will get an AllZeroException when the first branch is visited. To work around this, avoid using point masses in your model definition. For example, the first branch can generate x from a Bernoulli(0.99999) distribution, which is effectively equivalent to true but avoids the exception.
 
 *   **Inferred marginals are far from exact, even for a simple model**
 

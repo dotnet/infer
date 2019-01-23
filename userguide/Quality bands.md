@@ -38,8 +38,4 @@ engine.Compiler.RecommendedQuality = QualityBand.Unknown;
 
 ### Default Quality Bands
 
-By default the **required quality band** is set to ```csharp
-QualityBand.Experimental
-``` and the **recommended quality band** is set to ```csharp
-QualityBand.Preview
-```.
+By default the **required quality band** is set to ```QualityBand.Experimental``` and the **recommended quality band** is set to ```QualityBand.Preview```.
