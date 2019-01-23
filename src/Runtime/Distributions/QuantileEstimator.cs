@@ -53,6 +53,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
         [DataMember]
         public readonly double MaximumError;
 
+        private int bufferLength
+        {
+            get
+            {
+                double invError = 1 / MaximumError;
+                int bufferCount = buffers.Length;
+                int length = (int)Math.Ceiling(invError * Math.Sqrt(bufferCount - 1));
+                if (length % 2 == 1) length++;
+                return length;
+            }
+        }
+
         /// <summary>
         /// 0 = point mass on each data point (i/n)
         /// 1 = interpolate (i/n + (i+1)/n)/2 = (i+0.5)/n
@@ -73,9 +85,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             double invError = 1 / maximumError;
             int bufferCount = 1 + Math.Max(1, (int)Math.Ceiling(Math.Log(invError, 2)));
             if (bufferCount < 2) throw new Exception("bufferCount < 2");
-            int bufferLength = (int)Math.Ceiling(invError * Math.Sqrt(bufferCount - 1));
-            if (bufferLength % 2 == 1) bufferLength++;
-            buffers = Util.ArrayInit(bufferCount, i => (i == 0) ? new double[bufferLength] : null);
+            buffers = new double[bufferCount][];
             countInBuffer = new int[bufferCount];
         }
 
@@ -284,7 +294,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (lowestBufferHeight == 0)
             {
+                int bufferToFree = lowestBufferIndex;
                 RaiseLowestHeight();
+                if (countInBuffer[bufferToFree] > 0) throw new Exception("countInBuffer[bufferToFree] > 0");
+                buffers[bufferToFree] = null;
             }
             lowestBufferHeight--;
             reservoirCount /= 2;
@@ -411,7 +424,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             double[] buffer = buffers[bufferIndex];
             if (buffer == null)
             {
-                buffers[bufferIndex] = buffer = new double[buffers[0].Length];
+                buffers[bufferIndex] = buffer = new double[bufferLength];
             }
             return buffer;
         }
@@ -433,14 +446,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         private void CompactBuffer(int bufferIndex)
         {
-            double[] buffer = buffers[bufferIndex];
             int count = countInBuffer[bufferIndex];
+            if (count == 0) return;
+            double[] buffer = buffers[bufferIndex];
             // move half of the items to the next buffer, and empty this buffer.
             int nextBufferIndex = (bufferIndex + 1) % buffers.Length;
             if (nextBufferIndex == lowestBufferIndex)
                 throw new Exception("Out of buffers");
             Array.Sort(buffer, 0, count);
             int firstIndex = Rand.Int(2);
+            if (count == 1 && firstIndex == 1) countInBuffer[bufferIndex] = 0;
             for (int i = firstIndex; i < count; i += 2)
             {
                 if (i + 2 >= count) countInBuffer[bufferIndex] = 0;
@@ -608,8 +623,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         private void RaiseLowestHeight()
         {
             // Compacting the lowest buffer will always succeed because of the invariant or because there is at least one empty buffer.
-            if (countInBuffer[lowestBufferIndex] > 0)
-                CompactBuffer(lowestBufferIndex);
+            CompactBuffer(lowestBufferIndex);
             // Since the lowest buffer is now empty, we re-purpose it as the new highest buffer.
             lowestBufferIndex = (lowestBufferIndex + 1) % buffers.Length;
             lowestBufferHeight++;
