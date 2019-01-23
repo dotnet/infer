@@ -4,71 +4,118 @@
 
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    using Microsoft.ML.Probabilistic.Distributions;
-    using Microsoft.ML.Probabilistic.Math;
+    using Microsoft.ML.Probabilistic.Collections;
+    using Microsoft.ML.Probabilistic.Utilities;
 
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
-        where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
-        where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
-        where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
         /// <summary>
         /// Represents a collection of automaton states for use in public APIs
         /// </summary>
         /// <remarks>
-        /// Is a thin wrapper around Automaton.stateData. Wraps each <see cref="StateData"/> into <see cref="State"/> on demand.
+        /// Is a thin wrapper around Automaton.data. Wraps each <see cref="StateData"/> into <see cref="State"/> on demand.
         /// </remarks>
         public struct StateCollection : IReadOnlyList<State>
         {
+            /// <summary>
+            /// Cached value of this.owner.Data.states. Cached for performance.
+            /// </summary>
+            internal readonly ReadOnlyArray<StateData> states;
+
+            /// <summary>
+            /// Cached value of this.owner.Data.states. Cached for performance.
+            /// </summary>
+            internal readonly ReadOnlyArray<Transition> transitions;
+
             /// <summary>
             /// Owner automaton of all states in collection.
             /// </summary>
             private readonly Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> owner;
 
             /// <summary>
-            /// Cached value of owner.statesData. Cached for performance reasons.
-            /// </summary>
-            private readonly List<StateData> statesData;
-
-            /// <summary>
             /// Initializes instance of <see cref="StateCollection"/>.
             /// </summary>
-            internal StateCollection(Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> owner)
+            internal StateCollection(
+                Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis> owner)
             {
                 this.owner = owner;
-                this.statesData = owner.statesData;
+                this.states = owner.Data.States;
+                this.transitions = owner.Data.Transitions;
             }
 
-            /// <summary>
-            /// Gets state by its index.
-            /// </summary>
-            public State this[int index] => new State(this.owner, index, this.statesData[index]);
+            #region IReadOnlyList<State> methods
+
+            /// <inheritdoc/>
+            public State this[int index] => new State(this.owner, this.states, this.transitions, index);
+
+            /// <inheritdoc/>
+            public int Count => this.states.Count;
 
             /// <summary>
-            /// Gets number of states in collection.
+            /// Returns enumerator over all states.
             /// </summary>
-            public int Count => this.statesData.Count;
+            /// <remarks>
+            /// This is value-type non-virtual version of enumerator that is used by compiler in foreach loops.
+            /// </remarks>
+            public StateEnumerator GetEnumerator() => new StateEnumerator(this);
+
+            /// <inheritdoc/>
+            IEnumerator<State> IEnumerable<State>.GetEnumerator() => new StateEnumerator(this);
+
+            /// <inheritdoc/>
+            IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+            #endregion
 
             /// <summary>
-            /// Returns enumerator over all states in collection.
+            /// Enumerator over states in <see cref="StateCollection"/>.
             /// </summary>
-            public IEnumerator<State> GetEnumerator()
+            public struct StateEnumerator : IEnumerator<State>
             {
-                var owner = this.owner;
-                return this.statesData.Select((data, index) => new State(owner, index, data)).GetEnumerator();
-            }
+                /// <summary>
+                /// Collection being enumerated.
+                /// </summary>
+                private readonly StateCollection collection;
 
-            /// <summary>
-            /// Returns enumerator over all states in collection.
-            /// </summary>
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return this.GetEnumerator();
+                /// <summary>
+                /// Index of current state.
+                /// </summary>
+                private int index;
+
+                public StateEnumerator(StateCollection collection)
+                {
+                    this.collection = collection;
+                    this.index = -1;
+                }
+
+                /// <inheritdoc/>
+                public void Dispose()
+                {
+                }
+
+                /// <inheritdoc/>
+                public bool MoveNext()
+                {
+                    ++this.index;
+                    return this.index < this.collection.Count;
+                }
+
+                /// <inheritdoc/>
+                public State Current => this.collection[this.index];
+
+                /// <inheritdoc/>
+                object IEnumerator.Current => this.Current;
+
+                /// <inheritdoc/>
+                void IEnumerator.Reset()
+                {
+                    this.index = -1;
+                }
             }
         }
     }

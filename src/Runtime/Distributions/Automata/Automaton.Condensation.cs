@@ -8,18 +8,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Diagnostics;
 
-    using Microsoft.ML.Probabilistic.Distributions;
-    using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <content>
     /// Contains the class used to represent a condensation of the automaton graph.
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
-        where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
-        where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
-        where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
         /// <summary>
         /// Computes a condensation of the underlying automaton graph.
@@ -46,7 +40,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The computed condensation.</returns>
         public Condensation ComputeCondensation(State root, Func<Transition, bool> transitionFilter, bool useApproximateClosure)
         {
-            Argument.CheckIfValid(!root.IsNull, nameof(root));
             Argument.CheckIfNotNull(transitionFilter, nameof(transitionFilter));
             Argument.CheckIfValid(ReferenceEquals(root.Owner, this), nameof(root), "The given node belongs to a different automaton.");
 
@@ -108,7 +101,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </param>
             internal Condensation(State root, Func<Transition, bool> transitionFilter, bool useApproximateClosure)
             {
-                Debug.Assert(!root.IsNull, "A valid root node must be provided.");
                 Debug.Assert(transitionFilter != null, "A valid transition filter must be provided.");
                 
                 this.Root = root;
@@ -160,24 +152,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Gets the total weight of all paths starting at a given state. 
             /// Ending weights are taken into account.
             /// </summary>
-            /// <param name="state">The state.</param>
+            /// <param name="stateIndex">The state Index.</param>
             /// <returns>The computed total weight.</returns>
-            public Weight GetWeightToEnd(State state)
+            public Weight GetWeightToEnd(int stateIndex)
             {
-                Argument.CheckIfValid(!state.IsNull, nameof(state));
-                Argument.CheckIfValid(ReferenceEquals(state.Owner, this.Root.Owner), "state", "The given state belongs to a different automaton.");
-
                 if (!this.weightsToEndComputed)
                 {
                     this.ComputeWeightsToEnd();
                 }
 
-                if (!this.stateIdToInfo.TryGetValue(state.Index, out var info))
-                {
-                    return Weight.Zero;
-                }
-
-                return info.WeightToEnd;
+                return
+                    this.stateIdToInfo.TryGetValue(stateIndex, out var info)
+                        ? info.WeightToEnd
+                        : Weight.Zero;
             }
 
             /// <summary>
@@ -188,7 +175,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <returns>The computed total weight.</returns>
             public Weight GetWeightFromRoot(State state)
             {
-                Argument.CheckIfValid(!state.IsNull, nameof(state));
                 Argument.CheckIfValid(ReferenceEquals(state.Owner, this.Root.Owner), "state", "The given state belongs to a different automaton.");
 
                 if (!this.weightsFromRootComputed)
@@ -227,9 +213,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 stateIdStack.Push(currentState);
                 stateInfo.InStack = true;
 
-                for (int transitionIndex = 0; transitionIndex < currentState.TransitionCount; ++transitionIndex)
+                foreach (var transition in currentState.Transitions)
                 {
-                    Transition transition = currentState.GetTransition(transitionIndex);
                     if (!this.transitionFilter(transition))
                     {
                         continue;
@@ -282,9 +267,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                         // Aggregate weights of all the outgoing transitions from this state
                         Weight weightToAdd = state.EndWeight;
-                        for (int transitionIndex = 0; transitionIndex < state.TransitionCount; ++transitionIndex)
+                        foreach (var transition in state.Transitions)
                         {
-                            Transition transition = state.GetTransition(transitionIndex);
                             State destState = state.Owner.States[transition.DestinationStateIndex];
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {
@@ -361,9 +345,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         // Aggregate weights of all the outgoing transitions from this state
-                        for (int transitionIndex = 0; transitionIndex < srcState.TransitionCount; ++transitionIndex)
+                        foreach (var transition in srcState.Transitions)
                         {
-                            Transition transition = srcState.GetTransition(transitionIndex);
                             State destState = srcState.Owner.States[transition.DestinationStateIndex];
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {

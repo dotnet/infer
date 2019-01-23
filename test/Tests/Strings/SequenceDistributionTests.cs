@@ -178,11 +178,15 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void ProductWithGroups()
         {
             StringDistribution lhsWithoutGroup = StringDistribution.String("ab");
-            var weightFunction = lhsWithoutGroup.GetWorkspaceOrPoint();
-            var transitionWithGroup = weightFunction.Start.GetTransitions()[0];
+
+            // add a group to first transition of the start state
+            var weightFunctionBuilder = StringAutomaton.Builder.FromAutomaton(lhsWithoutGroup.GetWorkspaceOrPoint());
+            var transitionIterator = weightFunctionBuilder.Start.TransitionIterator;
+            var transitionWithGroup = transitionIterator.Value;
             transitionWithGroup.Group = 1;
-            weightFunction.Start.SetTransition(0, transitionWithGroup);
-            StringDistribution lhs = StringDistribution.FromWeightFunction(weightFunction);
+            transitionIterator.Value = transitionWithGroup;
+
+            StringDistribution lhs = StringDistribution.FromWeightFunction(weightFunctionBuilder.GetAutomaton());
             StringDistribution rhs = StringDistribution.OneOf("ab", "ac");
             Assert.True(lhs.GetWorkspaceOrPoint().HasGroup(1));
             Assert.False(rhs.GetWorkspaceOrPoint().UsesGroups());
@@ -577,11 +581,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             const double StoppingProbability = 0.7;
 
             // The length of sequences sampled from this distribution must follow a geometric distribution
-            StringAutomaton automaton = StringAutomaton.Zero();
-            automaton.Start = automaton.AddState();
-            automaton.Start.SetEndWeight(Weight.FromValue(StoppingProbability));
-            automaton.Start.AddTransition('a', Weight.FromValue(1 - StoppingProbability), automaton.Start);
-            StringDistribution dist = StringDistribution.FromWeightFunction(automaton);
+            var builder = new StringAutomaton.Builder();
+            builder.StartStateIndex = builder.AddState().Index;
+            builder.Start.SetEndWeight(Weight.FromValue(StoppingProbability));
+            builder.Start.AddTransition('a', Weight.FromValue(1 - StoppingProbability), builder.Start.Index);
+            StringDistribution dist = StringDistribution.FromWeightFunction(builder.GetAutomaton());
 
             var acc = new MeanVarianceAccumulator();
             const int SampleCount = 30000;

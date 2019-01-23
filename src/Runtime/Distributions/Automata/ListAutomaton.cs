@@ -26,14 +26,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         protected ListAutomaton()
         {
         }
-
-        /// <summary>
-        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
-        /// </summary>
-        protected ListAutomaton(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 
     /// <summary>
@@ -52,14 +44,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
-        /// </summary>
-        protected ListAutomaton(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-
-        /// <summary>
         /// Computes a set of outgoing transitions from a given state of the determinization result.
         /// </summary>
         /// <param name="sourceState">The source state of the determinized automaton represented as 
@@ -69,7 +53,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// The first two elements of a tuple define the element distribution and the weight of a transition.
         /// The third element defines the outgoing state.
         /// </returns>
-        protected override IEnumerable<Tuple<TElementDistribution, Weight, Determinization.WeightedStateSet>> GetOutgoingTransitionsForDeterminization(
+        protected override List<(TElementDistribution, Weight, Determinization.WeightedStateSet)> GetOutgoingTransitionsForDeterminization(
             Determinization.WeightedStateSet sourceState)
         {
             throw new NotImplementedException("Determinization is not yet supported for this type of automata.");
@@ -91,14 +75,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
-        /// </summary>
-        protected ListAutomaton(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-
-        /// <summary>
         /// Computes a set of outgoing transitions from a given state of the determinization result.
         /// </summary>
         /// <param name="sourceState">The source state of the determinized automaton represented as 
@@ -108,7 +84,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// The first two elements of a tuple define the element distribution and the weight of a transition.
         /// The third element defines the outgoing state.
         /// </returns>
-        protected override IEnumerable<Tuple<TElementDistribution, Weight, Determinization.WeightedStateSet>> GetOutgoingTransitionsForDeterminization(
+        protected override List<(TElementDistribution, Weight, Determinization.WeightedStateSet)> GetOutgoingTransitionsForDeterminization(
             Determinization.WeightedStateSet sourceState)
         {
             throw new NotImplementedException();
