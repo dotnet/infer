@@ -8,16 +8,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Linq;
 
-    using Math;
-
     /// <content>
     /// Extracts groups from a loop-free automaton.
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
-        where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
-        where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
-        where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
         private static class GroupExtractor
         {           
@@ -36,7 +30,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 var weightsFromRoot = ComputeWeightsFromRoot(states.Count, topologicalOrder, group);
                 var weightsToEnd = ComputeWeightsToEnd(states.Count, topologicalOrder, group);
-                var subautomaton = new TThis();
+                var subautomaton = new Builder();
                 var stateMapping = subgraph.ToDictionary(x => x, _ => subautomaton.AddState());
                 var hasNoIncomingTransitions = new HashSet<int>(subgraph);
 
@@ -45,15 +39,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     var newSourceState = stateMapping[stateIndex];
 
-                    for (int i = 0; i < states[stateIndex].TransitionCount; i++)
+                    foreach (var transition in states[stateIndex].Transitions)
                     {
-                        var transition = states[stateIndex].GetTransition(i);
-                        if (transition.Group != group) continue;
+                        if (transition.Group != group)
+                        {
+                            continue;
+                        }
                         hasNoIncomingTransitions.Remove(transition.DestinationStateIndex);
                         newSourceState.AddTransition(
                             transition.ElementDistribution,
                             transition.Weight,
-                            stateMapping[transition.DestinationStateIndex]);
+                            stateMapping[transition.DestinationStateIndex].Index);
                     }
                 }
 
@@ -65,10 +61,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var newSourceState = stateMapping[stateIndex];
 
                     // consider start states
-                    var weightFromRoot = newSourceState.TransitionCount > 0 ? weightsFromRoot[stateIndex] : Weight.Zero;
+                    var weightFromRoot = newSourceState.HasTransitions ? weightsFromRoot[stateIndex] : Weight.Zero;
                     if (!weightFromRoot.IsZero)
                     {
-                        subautomaton.Start.AddEpsilonTransition(weightFromRoot, newSourceState);
+                        subautomaton.Start.AddEpsilonTransition(weightFromRoot, newSourceState.Index);
                     }
 
                     // consider end states
@@ -81,11 +77,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     correctionFactor = Weight.Sum(correctionFactor, Weight.Product(weightFromRoot, weightToEnd));
                 }
 
-                if (!correctionFactor.IsZero) throw new Exception("Write a unit test for this case. Code should be fine.");
+                if (!correctionFactor.IsZero)
+                {
+                    throw new Exception("Write a unit test for this case. Code should be fine.");
+                }
+
                 var epsilonWeight = Weight.AbsoluteDifference(weightsToEnd[topologicalOrder[0].Index], correctionFactor);
                 subautomaton.Start.SetEndWeight(epsilonWeight);
 
-                return subautomaton;
+                return subautomaton.GetAutomaton();
             }
 
             /// <summary>
@@ -125,9 +125,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var state = states[stateIdx];
 
                 temporary[stateIdx] = true;
-                for (var i = 0; i < state.TransitionCount; i++)
+                foreach (var transition in state.Transitions)
                 {
-                    var transition = state.GetTransition(i);
                     var group = transition.Group;
                     if (group != 0)
                     {
@@ -165,10 +164,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var state = topologicalOrder[stateIndex];
                     // Aggregate weights of all the outgoing transitions from this state
                     var weightToAdd = state.EndWeight;
-                    for (var transitionIndex = 0; transitionIndex < state.TransitionCount; ++transitionIndex)
+                    foreach (var transition in state.Transitions)
                     {
-                        var transition = state.GetTransition(transitionIndex);
-
                         if (transition.Group == group) continue;
 
                         weightToAdd = Weight.Sum(
@@ -204,10 +201,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
 
                     // Aggregate weights of all the outgoing transitions from this state
-                    for (var transitionIndex = 0; transitionIndex < srcState.TransitionCount; transitionIndex++)
+                    foreach (var transition in srcState.Transitions)
                     {
-                        var transition = srcState.GetTransition(transitionIndex);
-
                         if (transition.Group == group) continue;
 
                         var destWeight = weights[transition.DestinationStateIndex];

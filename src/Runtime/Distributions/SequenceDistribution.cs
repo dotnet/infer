@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.InteropServices.ComTypes;
+
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
@@ -224,10 +226,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public static TThis SingleElement(TElementDistribution elementDistribution)
         {
-            var func = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Zero();
+            var func = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
             var end = func.Start.AddTransition(elementDistribution, Weight.One);
             end.SetEndWeight(Weight.One);
-            return FromWorkspace(func);
+            return FromWorkspace(func.GetAutomaton());
         }
 
         /// <summary>
@@ -239,6 +241,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             var sequence = SequenceManipulator.ToSequence(new List<TElement> { element });
             return PointMass(sequence);
+        }
+
+        /// <summary>
+        /// Creates a distribution over sequences induced by a given list of distributions over sequence elements.
+        /// </summary>
+        /// <param name="sequence">Enumerable of distributions over sequence elements.</param>
+        /// <returns>The created distribution.</returns>
+        public static TThis Concatenate(IEnumerable<TElementDistribution> sequence)
+        {
+            var result = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
+            var last = result.Start;
+            foreach (var elem in sequence)
+            {
+                last = last.AddTransition(elem, Weight.One);
+            }
+            
+            last.SetEndWeight(Weight.One);
+            return FromWorkspace(result.GetAutomaton());
         }
 
         /// <summary>
@@ -423,7 +443,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             var weight = uniformity == DistributionKind.UniformOverLengthThenValue
                 ? Weight.One
                 : Weight.FromLogValue(distLogNormalizer);
-            var func = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Zero();
+
+            var func = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
             var state = func.Start;
 
             int iterationBound = maxTimes.HasValue ? maxTimes.Value : minTimes;
@@ -443,7 +464,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 state.AddSelfTransition(allowedElements, weight);
             }
 
-            return FromWorkspace(func);
+            return FromWorkspace(func.GetAutomaton());
         }
 
         /// <summary>
@@ -1444,10 +1465,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 double logSample = Math.Log(Rand.Double());
                 Weight probSum = Weight.Zero;
-                for (int i = 0; i < currentState.TransitionCount; ++i)
+                foreach (var transition in currentState.Transitions)
                 {
-                    var transition = currentState.GetTransition(i);
-
                     probSum = Weight.Sum(probSum, transition.Weight);
                     if (logSample < probSum.LogValue)
                     {

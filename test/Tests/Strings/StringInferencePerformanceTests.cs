@@ -35,11 +35,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Assert.Timeout(() =>
             {
-                StringAutomaton automaton = StringAutomaton.Zero();
-                var nextState = automaton.Start.AddTransitionsForSequence("abc");
+                var builder = new StringAutomaton.Builder();
+                var nextState = builder.Start.AddTransitionsForSequence("abc");
                 nextState.AddSelfTransition('d', Weight.FromValue(0.1));
                 nextState.AddTransitionsForSequence("efg").SetEndWeight(Weight.One);
                 nextState.AddTransitionsForSequence("hejfhoenmf").SetEndWeight(Weight.One);
+
+                var automaton = builder.GetAutomaton();
 
                 ProfileAction(() => automaton.GetLogNormalizer(), 100000);
             }, 10000);
@@ -55,8 +57,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Assert.Timeout(() =>
             {
-                StringAutomaton automaton = StringAutomaton.Zero();
-                var nextState = automaton.Start.AddTransitionsForSequence("abc");
+                var builder = new StringAutomaton.Builder();
+                var nextState = builder.Start.AddTransitionsForSequence("abc");
                 nextState.SetEndWeight(Weight.One);
                 nextState.AddSelfTransition('d', Weight.FromValue(0.1));
                 nextState = nextState.AddTransitionsForSequence("efg");
@@ -65,6 +67,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 nextState = nextState.AddTransitionsForSequence("grlkhgn;lk3rng");
                 nextState.SetEndWeight(Weight.One);
                 nextState.AddSelfTransition('h', Weight.FromValue(0.3));
+
+                var automaton = builder.GetAutomaton();
 
                 ProfileAction(() => automaton.GetLogNormalizer(), 100000);
             }, 20000);
@@ -80,13 +84,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Assert.Timeout(() =>
             {
-                StringAutomaton automaton = StringAutomaton.Zero();
-                automaton.Start.AddSelfTransition('a', Weight.FromValue(0.5));
-                automaton.Start.SetEndWeight(Weight.One);
-                var nextState = automaton.Start.AddTransitionsForSequence("aa");
+                var builder = new StringAutomaton.Builder();
+                builder.Start.AddSelfTransition('a', Weight.FromValue(0.5));
+                builder.Start.SetEndWeight(Weight.One);
+                var nextState = builder.Start.AddTransitionsForSequence("aa");
                 nextState.AddSelfTransition('a', Weight.FromValue(0.5));
                 nextState.SetEndWeight(Weight.One);
 
+                var automaton = builder.GetAutomaton();
                 for (int i = 0; i < 3; ++i)
                 {
                     automaton = automaton.Product(automaton);

@@ -96,9 +96,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     var state = currentComponent.GetStateByIndex(stateIndex);
                     RegexpTreeNode<TElement> stateDownwardRegexp = state.CanEnd ? RegexpTreeNode<TElement>.Empty() : RegexpTreeNode<TElement>.Nothing();
-                    for (int transitionIndex = 0; transitionIndex < state.TransitionCount; ++transitionIndex)
+
+                    foreach (var transition in state.Transitions)
                     {
-                        var transition = state.GetTransition(transitionIndex);
                         var destState = automaton.States[transition.DestinationStateIndex];
                         if (!transition.Weight.IsZero && !currentComponent.HasState(destState))
                         {
@@ -180,9 +180,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 return true;
                             }
 
-                            for (int tidx = 0; tidx < s.TransitionCount; ++tidx)
+                            foreach (var t in s.Transitions)
                             {
-                                var t = s.GetTransition(tidx);
                                 var dest = automaton.States[t.DestinationStateIndex];
                                 if ((!t.Weight.IsZero) && (!currentComponent.HasState(dest)))
                                 {
@@ -207,10 +206,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                     continue;
                                 }
 
-                                var trans = s1.GetTransitions();
-                                for (int tIdx = 0; tIdx < trans.Length; tIdx++)
+                                foreach (var t in s1.Transitions)
                                 {
-                                    var t = trans[tIdx];
                                     if (t.DestinationStateIndex == sIdx && !t.Weight.IsZero)
                                     {
                                         return true;
@@ -238,9 +235,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
 
                     var outgoingRegexes = new Dictionary<int, RegexpTreeNode<TElement>>();
-                    for (int transitionIndex = 0; transitionIndex < state.TransitionCount; ++transitionIndex)
+                    foreach (var transition in state.Transitions)
                     {
-                        var transition = state.GetTransition(transitionIndex);
                         var destState = automaton.States[transition.DestinationStateIndex];
                         if ((!transition.Weight.IsZero) && (!currentComponent.HasState(destState)))
                         {
@@ -377,9 +373,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var state = component.GetStateByIndex(stateIndex);
                 regexps[stateIndex, stateIndex] = RegexpTreeNode<TElement>.Empty();
 
-                for (int transitionIndex = 0; transitionIndex < state.TransitionCount; ++transitionIndex)
+                foreach (var transition in state.Transitions)
                 {
-                    var transition = state.GetTransition(transitionIndex);
                     if (transition.Weight.IsZero)
                     {
                         continue;
