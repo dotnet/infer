@@ -10,6 +10,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Text;
+    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
@@ -326,8 +327,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public bool ValueEquals(QuantileEstimator that)
         {
             return (this.MaximumError == that.MaximumError) &&
-                Util.JaggedValueEquals(this.buffers, that.buffers) &&
-                Util.ValueEquals(this.countInBuffer, that.countInBuffer) &&
+                this.buffers.JaggedValueEquals(that.buffers) &&
+                this.countInBuffer.ValueEquals(that.countInBuffer) &&
                 (this.lowestBufferIndex == that.lowestBufferIndex) &&
                 (this.lowestBufferHeight == that.lowestBufferHeight) &&
                 (this.nextSample == that.nextSample) &&

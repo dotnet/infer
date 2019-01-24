@@ -60,7 +60,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.CodeModel.Concrete
 
             if (Name != type.Name ||
                 Namespace != type.Namespace ||
-                !Util.SafeEquals(BaseType, type.BaseType))
+                !Util.AreEqual(BaseType, type.BaseType))
                 return false;
             return true;
             if (Interface != type.Interface ||
