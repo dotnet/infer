@@ -179,7 +179,7 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public bool IsCompatibleWith(ICursorArray that)
         {
-            return Util.ValueEquals(Lengths, that.Lengths);
+            return Lengths.ValueEquals(that.Lengths);
         }
 
         protected void CheckMembers()

@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="sequence1">The first list.</param>
         /// <param name="sequence2">The second list.</param>
         /// <returns><see langword="true"/> if the lists are equal, <see langword="false"/> otherwise.</returns>
-        public bool SequencesAreEqual(TList sequence1, TList sequence2) => Util.ValueEquals(sequence1, sequence2);
+        public bool SequencesAreEqual(TList sequence1, TList sequence2) => ListComparer<TElement>.EqualLists(sequence1, sequence2);
 
         /// <summary>
         /// Creates a list by copying the first list and then appending the second list to it.

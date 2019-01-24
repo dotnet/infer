@@ -39,65 +39,11 @@ namespace Microsoft.ML.Probabilistic.Utilities
             else return EqualityComparer<T>.Default;
         }
 
-        public static bool ValueEquals(IList<int> a, IList<int> b)
-        {
-            if (a == null) return (b == null);
-            if (b == null) return false;
-            if (a.Count != b.Count) return false;
-            for (int i = 0; i < a.Count; i++)
-            {
-                if (a[i] != b[i]) return false;
-            }
-            return true;
-        }
-
-        public static bool ValueEquals(IReadOnlyList<double> a, IReadOnlyList<double> b)
-        {
-            if (a == null) return (b == null);
-            if (b == null) return false;
-            if (a.Count != b.Count) return false;
-            for (int i = 0; i < a.Count; i++)
-            {
-                if (!a[i].Equals(b[i])) return false;
-            }
-            return true;
-        }
-
-        public static bool JaggedValueEquals(IReadOnlyList<IReadOnlyList<double>> a, IReadOnlyList<IReadOnlyList<double>> b)
-        {
-            if (a == null) return (b == null);
-            if (b == null) return false;
-            if (a.Count != b.Count) return false;
-            for (int i = 0; i < a.Count; i++)
-            {
-                if (!ValueEquals(a[i], b[i])) return false;
-            }
-            return true;
-        }
-
         // parameters may be null
-        public static bool SafeEquals<T>(T a, T b)
-        {
-            bool aIsNull = object.ReferenceEquals(a, null);
-            bool bIsNull = object.ReferenceEquals(b, null);
-            if (aIsNull) return bIsNull;
-            if (bIsNull) return false; // a is not null
-            return a.Equals(b);
-        }
-
-        public static bool ValueEquals<T>(ICollection<T> a, ICollection<T> b)
+        public static bool AreEqual<T>(T a, T b)
         {
             if (a == null) return (b == null);
-            if (b == null) return false;
-            if (a.Count != b.Count) return false;
-            if (a.Count == 0) return true;
-            IEnumerator<T> iter = a.GetEnumerator();
-            foreach (T item in b)
-            {
-                iter.MoveNext();
-                if (!SafeEquals<T>(iter.Current, item)) return false;
-            }
-            return true;
+            else return a.Equals(b);
         }
 
         public static string CollectionToString<T>(IEnumerable<T> list)
