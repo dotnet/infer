@@ -765,6 +765,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
+        [Trait("Category", "OpenBug")]
         public void TryComputePointLargeAutomaton()
         {
             //// Fails with ~2500 states due to stack overflow
