@@ -170,25 +170,34 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             Dictionary<string, IExpression> dict = new Dictionary<string, IExpression>();
             Type type = expr.GetExpressionType();
-            Type[] faces = type.GetInterfaces();
-            bool hasGetMean = false;
-            bool hasGetVariance = false;
-            foreach (Type face in faces)
+            bool useToString = true;
+            if (useToString)
             {
-                if (face.Name == "CanGetMean`1")
-                    hasGetMean = true;
-                else if (face.Name == "CanGetVariance`1")
-                    hasGetVariance = true;
+                var toStringMethod = type.GetMethod("ToString", new Type[0]);
+                dict["ToString"] = Builder.Method(expr, toStringMethod);
             }
-            if (hasGetMean)
+            else
             {
-                var meanMethod = type.GetMethod("GetMean", new Type[0]);
-                dict["Mean"] = Builder.Method(expr, meanMethod);
-            }
-            if (hasGetVariance)
-            {
-                var varianceMethod = type.GetMethod("GetVariance", new Type[0]);
-                dict["Variance"] = Builder.Method(expr, varianceMethod);
+                Type[] faces = type.GetInterfaces();
+                bool hasGetMean = false;
+                bool hasGetVariance = false;
+                foreach (Type face in faces)
+                {
+                    if (face.Name == "CanGetMean`1")
+                        hasGetMean = true;
+                    else if (face.Name == "CanGetVariance`1")
+                        hasGetVariance = true;
+                }
+                if (hasGetMean)
+                {
+                    var meanMethod = type.GetMethod("GetMean", new Type[0]);
+                    dict["Mean"] = Builder.Method(expr, meanMethod);
+                }
+                if (hasGetVariance)
+                {
+                    var varianceMethod = type.GetMethod("GetVariance", new Type[0]);
+                    dict["Variance"] = Builder.Method(expr, varianceMethod);
+                }
             }
             return dict;
         }
