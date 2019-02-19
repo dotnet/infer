@@ -40,7 +40,8 @@ _**See also:** [Branching on variables to create mixture models](Branching on va
 ```csharp
 Variable<double> probIfTreated, probIfControl;  
 using (Variable.If(isEffective))  
-{ // Model if treatment is effective probIfControl = Variable.Beta(1, 1);  
+{ // Model if treatment is effective
+  probIfControl = Variable.Beta(1, 1);  
   controlGroup[i] = Variable.Bernoulli(probIfControl).ForEach(i);  
   probIfTreated = Variable.Beta(1, 1);  
   treatedGroup[j] = Variable.Bernoulli(probIfTreated).ForEach(j);  
@@ -57,7 +58,8 @@ Now let us consider the alternative model, where the treatment has no effect _i.
 
 ```csharp
 using (Variable.IfNot(isEffective))  
-{ // Model if treatment is not effective Variable<double> probAll = Variable.Beta(1, 1);  
+{ // Model if treatment is not effective
+  Variable<double> probAll = Variable.Beta(1, 1);  
   controlGroup[i] = Variable.Bernoulli(probAll).ForEach(i);  
   treatedGroup[j] = Variable.Bernoulli(probAll).ForEach(j);  
 }
