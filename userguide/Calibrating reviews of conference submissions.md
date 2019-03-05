@@ -83,8 +83,6 @@ which you can call to build up your list as you parse your data file.
 
 The KDD 2009 program committee chairs used this model to highlight areas where further screening of submissions was needed, and the model was successful in bringing to light biases in the reviews due to the variation in standards and expertise level of different reviewers. We would love to describe the results in more detail, but unfortunately we cannot due to the confidentiality of the data. One interesting side note is that our expectation, stated earlier, that high expertise should lead to more precise reviews is in fact confirmed by the model which gives precisions of 1.287 ("Informed outsider"), 1.462 ("Knowledgeable"), and 1.574 ("Expert").
 
-Take a look at the full code (details below) and let us know your experiences in using this model.
-
 ## Full code for this model: 
 
-A full C# code can be viewed at [Reviewer model](Reviewer model.md). This code includes classes for review (`Review`), reviewer (`Reviewer`) and submission (`Submission`), and a `Utility` class to ensure that mappings between these entities and model indices are handled safely and consistently. There are also `enums` for expertise level (`Expertise`) and rating level (`Recommendation`) - if you want to try out this model, you should change these to match the levels in your data, though note that there is an assumption that levels start at 1 in both cases. Finally, the code includes a class to collect the results (`ReviewerCalibrationResults`), and, the focus of this blog, the main model class (`ReviewerCalibration`).
+The full C# code is in the [ReviewerCalibration](https://github.com/dotnet/infer/blob/master/src/Examples/ReviewerCalibration/ReviewerCalibration.cs) project.
