@@ -282,3 +282,6 @@ a:link {
 .highlight .vg { color: #2b91af } /* Name.Variable.Global */
 .highlight .vi { color: #2b91af } /* Name.Variable.Instance */
 .highlight .vm { color: #2b91af } /* Name.Variable.Magic */
+
+footer { background: #f2f2f2; margin-top: 40px; padding: 10px 0; text-align: right; }
+footer span { margin-left: 10px; }
