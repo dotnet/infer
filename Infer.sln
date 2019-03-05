@@ -84,7 +84,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crowdsourcing", "src\Exampl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrowdsourcingWithWords", "src\Examples\CrowdsourcingWithWords\CrowdsourcingWithWords.csproj", "{6563C4C6-411E-4D67-B458-830AD9B311D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReviewerCalibration", "src\Examples\ReviewerCalibration\ReviewerCalibration.csproj", "{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReviewerCalibration", "src\Examples\ReviewerCalibration\ReviewerCalibration.csproj", "{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -460,16 +460,16 @@ Global
 		{6563C4C6-411E-4D67-B458-830AD9B311D2}.ReleaseFull|Any CPU.Build.0 = ReleaseFull|Any CPU
 		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.DebugCore|Any CPU.Build.0 = Debug|Any CPU
-		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.DebugFull|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.DebugFull|Any CPU.Build.0 = Debug|Any CPU
+		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.DebugCore|Any CPU.ActiveCfg = DebugCore|Any CPU
+		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.DebugCore|Any CPU.Build.0 = DebugCore|Any CPU
+		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.DebugFull|Any CPU.ActiveCfg = DebugFull|Any CPU
+		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.DebugFull|Any CPU.Build.0 = DebugFull|Any CPU
 		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
-		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
-		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
-		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
+		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.ReleaseCore|Any CPU.ActiveCfg = ReleaseCore|Any CPU
+		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.ReleaseCore|Any CPU.Build.0 = ReleaseCore|Any CPU
+		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.ReleaseFull|Any CPU.ActiveCfg = ReleaseFull|Any CPU
+		{7D7EA3FD-8D1A-4E07-B34C-5B2B86CAFCAA}.ReleaseFull|Any CPU.Build.0 = ReleaseFull|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
