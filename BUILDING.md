@@ -50,15 +50,7 @@ dotnet build -c ReleaseCore Infer.sln
 ```
 to build release assemblies.
 
-The corresponding commands to build .NET Standard libraries and .NET Framework executables with Mono are
-```bash
-msbuild /c:DebugFull /p:MonoSupport=true /restore Infer.sln
-```
-and
-```bash
-msbuild /c:ReleaseFull /p:MonoSupport=true /restore Infer.sln
-```
-Please, expect build failure messages about examples that use WPF GUI. Libraries and executables that don't reference WPF should build, though.
+When not using Windows, expect build failure messages about examples that use WPF GUI. Libraries and executables that don't reference WPF should build, though.
 
 ### Run unit tests
 
@@ -137,3 +129,10 @@ When using this special build of Infer.NET, you must tell your code where to fin
    4. Select the libraries listed in the [MKL linkage guide](https://software.intel.com/en-us/articles/intel-math-kernel-library-intel-mkl-linkage-and-distribution-quick-reference-guide): `mkl_rt.dll`, `mkl_intel_thread.dll`, `mkl_core.dll`, `libiomp5md.dll`, etc.
    5. Click "Add" or "Add as Link"
 1. For each of the added items, change the "Copy to output directory" property to "Copy if newer".  When you build your project, the MKL libraries will be included alongside the Infer.NET libraries.
+
+## Embedding Infer.NET source code in your own project
+
+If you plan to reference the Infer.NET source code from your own project, we recommend using a [Git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules).  A Git submodule refers to a specific commit of Infer.NET and ensures that anyone who clones your project will get the version of Infer.NET that your code works with.  To set up this submodule, you only need to type:
+```bash
+git submodule add https://github.com/dotnet/infer
+```
