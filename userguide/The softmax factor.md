@@ -61,7 +61,6 @@ Finally we [run inference](Running inference.md) over the model:
 
 ```csharp
 var ie = new InferenceEngine(new VariationalMessagePassing());
-ie.Compiler.GivePriorityTo(typeof(SaulJordanSoftmaxOp_NCVMP));
 var bPost = ie.Infer<VectorGaussian[]>(B);
 var meanPost = ie.Infer<Gaussian[]>(m);
 ```
@@ -76,6 +75,6 @@ A good sanity check is to see how the inference performance improves with increa
 
 ![multinomial_regression_sample_size.png](multinomial_regression_sample_size.png)
 
-The code including generating synthetic data, setting up the model, running inference and computing errors is available [here](Multinomial regression.md). Feel free to download it, try it out on your own data or modify/extend the model however you please. If you don't have it yet, be sure to install the latest Infer.NET release.
+The code for this model is available at [MultinomialRegression.cs](https://github.com/dotnet/infer/blob/master/src/Tutorials/MultinomialRegression.cs)
  
 The possibilities extend far beyond simple multinomial regression. The great thing about the softmax factor is that any time you want to model probability vectors with complex dependencies, you can model those dependencies in continuous space and map to probability vectors using the softmax factor. A model of this type in the machine learning literature is the [correlated topic model](http://www.cs.columbia.edu/~blei/papers/BleiLafferty2006.pdf), a version of [Latent Dirichlet Alocation](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation) where the document specific distributions over topics are represented as continuous vectors drawn from a learnt multivariate Gaussian, and are put through a softmax function to give valid probability distiributions.
