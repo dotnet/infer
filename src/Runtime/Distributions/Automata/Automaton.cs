@@ -825,6 +825,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="group">The specified group.</param>
         public void SetGroup(int group)
         {
+            if (group == 0 && !this.UsesGroups)
+            {
+                return;
+            }
+
             var builder = Builder.FromAutomaton(this);
             for (var i = 0; i < builder.StatesCount; ++i)
             {
