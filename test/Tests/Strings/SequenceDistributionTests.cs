@@ -189,7 +189,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringDistribution lhs = StringDistribution.FromWeightFunction(weightFunctionBuilder.GetAutomaton());
             StringDistribution rhs = StringDistribution.OneOf("ab", "ac");
             Assert.True(lhs.GetWorkspaceOrPoint().HasGroup(1));
-            Assert.False(rhs.GetWorkspaceOrPoint().UsesGroups());
+            Assert.False(rhs.GetWorkspaceOrPoint().UsesGroups);
             var result = StringDistribution.Zero();
             result.SetToProduct(lhs, rhs);
             Assert.True(result.GetWorkspaceOrPoint().HasGroup(1));
