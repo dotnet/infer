@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.ML.Probabilistic.Collections;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
@@ -18,7 +17,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Compiler;
     using Microsoft.ML.Probabilistic.Compiler.CodeModel;
-    using System.Linq;
 
 #if SUPPRESS_XMLDOC_WARNINGS
 #pragma warning disable 1591
