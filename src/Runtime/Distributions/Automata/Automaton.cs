@@ -2,11 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections;
-
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Diagnostics;
@@ -143,7 +142,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>
         /// TODO: We need to develop more elegant automaton approximation methods, this is a simple placeholder for those.
         /// </remarks>
-        public double? PruneTransitionsWithLogWeightLessThan { get; set; }
+        public double? PruneStatesWithLogEndWeightLessThan { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of states an automaton can have.
@@ -763,12 +762,108 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 return this.ToString();
             }
-            else
+
+            var builder = new StringBuilder();
+            var visitedStates = new HashSet<int>();
+            //
+            var stack = new Stack<(string prefix, Option<TElementDistribution> prefixDistribution, int state)>();
+            stack.Push((string.Empty, Option.None, Start.Index));
+
+            while (stack.Count > 0)
             {
-                StringBuilder builder = new StringBuilder();
-                this.AppendString(builder, new HashSet<int>(), this.Start.Index, appendElement);
-                return builder.ToString();
+                var (prefix, prefixDistribution, stateIndex) = stack.Pop();
+
+                builder.Append(prefix);
+                if (prefixDistribution.HasValue)
+                {
+                    if (appendElement != null)
+                    {
+                        appendElement(prefixDistribution.Value, builder);
+                    }
+                    else
+                    {
+                        builder.Append(prefixDistribution);
+                    }
+                }
+
+                if (stateIndex == -1)
+                {
+                    continue;
+                }
+
+                if (visitedStates.Contains(stateIndex))
+                {
+                    builder.Append('➥');
+                    continue;
+                }
+
+                visitedStates.Add(stateIndex);
+
+                var state = this.States[stateIndex];
+                var transitions = state.Transitions.Where(t => !t.Weight.IsZero);
+                var selfTransitions = transitions.Where(t => t.DestinationStateIndex == stateIndex);
+                var selfTransitionCount = selfTransitions.Count();
+                var nonSelfTransitions = transitions.Where(t => t.DestinationStateIndex != stateIndex);
+                var nonSelfTransitionCount = nonSelfTransitions.Count();
+
+                if (state.CanEnd && nonSelfTransitionCount > 0)
+                {
+                    builder.Append('▪');
+                }
+
+                if (selfTransitionCount > 1)
+                {
+                    builder.Append('[');
+                }
+
+                var transIdx = 0;
+                foreach (var transition in selfTransitions)
+                {
+                    if (!transition.IsEpsilon)
+                    {
+                        if (appendElement != null)
+                        {
+                            appendElement(transition.ElementDistribution.Value, builder);
+                        }
+                        else
+                        {
+                            builder.Append(transition.ElementDistribution);
+                        }
+                    }
+
+                    if (++transIdx < selfTransitionCount)
+                    {
+                        builder.Append('|');
+                    }
+                }
+
+                if (selfTransitionCount > 1)
+                {
+                    builder.Append(']');
+                }
+
+                if (selfTransitionCount > 0)
+                {
+                    builder.Append('*');
+                }
+
+                if (nonSelfTransitionCount > 1)
+                {
+                    builder.Append('[');
+                    stack.Push(("]", Option.None, -1));
+                }
+
+                transIdx = 0;
+                foreach (var transition in nonSelfTransitions)
+                {
+                    var transitionPrefix = (nonSelfTransitionCount == 1 || ++transIdx == 1)
+                        ? string.Empty
+                        : "|";
+                    stack.Push((transitionPrefix, transition.ElementDistribution, transition.DestinationStateIndex));
+                }
             }
+
+            return builder.ToString();
         }
 
         /// <summary>
@@ -853,10 +948,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <returns>The logarithm of the normalizer.</returns>
         /// <remarks>Returns <see cref="double.PositiveInfinity"/> if the sum diverges.</remarks>
-        public double GetLogNormalizer()
-        {
-            return this.DoGetLogNormalizer(false);
-        }
+        public double GetLogNormalizer() => this.DoGetLogNormalizer(false);
 
         /// <summary>
         /// Normalizes the automaton so that the sum of its values over all possible sequences equals to one
@@ -1036,7 +1128,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var state = result[stateId];
                 if (state.CanEnd)
                 {
-                    // Make all accepting states contibute the desired value to the result
+                    // Make all accepting states contribute the desired value to the result
                     state.SetEndWeight(value);
                 }
 
@@ -1242,37 +1334,35 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             var builder = new Builder(0);
             var productStateCache = new Dictionary<(int, int), int>(automaton1.States.Count + automaton2.States.Count);
-            builder.StartStateIndex = BuildProduct(automaton1.Start, automaton2.Start);
+            var stack = new Stack<(int state1, int state2, int productStateIndex)>();
 
-            var simplification = new Simplification(builder, this.PruneTransitionsWithLogWeightLessThan);
-            simplification.RemoveDeadStates(); // Product can potentially create dead states
-            simplification.SimplifyIfNeeded();
-
-            this.Data = builder.GetData();
-            if (this is StringAutomaton && tryDeterminize)
+            // Creates product state and schedules product computation for it.
+            // If computation is already scheduled or done the state index is simply taken from cache
+            int CreateProductState(State state1, State state2)
             {
-                this.TryDeterminize();
-            }
-
-            // Recursively builds an automaton representing the product of two given automata.
-            // Returns start state of product automaton.
-            int BuildProduct(State state1, State state2)
-            {
-                Debug.Assert(state1 != null && state2 != null, "Valid states must be provided.");
-                Debug.Assert(
-                    state2.Owner.IsEpsilonFree,
-                    "The second argument of the product operation must be epsilon-free.");
-
-                // State already exists, return its index
-                var statePair = (state1.Index, state2.Index);
-                if (productStateCache.TryGetValue(statePair, out var productStateIndex))
+                var destPair = (state1.Index, state2.Index);
+                if (!productStateCache.TryGetValue(destPair, out var productStateIndex))
                 {
-                    return productStateIndex;
+                    var productState = builder.AddState();
+                    productState.SetEndWeight(Weight.Product(state1.EndWeight, state2.EndWeight));
+                    stack.Push((state1.Index, state2.Index, productState.Index));
+                    productStateCache[destPair] = productState.Index;
+                    productStateIndex = productState.Index;
                 }
 
-                // Create a new state
-                var productState = builder.AddState();
-                productStateCache.Add(statePair, productState.Index);
+                return productStateIndex;
+            }
+
+            // Populate the stack with start product state
+            builder.StartStateIndex = CreateProductState(automaton1.Start, automaton2.Start);
+
+            while (stack.Count > 0)
+            {
+                var (state1Index, state2Index, productStateIndex) = stack.Pop();
+
+                var state1 = automaton1.States[state1Index];
+                var state2 = automaton2.States[state2Index];
+                var productState = builder[productStateIndex];
 
                 // Iterate over transitions in state1
                 foreach (var transition1 in state1.Transitions)
@@ -1282,7 +1372,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (transition1.IsEpsilon)
                     {
                         // Epsilon transition case
-                        var destProductStateIndex = BuildProduct(destState1, state2);
+                        var destProductStateIndex = CreateProductState(destState1, state2);
                         productState.AddEpsilonTransition(transition1.Weight, destProductStateIndex, transition1.Group);
                         continue;
                     }
@@ -1295,23 +1385,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             "The second argument of the product operation must be epsilon-free.");
                         var destState2 = state2.Owner.States[transition2.DestinationStateIndex];
                         var productLogNormalizer = Distribution<TElement>.GetLogAverageOf(
-                            transition1.ElementDistribution.Value, transition2.ElementDistribution.Value, out var product);
+                            transition1.ElementDistribution.Value, transition2.ElementDistribution.Value,
+                            out var product);
                         if (double.IsNegativeInfinity(productLogNormalizer))
                         {
                             continue;
                         }
 
                         var productWeight = Weight.Product(
-                            transition1.Weight,
-                            transition2.Weight,
-                            Weight.FromLogValue(productLogNormalizer));
-                        var destProductStateIndex = BuildProduct(destState1, destState2);
+                            transition1.Weight, transition2.Weight, Weight.FromLogValue(productLogNormalizer));
+                        var destProductStateIndex = CreateProductState(destState1, destState2);
                         productState.AddTransition(product, productWeight, destProductStateIndex, transition1.Group);
                     }
                 }
+            }
 
-                productState.SetEndWeight(Weight.Product(state1.EndWeight, state2.EndWeight));
-                return productState.Index;
+            var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
+            simplification.RemoveDeadStates(); // Product can potentially create dead states
+            simplification.SimplifyIfNeeded();
+
+            this.Data = builder.GetData();
+            if (this is StringAutomaton && tryDeterminize)
+            {
+                this.TryDeterminize();
             }
         }
 
@@ -1323,17 +1419,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The merged pruning threshold.</returns>
         private double? MergePruningWeights(TThis automaton1, TThis automaton2)
         {
-            if (automaton1.PruneTransitionsWithLogWeightLessThan == null)
+            if (automaton1.PruneStatesWithLogEndWeightLessThan == null)
             {
-                return automaton2.PruneTransitionsWithLogWeightLessThan;
+                return automaton2.PruneStatesWithLogEndWeightLessThan;
             }
 
-            if (automaton2.PruneTransitionsWithLogWeightLessThan == null)
+            if (automaton2.PruneStatesWithLogEndWeightLessThan == null)
             {
-                return automaton1.PruneTransitionsWithLogWeightLessThan;
+                return automaton1.PruneStatesWithLogEndWeightLessThan;
             }
 
-            return Math.Min(automaton1.PruneTransitionsWithLogWeightLessThan.Value, automaton2.PruneTransitionsWithLogWeightLessThan.Value);
+            return Math.Min(automaton1.PruneStatesWithLogEndWeightLessThan.Value, automaton2.PruneStatesWithLogEndWeightLessThan.Value);
         }
 
         /// <summary>
@@ -1437,7 +1533,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            var simplification = new Simplification(result, this.PruneTransitionsWithLogWeightLessThan);
+            var simplification = new Simplification(result, this.PruneStatesWithLogEndWeightLessThan);
             simplification.SimplifyIfNeeded();
 
             this.Data = result.GetData();
@@ -1571,7 +1667,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             this.Data = automaton.Data;
             this.LogValueOverride = automaton.LogValueOverride;
-            this.PruneTransitionsWithLogWeightLessThan = automaton.PruneTransitionsWithLogWeightLessThan;
+            this.PruneStatesWithLogEndWeightLessThan = automaton.PruneStatesWithLogEndWeightLessThan;
         }
 
         /// <summary>
@@ -1632,56 +1728,85 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="sequence">The sequence to compute the value on.</param>
         /// <returns>The logarithm of the value.</returns>
+        /// <remarks></remarks>
+        /// <remarks>Recursive implementation would be simpler but prone to stack overflows with large automata</remarks>
         public double GetLogValue(TSequence sequence)
         {
             Argument.CheckIfNotNull(sequence, "sequence");
-            var valueCache = new Dictionary<(int, int), Weight>();
-            var logValue = DoGetValue(this.Start.Index, 0).LogValue;
+            var sequenceLength = SequenceManipulator.GetLength(sequence);
 
-            return
-                !double.IsNegativeInfinity(logValue) && this.LogValueOverride.HasValue
-                    ? this.LogValueOverride.Value
-                    : logValue;
+            // This algorithm is unwinding of trivial recursion with cache. It encodes recursion through explicit
+            // stack to avoid stack-overflow. It makes calculation not straightforward. Recursive algorithm that
+            // we want to encode looks like this:
+            //    GetLogValue(state, sequencePos) =
+            //       closure = EpsilonClosure(state)
+            //       if sequencePos == sequenceLength:
+            //           return closure.EndWeight
+            //       else:
+            //           return sum([GetLogValue(transition.Destination, sequencePos+1) * transitionWeight'
+            //                          for transition in closure.Transitions])
+            //           where transitionWeight' = transition.Weight * closureStateWeight * transition.ElementDistribution.GetLogWeight(sequence[sequencePos])
+            //
+            // To encode that with explicit stack we split each GetLogValue() call into 2 parts which are put
+            // on operations stack:
+            // a) (stateIndex, sequencePos, mul, -1) -
+            //    schedules computation for each transition from this state and (b) operation after them
+            // b) (stateIndex, sequencePos, mul, sumUntil) -
+            //    sums values of transitions from this state. They will be on top of the stack
+            // As an optimization, value calculated by (b) is cached, so if (a) notices that result for
+            // (stateIndex, sequencePos) already calculated it doesn't schedule any extra work
+            var operationsStack = new Stack<(int stateIndex, int sequencePos, Weight multiplier, int sumUntil)>();
+            var valuesStack = new Stack<Weight>();
+            var valueCache = new Dictionary<(int stateIndex, int sequencePos), Weight>();
+            operationsStack.Push((this.Start.Index, 0, Weight.One, -1));
 
-            Weight DoGetValue(int stateIndex, int sequencePosition)
+            while (operationsStack.Count > 0)
             {
-                var state = this.States[stateIndex];
-                var stateIndexPair = (stateIndex, sequencePosition);
-                if (valueCache.TryGetValue(stateIndexPair, out var cachedValue))
-                {
-                    return cachedValue;
-                }
+                var (stateIndex, sequencePos, multiplier, sumUntil) = operationsStack.Pop();
+                var statePosPair = (stateIndex, sequencePos);
 
-                var closure = state.GetEpsilonClosure();
-
-                var value = Weight.Zero;
-                var count = SequenceManipulator.GetLength(sequence);
-                var isCurrent = sequencePosition < count;
-                if (isCurrent)
+                if (sumUntil < 0)
                 {
-                    var element = SequenceManipulator.GetElement(sequence, sequencePosition);
-                    for (var closureStateIndex = 0; closureStateIndex < closure.Size; ++closureStateIndex)
+                    if (valueCache.TryGetValue(statePosPair, out var cachedValue))
                     {
-                        var closureState = closure.GetStateByIndex(closureStateIndex);
-                        var closureStateWeight = closure.GetStateWeightByIndex(closureStateIndex);
+                        valuesStack.Push(Weight.Product(cachedValue, multiplier));
+                    }
+                    else
+                    {
+                        var closure = this.States[stateIndex].GetEpsilonClosure();
 
-                        foreach (var transition in closureState.Transitions)
+                        if (sequencePos == sequenceLength)
                         {
-                            if (transition.IsEpsilon)
-                            {
-                                continue; // The destination is a part of the closure anyway
-                            }
+                            // We are at the end of sequence. So put an answer on stack
+                            valuesStack.Push(Weight.Product(closure.EndWeight, multiplier));
+                            valueCache[statePosPair] = closure.EndWeight;
+                        }
+                        else
+                        {
+                            // schedule second part of computation - sum values for all transitions
+                            // Note: it is put on stack before operations for any transitions, that
+                            // means that it will be executed after them
+                            operationsStack.Push((stateIndex, sequencePos, multiplier, valuesStack.Count));
 
-                            var destState = this.States[transition.DestinationStateIndex];
-                            var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
-                            if (!distWeight.IsZero && !transition.Weight.IsZero)
+                            var element = SequenceManipulator.GetElement(sequence, sequencePos);
+                            for (var closureStateIndex = 0; closureStateIndex < closure.Size; ++closureStateIndex)
                             {
-                                var destValue = DoGetValue(destState.Index, sequencePosition + 1);
-                                if (!destValue.IsZero)
+                                var closureState = closure.GetStateByIndex(closureStateIndex);
+                                var closureStateWeight = closure.GetStateWeightByIndex(closureStateIndex);
+                                foreach (var transition in closureState.Transitions)
                                 {
-                                    value = Weight.Sum(
-                                        value,
-                                        Weight.Product(closureStateWeight, transition.Weight, distWeight, destValue));
+                                    if (transition.IsEpsilon)
+                                    {
+                                        continue; // The destination is a part of the closure anyway
+                                    }
+
+                                    var destStateIndex = transition.DestinationStateIndex;
+                                    var distWeight = Weight.FromLogValue(transition.ElementDistribution.Value.GetLogProb(element));
+                                    if (!distWeight.IsZero && !transition.Weight.IsZero)
+                                    {
+                                        var weightMul = Weight.Product(closureStateWeight, transition.Weight, distWeight);
+                                        operationsStack.Push((destStateIndex, sequencePos + 1, weightMul, -1));
+                                    }
                                 }
                             }
                         }
@@ -1689,12 +1814,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
                 else
                 {
-                    value = closure.EndWeight;
-                }
+                    // All transitions value from this state are already calculated, sum them and store on stack and in cache
+                    var sum = Weight.Zero;
+                    while (valuesStack.Count > sumUntil)
+                    {
+                        var transitionValue = valuesStack.Pop();
+                        sum = Weight.Sum(sum, transitionValue);
+                    }
 
-                valueCache.Add(stateIndexPair, value);
-                return value;
+                    valuesStack.Push(Weight.Product(multiplier, sum));
+                    valueCache[statePosPair] = sum;
+                }
             }
+
+            Debug.Assert(valuesStack.Count == 1);
+            var result = valuesStack.Pop();
+            return 
+                !result.IsZero && this.LogValueOverride.HasValue
+                    ? this.LogValueOverride.Value
+                    : result.LogValue;
         }
 
         /// <summary>
@@ -1714,10 +1852,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// The only sequence having non-zero value, if found.
         /// <see langword="null"/>, if the automaton is zero everywhere or is non-zero on more than one sequence.
         /// </returns>
+        /// <remarks>Recursive implementation would be simpler but prone to stack overflows with large automata</remarks>
         public TSequence TryComputePoint()
         {
-            bool[] endNodeReachability = this.ComputeEndStateReachability();
-            if (!endNodeReachability[this.Start.Index])
+            var isEndNodeReachable = this.ComputeEndStateReachability();
+            if (!isEndNodeReachable[this.Start.Index])
             {
                 return null;
             }
@@ -1725,8 +1864,92 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var point = new List<TElement>();
             int? pointLength = null;
             var stateDepth = new ArrayDictionary<int>(this.States.Count);
-            bool isPoint = this.TryComputePointDfs(this.Start, 0, stateDepth, endNodeReachability, point, ref pointLength);
-            return isPoint && pointLength.HasValue ? SequenceManipulator.ToSequence(point) : null;
+            var stack = new Stack<(int stateIndex, int sequencePos)>();
+            stack.Push((this.Start.Index, 0));
+
+            // Note: this algorithm looks simpler if implemented recursively. But recursive implementation
+            // causes StackOverflowException.
+            // Algorithm is simple: traverse automaton id depth-first fashion and check that element transitions
+            // along all paths are equal. If any inconsistency is found
+
+            while (stack.Count != 0)
+            {
+                var (stateIndex, sequencePos) = stack.Pop();
+                Debug.Assert(isEndNodeReachable[stateIndex], "Dead branches must not be visited.");
+
+                if (stateDepth.TryGetValue(stateIndex, out var cachedStateDepth))
+                {
+                    // If we've already been in this state, we must be at the same sequence pos
+                    if (sequencePos != cachedStateDepth)
+                    {
+                        return null;
+                    }
+
+                    // This state was already processed, goto next one
+                    continue;
+                }
+
+                stateDepth.Add(stateIndex, sequencePos);
+
+                var state = this.States[stateIndex];
+
+                // Can we stop in this state?
+                if (state.CanEnd)
+                {
+                    // Is this a suffix or a prefix of the point already found?
+                    if (pointLength.HasValue)
+                    {
+                        if (sequencePos != pointLength.Value)
+                        {
+                            return null;
+                        }
+
+                        continue;
+                    }
+                    
+                    // Now we know the length of the sequence
+                    pointLength = sequencePos;
+                }
+
+                foreach (var transition in state.Transitions)
+                {
+                    var destStateIndex = transition.DestinationStateIndex;
+                    if (!isEndNodeReachable[destStateIndex])
+                    {
+                        // Only walk through the accepting part of the automaton
+                        continue;
+                    }
+
+                    if (transition.IsEpsilon)
+                    {
+                        // Move to the next state, keep the sequence position
+                        stack.Push((destStateIndex, sequencePos));
+                    }
+                    else if (!transition.ElementDistribution.Value.IsPointMass)
+                    {
+                        // If there's non-point distribution on transition, than automaton doesn't have point either
+                        return null;
+                    }
+                    else
+                    {
+                        var element = transition.ElementDistribution.Value.Point;
+                        if (sequencePos == point.Count)
+                        {
+                            // It is the first time at this sequence position
+                            point.Add(element);
+                        }
+                        else if (!point[sequencePos].Equals(element))
+                        {
+                            // This is not the first time at this sequence position, and the elements are different
+                            return null;
+                        }
+
+                        stack.Push((destStateIndex, sequencePos + 1));
+                    }
+                }
+            }
+
+            return pointLength.HasValue ? SequenceManipulator.ToSequence(point) : null;
         }
 
         /// <summary>
@@ -1936,7 +2159,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             this.Data = builder.GetData();
             this.LogValueOverride = automaton.LogValueOverride;
-            this.PruneTransitionsWithLogWeightLessThan = automaton.LogValueOverride;
+            this.PruneStatesWithLogEndWeightLessThan = automaton.LogValueOverride;
 
             // Recursively builds an automaton representing the epsilon closure of a given automaton.
             // Returns the state index of state representing the closure
@@ -2077,12 +2300,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// For each state computes whether any state with non-zero ending weight can be reached from it.
         /// </summary>
         /// <returns>An array mapping state indices to end state reachability.</returns>
+        /// <remarks>Recursive implementation would be simpler but prone to stack overflows with large automatons</remarks>
         private bool[] ComputeEndStateReachability()
         {
             //// First, build a reversed graph
 
-            int[] edgePlacementIndices = new int[this.States.Count + 1];
-            for (int i = 0; i < this.States.Count; ++i)
+            var edgePlacementIndices = new int[this.States.Count + 1];
+            for (var i = 0; i < this.States.Count; ++i)
             {
                 var state = this.States[i];
                 foreach (var transition in state.Transitions)
@@ -2097,15 +2321,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // The element of edgePlacementIndices at index i+1 contains a count of the number of edges 
             // going into the i'th state (the indegree of the state).
             // Convert this into a cumulative count (which will be used to give a unique index to each edge).
-            for (int i = 1; i < edgePlacementIndices.Length; ++i)
+            for (var i = 1; i < edgePlacementIndices.Length; ++i)
             {
                 edgePlacementIndices[i] += edgePlacementIndices[i - 1];
             }
 
-            int[] edgeArrayStarts = (int[])edgePlacementIndices.Clone();
-            int totalEdgeCount = edgePlacementIndices[this.States.Count];
-            int[] edgeDestinationIndices = new int[totalEdgeCount];
-            for (int i = 0; i < this.States.Count; ++i)
+            var edgeArrayStarts = (int[])edgePlacementIndices.Clone();
+            var totalEdgeCount = edgePlacementIndices[this.States.Count];
+            var edgeDestinationIndices = new int[totalEdgeCount];
+            for (var i = 0; i < this.States.Count; ++i)
             {
                 var state = this.States[i];
                 foreach (var transition in state.Transitions)
@@ -2113,7 +2337,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (!transition.Weight.IsZero)
                     {
                         // The unique index for this edge
-                        int edgePlacementIndex = edgePlacementIndices[transition.DestinationStateIndex]++;
+                        var edgePlacementIndex = edgePlacementIndices[transition.DestinationStateIndex]++;
 
                         // The source index for the edge (which is the destination edge in the reversed graph)
                         edgeDestinationIndices[edgePlacementIndex] = i;
@@ -2122,38 +2346,38 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             //// Now run a depth-first search to label all reachable nodes
-            bool[] visitedNodes = new bool[this.States.Count];
-            for (int i = 0; i < this.States.Count; ++i)
+            var stack = new Stack<int>();
+            var visitedNodes = new bool[this.States.Count];
+            for (var i = 0; i < this.States.Count; ++i)
             {
                 if (!visitedNodes[i] && this.States[i].CanEnd)
                 {
-                    LabelReachableNodesDfs(i);
+                    visitedNodes[i] = true;
+                    stack.Push(i);
+                    while (stack.Count != 0)
+                    {
+                        var stateIndex = stack.Pop();
+                        for (var edgeIndex = edgeArrayStarts[stateIndex]; edgeIndex < edgeArrayStarts[stateIndex + 1]; ++edgeIndex)
+                        {
+                            var destinationIndex = edgeDestinationIndices[edgeIndex];
+                            if (!visitedNodes[destinationIndex])
+                            {
+                                visitedNodes[destinationIndex] = true;
+                                stack.Push(destinationIndex);
+                            }
+                        }
+                    }
                 }
             }
 
             return visitedNodes;
-
-            void LabelReachableNodesDfs(int currentVertex)
-            {
-                Debug.Assert(!visitedNodes[currentVertex], "Visited vertices must not be revisited.");
-                visitedNodes[currentVertex] = true;
-
-                for (int edgeIndex = edgeArrayStarts[currentVertex]; edgeIndex < edgeArrayStarts[currentVertex + 1]; ++edgeIndex)
-                {
-                    int destVertexIndex = edgeDestinationIndices[edgeIndex];
-                    if (!visitedNodes[destVertexIndex])
-                    {
-                        LabelReachableNodesDfs(destVertexIndex);
-                    }
-                }
-            }
         }
 
         /// <summary>
         /// Computes the logarithm of the normalizer of the automaton, normalizing it afterwards if requested.
         /// </summary>
         /// <param name="normalize">Specifies whether the automaton must be normalized after computing the normalizer.</param>
-        /// <returns>The logarithm of the normalizer.</returns>
+        /// <returns>The logarithm of the normalizer and condensation of automaton.</returns>
         /// <remarks>The automaton is normalized only if the normalizer has a finite non-zero value.</remarks>
         private double DoGetLogNormalizer(bool normalize)
         {
@@ -2161,7 +2385,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             TThis noEpsilonTransitions = Zero();
             noEpsilonTransitions.SetToEpsilonClosureOf((TThis)this); // To get rid of infinite weight closures
 
-            Condensation condensation = noEpsilonTransitions.ComputeCondensation(noEpsilonTransitions.Start, tr => true, false);
+            var condensation = noEpsilonTransitions.ComputeCondensation(noEpsilonTransitions.Start, tr => true, false);
             double logNormalizer = condensation.GetWeightToEnd(noEpsilonTransitions.Start.Index).LogValue;
             if (normalize)
             {
@@ -2206,101 +2430,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// Recursively looks for the only sequence which has non-zero value under the automaton.
-        /// </summary>
-        /// <param name="currentState">The state currently being traversed.</param>
-        /// <param name="currentSequencePos">The current position in the sequence.</param>
-        /// <param name="stateSequencePosCache">A lookup table for memoization.</param>
-        /// <param name="isEndNodeReachable">End node reachability table to avoid dead branches.</param>
-        /// <param name="point">The candidate sequence.</param>
-        /// <param name="pointLength">The length of the candidate sequence
-        /// or <see langword="null"/> if the length isn't known yet.</param>
-        /// <returns>
-        /// <see langword="true"/> if the sequence was found, <see langword="false"/> otherwise.
-        /// </returns>
-        private bool TryComputePointDfs(
-            State currentState,
-            int currentSequencePos,
-            ArrayDictionary<int> stateSequencePosCache,
-            bool[] isEndNodeReachable,
-            List<TElement> point,
-            ref int? pointLength)
-        {
-            Debug.Assert(isEndNodeReachable[currentState.Index], "Dead branches must not be visited.");
-
-            int cachedStateDepth;
-            if (stateSequencePosCache.TryGetValue(currentState.Index, out cachedStateDepth))
-            {
-                // If we've already been in this state, we must be at the same sequence pos
-                return currentSequencePos == cachedStateDepth;
-            }
-
-            stateSequencePosCache.Add(currentState.Index, currentSequencePos);
-
-            // Can we stop in this state?
-            if (currentState.CanEnd)
-            {
-                // Is this a suffix or a prefix of the point already found?
-                if (pointLength.HasValue)
-                {
-                    if (currentSequencePos != pointLength.Value)
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    // Now we know the length of the sequence
-                    pointLength = currentSequencePos;
-                }
-            }
-
-            foreach (var transition in currentState.Transitions)
-            {
-                State destState = this.States[transition.DestinationStateIndex];
-                if (!isEndNodeReachable[destState.Index])
-                {
-                    continue; // Only walk through the accepting part of the automaton
-                }
-
-                if (transition.IsEpsilon)
-                {
-                    // Move to the next state, keep the sequence position
-                    if (!this.TryComputePointDfs(destState, currentSequencePos, stateSequencePosCache, isEndNodeReachable, point, ref pointLength))
-                    {
-                        return false;
-                    }
-                }
-                else if (!transition.ElementDistribution.Value.IsPointMass)
-                {
-                    return false;
-                }
-                else
-                {
-                    TElement element = transition.ElementDistribution.Value.Point;
-                    if (currentSequencePos == point.Count)
-                    {
-                        // It is the first time at this sequence position
-                        point.Add(element);
-                    }
-                    else if (!point[currentSequencePos].Equals(element))
-                    {
-                        // This is not the first time at this sequence position, and the elements are different
-                        return false;
-                    }
-
-                    // Look at the next sequence position
-                    if (!this.TryComputePointDfs(destState, currentSequencePos + 1, stateSequencePosCache, isEndNodeReachable, point, ref pointLength))
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
         /// Swaps the current automaton with a given one.
         /// </summary>
         /// <param name="automaton">The automaton to swap the current one with.</param>
@@ -2317,107 +2446,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             this.LogValueOverride = automaton.LogValueOverride;
             automaton.LogValueOverride = dummy;
 
-            dummy = this.PruneTransitionsWithLogWeightLessThan;
-            this.PruneTransitionsWithLogWeightLessThan = automaton.PruneTransitionsWithLogWeightLessThan;
-            automaton.PruneTransitionsWithLogWeightLessThan = dummy;
-        }
-
-        /// <summary>
-        /// Appends a string representing the automaton from the current state.
-        /// </summary>
-        /// <param name="builder">The string builder.</param>
-        /// <param name="visitedStates">The set of states that has already been visited.</param>
-        /// <param name="stateIndex">The index of the current state.</param>
-        /// <param name="appendRegex">Optional method for appending at the element distribution level.</param>
-        private void AppendString(StringBuilder builder, HashSet<int> visitedStates, int stateIndex, Action<TElementDistribution, StringBuilder> appendRegex = null)
-        {
-            if (visitedStates.Contains(stateIndex))
-            {
-                builder.Append('➥');
-                return;
-            }
-
-            visitedStates.Add(stateIndex);
-
-            var currentState = this.States[stateIndex];
-            var transitions = currentState.Transitions.Where(t => !t.Weight.IsZero);
-            var selfTransitions = transitions.Where(t => t.DestinationStateIndex == stateIndex);
-            int selfTransitionCount = selfTransitions.Count();
-            var nonSelfTransitions = transitions.Where(t => t.DestinationStateIndex != stateIndex);
-            int nonSelfTransitionCount = nonSelfTransitions.Count();
-
-            if (currentState.CanEnd && nonSelfTransitionCount > 0)
-            {
-                builder.Append('▪');
-            }
-
-            if (selfTransitionCount > 1)
-            {
-                builder.Append('[');
-            }
-
-            int transIdx = 0;
-            foreach (var transition in selfTransitions)
-            {
-                if (!transition.IsEpsilon)
-                {
-                    if (appendRegex != null)
-                    {
-                        appendRegex(transition.ElementDistribution.Value, builder);
-                    }
-                    else
-                    {
-                        builder.Append(transition.ElementDistribution);
-                    }
-                }
-
-                if (++transIdx < selfTransitionCount)
-                {
-                    builder.Append('|');
-                }
-            }
-
-            if (selfTransitionCount > 1)
-            {
-                builder.Append(']');
-            }
-
-            if (selfTransitionCount > 0)
-            {
-                builder.Append('*');
-            }
-
-            if (nonSelfTransitionCount > 1)
-            {
-                builder.Append('[');
-            }
-
-            transIdx = 0;
-            foreach (var transition in nonSelfTransitions)
-            {
-                if (!transition.IsEpsilon)
-                {
-                    if (appendRegex != null)
-                    {
-                        appendRegex(transition.ElementDistribution.Value, builder);
-                    }
-                    else
-                    {
-                        builder.Append(transition.ElementDistribution);
-                    }
-                }
-
-                this.AppendString(builder, visitedStates, transition.DestinationStateIndex, appendRegex);
-                if (++transIdx < nonSelfTransitionCount)
-                {
-                    builder.Append('|');
-                }
-            }
-
-            if (nonSelfTransitionCount > 1)
-            {
-                builder.Append(']');
-            }
+            dummy = this.PruneStatesWithLogEndWeightLessThan;
+            this.PruneStatesWithLogEndWeightLessThan = automaton.PruneStatesWithLogEndWeightLessThan;
+            automaton.PruneStatesWithLogEndWeightLessThan = dummy;
         }
 
         /// <summary>
@@ -2587,7 +2618,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             propertyMask[1 << idx++] = true; // isEpsilonFree is alway known
             propertyMask[1 << idx++] = this.Data.IsEpsilonFree;
             propertyMask[1 << idx++] = this.LogValueOverride.HasValue;
-            propertyMask[1 << idx++] = this.PruneTransitionsWithLogWeightLessThan.HasValue;
+            propertyMask[1 << idx++] = this.PruneStatesWithLogEndWeightLessThan.HasValue;
             propertyMask[1 << idx++] = true; // start state is alway serialized
 
             writeInt32(propertyMask.Data);
@@ -2597,9 +2628,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 writeDouble(this.LogValueOverride.Value);
             }
 
-            if (this.PruneTransitionsWithLogWeightLessThan.HasValue)
+            if (this.PruneStatesWithLogEndWeightLessThan.HasValue)
             {
-                writeDouble(this.PruneTransitionsWithLogWeightLessThan.Value);
+                writeDouble(this.PruneStatesWithLogEndWeightLessThan.Value);
             }
 
             // This state is serialized only for its index.
@@ -2624,11 +2655,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var propertyMask = new BitVector32(readInt32());
             var res = new TThis();
             var idx = 0;
-            // we do not trust serialized "isEpsilonFree". Will take it from builder anyway
+            // Serialized "isEpsilonFree" is not used. Will be taken from builder anyway
             var hasEpsilonFreeIgnored = propertyMask[1 << idx++];
             var isEpsilonFreeIgnored = propertyMask[1 << idx++];
             var hasLogValueOverride = propertyMask[1 << idx++];
-            var hasPruneTransitions = propertyMask[1 << idx++];
+            var hasPruneWeights = propertyMask[1 << idx++];
             var hasStartState = propertyMask[1 << idx++];
 
             if (hasLogValueOverride)
@@ -2636,9 +2667,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 res.LogValueOverride = readDouble();
             }
 
-            if (hasPruneTransitions)
+            if (hasPruneWeights)
             {
-                res.PruneTransitionsWithLogWeightLessThan = readDouble();
+                res.PruneStatesWithLogEndWeightLessThan = readDouble();
             }
 
             var builder = new Builder(0);

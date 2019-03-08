@@ -910,13 +910,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <param name="eps">Precision.</param>
         public static void Equal(double expected, double observed, double eps)
         {
-            // Infinty check
+            // Infinity check
             if (expected == observed)
             {
                 return;
             }
 
-            Assert.True(Math.Abs(expected - observed) < eps, $"Equality failure\n. Expected: {expected}\nActual:   {observed}");
+            Assert.True(Math.Abs(expected - observed) < eps, $"Equality failure.\nExpected: {expected}\nActual:   {observed}");
         }
 
         /// <summary>

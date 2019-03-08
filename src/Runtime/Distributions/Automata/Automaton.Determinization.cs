@@ -123,11 +123,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            var simplification = new Simplification(builder, this.PruneTransitionsWithLogWeightLessThan);
+            var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
             simplification.MergeParallelTransitions(); // Determinization produces a separate transition for each segment
 
             var result = builder.GetAutomaton();
-            result.PruneTransitionsWithLogWeightLessThan = this.PruneTransitionsWithLogWeightLessThan;
+            result.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
             result.LogValueOverride = this.LogValueOverride;
             this.SwapWith(result);
 

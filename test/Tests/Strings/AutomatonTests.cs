@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.ML.Probabilistic.Collections;
-
 namespace Microsoft.ML.Probabilistic.Tests
 {
     using System;
@@ -15,10 +13,10 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Xunit;
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 
+    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Distributions.Automata;
     using Microsoft.ML.Probabilistic.Math;
-    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Tests for weighted finite state automata.
@@ -64,10 +62,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             StringInferenceTestUtilities.TestValue(zero3, 0.0, "abc", "ab", "a", string.Empty);
 
             StringAutomaton zero4 =
-                StringAutomaton.Constant(2.0, DiscreteChar.Lower())
-                                       .Product(
-                                           StringAutomaton.Constant(3.0, DiscreteChar.Upper())
-                                                                  .Append(StringAutomaton.ConstantOnElement(1.5, DiscreteChar.Digit())));
+                StringAutomaton
+                    .Constant(2.0, DiscreteChar.Lower())
+                    .Product(
+                        StringAutomaton
+                            .Constant(3.0, DiscreteChar.Upper())
+                            .Append(StringAutomaton.ConstantOnElement(1.5, DiscreteChar.Digit())));
             Assert.True(zero4.IsZero());
             Assert.True(zero4.IsCanonicZero());
             StringInferenceTestUtilities.TestValue(zero4, 0.0, "abc", "ab", "a", string.Empty);
@@ -761,33 +761,90 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests whether the point mass computation operations fails due to a stack overflow when
+        /// an automaton becomes sufficiently large.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void TryComputePointLargeAutomaton()
+        {
+            using (var unlimited = new StringAutomaton.UnlimitedStatesComputation())
+            {
+                const int StateCount = 100_000;
+
+                var builder = new StringAutomaton.Builder();
+                var state = builder.Start;
+
+                for (var i = 1; i < StateCount; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                state.SetEndWeight(Weight.One);
+
+                var automaton = builder.GetAutomaton();
+                var point = new string('a', StateCount - 1);
+
+                Assert.True(automaton.TryComputePoint() == point);
+                StringInferenceTestUtilities.TestValue(automaton, 1.0, point);
+            }
+        }
+
+        /// <summary>
         /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        [Trait("Category", "OpenBug")]
-        public void TryComputePointLargeAutomaton()
+        public void SetToProductLargeAutomaton()
         {
-            //// Fails with ~2500 states due to stack overflow
-            //// Fails on MacOS 64-bit with 750 states due to stack overflow
-            int stateCount = Environment.Is64BitProcess  ? 600 : 1500; // Stack frames are larger on 64bit
-            Debug.Assert(stateCount <= StringAutomaton.MaxStateCount, "MaxStateCount must be adjusted first.");
-
-            var builder = new StringAutomaton.Builder();
-            var state = builder.Start;
-            
-            for (int i = 1; i < stateCount; ++i)
+            using (var unlimited = new StringAutomaton.UnlimitedStatesComputation())
             {
-                state = state.AddTransition('a', Weight.One);
+                const int StateCount = 100_000;
+
+                var builder = new StringAutomaton.Builder();
+                var state = builder.Start;
+
+                for (var i = 1; i < StateCount; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                state.SetEndWeight(Weight.One);
+
+                var automaton1 = builder.GetAutomaton();
+                var automaton2 = builder.GetAutomaton();
+                var point = new string('a', StateCount - 1);
+
+                var productAutomaton = StringAutomaton.Product(automaton1, automaton2);
+                StringInferenceTestUtilities.TestValue(productAutomaton, 1.0, point);
             }
+        }
 
-            state.SetEndWeight(Weight.One);
+        /// <summary>
+        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void GetLogNormalizerLargeAutomaton()
+        {
+            using (var unlimited = new StringAutomaton.UnlimitedStatesComputation())
+            {
+                const int StateCount = 100_000;
 
-            var automaton = builder.GetAutomaton();
-            string point = new string('a', stateCount - 1);
-            
-            Assert.True(automaton.TryComputePoint() == point);
-            StringInferenceTestUtilities.TestValue(automaton, 1.0, point);
+                var builder = new StringAutomaton.Builder();
+                var state = builder.Start;
+
+                for (var i = 1; i < StateCount; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                state.SetEndWeight(Weight.One);
+
+                var logNormalizer = builder.GetAutomaton().GetLogNormalizer();
+
+                Assert.Equal(0.0, logNormalizer);
+            }
         }
 
         /// <summary>
@@ -1282,7 +1339,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             for (int i = 0; i < 3; ++i)
-        {
+            {
                 StringInferenceTestUtilities.TestValue(automaton, 2.0, "ab");
                 StringInferenceTestUtilities.TestValue(automaton, 3.0, "adc", "adddc", "ac");
                 StringInferenceTestUtilities.TestValue(automaton, 0.0, "adb", "ad", string.Empty);
