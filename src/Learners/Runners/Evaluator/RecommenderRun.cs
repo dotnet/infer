@@ -110,10 +110,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         public void Execute()
         {
             // Report that the run has been started
-            if (this.Started != null)
-            {
-                this.Started(this, EventArgs.Empty);
-            }
+            this.Started?.Invoke(this, EventArgs.Empty);
 
             try
             {

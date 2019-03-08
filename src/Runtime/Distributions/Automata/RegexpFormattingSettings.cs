@@ -42,6 +42,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             this.IgnoreElementDistributionDetails = ignoreElementDistributionDetails;
             this.TruncationLength = truncationLength;
             this.EscapeCharacters = escapeCharacters;
+            this.UseLazyQuantifier = useLazyQuantifier;
         }
 
         /// <summary>

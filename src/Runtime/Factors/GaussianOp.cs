@@ -294,16 +294,17 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double v = xv + mv;
                 double lowerBound = 0;
                 double upperBound = Double.PositiveInfinity;
-                bool precisionIsBetween = true;
+                bool precisionIsBetween;
                 if (mean.Precision >= 0)
                 {
                     if (sample.Precision < -mean.Precision)
                         throw new ImproperMessageException(sample);
+                    precisionIsBetween = true;
                     //lowerBound = -mean.Precision * sample.Precision / (mean.Precision + sample.Precision);
                     lowerBound = -1.0 / v;
                 }
-                else
-                {  // mean.Precision < 0
+                else // mean.Precision < 0
+                {  
                     if (sample.Precision < 0)
                     {
                         precisionIsBetween = true;
@@ -316,12 +317,18 @@ namespace Microsoft.ML.Probabilistic.Factors
                         lowerBound = 0;
                         upperBound = -mean.Precision;
                     }
-                    else
+                    else // sample.Precision >= -mean.Precision > 0
                     {
+                        // mv < v < 0
+                        // 0 < -v < -mv
+                        // we want 1/(mv + 1/prec) > -sample.Precision
+                        // If mv + 1/prec > 0 (1/prec > -mv) then -xv < mv + 1/prec, 1/prec > -v, prec < -1/v, prec < -1/mv (latter is stronger)
+                        // If mv + 1/prec < 0 (1/prec < -mv) then -xv > mv + 1/prec, 1/prec < -v, prec > -1/v, prec > -1/mv (former is stronger)
+                        // Therefore the integration region is (prec < -1/mv) and (prec > -1/v).
                         // in this case, the precision should NOT be in this interval.
                         precisionIsBetween = false;
                         lowerBound = -mean.Precision;
-                        lowerBound = -1.0 / v;
+                        upperBound = -1.0 / v;
                     }
                 }
                 double[] nodes = new double[QuadratureNodeCount];
@@ -1468,27 +1475,28 @@ namespace Microsoft.ML.Probabilistic.Factors
             //Console.WriteLine("inflection points = {0}", StringUtil.CollectionToString(inflectionPoints, " "));
             inflectionPoints = inflectionPoints.ConvertAll(x => Math.Log(x));
             // find the maximum and the target value
-            Func<double, double> like = logx =>
+            double like(double logx)
             {
                 if (double.IsInfinity(logx))
                     return double.NegativeInfinity;
                 double x = Math.Exp(logx);
-                double vx = v + 1/x;
+                double vx = v + 1 / x;
                 return a * logx - b * x - 0.5 * Math.Log(vx) - 0.5 * m2 / vx;
-            };
+            }
             var stationaryValues = stationaryPoints.ConvertAll(logx => like(logx));
             double max = MMath.Max(stationaryValues);
             double logx0 = stationaryPoints[stationaryValues.IndexOf(max)];
             logrmode = logx0;
-            Func<double,double> func = logx =>
+            double func(double logx)
             {
                 return LogLikelihoodRatio(logx, logx0, m, v, a, b) + 50;
-            };
-            Func<double,double> deriv = logx => {
+            }
+            double deriv(double logx)
+            {
                 double x = Math.Exp(logx);
-                double vx = v*x + 1;
-                return a - b*x + 0.5*(vx - m*m*x)/(vx*vx);
-            };
+                double vx = v * x + 1;
+                return a - b * x + 0.5 * (vx - m * m * x) / (vx * vx);
+            }
             // find where the likelihood matches the bound value
             List<double> zeroes = FindZeroes(func, deriv, stationaryPoints, inflectionPoints);
             logrmin = MMath.Min(zeroes);

@@ -375,16 +375,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                     else
                     {
-                        if (resultIndex != null)
+                        if (parameter.IsDefined(typeof(SkipIfMatchingIndexIsUniformAttribute), false))
                         {
-                            if (parameter.IsDefined(typeof(SkipIfMatchingIndexIsUniformAttribute), false))
-                            {
-                                if (resultIndex == null)
-                                    throw new InferCompilerException(parameter.Name + " has SkipIfMatchingIndexIsUniformAttribute but " + StringUtil.MethodNameToString(method) +
-                                                                   " has no resultIndex parameter");
-                                IExpression requirement = Builder.ArrayIndex(paramRef, resultIndex);
-                                info.Add(DependencyType.SkipIfUniform, Builder.ExprStatement(requirement));
-                            }
+                            if (resultIndex == null)
+                                throw new InferCompilerException(parameter.Name + " has SkipIfMatchingIndexIsUniformAttribute but " + StringUtil.MethodNameToString(method) +
+                                                               " has no resultIndex parameter");
+                            IExpression requirement = Builder.ArrayIndex(paramRef, resultIndex);
+                            info.Add(DependencyType.SkipIfUniform, Builder.ExprStatement(requirement));
                         }
                         if (parameter.IsDefined(typeof(SkipIfAnyExceptIndexIsUniformAttribute), false))
                         {

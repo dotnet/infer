@@ -170,10 +170,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
             int methodIndex = context.FindAncestorIndex<IMethodInvokeExpression>();
             if (methodIndex != -1)
             {
-                IAddressOutExpression iaoe = context.GetAncestor(methodIndex + 1) as IAddressOutExpression;
-                if (iaoe == null)
+                if (context.GetAncestor(methodIndex + 1) is IAddressOutExpression iaoe)
+                    return IsPartOf(iaoe.Expression, expr);
+                else
                     return false;
-                return IsPartOf(iaoe.Expression, expr);
             }
             return IsOnLHSOfAssignment(context, expr);
         }
@@ -187,9 +187,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 if (bounds.TryGetValue(ivd, out b))
                     return b;
             }
-            else if (expr is IBinaryExpression)
+            else if (expr is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression)expr;
                 Bounds left = GetBounds(ibe.Left, bounds);
                 Bounds right = GetBounds(ibe.Right, bounds);
                 if (left != null && right != null)
@@ -212,12 +211,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     }
                 }
             }
-            else if (expr is ILiteralExpression)
+            else if (expr is ILiteralExpression ile)
             {
-                ILiteralExpression ile = (ILiteralExpression)expr;
-                if (ile.Value is int)
+                if (ile.Value is int value)
                 {
-                    int value = (int)ile.Value;
                     return new Bounds()
                     {
                         lowerBound = value,
@@ -241,12 +238,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 return GetVariableDeclaration(expr);
             }
-            else if (expr is IBinaryExpression)
+            else if (expr is IBinaryExpression indexBinaryExpr)
             {
-                IBinaryExpression indexBinaryExpr = (IBinaryExpression)expr;
-                IVariableReferenceExpression ivre = indexBinaryExpr.Left as IVariableReferenceExpression;
                 ILiteralExpression offsetExpr = indexBinaryExpr.Right as ILiteralExpression;
-                if (ivre != null && offsetExpr != null && offsetExpr.Value is int)
+                if (indexBinaryExpr.Left is IVariableReferenceExpression ivre && offsetExpr != null && offsetExpr.Value is int)
                 {
                     offset = (int)offsetExpr.Value;
                     if (indexBinaryExpr.Operator == BinaryOperator.Subtract)
@@ -270,7 +265,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <summary>
         /// Reflection cache
         /// </summary>
-        MethodInfo AnyIndexMethod = new Func<int>(GateAnalysisTransform.AnyIndex).Method;
+        readonly MethodInfo AnyIndexMethod = new Func<int>(GateAnalysisTransform.AnyIndex).Method;
 
         // helper for MutatingFirstAffectsSecond
         // offsets and extraIndices only need to be modified on a match (though they can be modified in any case)
@@ -451,7 +446,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <summary>
         /// Reflection cache
         /// </summary>
-        MethodInfo AnyMethod = new Func<object[], object>(FactorManager.Any).Method;
+        readonly MethodInfo AnyMethod = new Func<object[], object>(FactorManager.Any).Method;
 
         /// <summary>
         /// Returns true if mutating the first expression would affect the value of the second.
@@ -537,12 +532,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 bool lastBracket = (i == affectedPrefixes.Count - 1);
                 IExpression mutatedPrefix = mutatedPrefixes[i];
                 IExpression affectedPrefix = affectedPrefixes[i];
-                if (mutatedPrefix is IArrayIndexerExpression)
+                if (mutatedPrefix is IArrayIndexerExpression mutated_iaie)
                 {
-                    IArrayIndexerExpression mutated_iaie = (IArrayIndexerExpression)mutatedPrefix;
-                    if (affectedPrefix is IArrayIndexerExpression)
+                    if (affectedPrefix is IArrayIndexerExpression affected_iaie)
                     {
-                        IArrayIndexerExpression affected_iaie = (IArrayIndexerExpression)affectedPrefix;
                         try
                         {
                             if (!IndicesOverlap(mutated_iaie.Indices, affected_iaie.Indices, mutatesWithinOnly && lastBracket, boundsInMutated, boundsInAffected, offsets, extraIndices, matchedIndices))
@@ -556,36 +549,30 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     else
                         return !mutatesWithinOnly;
                 }
-                else if (mutatedPrefix is IPropertyIndexerExpression)
+                else if (mutatedPrefix is IPropertyIndexerExpression mutated_ipie)
                 {
-                    IPropertyIndexerExpression mutated_ipie = (IPropertyIndexerExpression)mutatedPrefix;
-                    if (affectedPrefix is IPropertyIndexerExpression)
+                    if (affectedPrefix is IPropertyIndexerExpression affected_ipie)
                     {
-                        IPropertyIndexerExpression affected_ipie = (IPropertyIndexerExpression)affectedPrefix;
                         if (!IndicesOverlap(mutated_ipie.Indices, affected_ipie.Indices, mutatesWithinOnly && lastBracket, boundsInMutated, boundsInAffected, offsets, extraIndices, matchedIndices))
                             return false;
                     }
                     else
                         return !mutatesWithinOnly;
                 }
-                else if (mutatedPrefix is IPropertyReferenceExpression)
+                else if (mutatedPrefix is IPropertyReferenceExpression mutated_ipre)
                 {
-                    IPropertyReferenceExpression mutated_ipre = (IPropertyReferenceExpression)mutatedPrefix;
-                    if (affectedPrefix is IPropertyReferenceExpression)
+                    if (affectedPrefix is IPropertyReferenceExpression affected_ipre)
                     {
-                        IPropertyReferenceExpression affected_ipre = (IPropertyReferenceExpression)affectedPrefix;
                         if (!mutated_ipre.Property.Equals(affected_ipre.Property))
                             return !mutatesWithinOnly;
                     }
                     else
                         return !mutatesWithinOnly;
                 }
-                else if (mutatedPrefix is IFieldReferenceExpression)
+                else if (mutatedPrefix is IFieldReferenceExpression mutated_ifre)
                 {
-                    IFieldReferenceExpression mutated_ifre = (IFieldReferenceExpression)mutatedPrefix;
-                    if (affectedPrefix is IFieldReferenceExpression)
+                    if (affectedPrefix is IFieldReferenceExpression affected_ifre)
                     {
-                        IFieldReferenceExpression affected_ifre = (IFieldReferenceExpression)affectedPrefix;
                         if (!mutated_ifre.Field.Equals(affected_ifre.Field))
                             return !mutatesWithinOnly;
                     }
@@ -604,18 +591,16 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 Set<IVariableDeclaration> loopVars = new Set<IVariableDeclaration>(new IdentityComparer<IVariableDeclaration>());
                 foreach (IStatement container in containers.inputs)
                 {
-                    if (container is IForStatement)
+                    if (container is IForStatement ifs)
                     {
-                        IForStatement ifs = (IForStatement)container;
                         loopVars.Add(LoopVariable(ifs));
                     }
                 }
                 for (int i = count; i < mutatedPrefixes.Count; i++)
                 {
                     IExpression mutatedPrefix = mutatedPrefixes[i];
-                    if (mutatedPrefix is IArrayIndexerExpression)
+                    if (mutatedPrefix is IArrayIndexerExpression mutated_iaie)
                     {
-                        IArrayIndexerExpression mutated_iaie = (IArrayIndexerExpression)mutatedPrefix;
                         foreach (IExpression index in mutated_iaie.Indices)
                         {
                             foreach (var v in GetVariables(index))
@@ -685,12 +670,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 IExpression prefix1 = prefixes1[i];
                 IExpression prefix2 = prefixes2[i];
-                if (prefix1 is IArrayIndexerExpression)
+                if (prefix1 is IArrayIndexerExpression iaie1)
                 {
-                    IArrayIndexerExpression iaie1 = (IArrayIndexerExpression)prefix1;
-                    if (prefix2 is IArrayIndexerExpression)
+                    if (prefix2 is IArrayIndexerExpression iaie2)
                     {
-                        IArrayIndexerExpression iaie2 = (IArrayIndexerExpression)prefix2;
                         if (iaie1.Indices.Count != iaie2.Indices.Count)
                             break;
                         for (int j = 0; j < iaie1.Indices.Count; j++)
@@ -712,12 +695,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     else
                         break;
                 }
-                else if (prefix1 is IPropertyIndexerExpression)
+                else if (prefix1 is IPropertyIndexerExpression ipie1)
                 {
-                    IPropertyIndexerExpression ipie1 = (IPropertyIndexerExpression)prefix1;
-                    if (prefix2 is IPropertyIndexerExpression)
+                    if (prefix2 is IPropertyIndexerExpression ipie2)
                     {
-                        IPropertyIndexerExpression ipie2 = (IPropertyIndexerExpression)prefix2;
                         if (ipie1.Indices.Count != ipie2.Indices.Count)
                             break;
                         for (int j = 0; j < ipie1.Indices.Count; j++)
@@ -739,12 +720,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     else
                         break;
                 }
-                else if (prefix1 is IPropertyReferenceExpression)
+                else if (prefix1 is IPropertyReferenceExpression ipre1)
                 {
-                    IPropertyReferenceExpression ipre1 = (IPropertyReferenceExpression)prefix1;
-                    if (prefix2 is IPropertyReferenceExpression)
+                    if (prefix2 is IPropertyReferenceExpression ipre2)
                     {
-                        IPropertyReferenceExpression ipre2 = (IPropertyReferenceExpression)prefix2;
                         // we assume that mutating one property does not affect another.
                         if (!ipre1.Property.Equals(ipre2.Property))
                             break;
@@ -752,12 +731,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     else
                         break;
                 }
-                else if (prefix1 is IFieldReferenceExpression)
+                else if (prefix1 is IFieldReferenceExpression ifre1)
                 {
-                    IFieldReferenceExpression ifre1 = (IFieldReferenceExpression)prefix1;
-                    if (prefix2 is IFieldReferenceExpression)
+                    if (prefix2 is IFieldReferenceExpression ifre2)
                     {
-                        IFieldReferenceExpression ifre2 = (IFieldReferenceExpression)prefix2;
                         if (!ifre1.Field.Equals(ifre2.Field))
                             break;
                     }
@@ -905,9 +882,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
         {
             if (expr == null)
                 return 0;
-            else if (expr is IArrayIndexerExpression)
+            else if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr;
                 int maxDepth = GetExpressionDepth(iaie.Target);
                 foreach (IExpression index in iaie.Indices)
                 {
@@ -917,14 +893,12 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 return 1 + maxDepth;
             }
-            else if (expr is IMethodReferenceExpression)
+            else if (expr is IMethodReferenceExpression imre)
             {
-                IMethodReferenceExpression imre = (IMethodReferenceExpression)expr;
                 return GetExpressionDepth(imre.Target);
             }
-            else if (expr is IMethodInvokeExpression)
+            else if (expr is IMethodInvokeExpression imie)
             {
-                IMethodInvokeExpression imie = (IMethodInvokeExpression)expr;
                 int maxDepth = GetExpressionDepth(imie.Method);
                 foreach (IExpression arg in imie.Arguments)
                 {
@@ -934,24 +908,20 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 return 1 + maxDepth;
             }
-            else if (expr is IBinaryExpression)
+            else if (expr is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression)expr;
                 return 1 + System.Math.Max(GetExpressionDepth(ibe.Left), GetExpressionDepth(ibe.Right));
             }
-            else if (expr is IUnaryExpression)
+            else if (expr is IUnaryExpression iue)
             {
-                IUnaryExpression iue = (IUnaryExpression)expr;
                 return 1 + GetExpressionDepth(iue.Expression);
             }
-            else if (expr is IPropertyReferenceExpression)
+            else if (expr is IPropertyReferenceExpression ipre)
             {
-                IPropertyReferenceExpression ipre = (IPropertyReferenceExpression)expr;
                 return 1 + GetExpressionDepth(ipre.Target);
             }
-            else if (expr is IPropertyIndexerExpression)
+            else if (expr is IPropertyIndexerExpression ipie)
             {
-                IPropertyIndexerExpression ipie = (IPropertyIndexerExpression)expr;
                 int maxDepth = GetExpressionDepth(ipie.Target);
                 foreach (IExpression index in ipie.Indices)
                 {
@@ -961,9 +931,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 return 1 + maxDepth;
             }
-            else if (expr is IObjectCreateExpression)
+            else if (expr is IObjectCreateExpression ioce)
             {
-                var ioce = (IObjectCreateExpression)expr;
                 int maxDepth = GetExpressionDepth(ioce.Initializer);
                 foreach (IExpression arg in ioce.Arguments)
                 {
@@ -973,9 +942,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 }
                 return 1 + maxDepth;
             }
-            else if (expr is IAssignExpression)
+            else if (expr is IAssignExpression iae)
             {
-                IAssignExpression iae = (IAssignExpression)expr;
                 return 1 + System.Math.Max(GetExpressionDepth(iae.Target), GetExpressionDepth(iae.Expression));
             }
             else if (expr is IVariableReferenceExpression || expr is ILiteralExpression || expr is IArgumentReferenceExpression || expr is ITypeReferenceExpression
@@ -1003,9 +971,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private IEnumerable<IExpression> GetSummands(IExpression expr)
         {
-            if (expr is IBinaryExpression)
+            if (expr is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression)expr;
                 if (ibe.Operator == BinaryOperator.Add)
                 {
                     foreach (var summand in GetSummands(ibe.Left))
@@ -1013,7 +980,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     foreach (var summand in GetSummands(ibe.Right))
                         yield return summand;
                 }
-                else if(ibe.Operator == BinaryOperator.Subtract)
+                else if (ibe.Operator == BinaryOperator.Subtract)
                 {
                     foreach (var summand in GetSummands(ibe.Left))
                         yield return summand;
@@ -1023,9 +990,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 else
                     yield return expr;
             }
-            else if (expr is IMethodInvokeExpression)
+            else if (expr is IMethodInvokeExpression imie)
             {
-                IMethodInvokeExpression imie = (IMethodInvokeExpression)expr;
                 if (IsStaticMethod(imie, new Func<int, int, int>(ML.Probabilistic.Factors.Factor.Plus)))
                 {
                     foreach (var arg in imie.Arguments)
@@ -1050,18 +1016,16 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private IExpression Negate(IExpression expr)
         {
-            if(expr is IMethodInvokeExpression)
+            if (expr is IMethodInvokeExpression imie)
             {
-                IMethodInvokeExpression imie = (IMethodInvokeExpression)expr;
                 if (IsStaticMethod(imie, new Func<int, int>(ML.Probabilistic.Factors.Factor.Negate)))
                 {
                     return imie.Arguments[0];
                 }
             }
-            if(expr is IUnaryExpression)
+            if (expr is IUnaryExpression iue)
             {
-                IUnaryExpression iue = (IUnaryExpression)expr;
-                if(iue.Operator == UnaryOperator.Negate)
+                if (iue.Operator == UnaryOperator.Negate)
                 {
                     return iue.Expression;
                 }
@@ -1080,10 +1044,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 IVariableDeclaration ivd = GetVariableDeclaration(expr);
                 return bindings.TryGetValue(ivd, out value);
             }
-            else if (expr is IBinaryExpression)
+            else if (expr is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression)expr;
-                if (ibe.Operator == BinaryOperator.ValueInequality || 
+                if (ibe.Operator == BinaryOperator.ValueInequality ||
                     ibe.Operator == BinaryOperator.IdentityInequality ||
                     ibe.Operator == BinaryOperator.GreaterThan ||
                     ibe.Operator == BinaryOperator.LessThan)
@@ -1140,9 +1103,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     return true;
                 }
             }
-            else if (expr is IUnaryExpression)
+            else if (expr is IUnaryExpression iue)
             {
-                IUnaryExpression iue = (IUnaryExpression)expr;
                 T target;
                 if (TryEvaluate(iue.Expression, bindings, out target))
                 {
@@ -1152,9 +1114,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     return true;
                 }
             }
-            else if (expr is ILiteralExpression)
+            else if (expr is ILiteralExpression ile)
             {
-                ILiteralExpression ile = (ILiteralExpression)expr;
                 if (ile.Value is T)
                 {
                     value = (T)ile.Value;
@@ -1247,19 +1208,17 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public IExpression LoopSizeExpression(IForStatement loop)
         {
-            if (loop.Condition is IBinaryExpression)
+            if (loop.Condition is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression)loop.Condition;
                 if (ibe.Operator == BinaryOperator.LessThan)
                 {
                     return ibe.Right;
                 }
-                else if(ibe.Operator == BinaryOperator.GreaterThanOrEqual)
+                else if (ibe.Operator == BinaryOperator.GreaterThanOrEqual)
                 {
                     var start = LoopStartExpression(loop);
-                    if(start is IBinaryExpression)
+                    if (start is IBinaryExpression ibe2)
                     {
-                        IBinaryExpression ibe2 = (IBinaryExpression)start;
                         if (ibe2.Operator == BinaryOperator.Subtract)
                         {
                             return ibe2.Left;
@@ -1281,9 +1240,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private IExpression LoopBreakExpression(IForStatement loop)
         {
-            if (loop.Condition is IBinaryExpression)
+            if (loop.Condition is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression)loop.Condition;
                 if (ibe.Operator == BinaryOperator.LessThan)
                     return Builder.BinaryExpr(BinaryOperator.Subtract, ibe.Right, Builder.LiteralExpr(1));
                 else if (ibe.Operator == BinaryOperator.LessThanOrEqual)
@@ -1303,12 +1261,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public IExpression LoopStartExpression(IForStatement loop)
         {
-            if (loop.Initializer is IExpressionStatement)
+            if (loop.Initializer is IExpressionStatement ies)
             {
-                IExpressionStatement ies = (IExpressionStatement)loop.Initializer;
-                if (ies.Expression is IAssignExpression)
+                if (ies.Expression is IAssignExpression iae)
                 {
-                    IAssignExpression iae = (IAssignExpression)ies.Expression;
                     return iae.Expression;
                 }
             }
@@ -1332,9 +1288,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public void AddLoopBounds(Dictionary<IVariableDeclaration, Bounds> bounds, IStatement ist)
         {
-            if (ist is IForStatement)
+            if (ist is IForStatement ifs)
             {
-                IForStatement ifs = (IForStatement)ist;
                 IVariableDeclaration loopVar = LoopVariable(ifs);
                 Bounds b;
                 if (!bounds.TryGetValue(loopVar, out b))
@@ -1357,13 +1312,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 if (ifs.Body.Statements.Count == 1)
                     AddLoopBounds(bounds, ifs.Body.Statements[0]);
             }
-            else if (ist is IConditionStatement)
+            else if (ist is IConditionStatement ics)
             {
-                IConditionStatement ics = (IConditionStatement)ist;
                 IExpression condition = ics.Condition;
-                if (condition is IBinaryExpression)
+                if (condition is IBinaryExpression ibe)
                 {
-                    IBinaryExpression ibe = (IBinaryExpression)condition;
                     if (ibe.Left is IVariableReferenceExpression)
                     {
                         IVariableDeclaration loopVar = GetVariableDeclaration(ibe.Left);
@@ -1476,9 +1429,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             Set<ConditionBinding> bindings = new Set<ConditionBinding>();
             while (true)
             {
-                if (ist is IForStatement)
+                if (ist is IForStatement ifs)
                 {
-                    IForStatement ifs = (IForStatement)ist;
                     IVariableDeclaration loopVar = LoopVariable(ifs);
                     if (localVars != null)
                         localVars.Add(loopVar);
@@ -1493,9 +1445,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                     else
                         break;
                 }
-                else if (ist is IConditionStatement)
+                else if (ist is IConditionStatement ics)
                 {
-                    IConditionStatement ics = (IConditionStatement)ist;
                     bindings.Add(new ConditionBinding(ics.Condition));
                     if (ics.Then.Statements.Count == 1)
                         ist = ics.Then.Statements[0];
@@ -1535,8 +1486,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public IExpression StripIndexers(IExpression expr, bool varsOnly)
         {
-            IArrayIndexerExpression iaie = expr as IArrayIndexerExpression;
-            if (iaie == null)
+            if (!(expr is IArrayIndexerExpression iaie))
                 return expr;
             if ((!(iaie.Indices[0] is IVariableReferenceExpression)) && varsOnly)
                 return expr;
@@ -1555,8 +1505,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public bool IsNewObject(IExpression expr, Type type)
         {
-            IObjectCreateExpression ioce = expr as IObjectCreateExpression;
-            if (ioce == null)
+            if (!(expr is IObjectCreateExpression ioce))
                 return false;
             Type t = Builder.ToType(ioce.Type);
             return t.Equals(type);
@@ -1724,10 +1673,6 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 ForEachPrefix(((IMethodInvokeExpression)expr).Method, action);
             else if (expr is IMethodReferenceExpression)
                 ForEachPrefix(((IMethodReferenceExpression)expr).Target, action);
-            else if (expr is IUnaryExpression)
-                ForEachPrefix(((IUnaryExpression)expr).Expression, action);
-            else if (expr is IAddressReferenceExpression)
-                ForEachPrefix(((IAddressReferenceExpression)expr).Expression, action);
             else if (expr is IDelegateInvokeExpression)
                 ForEachPrefix(((IDelegateInvokeExpression)expr).Target, action);
             action(expr);
@@ -1754,12 +1699,11 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns></returns>
         public IEnumerable<object> GetVariablesAndParameters(IExpression expr)
         {
-            if (expr is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr;
                 foreach (IExpression index in iaie.Indices)
                 {
-                    foreach(var decl in GetVariablesAndParameters(index))
+                    foreach (var decl in GetVariablesAndParameters(index))
                     {
                         yield return decl;
                     }
@@ -1767,48 +1711,42 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 foreach (var decl in GetVariablesAndParameters(iaie.Target))
                     yield return decl;
             }
-            else if (expr is IMethodInvokeExpression)
+            else if (expr is IMethodInvokeExpression imie)
             {
-                IMethodInvokeExpression imie = (IMethodInvokeExpression)expr;
                 foreach (IExpression arg in imie.Arguments)
                 {
                     foreach (var decl in GetVariablesAndParameters(arg))
                         yield return decl;
                 }
             }
-            else if (expr is IBinaryExpression)
+            else if (expr is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression)expr;
                 foreach (var decl in GetVariablesAndParameters(ibe.Left))
                     yield return decl;
                 foreach (var decl in GetVariablesAndParameters(ibe.Right))
                     yield return decl;
             }
-            else if (expr is IUnaryExpression)
+            else if (expr is IUnaryExpression iue)
             {
-                IUnaryExpression iue = (IUnaryExpression)expr;
                 foreach (var decl in GetVariablesAndParameters(iue.Expression))
                     yield return decl;
             }
-            else if (expr is IPropertyIndexerExpression)
+            else if (expr is IPropertyIndexerExpression ipie)
             {
-                IPropertyIndexerExpression ipie = (IPropertyIndexerExpression)expr;
                 foreach (IExpression index in ipie.Indices)
                     foreach (var decl in GetVariablesAndParameters(index))
                         yield return decl;
                 foreach (var decl in GetVariablesAndParameters(ipie.Target))
                     yield return decl;
             }
-            else if (expr is IObjectCreateExpression)
+            else if (expr is IObjectCreateExpression ioce)
             {
-                var ioce = (IObjectCreateExpression)expr;
                 foreach (IExpression arg in ioce.Arguments)
                     foreach (var decl in GetVariablesAndParameters(arg))
                         yield return decl;
             }
-            else if (expr is IAssignExpression)
+            else if (expr is IAssignExpression iae)
             {
-                IAssignExpression iae = (IAssignExpression)expr;
                 foreach (var decl in GetVariablesAndParameters(iae.Expression))
                     yield return decl;
                 foreach (var decl in GetVariablesAndParameters(iae.Target))
@@ -1826,23 +1764,21 @@ namespace Microsoft.ML.Probabilistic.Compiler
         {
             if (expr is IArgumentReferenceExpression)
                 yield return (IArgumentReferenceExpression)expr;
-            else if (expr is IArrayIndexerExpression)
+            else if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr;
                 foreach (IExpression index in iaie.Indices)
                     foreach (var iare in GetArgumentReferenceExpressions(index))
                         yield return iare;
                 foreach (var iare in GetArgumentReferenceExpressions(iaie.Target))
                     yield return iare;
             }
-            else if (expr is IUnaryExpression)
+            else if (expr is IUnaryExpression iue)
             {
-                foreach (var iare in GetArgumentReferenceExpressions(((IUnaryExpression)expr).Expression))
+                foreach (var iare in GetArgumentReferenceExpressions(iue.Expression))
                     yield return iare;
             }
-            else if (expr is IBinaryExpression)
+            else if (expr is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression)expr;
                 foreach (var iare in GetArgumentReferenceExpressions(ibe.Left))
                     yield return iare;
                 foreach (var iare in GetArgumentReferenceExpressions(ibe.Right))
@@ -1852,33 +1788,29 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public IEnumerable<IExpression> GetConditionAndTargetIndexExpressions(IStatement stmt)
         {
-            if (stmt is IConditionStatement)
+            if (stmt is IConditionStatement ics)
             {
-                IConditionStatement ics = (IConditionStatement)stmt;
                 yield return ics.Condition;
                 foreach (var expr in GetConditionAndTargetIndexExpressions(ics.Then))
                     yield return expr;
             }
-            else if (stmt is IForStatement)
+            else if (stmt is IForStatement ifs)
             {
-                foreach (var expr in GetConditionAndTargetIndexExpressions(((IForStatement)stmt).Body))
+                foreach (var expr in GetConditionAndTargetIndexExpressions(ifs.Body))
                     yield return expr;
             }
-            else if (stmt is IBlockStatement)
+            else if (stmt is IBlockStatement ibs)
             {
-                IBlockStatement ibs = (IBlockStatement)stmt;
                 foreach (IStatement ist in ibs.Statements)
                 {
                     foreach (var expr in GetConditionAndTargetIndexExpressions(ist))
                         yield return expr;
                 }
             }
-            else if (stmt is IExpressionStatement)
+            else if (stmt is IExpressionStatement ies)
             {
-                IExpressionStatement ies = (IExpressionStatement)stmt;
-                if (ies.Expression is IAssignExpression)
+                if (ies.Expression is IAssignExpression iae)
                 {
-                    IAssignExpression iae = (IAssignExpression)ies.Expression;
                     // target indices are considered "conditions" for this purpose
                     foreach (var index in GetFlattenedIndices(iae.Target))
                         yield return index;
@@ -1892,32 +1824,29 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <param name="ist"></param>
         public IEnumerable<IExpression> GetTargets(IStatement ist)
         {
-            if (ist is IExpressionStatement)
+            if (ist is IExpressionStatement ies)
             {
-                IExpressionStatement ies = (IExpressionStatement)ist;
                 IExpression expr = ies.Expression;
                 if (expr is IAssignExpression)
                 {
                     IAssignExpression iae = (IAssignExpression)ies.Expression;
-                     yield return iae.Target;
+                    yield return iae.Target;
                 }
                 else if (expr is IVariableDeclarationExpression)
                 {
                     yield return expr;
                 }
             }
-            else if (ist is IConditionStatement)
+            else if (ist is IConditionStatement ics)
             {
-                IConditionStatement ics = (IConditionStatement)ist;
                 foreach (IStatement st in ics.Then.Statements)
                 {
                     foreach (var expr in GetTargets(st))
                         yield return expr;
                 }
             }
-            else if (ist is IForStatement)
+            else if (ist is IForStatement ifs)
             {
-                IForStatement ifs = (IForStatement)ist;
                 foreach (IStatement st in ifs.Body.Statements)
                 {
                     foreach (var expr in GetTargets(st))

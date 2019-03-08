@@ -239,7 +239,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners.MovieLens
         public static Tuple<int, string> ComputeMovieGenre(int offset, string feature)
         {
             string[] genres = feature.Split('|');
-            if (genres.Length < 1 && genres.Length > 3)
+            if (genres.Length < 1 || genres.Length > 3)
             {
                 throw new ArgumentException(string.Format("Movies should have between 1 and 3 genres; given {0}.", genres.Length));
             }

@@ -134,7 +134,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             if ((afm1 < 0 || bf < 0) && mx * mz > 0)
             {
-                double v_opt = 2 / 3 * (Math.Log(mx * mz / Ex2 / 2) - m);
+                double v_opt = 2.0 / 3 * (Math.Log(mx * mz / Ex2 / 2) - m);
                 if (v_opt != v)
                 {
                     bf = v * grad_S_v / (v_opt - v);

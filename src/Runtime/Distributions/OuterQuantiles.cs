@@ -107,8 +107,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), "probability < 0");
             if (probability > 1.0) throw new ArgumentOutOfRangeException(nameof(probability), "probability > 1.0");
-            int n = quantiles.Length;
             if (quantiles == null) throw new ArgumentNullException(nameof(quantiles));
+            int n = quantiles.Length;
             if (n == 0) throw new ArgumentException("quantiles array is empty", nameof(quantiles));
             if (probability == 1.0)
             {

@@ -66,16 +66,16 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
     class DotWriteHelper : WriteHelper
     {
         /// <summary>
-        /// Write atribute of DOT object.
+        /// Write attribute of DOT object.
         /// </summary>
         /// <param name="writer">Text writer assigned to a DOT file.</param>
-        /// <param name="name">Name of the atribute.</param>
-        /// <param name="defaultValue">Default value of the atribute.</param>
-        /// <param name="value">Value of the atribute. If it equals default value, attribute isn't written.</param>
-        /// <param name="converter">Converter that represent value of atribute as a string. If null, ToString() method of value is used.</param>
+        /// <param name="name">Name of the attribute.</param>
+        /// <param name="defaultValue">Default value of the attribute.</param>
+        /// <param name="value">Value of the attribute. If it equals default value or null, the attribute isn't written.</param>
+        /// <param name="converter">Converter that represent value of attribute as a string. If null, ToString() method of value is used.</param>
         public static void WriteAttribute(TextWriter writer, string name, object defaultValue, object value, Func<object, string> converter = null)
         {
-            if (defaultValue == null && value == null || value.Equals(defaultValue))
+            if (value == null || value.Equals(defaultValue))
             {
                 return;
             }

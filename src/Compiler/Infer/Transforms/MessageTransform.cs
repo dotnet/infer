@@ -56,7 +56,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         protected FactorManager factorManager;
         protected ModelCompiler compiler;
         internal bool InitializeOnSeparateLine;
-        bool AllowDerivedParents;
+        readonly bool AllowDerivedParents;
 
         internal const string resultName = "result";
         internal const string resultIndexName = "resultIndex";
@@ -85,7 +85,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         // TODO: consider collapsing unit arrays (arrays of length 1) into non-array variables
 
         // Caches the quality band of the algorithm
-        private IDictionary<IAlgorithm, QualityBand> algQualityBand = new Dictionary<IAlgorithm, QualityBand>();
+        private readonly IDictionary<IAlgorithm, QualityBand> algQualityBand = new Dictionary<IAlgorithm, QualityBand>();
 
         public MessageTransform(ModelCompiler compiler, IAlgorithm algorithm, FactorManager factorManager, bool allowDerivedParents)
         {
@@ -553,7 +553,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (argIsConstant[i] && !isChild) continue;
                 if (UseMessageAnalysis)
                 {
-                    AddInitialiserStatement(mi.messageFromFactor, (iae == null) ? (IExpression)imie : iae);
+                    AddInitialiserStatement(mi.messageFromFactor, iae ?? (IExpression)imie);
                     if (isChild) AddInitialiserStatement(mi.messageToFactor, null);
                 }
 
@@ -603,11 +603,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     this.factorManager.GivePriorityTo(op.Container);
                 }
 
-                Action<IStatement> action = delegate (IStatement st)
+                void action(IStatement st)
                 {
                     if (argIsConstant[i]) context.OutputAttributes.Remove<OperatorStatement>(st);
                     context.AddStatementBeforeCurrent(st);
-                };
+                }
                 ForEachOperatorStatement(action, alg, info, msgInfo, operatorSuffix, targetParameter, argumentTypes, isStochastic, isVariableFactor);
 
                 this.factorManager.PriorityList.RemoveRange(0, this.factorManager.PriorityList.Count - currentPriorityListSize);
@@ -806,12 +806,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 });
                 if (!hasReturnParameter) throw new NotSupportedException("'" + returnValue + "' is not an argument of " + StringUtil.MethodSignatureToString(fninfo.Method));
             }
-            Predicate<string> conversionAllowed = parameterName =>
+            bool conversionAllowed(string parameterName)
             {
                 // Do not allow point mass conversion of the return parameter in a LogEvidenceRatio method.
                 return targetParameter.Length > 0 || info.IsVoid || fninfo.Method.Name != epEvidenceMethodName ||
                     (fninfo.factorEdgeOfParameter[parameterName].ParameterName != info.ParameterNames[0]);
-            };
+            }
             fullArgs = ConvertArguments(fninfo.Method, fullArgs, conversionAllowed);
             IExpression operatorMethod = Builder.StaticMethod(fninfo.Method, fullArgs.ToArray());
             if (!context.OutputAttributes.Has<MessageFcnInfo>(fninfo.Method))

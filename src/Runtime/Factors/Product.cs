@@ -678,24 +678,24 @@ namespace Microsoft.ML.Probabilistic.Factors
             //Console.WriteLine(StringUtil.CollectionToString(coeffs2, " "));
             List<double> inflectionPoints;
             GaussianOp_Slow.GetRealRoots(coeffs2, out inflectionPoints);
-            Func<double, double> like = a => LogLikelihood(a, mProduct, vProduct, mA, pA, mB, vB);
+            double like(double a) => LogLikelihood(a, mProduct, vProduct, mA, pA, mB, vB);
             var stationaryValues = stationaryPoints.ConvertAll(a => like(a));
             double max = MMath.Max(stationaryValues);
             double a0 = stationaryPoints[stationaryValues.IndexOf(max)];
             amode = a0;
-            Func<double, double> func = a =>
+            double func(double a)
             {
                 return LogLikelihoodRatio(a, a0, mProduct, vProduct, mA, pA, mB, vB) + 50;
-            };
-            Func<double, double> deriv = a =>
+            }
+            double deriv(double a)
             {
                 if (double.IsInfinity(a))
                     return -a;
                 double v = vProduct + vB * a * a;
-                double diffv = (mProduct - a * mB)/v;
+                double diffv = (mProduct - a * mB) / v;
                 double diffa = a - mA;
-                return a*vB*(diffv*diffv -1/v) + mB*diffv - diffa * pA;
-            };
+                return a * vB * (diffv * diffv - 1 / v) + mB * diffv - diffa * pA;
+            }
             // find where the likelihood matches the bound value
             List<double> zeroes = GaussianOp_Slow.FindZeroes(func, deriv, stationaryPoints, inflectionPoints);
             amin = MMath.Min(zeroes);
