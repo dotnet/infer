@@ -382,6 +382,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 var hasEpsilonTransitions = false;
+                var usesGroups = false;
                 var resultStates = new StateData[this.states.Count];
                 var resultTransitions = new Transition[this.transitions.Count - this.numRemovedTransitions];
                 var nextResultTransitionIndex = 0;
@@ -401,6 +402,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         resultTransitions[nextResultTransitionIndex] = transition;
                         ++nextResultTransitionIndex;
                         hasEpsilonTransitions = hasEpsilonTransitions || transition.IsEpsilon;
+                        usesGroups = usesGroups || (transition.Group != 0);
 
                         transitionIndex = node.Next;
                     }
@@ -413,7 +415,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     nextResultTransitionIndex == resultTransitions.Length,
                     "number of copied transitions must match result array size");
 
-                return new DataContainer(this.StartStateIndex, !hasEpsilonTransitions, resultStates, resultTransitions);
+                return new DataContainer(this.StartStateIndex, !hasEpsilonTransitions, usesGroups, resultStates, resultTransitions);
             }
 
             #endregion
