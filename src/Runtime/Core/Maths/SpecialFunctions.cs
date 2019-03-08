@@ -3018,7 +3018,7 @@ f = 1/gamma(x+1)-1
         }
 
         // Integrate using quadrature nodes and weights
-        private static double integrate(Converter<double, double> f, Vector nodes, Vector weights)
+        private static double Integrate(Converter<double, double> f, Vector nodes, Vector weights)
         {
             return weights.Inner(nodes, x => f(x));
         }
@@ -3123,7 +3123,7 @@ f = 1/gamma(x+1)-1
                 {
                     return Math.Exp(MMath.LogisticLn(z) + Gaussian.GetLogProb(z, mean, variance) - Gaussian.GetLogProb(z, m_p, v_p));
                 }
-                return integrate(weightedIntegrand, nodes, weights);
+                return Integrate(weightedIntegrand, nodes, weights);
             }
             /*
 else {
@@ -3230,7 +3230,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 {
                     return Math.Exp(MMath.LogisticLn(z) + MMath.LogisticLn(-z) + Gaussian.GetLogProb(z, mean, variance) - Gaussian.GetLogProb(z, m_p, v_p));
                 }
-                return integrate(weightedIntegrand, nodes, weights);
+                return Integrate(weightedIntegrand, nodes, weights);
             }
 
             /*
@@ -3343,7 +3343,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     double OneMinus2Sigma = -Math.Tanh(z / 2);
                     return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(z, mean, variance) - Gaussian.GetLogProb(z, m_p, v_p));
                 }
-                return integrate(weightedIntegrand, nodes, weights);
+                return Integrate(weightedIntegrand, nodes, weights);
             }
 
             /*
