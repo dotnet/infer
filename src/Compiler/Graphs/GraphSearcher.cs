@@ -68,37 +68,37 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
 
         protected void OnDiscoverNode(NodeType node)
         {
-            if (DiscoverNode != null) DiscoverNode(node);
+            DiscoverNode?.Invoke(node);
         }
 
         protected void OnFinishNode(NodeType node)
         {
-            if (FinishNode != null) FinishNode(node);
+            FinishNode?.Invoke(node);
         }
 
         protected void OnTreeEdge(EdgeType edge)
         {
-            if (TreeEdge != null) TreeEdge(edge);
+            TreeEdge?.Invoke(edge);
         }
 
         protected void OnBackEdge(EdgeType edge)
         {
-            if (BackEdge != null) BackEdge(edge);
+            BackEdge?.Invoke(edge);
         }
 
         protected void OnCrossEdge(EdgeType edge)
         {
-            if (CrossEdge != null) CrossEdge(edge);
+            CrossEdge?.Invoke(edge);
         }
 
         protected void OnDiscoverEdge(EdgeType edge)
         {
-            if (DiscoverEdge != null) DiscoverEdge(edge);
+            DiscoverEdge?.Invoke(edge);
         }
 
         protected void OnFinishTreeEdge(EdgeType edge)
         {
-            if (FinishTreeEdge != null) FinishTreeEdge(edge);
+            FinishTreeEdge?.Invoke(edge);
         }
     }
 

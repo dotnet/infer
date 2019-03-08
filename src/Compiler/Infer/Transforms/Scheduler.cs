@@ -5470,20 +5470,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         public void OnAddEdge(EdgeType edge)
         {
             excluded[edge] = true;
-            if (AddEdge != null)
-                AddEdge(edge);
+            AddEdge?.Invoke(edge);
         }
 
         public void OnBeginCycle()
         {
-            if (BeginCycle != null)
-                BeginCycle();
+            BeginCycle?.Invoke();
         }
 
         public void OnEndCycle()
         {
-            if (EndCycle != null)
-                EndCycle();
+            EndCycle?.Invoke();
         }
     }
 }

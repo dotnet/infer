@@ -42,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <param name="reader">The binary reader to read the distribution over feature weights from.</param>
         public FeatureParameterDistribution(BinaryReader reader)
         {
-            if (reader != null) throw new ArgumentNullException(nameof(reader));
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
 
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);
 

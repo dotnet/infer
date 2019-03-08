@@ -476,13 +476,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <param name="rmsDeriv"></param>
         protected internal void RaiseIterationEvent(int iteration, double objVal, double rmsDeriv)
         {
-            // Safely invoke an event:
-            IterationEventHandler temp = OnIteration;
-
-            if (temp != null)
-            {
-                temp(this, new OptimiserIterationEventArgs(iteration, objVal, rmsDeriv));
-            }
+            OnIteration?.Invoke(this, new OptimiserIterationEventArgs(iteration, objVal, rmsDeriv));
         }
 
         /// <summary>
