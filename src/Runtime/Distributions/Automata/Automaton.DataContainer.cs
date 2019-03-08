@@ -20,15 +20,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public struct DataContainer : ISerializable
         {
             /// <summary>
+            /// Stores
+            /// </summary>
+            private readonly Flags flags;
+
+            /// <summary>
             /// Index of start state of automaton.
             /// </summary>
             public readonly int StartStateIndex;
-
-            /// <summary>
-            /// Value indicating whether this automaton is epsilon-free.
-            /// </summary>
-            public readonly bool IsEpsilonFree;
-
+            
             /// <summary>
             /// All automaton states.
             /// </summary>
@@ -41,17 +41,30 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public readonly ReadOnlyArray<Transition> Transitions;
 
             /// <summary>
+            /// Gets value indicating whether this automaton is epsilon-free.
+            /// </summary>
+            public bool IsEpsilonFree => (this.flags & Flags.IsEpsilonFree) != 0;
+
+            /// <summary>
+            /// Get value indicating whether this automaton uses groups.
+            /// </summary>
+            public bool UsesGroups => (this.flags & Flags.UsesGroups) != 0;
+
+            /// <summary>
             /// Initializes instance of <see cref="DataContainer"/>.
             /// </summary>
-            [Construction("StartStateIndex", "IsEpsilonFree", "States", "Transitions")]
+            [Construction("StartStateIndex", "IsEpsilonFree", "UsesGroups", "States", "Transitions")]
             public DataContainer(
                 int startStateIndex,
                 bool isEpsilonFree,
+                bool usesGroups,
                 ReadOnlyArray<StateData> states,
                 ReadOnlyArray<Transition> transitions)
             {
+                this.flags =
+                    (isEpsilonFree ? Flags.IsEpsilonFree : 0) |
+                    (usesGroups ? Flags.UsesGroups : 0);
                 this.StartStateIndex = startStateIndex;
-                this.IsEpsilonFree = isEpsilonFree;
                 this.States = states;
                 this.Transitions = transitions;
             }
@@ -102,8 +115,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             internal DataContainer(SerializationInfo info, StreamingContext context)
             {
+                this.flags = (Flags)info.GetValue(nameof(this.flags), typeof(Flags));
                 this.StartStateIndex = (int)info.GetValue(nameof(this.StartStateIndex), typeof(int));
-                this.IsEpsilonFree = (bool)info.GetValue(nameof(this.IsEpsilonFree), typeof(bool));
                 this.States = (StateData[])info.GetValue(nameof(this.States), typeof(StateData[]));
                 this.Transitions = (Transition[])info.GetValue(nameof(this.Transitions), typeof(Transition[]));
 
@@ -119,10 +132,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 info.AddValue(nameof(this.States), this.States.CloneArray());
                 info.AddValue(nameof(this.Transitions), this.Transitions.CloneArray());
                 info.AddValue(nameof(this.StartStateIndex), this.StartStateIndex);
-                info.AddValue(nameof(this.IsEpsilonFree), this.IsEpsilonFree);
+                info.AddValue(nameof(this.flags), this.flags);
             }
 
             #endregion
+
+            [Flags]
+            private enum Flags
+            {
+                IsEpsilonFree = 0x1,
+                UsesGroups = 0x2,
+            }
         }
     }
 }

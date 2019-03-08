@@ -1815,7 +1815,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return false;
             }
 
-            return this.sequenceToWeight.UsesGroups();
+            return this.sequenceToWeight.UsesGroups;
         }
 
         /// <summary>

@@ -58,7 +58,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             this.MakeEpsilonFree(); // Deterministic automata cannot have epsilon-transitions
 
-            if (this.UsesGroups())
+            if (this.UsesGroups)
             {
                 // Determinization will result in lost of group information, which we cannot allow
                 return false;

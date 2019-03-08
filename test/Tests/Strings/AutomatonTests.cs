@@ -802,6 +802,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 new StringAutomaton.DataContainer(
                     0,
                     true,
+                    false,
                     new[]
                         {
                             new StringAutomaton.StateData(0, 1, Weight.One),
@@ -817,6 +818,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 new StringAutomaton.DataContainer(
                     0,
                     true,
+                    false,
                     new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
                     Array.Empty<StringAutomaton.Transition>()));
             Assert.True(automaton2.IsZero());
@@ -827,6 +829,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     new StringAutomaton.DataContainer(
                         0,
                         true,
+                        false,
                         Array.Empty<StringAutomaton.StateData>(),
                         Array.Empty<StringAutomaton.Transition>())));
 
@@ -835,6 +838,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
+                        false,
                         false,
                         new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
                         Array.Empty<StringAutomaton.Transition>())));
@@ -845,6 +849,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     new StringAutomaton.DataContainer(
                         0,
                         false,
+                        false,
                         new[] { new StringAutomaton.StateData(0, 1, Weight.Zero) },
                         new[] { new StringAutomaton.Transition(Option.None, Weight.One, 1) })));
 
@@ -854,6 +859,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     new StringAutomaton.DataContainer(
                         0,
                         true,
+                        false,
                         new[] { new StringAutomaton.StateData(0, 1, Weight.One) },
                         new[] { new StringAutomaton.Transition(Option.None, Weight.One, 2) })));
         }

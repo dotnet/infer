@@ -809,27 +809,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return false;
         }
 
-        /// <summary>
-        /// Determines whether this automaton has groups.
-        /// </summary>
-        /// <returns>True if it the automaton has groups, false otherwise.</returns>
-        public bool UsesGroups()
-        {
-            for (int stateIndex = 0; stateIndex < this.States.Count; stateIndex++)
-            {
-                var state = this.States[stateIndex];
-                foreach (var transition in state.Transitions)
-                {
-                    if (transition.Group != 0)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
         public Dictionary<int, TThis> GetGroups() => GroupExtractor.ExtractGroups(this);
 
         /// <summary>
@@ -846,6 +825,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <param name="group">The specified group.</param>
         public void SetGroup(int group)
         {
+            if (group == 0 && !this.UsesGroups)
+            {
+                return;
+            }
+
             var builder = Builder.FromAutomaton(this);
             for (var i = 0; i < builder.StatesCount; ++i)
             {
@@ -1235,7 +1219,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return;
             }
 
-            if (automaton1.UsesGroups())
+            if (automaton1.UsesGroups)
             {
                 // We cannot swap automaton 1 and automaton 2 as groups from first are used.
                 if (!automaton2.IsEpsilonFree)
@@ -1517,7 +1501,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public void SetToZero()
         {
-            this.Data = new DataContainer(0, true, ZeroStates, ZeroTransitions);
+            this.Data = new DataContainer(0, true, false, ZeroStates, ZeroTransitions);
         }
 
         /// <summary>
@@ -1858,6 +1842,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Gets a value indicating whether this automaton is epsilon-free.
         /// </summary>
         public bool IsEpsilonFree => this.Data.IsEpsilonFree;
+
+        /// <summary>
+        /// Determines whether this automaton has groups.
+        /// </summary>
+        /// <value>True if it the automaton has groups, false otherwise.</value>
+        public bool UsesGroups => this.Data.UsesGroups;
 
         /// <summary>
         /// Tests whether the automaton is deterministic,
