@@ -28,7 +28,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
         {
             if (argument == null)
             {
-                throw new ArgumentNullException(argumentName);
+                ThrowArgumentNullException(argumentName);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
         {
             if (argument == null)
             {
-                throw new ArgumentNullException(argumentName, message);
+                ThrowArgumentNullException(argumentName, message);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
         {
             if (!inRangeCondition)
             {
-                throw new ArgumentOutOfRangeException(argumentName, message);
+                ThrowArgumentOutOfRangeException(argumentName, message);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
         {
             if (!isValidCondition)
             {
-                throw new ArgumentException(message, argumentName);
+                ThrowArgumentException(message, argumentName);
             }
         }
 
@@ -94,8 +94,58 @@ namespace Microsoft.ML.Probabilistic.Utilities
         {
             if (!isValidCondition)
             {
-                throw new ArgumentException(message);
+                ThrowArgumentException(message);
             }
         }
+
+        /// <summary>
+        /// Helper method for throwing <see cref="ArgumentNullException"/>.
+        /// </summary>
+        /// <remarks>
+        /// Methods which throw exceptions can not be inlined by CLR JIT. We want all argument checking
+        /// methods to be inlined, so rare case of of throwing exception is moved out in helper.
+        /// </remarks>
+        private static void ThrowArgumentNullException(string argumentName) =>
+                throw new ArgumentNullException(argumentName);
+
+        /// <summary>
+        /// Helper method for throwing <see cref="ArgumentNullException"/>.
+        /// </summary>
+        /// <remarks>
+        /// Methods which throw exceptions can not be inlined by CLR JIT. We want all argument checking
+        /// methods to be inlined, so rare case of of throwing exception is moved out in helper.
+        /// </remarks>
+        private static void ThrowArgumentNullException(string argumentName, string message) =>
+            throw new ArgumentNullException(argumentName, message);
+
+        /// <summary>
+        /// Helper method for throwing <see cref="ArgumentOutOfRangeException"/>.
+        /// </summary>
+        /// <remarks>
+        /// Methods which throw exceptions can not be inlined by CLR JIT. We want all argument checking
+        /// methods to be inlined, so rare case of of throwing exception is moved out in helper.
+        /// </remarks>
+        private static void ThrowArgumentOutOfRangeException(string argumentName, string message) =>
+            throw new ArgumentOutOfRangeException(argumentName, message);
+
+        /// <summary>
+        /// Helper method for throwing <see cref="ArgumentException"/>.
+        /// </summary>
+        /// <remarks>
+        /// Methods which throw exceptions can not be inlined by CLR JIT. We want all argument checking
+        /// methods to be inlined, so rare case of of throwing exception is moved out in helper.
+        /// </remarks>
+        private static void ThrowArgumentException(string message) =>
+            throw new ArgumentException(message);
+
+        /// <summary>
+        /// Helper method for throwing <see cref="ArgumentException"/>.
+        /// </summary>
+        /// <remarks>
+        /// Methods which throw exceptions can not be inlined by CLR JIT. We want all argument checking
+        /// methods to be inlined, so rare case of of throwing exception is moved out in helper.
+        /// </remarks>
+        private static void ThrowArgumentException(string message, string argumentName) =>
+            throw new ArgumentException(message, argumentName);
     }
 }
