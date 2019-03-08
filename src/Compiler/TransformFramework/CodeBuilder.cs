@@ -466,8 +466,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns>Expression statement</returns>
         public IExpressionStatement ExprStatement(IExpression expr)
         {
-            if (expr == null)
-                throw new ArgumentNullException(nameof(expr));
+            if (expr == null) throw new ArgumentNullException(nameof(expr));
             IExpressionStatement es = ExprStatement();
             es.Expression = expr;
             return es;

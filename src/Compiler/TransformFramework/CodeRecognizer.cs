@@ -1853,9 +1853,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                         yield return expr;
                 }
             }
-            else if (ist is IWhileStatement)
+            else if (ist is IWhileStatement iws)
             {
-                IWhileStatement iws = (IWhileStatement)ist;
                 foreach (IStatement st in iws.Body.Statements)
                 {
                     foreach (var expr in GetTargets(st))
@@ -1908,10 +1907,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns></returns>
         public int GetIndexingDepth(IExpression iexpr)
         {
-            IArrayIndexerExpression iaie = iexpr as IArrayIndexerExpression;
-            if (iaie == null)
+            if (iexpr is IArrayIndexerExpression iaie)
+                return 1 + GetIndexingDepth(iaie.Target);
+            else
                 return 0;
-            return 1 + GetIndexingDepth(iaie.Target);
         }
 
 #if SUPPRESS_UNREACHABLE_CODE_WARNINGS
@@ -1932,9 +1931,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 return;
             if (expr is IArgumentReferenceExpression)
                 return;
-            if (expr is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr;
                 IVariableDeclaration[] vars = new IVariableDeclaration[iaie.Indices.Count];
                 for (int i = 0; i < vars.Length; i++)
                 {
@@ -1955,9 +1953,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         private IEnumerable<IExpression> GetFlattenedIndices(IExpression expr)
         {
-            if (expr is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr;
                 foreach (IExpression index in GetFlattenedIndices(iaie.Target))
                     yield return index;
                 foreach (IExpression index in iaie.Indices)
@@ -1997,9 +1994,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns>The innermost expression</returns>
         private IExpression ForEachIndexingBracket(IExpression expr, Action<IList<IExpression>> action)
         {
-            if (expr is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr;
                 var target = ForEachIndexingBracket(iaie.Target, action);
                 action(iaie.Indices);
                 return target;
@@ -2015,17 +2011,21 @@ namespace Microsoft.ML.Probabilistic.Compiler
         /// <returns></returns>
         public IExpression RemoveLastIndex(IExpression expr)
         {
-            IArrayIndexerExpression iaie = expr as IArrayIndexerExpression;
-            if (iaie == null)
-                return expr;
-            if (iaie.Target is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression aie = Builder.ArrayIndxrExpr();
-                aie.Indices.AddRange(iaie.Indices);
-                aie.Target = RemoveLastIndex(iaie.Target);
-                return aie;
+                if (iaie.Target is IArrayIndexerExpression)
+                {
+                    IArrayIndexerExpression aie = Builder.ArrayIndxrExpr();
+                    aie.Indices.AddRange(iaie.Indices);
+                    aie.Target = RemoveLastIndex(iaie.Target);
+                    return aie;
+                }
+                else return iaie.Target;
             }
-            return iaie.Target;
+            else
+            {
+                return expr;
+            }
         }
 
         /// <summary>
@@ -2045,9 +2045,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 if (ti.inputElement == excludeAncestor)
                     break;
-                if (ti.inputElement is IForStatement)
+                if (ti.inputElement is IForStatement loop)
                 {
-                    IForStatement loop = (IForStatement)ti.inputElement;
                     IVariableDeclaration loopVd = LoopVariable(loop);
                     if (ivd.Name == loopVd.Name)
                         return loop;
@@ -2058,38 +2057,32 @@ namespace Microsoft.ML.Probabilistic.Compiler
 
         public bool IsForwardLoop(IForStatement ifs)
         {
-            if (ifs.Increment is IExpressionStatement)
+            if (ifs.Increment is IExpressionStatement ies)
             {
-                IExpressionStatement ies = (IExpressionStatement)ifs.Increment;
-                if (ies.Expression is IAssignExpression)
+                if (ies.Expression is IAssignExpression iae)
                 {
-                    IAssignExpression iae = (IAssignExpression)ies.Expression;
-                    IBinaryExpression ibe = ChannelTransform.RemoveCast(iae.Expression) as IBinaryExpression;
-                    if (ibe != null)
+                    if (ChannelTransform.RemoveCast(iae.Expression) is IBinaryExpression ibe)
                     {
                         if (ibe.Operator == BinaryOperator.Add)
                         {
-                            if (ibe.Right is ILiteralExpression)
+                            if (ibe.Right is ILiteralExpression ile)
                             {
-                                ILiteralExpression ile = (ILiteralExpression)ibe.Right;
                                 if (ile.Value is int)
                                     return ((int)ile.Value >= 0);
                             }
                         }
                         else if (ibe.Operator == BinaryOperator.Subtract)
                         {
-                            if (ibe.Right is ILiteralExpression)
+                            if (ibe.Right is ILiteralExpression ile)
                             {
-                                ILiteralExpression ile = (ILiteralExpression)ibe.Right;
                                 if (ile.Value is int)
                                     return ((int)ile.Value < 0);
                             }
                         }
                     }
                 }
-                else if (ies.Expression is IUnaryExpression)
+                else if (ies.Expression is IUnaryExpression iue)
                 {
-                    IUnaryExpression iue = (IUnaryExpression)ies.Expression;
                     return (iue.Operator == UnaryOperator.PostIncrement) || (iue.Operator == UnaryOperator.PreIncrement);
                 }
             }
@@ -2281,9 +2274,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
         {
             if (expr is ILiteralExpression) return false;
             if (expr is IDefaultExpression) return false;
-            if (expr is IMethodInvokeExpression)
+            if (expr is IMethodInvokeExpression imie)
             {
-                IMethodInvokeExpression imie = (IMethodInvokeExpression)expr;
                 bool stochArgs = IsAnyStochastic(context, imie.Arguments);
                 bool stochFactor = false;
                 FactorManager.FactorInfo info = GetFactorInfo(context, imie);
@@ -2296,31 +2288,26 @@ namespace Microsoft.ML.Probabilistic.Compiler
             if (expr is IPropertyReferenceExpression) return IsStochastic(context, ((IPropertyReferenceExpression)expr).Target);
             if (expr is IFieldReferenceExpression) return IsStochastic(context, ((IFieldReferenceExpression)expr).Target);
             if (expr is IArrayCreateExpression) return false;
-            if (expr is IObjectCreateExpression)
+            if (expr is IObjectCreateExpression ioce)
             {
-                IObjectCreateExpression ioce = (IObjectCreateExpression)expr;
                 return IsAnyStochastic(context, ioce.Arguments);
             }
-            if (expr is IUnaryExpression)
+            if (expr is IUnaryExpression iue)
             {
-                IUnaryExpression iue = (IUnaryExpression)expr;
                 return IsStochastic(context, iue.Expression);
             }
-            if (expr is IBinaryExpression)
+            if (expr is IBinaryExpression ibe)
             {
-                IBinaryExpression ibe = (IBinaryExpression)expr;
                 return IsStochastic(context, ibe.Left) || IsStochastic(context, ibe.Right);
             }
-            if (expr is IArrayIndexerExpression)
+            if (expr is IArrayIndexerExpression iaie)
             {
-                IArrayIndexerExpression iaie = (IArrayIndexerExpression)expr;
                 return IsStochastic(context, iaie.Target) || IsAnyStochastic(context, iaie.Indices);
             }
             if (expr is ICastExpression) return IsStochastic(context, ((ICastExpression)expr).Expression);
             if (expr is ICheckedExpression) return IsStochastic(context, ((ICheckedExpression)expr).Expression);
-            if (expr is IPropertyIndexerExpression)
+            if (expr is IPropertyIndexerExpression ipie)
             {
-                IPropertyIndexerExpression ipie = (IPropertyIndexerExpression)expr;
                 return IsStochastic(context, ipie.Target) || IsAnyStochastic(context, ipie.Indices);
             }
             if (expr is IAddressDereferenceExpression) return false;
@@ -2372,9 +2359,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
         internal static IExpression RemoveCast(IExpression expr)
         {
             // used to remove spurious casts
-            if (expr is ICastExpression)
+            if (expr is ICastExpression ice)
             {
-                ICastExpression ice = (ICastExpression)expr;
                 if (expr.GetExpressionType().IsAssignableFrom(ice.Expression.GetExpressionType()))
                 {
                     return ice.Expression;

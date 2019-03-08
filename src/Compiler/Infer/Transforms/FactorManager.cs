@@ -18,6 +18,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Compiler;
     using Microsoft.ML.Probabilistic.Compiler.CodeModel;
+    using System.Linq;
 
 #if SUPPRESS_XMLDOC_WARNINGS
 #pragma warning disable 1591
@@ -101,9 +102,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         public static bool ContainsType(object container, Type type)
         {
-            if (container is Type)
+            if (container is Type containerType)
             {
-                Type containerType = (Type)container;
                 if (containerType.IsGenericTypeDefinition)
                     return type.IsGenericType && containerType.IsAssignableFrom(type.GetGenericTypeDefinition());
                 else return containerType.IsAssignableFrom(type);
