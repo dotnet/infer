@@ -230,6 +230,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             Gamma Precision, to_precision;
             Gaussian xActual, xExpected;
 
+            bool testImproper = false;
+            if (testImproper)
+            {
+                // Test the case where precisionIsBetween = false
+                X = Gaussian.FromNatural(1, 2);
+                Mean = Gaussian.FromNatural(3, -1);
+                Precision = Gamma.FromShapeAndRate(4, 5);
+                to_precision = Gamma.FromShapeAndRate(6, 7);
+                xActual = GaussianOp.SampleAverageConditional(X, Mean, Precision, to_precision);
+            }
+
             X = Gaussian.FromNatural(0.1559599323109816, 8.5162535450918462);
             Mean = Gaussian.PointMass(0.57957597647840942);
             Precision = Gamma.FromShapeAndRate(7.8308812008325587E+30, 8.2854255911709925E+30);

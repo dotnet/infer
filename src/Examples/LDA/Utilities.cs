@@ -71,7 +71,7 @@ namespace LDAExample
                 // Draw the number of unique topics in the doc.
                 int numUniqueTopicsPerDoc = Math.Min(1 + Poisson.Sample(1.0), numTopics);
                 double expectedRepeatOfTopicInDoc = 
-                    averageDocLength / numUniqueTopicsPerDoc;
+                    (double)averageDocLength / numUniqueTopicsPerDoc;
                 int[] shuffledTopicIndices = Rand.Perm(numTopics);
                 for (int j = 0; j < numUniqueTopicsPerDoc; j++)
                 {

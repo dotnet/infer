@@ -233,11 +233,11 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void VectorFromArrayOp_PointMassTest()
         {
-            vectorFromArrayOp_PointMassTest(false);
-            vectorFromArrayOp_PointMassTest(true);
+            VectorFromArrayOp_HandlesPointMass(false);
+            VectorFromArrayOp_HandlesPointMass(true);
         }
 
-        private void vectorFromArrayOp_PointMassTest(bool partial)
+        private void VectorFromArrayOp_HandlesPointMass(bool partial)
         {
             int dim = 2;
             VectorGaussian to_vector = new VectorGaussian(dim);
@@ -712,16 +712,16 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Gaussian a = new Gaussian(1, 2);
             Gaussian b = new Gaussian(4, 5);
-            max_MaxPointMassTest(a, b);
-            max_MaxPointMassTest(a, Gaussian.PointMass(2));
-            max_MaxPointMassTest(a, Gaussian.PointMass(3));
-            max_MaxPointMassTest(Gaussian.PointMass(2), b);
-            max_MaxPointMassTest(Gaussian.PointMass(3), b);
-            max_MaxPointMassTest(Gaussian.PointMass(3), Gaussian.PointMass(2));
-            max_MaxPointMassTest(Gaussian.PointMass(2), Gaussian.PointMass(3));
+            Max_MaxPointMass(a, b);
+            Max_MaxPointMass(a, Gaussian.PointMass(2));
+            Max_MaxPointMass(a, Gaussian.PointMass(3));
+            Max_MaxPointMass(Gaussian.PointMass(2), b);
+            Max_MaxPointMass(Gaussian.PointMass(3), b);
+            Max_MaxPointMass(Gaussian.PointMass(3), Gaussian.PointMass(2));
+            Max_MaxPointMass(Gaussian.PointMass(2), Gaussian.PointMass(3));
         }
 
-        private void max_MaxPointMassTest(Gaussian a, Gaussian b)
+        private void Max_MaxPointMass(Gaussian a, Gaussian b)
         {
             double point = 3;
             Gaussian toPoint = MaxGaussianOp.MaxAverageConditional(Gaussian.PointMass(point), a, b);
@@ -745,18 +745,18 @@ namespace Microsoft.ML.Probabilistic.Tests
             //MaxGaussianOp.ForceProper = false;
             Gaussian max = new Gaussian(4, 5);
             Gaussian b = new Gaussian(1, 2);
-            max_APointMassTest(new Gaussian(4, 1e-0), Gaussian.PointMass(0));
-            max_APointMassTest(Gaussian.PointMass(11), Gaussian.PointMass(0));
-            max_APointMassTest(max, b);
-            max_APointMassTest(max, Gaussian.PointMass(2));
-            max_APointMassTest(max, Gaussian.PointMass(3));
-            max_APointMassTest(max, Gaussian.PointMass(4));
-            max_APointMassTest(Gaussian.PointMass(3), b);
-            max_APointMassTest(Gaussian.PointMass(4), b);
-            max_APointMassTest(Gaussian.PointMass(3), Gaussian.PointMass(3));
+            Max_APointMass(new Gaussian(4, 1e-0), Gaussian.PointMass(0));
+            Max_APointMass(Gaussian.PointMass(11), Gaussian.PointMass(0));
+            Max_APointMass(max, b);
+            Max_APointMass(max, Gaussian.PointMass(2));
+            Max_APointMass(max, Gaussian.PointMass(3));
+            Max_APointMass(max, Gaussian.PointMass(4));
+            Max_APointMass(Gaussian.PointMass(3), b);
+            Max_APointMass(Gaussian.PointMass(4), b);
+            Max_APointMass(Gaussian.PointMass(3), Gaussian.PointMass(3));
         }
 
-        private void max_APointMassTest(Gaussian max, Gaussian b)
+        private void Max_APointMass(Gaussian max, Gaussian b)
         {
             double point = 3;
             Gaussian toPoint = MaxGaussianOp.AAverageConditional(max, Gaussian.PointMass(point), b);
@@ -3022,18 +3022,18 @@ weight * (tau + alphaX) + alphaX
             {
                 Gaussian Product = Gaussian.FromMeanAndVariance(1.3, 0.1);
                 Gaussian B = Gaussian.FromMeanAndVariance(1.24, 0.04);
-                gaussianProductOp_APointMassTest(1, Product, B);
+                GaussianProductOp_APointMass(1, Product, B);
 
                 Product = Gaussian.FromMeanAndVariance(10, 1);
                 B = Gaussian.FromMeanAndVariance(5, 1);
-                gaussianProductOp_APointMassTest(2, Product, B);
+                GaussianProductOp_APointMass(2, Product, B);
 
                 Product = Gaussian.FromNatural(1, 0);
-                gaussianProductOp_APointMassTest(2, Product, B);
+                GaussianProductOp_APointMass(2, Product, B);
             }
         }
 
-        private void gaussianProductOp_APointMassTest(double aMean, Gaussian Product, Gaussian B)
+        private void GaussianProductOp_APointMass(double aMean, Gaussian Product, Gaussian B)
         {
             bool isProper = Product.IsProper();
             Gaussian A = Gaussian.PointMass(aMean);

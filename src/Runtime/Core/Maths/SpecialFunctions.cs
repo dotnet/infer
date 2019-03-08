@@ -423,41 +423,41 @@ namespace Microsoft.ML.Probabilistic.Math
             List<double> aTerm = new List<double>();
             List<double> cTerm = new List<double>();
             List<double> eTerm = new List<double>();
-            Func<int, double> aFunc = n =>
-                {
-                    double neg = (n % 2) == 0 ? 1.0 : -1.0;
-                    return (a <= b) ?
-                        2.0 * q * (1.0 + neg * Math.Pow(a / b, n + 1)) / (2.0 + n) :
-                        2.0 * p * (neg + Math.Pow(b / a, n + 1)) / (2.0 + n);
-                };
+            double aFunc(int n)
+            {
+                double neg = (n % 2) == 0 ? 1.0 : -1.0;
+                return (a <= b) ?
+                    2.0 * q * (1.0 + neg * Math.Pow(a / b, n + 1)) / (2.0 + n) :
+                    2.0 * p * (neg + Math.Pow(b / a, n + 1)) / (2.0 + n);
+            }
 
             // Assumes aTerm has been populated up to n
-            Func<int, double, double> bFunc = (n, r) =>
+            double bFunc(int n, double r)
+            {
+                if (n == 0)
                 {
-                    if (n == 0)
+                    return 1.0;
+                }
+                else if (n == 1)
+                {
+                    return r * aTerm[1];
+                }
+                else
+                {
+                    List<double> bTerm = new List<double>();
+                    bTerm.Add(1.0);
+                    bTerm.Add(r * aTerm[1]);
+                    for (int j = 2; j <= n; j++)
                     {
-                        return 1.0;
+                        bTerm.Add(r * aTerm[j] + Enumerable.Range(1, j - 1).Sum(i => ((j - i) * r - i) * bTerm[i] * aTerm[j - i]) / j);
                     }
-                    else if (n == 1)
-                    {
-                        return r * aTerm[1];
-                    }
-                    else
-                    {
-                        List<double> bTerm = new List<double>();
-                        bTerm.Add(1.0);
-                        bTerm.Add(r * aTerm[1]);
-                        for (int j = 2; j <= n; j++)
-                        {
-                            bTerm.Add(r * aTerm[j] + Enumerable.Range(1, j - 1).Sum(i => ((j - i) * r - i) * bTerm[i] * aTerm[j - i]) / j);
-                        }
 
-                        return bTerm[n];
-                    }
-                };
+                    return bTerm[n];
+                }
+            }
 
             // Assumes aTerm has been populated up to n
-            Func<int, double> cFunc = n => bFunc(n - 1, -n / 2.0) / n;
+            double cFunc(int n) => bFunc(n - 1, -n / 2.0) / n;
             aTerm.Add(aFunc(0));
             aTerm.Add(aFunc(1));
             cTerm.Add(cFunc(1));
@@ -1826,7 +1826,7 @@ f = 1/gamma(x+1)-1
 
         // [0] contains moments for x=-2
         // [1] contains moments for x=-3, etc.
-        private static double[][] NormalCdfMomentRatioTable = new double[7][];
+        private static readonly double[][] NormalCdfMomentRatioTable = new double[7][];
 
         /// <summary>
         /// Computes int_0^infinity t^n N(t;x,1) dt / (n! N(x;0,1))
@@ -3018,7 +3018,7 @@ f = 1/gamma(x+1)-1
         }
 
         // Integrate using quadrature nodes and weights
-        private static double integrate(Converter<double, double> f, Vector nodes, Vector weights)
+        private static double Integrate(Converter<double, double> f, Vector nodes, Vector weights)
         {
             return weights.Inner(nodes, x => f(x));
         }
@@ -3104,10 +3104,10 @@ f = 1/gamma(x+1)-1
 
             if (variance > LogisticGaussianVarianceThreshold)
             {
-                Converter<double, double> f = delegate (double x)
+                double f(double x)
                 {
                     return Math.Exp(MMath.LogisticLn(x) + Gaussian.GetLogProb(x, mean, variance));
-                };
+                }
                 double upperBound = mean + Math.Sqrt(variance);
                 upperBound = Math.Max(upperBound, 10);
                 return Quadrature.AdaptiveClenshawCurtis(f, upperBound, 32, 1e-10);
@@ -3119,12 +3119,11 @@ f = 1/gamma(x+1)-1
                 double m_p, v_p;
                 BigvProposal(mean, variance, out m_p, out v_p);
                 Quadrature.GaussianNodesAndWeights(m_p, v_p, nodes, weights);
-                Converter<double, double> weightedIntegrand =
-                    delegate (double z)
-                    {
-                        return Math.Exp(MMath.LogisticLn(z) + Gaussian.GetLogProb(z, mean, variance) - Gaussian.GetLogProb(z, m_p, v_p));
-                    };
-                return integrate(weightedIntegrand, nodes, weights);
+                double weightedIntegrand(double z)
+                {
+                    return Math.Exp(MMath.LogisticLn(z) + Gaussian.GetLogProb(z, mean, variance) - Gaussian.GetLogProb(z, m_p, v_p));
+                }
+                return Integrate(weightedIntegrand, nodes, weights);
             }
             /*
 else {
@@ -3214,10 +3213,10 @@ else if (m < 20.0 - 60.0/11.0 * s) {
 
             if (variance > LogisticGaussianVarianceThreshold)
             {
-                Converter<double, double> f = delegate (double x)
+                double f(double x)
                 {
                     return Math.Exp(MMath.LogisticLn(x) + MMath.LogisticLn(-x) + Gaussian.GetLogProb(x, mean, variance));
-                };
+                }
                 return Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10);
             }
             else
@@ -3227,12 +3226,11 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 double m_p, v_p;
                 BigvProposal(mean, variance, out m_p, out v_p);
                 Quadrature.GaussianNodesAndWeights(m_p, v_p, nodes, weights);
-                Converter<double, double> weightedIntegrand =
-                    delegate (double z)
-                    {
-                        return Math.Exp(MMath.LogisticLn(z) + MMath.LogisticLn(-z) + Gaussian.GetLogProb(z, mean, variance) - Gaussian.GetLogProb(z, m_p, v_p));
-                    };
-                return integrate(weightedIntegrand, nodes, weights);
+                double weightedIntegrand(double z)
+                {
+                    return Math.Exp(MMath.LogisticLn(z) + MMath.LogisticLn(-z) + Gaussian.GetLogProb(z, mean, variance) - Gaussian.GetLogProb(z, m_p, v_p));
+                }
+                return Integrate(weightedIntegrand, nodes, weights);
             }
 
             /*
@@ -3322,13 +3320,13 @@ else if (m < 20.0 - 60.0/11.0 * s) {
 
             if (variance > LogisticGaussianVarianceThreshold)
             {
-                Converter<double, double> f = delegate (double x)
-                    {
-                        double logSigma = MMath.LogisticLn(x);
-                        double log1MinusSigma = MMath.LogisticLn(-x);
-                        double OneMinus2Sigma = -Math.Tanh(x / 2);
-                        return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(x, mean, variance));
-                    };
+                double f(double x)
+                {
+                    double logSigma = MMath.LogisticLn(x);
+                    double log1MinusSigma = MMath.LogisticLn(-x);
+                    double OneMinus2Sigma = -Math.Tanh(x / 2);
+                    return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(x, mean, variance));
+                }
                 return Quadrature.AdaptiveClenshawCurtis(f, 10, 32, 1e-10);
             }
             else
@@ -3338,14 +3336,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 double m_p, v_p;
                 BigvProposal(mean, variance, out m_p, out v_p);
                 Quadrature.GaussianNodesAndWeights(m_p, v_p, nodes, weights);
-                Converter<double, double> weightedIntegrand = delegate (double z)
-                    {
-                        double logSigma = MMath.LogisticLn(z);
-                        double log1MinusSigma = MMath.LogisticLn(-z);
-                        double OneMinus2Sigma = -Math.Tanh(z / 2);
-                        return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(z, mean, variance) - Gaussian.GetLogProb(z, m_p, v_p));
-                    };
-                return integrate(weightedIntegrand, nodes, weights);
+                double weightedIntegrand(double z)
+                {
+                    double logSigma = MMath.LogisticLn(z);
+                    double log1MinusSigma = MMath.LogisticLn(-z);
+                    double OneMinus2Sigma = -Math.Tanh(z / 2);
+                    return OneMinus2Sigma * Math.Exp(logSigma + log1MinusSigma + Gaussian.GetLogProb(z, mean, variance) - Gaussian.GetLogProb(z, m_p, v_p));
+                }
+                return Integrate(weightedIntegrand, nodes, weights);
             }
 
             /*
@@ -3381,7 +3379,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             if (k < 0 || k > 2) throw new ArgumentException("invalid k (" + k + ")");
             double a = mean / variance;
             // int 0.5 cosh(x(m/v+1/2))/cosh(x/2) N(x;0,v) dx
-            Converter<double, double> f = delegate (double x)
+            double f(double x)
             {
                 double logSigma = MMath.LogisticLn(x);
                 double extra = 0;
@@ -3389,7 +3387,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 if (k > 0) extra += MMath.LogisticLn(-x);
                 if (k > 1) s = -Math.Tanh(x / 2);
                 return s * Math.Exp(logSigma + extra + x * a + Gaussian.GetLogProb(x, 0, variance));
-            };
+            }
             double upperBound = (Math.Abs(a + 0.5) - 0.5) * variance + Math.Sqrt(variance);
             upperBound = Math.Max(upperBound, 10);
             return Quadrature.AdaptiveClenshawCurtis(f, upperBound, 32, 1e-10);

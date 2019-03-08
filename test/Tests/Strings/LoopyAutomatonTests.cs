@@ -661,7 +661,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             Assert.Equal("(a(c|bbb))*", automaton.ToString(AutomatonFormats.Friendly));
-            Assert.Equal("(a(c|bbb))*", automaton.ToString(AutomatonFormats.Regexp));
+            Assert.Equal("(a(c|bbb))*?", automaton.ToString(AutomatonFormats.Regexp));
         }
 
         /// <summary>
@@ -679,7 +679,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             Assert.Equal("(a|b)*", automaton.ToString(AutomatonFormats.Friendly));
-            Assert.Equal("(a|b)*", automaton.ToString(AutomatonFormats.Regexp));
+            Assert.Equal("(a|b)*?", automaton.ToString(AutomatonFormats.Regexp));
         }
 
         /// <summary>
@@ -716,7 +716,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder.Start.AddTransition('!', Weight.One).SetEndWeight(Weight.One);
             var automaton = builder.GetAutomaton();
             Assert.Equal("(xyz)*!", automaton.ToString(AutomatonFormats.Friendly));
-            Assert.Equal("(xyz)*!", automaton.ToString(AutomatonFormats.Regexp));
+            Assert.Equal("(xyz)*?!", automaton.ToString(AutomatonFormats.Regexp));
         }
 
         /// <summary>
@@ -735,7 +735,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton = builder.GetAutomaton();
 
             Assert.Equal("xa*", automaton.ToString(AutomatonFormats.Friendly));
-            Assert.Equal("xa*", automaton.ToString(AutomatonFormats.Regexp));
+            Assert.Equal("xa*?", automaton.ToString(AutomatonFormats.Regexp));
         }
 
         /// <summary>

@@ -42,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <param name="reader">The binary reader to read the distribution over feature weights from.</param>
         public FeatureParameterDistribution(BinaryReader reader)
         {
-            Debug.Assert(reader != null, "The reader must not be null.");
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
 
             int deserializedVersion = reader.ReadSerializationVersion(CustomSerializationVersion);
 
@@ -60,11 +60,18 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
         /// <param name="biasFeatureWeightDistribution">The distribution over weights of the feature contribution to biases.</param>
         public FeatureParameterDistribution(GaussianMatrix traitFeatureWeightDistribution, GaussianArray biasFeatureWeightDistribution)
         {
-            Debug.Assert(
-                (traitFeatureWeightDistribution == null && biasFeatureWeightDistribution == null) ||
-                traitFeatureWeightDistribution.All(w => w != null && w.Count == biasFeatureWeightDistribution.Count),
-                "The provided distributions should be valid and consistent in the number of features.");
-            
+            if (traitFeatureWeightDistribution == null)
+                traitFeatureWeightDistribution = new GaussianMatrix(0);
+            if (biasFeatureWeightDistribution == null)
+                biasFeatureWeightDistribution = new GaussianArray(0);
+            foreach (var w in traitFeatureWeightDistribution)
+            {
+                if (w == null)
+                    throw new ArgumentException(nameof(traitFeatureWeightDistribution), "Element is null");
+                if (w.Count != biasFeatureWeightDistribution.Count)
+                    throw new ArgumentException(nameof(traitFeatureWeightDistribution), "Feature count does not match biasFeatureWeightDistribution.Count");
+            }
+
             this.TraitWeights = traitFeatureWeightDistribution;
             this.BiasWeights = biasFeatureWeightDistribution;
         }

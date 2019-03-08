@@ -71,7 +71,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
 
         public void OnSetDistance(NodeType node, int distance)
         {
-            if (SetDistance != null) SetDistance(node, distance);
+            SetDistance?.Invoke(node, distance);
         }
     }
 }

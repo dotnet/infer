@@ -877,7 +877,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder.Start.AddTransition('a', Weight.One).AddSelfTransition('b', Weight.One).AddTransition('c', Weight.One).SetEndWeight(Weight.One);
             var automaton = builder.GetAutomaton();
             Assert.Equal("ab*c", automaton.ToString(AutomatonFormats.Friendly));
-            Assert.Equal("ab*c", automaton.ToString(AutomatonFormats.Regexp));
+            Assert.Equal("ab*?c", automaton.ToString(AutomatonFormats.Regexp));
         }
             
         /// <summary>

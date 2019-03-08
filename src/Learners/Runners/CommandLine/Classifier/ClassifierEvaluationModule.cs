@@ -453,21 +453,13 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
             for (int c = 0; c < classLabelCount; c++)
             {
                 // ...find the longest string among counts and label
-                int labelWidth = labels[c].Length;
+                int labelWidth = Math.Min(labels[c].Length, MaxLabelWidth);
 
-                columnWidths[c + 1] = labelWidth > MaxLabelWidth ? MaxLabelWidth : labelWidth;
-                for (int r = 0; r < classLabelCount; r++)
-                {
-                    int countWidth = MaxValueWidth;
-                    if (countWidth > columnWidths[c + 1])
-                    {
-                        columnWidths[c + 1] = countWidth;
-                    }
-                }
+                columnWidths[c + 1] = Math.Max(MaxValueWidth, labelWidth);
 
                 if (labelWidth > columnWidths[0])
                 {
-                    columnWidths[0] = labelWidth > MaxLabelWidth ? MaxLabelWidth : labelWidth;
+                    columnWidths[0] = labelWidth;
                 }
             }
 

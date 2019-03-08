@@ -753,7 +753,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         {
             if (null == dp)
                 throw new InferCompilerException("A type declaration provider has not been set for this instance of the model compiler");
-            return CompileWithoutParams(dp.GetTypeDeclaration(method != null ? method.DeclaringType : null, true),
+            return CompileWithoutParams(dp.GetTypeDeclaration(method?.DeclaringType, true),
                                         method, new AttributeRegistry<object, ICompilerAttribute>(true));
         }
 
@@ -786,9 +786,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 {
                     foreach (CodeTransformer ct in tc.transformers)
                     {
-                        DeadCodeTransform bst = ct.Transform as DeadCodeTransform;
-                        //SchedulingTransform bst = ct.Transform as SchedulingTransform;
-                        if (bst != null)
+                        if (ct.Transform is DeadCodeTransform bst)
                         {
                             foreach (ITypeDeclaration itd2 in ct.transformMap.Values)
                             {

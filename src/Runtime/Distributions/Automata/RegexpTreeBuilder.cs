@@ -1124,7 +1124,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// A static instance of an interval comparer.
                 /// </summary>
-                private static IComparer<IntervalTreeNode> intervalComparerInstance = new IntervalNodeComparer();
+                private static readonly IComparer<IntervalTreeNode> intervalComparerInstance = new IntervalNodeComparer();
 
                 /// <summary>
                 /// Backing field for <see cref="Children"/>.

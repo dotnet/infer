@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.ML.Probabilistic.Collections;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 {
@@ -101,9 +100,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
         public static bool ContainsType(object container, Type type)
         {
-            if (container is Type)
+            if (container is Type containerType)
             {
-                Type containerType = (Type)container;
                 if (containerType.IsGenericTypeDefinition)
                     return type.IsGenericType && containerType.IsAssignableFrom(type.GetGenericTypeDefinition());
                 else return containerType.IsAssignableFrom(type);
@@ -375,16 +373,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     }
                     else
                     {
-                        if (resultIndex != null)
+                        if (parameter.IsDefined(typeof(SkipIfMatchingIndexIsUniformAttribute), false))
                         {
-                            if (parameter.IsDefined(typeof(SkipIfMatchingIndexIsUniformAttribute), false))
-                            {
-                                if (resultIndex == null)
-                                    throw new InferCompilerException(parameter.Name + " has SkipIfMatchingIndexIsUniformAttribute but " + StringUtil.MethodNameToString(method) +
-                                                                   " has no resultIndex parameter");
-                                IExpression requirement = Builder.ArrayIndex(paramRef, resultIndex);
-                                info.Add(DependencyType.SkipIfUniform, Builder.ExprStatement(requirement));
-                            }
+                            if (resultIndex == null)
+                                throw new InferCompilerException(parameter.Name + " has SkipIfMatchingIndexIsUniformAttribute but " + StringUtil.MethodNameToString(method) +
+                                                               " has no resultIndex parameter");
+                            IExpression requirement = Builder.ArrayIndex(paramRef, resultIndex);
+                            info.Add(DependencyType.SkipIfUniform, Builder.ExprStatement(requirement));
                         }
                         if (parameter.IsDefined(typeof(SkipIfAnyExceptIndexIsUniformAttribute), false))
                         {

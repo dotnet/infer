@@ -71,7 +71,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// 1 = interpolate (i/n + (i+1)/n)/2 = (i+0.5)/n
         /// 2 = interpolate i/(n-1)
         /// </summary>
-        private static int InterpolationType = 0;
+        private readonly int InterpolationType = 0;
 
         /// <summary>
         /// Creates a new QuantileEstimator.

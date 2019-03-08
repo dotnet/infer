@@ -85,17 +85,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
 
         public void OnAddNode(NodeType node)
         {
-            if (AddNode != null) AddNode(node);
+            AddNode?.Invoke(node);
         }
 
         public void OnBeginComponent()
         {
-            if (BeginComponent != null) BeginComponent();
+            BeginComponent?.Invoke();
         }
 
         public void OnEndComponent()
         {
-            if (EndComponent != null) EndComponent();
+            EndComponent?.Invoke();
         }
     }
 
@@ -205,17 +205,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
 
         public void OnAddNode(NodeType node)
         {
-            if (AddNode != null) AddNode(node);
+            AddNode?.Invoke(node);
         }
 
         public void OnBeginComponent()
         {
-            if (BeginComponent != null) BeginComponent();
+            BeginComponent?.Invoke();
         }
 
         public void OnEndComponent()
         {
-            if (EndComponent != null) EndComponent();
+            EndComponent?.Invoke();
         }
     }
 
