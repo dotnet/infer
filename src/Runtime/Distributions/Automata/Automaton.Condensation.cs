@@ -272,9 +272,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             State destState = state.Owner.States[transition.DestinationStateIndex];
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {
+                                Weight weight2 = this.stateIdToInfo[transition.DestinationStateIndex].WeightToEnd;
                                 weightToAdd = Weight.Sum(
                                     weightToAdd,
-                                    Weight.Product(transition.Weight, this.stateIdToInfo[transition.DestinationStateIndex].WeightToEnd));
+                                    transition.Weight * weight2);
                             }
                         }
 
@@ -287,7 +288,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 CondensationStateInfo updatedStateInfo = this.stateIdToInfo[updatedState.Index];
                                 updatedStateInfo.WeightToEnd = Weight.Sum(
                                     updatedStateInfo.WeightToEnd,
-                                    Weight.Product(currentComponent.GetWeight(updatedStateIndex, stateIndex), weightToAdd));
+                                    currentComponent.GetWeight(updatedStateIndex, stateIndex) * weightToAdd);
                                 this.stateIdToInfo[updatedState.Index] = updatedStateInfo;
                             }
                         }
@@ -327,9 +328,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             State destState = currentComponent.GetStateByIndex(destStateIndex);
                             CondensationStateInfo destStateInfo = this.stateIdToInfo[destState.Index];
+                            Weight weight2 = currentComponent.GetWeight(srcStateIndex, destStateIndex);
                             destStateInfo.WeightFromRoot = Weight.Sum(
                                 destStateInfo.WeightFromRoot,
-                                Weight.Product(srcStateInfo.UpwardWeightFromRoot, currentComponent.GetWeight(srcStateIndex, destStateIndex)));
+                                srcStateInfo.UpwardWeightFromRoot * weight2);
                             this.stateIdToInfo[destState.Index] = destStateInfo;
                         }
                     }
@@ -353,7 +355,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 CondensationStateInfo destStateInfo = this.stateIdToInfo[destState.Index];
                                 destStateInfo.UpwardWeightFromRoot = Weight.Sum(
                                     destStateInfo.UpwardWeightFromRoot,
-                                    Weight.Product(srcStateInfo.WeightFromRoot, transition.Weight));
+                                    srcStateInfo.WeightFromRoot * transition.Weight);
                                 this.stateIdToInfo[transition.DestinationStateIndex] = destStateInfo;
                             }
                         }

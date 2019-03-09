@@ -546,7 +546,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         var sequence = new GeneralizedSequence(currentSequenceElements);
                         // TODO: use immutable data structure instead of copying sequences
-                        weightedSequences.Add(new WeightedSequence(sequence, Weight.Product(currentWeight, state.EndWeight)));
+                        weightedSequences.Add(new WeightedSequence(sequence, currentWeight * state.EndWeight));
                     }
 
                     // Traverse the outgoing transitions
@@ -569,7 +569,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         stack.Push(
                             new StateWeight(
                                 transition.DestinationStateIndex,
-                                Weight.Product(currentWeight, transition.Weight)));
+                                currentWeight * transition.Weight));
 
                         if (!transition.IsEpsilon)
                         {
@@ -678,6 +678,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 transition.IsEpsilon &&
                                 transition.DestinationStateIndex >= firstAllowedStateIndex)
                             {
+                                Weight weight2 = Weight.Inverse(transition.Weight);
                                 if (this.DoAddGeneralizedSequence(
                                     transition.DestinationStateIndex,
                                     false,
@@ -685,7 +686,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                     firstAllowedStateIndex,
                                     currentSequencePos,
                                     sequence,
-                                    Weight.Product(weight, Weight.Inverse(transition.Weight))))
+                                    weight * weight2))
                                 {
                                     return true;
                                 }
@@ -786,6 +787,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     // Skip the element in the sequence, move to the destination state
                     // Weight of the existing transition must be taken into account
                     // This case can fail if the next element is a self-loop and the destination state already has a different one
+                    Weight weight2 = Weight.Inverse(transition.Weight);
                     if (this.DoAddGeneralizedSequence(
                         transition.DestinationStateIndex,
                         false,
@@ -793,7 +795,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         firstAllowedStateIndex,
                         currentSequencePos + 1,
                         sequence,
-                        Weight.Product(weight, Weight.Inverse(transition.Weight))))
+                        weight * weight2))
                     {
                         return true;
                     }

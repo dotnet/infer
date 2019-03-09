@@ -86,7 +86,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             logValues1.SetToFunction(
                 logValues1,
                 logValues2,
-                (x, y) => Weight.Sum(Weight.FromLogValue(x), Weight.Product(values2Scale, Weight.FromLogValue(y))).LogValue);
+                (x, y) => (Weight.FromLogValue(x) + values2Scale * Weight.FromLogValue(y)).LogValue);
             return logValues1;
         }
     }

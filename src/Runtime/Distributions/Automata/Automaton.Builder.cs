@@ -321,13 +321,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             }
                             else
                             {
-                                transition.Weight = Weight.Product(transition.Weight, endState.EndWeight);
+                                transition.Weight = transition.Weight * endState.EndWeight;
                             }
 
                             endState.AddTransition(transition);
                         }
 
-                        endState.SetEndWeight(Weight.Product(endState.EndWeight, secondStartState.EndWeight));
+                        endState.SetEndWeight(endState.EndWeight * secondStartState.EndWeight);
                     }
 
                     this.RemoveState(secondStartState.Index);

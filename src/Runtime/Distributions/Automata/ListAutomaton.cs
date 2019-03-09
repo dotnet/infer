@@ -137,12 +137,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 if (stateIdWithWeight.Value.LogValue > LogEps)
                 {
-                    Weight stateWeight = Weight.Product(stateIdWithWeight.Value, Weight.Inverse(elementStateWeightSum));
+                    Weight weight2 = Weight.Inverse(elementStateWeightSum);
+                    Weight stateWeight = stateIdWithWeight.Value * weight2;
                     destinationState.Add(stateIdWithWeight.Key, stateWeight);
                 }
             }
 
-            Weight transitionWeight = Weight.Product(Weight.FromValue(1), elementStateWeightSum);
+            Weight transitionWeight = Weight.FromValue(1) * elementStateWeightSum;
             results.Add(Tuple.Create(transitionElements[0].distribution,transitionWeight, destinationState));
         }
 
@@ -159,7 +160,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Dictionary<TElement, List<TransitionElement>> elements, List<TransitionElement> uniformList)
         {
             var dist = transition.ElementDistribution.Value;
-            Weight weightBase = Weight.Product(transition.Weight, sourceStateResidualWeight);
+            Weight weightBase = transition.Weight * sourceStateResidualWeight;
             if (dist.IsPointMass)
             {
                 var pt = dist.Point;

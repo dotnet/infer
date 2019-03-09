@@ -397,7 +397,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
-                destState.SetEndWeight(Weight.Product(mappingState.EndWeight, srcState.EndWeight));
+                destState.SetEndWeight(mappingState.EndWeight * srcState.EndWeight);
                 return destState.Index;
             }
         }
@@ -480,7 +480,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             continue;
                         }
 
-                        var weight = Weight.Product(mappingTransition.Weight, Weight.FromLogValue(projectionLogScale));
+                        Weight weight2 = Weight.FromLogValue(projectionLogScale);
+                        var weight = mappingTransition.Weight * weight2;
                         var childDestState = BuildProjectionOfSequence(destMappingState,srcSequenceIndex + 1);
                         destState.AddTransition(destElementDistribution, weight, childDestState, mappingTransition.Group);
                     }

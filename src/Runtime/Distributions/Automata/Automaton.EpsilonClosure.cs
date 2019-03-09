@@ -55,7 +55,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     Weight stateWeight = Weight.ApproximateClosure(selfLoopWeight);
                     this.weightedStates.Add(Pair.Create(state, stateWeight));
-                    this.EndWeight = Weight.Product(stateWeight, state.EndWeight);
+                    this.EndWeight = stateWeight * state.EndWeight;
                 }
                 else
                 {

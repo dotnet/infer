@@ -236,8 +236,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     for (int i = 0; i < this.Size; ++i)
                     {
-                        this.pairwiseWeights[i, k] = Weight.Product(this.pairwiseWeights[i, k], loopWeight);
-                        this.pairwiseWeights[k, i] = Weight.Product(this.pairwiseWeights[k, i], loopWeight);
+                        this.pairwiseWeights[i, k] = this.pairwiseWeights[i, k] * loopWeight;
+                        this.pairwiseWeights[k, i] = this.pairwiseWeights[k, i] * loopWeight;
                     }
 
                     this.pairwiseWeights[k, k] = loopWeight;

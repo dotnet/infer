@@ -647,7 +647,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             endStatesWithTargetWeights.Add(ValueTuple.Create(
                                 state.Index,
-                                Weight.Product(Weight.FromValue(repetitionNumberWeights[i]), state.EndWeight)));
+                                Weight.FromValue(repetitionNumberWeights[i]) * state.EndWeight));
                         }
                     }
                 }
@@ -1310,7 +1310,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
-                productState.SetEndWeight(Weight.Product(state1.EndWeight, state2.EndWeight));
+                productState.SetEndWeight(state1.EndWeight * state2.EndWeight);
                 return productState.Index;
             }
         }
@@ -1967,7 +1967,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         var closureDestStateIndex = BuildEpsilonClosure(destState);
                         resultState.AddTransition(
                             transition.ElementDistribution,
-                            Weight.Product(transition.Weight, closureStateWeight),
+                            transition.Weight * closureStateWeight,
                             closureDestStateIndex,
                             transition.Group);
                     }
@@ -2198,7 +2198,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         transitionIterator.Value = transition;
                     }
 
-                    state.SetEndWeight(Weight.Product(state.EndWeight, weightToEndInv));
+                    state.SetEndWeight(state.EndWeight * weightToEndInv);
                 }
 
                 return builder.GetData();
@@ -2501,7 +2501,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var currentState = this.States[stateIndex];
             if (currentState.CanEnd)
             {
-                var newWeight = Weight.Product(weight, currentState.EndWeight);
+                var newWeight = weight * currentState.EndWeight;
                 yield return new Tuple<List<TElementDistribution>, double>(prefix.Reverse().ToList(), newWeight.LogValue);
             }
 
@@ -2526,7 +2526,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     prefix.Push(transition.ElementDistribution.Value);
                 }
 
-                foreach (var support in this.EnumeratePaths(prefix, visitedStates, Weight.Product(weight, transition.Weight), transition.DestinationStateIndex))
+                foreach (var support in this.EnumeratePaths(prefix, visitedStates, weight * transition.Weight, transition.DestinationStateIndex))
                 {
                     yield return support;
                 }

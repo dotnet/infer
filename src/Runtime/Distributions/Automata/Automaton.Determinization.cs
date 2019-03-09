@@ -110,9 +110,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         destinationState.SetEndWeight(Weight.Zero);
                         foreach (KeyValuePair<int, Weight> stateIdWithWeight in destWeightedStateSet)
                         {
+                            Weight weight2 = this.States[stateIdWithWeight.Key].EndWeight;
                             destinationState.SetEndWeight(Weight.Sum(
                                 destinationState.EndWeight,
-                                Weight.Product(stateIdWithWeight.Value, this.States[stateIdWithWeight.Key].EndWeight)));
+                                stateIdWithWeight.Value * weight2));
                         }
 
                         destinationStateIndex = destinationState.Index;

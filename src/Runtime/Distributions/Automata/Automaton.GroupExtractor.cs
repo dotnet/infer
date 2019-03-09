@@ -74,7 +74,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         newSourceState.SetEndWeight(weightToEnd);
                     }
 
-                    correctionFactor = Weight.Sum(correctionFactor, Weight.Product(weightFromRoot, weightToEnd));
+                    correctionFactor = Weight.Sum(correctionFactor, weightFromRoot * weightToEnd);
                 }
 
                 if (!correctionFactor.IsZero)
@@ -168,9 +168,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         if (transition.Group == group) continue;
 
+                        Weight weight2 = weights[transition.DestinationStateIndex];
                         weightToAdd = Weight.Sum(
                             weightToAdd,
-                            Weight.Product(transition.Weight, weights[transition.DestinationStateIndex]));
+                            transition.Weight * weight2);
                     }
 
                     weights[state.Index] = weightToAdd;
@@ -206,7 +207,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         if (transition.Group == group) continue;
 
                         var destWeight = weights[transition.DestinationStateIndex];
-                        var weight = Weight.Sum(destWeight, Weight.Product(srcWeight, transition.Weight));
+                        var weight = Weight.Sum(destWeight, srcWeight * transition.Weight);
 
                         weights[transition.DestinationStateIndex] = weight;
                     }
