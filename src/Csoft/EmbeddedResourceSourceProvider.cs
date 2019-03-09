@@ -20,9 +20,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
             var asm = t.Assembly;
             return asm.GetManifestResourceNames().Where(s => s.EndsWith(".cs")).Select(s =>
             {
-                using (var stream = asm.GetManifestResourceStream(s))
+                var stream = asm.GetManifestResourceStream(s);
+                using (var reader = new StreamReader(stream))
                 {
-                    var reader = new StreamReader(stream);
                     return new SourceCode(s, reader.ReadToEnd());
                 }
             }).FirstOrDefault(code =>
