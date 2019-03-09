@@ -227,9 +227,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             List<int> examList = new List<int>();
             char[] sep = {'\t'};
 
-            StreamReader reader = new StreamReader(filename);
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            foreach (string line in File.ReadLines(filename))
             {
                 if (maxDocs >= 0 && labelList.Count == maxDocs) break;
                 string[] split = line.Split(sep);
@@ -237,7 +235,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                 clickList.Add(int.Parse(split[1]));
                 examList.Add(int.Parse(split[2]));
             }
-            reader.Close();
             labels = labelList.ToArray();
             clicks = clickList.ToArray();
             exams = examList.ToArray();

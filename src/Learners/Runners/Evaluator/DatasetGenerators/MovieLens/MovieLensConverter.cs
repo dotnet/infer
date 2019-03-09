@@ -59,19 +59,14 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners.MovieLens
             try
             {
                 using (TextWriter writer = new StreamWriter(outputFileName))
+                using (TextReader moviesReader = new StreamReader(moviesInfoFileName))
+                using (TextReader usersReader = new StreamReader(usersInfoFileName))
+                using (TextReader ratingReader = new StreamReader(ratingFileName))
                 {
-                    TextReader moviesReader = new StreamReader(moviesInfoFileName);
-                    TextReader usersReader = new StreamReader(usersInfoFileName);
-                    TextReader ratingReader = new StreamReader(ratingFileName);
-
                     writer.WriteLine("R,1,5");
                     ConvertRating(ratingReader, writer);
                     GenerateEntityFeatures(usersReader, writer, FeatureProcessor.ProcessUserFeatures);
                     GenerateEntityFeatures(moviesReader, writer, FeatureProcessor.ProcessItemFeatures);
-
-                    moviesReader.Close();
-                    usersReader.Close();
-                    ratingReader.Close();
                 }
             }
             catch

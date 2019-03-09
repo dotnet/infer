@@ -46,8 +46,8 @@ namespace ImageClassifier
 
         public void ReadImages()
         {
-            List<string> filenames = ReadLines(folder + "Images.txt");
-            int n = filenames.Count;
+            string[] filenames = File.ReadAllLines(folder + "Images.txt");
+            int n = filenames.Length;
 
             probLabels = new Label[n];
             int xpos = 5;
@@ -131,26 +131,10 @@ namespace ImageClassifier
             }
         }
 
-        public static List<string> ReadLines(string path)
-        {
-            List<string> result = new List<string>();
-            StreamReader reader = new StreamReader(path);
-            while (true)
-            {
-                string s = reader.ReadLine();
-                if (s == null) break;
-                result.Add(s);
-            }
-
-            reader.Close();
-            return result;
-        }
-
         public static List<Vector> ReadVectors(string path)
         {
             List<Vector> result = new List<Vector>();
-            List<string> lines = ReadLines(path);
-            foreach (string line in lines)
+            foreach (string line in File.ReadLines(path))
             {
                 string[] entries = line.Split(',');
                 Vector v = Vector.Zero(entries.Length - 1);

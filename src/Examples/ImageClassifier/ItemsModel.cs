@@ -85,12 +85,11 @@ namespace ImageClassifier
             foreach (Item item in Items) item.Reset();
         }
 
-        public void PopulateFromStringsAndVectors(List<string> filenames, List<Vector> data)
+        public void PopulateFromStringsAndVectors(IReadOnlyList<string> filenames, IReadOnlyList<Vector> data)
         {
-            int ct = 0;
-            foreach (string s in filenames)
+            for (int i = 0; i < filenames.Count; i++)
             {
-                items.Add(new Item(form1.folder + s, data[ct++]));
+                items.Add(new Item(form1.folder + filenames[i], data[i]));
             }
         }
     }
