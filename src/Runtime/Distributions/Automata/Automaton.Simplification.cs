@@ -394,7 +394,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // TODO:
                 //   - set automaton to epsilon-closure
                 //   - compute Condensation & logNormalizer
-                //   - remove all end states with EndWeight < PruneStatesWithLogEndWeightLessThan - LogNormalizer
+                //   - remove all end states with WeightFromRoot * EndWeight < PruneStatesWithLogEndWeightLessThan - LogNormalizer
                 //   - remove dead states
                 //   - write lots of unit-tests
             }
