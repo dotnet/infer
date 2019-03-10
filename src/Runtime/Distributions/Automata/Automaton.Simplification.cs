@@ -5,7 +5,6 @@
 
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
 
@@ -145,8 +144,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     this.RemoveLowWeightEndStates();
                 }
-
-                Console.WriteLine($"s:{initialStatesCount}->{builder.StatesCount}, t:{initialTransitionsCount}->{builder.TransitionsCount}");
 
                 return builder.StatesCount != initialStatesCount ||
                        builder.TransitionsCount != initialTransitionsCount;
