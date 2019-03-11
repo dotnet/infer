@@ -7,6 +7,7 @@ using System.IO;
 using System.Drawing;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Utilities;
+using System.Linq;
 
 namespace ImageClassifier
 {
@@ -15,7 +16,7 @@ namespace ImageClassifier
         public void ComputeImageFeatures()
         {
             string folder = @"..\..\Images\";
-            List<string> filenames = ReadLines(folder + "Images.txt");
+            string[] filenames = File.ReadAllLines(folder + "Images.txt");
             Dictionary<string, Vector> labels = ReadLabels(folder + "Labels.txt");
             Dictionary<string, Vector> features = new Dictionary<string, Vector>();
             foreach (string filename in filenames)
@@ -40,24 +41,20 @@ namespace ImageClassifier
         private Dictionary<string, Vector> ReadLabels(string path)
         {
             Dictionary<string, int> keywords = new Dictionary<string, int>();
-            List<string[]> lines = new List<string[]>();
-            StreamReader reader = new StreamReader(path);
-            while (true)
+            List<string[]> lines = File.ReadLines(path).Select(s =>
             {
-                string s = reader.ReadLine();
-                if (s == null) break;
                 string[] items = s.Split(',');
-                if (items.Length == 0) continue;
-                for (int i = 1; i < items.Length; i++)
+                if (items.Length > 0)
                 {
-                    items[i] = items[i].Trim();
-                    if (!keywords.ContainsKey(items[i])) keywords[items[i]] = keywords.Count;
+                    for (int i = 1; i < items.Length; i++)
+                    {
+                        items[i] = items[i].Trim();
+                        if (!keywords.ContainsKey(items[i])) keywords[items[i]] = keywords.Count;
+                    }
                 }
+                return items;
+            }).ToList();
 
-                lines.Add(items);
-            }
-
-            reader.Close();
             Dictionary<string, Vector> labels = new Dictionary<string, Vector>();
             foreach (string[] items in lines)
             {
@@ -228,21 +225,6 @@ namespace ImageClassifier
             }
 
             return max;
-        }
-
-        private List<string> ReadLines(string path)
-        {
-            List<string> result = new List<string>();
-            StreamReader reader = new StreamReader(path);
-            while (true)
-            {
-                string s = reader.ReadLine();
-                if (s == null) break;
-                result.Add(s);
-            }
-
-            reader.Close();
-            return result;
         }
     }
 }

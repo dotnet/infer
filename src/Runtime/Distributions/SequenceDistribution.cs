@@ -1467,7 +1467,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 Weight probSum = Weight.Zero;
                 foreach (var transition in currentState.Transitions)
                 {
-                    probSum = Weight.Sum(probSum, transition.Weight);
+                    probSum = probSum + transition.Weight;
                     if (logSample < probSum.LogValue)
                     {
                         if (!transition.IsEpsilon)
@@ -1791,15 +1791,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 
                 this.isNormalized = true;
             }
-            
-            ////// todo: consider moving the following logic into the Automaton class
-            ////if (product.PruneTransitionsWithLogWeightLessThan.HasValue)
-            ////{
-            ////    if (this.isNormalized || product.TryNormalizeValues())
-            ////    {
-            ////        product.RemoveTransitionsWithSmallWeights(product.PruneTransitionsWithLogWeightLessThan.Value);
-            ////    }
-            ////}
             
             return logNormalizer;
         }

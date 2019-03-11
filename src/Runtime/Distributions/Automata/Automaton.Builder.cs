@@ -214,14 +214,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
                 }
 
-                this.StartStateIndex = oldToNewStateIdMapping[this.StartStateIndex];
-                if (this.StartStateIndex == -1)
+                if (deadStateCount == 0)
                 {
-                    // Cannot reach any end state from the start state => the automaton is zero everywhere
-                    this.Clear();
-                    this.AddState();
-                    return deadStateCount;
+                    return 0;
                 }
+
+                // may invalidate automaton
+                this.StartStateIndex = oldToNewStateIdMapping[this.StartStateIndex];
 
                 for (var i = 0; i < this.states.Count; ++i)
                 {

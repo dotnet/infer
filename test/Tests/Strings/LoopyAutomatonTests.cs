@@ -799,7 +799,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Weight weightSum = automatonClone.States[i].EndWeight;
                 for (int j = 0; j < automatonClone.States[i].Transitions.Count; ++j)
                 {
-                    weightSum = Weight.Sum(weightSum, automatonClone.States[i].Transitions[j].Weight);
+                    weightSum += automatonClone.States[i].Transitions[j].Weight;
                 }
 
                 Assert.Equal(0.0, weightSum.LogValue, 1e-6);

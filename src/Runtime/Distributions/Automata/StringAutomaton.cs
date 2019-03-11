@@ -108,8 +108,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (segmentBound.IsStart)
                 {
                     activeSegments.Add(segmentBound);
-                    currentSegmentStateWeightSum = Weight.Sum(currentSegmentStateWeightSum, segmentBound.Weight);
-                    currentSegmentStateWeights[segmentBound.DestinationStateId] = Weight.Sum(currentSegmentStateWeights[segmentBound.DestinationStateId], segmentBound.Weight);
+                    currentSegmentStateWeightSum += segmentBound.Weight;
+                    currentSegmentStateWeights[segmentBound.DestinationStateId] += segmentBound.Weight;
                 }
                 else
                 {
@@ -118,9 +118,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (double.IsInfinity(segmentBound.Weight.Value))
                     {
                         // Cannot subtract because of the infinities involved.
-                        currentSegmentStateWeightSum = activeSegments.Select(sb => sb.Weight).Aggregate(Weight.Zero, (acc, w) => Weight.Sum(acc, w));
+                        currentSegmentStateWeightSum = activeSegments.Select(sb => sb.Weight).Aggregate(Weight.Zero, Weight.Sum);
                         currentSegmentStateWeights[segmentBound.DestinationStateId] =
-                            activeSegments.Where(sb => sb.DestinationStateId == segmentBound.DestinationStateId).Select(sb => sb.Weight).Aggregate(Weight.Zero, (acc, w) => Weight.Sum(acc, w));
+                            activeSegments.Where(sb => sb.DestinationStateId == segmentBound.DestinationStateId).Select(sb => sb.Weight).Aggregate(Weight.Zero, Weight.Sum);
                     }
                     else
                     {

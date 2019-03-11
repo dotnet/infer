@@ -122,14 +122,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var elementStateWeightSum = Weight.Zero;
             foreach (var element in transitionElements)
             {
-                Weight prevStateWeight;
-                if (!elementStatesWeights.TryGetWeight(element.destIndex, out prevStateWeight))
+                if (!elementStatesWeights.TryGetWeight(element.destIndex, out var prevStateWeight))
                 {
                     prevStateWeight = Weight.Zero;
                 }
 
-                elementStatesWeights[element.destIndex] = Weight.Sum(prevStateWeight, element.weight);
-                elementStateWeightSum = Weight.Sum(elementStateWeightSum, element.weight);
+                elementStatesWeights[element.destIndex] = prevStateWeight + element.weight;
+                elementStateWeightSum += element.weight;
             }
 
             var destinationState = new Determinization.WeightedStateSet();

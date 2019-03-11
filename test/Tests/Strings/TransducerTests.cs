@@ -536,5 +536,38 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.Equal(referenceValue2, transpose1.GetValue(valuePair[0], valuePair[1]));
             }
         }
+
+        /// <summary>
+        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void ProjectSourceLargeAutomaton()
+        {
+            using (var unlimited = new StringAutomaton.UnlimitedStatesComputation())
+            {
+                const int StateCount = 100_000;
+
+                var builder = new StringAutomaton.Builder();
+                var state = builder.Start;
+
+                for (var i = 1; i < StateCount; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                state.SetEndWeight(Weight.One);
+
+                var automaton = builder.GetAutomaton();
+                var point = new string('a', StateCount - 1);
+                var copyTransducer = StringTransducer.Copy();
+
+                var projectedAutomaton = copyTransducer.ProjectSource(automaton);
+                var projectedPoint = copyTransducer.ProjectSource(point);
+
+                StringInferenceTestUtilities.TestValue(projectedAutomaton, 1.0, point);
+                StringInferenceTestUtilities.TestValue(projectedPoint, 1.0, point);
+            }
+        }
     }
 }

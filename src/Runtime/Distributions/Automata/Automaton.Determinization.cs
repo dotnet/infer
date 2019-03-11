@@ -110,10 +110,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         destinationState.SetEndWeight(Weight.Zero);
                         foreach (KeyValuePair<int, Weight> stateIdWithWeight in destWeightedStateSet)
                         {
-                            Weight weight2 = this.States[stateIdWithWeight.Key].EndWeight;
-                            destinationState.SetEndWeight(Weight.Sum(
-                                destinationState.EndWeight,
-                                stateIdWithWeight.Value * weight2));
+                            var addedWeight = stateIdWithWeight.Value * this.States[stateIdWithWeight.Key].EndWeight;
+                            destinationState.SetEndWeight(destinationState.EndWeight + addedWeight);
                         }
 
                         destinationStateIndex = destinationState.Index;
@@ -124,11 +122,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
             }
 
-            var simplification = new Simplification(builder, this.PruneTransitionsWithLogWeightLessThan);
+            var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
             simplification.MergeParallelTransitions(); // Determinization produces a separate transition for each segment
 
             var result = builder.GetAutomaton();
-            result.PruneTransitionsWithLogWeightLessThan = this.PruneTransitionsWithLogWeightLessThan;
+            result.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
             result.LogValueOverride = this.LogValueOverride;
             this.SwapWith(result);
 
