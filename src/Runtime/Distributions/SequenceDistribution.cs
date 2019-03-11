@@ -1792,15 +1792,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 this.isNormalized = true;
             }
             
-            ////// todo: consider moving the following logic into the Automaton class
-            ////if (product.PruneTransitionsWithLogWeightLessThan.HasValue)
-            ////{
-            ////    if (this.isNormalized || product.TryNormalizeValues())
-            ////    {
-            ////        product.RemoveTransitionsWithSmallWeights(product.PruneTransitionsWithLogWeightLessThan.Value);
-            ////    }
-            ////}
-            
             return logNormalizer;
         }
         

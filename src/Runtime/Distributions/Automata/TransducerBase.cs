@@ -318,47 +318,56 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="srcAutomaton">The automaton to project.</param>
         /// <returns>The projection.</returns>
+        /// <remarks>
+        /// The code of this method has a lot in common with the code of Automaton.SetToProduct.
+        /// Unfortunately, it's not clear how to avoid the duplication in the current design.
+        /// </remarks>
         public TDestAutomaton ProjectSource(TSrcAutomaton srcAutomaton)
         {
             Argument.CheckIfNotNull(srcAutomaton, "srcAutomaton");
 
-            var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
-
-            if (srcAutomaton.IsCanonicZero() || this.sequencePairToWeight.IsCanonicZero())
+            var mappingAutomaton = this.sequencePairToWeight;
+            if (srcAutomaton.IsCanonicZero() || mappingAutomaton.IsCanonicZero())
             {
-                return result.GetAutomaton();
+                return Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Zero();
             }
 
             // The projected automaton must be epsilon-free
             srcAutomaton.MakeEpsilonFree();
 
+            var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
             var destStateCache = new Dictionary<(int, int), int>();
-            result.StartStateIndex = BuildProjectionOfAutomaton(this.sequencePairToWeight.Start, srcAutomaton.Start);
+            var stack = new Stack<(int state1, int state2, int destStateIndex)>();
 
-            var simplification = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Simplification(result, null);
-            simplification.RemoveDeadStates();
-            simplification.SimplifyIfNeeded();
-
-            return result.GetAutomaton();
-            
-            // Recursively builds the projection of a given automaton onto this transducer.
-            // The projected automaton must be epsilon-free.
-            int BuildProjectionOfAutomaton(
+            // Creates destination state and schedules projection computation for it.
+            // If computation is already scheduled or done the state index is simply taken from cache
+            int CreateDestState(
                 PairListAutomaton.State mappingState,
                 Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.State srcState)
             {
-                //// The code of this method has a lot in common with the code of Automaton<>.BuildProduct.
-                //// Unfortunately, it's not clear how to avoid the duplication in the current design.
-
-                // State already exists, return its index
-                var statePair = (mappingState.Index, srcState.Index);
-                if (destStateCache.TryGetValue(statePair, out var destStateIndex))
+                var destPair = (mappingState.Index, srcState.Index);
+                if (!destStateCache.TryGetValue(destPair, out var destStateIndex))
                 {
-                    return destStateIndex;
+                    var destState = result.AddState();
+                    destState.SetEndWeight(Weight.Product(mappingState.EndWeight, srcState.EndWeight));
+                    stack.Push((mappingState.Index, srcState.Index, destState.Index));
+                    destStateCache[destPair] = destState.Index;
+                    destStateIndex = destState.Index;
                 }
 
-                var destState = result.AddState();
-                destStateCache.Add(statePair, destState.Index);
+                return destStateIndex;
+            }
+
+            // Populate the stack with start destination state
+            result.StartStateIndex = CreateDestState(mappingAutomaton.Start, srcAutomaton.Start);
+
+            while (stack.Count > 0)
+            {
+                var (mappingStateIndex, srcStateIndex, destStateIndex) = stack.Pop();
+
+                var mappingState = mappingAutomaton.States[mappingStateIndex];
+                var srcState = srcAutomaton.States[srcStateIndex];
+                var destState = result[destStateIndex];
 
                 // Iterate over transitions from mappingState
                 foreach (var mappingTransition in mappingState.Transitions)
@@ -372,7 +381,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             mappingTransition.ElementDistribution.HasValue
                                 ? mappingTransition.ElementDistribution.Value.Second
                                 : Option.None;
-                        var childDestStateIndex = BuildProjectionOfAutomaton(childMappingState, srcState);
+                        var childDestStateIndex = CreateDestState(childMappingState, srcState);
                         destState.AddTransition(destElementDistribution, mappingTransition.Weight, childDestStateIndex, mappingTransition.Group);
                         continue;
                     }
@@ -392,14 +401,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         var destWeight = Weight.Product(mappingTransition.Weight, srcTransition.Weight, Weight.FromLogValue(projectionLogScale));
-                        var childDestStateIndex = BuildProjectionOfAutomaton(childMappingState, srcChildState);
+                        var childDestStateIndex = CreateDestState(childMappingState, srcChildState);
                         destState.AddTransition(destElementDistribution, destWeight, childDestStateIndex, mappingTransition.Group);
                     }
                 }
-
-                destState.SetEndWeight(Weight.Product(mappingState.EndWeight, srcState.EndWeight));
-                return destState.Index;
             }
+
+            var simplification = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Simplification(result, null);
+            simplification.RemoveDeadStates();
+            simplification.SimplifyIfNeeded();
+
+            return result.GetAutomaton();
         }
 
         /// <summary>
@@ -411,45 +423,57 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Using this method is more efficient than applying <see cref="ProjectSource(TSrcAutomaton)"/>
         /// to the automaton representation of a projected sequence.
         /// </remarks>
+        /// <remarks>
+        /// The code of this method has a lot in common with the code of Automaton.SetToProduct.
+        /// Unfortunately, it's not clear how to avoid the duplication in the current design.
+        /// </remarks>
         public TDestAutomaton ProjectSource(TSrcSequence srcSequence)
         {
             Argument.CheckIfNotNull(srcSequence, "srcSequence");
 
-            var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
-
-            if (this.sequencePairToWeight.IsCanonicZero())
+            var mappingAutomaton = this.sequencePairToWeight;
+            if (mappingAutomaton.IsCanonicZero())
             {
-                return result.GetAutomaton();
+                return Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Zero();
             }
 
+            var sourceSequenceManipulator =
+                Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.SequenceManipulator;
+            var srcSequenceLength = sourceSequenceManipulator.GetLength(srcSequence);
+            
+            var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
             var destStateCache = new Dictionary<(int, int), int>();
-            result.StartStateIndex = BuildProjectionOfSequence(this.sequencePairToWeight.Start, 0);
+            var stack = new Stack<(int state1, int state2, int destStateIndex)>();
 
-            var simplification = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Simplification(result, null);
-            simplification.RemoveDeadStates();
-            simplification.SimplifyIfNeeded();
-
-            return result.GetAutomaton();
-
-            // Recursively builds the projection of a given sequence onto this transducer.
-            int BuildProjectionOfSequence(PairListAutomaton.State mappingState, int srcSequenceIndex)
+            // Creates destination state and schedules projection computation for it.
+            // If computation is already scheduled or done the state index is simply taken from cache
+            int CreateDestState(PairListAutomaton.State mappingState, int srcSequenceIndex)
             {
-                //// The code of this method has a lot in common with the code of Automaton<>.BuildProduct.
-                //// Unfortunately, it's not clear how to avoid the duplication in the current design.
-
-                var sourceSequenceManipulator =
-                    Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.SequenceManipulator;
-
-                var statePair = (mappingState.Index, srcSequenceIndex);
-                if (destStateCache.TryGetValue(statePair, out var destStateIndex))
+                var destPair = (mappingState.Index, srcSequenceIndex);
+                if (!destStateCache.TryGetValue(destPair, out var destStateIndex))
                 {
-                    return destStateIndex;
+                    var destState = result.AddState();
+                    destState.SetEndWeight(
+                        srcSequenceIndex == srcSequenceLength
+                            ? mappingState.EndWeight
+                            : Weight.Zero);
+                    stack.Push((mappingState.Index, srcSequenceIndex, destState.Index));
+                    destStateCache[destPair] = destState.Index;
+                    destStateIndex = destState.Index;
                 }
 
-                var destState = result.AddState();
-                destStateCache.Add(statePair, destState.Index);
+                return destStateIndex;
+            }
 
-                var srcSequenceLength = sourceSequenceManipulator.GetLength(srcSequence);
+            // Populate the stack with start destination state
+            result.StartStateIndex = CreateDestState(mappingAutomaton.Start, 0);
+
+            while (stack.Count > 0)
+            {
+                var (mappingStateIndex, srcSequenceIndex, destStateIndex) = stack.Pop();
+
+                var mappingState = mappingAutomaton.States[mappingStateIndex];
+                var destState = result[destStateIndex];
 
                 // Enumerate transitions from the current mapping state
                 foreach (var mappingTransition in mappingState.Transitions)
@@ -463,7 +487,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             mappingTransition.ElementDistribution.HasValue
                                 ? mappingTransition.ElementDistribution.Value.Second
                                 : Option.None;
-                        var childDestStateIndex = BuildProjectionOfSequence(destMappingState, srcSequenceIndex);
+                        var childDestStateIndex = CreateDestState(destMappingState, srcSequenceIndex);
                         destState.AddTransition(destElementWeights, mappingTransition.Weight, childDestStateIndex, mappingTransition.Group);
                         continue;
                     }
@@ -481,14 +505,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
 
                         var weight = Weight.Product(mappingTransition.Weight, Weight.FromLogValue(projectionLogScale));
-                        var childDestState = BuildProjectionOfSequence(destMappingState,srcSequenceIndex + 1);
+                        var childDestState = CreateDestState(destMappingState,srcSequenceIndex + 1);
                         destState.AddTransition(destElementDistribution, weight, childDestState, mappingTransition.Group);
                     }
                 }
-
-                destState.SetEndWeight(srcSequenceIndex == srcSequenceLength ? mappingState.EndWeight : Weight.Zero);
-                return destState.Index;
             }
+
+            var simplification = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Simplification(result, null);
+            simplification.RemoveDeadStates();
+            simplification.SimplifyIfNeeded();
+
+            return result.GetAutomaton();
         }
 
         /// <summary>
