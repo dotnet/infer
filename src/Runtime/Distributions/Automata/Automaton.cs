@@ -765,7 +765,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             var builder = new StringBuilder();
             var visitedStates = new HashSet<int>();
-            //
             var stack = new Stack<(string prefix, Option<TElementDistribution> prefixDistribution, int state)>();
             stack.Push((string.Empty, Option.None, Start.Index));
 
@@ -803,7 +802,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 var transitions = state.Transitions.Where(t => !t.Weight.IsZero);
                 var selfTransitions = transitions.Where(t => t.DestinationStateIndex == stateIndex);
                 var selfTransitionCount = selfTransitions.Count();
-                var nonSelfTransitions = transitions.Where(t => t.DestinationStateIndex != stateIndex);
+                var nonSelfTransitions = transitions.Where(t => t.DestinationStateIndex != stateIndex).ToArray();
                 var nonSelfTransitionCount = nonSelfTransitions.Count();
 
                 if (state.CanEnd && nonSelfTransitionCount > 0)
@@ -853,12 +852,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     stack.Push(("]", Option.None, -1));
                 }
 
-                transIdx = 0;
-                foreach (var transition in nonSelfTransitions)
+                // Iterate transitions in reverse order, because after destinations are pushed to stack,
+                // order will be reversed again.
+                for (transIdx = nonSelfTransitions.Length - 1; transIdx >= 0; --transIdx)
                 {
-                    var transitionPrefix = (nonSelfTransitionCount == 1 || ++transIdx == 1)
-                        ? string.Empty
-                        : "|";
+                    var transition = nonSelfTransitions[transIdx];
+                    var transitionPrefix = transIdx == 0 ? string.Empty : "|";
                     stack.Push((transitionPrefix, transition.ElementDistribution, transition.DestinationStateIndex));
                 }
             }
