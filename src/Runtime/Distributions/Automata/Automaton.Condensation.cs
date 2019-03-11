@@ -215,7 +215,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 while (traversalStack.Count > 0)
                 {
-                    restart:
                     var (current, currentTransitionIndex) = traversalStack.Pop();
                     var currentState = states[current];
 
@@ -253,7 +252,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 // traverse destination
                                 traversalStack.Push((destination, -1));
                                 // Processing of this state will effectively be resumed after destination is processed
-                                goto restart;
+                                break;
                             }
                             
                             if (info[destination].InStack)
@@ -262,6 +261,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                     Math.Min(info[current].Lowlink, info[destination].TraversalIndex);
                             }
                         }
+                    }
+
+                    // We can break from for-loop above before end condition is met only if we pushed some
+                    // work to do onto traversal stack. One of the things pushed to stack will effectively
+                    // resume the loop from the currentTransitionIndex.
+                    if (currentTransitionIndex < currentState.Transitions.Count)
+                    {
+                        continue;
                     }
 
                     if (info[current].Lowlink == info[current].TraversalIndex)
