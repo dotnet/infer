@@ -165,23 +165,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         for (; iterator2.Ok; iterator2.Next())
                         {
                             var transition2 = iterator2.Value;
-                            if (transition1.DestinationStateIndex == transition2.DestinationStateIndex &&
-                                transition1.Group == transition2.Group)
+                            var mergedTransition = TryMergeTransitions(transition1, transition2);
+                            if (mergedTransition != null)
                             {
-                                var mergedTransition = TryMergeTransitions(transition1, transition2);
-                                if (mergedTransition != null)
-                                {
-                                    iterator1.Value = mergedTransition.Value;
-                                    transition1 = mergedTransition.Value;
-                                    iterator2.Remove();
-                                }
+                                iterator1.Value = mergedTransition.Value;
+                                transition1 = mergedTransition.Value;
+                                iterator2.Remove();
                             }
+
                         }
                     }
                 }
 
                 Transition? TryMergeTransitions(Transition transition1, Transition transition2)
                 {
+                    if (transition1.DestinationStateIndex != transition2.DestinationStateIndex ||
+                        transition1.Group != transition2.Group)
+                    {
+                        return null;
+                    }
+
                     if (transition1.IsEpsilon && transition2.IsEpsilon)
                     {
                         transition1.Weight = Weight.Sum(transition1.Weight, transition2.Weight);
