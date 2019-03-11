@@ -92,8 +92,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         if (stateIdWithWeight.Value.LogValue > LogEps)
                         {
-                            Weight weight2 = Weight.Inverse(currentSegmentStateWeightSum);
-                            Weight stateWeight = stateIdWithWeight.Value * weight2;
+                            Weight stateWeight = stateIdWithWeight.Value * Weight.Inverse(currentSegmentStateWeightSum);
                             destinationState.Add(stateIdWithWeight.Key, stateWeight);
                         }
                     }
@@ -118,9 +117,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (double.IsInfinity(segmentBound.Weight.Value))
                     {
                         // Cannot subtract because of the infinities involved.
-                        currentSegmentStateWeightSum = activeSegments.Select(sb => sb.Weight).Aggregate(Weight.Zero, Weight.Sum);
+                        currentSegmentStateWeightSum =
+                            activeSegments
+                                .Select(sb => sb.Weight)
+                                .Aggregate(Weight.Zero, Weight.Sum);
                         currentSegmentStateWeights[segmentBound.DestinationStateId] =
-                            activeSegments.Where(sb => sb.DestinationStateId == segmentBound.DestinationStateId).Select(sb => sb.Weight).Aggregate(Weight.Zero, Weight.Sum);
+                            activeSegments
+                                .Where(sb => sb.DestinationStateId == segmentBound.DestinationStateId)
+                                .Select(sb => sb.Weight)
+                                .Aggregate(Weight.Zero, Weight.Sum);
                     }
                     else
                     {

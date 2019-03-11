@@ -136,14 +136,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 if (stateIdWithWeight.Value.LogValue > LogEps)
                 {
-                    Weight weight2 = Weight.Inverse(elementStateWeightSum);
-                    Weight stateWeight = stateIdWithWeight.Value * weight2;
+                    Weight stateWeight = stateIdWithWeight.Value * Weight.Inverse(elementStateWeightSum);
                     destinationState.Add(stateIdWithWeight.Key, stateWeight);
                 }
             }
 
-            Weight transitionWeight = Weight.FromValue(1) * elementStateWeightSum;
-            results.Add(Tuple.Create(transitionElements[0].distribution,transitionWeight, destinationState));
+            Weight transitionWeight = elementStateWeightSum;
+            results.Add(Tuple.Create(transitionElements[0].distribution, transitionWeight, destinationState));
         }
 
         /// <summary>

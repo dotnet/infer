@@ -320,7 +320,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             }
                             else
                             {
-                                transition.Weight = transition.Weight * endState.EndWeight;
+                                transition.Weight *= endState.EndWeight;
                             }
 
                             endState.AddTransition(transition);

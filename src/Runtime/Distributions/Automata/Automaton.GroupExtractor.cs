@@ -74,7 +74,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         newSourceState.SetEndWeight(weightToEnd);
                     }
 
-                    correctionFactor = correctionFactor + weightFromRoot * weightToEnd;
+                    correctionFactor += weightFromRoot * weightToEnd;
                 }
 
                 if (!correctionFactor.IsZero)

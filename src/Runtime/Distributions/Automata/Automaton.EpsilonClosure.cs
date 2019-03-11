@@ -47,7 +47,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             break;
                         }
 
-                        selfLoopWeight = selfLoopWeight + transition.Weight;
+                        selfLoopWeight += transition.Weight;
                     }
                 }
 

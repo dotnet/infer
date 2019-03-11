@@ -165,7 +165,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             if (this.transitionFilter(transition) && transition.DestinationStateIndex == state.Index)
                             {
-                                this.singleStatePairwiseWeight = this.singleStatePairwiseWeight.Value + transition.Weight;
+                                this.singleStatePairwiseWeight += transition.Weight;
                             }
                         }
 

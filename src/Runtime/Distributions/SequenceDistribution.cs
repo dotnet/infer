@@ -1467,7 +1467,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 Weight probSum = Weight.Zero;
                 foreach (var transition in currentState.Transitions)
                 {
-                    probSum = probSum + transition.Weight;
+                    probSum += transition.Weight;
                     if (logSample < probSum.LogValue)
                     {
                         if (!transition.IsEpsilon)
