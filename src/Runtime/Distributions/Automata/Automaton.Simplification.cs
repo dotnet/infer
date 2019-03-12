@@ -235,13 +235,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     var stateIndex = stack.Pop();
                     var state = builder[stateIndex];
+
+                    // Transitions to non-tree nodes and self-loops should be ignored
+                    bool IsMergeableTransition(Transition t) =>
+                        isTreeNode[t.DestinationStateIndex] && t.DestinationStateIndex != stateIndex;
+
                     for (var iterator1 = state.TransitionIterator; iterator1.Ok; iterator1.Next())
                     {
                         var transition1 = iterator1.Value;
 
                         // ignore non-tree nodes and self-loops
-                        if (!isTreeNode[transition1.DestinationStateIndex] ||
-                            transition1.DestinationStateIndex == stateIndex)
+                        if (!IsMergeableTransition(transition1))
                         {
                             continue;
                         }
@@ -257,9 +261,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 "Parallel transitions must be merged earlier by MergeParallelTransitions()");
 
                             // ignore non-tree nodes and self-loops
-                            if (isTreeNode[transition1.DestinationStateIndex] &&
-                                transition1.DestinationStateIndex != stateIndex &&
-                                CanMerge(transition1, transition2))
+                            if (IsMergeableTransition(transition2) && CanMerge(transition1, transition2))
                             {
                                 MergeStates(
                                     transition1.DestinationStateIndex,
@@ -269,6 +271,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 iterator2.Remove();
                             }
                         }
+
+                        stack.Push(transition1.DestinationStateIndex);
                     }
                 }
 
