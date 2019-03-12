@@ -164,6 +164,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public void RemoveState(int stateIndex)
             {
+                // Caller must ensure that it doesn't try to delete start state. Because it will lead to
+                // invalid automaton.
+                Debug.Assert(stateIndex != StartStateIndex);
+
                 // After state is removed, all its transitions will be dead
                 for (var iterator = this[stateIndex].TransitionIterator; iterator.Ok; iterator.Next())
                 {
@@ -219,8 +223,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return 0;
                 }
 
-                // may invalidate automaton
                 this.StartStateIndex = oldToNewStateIdMapping[this.StartStateIndex];
+
+                // Caller must ensure that it doesn't try to delete start state. Because it will lead to
+                // invalid automaton.
+                Debug.Assert(StartStateIndex != -1);
 
                 for (var i = 0; i < this.states.Count; ++i)
                 {
