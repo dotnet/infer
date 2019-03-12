@@ -257,8 +257,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 "Parallel transitions must be merged earlier by MergeParallelTransitions()");
 
                             // ignore non-tree nodes and self-loops
-                            if (isTreeNode[transition1.DestinationStateIndex] &&
-                                transition1.DestinationStateIndex != stateIndex &&
+                            if (isTreeNode[transition2.DestinationStateIndex] &&
+                                transition2.DestinationStateIndex != stateIndex &&
                                 CanMerge(transition1, transition2))
                             {
                                 MergeStates(
@@ -269,6 +269,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 iterator2.Remove();
                             }
                         }
+
+                        stack.Push(transition1.DestinationStateIndex);
                     }
                 }
 
