@@ -92,12 +92,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         if (stateIdWithWeight.Value.LogValue > LogEps)
                         {
-                            Weight stateWeight = Weight.Product(stateIdWithWeight.Value, Weight.Inverse(currentSegmentStateWeightSum));
+                            Weight stateWeight = stateIdWithWeight.Value * Weight.Inverse(currentSegmentStateWeightSum);
                             destinationState.Add(stateIdWithWeight.Key, stateWeight);
                         }
                     }
 
-                    Weight transitionWeight = Weight.Product(Weight.FromValue(segmentLength), currentSegmentStateWeightSum);
+                    Weight transitionWeight = Weight.FromValue(segmentLength) * currentSegmentStateWeightSum;
                     result.Add((elementDist, transitionWeight, destinationState));
                 }
 
@@ -107,8 +107,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (segmentBound.IsStart)
                 {
                     activeSegments.Add(segmentBound);
-                    currentSegmentStateWeightSum = Weight.Sum(currentSegmentStateWeightSum, segmentBound.Weight);
-                    currentSegmentStateWeights[segmentBound.DestinationStateId] = Weight.Sum(currentSegmentStateWeights[segmentBound.DestinationStateId], segmentBound.Weight);
+                    currentSegmentStateWeightSum += segmentBound.Weight;
+                    currentSegmentStateWeights[segmentBound.DestinationStateId] += segmentBound.Weight;
                 }
                 else
                 {
@@ -117,9 +117,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (double.IsInfinity(segmentBound.Weight.Value))
                     {
                         // Cannot subtract because of the infinities involved.
-                        currentSegmentStateWeightSum = activeSegments.Select(sb => sb.Weight).Aggregate(Weight.Zero, (acc, w) => Weight.Sum(acc, w));
+                        currentSegmentStateWeightSum =
+                            activeSegments
+                                .Select(sb => sb.Weight)
+                                .Aggregate(Weight.Zero, Weight.Sum);
                         currentSegmentStateWeights[segmentBound.DestinationStateId] =
-                            activeSegments.Where(sb => sb.DestinationStateId == segmentBound.DestinationStateId).Select(sb => sb.Weight).Aggregate(Weight.Zero, (acc, w) => Weight.Sum(acc, w));
+                            activeSegments
+                                .Where(sb => sb.DestinationStateId == segmentBound.DestinationStateId)
+                                .Select(sb => sb.Weight)
+                                .Aggregate(Weight.Zero, Weight.Sum);
                     }
                     else
                     {
@@ -149,7 +155,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var ranges = distribution.Ranges;
             int commonValueStart = char.MinValue;
             Weight commonValue = Weight.FromValue(distribution.ProbabilityOutsideRanges);
-            Weight weightBase = Weight.Product(transition.Weight, sourceStateResidualWeight);
+            Weight weightBase = transition.Weight * sourceStateResidualWeight;
             TransitionCharSegmentBound newSegmentBound;
 
             ////if (double.IsInfinity(weightBase.Value))
@@ -162,7 +168,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (range.StartInclusive > commonValueStart && !commonValue.IsZero)
                 {
                     // Add endpoints for the common value
-                    Weight segmentWeight = Weight.Product(commonValue, weightBase);
+                    Weight segmentWeight = commonValue * weightBase;
                     newSegmentBound = new TransitionCharSegmentBound(commonValueStart, transition.DestinationStateIndex, segmentWeight, true);
                     bounds.Add(new ValueTuple<int, TransitionCharSegmentBound>(bounds.Count, newSegmentBound));
                     newSegmentBound = new TransitionCharSegmentBound(range.StartInclusive, transition.DestinationStateIndex, segmentWeight, false);
@@ -173,7 +179,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 Weight pieceValue = Weight.FromValue(range.Probability);
                 if (!pieceValue.IsZero)
                 {
-                    Weight segmentWeight = Weight.Product(pieceValue, weightBase);
+                    Weight segmentWeight = pieceValue * weightBase;
                     newSegmentBound = new TransitionCharSegmentBound(range.StartInclusive, transition.DestinationStateIndex, segmentWeight, true);
                     bounds.Add(new ValueTuple<int, TransitionCharSegmentBound>(bounds.Count, newSegmentBound));
                     newSegmentBound = new TransitionCharSegmentBound(range.EndExclusive, transition.DestinationStateIndex, segmentWeight, false);
@@ -186,7 +192,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             if (!commonValue.IsZero && (ranges.Count == 0 || ranges[ranges.Count - 1].EndExclusive != DiscreteChar.CharRangeEndExclusive))
             {
                 // Add endpoints for the last common value segment
-                Weight segmentWeight = Weight.Product(commonValue, weightBase);
+                Weight segmentWeight = commonValue * weightBase;
                 newSegmentBound = new TransitionCharSegmentBound(commonValueStart, transition.DestinationStateIndex, segmentWeight, true);
                 bounds.Add(new ValueTuple<int, TransitionCharSegmentBound>(bounds.Count, newSegmentBound));
                 newSegmentBound = new TransitionCharSegmentBound(char.MaxValue + 1, transition.DestinationStateIndex, segmentWeight, false);

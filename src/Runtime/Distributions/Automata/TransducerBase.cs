@@ -349,7 +349,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (!destStateCache.TryGetValue(destPair, out var destStateIndex))
                 {
                     var destState = result.AddState();
-                    destState.SetEndWeight(Weight.Product(mappingState.EndWeight, srcState.EndWeight));
+                    destState.SetEndWeight(mappingState.EndWeight * srcState.EndWeight);
                     stack.Push((mappingState.Index, srcState.Index, destState.Index));
                     destStateCache[destPair] = destState.Index;
                     destStateIndex = destState.Index;
@@ -504,7 +504,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             continue;
                         }
 
-                        var weight = Weight.Product(mappingTransition.Weight, Weight.FromLogValue(projectionLogScale));
+                        var weight = mappingTransition.Weight * Weight.FromLogValue(projectionLogScale);
                         var childDestState = CreateDestState(destMappingState,srcSequenceIndex + 1);
                         destState.AddTransition(destElementDistribution, weight, childDestState, mappingTransition.Group);
                     }

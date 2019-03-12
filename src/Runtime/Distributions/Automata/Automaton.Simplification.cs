@@ -187,7 +187,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     if (transition1.IsEpsilon && transition2.IsEpsilon)
                     {
-                        transition1.Weight = Weight.Sum(transition1.Weight, transition2.Weight);
+                        transition1.Weight += transition2.Weight;
                         return transition1;
                     }
                     
@@ -213,7 +213,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                         return new Transition(
                             newElementDistribution,
-                            Weight.Sum(transition1.Weight, transition2.Weight),
+                            transition1.Weight + transition2.Weight,
                             transition1.DestinationStateIndex,
                             transition1.Group);
                     }
@@ -266,7 +266,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 MergeStates(
                                     transition1.DestinationStateIndex,
                                     transition2.DestinationStateIndex,
-                                    Weight.Product(transition2.Weight, Weight.Inverse(transition1.Weight)));
+                                    transition2.Weight * Weight.Inverse(transition1.Weight));
                                 isRemovedNode[transition2.DestinationStateIndex] = true;
                                 iterator2.Remove();
                             }
@@ -370,8 +370,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     // sum end weights
                     if (!state2.EndWeight.IsZero)
                     {
-                        var state2EndWeight = Weight.Product(state2WeightMultiplier, state2.EndWeight);
-                        state1.SetEndWeight(Weight.Sum(state1.EndWeight, state2EndWeight));
+                        var state2EndWeight = state2WeightMultiplier * state2.EndWeight;
+                        state1.SetEndWeight(state1.EndWeight + state2EndWeight);
                     }
 
                     // Copy all transitions except self-loop.
@@ -383,7 +383,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         var transition = iterator.Value;
                         if (transition.DestinationStateIndex != state2Index)
                         {
-                            transition.Weight = Weight.Product(transition.Weight, state2WeightMultiplier);
+                            transition.Weight *= state2WeightMultiplier;
                             state1.AddTransition(transition);
                         }
                     }

@@ -43,50 +43,32 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets the zero weight.
         /// </summary>
-        public static Weight Zero
-        {
-            get { return new Weight(double.NegativeInfinity); }
-        }
+        public static Weight Zero => new Weight(double.NegativeInfinity);
 
         /// <summary>
         /// Gets the unit weight.
         /// </summary>
-        public static Weight One
-        {
-            get { return new Weight(0); }
-        }
+        public static Weight One => new Weight(0);
 
         /// <summary>
         /// Gets the infinite weight.
         /// </summary>
-        public static Weight Infinity
-        {
-            get { return new Weight(double.PositiveInfinity); }
-        }
+        public static Weight Infinity => new Weight(double.PositiveInfinity);
 
         /// <summary>
         /// Gets the logarithm of the weight value.
         /// </summary>
-        public double LogValue
-        {
-            get { return this.logValue; }
-        }
+        public double LogValue => this.logValue;
 
         /// <summary>
         /// Gets the weight value.
         /// </summary>
-        public double Value
-        {
-            get { return Math.Exp(this.LogValue); }
-        }
+        public double Value => Math.Exp(this.LogValue);
 
         /// <summary>
         /// Gets a value indicating whether the weight is zero.
         /// </summary>
-        public bool IsZero
-        {
-            get { return double.IsNegativeInfinity(this.LogValue); }
-        }
+        public bool IsZero => double.IsNegativeInfinity(this.LogValue);
 
         /// <summary>
         /// Gets value indicating whether weight is infinite.
@@ -281,6 +263,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             return !(weight1 == weight2);
         }
+
+        /// <summary>
+        /// Compute the product of given weights.
+        /// </summary>
+        /// <param name="weight1">The first weight.</param>
+        /// <param name="weight2">The second weight.</param>
+        /// <returns>The computed product.</returns>
+        public static Weight operator *(Weight weight1, Weight weight2) => Product(weight1, weight2);
+
+        /// <summary>
+        /// Compute the sum of given weights.
+        /// </summary>
+        /// <param name="weight1">The first weight.</param>
+        /// <param name="weight2">The second weight.</param>
+        /// <returns>The computed sum.</returns>
+        public static Weight operator +(Weight weight1, Weight weight2) => Sum(weight1, weight2);
 
         /// <summary>
         /// Checks if this instance is equal to a given object.

@@ -165,8 +165,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             if (this.transitionFilter(transition) && transition.DestinationStateIndex == state.Index)
                             {
-                                this.singleStatePairwiseWeight = Weight.Sum(
-                                    this.singleStatePairwiseWeight.Value, transition.Weight);
+                                this.singleStatePairwiseWeight += transition.Weight;
                             }
                         }
 
@@ -203,8 +202,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         int destStateIndexInComponent;
                         if (this.transitionFilter(transition) && (destStateIndexInComponent = this.GetIndexByState(destState)) != -1)
                         {
-                            this.pairwiseWeights[srcStateIndexInComponent, destStateIndexInComponent] = Weight.Sum(
-                                this.pairwiseWeights[srcStateIndexInComponent, destStateIndexInComponent], transition.Weight);
+                            this.pairwiseWeights[srcStateIndexInComponent, destStateIndexInComponent] += transition.Weight;
                         }
                     }
                 }
@@ -228,16 +226,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 continue;
                             }
 
-                            Weight additionalWeight = Weight.Product(
+                            this.pairwiseWeights[i, j] += Weight.Product(
                                 this.pairwiseWeights[i, k], loopWeight, this.pairwiseWeights[k, j]);
-                            this.pairwiseWeights[i, j] = Weight.Sum(this.pairwiseWeights[i, j], additionalWeight);
                         }
                     }
 
                     for (int i = 0; i < this.Size; ++i)
                     {
-                        this.pairwiseWeights[i, k] = Weight.Product(this.pairwiseWeights[i, k], loopWeight);
-                        this.pairwiseWeights[k, i] = Weight.Product(this.pairwiseWeights[k, i], loopWeight);
+                        this.pairwiseWeights[i, k] *= loopWeight;
+                        this.pairwiseWeights[k, i] *= loopWeight;
                     }
 
                     this.pairwiseWeights[k, k] = loopWeight;

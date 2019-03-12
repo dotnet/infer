@@ -122,14 +122,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var elementStateWeightSum = Weight.Zero;
             foreach (var element in transitionElements)
             {
-                Weight prevStateWeight;
-                if (!elementStatesWeights.TryGetWeight(element.destIndex, out prevStateWeight))
+                if (!elementStatesWeights.TryGetWeight(element.destIndex, out var prevStateWeight))
                 {
                     prevStateWeight = Weight.Zero;
                 }
 
-                elementStatesWeights[element.destIndex] = Weight.Sum(prevStateWeight, element.weight);
-                elementStateWeightSum = Weight.Sum(elementStateWeightSum, element.weight);
+                elementStatesWeights[element.destIndex] = prevStateWeight + element.weight;
+                elementStateWeightSum += element.weight;
             }
 
             var destinationState = new Determinization.WeightedStateSet();
@@ -137,13 +136,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 if (stateIdWithWeight.Value.LogValue > LogEps)
                 {
-                    Weight stateWeight = Weight.Product(stateIdWithWeight.Value, Weight.Inverse(elementStateWeightSum));
+                    Weight stateWeight = stateIdWithWeight.Value * Weight.Inverse(elementStateWeightSum);
                     destinationState.Add(stateIdWithWeight.Key, stateWeight);
                 }
             }
 
-            Weight transitionWeight = Weight.Product(Weight.FromValue(1), elementStateWeightSum);
-            results.Add(Tuple.Create(transitionElements[0].distribution,transitionWeight, destinationState));
+            Weight transitionWeight = elementStateWeightSum;
+            results.Add(Tuple.Create(transitionElements[0].distribution, transitionWeight, destinationState));
         }
 
         /// <summary>
@@ -159,7 +158,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Dictionary<TElement, List<TransitionElement>> elements, List<TransitionElement> uniformList)
         {
             var dist = transition.ElementDistribution.Value;
-            Weight weightBase = Weight.Product(transition.Weight, sourceStateResidualWeight);
+            Weight weightBase = transition.Weight * sourceStateResidualWeight;
             if (dist.IsPointMass)
             {
                 var pt = dist.Point;
