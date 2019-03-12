@@ -16,7 +16,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Represents the epsilon closure of a state.
         /// </summary>
-        public class EpsilonClosure
+        public struct EpsilonClosure
         {
             /// <summary>
             /// The default capacity of <see cref="weightedStates"/>.
@@ -26,7 +26,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// The list of the states in the closure.
             /// </summary>
-            private readonly List<Pair<State, Weight>> weightedStates = new List<Pair<State, Weight>>(DefaultStateListCapacity);
+            private readonly List<(State, Weight)> weightedStates;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="EpsilonClosure"/> class.
@@ -34,6 +34,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="state">The state, which epsilon closure this instance will represent.</param>
             internal EpsilonClosure(State state)
             {
+                weightedStates = new List<(State, Weight)>(DefaultStateListCapacity);
+
                 // Optimize for a very common case: a single-node closure
                 bool singleNodeClosure = true;
                 Weight selfLoopWeight = Weight.Zero;
@@ -54,7 +56,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 if (singleNodeClosure)
                 {
                     Weight stateWeight = Weight.ApproximateClosure(selfLoopWeight);
-                    this.weightedStates.Add(Pair.Create(state, stateWeight));
+                    this.weightedStates.Add((state, stateWeight));
                     this.EndWeight = stateWeight * state.EndWeight;
                 }
                 else
@@ -66,7 +68,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         for (int j = 0; j < component.Size; ++j)
                         {
                             State componentState = component.GetStateByIndex(j);
-                            this.weightedStates.Add(Pair.Create(componentState, condensation.GetWeightFromRoot(componentState)));
+                            this.weightedStates.Add((componentState, condensation.GetWeightFromRoot(componentState)));
                         }
                     }
 
@@ -83,10 +85,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets the number of states in the closure.
             /// </summary>
-            public int Size
-            {
-                get { return this.weightedStates.Count; }
-            }
+            public int Size => this.weightedStates.Count;
 
             /// <summary>
             /// Gets a state by its index.
@@ -97,7 +96,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 Argument.CheckIfInRange(index >= 0 && index < this.weightedStates.Count, "index", "An invalid closure state index given.");
 
-                return this.weightedStates[index].First;
+                return this.weightedStates[index].Item1;
             }
 
             /// <summary>
@@ -110,7 +109,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 Argument.CheckIfInRange(index >= 0 && index < this.weightedStates.Count, "index", "An invalid closure state index given.");
 
-                return this.weightedStates[index].Second;
+                return this.weightedStates[index].Item2;
             }
         }
     }
