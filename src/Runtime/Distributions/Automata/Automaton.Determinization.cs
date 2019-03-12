@@ -29,38 +29,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>See <a href="http://www.cs.nyu.edu/~mohri/pub/hwa.pdf"/> for algorithm details.</remarks>
         public bool TryDeterminize()
         {
-            // We'd like to break if the determinized automaton is much larger than the original one,
-            // or the original automaton is not determinizable at all.
-            int maxStatesBeforeStop = Math.Min(this.States.Count * 3, MaxStateCount);
-            return this.TryDeterminize(maxStatesBeforeStop);
-        }
+            if (this.Data.DeterminizationState != DeterminizationState.Unknown)
+            {
+                return this.Data.DeterminizationState == DeterminizationState.IsDeterminized;
+            }
 
-        /// <summary>
-        /// Attempts to determinize the automaton,
-        /// i.e. modify it such that for every state and every element there is at most one transition that allows for that element,
-        /// and there are no epsilon transitions.
-        /// </summary>
-        /// <param name="maxStatesBeforeStop">
-        /// The maximum number of states the resulting automaton can have. If the number of states exceeds the value
-        /// of this parameter during determinization, the process is aborted.
-        /// </param>
-        /// <returns>
-        /// <see langword="true"/> if the determinization attempt was successful and the automaton is now deterministic,
-        /// <see langword="false"/> otherwise.
-        /// </returns>
-        /// <remarks>See <a href="http://www.cs.nyu.edu/~mohri/pub/hwa.pdf"/> for algorithm details.</remarks>
-        public bool TryDeterminize(int maxStatesBeforeStop)
-        {
-            Argument.CheckIfInRange(
-                maxStatesBeforeStop > 0 && maxStatesBeforeStop <= MaxStateCount,
-                "maxStatesBeforeStop",
-                "The maximum number of states must be positive and not greater than the maximum number of states allowed in an automaton.");
+            int maxStatesBeforeStop = Math.Min(this.States.Count * 3, MaxStateCount);
 
             this.MakeEpsilonFree(); // Deterministic automata cannot have epsilon-transitions
 
             if (this.UsesGroups)
             {
                 // Determinization will result in lost of group information, which we cannot allow
+                this.Data = this.Data.WithDeterminizationState(DeterminizationState.IsNonDeterminizable);
                 return false;
             }
 
@@ -125,10 +106,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
             simplification.MergeParallelTransitions(); // Determinization produces a separate transition for each segment
 
-            var result = builder.GetAutomaton();
-            result.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
-            result.LogValueOverride = this.LogValueOverride;
-            this.SwapWith(result);
+            this.Data = builder.GetData().WithDeterminizationState(DeterminizationState.IsDeterminized);
+            this.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
+            this.LogValueOverride = this.LogValueOverride;
 
             return true;
         }
