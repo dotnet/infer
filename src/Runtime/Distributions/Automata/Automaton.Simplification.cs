@@ -250,6 +250,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             continue;
                         }
 
+                        // If it is an epsilon transition then try to merge with current state first
+                        // Note: group doesn't matter for epsilon transitions (in generalized trees)
+                        if (transition1.IsEpsilon &&
+                            CanMergeStates(stateIndex, transition1.DestinationStateIndex))
+                        {
+                            // All transitions from transition1.DestinationStateIndex will be inserted
+                            // into current state. And will be iterated by iterator1 without special treatment.
+                            MergeStates(stateIndex, transition1.DestinationStateIndex, transition1.Weight);
+                            iterator1.Remove();
+                            continue;
+                        }
+
+                        // Try to find transitions with which this one can be merged
                         var iterator2 = iterator1;
                         iterator2.Next();
                         for (; iterator2.Ok; iterator2.Next())
@@ -261,7 +274,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 "Parallel transitions must be merged earlier by MergeParallelTransitions()");
 
                             // ignore non-tree nodes and self-loops
-                            if (IsMergeableTransition(transition2) && CanMerge(transition1, transition2))
+                            if (IsMergeableTransition(transition2) &&
+                                CanMergeDestinations(transition1, transition2))
                             {
                                 MergeStates(
                                     transition1.DestinationStateIndex,
@@ -318,17 +332,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return result;
                 }
 
-                bool CanMerge(Transition transition1, Transition transition2)
+                bool CanMergeStates(int stateIndex1, int stateIndex2)
                 {
-                    // Check that group and element distribution match
-                    if (transition1.Group != transition2.Group ||
-                        !EqualDistributions(transition1.ElementDistribution, transition2.ElementDistribution))
-                    {
-                        return false;
-                    }
-
-                    var selfLoop1 = TryFindSelfLoop(transition1.DestinationStateIndex);
-                    var selfLoop2 = TryFindSelfLoop(transition2.DestinationStateIndex);
+                    var selfLoop1 = TryFindSelfLoop(stateIndex1);
+                    var selfLoop2 = TryFindSelfLoop(stateIndex2);
 
                     // Can merge only if both destination states don't have self-loops
                     // or these loops are exactly the same.
@@ -338,6 +345,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             || (selfLoop1.Value.Group == selfLoop2.Value.Group &&
                                 selfLoop1.Value.Weight == selfLoop2.Value.Weight &&
                                 EqualDistributions(selfLoop1.Value.ElementDistribution, selfLoop2.Value.ElementDistribution)));
+                }
+
+                bool CanMergeDestinations(Transition transition1, Transition transition2)
+                {
+                    // Check that group and element distribution match
+                    if (transition1.Group != transition2.Group ||
+                        !EqualDistributions(transition1.ElementDistribution, transition2.ElementDistribution))
+                    {
+                        return false;
+                    }
+
+                    return CanMergeStates(transition1.DestinationStateIndex, transition2.DestinationStateIndex);
                 }
 
                 // Compares element distributions in transition. Epsilon transitions are considered equal.
