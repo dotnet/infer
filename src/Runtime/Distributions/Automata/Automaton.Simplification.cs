@@ -406,7 +406,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         }
                         else
                         {
-                            // Self-loop get special treatment - it's not copied but destination self-loop weight is updated
+                            // Self-loop gets special treatment - it's not copied, instead destination self-loop weight is updated
                             for (var iterator2 = state1.TransitionIterator; iterator2.Ok; iterator.Next())
                             {
                                 var transition2 = iterator2.Value;
