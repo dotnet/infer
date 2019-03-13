@@ -401,22 +401,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         var transition = iterator.Value;
                         if (transition.DestinationStateIndex != state2Index)
                         {
+                            // Self-loop is not copied: it is already present in state1 and is absolutely
+                            // compatible: it has the same distribution and weight
                             transition.Weight *= state2WeightMultiplier;
                             state1.AddTransition(transition);
-                        }
-                        else
-                        {
-                            // Self-loop gets special treatment - it's not copied, instead destination self-loop weight is updated
-                            for (var iterator2 = state1.TransitionIterator; iterator2.Ok; iterator.Next())
-                            {
-                                var transition2 = iterator2.Value;
-                                if (transition2.DestinationStateIndex == state1Index)
-                                {
-                                    transition2.Weight += transition.Weight * state2WeightMultiplier;
-                                    iterator2.Value = transition2;
-                                    break;
-                                }
-                            }
                         }
                     }
 
