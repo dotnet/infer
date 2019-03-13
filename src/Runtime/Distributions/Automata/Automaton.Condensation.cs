@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.ML.Probabilistic.Collections;
-
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
@@ -109,8 +107,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 this.transitionFilter = transitionFilter;
                 this.useApproximateClosure = useApproximateClosure;
 
-                this.components = new List<StronglyConnectedComponent>();
-                this.FindStronglyConnectedComponents();
+                this.components = this.FindStronglyConnectedComponents();
 
                 this.stateIdToInfo = new Dictionary<int, CondensationStateInfo>();
                 for (int i = 0; i < this.components.Count; ++i)
@@ -131,10 +128,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets the number of strongly connected components in the condensation.
             /// </summary>
-            public int ComponentCount
-            {
-                get { return this.components.Count; }
-            }
+            public int ComponentCount => this.components.Count;
 
             /// <summary>
             /// Gets the strongly connected component by its index.
@@ -193,100 +187,93 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Implements <a href="http://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm">Tarjan's algorithm</a>
             /// for finding the strongly connected components of the automaton graph.
             /// </summary>
-            /// <remarks>
-            /// This implementation closely follows algorithm from wikipedia. But is rewritten to use explicit
-            /// traversal stack instead of recursion.
-            ///
-            /// Basic idea is each time we need to do a recursive call we save all needed state into traversal
-            /// stack, and push this "continuation" onto the stack. All state that need to be preserved are:
-            ///   - currentStateIndex - state being processed
-            ///   - currentTransitionIndex - index of the transition which was recursed last.
-            ///     If it is -1, that means that state was not processed yet at all.
-            /// </remarks>
-            private void FindStronglyConnectedComponents()
+            private List<StronglyConnectedComponent> FindStronglyConnectedComponents()
             {
+                var components = new List<StronglyConnectedComponent>();
+
                 var states = this.Root.Owner.States;
-                var traversalIndex = 0;
-                var stateIdStack = new Stack<int>(); // Stack that maintains Tarjan algorithm invariant
-                var info = new TarjanStateInfo[this.Root.Owner.States.Count];
-                var traversalStack = new Stack<(int currentStateIndex, int lastDestination)>();
+                var stateIdStack = new Stack<int>();
+                var stateIdToStateInfo = new Dictionary<int, TarjanStateInfo>();
+                int traversalIndex = 0;
 
-                traversalStack.Push((this.Root.Index, -1));
+                var traversalStack = new Stack<(TarjanStateInfo, int stateIndex, int currentTransitionIndex)>();
 
+                traversalStack.Push((null, this.Root.Index, 0));
                 while (traversalStack.Count > 0)
                 {
-                    var (current, currentTransitionIndex) = traversalStack.Pop();
-                    var currentState = states[current];
+                    var (stateInfo, currentStateIndex, currentTransitionIndex) = traversalStack.Pop();
+                    var currentState = states[currentStateIndex];
+                    var transitions = currentState.Transitions;
 
-                    if (currentTransitionIndex < 0)
+                    if (stateInfo == null)
                     {
-                        // Just entered
-                        Debug.Assert(!info[current].Visited);
-                        info[current].Visited = true;
-                        info[current].TraversalIndex = traversalIndex;
-                        info[current].Lowlink = traversalIndex;
-                        info[current].InStack = true;
-                        stateIdStack.Push(current);
+                        // Entered into processing of this state for the first time: create Tarjan info for it
+                        // and push the state onto Tarjan stack.
+                        stateInfo = new TarjanStateInfo(traversalIndex);
+                        stateIdToStateInfo.Add(currentStateIndex, stateInfo);
                         ++traversalIndex;
-                        currentTransitionIndex = 0;
+                        stateIdStack.Push(currentStateIndex);
+                        stateInfo.InStack = true;
                     }
                     else
                     {
-                        // we already traversed some state, and its index is in enumerator
-                        var lastTraversed = currentState.Transitions[currentTransitionIndex].DestinationStateIndex;
-                        info[current].Lowlink = Math.Min(info[current].Lowlink, info[lastTraversed].Lowlink);
+                        // Just returned from recursion into 'currentTransitionIndex': update Lowlink
+                        // and advance to next transition.
+                        var lastDestination = transitions[currentTransitionIndex].DestinationStateIndex;
+                        stateInfo.Lowlink = Math.Min(stateInfo.Lowlink, stateIdToStateInfo[lastDestination].Lowlink);
                         ++currentTransitionIndex;
                     }
 
-                    // Continue processing 
-                    for (; currentTransitionIndex < currentState.Transitions.Count; ++currentTransitionIndex)
+                    for (; currentTransitionIndex < transitions.Count; ++currentTransitionIndex)
                     {
-                        var transition = currentState.Transitions[currentTransitionIndex];
-                        if (transitionFilter(transition))
+                        var transition = transitions[currentTransitionIndex];
+                        if (!this.transitionFilter(transition))
                         {
-                            var destination = transition.DestinationStateIndex;
-                            if (!info[destination].Visited)
-                            {
-                                // return to this state after destination is traversed
-                                traversalStack.Push((current, currentTransitionIndex));
-                                // traverse destination
-                                traversalStack.Push((destination, -1));
-                                // Processing of this state will effectively be resumed after destination is processed
-                                break;
-                            }
-                            
-                            if (info[destination].InStack)
-                            {
-                                info[current].Lowlink =
-                                    Math.Min(info[current].Lowlink, info[destination].TraversalIndex);
-                            }
+                            continue;
+                        }
+
+                        var destinationStateIndex = transition.DestinationStateIndex;
+                        if (!stateIdToStateInfo.TryGetValue(destinationStateIndex, out var destinationStateInfo))
+                        {
+                            // Return to this (state/transition) after destinationState is processed.
+                            // Processing will resume from currentTransitionIndex.
+                            traversalStack.Push((stateInfo, currentStateIndex, currentTransitionIndex));
+                            // Process destination state.
+                            traversalStack.Push((null, destinationStateIndex, 0));
+                            // Do not process other transitions until destination state is processed.
+                            break;
+                        }
+                        
+                        if (destinationStateInfo.InStack)
+                        {
+                            stateInfo.Lowlink = Math.Min(stateInfo.Lowlink, destinationStateInfo.TraversalIndex);
                         }
                     }
 
-                    // We can break from for-loop above before end condition is met only if we pushed some
-                    // work to do onto traversal stack. One of the things pushed to stack will effectively
-                    // resume the loop from the currentTransitionIndex.
-                    if (currentTransitionIndex < currentState.Transitions.Count)
+                    if (currentTransitionIndex < transitions.Count)
                     {
+                        // Not all states processed: continue processing according to stack. Current state
+                        // is already pushed onto it -> will be processed again.
                         continue;
                     }
 
-                    if (info[current].Lowlink == info[current].TraversalIndex)
+                    if (stateInfo.Lowlink == stateInfo.TraversalIndex)
                     {
                         var statesInComponent = new List<State>();
-                        State state;
+                        int stateIndex;
                         do
                         {
-                            state = states[stateIdStack.Pop()];
-                            info[state.Index].InStack = false;
-                            statesInComponent.Add(state);
-                        } while (state.Index != current);
+                            stateIndex = stateIdStack.Pop();
+                            stateIdToStateInfo[stateIndex].InStack = false;
+                            statesInComponent.Add(states[stateIndex]);
+                        } while (stateIndex != currentStateIndex);
 
-                        this.components.Add(
-                            new StronglyConnectedComponent(
-                                this.transitionFilter, statesInComponent, this.useApproximateClosure));
+                        components.Add(new StronglyConnectedComponent(
+                            this.transitionFilter, statesInComponent, this.useApproximateClosure));
                     }
                 }
+
+                return components;
             }
 
             /// <summary>
@@ -313,7 +300,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             State destState = state.Owner.States[transition.DestinationStateIndex];
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {
-                                weightToAdd += transition.Weight * this.stateIdToInfo[transition.DestinationStateIndex].WeightToEnd;
+                                weightToAdd = Weight.Sum(
+                                    weightToAdd,
+                                    Weight.Product(transition.Weight, this.stateIdToInfo[transition.DestinationStateIndex].WeightToEnd));
                             }
                         }
 
@@ -324,8 +313,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             {
                                 State updatedState = currentComponent.GetStateByIndex(updatedStateIndex);
                                 CondensationStateInfo updatedStateInfo = this.stateIdToInfo[updatedState.Index];
-                                updatedStateInfo.WeightToEnd +=
-                                    currentComponent.GetWeight(updatedStateIndex, stateIndex) * weightToAdd;
+                                updatedStateInfo.WeightToEnd = Weight.Sum(
+                                    updatedStateInfo.WeightToEnd,
+                                    Weight.Product(currentComponent.GetWeight(updatedStateIndex, stateIndex), weightToAdd));
                                 this.stateIdToInfo[updatedState.Index] = updatedStateInfo;
                             }
                         }
@@ -365,8 +355,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             State destState = currentComponent.GetStateByIndex(destStateIndex);
                             CondensationStateInfo destStateInfo = this.stateIdToInfo[destState.Index];
-                            destStateInfo.WeightFromRoot +=
-                                srcStateInfo.UpwardWeightFromRoot * currentComponent.GetWeight(srcStateIndex, destStateIndex);
+                            destStateInfo.WeightFromRoot = Weight.Sum(
+                                destStateInfo.WeightFromRoot,
+                                Weight.Product(srcStateInfo.UpwardWeightFromRoot, currentComponent.GetWeight(srcStateIndex, destStateIndex)));
                             this.stateIdToInfo[destState.Index] = destStateInfo;
                         }
                     }
@@ -388,7 +379,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             if (this.transitionFilter(transition) && !currentComponent.HasState(destState))
                             {
                                 CondensationStateInfo destStateInfo = this.stateIdToInfo[destState.Index];
-                                destStateInfo.UpwardWeightFromRoot += srcStateInfo.WeightFromRoot * transition.Weight;
+                                destStateInfo.UpwardWeightFromRoot = Weight.Sum(
+                                    destStateInfo.UpwardWeightFromRoot,
+                                    Weight.Product(srcStateInfo.WeightFromRoot, transition.Weight));
                                 this.stateIdToInfo[transition.DestinationStateIndex] = destStateInfo;
                             }
                         }
@@ -406,18 +399,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Gets the default state info with all the weights set to 0.
                 /// </summary>
-                public static CondensationStateInfo Default
-                {
-                    get
+                public static CondensationStateInfo Default =>
+                    new CondensationStateInfo
                     {
-                        return new CondensationStateInfo
-                        {
-                            WeightToEnd = Weight.Zero,
-                            WeightFromRoot = Weight.Zero,
-                            UpwardWeightFromRoot = Weight.Zero
-                        };
-                    }
-                }
+                        WeightToEnd = Weight.Zero,
+                        WeightFromRoot = Weight.Zero,
+                        UpwardWeightFromRoot = Weight.Zero
+                    };
 
                 /// <summary>
                 /// Gets or sets the total weight of all paths starting at the state.
@@ -442,12 +430,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Stores the information maintained by the Tarjan's algorithm.
             /// </summary>
-            private struct TarjanStateInfo
+            private class TarjanStateInfo
             {
                 /// <summary>
-                /// Gets or sets value indicating whether this node has already been visited
+                /// Initializes a new instance of the <see cref="TarjanStateInfo"/> class.
                 /// </summary>
-                public bool Visited { get; set; }
+                /// <param name="traversalIndex">The current traversal index.</param>
+                public TarjanStateInfo(int traversalIndex)
+                {
+                    this.TraversalIndex = traversalIndex;
+                    this.Lowlink = traversalIndex;
+                }
 
                 /// <summary>
                 /// Gets or sets a value indicating whether the state is currently in stack.
@@ -457,7 +450,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Gets the traversal index of the state.
                 /// </summary>
-                public int TraversalIndex { get; set; }
+                public int TraversalIndex { get; }
 
                 /// <summary>
                 /// Gets or sets the lowlink of the state.
