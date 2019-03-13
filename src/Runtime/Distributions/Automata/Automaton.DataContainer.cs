@@ -2,14 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.ML.Probabilistic.Serialization;
-
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.Serialization;
-
+    
     using Microsoft.ML.Probabilistic.Collections;
+    using Microsoft.ML.Probabilistic.Serialization;
 
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
     {
@@ -51,22 +51,47 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public bool UsesGroups => (this.flags & Flags.UsesGroups) != 0;
 
             /// <summary>
+            /// Gets value indicating whether this automaton is
+            /// </summary>
+            public DeterminizationState DeterminizationState =>
+                ((this.flags & Flags.DeterminizationStateKnown) == 0)
+                    ? DeterminizationState.Unknown
+                    : ((this.flags & Flags.IsDeterminized) != 0
+                        ? DeterminizationState.IsDeterminized
+                        : DeterminizationState.IsNonDeterminizable);
+
+            /// <summary>
             /// Initializes instance of <see cref="DataContainer"/>.
             /// </summary>
-            [Construction("StartStateIndex", "IsEpsilonFree", "UsesGroups", "States", "Transitions")]
+            [Construction("StartStateIndex", "IsEpsilonFree", "UsesGroups", "DeterminizationState", "States", "Transitions")]
             public DataContainer(
                 int startStateIndex,
                 bool isEpsilonFree,
                 bool usesGroups,
+                DeterminizationState determinizationState,
                 ReadOnlyArray<StateData> states,
                 ReadOnlyArray<Transition> transitions)
             {
                 this.flags =
                     (isEpsilonFree ? Flags.IsEpsilonFree : 0) |
-                    (usesGroups ? Flags.UsesGroups : 0);
+                    (usesGroups ? Flags.UsesGroups : 0) |
+                    (determinizationState != DeterminizationState.Unknown ? Flags.DeterminizationStateKnown : 0) |
+                    (determinizationState == DeterminizationState.IsDeterminized ? Flags.IsDeterminized : 0);
                 this.StartStateIndex = startStateIndex;
                 this.States = states;
                 this.Transitions = transitions;
+            }
+
+            public DataContainer WithDeterminizationState(DeterminizationState determinizationState)
+            {
+                Debug.Assert(this.DeterminizationState == DeterminizationState.Unknown);
+                return new DataContainer(
+                    this.StartStateIndex,
+                    this.IsEpsilonFree,
+                    this.UsesGroups,
+                    determinizationState,
+                    this.States,
+                    this.Transitions);
             }
 
             /// <summary>
@@ -142,7 +167,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 IsEpsilonFree = 0x1,
                 UsesGroups = 0x2,
+                DeterminizationStateKnown = 0x4,
+                IsDeterminized = 0x8,
             }
+        }
+
+        public enum DeterminizationState
+        {
+            Unknown,
+            IsDeterminized,
+            IsNonDeterminizable,
         }
     }
 }

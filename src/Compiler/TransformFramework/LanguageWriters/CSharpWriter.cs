@@ -711,7 +711,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
             }
             else if (typeof (Enum).IsAssignableFrom(t))
             {
-                sb.Append(t.FullName + "." + Enum.GetName(t, ile.Value));
+                AppendType(sb, t);
+                sb.Append(".");
+                sb.Append(Enum.GetName(t, ile.Value));
             }
             else
             {

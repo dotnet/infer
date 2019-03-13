@@ -1596,7 +1596,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public void SetToZero()
         {
-            this.Data = new DataContainer(0, true, false, ZeroStates, ZeroTransitions);
+            this.Data = new DataContainer(
+                0, true, false, DeterminizationState.IsDeterminized, ZeroStates, ZeroTransitions);
         }
 
         /// <summary>

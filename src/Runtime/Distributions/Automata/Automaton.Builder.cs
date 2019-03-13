@@ -421,7 +421,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     nextResultTransitionIndex == resultTransitions.Length,
                     "number of copied transitions must match result array size");
 
-                return new DataContainer(this.StartStateIndex, !hasEpsilonTransitions, usesGroups, resultStates, resultTransitions);
+                return new DataContainer(
+                    this.StartStateIndex,
+                    !hasEpsilonTransitions,
+                    usesGroups,
+                    DeterminizationState.Unknown,
+                    resultStates,
+                    resultTransitions);
             }
 
             #endregion
