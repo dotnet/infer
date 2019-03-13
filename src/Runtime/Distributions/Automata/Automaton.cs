@@ -2152,27 +2152,32 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return;
             }
 
-            var builder = new Builder();
-            var oldToNewState = new ArrayDictionary<int>(automaton.States.Count);
-            builder.StartStateIndex = BuildEpsilonClosure(automaton.Start);
+            var builder = new Builder(0);
+            var oldToNewState = new int?[automaton.States.Count];
+            var stack = new Stack<int>();
 
-            this.Data = builder.GetData();
-            this.LogValueOverride = automaton.LogValueOverride;
-            this.PruneStatesWithLogEndWeightLessThan = automaton.LogValueOverride;
-
-            // Recursively builds an automaton representing the epsilon closure of a given automaton.
-            // Returns the state index of state representing the closure
-            int BuildEpsilonClosure(State state)
+            // Enqueues state for processing if necessary and returns its index in new automaton
+            int Enqueue(int oldStateIndex)
             {
-                if (oldToNewState.TryGetValue(state.Index, out var resultStateIndex))
+                if (oldToNewState[oldStateIndex] != null)
                 {
-                    return resultStateIndex;
+                    return oldToNewState[oldStateIndex].Value;
                 }
 
-                var resultState = builder.AddState();
-                oldToNewState.Add(state.Index, resultState.Index);
+                var newStateIndex = builder.AddState().Index;
+                oldToNewState[oldStateIndex] = newStateIndex;
+                stack.Push(oldStateIndex);
+                return newStateIndex;
+            }
 
-                var closure = state.GetEpsilonClosure();
+            builder.StartStateIndex = Enqueue(automaton.Start.Index);
+            while (stack.Count > 0)
+            {
+                var oldStateIndex = stack.Pop();
+                var oldState = automaton.States[oldStateIndex];
+                var closure = oldState.GetEpsilonClosure();
+                var resultState = builder[oldToNewState[oldStateIndex].Value];
+
                 resultState.SetEndWeight(closure.EndWeight);
                 for (var stateIndex = 0; stateIndex < closure.Size; ++stateIndex)
                 {
@@ -2185,8 +2190,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             continue;
                         }
 
-                        var destState = state.Owner.States[transition.DestinationStateIndex];
-                        var closureDestStateIndex = BuildEpsilonClosure(destState);
+                        var closureDestStateIndex = Enqueue(transition.DestinationStateIndex);
                         resultState.AddTransition(
                             transition.ElementDistribution,
                             transition.Weight * closureStateWeight,
@@ -2194,9 +2198,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             transition.Group);
                     }
                 }
-
-                return resultState.Index;
             }
+
+            this.Data = builder.GetData();
+            this.LogValueOverride = automaton.LogValueOverride;
+            this.PruneStatesWithLogEndWeightLessThan = automaton.LogValueOverride;
         }
 
         #endregion
