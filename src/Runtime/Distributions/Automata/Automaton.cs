@@ -1902,12 +1902,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             return null;
                         }
-
-                        continue;
                     }
-                    
-                    // Now we know the length of the sequence
-                    pointLength = sequencePos;
+                    else
+                    {
+                        // Now we know the length of the sequence
+                        pointLength = sequencePos;
+                    }
                 }
 
                 foreach (var transition in state.Transitions)
