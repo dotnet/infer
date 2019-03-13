@@ -258,6 +258,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             // All transitions from transition1.DestinationStateIndex will be inserted
                             // into current state. And will be iterated by iterator1 without special treatment.
                             MergeStates(stateIndex, transition1.DestinationStateIndex, transition1.Weight);
+                            isRemovedNode[transition1.DestinationStateIndex] = true;
                             iterator1.Remove();
                             continue;
                         }
@@ -340,11 +341,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     // Can merge only if both destination states don't have self-loops
                     // or these loops are exactly the same.
                     return
-                        selfLoop1.HasValue == selfLoop2.HasValue
-                        && (!selfLoop1.HasValue
-                            || (selfLoop1.Value.Group == selfLoop2.Value.Group &&
-                                selfLoop1.Value.Weight == selfLoop2.Value.Weight &&
-                                EqualDistributions(selfLoop1.Value.ElementDistribution, selfLoop2.Value.ElementDistribution)));
+                        (!selfLoop1.HasValue && !selfLoop2.HasValue)
+                        || (selfLoop1.HasValue &&
+                            selfLoop2.HasValue &&
+                            selfLoop1.Value.Group == selfLoop2.Value.Group &&
+                            selfLoop1.Value.Weight == selfLoop2.Value.Weight &&
+                            EqualDistributions(selfLoop1.Value.ElementDistribution, selfLoop2.Value.ElementDistribution));
                 }
 
                 bool CanMergeDestinations(Transition transition1, Transition transition2)
@@ -393,10 +395,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         state1.SetEndWeight(state1.EndWeight + state2EndWeight);
                     }
 
-                    // Copy all transitions except self-loop.
-                    // Self-loop doesn't need to be copied because two states can be merged only if they have
-                    // identical self-loops. Thus if there is self-loop in state2 then it is also already
-                    // present in state1.
+                    // Copy all transitions
                     for (var iterator = state2.TransitionIterator; iterator.Ok; iterator.Next())
                     {
                         var transition = iterator.Value;
@@ -404,6 +403,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             transition.Weight *= state2WeightMultiplier;
                             state1.AddTransition(transition);
+                        }
+                        else
+                        {
+                            // Self-loop get special treatment - it's not copied but destination self-loop weight is updated
+                            for (var iterator2 = state1.TransitionIterator; iterator2.Ok; iterator.Next())
+                            {
+                                var transition2 = iterator2.Value;
+                                if (transition2.DestinationStateIndex == state1Index)
+                                {
+                                    transition2.Weight += transition.Weight * state2WeightMultiplier;
+                                    iterator2.Value = transition2;
+                                    break;
+                                }
+                            }
                         }
                     }
 
