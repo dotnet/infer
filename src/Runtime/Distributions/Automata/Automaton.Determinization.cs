@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Diagnostics;
+using Microsoft.ML.Probabilistic.Collections;
+
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
@@ -45,61 +48,51 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return false;
             }
 
-            // Weighted state set is a set of (stateId, weight) pairs, where state ids correspond to states of the original automaton..
-            // Such pairs correspond to states of the resulting automaton.
-            var weightedStateSetQueue = new Queue<Determinization.WeightedStateSet>();
-            var weightedStateSetToNewState = new Dictionary<Determinization.WeightedStateSet, int>();
             var builder = new Builder();
-
-            var startWeightedStateSet = new Determinization.WeightedStateSet { { this.Start.Index, Weight.One } };
-            weightedStateSetQueue.Enqueue(startWeightedStateSet);
-            weightedStateSetToNewState.Add(startWeightedStateSet, builder.StartStateIndex);
             builder.Start.SetEndWeight(this.Start.EndWeight);
 
-            while (weightedStateSetQueue.Count > 0)
+            var weightedStateSetStack = new Stack<(bool enter, Determinization.WeightedStateSet set)>();
+            var enqueuedWeightedStateSetStack = new Stack<(bool enter, Determinization.WeightedStateSet set)>();
+            var weightedStateSetToNewState = new Dictionary<Determinization.WeightedStateSet, int>();
+            // This hash set is used to track sets currently in path from root. If we've found a set of states
+            // that we have already seen during current path from root, but weights are different, that means
+            // we've found a non-converging loop - infinite number of weighed sets will be generated if
+            // we continue traversal and determinization will fail. For performance reasons we want to fail
+            // fast if such loop is found.
+            var stateSetsInPath = new Dictionary<Determinization.WeightedStateSet, Determinization.WeightedStateSet>(
+                Determinization.WeightedStateSetOnlyStateComparer.Instance);
+            
+            var startWeightedStateSet = new Determinization.WeightedStateSet(this.Start.Index);
+            weightedStateSetStack.Push((true, startWeightedStateSet));
+            weightedStateSetToNewState.Add(startWeightedStateSet, builder.StartStateIndex);
+
+            while (weightedStateSetStack.Count > 0)
             {
                 // Take one unprocessed state of the resulting automaton
-                Determinization.WeightedStateSet currentWeightedStateSet = weightedStateSetQueue.Dequeue();
-                var currentStateIndex = weightedStateSetToNewState[currentWeightedStateSet];
-                var currentState = builder[currentStateIndex];
+                var (enter, currentWeightedStateSet) = weightedStateSetStack.Pop();
 
-                // Find out what transitions we should add for this state
-                var outgoingTransitionInfos = this.GetOutgoingTransitionsForDeterminization(currentWeightedStateSet);
-
-                // For each transition to add
-                foreach ((TElementDistribution, Weight, Determinization.WeightedStateSet) outgoingTransitionInfo in outgoingTransitionInfos)
+                if (enter)
                 {
-                    TElementDistribution elementDistribution = outgoingTransitionInfo.Item1;
-                    Weight weight = outgoingTransitionInfo.Item2;
-                    Determinization.WeightedStateSet destWeightedStateSet = outgoingTransitionInfo.Item3;
-
-                    int destinationStateIndex;
-                    if (!weightedStateSetToNewState.TryGetValue(destWeightedStateSet, out destinationStateIndex))
+                    if (currentWeightedStateSet.Count > 1)
                     {
-                        if (builder.StatesCount == maxStatesBeforeStop)
+                        // Only sets with more than 1 state can lead to infinite loops with different weights.
+                        // Because if there's only 1 state, than it's weight is always Weight.One.
+                        if (!stateSetsInPath.ContainsKey(currentWeightedStateSet))
                         {
-                            // Too many states, determinization attempt failed
-                            return false;
+                            stateSetsInPath.Add(currentWeightedStateSet, currentWeightedStateSet);
                         }
 
-                        // Add new state to the result
-                        var destinationState = builder.AddState();
-                        weightedStateSetToNewState.Add(destWeightedStateSet, destinationState.Index);
-                        weightedStateSetQueue.Enqueue(destWeightedStateSet);
-
-                        // Compute its ending weight
-                        destinationState.SetEndWeight(Weight.Zero);
-                        foreach (KeyValuePair<int, Weight> stateIdWithWeight in destWeightedStateSet)
-                        {
-                            var addedWeight = stateIdWithWeight.Value * this.States[stateIdWithWeight.Key].EndWeight;
-                            destinationState.SetEndWeight(destinationState.EndWeight + addedWeight);
-                        }
-
-                        destinationStateIndex = destinationState.Index;
+                        weightedStateSetStack.Push((false, currentWeightedStateSet));
                     }
 
-                    // Add transition to the destination state
-                    currentState.AddTransition(elementDistribution, weight, destinationStateIndex);
+                    if (!EnqueueOutgoingTransitions(currentWeightedStateSet))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    stateSetsInPath.Remove(currentWeightedStateSet);
                 }
             }
 
@@ -111,6 +104,139 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             this.LogValueOverride = this.LogValueOverride;
 
             return true;
+
+            bool EnqueueOutgoingTransitions(Determinization.WeightedStateSet currentWeightedStateSet)
+            {
+                var currentStateIndex = weightedStateSetToNewState[currentWeightedStateSet];
+                var currentState = builder[currentStateIndex];
+
+                // Common special-case: definitely deterministic transitions from single state.
+                // In this case no complicated determinization procedure is needed.
+                if (currentWeightedStateSet.Count == 1 &&
+                    AllDestinationsAreSame(currentWeightedStateSet[0].Index))
+                {
+                    Debug.Assert(currentWeightedStateSet[0].Weight == Weight.One);
+
+                    var sourceState = this.States[currentWeightedStateSet[0].Index];
+                    foreach (var transition in sourceState.Transitions)
+                    {
+                        var destinationStates =
+                            new Determinization.WeightedStateSet(transition.DestinationStateIndex);
+                        var outgoingTransitionInfo =
+                            (transition.ElementDistribution.Value, transition.Weight, destinationStates);
+                        if (!TryAddTransition(enqueuedWeightedStateSetStack, outgoingTransitionInfo, currentState))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    // Find out what transitions we should add for this state
+                    var outgoingTransitionInfos =
+                        this.GetOutgoingTransitionsForDeterminization(currentWeightedStateSet);
+                    foreach (var outgoingTransitionInfo in outgoingTransitionInfos)
+                    {
+                        if (!TryAddTransition(enqueuedWeightedStateSetStack, outgoingTransitionInfo, currentState))
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                while (enqueuedWeightedStateSetStack.Count > 0)
+                {
+                    weightedStateSetStack.Push(enqueuedWeightedStateSetStack.Pop());
+                }
+
+                return true;
+            }
+
+            // Checks that all transitions from state end up in the same destination. This is used
+            // as a very fast "is determenistic" check, that doesn't care about distributions.
+            // State can have determenistic transitions with different destinations. This case will be
+            // handled by slow path.
+            bool AllDestinationsAreSame(int stateIndex)
+            {
+                var transitions = this.States[stateIndex].Transitions;
+                if (transitions.Count <= 1)
+                {
+                    return true;
+                }
+
+                var destination = transitions[0].DestinationStateIndex;
+                for (var i = 1; i < transitions.Count; ++i)
+                {
+                    if (transitions[i].DestinationStateIndex != destination)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            // Adds transition from currentState into state corresponding to weighted state set from
+            // outgoingTransitionInfo. If that state does not exist yet it is created and is put into stack
+            // for further processing. This function returns false if determinization has failed.
+            // That can happen because of 2 ressons:
+            // - Too many states were created and its not feasible to continue trying to determinize
+            //   automaton further
+            // - An infinite loop with not converging weights was found. It leads to infinite number of states.
+            //   So determinization is aborted early.
+            bool TryAddTransition(
+                Stack<(bool enter, Determinization.WeightedStateSet set)> destinationStack,
+                (TElementDistribution, Weight, Determinization.WeightedStateSet) outgoingTransitionInfo,
+                Builder.StateBuilder currentState)
+            {
+                var (elementDistribution, weight, destWeightedStateSet) = outgoingTransitionInfo;
+
+                if (!weightedStateSetToNewState.TryGetValue(destWeightedStateSet, out var destinationStateIndex))
+                {
+                    if (builder.StatesCount == maxStatesBeforeStop)
+                    {
+                        // Too many states, determinization attempt failed
+                        return false;
+                    }
+
+                    var visitedWeightedStateSet = default(Determinization.WeightedStateSet);
+                    var sameSetVisited =
+                        destWeightedStateSet.Count > 1 &&
+                        stateSetsInPath.TryGetValue(destWeightedStateSet, out visitedWeightedStateSet);
+
+                    if (sameSetVisited && !destWeightedStateSet.Equals(visitedWeightedStateSet))
+                    {
+                        // We arrived into the same state set as before, but with different weights.
+                        // This is an infinite non-converging loop. Determinization has failed
+                        return false;
+                    }
+
+                    // Add new state to the result
+                    var destinationState = builder.AddState();
+                    weightedStateSetToNewState.Add(destWeightedStateSet, destinationState.Index);
+                    destinationStack.Push((true, destWeightedStateSet));
+
+                    if (destWeightedStateSet.Count > 1 && !sameSetVisited)
+                    {
+                        destinationStack.Push((false, destWeightedStateSet));
+                    }
+
+                    // Compute its ending weight
+                    destinationState.SetEndWeight(Weight.Zero);
+                    for (var i = 0; i < destWeightedStateSet.Count; ++i)
+                    {
+                        var weightedState = destWeightedStateSet[i];
+                        var addedWeight = weightedState.Weight * this.States[weightedState.Index].EndWeight;
+                        destinationState.SetEndWeight(destinationState.EndWeight + addedWeight);
+                    }
+
+                    destinationStateIndex = destinationState.Index;
+                }
+
+                // Add transition to the destination state
+                currentState.AddTransition(elementDistribution, weight, destinationStateIndex);
+                return true;
+            }
         }
 
         /// <summary>
@@ -124,82 +250,88 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// The first two elements of a tuple define the element distribution and the weight of a transition.
         /// The third element defines the outgoing state.
         /// </returns>
-        protected abstract List<(TElementDistribution, Weight, Determinization.WeightedStateSet)> GetOutgoingTransitionsForDeterminization(
+        protected abstract IEnumerable<(TElementDistribution, Weight, Determinization.WeightedStateSet)> GetOutgoingTransitionsForDeterminization(
             Determinization.WeightedStateSet sourceState);
 
-        
         /// <summary>
         /// Groups together helper classes used for automata determinization.
         /// </summary>
         protected static class Determinization
         {
             /// <summary>
+            /// 
+            /// </summary>
+            public struct WeightedState : IComparable, IComparable<WeightedState>
+            {
+                public int Index { get; }
+                public int WeightHighBits { get; }
+                public Weight Weight { get; }
+
+                public WeightedState(int index, Weight weight)
+                {
+                    this.Index = index;
+                    this.WeightHighBits = (int)(BitConverter.DoubleToInt64Bits(weight.LogValue) >> 32);
+                    this.Weight = weight;
+                }
+
+                public int CompareTo(object obj)
+                {
+                    return obj is WeightedState that
+                        ? this.CompareTo(that)
+                        : throw new InvalidOperationException(
+                            "WeightedState can be compared only to another WeightedState");
+                }
+
+                public int CompareTo(WeightedState that) => Index.CompareTo(that.Index);
+
+                public override int GetHashCode() => (Index ^ WeightHighBits).GetHashCode();
+            }
+
+            /// <summary>
             /// Represents a state of the resulting automaton in the power set construction.
             /// It is essentially a set of (stateId, weight) pairs of the source automaton, where each state id is unique.
             /// Supports a quick lookup of the weight by state id.
             /// </summary>
-            public class WeightedStateSet : IEnumerable<KeyValuePair<int, Weight>>
+            public struct WeightedStateSet
             {
                 /// <summary>
                 /// A mapping from state ids to weights.
                 /// </summary>
-                private readonly Dictionary<int, Weight> stateIdToWeight;
+                private readonly ReadOnlyArray<WeightedState> weightedStates;
 
-                /// <summary>
-                /// Initializes a new instance of the <see cref="WeightedStateSet"/> class.
-                /// </summary>
-                public WeightedStateSet() =>
-                    this.stateIdToWeight = new Dictionary<int, Weight>();
-                
-                /// <summary>
-                /// Initializes a new instance of the <see cref="WeightedStateSet"/> class.
-                /// </summary>
-                /// <param name="stateIdToWeight">A collection of (stateId, weight) pairs.
-                /// </param>
-                public WeightedStateSet(IEnumerable<KeyValuePair<int, Weight>> stateIdToWeight) =>
-                    this.stateIdToWeight = stateIdToWeight.ToDictionary(kv => kv.Key, kv => kv.Value);
+                private readonly int singleStateIndex;
 
-                /// <summary>
-                /// Gets or sets the weight for a given state id.
-                /// </summary>
-                /// <param name="stateId">The state id.</param>
-                /// <returns>The weight.</returns>
-                public Weight this[int stateId]
+                public WeightedStateSet(int stateIndex)
                 {
-                    get => this.stateIdToWeight[stateId];
-                    set => this.stateIdToWeight[stateId] = value;
+                    this.weightedStates = null;
+                    this.singleStateIndex = stateIndex;
                 }
 
-                /// <summary>
-                /// Adds a given state id and a weight to the set.
-                /// </summary>
-                /// <param name="stateId">The state id.</param>
-                /// <param name="weight">The weight.</param>
-                public void Add(int stateId, Weight weight) =>
-                    this.stateIdToWeight.Add(stateId, weight);
+                public WeightedStateSet(ReadOnlyArray<WeightedState> weightedStates)
+                {
+                    Debug.Assert(weightedStates.Count > 0);
+                    if (weightedStates.Count == 1)
+                    {
+                        Debug.Assert(weightedStates[0].Weight == Weight.One);
+                        this.weightedStates = null;
+                        this.singleStateIndex = weightedStates[0].Index;
+                    }
+                    else
+                    {
+                        this.weightedStates = weightedStates;
+                        this.singleStateIndex = 0; // <- value doesn't matter, but silences the compiler
+                    }
+                }
 
-                /// <summary>
-                /// Attempts to retrieve the weight corresponding to a given state id from the set.
-                /// </summary>
-                /// <param name="stateId">The state id.</param>
-                /// <param name="weight">When the method returns, contains the retrieved weight.</param>
-                /// <returns>
-                /// <see langword="true"/> if the given state id was present in the set,
-                /// <see langword="false"/> otherwise.
-                /// </returns>
-                public bool TryGetWeight(int stateId, out Weight weight) =>
-                    this.stateIdToWeight.TryGetValue(stateId, out weight);
+                public int Count =>
+                    this.weightedStates.IsNull
+                        ? 1
+                        : this.weightedStates.Count;
 
-                /// <summary>
-                /// Checks whether the state with a given id is present in the set.
-                /// </summary>
-                /// <param name="stateId">The state id,</param>
-                /// <returns>
-                /// <see langword="true"/> if the given state id was present in the set,
-                /// <see langword="false"/> otherwise.
-                /// </returns>
-                public bool ContainsState(int stateId) =>
-                    this.stateIdToWeight.ContainsKey(stateId);
+                public WeightedState this[int index] =>
+                    this.weightedStates.IsNull
+                        ? new WeightedState(this.singleStateIndex, Weight.One)
+                        : this.weightedStates[index];
 
                 /// <summary>
                 /// Checks whether this object is equal to a given one.
@@ -209,25 +341,30 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <see langword="true"/> if the objects are equal,
                 /// <see langword="false"/> otherwise.
                 /// </returns>
-                public override bool Equals(object obj)
+                public override bool Equals(object obj) => obj is WeightedStateSet that && this.Equals(that);
+
+                /// <summary>
+                /// Checks whether this object is equal to a given one.
+                /// </summary>
+                /// <param name="that">The object to compare this object with.</param>
+                /// <returns>
+                /// <see langword="true"/> if the objects are equal,
+                /// <see langword="false"/> otherwise.
+                /// </returns>
+                public bool Equals(WeightedStateSet that)
                 {
-                    if (obj == null || obj.GetType() != typeof(WeightedStateSet))
+                    if (this.Count != that.Count)
                     {
                         return false;
                     }
 
-                    var other = (WeightedStateSet)obj;
-
-                    if (this.stateIdToWeight.Count != other.stateIdToWeight.Count)
+                    for (var i = 0; i < this.Count; ++i)
                     {
-                        return false;
-                    }
-
-                    foreach (KeyValuePair<int, Weight> pair in this.stateIdToWeight)
-                    {
-                        // TODO: Should we allow for some tolerance? But what about hashing then?
-                        Weight otherWeight;
-                        if (!other.stateIdToWeight.TryGetValue(pair.Key, out otherWeight) || otherWeight != pair.Value)
+                        var state1 = this[i];
+                        var state2 = that[i];
+                        if (state1.Index != state2.Index
+                            || (state1.WeightHighBits != state2.WeightHighBits
+                                && Math.Abs(state1.Weight.LogValue - state2.Weight.LogValue) > 1e-6))
                         {
                             return false;
                         }
@@ -240,17 +377,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// Computes the hash code of this instance.
                 /// </summary>
                 /// <returns>The computed hash code.</returns>
+                /// <remarks>Only state ids</remarks>
                 public override int GetHashCode()
                 {
-                    int result = 0;
-                    foreach (KeyValuePair<int, Weight> pair in this.stateIdToWeight)
+                    var result = this[0].GetHashCode();
+                    for (var i = 1; i < this.Count; ++i)
                     {
-                        int pairHash = Hash.Start;
-                        pairHash = Hash.Combine(pairHash, pair.Key.GetHashCode());
-                        pairHash = Hash.Combine(pairHash, pair.Value.GetHashCode());
-
-                        // Use commutative hashing combination because dictionaries are not ordered
-                        result ^= pairHash;
+                        result = Hash.Combine(result, this[i].GetHashCode());
                     }
 
                     return result;
@@ -260,38 +393,108 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// Returns a string representation of the instance.
                 /// </summary>
                 /// <returns>A string representation of the instance.</returns>
-                public override string ToString()
+                public override string ToString() => string.Join(", ", weightedStates);
+
+                public WeightedState[] ToArray()
                 {
-                    StringBuilder builder = new StringBuilder();
-                    foreach (var kvp in this.stateIdToWeight)
+                    var result = new WeightedState[this.Count];
+                    for (var i = 0; i < this.Count; ++i)
                     {
-                        builder.AppendLine(kvp.ToString());
+                        result[i] = this[i];
                     }
 
-                    return builder.ToString();
+                    return result;
+                }
+            }
+
+            /// <summary>
+            /// Builder for weighted sets.
+            /// </summary>
+            public struct WeightedStateSetBuilder
+            {
+                private List<WeightedState> weightedStates;
+
+                public static WeightedStateSetBuilder Create() =>
+                    new WeightedStateSetBuilder()
+                    {
+                        weightedStates = new List<WeightedState>(1),
+                    };
+
+                public void Add(int index, Weight weight) =>
+                    this.weightedStates.Add(new WeightedState(index, weight));
+
+                public void Reset() => this.weightedStates.Clear();
+
+                public (WeightedStateSet, Weight) Get()
+                {
+                    Debug.Assert(this.weightedStates.Count > 0);
+
+                    var sortedStates = this.weightedStates.ToArray();
+                    if (sortedStates.Length == 1)
+                    {
+                        var state = sortedStates[0];
+                        sortedStates[0] = new WeightedState(state.Index, Weight.One);
+                        return (new WeightedStateSet(sortedStates), state.Weight);
+                    }
+                    else
+                    {
+                        Array.Sort(sortedStates);
+
+                        var maxWeight = sortedStates[0].Weight;
+                        for (var i = 1; i < sortedStates.Length; ++i)
+                        {
+                            if (sortedStates[i].Weight > maxWeight)
+                            {
+                                maxWeight = sortedStates[i].Weight;
+                            }
+                        }
+
+                        var normalizer = Weight.Inverse(maxWeight);
+
+                        for (var i = 0; i < sortedStates.Length; ++i)
+                        {
+                            var state = sortedStates[i];
+                            sortedStates[i] = new WeightedState(state.Index, state.Weight * normalizer);
+                        }
+
+                        return (new WeightedStateSet(sortedStates), maxWeight);
+                    }
+                }
+            }
+
+            public class WeightedStateSetOnlyStateComparer : IEqualityComparer<WeightedStateSet>
+            {
+                public static readonly WeightedStateSetOnlyStateComparer Instance =
+                    new WeightedStateSetOnlyStateComparer();
+
+                public bool Equals(WeightedStateSet x, WeightedStateSet y)
+                {
+                    if (x.Count != y.Count)
+                    {
+                        return false;
+                    }
+
+                    for (var i = 0; i < x.Count; ++i)
+                    {
+                        if (x[i].Index != y[i].Index)
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
                 }
 
-                #region IEnumerable implementation
+                public int GetHashCode(WeightedStateSet set)
+                {
+                    var result = set[0].Index.GetHashCode();
+                    for (var i = 1; i < set.Count; ++i)
+                    {
+                        result = Hash.Combine(result, set[i].Index.GetHashCode());
+                    }
 
-                /// <summary>
-                /// Gets the enumerator.
-                /// </summary>
-                /// <returns>
-                /// The enumerator.
-                /// </returns>
-                public IEnumerator<KeyValuePair<int, Weight>> GetEnumerator() =>
-                    this.stateIdToWeight.GetEnumerator();
-
-                /// <summary>
-                /// Gets the enumerator.
-                /// </summary>
-                /// <returns>
-                /// The enumerator.
-                /// </returns>
-                IEnumerator IEnumerable.GetEnumerator() =>
-                    this.GetEnumerator();
-
-                #endregion
+                    return result;
+                }
             }
         }
     }

@@ -36,11 +36,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             var wrapper = new StringAutomatonWrapper(builder);
             
             var outgoingTransitions =
-                wrapper.GetOutgoingTransitionsForDeterminization(new Dictionary<int, Weight> { { 0, Weight.FromValue(3) } });
+                wrapper.GetOutgoingTransitionsForDeterminization(0, Weight.FromValue(3));
             var expectedOutgoingTransitions = new[]
             {
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
-                    DiscreteChar.Uniform(), Weight.FromValue(6), new Dictionary<int, Weight> { { 1, Weight.FromValue(1) } })
+                ValueTuple.Create(
+                    DiscreteChar.Uniform(),
+                    Weight.FromValue(2),
+                    new[] {(1, Weight.FromValue(1))})
             };
 
             AssertCollectionsEqual(expectedOutgoingTransitions, outgoingTransitions, TransitionInfoEqualityComparer.Instance);
@@ -61,13 +63,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             var wrapper = new StringAutomatonWrapper(builder);
             
             var outgoingTransitions =
-                wrapper.GetOutgoingTransitionsForDeterminization(new Dictionary<int, Weight> { { 0, Weight.FromValue(5) } });
+                wrapper.GetOutgoingTransitionsForDeterminization(0, Weight.FromValue(5));
             var expectedOutgoingTransitions = new[]
             {
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
-                    DiscreteChar.UniformInRange('A', 'Z'), Weight.FromValue(7.5), new Dictionary<int, Weight> { { 2, Weight.FromValue(1) } }),
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
-                    DiscreteChar.UniformInRange('a', 'z'), Weight.FromValue(17.5), new Dictionary<int, Weight> { { 1, Weight.FromValue(10 / 17.5) }, { 2, Weight.FromValue(7.5 / 17.5) } }),
+                ValueTuple.Create(
+                    DiscreteChar.UniformInRange('A', 'Z'),
+                    Weight.FromValue(1.5),
+                    new[] {(2, Weight.FromValue(1))}),
+                ValueTuple.Create(
+                    DiscreteChar.UniformInRange('a', 'z'),
+                    Weight.FromValue(3.5),
+                    new[] {(1, Weight.FromValue(1)), (2, Weight.FromValue(0.75))}),
             };
 
             AssertCollectionsEqual(expectedOutgoingTransitions, outgoingTransitions, TransitionInfoEqualityComparer.Instance);
@@ -91,29 +97,33 @@ namespace Microsoft.ML.Probabilistic.Tests
             var wrapper = new StringAutomatonWrapper(builder);
 
             var outgoingTransitions =
-                wrapper.GetOutgoingTransitionsForDeterminization(new Dictionary<int, Weight> { { 0, Weight.FromValue(6) } });
+                wrapper.GetOutgoingTransitionsForDeterminization(0, Weight.FromValue(6));
             var expectedOutgoingTransitions = new[]
             {
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
-                    DiscreteChar.UniformInRange(char.MinValue, (char)('a' - 1)),
-                    Weight.FromValue(30.0 * 97.0 / 98.0),
-                    new Dictionary<int, Weight> { { 4, Weight.FromValue(1) } }),
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
+                ValueTuple.Create(
+                    DiscreteChar.UniformInRange(char.MinValue, (char) ('a' - 1)),
+                    Weight.FromValue(5.0 * 97.0 / 98.0),
+                    new[] {(4, Weight.FromValue(1))}),
+                ValueTuple.Create(
                     DiscreteChar.PointMass('a'),
-                    Weight.FromValue((30.0 / 98.0) + 6.0),
-                    new Dictionary<int, Weight> { { 1, Weight.FromValue(6.0 / ((30.0 / 98.0) + 6.0)) }, { 4, Weight.FromValue((30.0 / 98.0) / ((30.0 / 98.0) + 6.0)) } }),
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
+                    Weight.FromValue((5.0 / 98.0) + 1.0),
+                    new[]
+                    {
+                        (1, Weight.FromValue(1.0 / ((30.0 / 98.0) + 1.0))),
+                        (4, Weight.FromValue((5.0 / 98.0) / ((30.0 / 98.0) + 1.0)))
+                    }),
+                ValueTuple.Create(
                     DiscreteChar.PointMass('b'),
-                    Weight.FromValue(12.0),
-                    new Dictionary<int, Weight> { { 1, Weight.FromValue(0.5) }, { 2, Weight.FromValue(0.5)} }),
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
+                    Weight.FromValue(2.0),
+                    new[] {(1, Weight.FromValue(0.5)), (2, Weight.FromValue(0.5))}),
+                ValueTuple.Create(
                     DiscreteChar.UniformInRange('c', 'd'),
-                    Weight.FromValue(12.0),
-                    new Dictionary<int, Weight> { { 2, Weight.FromValue(1.0) } }),
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
+                    Weight.FromValue(2.0),
+                    new[] {(2, Weight.FromValue(1.0))}),
+                ValueTuple.Create(
                     DiscreteChar.UniformInRange('e', 'g'),
-                    Weight.FromValue(24.0),
-                    new Dictionary<int, Weight> { { 3, Weight.FromValue(1.0) } }),
+                    Weight.FromValue(4.0),
+                    new[] {(3, Weight.FromValue(1.0))}),
             };
 
             AssertCollectionsEqual(expectedOutgoingTransitions, outgoingTransitions, TransitionInfoEqualityComparer.Instance);
@@ -133,39 +143,39 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder.Start.AddTransition(DiscreteChar.UniformInRanges('z', char.MaxValue), Weight.FromValue(4));
 
             var wrapper = new StringAutomatonWrapper(builder);
-            
-            var outgoingTransitions =
-                wrapper.GetOutgoingTransitionsForDeterminization(new Dictionary<int, Weight> { { 0, Weight.FromValue(5) } });
 
-            double transition1Segment1Weight = 10.0 * 'a' / (char.MaxValue + 1.0);
-            double transition1Segment2Weight = 10.0 * ('z' - 'a') / (char.MaxValue + 1.0);
-            double transition1Segment3Weight = 10.0 * (char.MaxValue - 'z' + 1.0) / (char.MaxValue + 1.0);
-            double transition2Segment1Weight = 15.0 * ('z' - 'a') / (char.MaxValue - 'a' + 1.0);
-            double transition2Segment2Weight = 15.0 * (char.MaxValue - 'z' + 1.0) / (char.MaxValue - 'a' + 1.0);
-            double transition3Segment1Weight = 20.0;
+            var outgoingTransitions =
+                wrapper.GetOutgoingTransitionsForDeterminization(0, Weight.FromValue(5));
+
+            double transition1Segment1Weight = 2.0 * 'a' / (char.MaxValue + 1.0);
+            double transition1Segment2Weight = 2.0 * ('z' - 'a') / (char.MaxValue + 1.0);
+            double transition1Segment3Weight = 2.0 * (char.MaxValue - 'z' + 1.0) / (char.MaxValue + 1.0);
+            double transition2Segment1Weight = 3.0 * ('z' - 'a') / (char.MaxValue - 'a' + 1.0);
+            double transition2Segment2Weight = 3.0 * (char.MaxValue - 'z' + 1.0) / (char.MaxValue - 'a' + 1.0);
+            double transition3Segment1Weight = 4.0;
             var expectedOutgoingTransitions = new[]
             {
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
+                ValueTuple.Create(
                     DiscreteChar.UniformInRange(char.MinValue, (char)('a' - 1)),
                     Weight.FromValue(transition1Segment1Weight),
-                    new Dictionary<int, Weight> { { 1, Weight.FromValue(1) } }),
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
+                    new[] {(1, Weight.FromValue(1))}),
+                ValueTuple.Create(
                     DiscreteChar.UniformInRange('a', (char)('z' - 1)),
                     Weight.FromValue(transition1Segment2Weight + transition2Segment1Weight),
-                    new Dictionary<int, Weight>
-                        {
-                            { 1, Weight.FromValue(transition1Segment2Weight / (transition1Segment2Weight + transition2Segment1Weight)) },
-                            { 2, Weight.FromValue(transition2Segment1Weight / (transition1Segment2Weight + transition2Segment1Weight)) }
-                        }),
-                new ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>(
+                    new[]
+                    {
+                        (1, Weight.FromValue(transition1Segment2Weight / (transition1Segment2Weight + transition2Segment1Weight))),
+                        (2, Weight.FromValue(transition2Segment1Weight / (transition1Segment2Weight + transition2Segment1Weight))),
+                    }),
+                ValueTuple.Create(
                     DiscreteChar.UniformInRange('z', char.MaxValue),
                     Weight.FromValue(transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight),
-                    new Dictionary<int, Weight>
-                        {
-                            { 1, Weight.FromValue(transition1Segment3Weight / (transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight)) },
-                            { 2, Weight.FromValue(transition2Segment2Weight / (transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight)) },
-                            { 3, Weight.FromValue(transition3Segment1Weight / (transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight)) }
-                        }),
+                    new[]
+                    {
+                        (1, Weight.FromValue(transition1Segment3Weight / (transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight))),
+                        (2, Weight.FromValue(transition2Segment2Weight / (transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight))),
+                        (3, Weight.FromValue(transition3Segment1Weight / (transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight))),
+                    }),
             };
 
             AssertCollectionsEqual(expectedOutgoingTransitions, outgoingTransitions, TransitionInfoEqualityComparer.Instance);
@@ -188,8 +198,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var wrapper = new StringAutomatonWrapper(builder);
 
-            var outgoingTransitions = wrapper.GetOutgoingTransitionsForDeterminization(
-                new Dictionary<int, Weight> { { 0, Weight.FromValue(1) } }).ToArray();
+            var outgoingTransitions =
+                wrapper.GetOutgoingTransitionsForDeterminization(0, Weight.FromValue(1)).ToArray();
 
             Assert.Equal(5, outgoingTransitions.Length);
             Assert.True(outgoingTransitions.All(ot => ot.Item1.IsPointMass));
@@ -277,7 +287,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// A comparer for weighted states that allows for some tolerance when comparing weights.
         /// </summary>
         private class WeightedStateEqualityComparer :
-            EqualityComparerBase<KeyValuePair<int, Weight>, WeightedStateEqualityComparer>
+            EqualityComparerBase<(int, Weight), WeightedStateEqualityComparer>
         {
             /// <summary>
             /// Checks whether two objects are equal.
@@ -288,9 +298,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             /// <see langword="true"/> if the objects are equal,
             /// <see langword="false"/> otherwise.
             /// </returns>
-            public override bool Equals(KeyValuePair<int, Weight> x, KeyValuePair<int, Weight> y)
+            public override bool Equals((int, Weight) x, (int, Weight) y)
             {
-                return x.Key == y.Key && WeightEqualityComparer.Instance.Equals(x.Value, y.Value);
+                return x.Item1 == y.Item1 && WeightEqualityComparer.Instance.Equals(x.Item2, y.Item2);
             }
         }
 
@@ -298,7 +308,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// A comparer for transition information that allows for some tolerance when comparing weights.
         /// </summary>
         private class TransitionInfoEqualityComparer :
-            EqualityComparerBase<ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>>, TransitionInfoEqualityComparer>
+            EqualityComparerBase<ValueTuple<DiscreteChar, Weight, (int, Weight)[]>, TransitionInfoEqualityComparer>
         {
             /// <summary>
             /// Checks whether two objects are equal.
@@ -310,13 +320,13 @@ namespace Microsoft.ML.Probabilistic.Tests
             /// <see langword="false"/> otherwise.
             /// </returns>
             public override bool Equals(
-                ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>> x,
-                ValueTuple<DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>> y)
+                ValueTuple<DiscreteChar, Weight, (int, Weight)[]> x,
+                ValueTuple<DiscreteChar, Weight, (int, Weight)[]> y)
             {
                 return
                     object.Equals(x.Item1, y.Item1) &&
                     WeightEqualityComparer.Instance.Equals(x.Item2, y.Item2) &&
-                    Enumerable.SequenceEqual(x.Item3, y.Item3, WeightedStateEqualityComparer.Instance);
+                    x.Item3.SequenceEqual(y.Item3, WeightedStateEqualityComparer.Instance);
             }
         }
 
@@ -338,14 +348,20 @@ namespace Microsoft.ML.Probabilistic.Tests
             /// <param name="sourceState">The source state.</param>
             /// <returns>The produced transitions.</returns>
             /// <remarks>See the doc of the original method.</remarks>
-            public IEnumerable<(DiscreteChar, Weight, IEnumerable<KeyValuePair<int, Weight>>)>
-                GetOutgoingTransitionsForDeterminization(IEnumerable<KeyValuePair<int, Weight>> sourceState)
+            public IEnumerable<(DiscreteChar, Weight, (int, Weight)[])>
+                GetOutgoingTransitionsForDeterminization(int sourceState, Weight sourceWeight)
             {
-                var result = base.GetOutgoingTransitionsForDeterminization(new Determinization.WeightedStateSet(sourceState));
-                return result.Select(t => (t.Item1, t.Item2, (IEnumerable<KeyValuePair<int, Weight>>)t.Item3));
+                var weightedStateSetBuilder = Determinization.WeightedStateSetBuilder.Create();
+                weightedStateSetBuilder.Add(sourceState, sourceWeight);
+
+                var (weightedStateSet, weight) = weightedStateSetBuilder.Get();
+                var result = base.GetOutgoingTransitionsForDeterminization(weightedStateSet);
+                return result.Select(t => (
+                    t.Item1,
+                    t.Item2 * weight,
+                    t.Item3.ToArray().Select(state => (state.Index, state.Weight)).ToArray()));
             }
         }
-
         #endregion
     }
 }
