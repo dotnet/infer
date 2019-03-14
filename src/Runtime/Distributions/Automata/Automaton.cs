@@ -1101,8 +1101,24 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="logValue">The logarithm of the desired value on the support of <paramref name="automaton"/>.</param>
         /// <param name="automaton">The automaton.</param>
-        /// <remarks>This function will fail if the <paramref name="automaton"/> cannot be determinized.</remarks>
+        ///<exception cref="NotImplementedException">Thrown if if the <paramref name="automaton"/> cannot be determinized.</exception>
         public void SetToConstantOnSupportOfLog(double logValue, TThis automaton)
+        {
+            var success = TrySetToConstantOnSupportOfLog(logValue, automaton);
+            if (!success)
+            {
+                throw new NotImplementedException("Not yet supported for non-determinizable automata.");
+            }
+        }
+
+        /// <summary>
+        /// Tries to set the automaton to be constant on the support of a given automaton.
+        /// </summary>
+        /// <param name="logValue">The logarithm of the desired value on the support of <paramref name="automaton"/>.</param>
+        /// <param name="automaton">The automaton.</param>
+        /// <returns>True if successful, false otherwise.</returns>
+        /// <remarks>This function will return false if the automaton cannot be determinized.</remarks>
+        public bool TrySetToConstantOnSupportOfLog(double logValue, TThis automaton)
         {
             Argument.CheckIfNotNull(automaton, "automaton");
             Argument.CheckIfValid(!double.IsNaN(logValue), "logValue", "A valid value must be provided.");
@@ -1111,13 +1127,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             if (value.IsZero)
             {
                 this.SetToZero();
-                return;
+                return true;
             }
 
             var determinizedAutomaton = automaton.Clone();
             if (!determinizedAutomaton.TryDeterminize())
             {
-                throw new NotImplementedException("Not yet supported for non-determinizable automata.");
+                return false;
             }
 
             var result = Builder.FromAutomaton(determinizedAutomaton);
@@ -1152,6 +1168,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             this.Data = result.GetData();
+            return true;
         }
 
         /// <summary>
