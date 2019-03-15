@@ -54,6 +54,14 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerTest()
         {
+            GammaPower g = new GammaPower(1, 1, -1);
+            g.ToString();
+            Gamma gamma = new Gamma(1, 1);
+            double expectedProbLessThan = gamma.GetProbLessThan(2);
+            Assert.Equal(expectedProbLessThan, 1-g.GetProbLessThan(0.5), 1e-10);
+            Assert.Equal(2, gamma.GetQuantile(expectedProbLessThan), 1e-10);
+            Assert.Equal(0.5, g.GetQuantile(1 - expectedProbLessThan), 1e-10);
+
             GammaPower(1);
             GammaPower(-1);
             GammaPower(2);
@@ -1408,6 +1416,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             double median = -m * System.Math.Log(0.5);
             Assert.Equal(0.5, g.GetProbLessThan(median), 1e-4);
             Assert.Equal(median, g.GetQuantile(0.5));
+
+            g = new Gamma(2, m);
+            double probability = g.GetProbLessThan(median);
+            double quantile = g.GetQuantile(probability);
+            Assert.Equal(median, quantile, 1e-10);
         }
 
         [Fact]
