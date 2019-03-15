@@ -257,10 +257,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else return Power*(MMath.Digamma(Shape) - Math.Log(Rate));
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Computes E[x^power]
         /// </summary>
@@ -269,23 +265,55 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (power == 0.0) return 1.0;
             else if (IsPointMass) return Math.Pow(Point, power);
-                //else if (Rate == 0.0) return (power > 0) ? Double.PositiveInfinity : 0.0;
+            //else if (Rate == 0.0) return (power > 0) ? Double.PositiveInfinity : 0.0;
             else if (!IsProper()) throw new ImproperDistributionException(this);
             else
             {
                 double power2 = Power*power;
                 if (Shape + power2 <= 0)
                 {
-                    throw new ArgumentException("Cannot compute E[x^" + power + "] for " + this + " (shape <= " + (-power2) + ")");
+                    //throw new ArgumentException($"Cannot compute E[x^{power}] since shape ({Shape}) <= {-power2}");
                     return Double.PositiveInfinity;
                 }
                 else return Math.Exp(MMath.GammaLn(Shape + power2) - MMath.GammaLn(Shape) - power2*Math.Log(Rate));
             }
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
+        /// <summary>
+        /// Compute the probability that a sample from this distribution is less than x.
+        /// </summary>
+        /// <param name="x">Any real number.</param>
+        /// <returns>The cumulative gamma distribution at <paramref name="x"/></returns>
+        public double GetProbLessThan(double x)
+        {
+            if (Power == 0) return (x > 1) ? 1.0 : 0.0;
+            double probLessThan = Gamma.FromShapeAndRate(Shape, Rate).GetProbLessThan(Math.Pow(x, 1 / Power));
+            if (Power > 0)
+            {
+                // If power > 0, Pr(gamma^power <= value) = Pr(gamma <= value^(1/power))
+                return probLessThan;
+            }
+            else
+            {
+                // If power < 0, Pr(gamma^power <= value) = Pr(gamma >= value^(1/power))
+                return 1 - probLessThan;
+            }
+        }
+
+        /// <summary>
+        /// Returns the value x such that GetProbLessThan(x) == probability.
+        /// </summary>
+        /// <param name="probability">A real number in [0,1].</param>
+        /// <returns></returns>
+        public double GetQuantile(double probability)
+        {
+            if (Power < 0)
+            {
+                probability = 1 - probability;
+            }
+            double quantile = Gamma.FromShapeAndRate(Shape, Rate).GetQuantile(probability);
+            return Math.Pow(quantile, Power);
+        }
 
         /// <summary>
         /// Asks whether the instance is a point mass

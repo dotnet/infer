@@ -473,6 +473,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new ImproperDistributionException(this);
             }
+            else if(MMath.AreEqual(probability, 0))
+            {
+                return 0;
+            }
+            else if(MMath.AreEqual(probability, 1))
+            {
+                return double.PositiveInfinity;
+            }
             else if (Shape == 1)
             {
                 // cdf is 1 - exp(-x*rate)
@@ -480,7 +488,27 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                throw new NotImplementedException("Shape != 1 is not implemented");
+                // Binary search
+                double lowerBound = 0;
+                double upperBound = double.MaxValue;
+                while(lowerBound < upperBound)
+                {
+                    double average = MMath.Average(lowerBound, upperBound);
+                    double p = GetProbLessThan(average);
+                    if(p == probability)
+                    {
+                        return average;
+                    }
+                    else if(p < probability)
+                    {
+                        lowerBound = MMath.NextDouble(average);
+                    }
+                    else
+                    {
+                        upperBound = MMath.PreviousDouble(average);
+                    }
+                }
+                return lowerBound;
             }
         }
 
