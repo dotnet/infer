@@ -503,7 +503,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 StringAutomaton validatingAutomaton = GetArgumentValidatingAutomaton(i, argNames);
                 result.SetToProduct(i == 0 ? format : result, validatingAutomaton);
                 result.ClearGroups();
-                result.SetToConstantOnSupportOfLog(0.0, result);
+                result.TrySetToConstantOnSupportOfLog(0.0, result);
             }
 
             return result;
