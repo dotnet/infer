@@ -87,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// The probability of a character under a uniform distribution over characters.
         /// </summary>
-        private static Weight UniformProb => Weight.One * Weight.Inverse(Weight.FromValue(CharRangeEndExclusive));
+        private static Weight UniformProb => Weight.Inverse(Weight.FromValue(CharRangeEndExclusive));
 
         private const string DigitRegexRepresentation = @"\d";
         private const string DigitSymbolRepresentation = @"#";
