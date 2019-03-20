@@ -190,6 +190,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
+        /// Returns a specified weight raised to the specified power.
+        /// </summary>
+        public static Weight Pow(Weight weight, double power) =>
+            power == 0 && double.IsNegativeInfinity(weight.LogValue)
+                ? Weight.One
+                : new Weight(weight.LogValue * power);
+
+        /// <summary>
         /// Computes the sum of a geometric series <c>1 + w + w^2 + w^3 + ...</c>,
         /// where <c>w</c> is a given weight.
         /// </summary>
