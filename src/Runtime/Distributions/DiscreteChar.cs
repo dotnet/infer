@@ -957,7 +957,20 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             switch (unnormalizedCharDist.Data.CharClasses)
             {
-                case CharClasses.Unknown:
+                case CharClasses.Digit:
+                case CharClasses.Lower:
+                    return unnormalizedCharDist;
+                case CharClasses.Upper:
+                case CharClasses.Letter:
+                    return Lower();
+                case CharClasses.LetterOrDigit:
+                    return new DiscreteChar(StorageCache.LowerOrDigit);
+                case CharClasses.WordChar:
+                    return new DiscreteChar(StorageCache.LowerWordCharOrDigit);
+                case CharClasses.Uniform:
+                    return new DiscreteChar(StorageCache.UpperComplement);
+                default:
+                    // TODO: decent implementation
                     var ranges = unnormalizedCharDist.Data.Ranges;
                     var probVector = PiecewiseVector.Zero(CharRangeEndExclusive);
                     foreach (var range in ranges)
@@ -970,22 +983,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         }
                     }
                     return FromVector(probVector);
-                case CharClasses.Digit:
-                case CharClasses.Lower:
-                    return unnormalizedCharDist;
-                case CharClasses.Upper:
-                case CharClasses.Letter:
-                    return Lower();
-                case CharClasses.LetterOrDigit:
-                    var result = Lower();
-                    result.SetToSum(0.5, Lower(), 0.5, Digit());
-                    result.SetToPartialUniform();
-                    return result;
-                case CharClasses.WordChar:
-                case CharClasses.Uniform:
-                    throw new NotSupportedException();
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -1893,6 +1890,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         internal sealed class StorageCache
         {
+            // Common distributions which can be created using factory methods
             public static readonly Storage Uniform;
             public static readonly Storage Digit;
             public static readonly Storage Lower;
@@ -1903,19 +1901,31 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public static readonly Storage NonWordChar;
             public static readonly Storage Whitespace;
 
+            // Common distributions which can be produced by ToLower()
+            public static readonly Storage LowerOrDigit;
+            public static readonly Storage LowerWordCharOrDigit;
+            public static readonly Storage UpperComplement;
+
             private static readonly Storage[] PointMasses;
 
             static StorageCache()
             {
+                string LetterOrDigitsRanges(string baseRange) => baseRange + "09";
+                string WordCharRanges(string baseRange) => baseRange + "09__";
+
                 Uniform = Storage.CreateUncached(new CharRange[] { }, UniformProb, CharClasses.Uniform, UniformRegexRepresentation);
                 Digit = Storage.CreateUniformInRanges("09", CharClasses.Digit, DigitRegexRepresentation);
                 Lower = Storage.CreateUniformInRanges(LowerCaseCharacterRanges, CharClasses.Lower,LowerRegexRepresentation);
                 Upper = Storage.CreateUniformInRanges(UpperCaseCharacterRanges, CharClasses.Upper, UpperRegexRepresentation);
                 Letter = Storage.CreateUniformInRanges(LetterCharacterRanges, CharClasses.Letter, LetterRegexRepresentation);
-                LetterOrDigit = Storage.CreateUniformInRanges(LetterCharacterRanges + "09", CharClasses.LetterOrDigit, LetterOrDigitRegexRepresentation);
-                WordChar = Storage.CreateUniformInRanges(LetterCharacterRanges + "09__", CharClasses.WordChar, WordCharRegexRepresentation);
+                LetterOrDigit = Storage.CreateUniformInRanges(LetterOrDigitsRanges(LetterCharacterRanges), CharClasses.LetterOrDigit, LetterOrDigitRegexRepresentation);
+                WordChar = Storage.CreateUniformInRanges(WordCharRanges(LetterCharacterRanges), CharClasses.WordChar, WordCharRegexRepresentation);
                 NonWordChar = WordChar.Complement();
                 Whitespace = Storage.CreateUniformInRanges("\t\r  ", CharClasses.Unknown, null);
+
+                LowerOrDigit = Storage.CreateUniformInRanges(LetterOrDigitsRanges(LowerCaseCharacterRanges), CharClasses.Unknown, null);
+                LowerWordCharOrDigit = Storage.CreateUniformInRanges(WordCharRanges(LowerCaseCharacterRanges), CharClasses.Unknown, null);
+
                 PointMasses = new Storage[CharRangeEndExclusive];
             }
 
