@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </remarks>
     [Serializable]
     [DataContract]
-    public struct Weight
+    public struct Weight : IComparable<Weight>
     {
         /// <summary>
         /// The logarithm of the weight value.
@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets value indicating whether weight is infinite.
         /// </summary>
-        public bool IsInfinity => double.IsInfinity(Value);
+        public bool IsInfinity => double.IsPositiveInfinity(Value);
 
         /// <summary>
         /// Creates a weight from the logarithm of its value.
@@ -190,6 +190,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
+        /// Returns a specified weight raised to the specified power.
+        /// </summary>
+        public static Weight Pow(Weight weight, double power) =>
+            power == 0 && double.IsNegativeInfinity(weight.LogValue)
+                ? Weight.One
+                : new Weight(weight.LogValue * power);
+
+        /// <summary>
         /// Computes the sum of a geometric series <c>1 + w + w^2 + w^3 + ...</c>,
         /// where <c>w</c> is a given weight.
         /// </summary>
@@ -245,10 +253,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <see langword="true"/> if the given weights are equal,
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator ==(Weight weight1, Weight weight2)
-        {
-            return weight1.logValue == weight2.logValue;
-        }
+        public static bool operator ==(Weight weight1, Weight weight2) => weight1.logValue == weight2.logValue;
 
         /// <summary>
         /// The weight inequality operator.
@@ -259,10 +264,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <see langword="true"/> if the given weights are not equal,
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator !=(Weight weight1, Weight weight2)
-        {
-            return !(weight1 == weight2);
-        }
+        public static bool operator !=(Weight weight1, Weight weight2) => !(weight1 == weight2);
+
+        /// <summary>
+        /// Weight "greater than" operator.
+        /// </summary>
+        public static bool operator >(Weight weight1, Weight weight2) => weight1.logValue > weight2.LogValue;
+
+        /// <summary>
+        /// Weight "greater than or equal" operator.
+        /// </summary>
+        public static bool operator >=(Weight weight1, Weight weight2) => weight1.logValue >= weight2.LogValue;
+
+        /// <summary>
+        /// Weight "less than" operator.
+        /// </summary>
+        public static bool operator <(Weight weight1, Weight weight2) => weight1.logValue < weight2.LogValue;
+
+        /// <summary>
+        /// Weight "less than or equal" operator.
+        /// </summary>
+        public static bool operator <=(Weight weight1, Weight weight2) => weight1.logValue <= weight2.LogValue;
+
 
         /// <summary>
         /// Compute the product of given weights.
@@ -325,6 +348,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             return this.Value.ToString(provider);
         }
+
+        /// <summary>
+        /// Compares the current instance with another object of the same type and returns an integer that
+        /// indicates whether the current instance precedes, follows, or occurs in the same position
+        /// in the sort order as the other object.
+        /// </summary>
+        /// <param name="that">An object to compare with this instance. </param>
+        /// <returns>
+        /// A value that indicates the relative order of the objects being compared. The return value
+        /// has these meanings: Value Meaning Less than zero This instance precedes <paramref name="that" />
+        /// in the sort order.  Zero This instance occurs in the same position in the sort order as
+        /// <paramref name="that" />. Greater than zero This instance follows <paramref name="that" /> in the sort order.
+        /// </returns>
+        public int CompareTo(Weight that) => this.LogValue.CompareTo(that.LogValue);
 
 
         /// <summary>
