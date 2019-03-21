@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Diagnostics;
+
 namespace Microsoft.ML.Probabilistic.Collections
 {
     using System;
@@ -95,27 +97,34 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <summary>
         /// Index of the first element which does not belong to this segment.
         /// </summary>
-        private readonly int end;
+        private readonly int length;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ReadOnlyArraySegment{T}"/> structure.
         /// </summary>
-        public ReadOnlyArraySegment(ReadOnlyArray<T> array, int begin, int end)
+        public ReadOnlyArraySegment(ReadOnlyArray<T> array, int begin, int length)
         {
             Argument.CheckIfValid(!array.IsNull, nameof(array));
-            Argument.CheckIfInRange(end >= 0 && end <= array.Count, nameof(end), "Segment end should be in the range [0, array.Count]");
-            Argument.CheckIfInRange(begin >= 0 && begin <= end, nameof(begin), "Segment begin should be in the range [0, end]");
+            Argument.CheckIfInRange(begin >= 0 && begin <= array.Count, nameof(begin), "Segment begin should be in the range [0, array.Count]");
+            Argument.CheckIfInRange(length >= 0 && length <= array.Count - begin, nameof(length), "Segment length should be in the range [0, array.Count - begin]");
 
             this.array = array;
             this.begin = begin;
-            this.end = end;
+            this.length = length;
         }
 
         /// <inheritdoc/>
-        public T this[int index] => this.array[this.begin + index];
+        public T this[int index]
+        {
+            get
+            {
+                Debug.Assert(index >= 0 && index < this.length);
+                return this.array[this.begin + index];
+            }
+        }
 
         /// <inheritdoc/>
-        public int Count => this.end - this.begin;
+        public int Count => this.length;
 
         /// <summary>
         /// Returns enumerator over elements of array.
@@ -124,15 +133,15 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// This is value-type non-virtual version of enumerator that is used by compiler in foreach loops.
         /// </remarks>
         public ReadOnlyArraySegmentEnumerator<T> GetEnumerator() =>
-            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.end);
+            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.begin + this.length);
 
         /// <inheritdoc/>
         IEnumerator<T> IEnumerable<T>.GetEnumerator() =>
-            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.end);
+            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.begin + this.length);
 
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator() =>
-            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.end);
+            new ReadOnlyArraySegmentEnumerator<T>(this.array, this.begin, this.begin + this.length);
     }
 
     /// <summary>
