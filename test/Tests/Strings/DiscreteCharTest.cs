@@ -27,7 +27,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var mix = new DiscreteChar();
             mix.SetToSum(0.8, rng, 0.2, unif);
 
-            DistributionTests.DistributionTest(unif, mix);
+            DistributionTests.DistributionTest(unif, mix, false);
             DistributionTests.PointMassTest(mix, 'b');
             DistributionTests.UniformTest(rng, 'b');
         }

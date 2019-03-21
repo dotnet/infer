@@ -1612,7 +1612,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         // Generic high-level tests ///////////////////////////////////////////////////////////////////////////
 
-        internal static void DistributionTest<T>(T a, T b)
+        internal static void DistributionTest<T>(T a, T b, bool doSumWithNegativeWeightsTests = true)
             where T : SettableToProduct<T>, SettableToRatio<T>, SettableToPower<T>, SettableToUniform, SettableToWeightedSum<T>,
                 ICloneable, Diffable, SettableTo<T>, CanGetLogAverageOf<T>, CanGetLogAverageOfPower<T>
         {
@@ -1631,7 +1631,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             SettableToTest(a);
             SettableToTest(b);
 
-            SettableToWeightedSumTest(a, b);
+            SettableToWeightedSumTest(a, b, doSumWithNegativeWeightsTests);
         }
 
         internal static void PointMassTest<T, DomainType>(T a, DomainType value)

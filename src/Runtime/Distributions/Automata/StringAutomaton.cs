@@ -154,7 +154,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var distribution = transition.ElementDistribution.Value;
             var ranges = distribution.Ranges;
             int commonValueStart = char.MinValue;
-            Weight commonValue = Weight.FromValue(distribution.ProbabilityOutsideRanges);
+            Weight commonValue = distribution.ProbabilityOutsideRanges;
             Weight weightBase = transition.Weight * sourceStateResidualWeight;
             TransitionCharSegmentBound newSegmentBound;
 
@@ -176,7 +176,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 // Add segment endpoints
-                Weight pieceValue = Weight.FromValue(range.Probability);
+                Weight pieceValue = range.Probability;
                 if (!pieceValue.IsZero)
                 {
                     Weight segmentWeight = pieceValue * weightBase;
