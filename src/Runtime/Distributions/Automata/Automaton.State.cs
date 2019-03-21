@@ -68,7 +68,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 new ReadOnlyArraySegment<Transition>(
                     this.transitions,
                     this.Data.FirstTransition,
-                    this.Data.LastTransition);
+                    this.Data.LastTransition - this.Data.FirstTransition);
 
             internal StateData Data => this.states[this.Index];
 
