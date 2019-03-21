@@ -51,7 +51,7 @@ Short examples of using Infer.NET to solve a variety of different problems. Can 
 *   **[Aggregation models for Crowdsourcing](Community-Based Bayesian Classifier Combination.md)**
 *   **[BCCWords: Bayesian Text Sentiment Analysis using Crowdsourced Annotations](BCCWords.md)**
 *   [**Multinomial Logistic Regression**](The softmax factor.md)
-*   From the forums and blogs:
+*   From the forums:
     *   **[Bayesian Linear Regression](http://social.microsoft.com/Forums/en-US/infer.net/thread/3fed94a3-f0da-4dc7-993f-71d9b571d278)**
     *   **[Discrete Markov network](http://social.microsoft.com/Forums/en-US/infer.net/thread/14af2e98-ff05-4d9a-9ffe-78d4a9b08623)**, [more](http://social.microsoft.com/Forums/en-US/infer.net/thread/589ba1d6-d4ee-4b97-828f-18c325319008)
     *   [**Hidden Markov Model**](https://github.com/oliparson/infer-hmm)
