@@ -379,12 +379,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Stores built automaton in pre-allocated <see cref="Automaton{TSequence,TElement,TElementDistribution,TSequenceManipulator,TThis}"/> object.
             /// </summary>
-            public DataContainer GetData()
+            public DataContainer GetData(
+                DeterminizationState determinizationState = DeterminizationState.Unknown)
             {
                 if (this.StartStateIndex < 0 || this.StartStateIndex >= this.states.Count)
                 {
                     throw new InvalidOperationException(
-                        $"Built automaton must have a valid start state. StartStateIndex = {this.StartStateIndex}, states.Count = {this.states.Count}");
+                        $"Built automaton must have a valid start state. " +
+                        $"StartStateIndex = {this.StartStateIndex}, states.Count = {this.states.Count}");
                 }
 
                 var hasEpsilonTransitions = false;
@@ -425,7 +427,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     this.StartStateIndex,
                     !hasEpsilonTransitions,
                     usesGroups,
-                    DeterminizationState.Unknown,
+                    determinizationState,
                     resultStates,
                     resultTransitions);
             }
