@@ -193,7 +193,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Returns a specified weight raised to the specified power.
         /// </summary>
         public static Weight Pow(Weight weight, double power) =>
-            power == 0 && double.IsNegativeInfinity(weight.LogValue)
+            power == 0
                 ? Weight.One
                 : new Weight(weight.LogValue * power);
 

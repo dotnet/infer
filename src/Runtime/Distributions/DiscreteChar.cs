@@ -957,7 +957,20 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             switch (unnormalizedCharDist.Data.CharClasses)
             {
-                case CharClasses.Unknown:
+                case CharClasses.Digit:
+                case CharClasses.Lower:
+                    return unnormalizedCharDist;
+                case CharClasses.Upper:
+                case CharClasses.Letter:
+                    return Lower();
+                case CharClasses.LetterOrDigit:
+                    return new DiscreteChar(StorageCache.LowerOrDigit);
+                case CharClasses.WordChar:
+                    return new DiscreteChar(StorageCache.LowerWordCharOrDigit);
+                case CharClasses.Uniform:
+                    return new DiscreteChar(StorageCache.UpperComplement);
+                default:
+                    // TODO: decent implementation
                     var ranges = unnormalizedCharDist.Data.Ranges;
                     var probVector = PiecewiseVector.Zero(CharRangeEndExclusive);
                     foreach (var range in ranges)
@@ -970,22 +983,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         }
                     }
                     return FromVector(probVector);
-                case CharClasses.Digit:
-                case CharClasses.Lower:
-                    return unnormalizedCharDist;
-                case CharClasses.Upper:
-                case CharClasses.Letter:
-                    return Lower();
-                case CharClasses.LetterOrDigit:
-                    var result = Lower();
-                    result.SetToSum(0.5, Lower(), 0.5, Digit());
-                    result.SetToPartialUniform();
-                    return result;
-                case CharClasses.WordChar:
-                case CharClasses.Uniform:
-                    throw new NotSupportedException();
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -1523,32 +1520,36 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 ReadOnlyArray<CharRange> ranges,
                 Weight probabilityOutsideRanges,
                 CharClasses charClasses,
-                string regexRepresentation)
+                string regexRepresentation,
+                string symbolRepresentation)
             {
                 this.Ranges = ranges;
                 this.ProbabilityOutsideRanges = probabilityOutsideRanges;
                 this.CharClasses = charClasses;
                 this.regexRepresentation = regexRepresentation;
+                this.symbolRepresentation = symbolRepresentation;
             }
 
             public static Storage CreateUncached(
                 ReadOnlyArray<CharRange> ranges,
                 Weight probabilityOutsideRanges,
                 CharClasses charClasses = CharClasses.Unknown,
-                string regexRepresentation = null)
+                string regexRepresentation = null,
+                string symbolRepresentation = null)
             {
-                return new Storage(ranges, probabilityOutsideRanges, charClasses, regexRepresentation);
+                return new Storage(ranges, probabilityOutsideRanges, charClasses, regexRepresentation, symbolRepresentation);
             }
 
             public static Storage Create(
                 ReadOnlyArray<CharRange> ranges,
                 Weight probabilityOutsideRanges,
                 CharClasses charClaasses = CharClasses.Unknown,
-                string regexRepresentation = null)
+                string regexRepresentation = null,
+                string symbolRepresentation = null)
             {
                 return IsRangesPointMass(ranges)
                     ? CreatePoint((char)ranges[0].StartInclusive, ranges)
-                    : CreateUncached(ranges, probabilityOutsideRanges, charClaasses, regexRepresentation);
+                    : CreateUncached(ranges, probabilityOutsideRanges, charClaasses, regexRepresentation, symbolRepresentation);
             }
 
             public static Storage CreatePoint(char point, ReadOnlyArray<CharRange> ranges) =>
@@ -1557,13 +1558,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public static Storage CreatePoint(char point) =>
                 StorageCache.GetPointMass(point, new ReadOnlyArray<CharRange>(null));
 
-            public static Storage CreateUniformInRanges(IEnumerable<char> startEndPairs, CharClasses charClasses, string regexRepresentation)
+            public static Storage CreateUniformInRanges(
+                IEnumerable<char> startEndPairs,
+                CharClasses charClasses = CharClasses.Unknown,
+                string regexRepresentation = null,
+                string symbolRepresentation = null)
             {
                 Argument.CheckIfNotNull(startEndPairs, "startEndPairs");
                 var startEndPairsArray = startEndPairs.ToArray();
                 Argument.CheckIfValid(startEndPairsArray.Length % 2 == 0, "startEndPairs", "The number of characters must be even.");
 
-                var builder = new StorageBuilder(Weight.Zero, charClasses, regexRepresentation);
+                var builder = new StorageBuilder(
+                    Weight.Zero, charClasses, regexRepresentation, symbolRepresentation);
                 for (int i = 0; i < startEndPairsArray.Length; i += 2)
                 {
                     var startInclusive = startEndPairsArray[i];
@@ -1612,7 +1618,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     return
                         this.IsPointMass
                             ? that.IsPointMass && this.Point == that.Point
-                            : this.CharClasses != CharClasses.Unknown && this.CharClasses == that.CharClasses|| this.MaxDiff(that) < Eps;
+                            : this.CharClasses != CharClasses.Unknown && this.CharClasses == that.CharClasses || this.MaxDiff(that) < Eps;
                 }
 
                 return false;
@@ -1893,6 +1899,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         internal sealed class StorageCache
         {
+            // Common distributions which can be created using factory methods
             public static readonly Storage Uniform;
             public static readonly Storage Digit;
             public static readonly Storage Lower;
@@ -1903,19 +1910,49 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public static readonly Storage NonWordChar;
             public static readonly Storage Whitespace;
 
+            // Common distributions which can be produced by ToLower()
+            public static readonly Storage LowerOrDigit;
+            public static readonly Storage LowerWordCharOrDigit;
+            public static readonly Storage UpperComplement;
+
             private static readonly Storage[] PointMasses;
 
             static StorageCache()
             {
-                Uniform = Storage.CreateUncached(new CharRange[] { }, UniformProb, CharClasses.Uniform, UniformRegexRepresentation);
-                Digit = Storage.CreateUniformInRanges("09", CharClasses.Digit, DigitRegexRepresentation);
-                Lower = Storage.CreateUniformInRanges(LowerCaseCharacterRanges, CharClasses.Lower,LowerRegexRepresentation);
-                Upper = Storage.CreateUniformInRanges(UpperCaseCharacterRanges, CharClasses.Upper, UpperRegexRepresentation);
-                Letter = Storage.CreateUniformInRanges(LetterCharacterRanges, CharClasses.Letter, LetterRegexRepresentation);
-                LetterOrDigit = Storage.CreateUniformInRanges(LetterCharacterRanges + "09", CharClasses.LetterOrDigit, LetterOrDigitRegexRepresentation);
-                WordChar = Storage.CreateUniformInRanges(LetterCharacterRanges + "09__", CharClasses.WordChar, WordCharRegexRepresentation);
+                string LetterOrDigitsRanges(string baseRange) => baseRange + "09";
+                string WordCharRanges(string baseRange) => baseRange + "09__";
+
+                Uniform = Storage.CreateUncached(
+                    new CharRange[] { },
+                    UniformProb,
+                    CharClasses.Uniform,
+                    UniformRegexRepresentation,
+                    UniformSymbolRepresentation);
+                Digit = Storage.CreateUniformInRanges("09", CharClasses.Digit);
+                Lower = Storage.CreateUniformInRanges(LowerCaseCharacterRanges, CharClasses.Lower);
+                Upper = Storage.CreateUniformInRanges(UpperCaseCharacterRanges, CharClasses.Upper);
+                Letter = Storage.CreateUniformInRanges(LetterCharacterRanges, CharClasses.Letter);
+                LetterOrDigit = Storage.CreateUniformInRanges(LetterOrDigitsRanges(LetterCharacterRanges), CharClasses.LetterOrDigit);
+                WordChar = Storage.CreateUniformInRanges(WordCharRanges(LetterCharacterRanges), CharClasses.WordChar);
                 NonWordChar = WordChar.Complement();
-                Whitespace = Storage.CreateUniformInRanges("\t\r  ", CharClasses.Unknown, null);
+                Whitespace = Storage.CreateUniformInRanges("\t\r  ");
+
+                LowerOrDigit = Storage.CreateUniformInRanges(
+                    LetterOrDigitsRanges(LowerCaseCharacterRanges),
+                    regexRepresentation: @"[\p{Ll}\d]",
+                    symbolRepresentation: "⭽");
+                LowerWordCharOrDigit = Storage.CreateUniformInRanges(
+                    WordCharRanges(LowerCaseCharacterRanges),
+                    regexRepresentation: @"[\p{Ll}\d_]",
+                    symbolRepresentation: "⧬");
+
+                var upperComplement = Upper.Complement();
+                UpperComplement = Storage.CreateUncached(
+                    upperComplement.Ranges,
+                    upperComplement.ProbabilityOutsideRanges,
+                    regexRepresentation: @"[^\p{Lu}]",
+                    symbolRepresentation: "🡻");
+
                 PointMasses = new Storage[CharRangeEndExclusive];
             }
 
@@ -2005,14 +2042,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
             private List<CharRange> ranges;
 
             /// <summary>
-            /// Precomuted character class
+            /// Precomuted character class.
             /// </summary>
             private CharClasses charClasses;
 
             /// <summary>
-            /// Precomputed regex representation
+            /// Precomputed regex representation.
             /// </summary>
             private string regexRepresentation;
+
+            /// <summary>
+            /// Precomputed symbol representation.
+            /// </summary>
+            private string symbolRepresentation;
 
             /// <summary>
             /// The probability of a character outside character ranges defined by <see cref="ranges"/>.
@@ -2024,12 +2066,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public StorageBuilder(
                 Weight probabilityOutsideRanges,
                 CharClasses charClasses = CharClasses.Unknown,
-                string regexRepresentation = null)
+                string regexRepresentation = null,
+                string symbolRepresentation = null)
             {
                 this.ProbabilityOutsideRanges = probabilityOutsideRanges;
                 this.ranges = new List<CharRange>();
                 this.charClasses = charClasses;
                 this.regexRepresentation = regexRepresentation;
+                this.symbolRepresentation = symbolRepresentation;
             }
 
             #region Public methods
@@ -2068,7 +2112,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 this.MergeNeighboringRanges();
                 this.NormalizeProbabilities();
-                return Storage.Create(this.ranges.ToArray(), this.ProbabilityOutsideRanges, this.charClasses, this.regexRepresentation);
+                return Storage.Create(
+                    this.ranges.ToArray(),
+                    this.ProbabilityOutsideRanges,
+                    this.charClasses,
+                    this.regexRepresentation,
+                    this.symbolRepresentation);
             }
 
             #endregion
