@@ -864,7 +864,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     new[]
                         {
                             new StringAutomaton.StateData(0, 1, Weight.One),
-                            new StringAutomaton.StateData(1, 1, Weight.One),
+                            new StringAutomaton.StateData(1, 0, Weight.One),
                         },
                     new[] { new StringAutomaton.Transition(DiscreteChar.PointMass('a'), Weight.One, 1) }));
 

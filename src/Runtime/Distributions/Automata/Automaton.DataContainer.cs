@@ -108,12 +108,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 foreach (var state in this.States)
                 {
-                    if (state.FirstTransition < 0 || state.LastTransition > this.Transitions.Count)
+                    var lastTransitionIndex = state.FirstTransitionIndex + state.TransitionsCount;
+                    if (state.FirstTransitionIndex < 0 || lastTransitionIndex > this.Transitions.Count)
                     {
                         return false;
                     }
 
-                    for (var i = state.FirstTransition; i < state.LastTransition; ++i)
+                    for (var i = state.FirstTransitionIndex; i < lastTransitionIndex; ++i)
                     {
                         var transition = this.Transitions[i];
                         if (transition.DestinationStateIndex < 0 ||
