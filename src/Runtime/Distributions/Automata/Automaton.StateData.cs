@@ -36,6 +36,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <see cref="FirstTransitionIndex"/> which belong to this state. All transitions for
             /// the same state are stored as a contiguous block.
             /// </summary>
+            [DataMember]
             public int TransitionsCount { get; internal set; }
 
             /// <summary>
