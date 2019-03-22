@@ -1937,9 +1937,21 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 NonWordChar = WordChar.Complement();
                 Whitespace = Storage.CreateUniformInRanges("\t\r  ");
 
-                LowerOrDigit = Storage.CreateUniformInRanges(LetterOrDigitsRanges(LowerCaseCharacterRanges));
-                LowerWordCharOrDigit =Storage.CreateUniformInRanges(WordCharRanges(LowerCaseCharacterRanges));
-                UpperComplement = Upper.Complement();
+                LowerOrDigit = Storage.CreateUniformInRanges(
+                    LetterOrDigitsRanges(LowerCaseCharacterRanges),
+                    regexRepresentation: @"[\p{Ll}\d]",
+                    symbolRepresentation: "⭽");
+                LowerWordCharOrDigit = Storage.CreateUniformInRanges(
+                    WordCharRanges(LowerCaseCharacterRanges),
+                    regexRepresentation: @"[\p{Ll}\d_]",
+                    symbolRepresentation: "⧬");
+
+                var upperComplement = Upper.Complement();
+                UpperComplement = Storage.CreateUncached(
+                    upperComplement.Ranges,
+                    upperComplement.ProbabilityOutsideRanges,
+                    regexRepresentation: @"[^\p{Lu}]",
+                    symbolRepresentation: "🡻");
 
                 PointMasses = new Storage[CharRangeEndExclusive];
             }
