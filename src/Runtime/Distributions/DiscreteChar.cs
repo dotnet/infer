@@ -213,22 +213,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="value">The character.</param>
         /// <returns>The probability of the character under this distribution.</returns>
-        public double this[char value]
-        {
-            get
-            {
-                var data = this.Data;
-                foreach (var range in data.Ranges)
-                {
-                    if (range.StartInclusive <= value && range.EndExclusive > value)
-                    {
-                        return range.Probability.Value;
-                    }
-                }
-
-                return data.ProbabilityOutsideRanges.Value;
-            }
-        }
+        public double this[char value] => FindProb(value).Value;
 
         #endregion
 
@@ -523,7 +508,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <see langword="true"/> if this distribution is a uniform distribution over all possible characters,
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public double GetLogProb(char value) => Math.Log(this[value]);
+        public double GetLogProb(char value) => FindProb(value).LogValue;
 
         /// <summary>
         /// Sets this distribution to a product of a given pair of distributions.
@@ -1093,6 +1078,20 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         #endregion
+
+        private Weight FindProb(char value)
+        {
+            var data = this.Data;
+            foreach (var range in data.Ranges)
+            {
+                if (range.StartInclusive <= value && range.EndExclusive > value)
+                {
+                    return range.Probability;
+                }
+            }
+
+            return data.ProbabilityOutsideRanges;
+        }
 
         #endregion
 
