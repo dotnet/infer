@@ -517,6 +517,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="distribution2">The second distribution.</param>
         public void SetToProduct(DiscreteChar distribution1, DiscreteChar distribution2)
         {
+            if (distribution1.IsPointMass && distribution2.IsPointMass)
+            {
+                if (distribution1.Point != distribution2.Point)
+                {
+                    this.Data = StorageCache.ImproperDistribution;
+                }
+
+                return;
+            }
+
             var probabilityOutsideRanges = distribution1.Data.ProbabilityOutsideRanges * distribution2.Data.ProbabilityOutsideRanges;
             var builder = new StorageBuilder(probabilityOutsideRanges);
             foreach (var pair in CharRangePair.CombinedRanges(distribution1, distribution2))
@@ -1924,6 +1934,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public static readonly Storage LowerWordCharOrDigit;
             public static readonly Storage UpperComplement;
 
+            // Storage that corresponds to improper result of SetToProduct() 
+            public static readonly Storage ImproperDistribution;
+
             private static readonly Storage[] PointMasses;
 
             static StorageCache()
@@ -1963,6 +1976,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     null,
                     regexRepresentation: @"[^\p{Lu}]",
                     symbolRepresentation: "🡻");
+
+                ImproperDistribution = Storage.CreateUncached(new CharRange[0], Weight.Zero, null);
 
                 PointMasses = new Storage[CharRangeEndExclusive];
             }
@@ -2051,12 +2066,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <summary>
             /// The array of character ranges with associated probabilities.
             /// </summary>
-            private List<CharRange> ranges;
+            private readonly List<CharRange> ranges;
 
             /// <summary>
             /// Precomuted character class.
             /// </summary>
-            private CharClasses charClasses;
+            private readonly CharClasses charClasses;
 
             /// <summary>
             /// Precomputed regex representation.
@@ -2066,12 +2081,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <summary>
             /// Precomputed symbol representation.
             /// </summary>
-            private string symbolRepresentation;
+            private readonly string symbolRepresentation;
 
             /// <summary>
             /// The probability of a character outside character ranges defined by <see cref="ranges"/>.
             /// </summary>
-            public Weight ProbabilityOutsideRanges { get; set; }
+            public Weight ProbabilityOutsideRanges { private get; set; }
 
             #endregion
 
