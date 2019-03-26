@@ -794,18 +794,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             /// <summary>
-            /// Version of <see cref="StateData"/> that is used during automaton constructions. Unliked
-            /// regular <see cref="StateData"/> transitions are stored as a linked list.
+            /// Version of <see cref="StateData"/> that is used during automaton constructions. Unlike
+            /// regular <see cref="StateData"/> transitions are stored as a linked list over
+            /// <see cref="Builder.transitions"/> array.
             /// </summary>
             private struct LinkedStateData
             {
                 /// <summary>
-                /// Index of the head of transitions list.
+                /// Index of the head of transitions list in <see cref="Builder.transitions"/>.
                 /// </summary>
                 public int FirstTransitionIndex { get; internal set; }
 
                 /// <summary>
-                /// Index of the tail of transitions list.
+                /// Index of the tail of transitions list in <see cref="Builder.transitions"/>.
                 /// </summary>
                 public int LastTransitionIndex { get; internal set; }
 
