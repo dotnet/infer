@@ -32,7 +32,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         : IDistribution<char>, SettableTo<DiscreteChar>, SettableToProduct<DiscreteChar>, SettableToRatio<DiscreteChar>, SettableToPower<DiscreteChar>,
         SettableToWeightedSumExact<DiscreteChar>, SettableToPartialUniform<DiscreteChar>,
         CanGetLogAverageOf<DiscreteChar>, CanGetLogAverageOfPower<DiscreteChar>, CanGetAverageLog<DiscreteChar>, CanGetMode<char>,
-        Sampleable<char>, CanEnumerateSupport<char>, ISerializable
+        Sampleable<char>, CanEnumerateSupport<char>, ISerializable, IEquatable<DiscreteChar>
     {
         #region Constants
 
@@ -199,14 +199,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public char Point
         {
-            get => this.Data.Point;
+            get => this.Data.Point ?? throw new InvalidOperationException();
             set => this.Data = StorageCache.GetPointMass(value, null);
         }
 
         /// <summary>
         /// Gets a value indicating whether this distribution represents a point mass.
         /// </summary>
-        public bool IsPointMass => this.Data.IsPointMass;
+        public bool IsPointMass => this.Data.Point.HasValue;
 
         /// <summary>
         /// Gets the probability of a given character under this distribution.
@@ -596,6 +596,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>The logarithm of the probability that distributions would draw the same sample.</returns>
         public double GetLogAverageOf(DiscreteChar distribution)
         {
+            if (distribution.IsPointMass)
+            {
+                return this.GetLogProb(distribution.Point);
+            }
+
+            if (this.IsPointMass)
+            {
+                return distribution.GetLogProb(this.Point);
+            }
+
             var result = Weight.Zero;
             foreach (var pair in CharRangePair.CombinedRanges(this, distribution))
             {
@@ -1017,11 +1027,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
             this.Data.AppendRegex(stringBuilder, useFriendlySymbols);
 
         /// <summary>
+        /// Checks if <paramref name="that"/> equals to this distribution (i.e. represents the same distribution over characters).
+        /// </summary>
+        /// <param name="that">The object to compare this distribution with.</param>
+        /// <returns><see langword="true"/> if this distribution is equal to <paramref name="that"/>, false otherwise.</returns>
+        public bool Equals(DiscreteChar that) => this.Data.Equals(that.Data);
+
+        /// <summary>
         /// Checks if <paramref name="obj"/> equals to this distribution (i.e. represents the same distribution over characters).
         /// </summary>
         /// <param name="obj">The object to compare this distribution with.</param>
         /// <returns><see langword="true"/> if this distribution is equal to <paramref name="obj"/>, false otherwise.</returns>
-        public override bool Equals(object obj) => obj is DiscreteChar other && this.Data.Equals(other.Data);
+        public override bool Equals(object obj) => obj is DiscreteChar that && this.Equals(that);
 
         /// <summary>
         /// Gets the hash code of this distribution.
@@ -1496,7 +1513,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <remarks>
             /// The character probabilities must be kept normalized by applying <see cref="StorageBuilder.NormalizeProbabilities"/> when necessary.
             /// </remarks>
-            public ReadOnlyArray<CharRange> Ranges { get; private set; }
+            public ReadOnlyArray<CharRange> Ranges { get; }
 
             /// <summary>
             /// The probability of a character outside character ranges defined by <see cref="Ranges"/>.
@@ -1504,12 +1521,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <remarks>
             /// The character probabilities must be kept normalized by applying <see cref="StorageBuilder.NormalizeProbabilities"/> when necessary.
             /// </remarks>
-            public Weight ProbabilityOutsideRanges { get; private set; }
+            public Weight ProbabilityOutsideRanges { get; }
+
+            public char? Point { get; }
 
             // Following 3 members are not immutable and can be recalculated on-demand
             public CharClasses CharClasses { get; private set; }
-            private string regexRepresentation = null;
-            private string symbolRepresentation = null;
+            private string regexRepresentation;
+            private string symbolRepresentation;
 
             #endregion
 
@@ -1518,12 +1537,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
             private Storage(
                 ReadOnlyArray<CharRange> ranges,
                 Weight probabilityOutsideRanges,
+                char? point,
                 CharClasses charClasses,
                 string regexRepresentation,
                 string symbolRepresentation)
             {
                 this.Ranges = ranges;
                 this.ProbabilityOutsideRanges = probabilityOutsideRanges;
+                this.Point = point;
                 this.CharClasses = charClasses;
                 this.regexRepresentation = regexRepresentation;
                 this.symbolRepresentation = symbolRepresentation;
@@ -1532,11 +1553,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public static Storage CreateUncached(
                 ReadOnlyArray<CharRange> ranges,
                 Weight probabilityOutsideRanges,
+                char? point,
                 CharClasses charClasses = CharClasses.Unknown,
                 string regexRepresentation = null,
                 string symbolRepresentation = null)
             {
-                return new Storage(ranges, probabilityOutsideRanges, charClasses, regexRepresentation, symbolRepresentation);
+                Debug.Assert(point.HasValue == IsRangesPointMass(ranges));
+                return new Storage(ranges, probabilityOutsideRanges, point, charClasses, regexRepresentation, symbolRepresentation);
             }
 
             public static Storage Create(
@@ -1548,7 +1571,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 return IsRangesPointMass(ranges)
                     ? CreatePoint((char)ranges[0].StartInclusive, ranges)
-                    : CreateUncached(ranges, probabilityOutsideRanges, charClaasses, regexRepresentation, symbolRepresentation);
+                    : CreateUncached(ranges, probabilityOutsideRanges, null, charClaasses, regexRepresentation, symbolRepresentation);
             }
 
             public static Storage CreatePoint(char point, ReadOnlyArray<CharRange> ranges) =>
@@ -1610,18 +1633,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return result;
             }
 
-            public override bool Equals(object obj)
-            {
-                if (obj is Storage that)
-                {
-                    return
-                        this.IsPointMass
-                            ? that.IsPointMass && this.Point == that.Point
-                            : this.CharClasses != CharClasses.Unknown && this.CharClasses == that.CharClasses || this.MaxDiff(that) < Eps;
-                }
+            public bool Equals(Storage that) =>
+                this.Point.HasValue
+                    ? that.Point.HasValue && this.Point.Value == that.Point.Value
+                    : this.CharClasses != CharClasses.Unknown && this.CharClasses == that.CharClasses || this.MaxDiff(that) < Eps;
 
-                return false;
-            }
+            public override bool Equals(object obj) => obj is Storage that && this.Equals(that);
 
             // TODO: What to do here? every distribution has multiple representations
             public override int GetHashCode() => 17;
@@ -1632,15 +1649,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             // TODO: Assumes that there are no ranges with zero probability
             // TODO: also assumes that a point is not represented by zero-probability ranges and a non-zero value outside of ranges
-            public bool IsPointMass => IsRangesPointMass(this.Ranges);
-
             private static bool IsRangesPointMass(ReadOnlyArray<CharRange> ranges) =>
                 ranges.Count > 0 && Math.Abs(ranges[0].Probability.LogValue - Weight.One.LogValue) < Eps;
-
-            public char Point =>
-                IsPointMass
-                    ? (char)this.Ranges[0].StartInclusive
-                    : throw new InvalidOperationException();
 
             /// <summary>
             /// Returns weather char class of this state DiscreteChar equals charClass.
@@ -1753,9 +1763,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <param name="stringBuilder">The string builder to append to</param>
             public void AppendToString(StringBuilder stringBuilder)
             {
-                if (this.IsPointMass)
+                if (this.Point.HasValue)
                 {
-                    AppendChar(stringBuilder, this.Point);
+                    AppendChar(stringBuilder, this.Point.Value);
                 }
                 else
                 {
@@ -1788,7 +1798,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     if (this.regexRepresentation == null)
                     {
-                        if (this.IsPointMass)
+                        if (this.Point.HasValue)
                         {
                             this.regexRepresentation = Regex.Escape(this.Point.ToString());
                         }
@@ -1835,7 +1845,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     if (this.symbolRepresentation == null)
                     {
-                        if (this.IsPointMass)
+                        if (this.Point.HasValue)
                         {
                             this.symbolRepresentation = this.Point.ToString();
                         }
@@ -1924,6 +1934,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 Uniform = Storage.CreateUncached(
                     new CharRange[] { },
                     UniformProb,
+                    null,
                     CharClasses.Uniform,
                     UniformRegexRepresentation,
                     UniformSymbolRepresentation);
@@ -1949,6 +1960,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 UpperComplement = Storage.CreateUncached(
                     upperComplement.Ranges,
                     upperComplement.ProbabilityOutsideRanges,
+                    null,
                     regexRepresentation: @"[^\p{Lu}]",
                     symbolRepresentation: "🡻");
 
@@ -1963,7 +1975,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         ranges.IsNull
                             ? new ReadOnlyArray<CharRange>(new[] { new CharRange(point, point + 1, Weight.One) })
                             : ranges,
-                        Weight.Zero);
+                        Weight.Zero,
+                        point);
                 }
 
                 return PointMasses[point];
