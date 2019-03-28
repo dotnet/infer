@@ -521,9 +521,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 if (distribution1.Point != distribution2.Point)
                 {
-                    this.Data = StorageCache.ImproperDistribution;
+                    throw new AllZeroException("A character distribution that is zero everywhere has been produced.");
                 }
 
+                this.Data = distribution1.Data;
                 return;
             }
 
@@ -1934,9 +1935,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public static readonly Storage LowerWordCharOrDigit;
             public static readonly Storage UpperComplement;
 
-            // Storage that corresponds to improper result of SetToProduct() 
-            public static readonly Storage ImproperDistribution;
-
             private static readonly Storage[] PointMasses;
 
             static StorageCache()
@@ -1976,8 +1974,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     null,
                     regexRepresentation: @"[^\p{Lu}]",
                     symbolRepresentation: "🡻");
-
-                ImproperDistribution = Storage.CreateUncached(new CharRange[0], Weight.Zero, null);
 
                 PointMasses = new Storage[CharRangeEndExclusive];
             }
