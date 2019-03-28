@@ -20,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// States created so far.
             /// </summary>
-            private readonly List<StateData> states;
+            private readonly List<LinkedStateData> states;
 
             /// <summary>
             /// Transitions created so far.
@@ -29,8 +29,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Unlike in <see cref="StateCollection.transitions"/>, transitions
             /// for single entity are not represented by contiguous segment of array, but rather as a linked
             /// list. It is done this way, because transitions can be added at any moment and inserting
-            /// transition into a middle of array is not feasible. <see cref="StateData.FirstTransition"/>
-            /// references head of list and <see cref="StateData.LastTransition"/> references last element of list.
+            /// transition into a middle of array is not feasible.
             /// </remarks>
             private readonly List<LinkedTransitionNode> transitions;
 
@@ -45,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public Builder(int startStateCount = 1)
             {
-                this.states = new List<StateData>();
+                this.states = new List<LinkedStateData>();
                 this.transitions = new List<LinkedTransitionNode>();
                 this.AddStates(startStateCount);
             }
@@ -120,10 +119,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 var index = this.states.Count;
                 this.states.Add(
-                    new StateData
+                    new LinkedStateData
                     {
-                        FirstTransition = -1,
-                        LastTransition = -1,
+                        FirstTransitionIndex = -1,
+                        LastTransitionIndex = -1,
                         EndWeight = Weight.Zero,
                     });
                 return new StateBuilder(this, index);
@@ -357,7 +356,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     for (var i = 0; i < oldStateCount; ++i)
                     {
                         var state = this.states[i];
-                        if (state.CanEnd && state.FirstTransition != -1)
+                        if (!state.EndWeight.IsZero && state.FirstTransitionIndex != -1)
                         {
                             return false;
                         }
@@ -397,9 +396,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 for (var i = 0; i < resultStates.Length; ++i)
                 {
-                    var state = this.states[i];
-                    var transitionIndex = state.FirstTransition;
-                    state.FirstTransition = nextResultTransitionIndex;
+                    var firstResultTransitionIndex = nextResultTransitionIndex;
+                    var transitionIndex = this.states[i].FirstTransitionIndex;
                     while (transitionIndex != -1)
                     {
                         var node = this.transitions[transitionIndex];
@@ -415,8 +413,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         transitionIndex = node.Next;
                     }
 
-                    state.LastTransition = nextResultTransitionIndex;
-                    resultStates[i] = state;
+                    resultStates[i] = new StateData(
+                        firstResultTransitionIndex,
+                        nextResultTransitionIndex - firstResultTransitionIndex,
+                        this.states[i].EndWeight);
                 }
 
                 Debug.Assert(
@@ -470,7 +470,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Gets a value indicating whether the ending weight of this state is greater than zero.
                 /// </summary>
-                public bool CanEnd => this.builder.states[this.Index].CanEnd;
+                public bool CanEnd => !this.builder.states[this.Index].EndWeight.IsZero;
 
                 /// <summary>
                 /// Gets or sets the ending weight of the state.
@@ -486,7 +486,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// Gets <see cref="TransitionIterator"/> over transitions of this state.
                 /// </summary>
                 public TransitionIterator TransitionIterator =>
-                    new TransitionIterator(this.builder, this.Index, this.builder.states[this.Index].FirstTransition);
+                    new TransitionIterator(this.builder, this.Index, this.builder.states[this.Index].FirstTransitionIndex);
 
                 /// <summary>
                 /// Initializes a new instance of <see cref="StateBuilder"/> struct.
@@ -525,22 +525,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         {
                             Transition = transition,
                             Next = -1,
-                            Prev = state.LastTransition,
+                            Prev = state.LastTransitionIndex,
                         });
 
-                    if (state.LastTransition != -1)
+                    if (state.LastTransitionIndex != -1)
                     {
                         // update "next" field in old tail
-                        var oldTail = this.builder.transitions[state.LastTransition];
+                        var oldTail = this.builder.transitions[state.LastTransitionIndex];
                         oldTail.Next = transitionIndex;
-                        this.builder.transitions[state.LastTransition] = oldTail;
+                        this.builder.transitions[state.LastTransitionIndex] = oldTail;
                     }
                     else
                     {
-                        state.FirstTransition = transitionIndex;
+                        state.FirstTransitionIndex = transitionIndex;
                     }
 
-                    state.LastTransition = transitionIndex;
+                    state.LastTransitionIndex = transitionIndex;
                     this.builder.states[this.Index] = state;
 
                     
@@ -759,16 +759,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
 
                     // update references in state
-                    if (state.FirstTransition == this.index || state.LastTransition == this.index)
+                    if (state.FirstTransitionIndex == this.index || state.LastTransitionIndex == this.index)
                     {
-                        if (state.FirstTransition == this.index)
+                        if (state.FirstTransitionIndex == this.index)
                         {
-                            state.FirstTransition = node.Next;
+                            state.FirstTransitionIndex = node.Next;
                         }
 
-                        if (state.LastTransition == this.index)
+                        if (state.LastTransitionIndex == this.index)
                         {
-                            state.LastTransition = node.Prev;
+                            state.LastTransitionIndex = node.Prev;
                         }
 
                         this.builder.states[this.stateIndex] = state;
@@ -791,6 +791,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     this.index = this.builder.transitions[this.index].Next;
                 }
 
+            }
+
+            /// <summary>
+            /// Version of <see cref="StateData"/> that is used during automaton constructions. Unlike
+            /// regular <see cref="StateData"/> transitions are stored as a linked list over
+            /// <see cref="Builder.transitions"/> array.
+            /// </summary>
+            private struct LinkedStateData
+            {
+                /// <summary>
+                /// Index of the head of transitions list in <see cref="Builder.transitions"/>.
+                /// </summary>
+                public int FirstTransitionIndex { get; internal set; }
+
+                /// <summary>
+                /// Index of the tail of transitions list in <see cref="Builder.transitions"/>.
+                /// </summary>
+                public int LastTransitionIndex { get; internal set; }
+
+                /// <summary>
+                /// Ending weight of the state.
+                /// </summary>
+                public Weight EndWeight { get; internal set; }
             }
 
             /// <summary>

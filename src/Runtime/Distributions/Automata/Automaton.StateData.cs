@@ -29,20 +29,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// this property contains index of the head of the linked-list of transitions.
             /// </remarks>
             [DataMember]
-            public int FirstTransition { get; internal set; }
+            public int FirstTransitionIndex { get; internal set; }
 
             /// <summary>
-            /// Gets or sets index of the first transition in <see cref="DataContainer.Transitions"/> after
-            /// <see cref="FirstTransition"/> which does not belong to this state. All transitions for
+            /// Gets or sets count of transition in <see cref="DataContainer.Transitions"/> after
+            /// <see cref="FirstTransitionIndex"/> which belong to this state. All transitions for
             /// the same state are stored as a contiguous block.
             /// </summary>
-            /// <remarks>
-            /// During automaton construction <see cref="Automaton{TSequence,TElement,TElementDistribution,TSequenceManipulator,TThis}.Builder"/>
-            /// stores transitions as linked-list instead of contiguous block. So, during construction
-            /// this property contains index of the tail of the linked-list of transitions.
-            /// </remarks>
             [DataMember]
-            public int LastTransition { get; internal set; }
+            public int TransitionsCount { get; internal set; }
 
             /// <summary>
             /// Gets or sets ending weight of the state.
@@ -53,11 +48,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Initializes a new instance of the <see cref="StateData"/> struct.
             /// </summary>
-            [Construction("FirstTransition", "LastTransition", "EndWeight")]
-            public StateData(int firstTransition, int lastTransition, Weight endWeight)
+            [Construction("FirstTransitionIndex", "TransitionsCount", "EndWeight")]
+            public StateData(int firstTransitionIndex, int transitionsCount, Weight endWeight)
             {
-                this.FirstTransition = firstTransition;
-                this.LastTransition = lastTransition;
+                this.FirstTransitionIndex = firstTransitionIndex;
+                this.TransitionsCount = transitionsCount;
                 this.EndWeight = endWeight;
             }
 
