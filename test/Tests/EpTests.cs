@@ -454,13 +454,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             // generate data from the model
             var hPrior = new Gaussian(hMean, hVariance);
             var hSample = Util.ArrayInit(n, i => hPrior.Sample());
+            // When xMultiplier != 1, we have model mismatch so we want the learned xPrecision to decrease.
             double xMultiplier = 5;
             var xData = Util.ArrayInit(n, i => Gaussian.Sample(xMultiplier * hSample[i], xPrecisionTrue));
             var yData = Util.ArrayInit(n, i => Gaussian.Sample(hSample[i], yPrecisionTrue));
             x.ObservedValue = xData;
             y.ObservedValue = yData;
 
-            // N(x; ah, vx) N(h; mh, vh) = N(h; mh + k*(x - a*mh), (1-ka)vh)
+            // N(x; a*h, vx) N(h; mh, vh) = N(h; mh + k*(x - a*mh), (1-ka)vh)
             // where k = vh*a/(a^2*vh + vx)
             // if x = a*x' then k(x - a*mh) = a*k(x' - mh)
             // a*k = vh/(vh + vx/a^2)
