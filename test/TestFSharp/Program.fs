@@ -13,5 +13,6 @@ let _ = GaussianRangesTutorial.ranges.rangesTestFunc()
 let _ = ClinicalTrialTutorial.clinical.clinicalTestFunc()
 let _ = BayesPointTutorial.bayes.bayesTestFunc()
 let _ = MixtureGaussiansTutorial.mixture.mixtureTestFunc()
+let _ = DifficultyAbilityExample.DifficultyAbility.main()
 
 Console.ReadLine() |> ignore

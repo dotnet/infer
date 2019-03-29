@@ -35,6 +35,7 @@
     <ProjectReference Include="..\..\src\FSharpWrapper\FSharpWrapper.fsproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DifficultyAbility.fs" />
     <Compile Include="..\..\src\Shared\SharedAssemblyFileVersion.fs">
       <Link>SharedAssemblyFileVersion.fs</Link>
     </Compile>

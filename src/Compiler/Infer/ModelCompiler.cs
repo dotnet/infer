@@ -987,8 +987,9 @@ namespace Microsoft.ML.Probabilistic.Compiler
             if (OptimiseInferenceCode)
                 tc.AddTransform(new DeadCode2Transform(this));
             tc.AddTransform(new ParallelScheduleTransform());
-            //if (TraceAllMessages)
-            //    tc.AddTransform(new TracingTransform());
+            bool useTracingTransform = false;
+            if (TraceAllMessages && useTracingTransform)
+                tc.AddTransform(new TracingTransform());
             bool useArraySizeTracing = false;
             if (useArraySizeTracing)
             {
