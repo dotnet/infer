@@ -20,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <returns><paramref name="input"/></returns>
         public static T Trace<T>([IsReturned] T input, string text)
         {
-            Debug.WriteLine(StringUtil.JoinColumns(text, ": ", input));
+            System.Diagnostics.Trace.WriteLine(StringUtil.JoinColumns(text, ": ", input));
             return input;
         }
 

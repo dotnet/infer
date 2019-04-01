@@ -24,6 +24,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         Dictionary<Set<IVariableDeclaration>, TableInfo> tableOfIndexVars = new Dictionary<Set<IVariableDeclaration>, TableInfo>();
         MethodInfo writeMethod, writeBytesMethod, writeLineMethod, flushMethod, disposeMethodInfo;
         IMethodDeclaration traceWriterMethod, disposeMethod;
+        public static bool UseToString = true;
 
         public override string Name
         {
@@ -66,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             var stmts = traceWriterMethod.Body.Statements;
             string folder = td.Name;
             stmts.Add(Builder.ExprStatement(Builder.StaticMethod(new Func<string, DirectoryInfo>(Directory.CreateDirectory), Builder.LiteralExpr(folder))));
-            IExpression pathExpr = Builder.BinaryExpr(BinaryOperator.Add, name, Builder.LiteralExpr(".csv"));
+            IExpression pathExpr = Builder.BinaryExpr(BinaryOperator.Add, name, Builder.LiteralExpr(UseToString ? ".tsv" : ".csv"));
             pathExpr = Builder.BinaryExpr(BinaryOperator.Add, Builder.LiteralExpr(folder + "/"), pathExpr);
             var writerDecl = Builder.VarDecl("writer", typeof(StreamWriter));
             var ctorExpr = Builder.NewObject(typeof(StreamWriter), pathExpr);
@@ -116,12 +117,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             StringBuilder header = new StringBuilder();
             header.Append("iteration");
             output2.Add(GetWriteStatement(writer, Builder.VarRefExpr(iterationVar)));
-            var delimiter = GetWriteStatement(writer, Builder.LiteralExpr(","));
+            string delimiter = UseToString ? "\t" : ",";
+            var writeDelimiter = GetWriteStatement(writer, Builder.LiteralExpr(delimiter));
             foreach (var indexVar in table.indexVars)
             {
-                header.Append(",");
+                header.Append(delimiter);
                 header.Append(indexVar.Name);
-                output2.Add(delimiter);
+                output2.Add(writeDelimiter);
                 output2.Add(GetWriteStatement(writer, Builder.VarRefExpr(indexVar)));
             }
             foreach (var messageBaseExpr in table.messageExprs)
@@ -141,9 +143,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     conditions.Push(Builder.BinaryExpr(BinaryOperator.IdentityEquality, messageExpr, Builder.LiteralExpr(null)));
                 if (messageExpr.GetExpressionType().IsPrimitive)
                 {
-                    header.Append(",");
+                    header.Append(delimiter);
                     header.Append(varInfo.Name);
-                    output2.Add(delimiter);
+                    output2.Add(writeDelimiter);
                     output2.Add(GetWriteStatement(writer, AddConditions(messageExpr, conditions)));
                 }
                 else
@@ -151,9 +153,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     Dictionary<string, IExpression> dict = GetProperties(messageExpr);
                     foreach (var entry in dict)
                     {
-                        header.Append(",");
+                        header.Append(delimiter);
                         header.Append(varInfo.Name + entry.Key);
-                        output2.Add(delimiter);
+                        output2.Add(writeDelimiter);
                         output2.Add(GetWriteStatement(writer, AddConditions(entry.Value, conditions)));
                     }
                 }
@@ -170,25 +172,33 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         {
             Dictionary<string, IExpression> dict = new Dictionary<string, IExpression>();
             Type type = expr.GetExpressionType();
-            Type[] faces = type.GetInterfaces();
-            bool hasGetMean = false;
-            bool hasGetVariance = false;
-            foreach (Type face in faces)
+            if (UseToString)
             {
-                if (face.Name == "CanGetMean`1")
-                    hasGetMean = true;
-                else if (face.Name == "CanGetVariance`1")
-                    hasGetVariance = true;
+                var toStringMethod = type.GetMethod("ToString", new Type[0]);
+                dict["ToString"] = Builder.Method(expr, toStringMethod);
             }
-            if (hasGetMean)
+            else
             {
-                var meanMethod = type.GetMethod("GetMean", new Type[0]);
-                dict["Mean"] = Builder.Method(expr, meanMethod);
-            }
-            if (hasGetVariance)
-            {
-                var varianceMethod = type.GetMethod("GetVariance", new Type[0]);
-                dict["Variance"] = Builder.Method(expr, varianceMethod);
+                Type[] faces = type.GetInterfaces();
+                bool hasGetMean = false;
+                bool hasGetVariance = false;
+                foreach (Type face in faces)
+                {
+                    if (face.Name == "CanGetMean`1")
+                        hasGetMean = true;
+                    else if (face.Name == "CanGetVariance`1")
+                        hasGetVariance = true;
+                }
+                if (hasGetMean)
+                {
+                    var meanMethod = type.GetMethod("GetMean", new Type[0]);
+                    dict["Mean"] = Builder.Method(expr, meanMethod);
+                }
+                if (hasGetVariance)
+                {
+                    var varianceMethod = type.GetMethod("GetVariance", new Type[0]);
+                    dict["Variance"] = Builder.Method(expr, varianceMethod);
+                }
             }
             return dict;
         }

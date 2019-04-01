@@ -838,8 +838,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
 
             // Support for the 'TraceMessages' and 'ListenToMessages' attributes
-            if (mi.channelDecl != null && (context.InputAttributes.Has<TraceMessages>(mi.channelDecl) ||
-                                           context.InputAttributes.Has<ListenToMessages>(mi.channelDecl)))
+            if (compiler.TraceAllMessages || 
+                (mi.channelDecl != null && (context.InputAttributes.Has<TraceMessages>(mi.channelDecl) ||
+                                           context.InputAttributes.Has<ListenToMessages>(mi.channelDecl))))
             {
                 string msgText = msg.ToString();
                 // Look for TraceMessages attribute that matches this message
@@ -851,7 +852,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 if (listenTo != null && listenTo.Containing != null && !msgText.Contains(listenTo.Containing)) listenTo = null;
 
 
-                if ((listenTo != null) || (trace != null))
+                if ((listenTo != null) || (trace != null) || compiler.TraceAllMessages)
                 {
                     IExpression textExpr = DebuggingSupport.GetExpressionTextExpression(msg);
                     if (listenTo != null)

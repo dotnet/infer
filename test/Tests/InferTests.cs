@@ -210,6 +210,18 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void TraceAllMessagesTest()
+        {
+            Variable<double> x = Variable.GaussianFromMeanAndPrecision(0, 1);
+            Variable.ConstrainPositive(x);
+            Variable.ConstrainPositive(x);
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.TraceAllMessages = true;
+            engine.Infer(x);
+        }
+
+        [Fact]
         public void MarginalWrongDistributionError()
         {
             Assert.Throws<ArgumentException>(() =>
