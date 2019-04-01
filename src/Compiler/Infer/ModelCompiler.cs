@@ -60,8 +60,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         }
 
         /// <summary>
-        /// If true, all messages after each iteration will be logged to csv files in a folder named with the model name.
-        /// Use MatlabWriter.WriteFromCsvFolder to convert these to a mat file.
+        /// If true, all variables will implicitly have a TraceMessages attribute.
         /// </summary>
         public bool TraceAllMessages { get; set; }
 
@@ -987,6 +986,8 @@ namespace Microsoft.ML.Probabilistic.Compiler
             if (OptimiseInferenceCode)
                 tc.AddTransform(new DeadCode2Transform(this));
             tc.AddTransform(new ParallelScheduleTransform());
+            // All messages after each iteration will be logged to csv files in a folder named with the model name.
+            // Use MatlabWriter.WriteFromCsvFolder to convert these to a mat file.
             bool useTracingTransform = false;
             if (TraceAllMessages && useTracingTransform)
                 tc.AddTransform(new TracingTransform());
