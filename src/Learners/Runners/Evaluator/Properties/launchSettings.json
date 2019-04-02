@@ -2,7 +2,7 @@
   "profiles": {
     "Evaluator": {
       "commandName": "Project",
-      "commandLineArgs": "x64JVMConfig.xml"
+      "commandLineArgs": "c:\\users\\minka\\Downloads\\Config.xml"
     }
   }
 }

@@ -15,7 +15,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         /// <summary>
         /// The default config file.
         /// </summary>
-        private const string DefaultConfigFile = "Config.xml";
+        private const string DefaultConfigFile = @"c:\users\minka\Downloads\Config.xml";
 
         private static bool HasFailed = false;
 
