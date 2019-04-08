@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 ValueTuple.Create(
                     DiscreteChar.Uniform(),
-                    Weight.FromValue(2),
+                    Weight.FromValue(6),
                     new[] {(1, Weight.FromValue(1))})
             };
 
@@ -68,11 +68,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 ValueTuple.Create(
                     DiscreteChar.UniformInRange('A', 'Z'),
-                    Weight.FromValue(1.5),
+                    Weight.FromValue(7.5),
                     new[] {(2, Weight.FromValue(1))}),
                 ValueTuple.Create(
                     DiscreteChar.UniformInRange('a', 'z'),
-                    Weight.FromValue(3.5),
+                    Weight.FromValue(10),
                     new[] {(1, Weight.FromValue(1)), (2, Weight.FromValue(0.75))}),
             };
 
@@ -102,27 +102,27 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 ValueTuple.Create(
                     DiscreteChar.UniformInRange(char.MinValue, (char) ('a' - 1)),
-                    Weight.FromValue(5.0 * 97.0 / 98.0),
+                    Weight.FromValue(6 * 5.0 * 97.0 / 98.0),
                     new[] {(4, Weight.FromValue(1))}),
                 ValueTuple.Create(
                     DiscreteChar.PointMass('a'),
-                    Weight.FromValue((5.0 / 98.0) + 1.0),
+                    Weight.FromValue(6),
                     new[]
                     {
-                        (1, Weight.FromValue(1.0 / ((30.0 / 98.0) + 1.0))),
-                        (4, Weight.FromValue((5.0 / 98.0) / ((30.0 / 98.0) + 1.0)))
+                        (1, Weight.FromValue(1.0)),
+                        (4, Weight.FromValue(5.0 / 98.0))
                     }),
                 ValueTuple.Create(
                     DiscreteChar.PointMass('b'),
-                    Weight.FromValue(2.0),
-                    new[] {(1, Weight.FromValue(0.5)), (2, Weight.FromValue(0.5))}),
+                    Weight.FromValue(6),
+                    new[] {(1, Weight.FromValue(1)), (2, Weight.FromValue(1))}),
                 ValueTuple.Create(
                     DiscreteChar.UniformInRange('c', 'd'),
-                    Weight.FromValue(2.0),
-                    new[] {(2, Weight.FromValue(1.0))}),
+                    Weight.FromValue(6 * 3 *  (2.0 / 3)),
+                    new[] {(2, Weight.FromValue(1))}),
                 ValueTuple.Create(
                     DiscreteChar.UniformInRange('e', 'g'),
-                    Weight.FromValue(4.0),
+                    Weight.FromValue(6 * 4),
                     new[] {(3, Weight.FromValue(1.0))}),
             };
 
@@ -145,14 +145,24 @@ namespace Microsoft.ML.Probabilistic.Tests
             var wrapper = new StringAutomatonWrapper(builder);
 
             var outgoingTransitions =
-                wrapper.GetOutgoingTransitionsForDeterminization(0, Weight.FromValue(5));
+                wrapper.GetOutgoingTransitionsForDeterminization(0, Weight.FromValue(1));
 
-            double transition1Segment1Weight = 2.0 * 'a' / (char.MaxValue + 1.0);
-            double transition1Segment2Weight = 2.0 * ('z' - 'a') / (char.MaxValue + 1.0);
-            double transition1Segment3Weight = 2.0 * (char.MaxValue - 'z' + 1.0) / (char.MaxValue + 1.0);
-            double transition2Segment1Weight = 3.0 * ('z' - 'a') / (char.MaxValue - 'a' + 1.0);
-            double transition2Segment2Weight = 3.0 * (char.MaxValue - 'z' + 1.0) / (char.MaxValue - 'a' + 1.0);
-            double transition3Segment1Weight = 4.0;
+            // we have 3 segments:
+            // 1. [char.MinValue, 'a')
+            // 2. ['a', 'z')
+            // 3. ['z', char.MaxValue]
+            var transition1Segment1Weight = 2.0 * 'a' / (char.MaxValue + 1.0);
+            var transition1Segment2Weight = 2.0 * ('z' - 'a') / (char.MaxValue + 1.0);
+            var transition1Segment3Weight = 2.0 * (char.MaxValue - 'z' + 1.0) / (char.MaxValue + 1.0);
+            var transition2Segment2Weight = 3.0 * ('z' - 'a') / (char.MaxValue - 'a' + 1.0);
+            var transition2Segment3Weight = 3.0 * (char.MaxValue - 'z' + 1.0) / (char.MaxValue - 'a' + 1.0);
+            var transition3Segment3Weight = 4.0;
+
+            var maxSegment2Weight = Math.Max(transition1Segment2Weight, transition2Segment2Weight);
+            var maxSegment3Weight = Math.Max(
+                transition1Segment3Weight,
+                Math.Max(transition2Segment3Weight, transition3Segment3Weight));
+
             var expectedOutgoingTransitions = new[]
             {
                 ValueTuple.Create(
@@ -161,20 +171,20 @@ namespace Microsoft.ML.Probabilistic.Tests
                     new[] {(1, Weight.FromValue(1))}),
                 ValueTuple.Create(
                     DiscreteChar.UniformInRange('a', (char)('z' - 1)),
-                    Weight.FromValue(transition1Segment2Weight + transition2Segment1Weight),
+                    Weight.FromValue(maxSegment2Weight),
                     new[]
                     {
-                        (1, Weight.FromValue(transition1Segment2Weight / (transition1Segment2Weight + transition2Segment1Weight))),
-                        (2, Weight.FromValue(transition2Segment1Weight / (transition1Segment2Weight + transition2Segment1Weight))),
+                        (1, Weight.FromValue(transition1Segment2Weight / maxSegment2Weight)),
+                        (2, Weight.FromValue(transition2Segment2Weight / maxSegment2Weight)),
                     }),
                 ValueTuple.Create(
                     DiscreteChar.UniformInRange('z', char.MaxValue),
-                    Weight.FromValue(transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight),
+                    Weight.FromValue(maxSegment3Weight),
                     new[]
                     {
-                        (1, Weight.FromValue(transition1Segment3Weight / (transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight))),
-                        (2, Weight.FromValue(transition2Segment2Weight / (transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight))),
-                        (3, Weight.FromValue(transition3Segment1Weight / (transition1Segment3Weight + transition2Segment2Weight + transition3Segment1Weight))),
+                        (1, Weight.FromValue(transition1Segment3Weight / maxSegment3Weight)),
+                        (2, Weight.FromValue(transition2Segment3Weight / maxSegment3Weight)),
+                        (3, Weight.FromValue(transition3Segment3Weight / maxSegment3Weight)),
                     }),
             };
 
