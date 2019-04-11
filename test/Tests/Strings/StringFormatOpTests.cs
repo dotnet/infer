@@ -14,6 +14,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Factors;
     using Microsoft.ML.Probabilistic.Utilities;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Tests for all implementations of StringFormat operation.
@@ -110,6 +111,29 @@ namespace Microsoft.ML.Probabilistic.Tests
                 new[] { StringDistribution.String("arg0"), StringDistribution.String("arg1") },
                 StringDistribution.Zero(),
                 StringDistribution.String("A template with arg1."));
+        }
+
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void MessageToStr_Parallel()
+        {
+            var options = new ParallelOptions();
+            options.MaxDegreeOfParallelism = 10;
+            Parallel.For(0, 10, options, (k) =>
+            {
+                TestMessageToFormat(
+                StringDistribution.String("A template with arg and arg."),
+                new[] { StringDistribution.String("arg"), StringDistribution.String("arg") },
+                StringDistribution.OneOf("A template with {0} and {1}.", "A template with {1} and {0}."),
+                StringDistribution.OneOf(
+                    "A template with {0} and {1}.",
+                    "A template with {1} and {0}.",
+                    "A template with {0} and arg.",
+                    "A template with {1} and arg.",
+                    "A template with arg and {0}.",
+                    "A template with arg and {1}.",
+                    "A template with arg and arg."));
+            });
         }
 
         /// <summary>

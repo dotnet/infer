@@ -15,6 +15,8 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Distributions.Automata;
     using Attributes;
     using Utilities;
+    using Microsoft.ML.Probabilistic.Collections;
+    using System.Collections.Concurrent;
 
     /// <summary>
     /// A base class for implementations of message passing operations for various forms of the string formatting factor.
@@ -31,8 +33,8 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <summary>
         /// Maps a string representing a set of arguments to an automaton that validates a format string with that set of arguments.
         /// </summary>
-        private static readonly Dictionary<string, StringAutomaton> ArgsToValidatingAutomaton =
-            new Dictionary<string, StringAutomaton>();
+        private static readonly ConcurrentDictionary<string, StringAutomaton> ArgsToValidatingAutomaton =
+            new ConcurrentDictionary<string, StringAutomaton>();
 
         /// <summary>
         /// An automaton that allows only for non-empty strings. Used to validate arguments.
@@ -681,7 +683,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <summary>
         /// Maps the number of argument to an array of default argument names ("0", "1" and so on).
         /// </summary>
-        private static readonly Dictionary<int, string[]> ArgumentCountToNames = new Dictionary<int, string[]>();
+        private static ReadOnlyArray<string>?[] ArgumentCountToNames = new ReadOnlyArray<string>?[0];
 
         public static StringDistribution StrAverageConditional(StringDistribution format, IList<string> args)
         {
@@ -754,14 +756,37 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <returns>The generated array of argument names.</returns>
         private static string[] GetArgumentNames(int argCount)
         {
-            string[] result;
-            if (!ArgumentCountToNames.TryGetValue(argCount, out result))
+            string[] result = null;
+            var cache = GetCache(argCount);
+            var readOnlyResult = cache[argCount];
+            if (readOnlyResult == null)
             {
                 result = Util.ArrayInit(argCount, i => i.ToString(CultureInfo.InvariantCulture));
-                ArgumentCountToNames.Add(argCount, result);
+                ArgumentCountToNames[argCount] = result;
+            }
+            else
+            {
+                result = new List<string>(readOnlyResult).ToArray();
             }
 
             return result;
+        }
+
+        private static ReadOnlyArray<string>?[] GetCache(int minSize)
+        {
+            lock (ArgumentCountToNames)
+            {
+                if (minSize >= ArgumentCountToNames.Length)
+                {
+                    var oldCache = ArgumentCountToNames;
+                    var newCache = new ReadOnlyArray<string>?[minSize + 1];
+                    Array.Copy(ArgumentCountToNames, 0, newCache, 0, ArgumentCountToNames.Count());
+                    ArgumentCountToNames = newCache;
+                }
+
+                return ArgumentCountToNames;
+            }
+
         }
     }
 
