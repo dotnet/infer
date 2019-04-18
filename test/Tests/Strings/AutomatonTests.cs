@@ -1598,11 +1598,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests that merging parallel transitions doesn't fail with high transition weights
+        /// Tests that merging parallel transitions doesn't fail when transition weights are too large
+        /// to fit in double in non-log space.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
-        public void MergePrallelTransitionsWithHighTransitionsWeightsDoesNotThrow()
+        public void MergeParallelTransitionsWithHighTransitionsWeightsDoesNotThrow()
         {
             var builder = new StringAutomaton.Builder();
             // Add 2 identical transitions from start state to second
