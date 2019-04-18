@@ -259,12 +259,29 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         protected static class Determinization
         {
             /// <summary>
-            /// 
+            /// Represents
             /// </summary>
             public struct WeightedState : IComparable, IComparable<WeightedState>
             {
+                /// <summary>
+                /// Index of the state.
+                /// </summary>
                 public int Index { get; }
+
+                /// <summary>
+                /// High bits of the state weight. Only these bits are used when comparing weighted states
+                /// for equality or when calculating hash code.
+                /// </summary>
+                /// <remarks>
+                /// Using high bits for hash code allows to have "fuzzy" matching of WeightedStateSets.
+                /// Sometimes there's more than one way to get to the same weighted state set in automaton,
+                /// but due to using floating point numbers calculated weights are slightly off. Using
+                /// only high 32 bits for comparison means that 20 bits of mantissa are used. Which means that
+                /// difference between weights (in log space) is no more than ~~ 10e-6 which is a sufficiently
+                /// good precision for all practical purposes.
+                /// </remarks>
                 public int WeightHighBits { get; }
+
                 public Weight Weight { get; }
 
                 public WeightedState(int index, Weight weight)
@@ -295,7 +312,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public struct WeightedStateSet
             {
                 /// <summary>
-                /// A mapping from state ids to weights.
+                /// A mapping from state ids to weights. This array is sorted by state Id.
                 /// </summary>
                 private readonly ReadOnlyArray<WeightedState> weightedStates;
 
@@ -310,6 +327,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 public WeightedStateSet(ReadOnlyArray<WeightedState> weightedStates)
                 {
                     Debug.Assert(weightedStates.Count > 0);
+                    Debug.Assert(IsSorted(weightedStates));
                     if (weightedStates.Count == 1)
                     {
                         Debug.Assert(weightedStates[0].Weight == Weight.One);
@@ -362,9 +380,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         var state1 = this[i];
                         var state2 = that[i];
-                        if (state1.Index != state2.Index
-                            || (state1.WeightHighBits != state2.WeightHighBits
-                                && Math.Abs(state1.Weight.LogValue - state2.Weight.LogValue) > 1e-6))
+                        if (state1.Index != state2.Index || state1.WeightHighBits != state2.WeightHighBits)
                         {
                             return false;
                         }
@@ -395,6 +411,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <returns>A string representation of the instance.</returns>
                 public override string ToString() => string.Join(", ", weightedStates);
 
+                /// <summary>
+                /// Turns weighted state set into an array. This is convenient for writing LINQ queries
+                /// in tests.
+                /// </summary>
                 public WeightedState[] ToArray()
                 {
                     var result = new WeightedState[this.Count];
@@ -404,6 +424,22 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     }
 
                     return result;
+                }
+
+                /// <summary>
+                /// Checks weather states array is sorted in ascending order by Index.
+                /// </summary>
+                private static bool IsSorted(ReadOnlyArray<WeightedState> array)
+                {
+                    for (var i = 1; i < array.Count; ++i)
+                    {
+                        if (array[i].Index <= array[i - 1].Index)
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
                 }
             }
 

@@ -53,25 +53,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             segmentBounds.Sort();
 
             // Produce an outgoing transition for each unique subset of overlapping segments
-            var currentSegmentTotal = (count: 0, weightSum: Weight.Zero);
+            var currentSegmentTotal = WeightSum.Zero();
 
-            var currentSegmentStateWeights = new Dictionary<int, (int count, Weight weightSum)>();
+            var currentSegmentStateWeights = new Dictionary<int, WeightSum>();
             var currentSegmentStart = (int)char.MinValue;
             var destinationStateSetBuilder = Determinization.WeightedStateSetBuilder.Create();
             foreach (var segmentBound in segmentBounds)
             {
-                if (currentSegmentTotal.count > 0 && currentSegmentStart < segmentBound.Bound)
+                if (currentSegmentTotal.Count != 0 && currentSegmentStart < segmentBound.Bound)
                 {
                     // Flush previous segment
                     var segmentEnd = (char)(segmentBound.Bound - 1);
                     var segmentLength = segmentEnd - currentSegmentStart + 1;
                     var elementDist = DiscreteChar.InRange((char)currentSegmentStart, segmentEnd);
-                    var invTotalWeight = Weight.Inverse(currentSegmentTotal.weightSum);
+                    var invTotalWeight = Weight.Inverse(currentSegmentTotal.Sum);
 
                     destinationStateSetBuilder.Reset();
                     foreach (var stateIdWithWeight in currentSegmentStateWeights)
                     {
-                        var stateWeight = stateIdWithWeight.Value.weightSum * invTotalWeight;
+                        var stateWeight = stateIdWithWeight.Value.Sum * invTotalWeight;
                         destinationStateSetBuilder.Add(stateIdWithWeight.Key, stateWeight);
                     }
 
@@ -79,7 +79,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     var transitionWeight = Weight.Product(
                         Weight.FromValue(segmentLength),
-                        currentSegmentTotal.weightSum,
+                        currentSegmentTotal.Sum,
                         destinationStateSetWeight);
                     yield return (elementDist, transitionWeight, destinationStateSet);
                 }
@@ -89,26 +89,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 if (segmentBound.IsStart)
                 {
-                    currentSegmentTotal = AddWeight(currentSegmentTotal, segmentBound.Weight);
+                    currentSegmentTotal += segmentBound.Weight;
                     if (currentSegmentStateWeights.TryGetValue(segmentBound.DestinationStateId, out var stateWeight))
                     {
                         currentSegmentStateWeights[segmentBound.DestinationStateId] =
-                            AddWeight(stateWeight, segmentBound.Weight);
+                            stateWeight + segmentBound.Weight;
                     }
                     else
                     {
-                        currentSegmentStateWeights[segmentBound.DestinationStateId] = (1, segmentBound.Weight);
+                        currentSegmentStateWeights[segmentBound.DestinationStateId] = new WeightSum(segmentBound.Weight);
                     }
                 }
                 else
                 {
                     Debug.Assert(currentSegmentStateWeights.ContainsKey(segmentBound.DestinationStateId), "We shouldn't exit a state we didn't enter.");
                     Debug.Assert(!segmentBound.Weight.IsInfinity);
-                    currentSegmentTotal = SubWeight(currentSegmentTotal, segmentBound.Weight);
+                    currentSegmentTotal -= segmentBound.Weight;
 
                     var prevStateWeight = currentSegmentStateWeights[segmentBound.DestinationStateId];
-                    var newStateWeight = SubWeight(prevStateWeight, segmentBound.Weight);
-                    if (newStateWeight.count == 0)
+                    var newStateWeight = prevStateWeight - segmentBound.Weight;
+                    if (newStateWeight.Count == 0)
                     {
                         currentSegmentStateWeights.Remove(segmentBound.DestinationStateId);
                     }
@@ -117,22 +117,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         currentSegmentStateWeights[segmentBound.DestinationStateId] = newStateWeight;
                     }
                 }
-            }
-
-            (int count, Weight sumWeight) AddWeight((int count, Weight sumWeight) a, Weight b) =>
-                (a.count + 1, a.sumWeight + b);
-
-            (int count, Weight sumWeight) SubWeight((int count, Weight sumWeight) a, Weight b)
-            {
-                Debug.Assert(a.count >= 1);
-
-                if (a.count == 1)
-                {
-                    return (0, Weight.Zero);
-                }
-
-                var newSumWeight = Weight.AbsoluteDifference(a.sumWeight, b);
-                return (a.count - 1, newSumWeight);
             }
         }
 
