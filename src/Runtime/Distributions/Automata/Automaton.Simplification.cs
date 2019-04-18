@@ -202,12 +202,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                                 1.0,
                                 transition2.ElementDistribution.Value);
                         }
+                        else if (transition1.Weight > transition2.Weight)
+                        {
+                            newElementDistribution.SetToSum(
+                                1,
+                                transition1.ElementDistribution.Value,
+                                (transition2.Weight / transition1.Weight).Value,
+                                transition2.ElementDistribution.Value);
+                        }
                         else
                         {
                             newElementDistribution.SetToSum(
-                                transition1.Weight.Value,
+                                (transition1.Weight / transition2.Weight).Value,
                                 transition1.ElementDistribution.Value,
-                                transition2.Weight.Value,
+                                1,
                                 transition2.ElementDistribution.Value);
                         }
 
