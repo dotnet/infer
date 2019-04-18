@@ -35,7 +35,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// The first two elements of a tuple define the element distribution and the weight of a transition.
         /// The third element defines the outgoing state.
         /// </returns>
-        protected override IEnumerable<(DiscreteChar, Weight, Determinization.WeightedStateSet)> GetOutgoingTransitionsForDeterminization(
+        protected override IEnumerable<Determinization.OutgoingTransition> GetOutgoingTransitionsForDeterminization(
             Determinization.WeightedStateSet sourceStateSet)
         {
             // Build a list of numbered non-zero probability character segment bounds (they are numbered here due to perf. reasons)
@@ -81,7 +81,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         Weight.FromValue(segmentLength),
                         currentSegmentTotal.Sum,
                         destinationStateSetWeight);
-                    yield return (elementDist, transitionWeight, destinationStateSet);
+                    yield return new Determinization.OutgoingTransition(
+                        elementDist, transitionWeight, destinationStateSet);
                 }
 
                 // Update current segment

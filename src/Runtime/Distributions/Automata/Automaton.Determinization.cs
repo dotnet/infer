@@ -120,10 +120,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     var sourceState = this.States[currentWeightedStateSet[0].Index];
                     foreach (var transition in sourceState.Transitions)
                     {
-                        var destinationStates =
-                            new Determinization.WeightedStateSet(transition.DestinationStateIndex);
-                        var outgoingTransitionInfo =
-                            (transition.ElementDistribution.Value, transition.Weight, destinationStates);
+                        var destinationStates = new Determinization.WeightedStateSet(transition.DestinationStateIndex);
+                        var outgoingTransitionInfo = new Determinization.OutgoingTransition(
+                            transition.ElementDistribution.Value, transition.Weight, destinationStates);
                         if (!TryAddTransition(enqueuedWeightedStateSetStack, outgoingTransitionInfo, currentState))
                         {
                             return false;
@@ -133,11 +132,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 else
                 {
                     // Find out what transitions we should add for this state
-                    var outgoingTransitionInfos =
+                    var outgoingTransitions =
                         this.GetOutgoingTransitionsForDeterminization(currentWeightedStateSet);
-                    foreach (var outgoingTransitionInfo in outgoingTransitionInfos)
+                    foreach (var outgoingTransition in outgoingTransitions)
                     {
-                        if (!TryAddTransition(enqueuedWeightedStateSetStack, outgoingTransitionInfo, currentState))
+                        if (!TryAddTransition(enqueuedWeightedStateSetStack, outgoingTransition, currentState))
                         {
                             return false;
                         }
@@ -186,12 +185,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             //   So determinization is aborted early.
             bool TryAddTransition(
                 Stack<(bool enter, Determinization.WeightedStateSet set)> destinationStack,
-                (TElementDistribution, Weight, Determinization.WeightedStateSet) outgoingTransitionInfo,
+                Determinization.OutgoingTransition transition,
                 Builder.StateBuilder currentState)
             {
-                var (elementDistribution, weight, destWeightedStateSet) = outgoingTransitionInfo;
-
-                if (!weightedStateSetToNewState.TryGetValue(destWeightedStateSet, out var destinationStateIndex))
+                var destinations = transition.Destinations;
+                if (!weightedStateSetToNewState.TryGetValue(destinations, out var destinationStateIndex))
                 {
                     if (builder.StatesCount == maxStatesBeforeStop)
                     {
@@ -201,10 +199,10 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     var visitedWeightedStateSet = default(Determinization.WeightedStateSet);
                     var sameSetVisited =
-                        destWeightedStateSet.Count > 1 &&
-                        stateSetsInPath.TryGetValue(destWeightedStateSet, out visitedWeightedStateSet);
+                        destinations.Count > 1 &&
+                        stateSetsInPath.TryGetValue(destinations, out visitedWeightedStateSet);
 
-                    if (sameSetVisited && !destWeightedStateSet.Equals(visitedWeightedStateSet))
+                    if (sameSetVisited && !destinations.Equals(visitedWeightedStateSet))
                     {
                         // We arrived into the same state set as before, but with different weights.
                         // This is an infinite non-converging loop. Determinization has failed
@@ -213,19 +211,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     // Add new state to the result
                     var destinationState = builder.AddState();
-                    weightedStateSetToNewState.Add(destWeightedStateSet, destinationState.Index);
-                    destinationStack.Push((true, destWeightedStateSet));
+                    weightedStateSetToNewState.Add(destinations, destinationState.Index);
+                    destinationStack.Push((true, destinations));
 
-                    if (destWeightedStateSet.Count > 1 && !sameSetVisited)
+                    if (destinations.Count > 1 && !sameSetVisited)
                     {
-                        destinationStack.Push((false, destWeightedStateSet));
+                        destinationStack.Push((false, destinations));
                     }
 
                     // Compute its ending weight
                     destinationState.SetEndWeight(Weight.Zero);
-                    for (var i = 0; i < destWeightedStateSet.Count; ++i)
+                    for (var i = 0; i < destinations.Count; ++i)
                     {
-                        var weightedState = destWeightedStateSet[i];
+                        var weightedState = destinations[i];
                         var addedWeight = weightedState.Weight * this.States[weightedState.Index].EndWeight;
                         destinationState.SetEndWeight(destinationState.EndWeight + addedWeight);
                     }
@@ -234,7 +232,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 // Add transition to the destination state
-                currentState.AddTransition(elementDistribution, weight, destinationStateIndex);
+                currentState.AddTransition(transition.ElementDistribution, transition.Weight, destinationStateIndex);
                 return true;
             }
         }
@@ -250,7 +248,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// The first two elements of a tuple define the element distribution and the weight of a transition.
         /// The third element defines the outgoing state.
         /// </returns>
-        protected abstract IEnumerable<(TElementDistribution, Weight, Determinization.WeightedStateSet)> GetOutgoingTransitionsForDeterminization(
+        protected abstract IEnumerable<Determinization.OutgoingTransition> GetOutgoingTransitionsForDeterminization(
             Determinization.WeightedStateSet sourceState);
 
         /// <summary>
@@ -258,6 +256,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         protected static class Determinization
         {
+            public struct OutgoingTransition
+            {
+                public TElementDistribution ElementDistribution { get; }
+                public Weight Weight { get; }
+                public WeightedStateSet Destinations { get; }
+
+                public OutgoingTransition(
+                    TElementDistribution elementDistribution, Weight weight, WeightedStateSet destinations)
+                {
+                    this.ElementDistribution = elementDistribution;
+                    this.Weight = weight;
+                    this.Destinations = destinations;
+                }
+            }
+
             /// <summary>
             /// Represents
             /// </summary>
