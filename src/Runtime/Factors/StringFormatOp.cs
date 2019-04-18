@@ -683,7 +683,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <summary>
         /// Maps the number of argument to an array of default argument names ("0", "1" and so on).
         /// </summary>
-        private static ReadOnlyArray<string>?[] ArgumentCountToNames = new ReadOnlyArray<string>?[0];
+        private static readonly ConcurrentDictionary<int, string[]> ArgumentCountToNames = new ConcurrentDictionary<int, string[]>();
 
         public static StringDistribution StrAverageConditional(StringDistribution format, IList<string> args)
         {
@@ -756,37 +756,14 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <returns>The generated array of argument names.</returns>
         private static string[] GetArgumentNames(int argCount)
         {
-            string[] result = null;
-            var cache = GetCache(argCount);
-            var readOnlyResult = cache[argCount];
-            if (readOnlyResult == null)
+            string[] result;
+            if (!ArgumentCountToNames.TryGetValue(argCount, out result))
             {
                 result = Util.ArrayInit(argCount, i => i.ToString(CultureInfo.InvariantCulture));
                 ArgumentCountToNames[argCount] = result;
             }
-            else
-            {
-                result = new List<string>(readOnlyResult).ToArray();
-            }
 
             return result;
-        }
-
-        private static ReadOnlyArray<string>?[] GetCache(int minSize)
-        {
-            lock (ArgumentCountToNames)
-            {
-                if (minSize >= ArgumentCountToNames.Length)
-                {
-                    var oldCache = ArgumentCountToNames;
-                    var newCache = new ReadOnlyArray<string>?[minSize + 1];
-                    Array.Copy(ArgumentCountToNames, 0, newCache, 0, ArgumentCountToNames.Count());
-                    ArgumentCountToNames = newCache;
-                }
-
-                return ArgumentCountToNames;
-            }
-
         }
     }
 
