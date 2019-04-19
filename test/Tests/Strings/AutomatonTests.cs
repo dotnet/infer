@@ -1597,6 +1597,22 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        /// <summary>
+        /// Tests that merging parallel transitions doesn't fail when transition weights are too large
+        /// to fit in double in non-log space.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void MergeParallelTransitionsWithHighTransitionsWeightsDoesNotThrow()
+        {
+            var builder = new StringAutomaton.Builder();
+            // Add 2 identical transitions from start state to second
+            builder.Start.AddTransition(DiscreteChar.Any(), Weight.FromLogValue(1e5));
+            builder.Start.AddTransition(DiscreteChar.Any(), Weight.FromLogValue(1e5), 1);
+            var automaton = builder.GetAutomaton();
+            automaton.Simplify();
+        }
+
         #endregion
 
         #region Determinization

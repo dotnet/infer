@@ -296,6 +296,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public static Weight operator *(Weight weight1, Weight weight2) => Product(weight1, weight2);
 
         /// <summary>
+        /// Compute the ratio of given weights.
+        /// </summary>
+        /// <param name="weight1">The first weight.</param>
+        /// <param name="weight2">The second weight.</param>
+        /// <returns>The computed product.</returns>
+        public static Weight operator /(Weight weight1, Weight weight2) => Product(weight1, Weight.Inverse(weight2));
+
+        /// <summary>
         /// Compute the sum of given weights.
         /// </summary>
         /// <param name="weight1">The first weight.</param>
