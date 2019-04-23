@@ -257,7 +257,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
                 action(); // To exclude the compilation time from the profile
                 ProfileAction(action, 100);
-            }, 10001);
+            }, 10000);
         }
 
         /// <summary>
