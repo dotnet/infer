@@ -2244,6 +2244,49 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(nonUniform.Equals(uniform));
         }
 
+        /// <summary>
+        /// Tests that SetToConstantSupportOf() Doesn't throw low probability transitions out.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SetToConstantSupportOfWithLowProbabilityTransition1()
+        {
+            var builder = new StringAutomaton.Builder(1);
+            builder.Start
+                .AddTransition('a', Weight.FromValue(5e-40))
+                .SetEndWeight(Weight.One);
+            var automaton = builder.GetAutomaton();
+            automaton.SetToConstantOnSupportOfLog(0.0, automaton);
+            Assert.Equal(new[] { "a" }, automaton.EnumerateSupport().ToArray());
+        }
+
+        /// <summary>
+        /// Tests that SetToConstantSupportOf() Doesn't throw low probability transitions out.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SetToConstantSupportOfWithMultipleLowProbabilityTransitions()
+        {
+            var builder = new StringAutomaton.Builder(1);
+            builder.Start
+                .AddTransition(DiscreteChar.OneOf('a', 'b'), Weight.One)
+                .SetEndWeight(Weight.One);
+            builder.Start
+                .AddTransition(DiscreteChar.OneOf('a', 'b'), Weight.FromLogValue(-1000))
+                .AddTransition('c', Weight.One)
+                .SetEndWeight(Weight.One);
+            builder.Start
+                .AddTransition('c', Weight.FromLogValue(-10000))
+                .SetEndWeight(Weight.One);
+            var automaton = builder.GetAutomaton();
+            var tmp = automaton.Clone();
+            tmp.TryDeterminize();
+            automaton.SetToConstantOnSupportOfLog(0.0, automaton);
+            var support = automaton.EnumerateSupport().OrderBy(s => s).ToArray();
+            Assert.Equal(new[] {"a", "ac", "b", "bc", "c"}, support);
+        }
+
+
         #endregion
 
         #region Helpers

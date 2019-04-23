@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets value indicating whether weight is infinite.
         /// </summary>
-        public bool IsInfinity => double.IsPositiveInfinity(Value);
+        public bool IsInfinity => double.IsPositiveInfinity(this.LogValue);
 
         /// <summary>
         /// Creates a weight from the logarithm of its value.

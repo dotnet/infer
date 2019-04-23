@@ -500,11 +500,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 /// <summary>
                 /// Sets a new end weight for this state.
                 /// </summary>
-                public void SetEndWeight(Weight weight)
+                public StateBuilder SetEndWeight(Weight weight)
                 {
                     var state = this.builder.states[this.Index];
                     state.EndWeight = weight;
                     this.builder.states[this.Index] = state;
+                    return this;
                 }
 
                 #region AddTransition variants
