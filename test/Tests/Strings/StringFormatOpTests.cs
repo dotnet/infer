@@ -122,17 +122,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             Parallel.For(0, 10, options, (k) =>
             {
                 TestMessageToFormat(
-                StringDistribution.String("A template with arg and arg."),
-                new[] { StringDistribution.String("arg"), StringDistribution.String("arg") },
-                StringDistribution.OneOf("A template with {0} and {1}.", "A template with {1} and {0}."),
-                StringDistribution.OneOf(
-                    "A template with {0} and {1}.",
-                    "A template with {1} and {0}.",
-                    "A template with {0} and arg.",
-                    "A template with {1} and arg.",
-                    "A template with arg and {0}.",
-                    "A template with arg and {1}.",
-                    "A template with arg and arg."));
+                    StringDistribution.String("A template with arg and arg."),
+                    new[] { StringDistribution.String("arg"), StringDistribution.String("arg") },
+                    StringDistribution.OneOf("A template with {0} and {1}.", "A template with {1} and {0}."),
+                    StringDistribution.OneOf(
+                        "A template with {0} and {1}.",
+                        "A template with {1} and {0}.",
+                        "A template with {0} and arg.",
+                        "A template with {1} and arg.",
+                        "A template with arg and {0}.",
+                        "A template with arg and {1}.",
+                        "A template with arg and arg."));
             });
         }
 
