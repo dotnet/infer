@@ -367,9 +367,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var (weightedStateSet, weight) = weightedStateSetBuilder.Get();
                 var result = base.GetOutgoingTransitionsForDeterminization(weightedStateSet);
                 return result.Select(t => (
-                    t.Item1,
-                    t.Item2 * weight,
-                    t.Item3.ToArray().Select(state => (state.Index, state.Weight)).ToArray()));
+                    t.ElementDistribution,
+                    t.Weight * weight,
+                    t.Destinations.ToArray().Select(state => (state.Index, state.Weight)).ToArray()));
             }
         }
         #endregion
