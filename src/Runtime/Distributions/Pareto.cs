@@ -128,7 +128,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (value < LowerBound)
                 return double.NegativeInfinity;
             else
-                return (Shape+1)*Math.Log(value) - GetLogNormalizer();
+                return -(Shape+1)*Math.Log(value) - GetLogNormalizer();
         }
 
         public double GetLogNormalizer()
