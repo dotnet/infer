@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Microsoft.ML.Probabilistic.Math;
+
 namespace Microsoft.ML.Probabilistic.Tests
 {
     using System;
@@ -62,6 +64,31 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
 
             Assert.True(false);
+        }
+
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SampleFromUniformCharDistribution()
+        {
+            // Make test deterministic
+            Rand.Restart(7);
+
+            // 10 chars in distribution
+            const int numChars = 10;
+            const int numSamples = 100000;
+            var dist = DiscreteChar.UniformInRanges("aj");
+
+            var hist = Vector.Zero(numChars);
+            for (var i = 0; i < numSamples; ++i)
+            {
+                hist[dist.Sample() - 'a'] += 1;
+            }
+
+            hist = hist * (1.0 / numSamples);
+            var unif = Vector.Constant(numChars, 1.0 / numChars);
+            var maxDiff = hist.MaxDiff(unif);
+
+            Assert.True(maxDiff < 0.01);
         }
 
         /// <summary>

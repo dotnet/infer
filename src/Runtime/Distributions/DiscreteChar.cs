@@ -859,7 +859,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 sampleProb -= prob.Value;
                 if (sampleProb < 0)
                 {
-                    return (char)(interval.StartInclusive - sampleProb / (prob * intervalLength).Value);
+                    return (char)(interval.StartInclusive - sampleProb / interval.Probability.Value);
                 }
             }
 
