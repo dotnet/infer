@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Microsoft.ML.Probabilistic.Math;
+
 namespace Microsoft.ML.Probabilistic.Tests
 {
     using System;
@@ -68,25 +70,25 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void SampleFromUniformCharDistribution()
         {
-            // 10 chars in distributions
+            // Make test deterministic
+            Rand.Restart(7);
+
+            // 10 chars in distribution
             const int numChars = 10;
-            const int charExp = 1000;
-            const int numTrials = numChars * charExp; 
+            const int numSamples = 100000;
             var dist = DiscreteChar.UniformInRanges("aj");
 
-            var count = new int[numChars];
-            for (var i = 0; i < numTrials; ++i)
+            var hist = Vector.Zero(numChars);
+            for (var i = 0; i < numSamples; ++i)
             {
-                count[dist.Sample() - 'a'] += 1;
+                hist[dist.Sample() - 'a'] += 1;
             }
 
-            
-            // We could calculate some statistical test (like chi-squared) to verify that distribution is
-            // really uniform. Instead just check that observed counts are somewhat close to expected values
-            foreach (var c in count)
-            {
-                Assert.True(c >= charExp * 0.8 && c <= charExp * 1.2);
-            }
+            hist = hist * (1.0 / numSamples);
+            var unif = Vector.Constant(numChars, 1.0 / numChars);
+            var maxDiff = hist.MaxDiff(unif);
+
+            Assert.True(maxDiff < 0.01);
         }
 
         /// <summary>
