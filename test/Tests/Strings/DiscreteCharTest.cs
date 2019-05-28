@@ -64,6 +64,31 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(false);
         }
 
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void SampleFromUniformCharDistribution()
+        {
+            // 10 chars in distributions
+            const int numChars = 10;
+            const int charExp = 1000;
+            const int numTrials = numChars * charExp; 
+            var dist = DiscreteChar.UniformInRanges("aj");
+
+            var count = new int[numChars];
+            for (var i = 0; i < numTrials; ++i)
+            {
+                count[dist.Sample() - 'a'] += 1;
+            }
+
+            
+            // We could calculate some statistical test (like chi-squared) to verify that distribution is
+            // really uniform. Instead just check that observed counts are somewhat close to expected values
+            foreach (var c in count)
+            {
+                Assert.True(c >= charExp * 0.8 && c <= charExp * 1.2);
+            }
+        }
+
         /// <summary>
         /// Tests the support of a character distribution.
         /// </summary>
