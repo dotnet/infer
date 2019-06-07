@@ -42,7 +42,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                                Sampleable<double>, CanGetMean<double>, CanGetVariance<double>,
                                CanGetMeanAndVarianceOut<double, double>, CanSetMeanAndVariance<double, double>,
                                CanGetLogAverageOf<GammaPower>, CanGetLogAverageOfPower<GammaPower>,
-                               CanGetAverageLog<GammaPower>, CanGetLogNormalizer
+                               CanGetAverageLog<GammaPower>, CanGetLogNormalizer, CanGetMode<double>
     {
         /// <summary>
         /// Rate parameter for the distribution
@@ -277,6 +277,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else return Math.Exp(MMath.GammaLn(Shape + power2) - MMath.GammaLn(Shape) - power2*Math.Log(Rate));
             }
+        }
+
+        /// <summary>
+        /// Returns x where GetLogProb(x) is highest.
+        /// </summary>
+        /// <returns></returns>
+        public double GetMode()
+        {
+            if (Power == 0.0) return 1.0;
+            else if (IsPointMass) return Point;
+            else return Math.Pow((Shape - Power) / Rate, Power);
         }
 
         /// <summary>
