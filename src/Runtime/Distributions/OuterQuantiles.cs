@@ -32,8 +32,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             for (int i = 0; i < array.Length; i++)
             {
-                if (double.IsInfinity(array[i])) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]}");
-                if (double.IsNaN(array[i])) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]}");
+                if (double.IsInfinity(array[i])) throw new ArgumentOutOfRangeException(paramName, array[i], $"Array element is infinite: {paramName}[{i}]={array[i]}");
+                if (double.IsNaN(array[i])) throw new ArgumentOutOfRangeException(paramName, array[i], $"Array element is NaN: {paramName}[{i}]={array[i]}");
             }
         }
 
@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             for (int i = 1; i < array.Length; i++)
             {
-                if (array[i] < array[i - 1]) throw new ArgumentException($"Array is not non-decreasing: {paramName}[{i}] {array[i]} < {paramName}[{i - 1}] {array[i - 1]}", paramName);
+                if (array[i] < array[i - 1]) throw new ArgumentException($"Decreasing array elements: {paramName}[{i}] {array[i]} < {paramName}[{i - 1}] {array[i - 1]}", paramName);
             }
         }
 
@@ -124,19 +124,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Returns the largest quantile such that ((quantile - lowerItem)/(upperItem - lowerItem) + lowerIndex)/(n-1) &lt;= probability.
         /// </summary>
-        /// <param name="probability"></param>
+        /// <param name="probability">A number between 0 and 1.</param>
         /// <param name="lowerIndex"></param>
-        /// <param name="lowerItem"></param>
-        /// <param name="upperItem"></param>
-        /// <param name="n"></param>
+        /// <param name="lowerItem">Must be finite.</param>
+        /// <param name="upperItem">Must be finite and at least lowerItem.</param>
+        /// <param name="n">Must be greater than 1</param>
         /// <returns></returns>
         internal static double GetQuantile(double probability, double lowerIndex, double lowerItem, double upperItem, long n)
         {
-            if (n == 1) throw new ArgumentOutOfRangeException("n == 1");
+            if(probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), probability, $"{nameof(probability)} < 0");
+            if (probability > 1) throw new ArgumentOutOfRangeException(nameof(probability), probability, $"{nameof(probability)} > 1");
+            if (n <= 1) throw new ArgumentOutOfRangeException(nameof(n), n, "n <= 1");
             double pos = MMath.LargestDoubleProduct(n - 1, probability);
             double frac = MMath.LargestDoubleSum(-lowerIndex, pos);
+            if (upperItem < lowerItem) throw new ArgumentOutOfRangeException(nameof(upperItem), upperItem, $"{nameof(upperItem)} ({upperItem}) < {nameof(lowerItem)} ({lowerItem})");
+            if (upperItem == lowerItem) return lowerItem;
+            // The above check ensures diff > 0
             double diff = upperItem - lowerItem;
-            if (diff == 0) return lowerItem;
             double offset = MMath.LargestDoubleProduct(diff, frac);
             return MMath.LargestDoubleSum(lowerItem, offset);
         }

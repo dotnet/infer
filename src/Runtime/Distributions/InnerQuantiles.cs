@@ -48,6 +48,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 this.quantiles[i] = canGetQuantile.GetQuantile((i + 1.0) / (quantileCount + 1.0));
             }
+            OuterQuantiles.AssertFinite(quantiles, nameof(canGetQuantile));
+            OuterQuantiles.AssertNondecreasing(quantiles, nameof(canGetQuantile));
             lowerGaussian = GetLowerGaussian(quantiles);
             upperGaussian = GetUpperGaussian(quantiles);
         }
@@ -72,16 +74,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return quantiles;
         }
 
+        /// <inheritdoc/>
         public double GetProbLessThan(double x)
         {
+            int n = quantiles.Length;
             if (x < quantiles[0])
             {
-                return lowerGaussian.GetProbLessThan(x);
+                return Math.Min(lowerGaussian.GetProbLessThan(x), 1.0/(n+1));
             }
-            int n = quantiles.Length;
             if (x > quantiles[n - 1])
             {
-                return upperGaussian.GetProbLessThan(x);
+                return Math.Max(upperGaussian.GetProbLessThan(x), n/(n+1.0));
             }
             return GetProbLessThan(x, quantiles);
         }
@@ -156,7 +159,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double mean, stddev;
                 GetGaussianFromQuantiles(quantiles[0], p0, quantiles[i], p1, out mean, out stddev);
                 Gaussian result = Gaussian.FromMeanAndVariance(mean, stddev * stddev);
-                if (!result.IsProper() || double.IsNaN(result.GetMean()) || double.IsInfinity(result.GetMean()))
+                if (result.IsPointMass || !result.IsProper() || double.IsNaN(result.GetMean()) || double.IsInfinity(result.GetMean()))
                 {
                     return Gaussian.PointMass(quantiles[0]);
                 }
@@ -184,6 +187,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double p1 = (i + 1.0) / (n + 1);
                 double mean, stddev;
                 GetGaussianFromQuantiles(quantiles[n - 1], p0, quantiles[i], p1, out mean, out stddev);
+                if (double.IsNaN(mean) || double.IsInfinity(mean))
+                {
+                    return Gaussian.PointMass(quantiles[n - 1]);
+                }
                 Gaussian result = Gaussian.FromMeanAndVariance(mean, stddev * stddev);
                 if (!result.IsProper() || double.IsNaN(result.GetMean()) || double.IsInfinity(result.GetMean()))
                 {
