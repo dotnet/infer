@@ -137,10 +137,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (probability > 1.0) throw new ArgumentOutOfRangeException(nameof(probability), "probability > 1.0");
             // compute the min and max of the retained items
             double lowerBound = double.PositiveInfinity, upperBound = double.NegativeInfinity;
+            bool countGreaterThanZero = false;
             for (int bufferIndex = 0; bufferIndex < buffers.Length; bufferIndex++)
             {
                 double[] buffer = buffers[bufferIndex];
                 int count = countInBuffer[bufferIndex];
+                if (count > 0) countGreaterThanZero = true;
                 for (int i = 0; i < count; i++)
                 {
                     double item = buffer[i];
@@ -150,7 +152,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             if (probability == 1.0) return MMath.NextDouble(upperBound);
             if (probability == 0.0) return lowerBound;
-            if (double.IsPositiveInfinity(lowerBound)) throw new Exception("QuantileEstimator has no data");
+            if (!countGreaterThanZero) throw new Exception("QuantileEstimator has no data");
             if (lowerBound == upperBound) return upperBound;
             // use bisection
             while (true)

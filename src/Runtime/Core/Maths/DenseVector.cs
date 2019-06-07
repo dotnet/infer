@@ -2585,9 +2585,8 @@ namespace Microsoft.ML.Probabilistic.Math
                         // Therefore scale <= double.MaxValue/Y.Count/abs(Y[j]*US[j,k]).
                         double absY = System.Math.Abs(Y[j]);
                         double absU = System.Math.Abs(US[j, k]);
-                        bool Ygt1 = (absY > 1);
                         double thisUpperBound;
-                        if (Ygt1)
+                        if (absY > 1)
                         {
                             thisUpperBound = limit / absY / absU;
                         }
