@@ -241,11 +241,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             int n = quantiles.Length;
             if (probability < 1.0 / (n + 1.0))
             {
-                return lowerGaussian.GetQuantile(probability);
+                return Math.Min(quantiles[0], lowerGaussian.GetQuantile(probability));
             }
             if (probability > n / (n + 1.0))
             {
-                return upperGaussian.GetQuantile(probability);
+                return Math.Max(quantiles[n-1], upperGaussian.GetQuantile(probability));
             }
             if (n == 1) return quantiles[0]; // probability must be 0.5
             double pos = MMath.LargestDoubleProduct(n + 1, probability) - 1;
