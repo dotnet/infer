@@ -1,0 +1,3 @@
+[submodule "src/Loki"]
+	path = src/Loki
+	url = https://msrcambridge.visualstudio.com/Loki/_git/Loki
