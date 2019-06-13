@@ -7,19 +7,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
     using System.Text;
+    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Represents a distribution using the quantiles at probabilities (1,...,n)/(n+1)
     /// </summary>
+    [Serializable, DataContract]
     public class InnerQuantiles : CanGetQuantile, CanGetProbLessThan
     {
         /// <summary>
         /// Numbers in increasing order.
         /// </summary>
-        private readonly double[] quantiles;
+        [DataMember] private readonly double[] quantiles;
         /// <summary>
         /// Gaussian approximation of the lower tail.
         /// </summary>
@@ -40,18 +43,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             upperGaussian = GetUpperGaussian(quantiles);
         }
 
-        public InnerQuantiles(int quantileCount, CanGetQuantile canGetQuantile)
+        public static InnerQuantiles FromDistribution(int quantileCount, CanGetQuantile canGetQuantile)
         {
-            if (quantileCount == 0) throw new ArgumentException("quantileCount == 0", nameof(quantiles));
-            this.quantiles = new double[quantileCount];
-            for (int i = 0; i < quantileCount; i++)
-            {
-                this.quantiles[i] = canGetQuantile.GetQuantile((i + 1.0) / (quantileCount + 1.0));
-            }
-            OuterQuantiles.AssertFinite(quantiles, nameof(canGetQuantile));
-            OuterQuantiles.AssertNondecreasing(quantiles, nameof(canGetQuantile));
-            lowerGaussian = GetLowerGaussian(quantiles);
-            upperGaussian = GetUpperGaussian(quantiles);
+            if (quantileCount == 0) throw new ArgumentOutOfRangeException(nameof(quantileCount), quantileCount, "quantileCount == 0");
+            var quantiles = Util.ArrayInit(quantileCount, i => canGetQuantile.GetQuantile((i + 1.0) / (quantileCount + 1.0)));
+            return new InnerQuantiles(quantiles);
         }
 
         public override string ToString()
@@ -72,6 +68,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double[] ToArray()
         {
             return quantiles;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is InnerQuantiles that)) return false;
+            return quantiles.ValueEquals(that.quantiles);
+        }
+
+        public override int GetHashCode()
+        {
+            return Hash.GetHashCodeAsSequence(quantiles);
         }
 
         /// <inheritdoc/>
