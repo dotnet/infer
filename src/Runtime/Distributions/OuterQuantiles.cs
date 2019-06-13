@@ -7,18 +7,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Math;
+    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Represents a distribution using the quantiles at probabilities (0,...,n-1)/(n-1)
     /// </summary>
+    [Serializable, DataContract]
     public class OuterQuantiles : CanGetQuantile, CanGetProbLessThan
     {
         /// <summary>
         /// Numbers in increasing order.
         /// </summary>
+        [DataMember]
         private readonly double[] quantiles;
 
         public OuterQuantiles(double[] quantiles)
@@ -26,6 +31,37 @@ namespace Microsoft.ML.Probabilistic.Distributions
             AssertNondecreasing(quantiles, nameof(quantiles));
             AssertFinite(quantiles, nameof(quantiles));
             this.quantiles = quantiles;
+        }
+
+        public override string ToString()
+        {
+            string quantileString;
+            if (quantiles.Length <= 5)
+            {
+                quantileString = StringUtil.CollectionToString(quantiles, " ");
+            }
+            else
+            {
+                int n = quantiles.Length;
+                quantileString = $"{quantiles[0]:g2} {quantiles[1]:g2} ... {quantiles[n - 2]:g2} {quantiles[n - 1]:g2}";
+            }
+            return $"OuterQuantiles({quantiles.Length}, {quantileString})";
+        }
+
+        public double[] ToArray()
+        {
+            return quantiles;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is OuterQuantiles that)) return false;
+            return quantiles.ValueEquals(that.quantiles);
+        }
+
+        public override int GetHashCode()
+        {
+            return Hash.GetHashCodeAsSequence(quantiles);
         }
 
         internal static void AssertFinite(double[] array, string paramName)
@@ -45,13 +81,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
         }
 
-        public OuterQuantiles(int quantileCount, CanGetQuantile canGetQuantile)
+        public static OuterQuantiles FromDistribution(int quantileCount, CanGetQuantile canGetQuantile)
         {
-            this.quantiles = new double[quantileCount];
-            for (int i = 0; i < quantileCount; i++)
-            {
-                this.quantiles[i] = canGetQuantile.GetQuantile(i / (quantileCount - 1.0));
-            }
+            var quantiles = Util.ArrayInit(quantileCount, i => canGetQuantile.GetQuantile(i / (quantileCount - 1.0)));
+            return new OuterQuantiles(quantiles);
         }
 
         public double GetProbLessThan(double x)

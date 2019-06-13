@@ -48,7 +48,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var est = new QuantileEstimator(0.1);
                 est.Add(double.PositiveInfinity);
                 //est.Add(double.NegativeInfinity);
-                var inner = new InnerQuantiles(10, est);
+                var inner = InnerQuantiles.FromDistribution(10, est);
             });
         }
 
@@ -159,7 +159,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             double[] x = { left, middle, right };
             var outer = new OuterQuantiles(x);
             Assert.Equal(middle, outer.GetQuantile(0.5));
-            var inner = new InnerQuantiles(3, outer);
+            var inner = InnerQuantiles.FromDistribution(3, outer);
             Assert.Equal(middle, inner.GetQuantile(0.5));
             inner = new InnerQuantiles(x);
             CheckGetQuantile(inner, inner, 25, 75);
@@ -260,7 +260,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(outer.GetQuantile(0.5), middle);
             Assert.Equal(outer.GetQuantile(0.7), middle);
             CheckGetQuantile(outer, outer);
-            var inner = new InnerQuantiles(7, outer);
+            var inner = InnerQuantiles.FromDistribution(7, outer);
             Assert.Equal(0.25, inner.GetProbLessThan(middle));
             Assert.Equal(outer.GetQuantile(0.3), middle);
             Assert.Equal(outer.GetQuantile(0.5), middle);
@@ -294,7 +294,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(1.0, outer.GetProbLessThan(next));
             Assert.Equal(next, outer.GetQuantile(1.0));
             CheckGetQuantile(outer, outer);
-            var inner = new InnerQuantiles(5, outer);
+            var inner = InnerQuantiles.FromDistribution(5, outer);
             CheckGetQuantile(inner, inner, (int)Math.Ceiling(100.0 / 6), (int)Math.Floor(100.0 * 5 / 6));
             var est = new QuantileEstimator(0.01);
             est.Add(first, 2);
@@ -331,7 +331,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(data[4], outer.GetQuantile(0.76));
             Assert.Equal(data[2], outer.GetQuantile(0.3));
             CheckGetQuantile(outer, outer);
-            var inner = new InnerQuantiles(7, outer);
+            var inner = InnerQuantiles.FromDistribution(7, outer);
             CheckGetQuantile(inner, inner, (int)Math.Ceiling(100.0 / 8), (int)Math.Floor(100.0 * 7 / 8));
         }
 
@@ -444,7 +444,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var sortedData = new OuterQuantiles(x.ToArray());
 
             // compute quantiles
-            var quantiles = new InnerQuantiles(100, sortedData);
+            var quantiles = InnerQuantiles.FromDistribution(100, sortedData);
 
             // loop over x's and compare true quantile rank
             var testPoints = EpTests.linspace(MMath.Min(x) - stddev, MMath.Max(x) + stddev, 100);
