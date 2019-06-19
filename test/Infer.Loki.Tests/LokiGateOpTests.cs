@@ -40,15 +40,15 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex("^ReviewerCalibration"));
 
             // Learners
-            settings.ExcludeProject(new Regex("^CommandLine"));
-            settings.ExcludeProject(new Regex("^Common"));
-            settings.ExcludeProject(new Regex("^Evaluator"));
-            settings.ExcludeProject(new Regex("^Classifier"));
             settings.ExcludeProject(new Regex("^ClassifierModels"));
             settings.ExcludeProject(new Regex("^Core"));
-            settings.ExcludeProject(new Regex("^LearnersTests"));
-            settings.ExcludeProject(new Regex("^Recommender"));
             settings.ExcludeProject(new Regex("^RecommenderModels"));
+            settings.ExcludeProject(new Regex("^Recommender"));
+            settings.ExcludeProject(new Regex("^Classifier"));
+            settings.ExcludeProject(new Regex("^Common"));
+            settings.ExcludeProject(new Regex("^CommandLine"));
+            settings.ExcludeProject(new Regex("^Evaluator"));
+            settings.ExcludeProject(new Regex("^LearnersTests"));
             settings.ExcludeProject(new Regex("^Microsoft.ML.Probabilistic.Learners.TestApp"));
 
             settings.ExcludeProject(new Regex(@"^FSharpWrapper"));
@@ -59,9 +59,11 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex(@"^Tools\.PrepareSource"));
             settings.ExcludeProject(new Regex("^Tutorials"));
             settings.ExcludeProject(new Regex("^Visualizers"));
+            
+            var testResult = await TestRunner.BuildAndRunTest(settings, GateOpTests.BernoulliEnterTest);
 
-
-            var testResult = await TestRunner.BuildAndRunTest(settings, new GateOpTests().BernoulliEnterTest);
+            Assert.True(testResult.DoublePrecisionPassed);
+            Assert.True(testResult.HighPrecisionPassed);
         }
     }
 }
