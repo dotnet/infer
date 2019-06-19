@@ -60,7 +60,7 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex("^Tutorials"));
             settings.ExcludeProject(new Regex("^Visualizers"));
             
-            var testResult = await TestRunner.BuildAndRunTest(settings, GateOpTests.BernoulliEnterTest);
+            var testResult = await TestRunner.BuildAndRunTest(settings, new GateOpTests().BernoulliEnterTest);
 
             Assert.True(testResult.DoublePrecisionPassed);
             Assert.True(testResult.HighPrecisionPassed);

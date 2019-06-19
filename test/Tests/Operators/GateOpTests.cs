@@ -19,13 +19,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// Tests EP and BP gate exit ops for Bernoulli random variable for correctness.
         /// </summary>
         [Fact]
-        public static void BernoulliEnterTest()
+        public void BernoulliEnterTest()
         {
-            GateOpTests gateOpTests = new GateOpTests();
-            gateOpTests.DoBernoulliEnterTest(0.3, 0.8, 0.4);
-            gateOpTests.DoBernoulliEnterTest(0.7, 0.8, 0.2);
-            gateOpTests.DoBernoulliEnterTest(0.7, 0.8, 0.0);
-            gateOpTests.DoBernoulliEnterTest(0.7, 0.8, 1.0);
+            DoBernoulliEnterTest(0.3, 0.8, 0.4);
+            DoBernoulliEnterTest(0.7, 0.8, 0.2);
+            DoBernoulliEnterTest(0.7, 0.8, 0.0);
+            DoBernoulliEnterTest(0.7, 0.8, 1.0);
         }
 
         /// <summary>
