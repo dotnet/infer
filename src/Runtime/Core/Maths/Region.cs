@@ -43,7 +43,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double logVolume = 0;
             for (int i = 0; i < Dimension; i++)
             {
-                logVolume += Math.Log(Upper[i] - Lower[i]);
+                logVolume += Math.Log(Math.Max(1e-10, Upper[i] - Lower[i]));
             }
             return logVolume;
         }

@@ -47,18 +47,17 @@ namespace Microsoft.ML.Probabilistic.Math
             // new_mean = mean + w/(count + w)*(x - mean)
             // new_var = count/(count + w)*(var + w/(count+w)*(x-mean)*(x-mean)')
             Count += weight;
-            if (Count == 0) return;
-            double diff;
-            if(x == Mean) diff = 0;  // avoid subtracting infinities
-            else diff = x - Mean;
             if (weight == Count)
             {
                 // avoid numerical overflow
-                Mean += diff;
+                Mean = x;
                 Variance = 0;
             }
-            else
+            else if(weight != 0)
             {
+                double diff;
+                if (x == Mean) diff = 0;  // avoid subtracting infinities
+                else diff = x - Mean;
                 double s = weight / Count;
                 if (double.IsInfinity(Mean))
                     Mean = s * x + (1 - s) * Mean;

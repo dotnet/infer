@@ -421,14 +421,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-                public void RandInt_ThrowsIfEqualArguments()
+        public void RandInt_ThrowsIfEqualArguments()
         {
-Assert.Throws<ArgumentException>(() =>
-{
-            Rand.Int(9, 9);
-        
-});
-}
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Rand.Int(9, 9);        
+            });
+        }
 
         [Fact]
         public void MeanVarianceAccumulator_Add_Infinity()
@@ -438,6 +437,17 @@ Assert.Throws<ArgumentException>(() =>
             mva.Add(0.0);
             Assert.True(double.IsPositiveInfinity(mva.Mean));
             Assert.True(double.IsPositiveInfinity(mva.Variance));
+        }
+
+        [Fact]
+        public void MeanVarianceAccumulator_Add_ZeroWeight()
+        {
+            MeanVarianceAccumulator mva = new MeanVarianceAccumulator();
+            mva.Add(4.5, 0.0);
+            Assert.Equal(4.5, mva.Mean);
+            mva.Add(4.5);
+            mva.Add(double.PositiveInfinity, 0.0);
+            Assert.Equal(4.5, mva.Mean);
         }
     }
 }

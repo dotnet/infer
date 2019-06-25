@@ -10,7 +10,9 @@ using Microsoft.ML.Probabilistic.Distributions; // for Gaussian.GetLogProb
 namespace Microsoft.ML.Probabilistic.Math
 {
     using System;
+    using System.Diagnostics;
     using Microsoft.ML.Probabilistic.Collections;
+    using Microsoft.ML.Probabilistic.Core.Maths;
 
     /// <summary>
     /// This class provides mathematical constants and special functions, 
@@ -1542,6 +1544,23 @@ f = 1/gamma(x+1)-1
         }
 
         /// <summary>
+        /// Computes <c>ln(NormalCdf(x)/N(x;0,1))</c> to high accuracy.
+        /// </summary>
+        /// <param name="x">Any real number.</param>
+        /// <returns></returns>
+        public static double NormalCdfRatioLn(double x)
+        {
+            if (x > 0)
+            {
+                return LogDifferenceOfExp(MMath.LnSqrt2PI + 0.5 * x * x, NormalCdfRatioLn(-x));
+            }
+            else
+            {
+                return Math.Log(NormalCdfRatio(x));
+            }
+        }
+
+        /// <summary>
         /// Computes <c>NormalCdf(x)/N(x;0,1)</c> to high accuracy.
         /// </summary>
         /// <param name="x">Any real number.</param>
@@ -1558,7 +1577,7 @@ f = 1/gamma(x+1)-1
                 // works only for |x| < 17
                 Assert.IsTrue(x > -17);
                 Assert.IsTrue(x <= 0);
-                int j = (int)(-x + 0.5);
+                int j = (int)System.Math.Floor(0.5 - x);
                 if (j >= c_normcdf_table.Length)
                     j = c_normcdf_table.Length - 1;
                 double y = c_normcdf_table[j];
@@ -1626,7 +1645,7 @@ f = 1/gamma(x+1)-1
             double Rodd = Reven * x + 1;
             double delta2 = delta * delta;
             double sum = delta * Rodd;
-            double oldSum = 0;
+            double oldSum;
             double pwr = 1;
             for (int i = 2; i < 1000; i += 2)
             {
@@ -1643,13 +1662,15 @@ f = 1/gamma(x+1)-1
         /// <summary>
         /// Computes <c>NormalCdfRatio(x+delta)-NormalCdfRatio(x)</c> 
         /// </summary>
-        /// <param name="x">Any real number</param>
+        /// <param name="x">A real number less than 37</param>
         /// <param name="delta">A finite real number with absolute value less than 9.9, or less than 70% of the absolute value of x.</param>
         /// <param name="startingIndex">The first moment to use in the power series.  Used to skip leading terms.  For example, 2 will skip NormalCdfMomentRatio(1, x).</param>
         /// <returns></returns>
         public static double NormalCdfRatioDiff(double x, double delta, int startingIndex = 1)
         {
             if (startingIndex < 1) throw new ArgumentOutOfRangeException(nameof(startingIndex), "startingIndex < 1");
+            // NormalCdfRatio will overflow for large x
+            if (x >= 37) throw new ArgumentOutOfRangeException(nameof(x), x, "x >= 37");
             if (double.IsInfinity(delta)) throw new ArgumentOutOfRangeException(nameof(delta), "delta is infinite");
             // This code is adapted from NormalCdfMomentRatioTaylor
             double sum = 0;
@@ -1662,7 +1683,7 @@ f = 1/gamma(x+1)-1
                 double deriv = iter.Current;
                 if (deriv == 0 || term == 0) return sum;
                 sum += deriv * term;
-                if (double.IsNaN(sum)) throw new Exception();
+                if (double.IsNaN(sum)) throw new Exception($"sum is NaN for x={x}, delta={delta}");
                 //Console.WriteLine("{0}: {1}", i, sum);
                 if (AreEqual(sum, sumOld)) return sum;
                 term *= delta;
@@ -2001,6 +2022,48 @@ f = 1/gamma(x+1)-1
         }
 
         /// <summary>
+        /// Computes NormalCdf(x) - NormalCdf(y) to high accuracy.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns>The difference.</returns>
+        public static ExtendedDouble NormalCdfDiff(double x, double y)
+        {
+            double delta = x - y;
+            if (delta <= 0)
+            {
+                return ExtendedDouble.Zero();
+            }
+            if (x > -y)
+            {
+                //   NormalCdf(x) - NormalCdf(y)
+                // = (1 - NormalCdf(-x)) - (1 - NormalCdf(-y))
+                // = NormalCdf(-y) - NormalCdf(-x)
+                return NormalCdfDiff(-y, -x);
+            }
+            // we know that x <= -y so x + y <= 0
+            if (delta > 1)
+            {
+                return NormalCdfExtended(x) - NormalCdfExtended(y);
+                //double quadDiff = (x + y) * delta / 2;
+                //return NormalCdfRatio(x) - NormalCdfRatio(x - delta) * Math.Exp(quadDiff);
+            }
+            else
+            {
+                //   NormalCdf(x) - NormalCdf(x-delta)
+                // = N(x;0,1) R(x) - N(x-delta;0,1) R(x-delta)
+                // = N(x;0,1) (R(x) - N(x-delta;0,1)/N(x;0,1) R(x-delta))
+                // = N(x;0,1) (R(x) - R(x-delta) + (1 - N(x-delta;0,1)/N(x;0,1)) R(x))
+                // N(x-delta;0,1)/N(x;0,1) = exp(-(x-delta)^2/2 + x^2/2) = exp((x+x-delta)*delta/2)
+                double Rx = NormalCdfRatio(y);
+                double Rdiff = NormalCdfRatioDiff(y, delta);
+                // both Rx and Rdiff are bounded.
+                double OneMinusProbRatio = -ExpMinus1((x + y) * delta / 2);
+                return new ExtendedDouble(Rdiff + OneMinusProbRatio * Rx, Gaussian.GetLogProb(x, 0, 1));
+            }
+        }
+
+        /// <summary>
         /// Computes the cumulative bivariate normal distribution.
         /// </summary>
         /// <param name="x">First upper limit.</param>
@@ -2014,29 +2077,75 @@ f = 1/gamma(x+1)-1
         /// </remarks>
         public static double NormalCdf(double x, double y, double r)
         {
+            return NormalCdfExtended(x, y, r).ToDouble();
+        }
+
+        /// <summary>
+        /// Computes the cumulative Gaussian distribution, defined as the
+        /// integral from -infinity to x of N(t;0,1) dt.  
+        /// For example, <c>NormalCdf(0) == 0.5</c>.
+        /// </summary>
+        /// <param name="x">Any real number.</param>
+        /// <returns>The cumulative Gaussian distribution at <paramref name="x"/>.</returns>
+        public static ExtendedDouble NormalCdfExtended(double x)
+        {
+            if (x < 0)
+            {
+                return new ExtendedDouble(NormalCdfRatio(x), Gaussian.GetLogProb(x, 0, 1));
+            }
+            else
+            {
+                return new ExtendedDouble(NormalCdf(x), 0);
+            }
+        }
+
+        /// <summary>
+        /// Computes the cumulative bivariate normal distribution.
+        /// </summary>
+        /// <param name="x">First upper limit.</param>
+        /// <param name="y">Second upper limit.</param>
+        /// <param name="r">Correlation coefficient.</param>
+        /// <returns><c>phi(x,y,r)</c></returns>
+        /// <remarks>
+        /// The cumulative bivariate normal distribution is defined as
+        /// <c>int_(-inf)^x int_(-inf)^y N([x;y],[0;0],[1 r; r 1]) dx dy</c>
+        /// where <c>N([x;y],[0;0],[1 r; r 1]) = exp(-0.5*(x^2+y^2-2*x*y*r)/(1-r^2))/(2*pi*sqrt(1-r^2))</c>.
+        /// </remarks>
+        public static ExtendedDouble NormalCdfExtended(double x, double y, double r)
+        {
+            double omr2 = (1 - r) * (1 + r); // more accurate than 1-r*r  
+            double sqrtomr2 = Math.Sqrt(omr2);
+            return NormalCdf(x, y, r, sqrtomr2);
+        }
+
+        public static ExtendedDouble NormalCdf(double x, double y, double r, double sqrtomr2)
+        {
             if (Double.IsNegativeInfinity(x) || Double.IsNegativeInfinity(y))
             {
-                return 0.0;
+                return ExtendedDouble.Zero();
             }
             else if (Double.IsPositiveInfinity(x))
             {
-                return NormalCdf(y);
+                return NormalCdfExtended(y);
             }
             else if (Double.IsPositiveInfinity(y))
             {
-                return NormalCdf(x);
+                return NormalCdfExtended(x);
             }
             else if (r == 0)
             {
-                return NormalCdf(x) * NormalCdf(y);
+                return NormalCdfExtended(x) * NormalCdfExtended(y);
             }
-            else if (r == 1)
+            else if (sqrtomr2 == 0)
             {
-                return NormalCdf(Math.Min(x, y));
-            }
-            else if (r == -1)
-            {
-                return Math.Max(0.0, NormalCdf(x) + NormalCdf(y) - 1);
+                if (r == 1)
+                {
+                    return NormalCdfExtended(Math.Min(x, y));
+                }
+                else // (r == -1)
+                {
+                    return NormalCdfDiff(x, -y);
+                }
             }
             // at this point, both x and y are finite.
             // swap to ensure |x| > |y|
@@ -2046,13 +2155,139 @@ f = 1/gamma(x+1)-1
                 x = y;
                 y = t;
             }
-            double offset = 0;
+            // ensure x <= 0
+            if (x > 0)
+            {
+                if (x + y > 1e-4)
+                {
+                    // phi(x,y,r) = phi(inf,y,r) - phi(-x,y,-r)
+                    // This is only safe when phi(y) - phi(-x) is sufficiently large.  This difference can be approximated by N(x;0,1)*(y+x).
+                    // Thus we need (y+x) to be sufficiently large.
+                    return (NormalCdfExtended(y) - NormalCdf(-x, y, -r, sqrtomr2)).Max(0);
+                }
+                else if (x - r * y > 0)
+                {
+                    // phi(x,y,r) = phi(-x,-y,r) + phi(x,y,-1)
+                    // recursive call has x-ry < 0
+                    return NormalCdf(-x, -y, r, sqrtomr2) + NormalCdf(x, y, -1, 0);
+                }
+            }
+            // avoid the problematic region
+            if (r > NormalCdf_Helper_maxR && x > NormalCdf_Helper_maxX)
+            {
+                // phi(x,y,r) = phi(x,inf,r) - phi(x,-y,-r)
+                return (NormalCdfExtended(x) - NormalCdf(x, -y, -r, sqrtomr2)).Max(0);
+            }
+            return NormalCdf_Helper(x, y, r, sqrtomr2);
+        }
+
+        /// <summary>
+        /// Computes the natural logarithm of the cumulative bivariate normal distribution.
+        /// </summary>
+        /// <param name="x">First upper limit.</param>
+        /// <param name="y">Second upper limit.</param>
+        /// <param name="r">Correlation coefficient.</param>
+        /// <returns><c>ln(phi(x,y,r))</c></returns>
+        public static double NormalCdfLn(double x, double y, double r)
+        {
+            return NormalCdfExtended(x, y, r).Log();
+        }
+
+        /// <summary>
+        /// Computes the natural logarithm of the cumulative bivariate normal distribution, 
+        /// minus the log-density of the bivariate normal distribution at x and y,
+        /// plus 0.5*log(1-r*r).
+        /// </summary>
+        /// <param name="x">First upper limit.</param>
+        /// <param name="y">Second upper limit.</param>
+        /// <param name="r">Correlation coefficient.</param>
+        /// <param name="sqrtomr2">sqrt(1-r*r)</param>
+        /// <returns><c>ln(phi(x,y,r)/N([x;y],[0;0],[1 r; r 1])</c></returns>
+        public static double NormalCdfRatioLn(double x, double y, double r, double sqrtomr2)
+        {
+            // The log-density of the bivariate normal distribution at x and y can be written in two equivalent ways:
+            // Gaussian.GetLogProb(x,0,1)+Gaussian.GetLogProb(y-r*x,0,1-r*r)
+            // Gaussian.GetLogProb(y,0,1)+Gaussian.GetLogProb(x-r*y,0,1-r*r)
+            if (Double.IsNegativeInfinity(x) || Double.IsNegativeInfinity(y))
+            {
+                throw new NotImplementedException();
+            }
+            else if (Double.IsPositiveInfinity(x))
+            {
+                return 0;
+            }
+            else if (Double.IsPositiveInfinity(y))
+            {
+                return 0;
+            }
+            else if (r == 0)
+            {
+                return NormalCdfRatioLn(x) + NormalCdfRatioLn(y);
+            }
+            else if (r == 1)
+            {
+                return NormalCdfRatioLn(Math.Min(x, y)) + MMath.LnSqrt2PI;
+            }
+            else if (r == -1)
+            {
+                // In this case, we should subtract log N(y;0,1)
+                bool shouldThrow = true;
+                if (shouldThrow)
+                    throw new NotImplementedException();
+                if (x > 0)
+                {
+                    if (y > 0)
+                    {
+                        // 1-NormalCdf(-x) + 1-NormalCdf(-y)-1 = 1 - NormalCdf(-x) - NormalCdf(-y)
+                        return Log1MinusExp(LogSumExp(NormalCdfLn(-x), NormalCdfLn(-y)));
+                    }
+                    else
+                    {
+                        // 1-NormalCdf(-x) + NormalCdf(y) - 1 = NormalCdf(y) - NormalCdf(-x)
+                        double nclx = NormalCdfLn(-x);
+                        double diff = NormalCdfLn(y) - nclx;
+                        if (diff < 0)
+                            return double.NegativeInfinity;
+                        return LogExpMinus1(diff) + nclx;
+                    }
+                }
+                else
+                {
+                    if (y > 0)
+                    {
+                        // NormalCdf(x) - NormalCdf(-y)
+                        if (x < -y)
+                            return double.NegativeInfinity;
+                        double ncly = NormalCdfLn(-y);
+                        double diff = NormalCdfLn(x) - ncly;
+                        if (diff < 0)
+                            return double.NegativeInfinity;
+                        return LogExpMinus1(diff) + ncly;
+                    }
+                    else
+                    {
+                        // x < 0 and y < 0
+                        return double.NegativeInfinity;
+                    }
+                }
+            }
+            // at this point, both x and y are finite.
+            // swap to ensure |x| > |y|
+            if (Math.Abs(y) > Math.Abs(x))
+            {
+                double t = x;
+                x = y;
+                y = t;
+            }
+            double logOffset = double.NegativeInfinity;
             double scale = 1;
+            double omr2 = sqrtomr2 * sqrtomr2;
             // ensure x <= 0
             if (x > 0)
             {
                 // phi(x,y,r) = phi(inf,y,r) - phi(-x,y,-r)
-                offset = MMath.NormalCdf(y);
+                double xmry = GetXMinusRY(x, y, r, omr2) / sqrtomr2;
+                logOffset = MMath.NormalCdfRatioLn(y) - Gaussian.GetLogProb(xmry, 0, 1);
                 scale = -1;
                 x = -x;
                 r = -r;
@@ -2061,55 +2296,107 @@ f = 1/gamma(x+1)-1
             if (r > 0)
             {
                 // phi(x,y,r) = phi(x,inf,r) - phi(x,-y,-r)
-                offset += scale * MMath.NormalCdf(x);
+                double ymrx = GetXMinusRY(y, x, r, omr2) / sqrtomr2;
+                double logOffset2 = MMath.NormalCdfRatioLn(x) - Gaussian.GetLogProb(ymrx, 0, 1);
+                if (scale == 1)
+                    logOffset = logOffset2;
+                else
+                {
+                    // the difference here must always be positive since y > -x
+                    // offset -= offset2;
+                    // logOffset = log(exp(logOffset) - exp(logOffset2))
+                    logOffset = MMath.LogDifferenceOfExp(logOffset, logOffset2);
+                }
                 scale *= -1;
                 y = -y;
                 r = -r;
             }
-            double omr2 = (1 - r) * (1 + r); // more accurate than 1-r*r            
-            double ymrx = (y - r * x) / Math.Sqrt(omr2);
-            double exponent;
-            double result = NormalCdf_Helper(x, y, r, omr2, ymrx, out exponent);
-            return offset + scale * result * Math.Exp(exponent);
+            double logResult = NormalCdf_Helper(x, y, r, sqrtomr2, true).Log();
+            if (scale == -1)
+                return MMath.LogDifferenceOfExp(logOffset, logResult);
+            else
+                return MMath.LogSumExp(logOffset, logResult);
         }
 
+        private const double NormalCdf_Helper_maxR = 0.5;
+        private const double NormalCdf_Helper_maxX = -1.6;
+
         // factor out the dominant terms and then call confrac
-        private static double NormalCdf_Helper(double x, double y, double r, double omr2, double ymrx, out double exponent)
+        private static ExtendedDouble NormalCdf_Helper(double x, double y, double r, double sqrtomr2, bool ratio = false)
         {
-            exponent = Gaussian.GetLogProb(x, 0, 1);
+            double exponent;
+            if (ratio)
+                exponent = 0;
+            else
+                exponent = Gaussian.GetLogProb(x, 0, 1);
+            double omr2 = sqrtomr2 * sqrtomr2;
             double scale;
+            double ymrx = GetXMinusRY(y, x, r, omr2) / sqrtomr2;
             if (ymrx < 0)
             {
                 // since phi(ymrx) will be small, we factor N(ymrx;0,1) out of the confrac
-                exponent += Gaussian.GetLogProb(ymrx, 0, 1);
+                if (!ratio)
+                    exponent += Gaussian.GetLogProb(ymrx, 0, 1);
                 scale = 1;
             }
             else
             {
                 // leave N(ymrx;0,1) in the confrac
-                scale = Math.Exp(Gaussian.GetLogProb(ymrx, 0, 1));
+                double logProb = Gaussian.GetLogProb(ymrx, 0, 1);
+                if (ratio)
+                    exponent -= logProb;
+                scale = Math.Exp(logProb);
             }
+            // This threshold is set using SpecialFunctionsTests.NormalCdf2Test2
             // For debugging, see SpecialFunctionsTests.NormalCdf2Test3
-            if (x < -1.5)
+            if (x < -2 || (x < -1 && r <= -0.48) || (r == -1 && x > 2))
             {
-                exponent -= Math.Log(-x);
-                return NormalCdfRatioConFrac(x, y, r, scale);
+                // For x == -1.3, this should not be used when -0.2 < r < 0.87
+                // For x == -1.2, this should not be used when -0.3 < r < 0.96
+                // For x == -1.1, this should not be used when -0.35 < r < 0.98
+                // For x == -1.0, this should not be used
+                return new ExtendedDouble(NormalCdfRatioConFrac(x, y, r, scale, sqrtomr2, false, true), exponent);
             }
-            else if (omr2 > 0.75 || (omr2 > 1 - 0.56 * 0.56 && x > -0.5))
+            else if ((omr2 > 1 - 0.51 * 0.51) || (omr2 > 1 - 0.6 * 0.6 && x > -1))
             {
-                return NormalCdfRatioTaylor(x, y, r) * scale;
+                // Empirical results from SpecialFunctionsTests.NormalCdf2Test2:
+                // Should never be used for x < -2
+                // For x == -2, this should not be used when omr2 < 1 - 0.51 * 0.51
+                // For x == -1.8, this should not be used when omr2 < 1 - 0.52 * 0.52
+                // For x == -1.6, this should not be used when omr2 < 1 - 0.54 * 0.54
+                // For x == -1, this should not be used when omr2 < 1 - 0.59 * 0.59
+                return new ExtendedDouble(NormalCdfRatioTaylor(x, y, r, sqrtomr2) * scale, exponent);
                 //return NormalCdfRatioConFrac3(x, y, r, scale);
             }
-            else
-            {
-                return NormalCdfRatioConFrac2b(x, y, r, scale);
+            else // (x >= -1 || (x >= -2 && r > -0.48)) && (omr2 <= 1 - 0.51 * 0.51) && (omr2 < 1 - 0.6 * 0.6 || x <= -1)
+            {    // which implies ((x >= -1 && omr2 <= 1 - 0.51 * 0.51) || (x >= -2 && r >= 0.51)) && (omr2 < 1 - 0.6 * 0.6 || x <= -1)
+                // For x <= -1.6, this always works
+                // For x == -1.5, this should not be used when r > -0.02
+                // For x == -1.4, this should not be used when r > -0.16
+                // For x == -1.3, this should not be used when r > -0.27
+                // For x == -1.2, this should not be used when omr2 > 1 - 0.37 * 0.37
+                // For x == -1.1, this should not be used when omr2 > 1 - 0.4 * 0.4
+                // For x == -1.0, this should not be used when r > -0.39
+                // For x == -0.9, this should not be used when r > -0.43
+                // For x == -0.8, this should not be used when r > -0.45
+                // For x == -0.7, this should not be used when r > -0.46
+                // For x == -0.6, this should not be used when omr2 > 1 - 0.52 * 0.52
+                // For x == -0.5, this should not be used when omr2 > 1 - 0.53 * 0.53
+                // For x == -0.4, this should not be used when omr2 > 1 - 0.53 * 0.53
+                // For x == -0.3, this should not be used when omr2 > 1 - 0.54 * 0.54
+                // For x == -0.1, this should not be used when r > -0.57
+                // For x == -0.01, this should not be used when r > -0.59
+                //return NormalCdfRatioConFrac2b(x, y, r, scale, sqrtomr2);
+                // For x == -2.0, this always works
+                // For x == -1.0, this should not be used when -0.1 < r < 0.7
+                return new ExtendedDouble(NormalCdfRatioConFrac(x, y, r, scale, sqrtomr2, false), exponent);
             }
         }
 
         // Returns NormalCdf divided by N(x;0,1) N((y-rx)/sqrt(1-r^2);0,1)
         // requires -1 < x < 0, abs(r) <= 0.6, and x-r*y <= 0 (or equivalently y < -x).
         // Uses Taylor series at r=0.
-        private static double NormalCdfRatioTaylor(double x, double y, double r)
+        internal static double NormalCdfRatioTaylor(double x, double y, double r, double sqrtomr2)
         {
             if (Math.Abs(x) > 5 || Math.Abs(y) > 5) throw new ArgumentOutOfRangeException();
             // First term of the Taylor series
@@ -2132,7 +2419,6 @@ f = 1/gamma(x+1)-1
             double sumOld = sum;
             for (int n = 2; n <= 100; n++)
             {
-                if (n == 100) throw new Exception($"not converging for x={x}, y={y}, r={r}");
                 //Console.WriteLine($"n = {n - 1} sum = {sum:r}");
                 double dlogphiOverFactorial;
                 if (n % 2 == 0) dlogphiOverFactorial = 1.0 / n - Halfx2y2;
@@ -2147,134 +2433,375 @@ f = 1/gamma(x+1)-1
                 Qderivs.Add(QderivOverFactorial);
                 rPowerN *= r;
                 sum += QderivOverFactorial * rPowerN;
-                if ((sum > double.MaxValue) || double.IsNaN(sum))
-                    throw new Exception($"not converging for x={x}, y={y}, r={r}");
+                if ((sum > double.MaxValue) || double.IsNaN(sum) || n >= 100)
+                    throw new Exception($"NormalCdfRatioTaylor not converging for x={x:r}, y={y:r}, r={r:r}");
                 if (AreEqual(sum, sumOld)) break;
                 sumOld = sum;
             }
-            double omr2 = (1 - r) * (1 + r); // more accurate than 1-r*r            
-            return sum / Math.Sqrt(omr2);
-        }
-
-        // Returns NormalCdf divided by N(x;0,1)/(-x) N((y-rx)/sqrt(1-r^2);0,1), multiplied by scale
-        // requires x < -1, r <= 0, and x-r*y <= 0 (or equivalently y < -x).
-        private static double NormalCdfRatioConFrac(double x, double y, double r, double scale)
-        {
-            if (x >= -1)
-                throw new ArgumentException("x >= -1");
-            if (r > 0)
-                throw new ArgumentException("r > 0");
-            if (x - r * y > 0)
-                throw new ArgumentException("x - r*y > 0");
-            if (scale == 0)
-                return scale;
-            double omr2 = (1 - r) * (1 + r); // more accurate than 1-r*r
-            double sqrtomr2 = Math.Sqrt(omr2);
-            double diff = (x - r * y) / sqrtomr2;
-            var RdiffIter = NormalCdfMomentRatioSequence(0, diff);
-            RdiffIter.MoveNext();
-            double Rdiff = RdiffIter.Current;
-            double numer = NormalCdfRatioConFracNumer(x, y, r, scale, sqrtomr2, diff, Rdiff);
-            double numerPrev = 0;
-            double denom = 1;
-            double denomPrev = denom;
-            double resultPrev = 0;
-            double result = 0;
-            double invX2 = 1 / (x * x);
-            double a = invX2;
-            double b = scale * r;
-            double bIncr = sqrtomr2 / x;
-            for (int i = 1; i < 1000; i++)
-            {
-                b *= bIncr * i;
-                RdiffIter.MoveNext();
-                //double c = b * MMath.NormalCdfMomentRatio(i, diff);
-                double c = b * RdiffIter.Current;
-                double numerNew = numer + a * numerPrev + c;
-                double denomNew = denom + a * denomPrev;
-                a += invX2;
-                numerPrev = numer;
-                numer = numerNew;
-                denomPrev = denom;
-                denom = denomNew;
-                result = numer / denom;
-                //Console.WriteLine("iter {0}: {1} {2}", i, result.ToString("r"), c.ToString("g4"));
-                if ((result > double.MaxValue) || double.IsNaN(result) || result < 0)
-                    throw new Exception($"not converging for x={x}, y={y}, r={r}");
-                if (AreEqual(result, resultPrev))
-                    return result;
-                resultPrev = result;
-            }
-            throw new Exception($"not converging for x={x}, y={y}, r={r}");
+            return sum / sqrtomr2;
         }
 
         // Helper function for NormalCdfRatioConFrac
-        private static double NormalCdfRatioConFracNumer(double x, double y, double r, double scale, double sqrtomr2, double diff, double Rdiff)
+        // Returns (phix + r*phiy)/phir/sqrt(1-r^2)
+        private static double NormalCdfRatioConFracNumer(double x, double y, double r, double scale, double sqrtomr2, double xmry, double Rxmry)
         {
-            double delta = (1 + r) * (y - x) / sqrtomr2;
+            double rPlus1 = GetRPlus1(r, sqrtomr2);
+            double omr2 = sqrtomr2 * sqrtomr2;
+            if (double.IsInfinity(Rxmry)) throw new ArgumentOutOfRangeException(nameof(Rxmry), Rxmry, "Rxmry is infinite");
+            // delta = ymrx - xmry
+            double delta = AreEqual(x, y) ? 0 : rPlus1 * (y - x) / sqrtomr2;
             double numer;
             if (Math.Abs(delta) > 0.5)
             {
-                numer = scale * r * Rdiff;
-                double diffy = (y - r * x) / sqrtomr2;
+                /*
+from mpmath import *
+mp.dps = 500; mp.pretty = True;
+vx = mpf('9.9999999999999885E+19');
+vl = mpf('1.493910049357609');
+vu = mpf('2.0207845396013928');
+r = -vx/sqrt(vx+vu)/sqrt(vx+vl);
+yl = mpf('-2.2188760015237346E-06');
+yu = mpf('2.2178897550353896E-06');
+(yu-r*yl)/sqrt(1-r*r)
+sqrt(1-r*r)
+sqrtomr2 = mpf('0.0018747493845240961');
+rr = mpf('-0.99999824265582826');
+                 */
+                numer = scale * r * Rxmry;
+                double ymrx = GetXMinusRY(y, x, r, omr2) / sqrtomr2;
                 if (scale == 1)
-                    numer += MMath.NormalCdfRatio(diffy);
+                    numer += MMath.NormalCdfRatio(ymrx);
                 else // this assumes scale = N((y-rx)/sqrt(1-r^2);0,1)
-                    numer += MMath.NormalCdf(diffy);
+                    numer += MMath.NormalCdf(ymrx);
             }
             else
             {
-                numer = scale * (NormalCdfRatioDiff(diff, delta) + (1 + r) * Rdiff);
+                numer = scale * (NormalCdfRatioDiff(xmry, delta) + rPlus1 * Rxmry);
             }
             return numer;
         }
 
-        // Returns NormalCdf divided by N(x;0,1) N((y-rx)/sqrt(1-r^2);0,1), multiplied by scale
-        // requires x <= 0, r <= 0, and x-r*y <= 0 (or equivalently y < -x).
-        // This version works best for -1 < x <= 0.
-        private static double NormalCdfRatioConFrac2(double x, double y, double r, double scale)
+        internal static double GetRPlus1(double r, double sqrtomr2)
         {
-            if (x > 0)
-                throw new ArgumentException("x >= 0");
-            if (r > 0)
-                throw new ArgumentException("r > 0");
-            if (x - r * y > 0)
-                throw new ArgumentException("x - r*y > 0");
-            if (scale == 0)
-                return scale;
-            double omr2 = (1 - r) * (1 + r); // more accurate than 1-r*r
-            double sqrtomr2 = Math.Sqrt(omr2);
-            double diff = (x - r * y) / sqrtomr2;
-            var RdiffIter = NormalCdfMomentRatioSequence(0, diff);
-            RdiffIter.MoveNext();
-            double Rdiff = RdiffIter.Current;
-            double numer = NormalCdfRatioConFracNumer(x, y, r, scale, sqrtomr2, diff, Rdiff);
-            double numerPrev = 0;
-            double denom = -x;
-            double denomPrev = -1;
-            double resultPrev = 0;
-            double cEven = scale * r;
-            double cOdd = cEven * sqrtomr2;
-            for (int i = 1; i < 1000; i++)
+            if (r >= 0) return r + 1;
+            else return sqrtomr2 * sqrtomr2 / (1 - r); // good test for Loki
+        }
+
+        internal static double GetXMinusRY(double x, double y, double r, double omr2)
+        {
+            double xPlusy = x + y;
+            if (r < -0.75 && Math.Abs(xPlusy) < 0.5 * Math.Abs(y))
             {
-                double numerNew, denomNew;
-                //double c = MMath.NormalCdfMomentRatio(i, diff);
-                RdiffIter.MoveNext();
-                double c = RdiffIter.Current;
-                if (i % 2 == 1)
+                // x-r*y has error eps*abs(r*y)
+                // x+y-(r+1)*y has error eps*abs(x+y)+eps*(r+1)*abs(y)
+                // difference is eps*(abs(r)-abs(r+1))*abs(y) which is significant when r near -1
+                // we want abs(r)-abs(r+1) > 0.5 > abs((x+y)/y)
+                // -r -(r+1) = -2r-1 > 0.5
+                // -1.5 > 2r
+                // -0.75 > r
+                double rPlus1 = omr2 / (1 - r);
+                return xPlusy - rPlus1 * y;
+            }
+            else if (r > 0.75 && Math.Abs(x-y) < 0.5 * Math.Abs(y))
+            {
+                double omr = omr2 / (1 + r);
+                return x - y + omr * y;
+            }
+            else if (AreEqual(x, r * y))
+            {
+                return 0;
+            }
+            else
+            {
+                return x - r * y;
+            }
+        }
+
+        internal static bool TraceConFrac;
+
+        /// <summary>
+        /// Returns NormalCdf divided by N(x;0,1) N((y-rx)/sqrt(1-r^2);0,1), multiplied by scale.
+        /// If r == -1, then divides by N(min(x,y);0,1) instead.
+        /// If integral==true, returns NormalCdfIntegral divided by N(x;0,1) N((y-rx)/sqrt(1-r^2);0,1), multiplied by scale
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="r"></param>
+        /// <param name="scale"></param>
+        /// <param name="sqrtomr2">sqrt(1-r*r)</param>
+        /// <param name="integral"></param>
+        /// <param name="smallX"></param>
+        /// <returns></returns>
+        private static double NormalCdfRatioConFrac(double x, double y, double r, double scale, double sqrtomr2, bool integral = false, bool smallX = false)
+        {
+            if (smallX)
+            {
+                //if (x >= -1)
+                //    throw new ArgumentException("x >= -1");
+                if (!integral)
                 {
-                    if (i > 1)
-                        cOdd *= (i - 1) * omr2;
-                    c *= cOdd;
-                    numerNew = x * numer + numerPrev + c;
-                    denomNew = x * denom + denomPrev;
+                    if (x - r * y > 0)
+                        throw new ArgumentException("x - r*y > 0");
+                }
+            }
+            else if (!integral)
+            {
+                //if (x > 0)
+                //    throw new ArgumentOutOfRangeException(nameof(x), x, "x >= 0");
+            }
+            else if (double.IsPositiveInfinity(x)) throw new ArgumentOutOfRangeException(nameof(x), x, "x is infinity");
+            else if (double.IsNegativeInfinity(x)) return 0;
+            bool rIsMinus1 = AreEqual(sqrtomr2, 0) && AreEqual(r, -1);
+            double xPlusy = x + y;
+            if (xPlusy <= 0 && rIsMinus1) return 0;
+            //double xmry0 = x - r * y;
+            //if (xmry0 > 1e-2 || (!rIsMinus1 && xmry0 > 0))
+            //    throw new ArgumentException("x - r*y > 0");
+            double omr2 = sqrtomr2 * sqrtomr2;
+            double rPlus1 = GetRPlus1(r, sqrtomr2);
+            double numer;
+            IEnumerator<double> RxmryIter;
+            double probYScaled;
+            // If true, use a recurrence for (numer - A2) instead of numer
+            bool shiftNumer = false;
+            double numerPrevPlusC = double.NaN;
+            // Direct computation of numer on later iterations, useful for debugging
+            //double numer3;
+            if (rIsMinus1)
+            {
+                // numer = probYScaled * scale * (N(x;0,1) - N(y;0,1))/N(y;0,1)
+                // C = probYScaled * scale * r * x * xPlusy
+                if (y <= x)
+                {
+                    // normalize by N(y;0,1)
+                    double delta = xPlusy * (y - x) / 2;
+                    numer = ExpMinus1(delta) * scale;
+                    probYScaled = 1;
+                    if (integral && delta > -1)
+                    {
+                        // Avoid cancellation in numerPrev + C  = C - numer
+                        // exp(delta)-1 + x*(x+y)
+                        // = exp(delta)-1-delta + (x+y)*((y-x)/2 + x)
+                        // = exp(delta)-1-delta + (x+y)*(y+x)/2
+                        double expMinus1RatioMinus1RatioMinusHalf = MMath.ExpMinus1RatioMinus1RatioMinusHalf(delta);
+                        double expMinus1RatioMinus1 = delta * (0.5 + expMinus1RatioMinus1RatioMinusHalf);
+                        numerPrevPlusC = -scale * (delta * expMinus1RatioMinus1 + xPlusy * xPlusy / 2);
+                        // delta + (x+y)^2 + x*(x+y) = (x+y)*((y-x)/2 + x+y+x) = (x+y)*(x+y)*3/2
+                        //numer3 = -scale * (x / 3 * delta * expMinus1RatioMinus1 + x * xPlusy * xPlusy / 2);
+                        // (x+y)^2*(x*(x+y) + 3/2 + 3/2*x^2)
+                        //numer4 = -scale / 3 * ((x * x + 3) * delta * expMinus1RatioMinus1 + xPlusy * xPlusy * (x * x * 3 / 2 + 3.0 / 2 + x * xPlusy));
+                        shiftNumer = true;
+                    }
                 }
                 else
                 {
-                    cEven *= i * omr2;
-                    c *= cEven;
-                    numerNew = (x * numer + i * numerPrev + c) / (i + 1);
-                    denomNew = (x * denom + i * denomPrev) / (i + 1);
+                    // normalize by N(x;0,1)
+                    double delta = xPlusy * (x - y) / 2;
+                    double probYScaledMinus1 = ExpMinus1(delta);
+                    numer = -probYScaledMinus1 * scale;
+                    // N(y;0,1)/N(x;0,1)
+                    probYScaled = probYScaledMinus1 + 1;
+                    if (integral && delta > -1)
+                    {
+                        // Avoid cancellation in numerPrev + C = C - numer
+                        double expMinus1RatioMinus1RatioMinusHalf = MMath.ExpMinus1RatioMinus1RatioMinusHalf(delta);
+                        double expMinus1RatioMinus1 = delta * (0.5 + expMinus1RatioMinus1RatioMinusHalf);
+                        numerPrevPlusC = -scale * (-delta * expMinus1RatioMinus1 + xPlusy * (xPlusy / 2 + x * probYScaledMinus1));
+                        shiftNumer = true;
+                    }
+                }
+                RxmryIter = null;
+            }
+            else
+            {
+                double xmry = GetXMinusRY(x, y, r, omr2) / sqrtomr2;
+                RxmryIter = NormalCdfMomentRatioSequence(0, xmry);
+                RxmryIter.MoveNext();
+                double Rxmry = RxmryIter.Current;
+                numer = NormalCdfRatioConFracNumer(x, y, r, scale, sqrtomr2, xmry, Rxmry);
+                probYScaled = 1;
+                if (integral && (xmry < 0 || r < -0.99))
+                {
+                    double ymrx = GetXMinusRY(y, x, r, omr2) / sqrtomr2;
+                    if (ymrx < 0 || r < -0.99)
+                    {
+                        double R1ymrx = NormalCdfMomentRatio(1, ymrx);
+                        //double R2ymrx = NormalCdfMomentRatio(2, ymrx) * 2;
+                        double R1xmry = NormalCdfMomentRatio(1, xmry);
+                        double R2xmry = NormalCdfMomentRatio(2, xmry) * 2;
+                        //double R3xmry = NormalCdfMomentRatio(3, xmry) * 6;
+                        double delta = AreEqual(x, y) ? 0 : rPlus1 * (y - x) / sqrtomr2;
+                        if (Math.Abs(delta) <= 0.5)
+                        {
+                            // numer = scale * (NormalCdfRatioDiff(xmry, delta) + (1 + r) * Rxmry)
+                            //       = scale * (delta*R1xmry + 0.5*delta*delta*R2xmry + ... + (1 + r) * Rxmry)
+                            // replace Rxmry = R2xmry - xmry*R1xmry
+                            // numer = scale * ((delta - (1+r)*xmry)*R1xmry + (0.5*delta*delta + 1+r)*R2xmry + ...)
+                            // numerPrevPlusC = -numer + scale * r * sqrtomr2 * R1xmry * x
+                            //                = scale * ((x * r * sqrtomr2 - delta + (1+r)*xmry)*R1xmry - (0.5*delta*delta + 1+r)*R2xmry - ...)
+                            // c1 = x * r * sqrtomr2 - delta + (1+r)*xmry 
+                            // = (x * r * (1-r^2) - (1+r)*(y-x) + (1+r)*(x-r*y)) / sqrtomr2
+                            // = (x * r * (1-r) - (y-x) + (x-r*y)) * (1+r) / sqrtomr2
+                            // = (x * (2+r-r^2) - (1+r)*y) * (1+r) / sqrtomr2
+                            // = (x * (2-r)*(1+r) - (1+r)*y) * (1+r) / sqrtomr2
+                            // (1+r)/sqrtomr2 = sqrtomr2/(1-r)
+                            double omr = omr2 / rPlus1;
+                            double c1 = sqrtomr2 * rPlus1 * (x + (x - y) / omr);
+                            if (AreEqual(R1xmry, 0)) c1 = 0; // avoid inf * 0
+                            double c2 = 0.5 * delta * delta + rPlus1;
+                            double c3 = NormalCdfRatioDiff(xmry, delta, 3) * delta * delta;
+                            numerPrevPlusC = scale * (c1 * R1xmry - c2 * R2xmry - c3);
+                            //numer3 = scale / 3 * x * (c1 * R1xmry - c2 * R2xmry - c3 + r * omr2 * R2xmry);
+                            //numer4 = scale / 3 * ((3 + x * x) * c1 * R1xmry + x * r * sqrtomr2 * omr2 * R3xmry - (3 * c2 + x * x * (c2 - r * omr2)) * R2xmry - (3 + x * x) * c3);
+                            //Trace.WriteLine($"numerPrevPlusC = {numerPrevPlusC:r} numer4 = {numer4:r}");
+                            //shiftNumer = omr2 * x * x > 100;
+                            shiftNumer = true;
+                        }
+                        else if (scale == 1 && xmry < -1 && ymrx < -1)
+                        {
+                            // In this regime, Rymrx =approx -1/ymrx, Rxmry =approx -1/xmry, R1xmry =approx 1/xmry^2
+                            // R1(ymrx)/ymrx + r*R1(xmry)/xmry = (R2(ymrx)+(1-R1(ymrx))/ymrx)/ymrx^2 + r*(R2(xmry)+(1-R1(xmry))/xmry)/xmry^2
+                            // 1/ymrx^3 + r/xmry^3 = (xmry^3 + r*ymrx^3)/(xmry^3*ymrx^3)
+                            // numerPrevPlusC = -numer + scale * r * sqrtomr2 * R1xmry * x
+                            // = scale * (-Rymrx -r * Rxmry + r * sqrtomr2 * R1xmry * x)
+                            // = scale * ((1-R1(ymrx))/ymrx + r * (1-R1(xmry))/xmry + r * sqrtomr2 * (R2(xmry)-R(xmry))/xmry * x)
+                            // = scale * sqrtomr2 * ((1-R1(ymrx))/(y-r*x) + r * (1-R1(xmry))/(x-r*y) + r * (R2(xmry)+(1-R1(xmry))/xmry)/xmry * x)
+                            // = scale * sqrtomr2 * (u - R1(ymrx)/(y-r*x) - r * R1(xmry)/(x-r*y) + r * (R2(xmry)-R1(xmry)/xmry)/xmry * x)
+                            // u = 1/(y-rx) + r/(x-ry) + rx(1-r^2)/(x-ry)^2
+                            // = ((x-ry)^2 + r(y-rx)(x-ry) + rx(1-r^2)(y-rx))/(x-ry)^2/(y-rx)
+                            // = (1-r^2)^2 x^2 / (x-ry)^2 / (y-rx)
+                            if (x < double.MinValue || x > double.MaxValue)
+                            {
+                                numerPrevPlusC = 0;
+                            }
+                            else
+                            {
+                                double xOverxmry = x / xmry;
+                                double u = sqrtomr2 * xOverxmry * xOverxmry / ymrx;
+                                numerPrevPlusC = scale * sqrtomr2 * (u - R1ymrx / (y - r * x) - r * R1xmry / (x - r * y) + r * (R2xmry - R1xmry / xmry) * xOverxmry);
+                            }
+                            shiftNumer = true;
+                        }
+                    }
+                }
+            }
+            double numerPrev = 0;
+            // denom is shifted by 1 after scaling
+            double denom = 0;
+            double denomPrev = 0;
+            double resultPrev = 0;
+            // This confrac converges faster as r -> -1
+            double cOdd, cEven;
+            if (rIsMinus1)
+            {
+                cEven = scale * r;
+                // cOdd = xPlusy^i / i!! for odd i
+                // cEven = xPlusy^i / (i-1)!! for even i
+                cOdd = cEven * xPlusy;
+            }
+            else
+            {
+                cEven = scale * r;
+                cOdd = cEven * sqrtomr2;
+            }
+            double xPlusy2 = xPlusy * xPlusy;
+            // SmallX variables
+            double invX2 = 1 / (x * x);
+            double nOverX2 = invX2;
+            double b = scale * r;
+            if (integral)
+            {
+                if (shiftNumer)
+                {
+                    if (smallX)
+                        numer = -numerPrevPlusC * invX2;
+                    else
+                        numer = -numerPrevPlusC * x;
+                    numerPrev = 0; // unused
+                }
+                else
+                {
+                    numerPrev = -numer;
+                    numer = 0;
+                }
+            }
+            if (smallX && !integral)
+            {
+                numer /= x;
+                b /= x;
+            }
+            double bIncr = sqrtomr2 / x;
+            const int iterationCount = 1000;
+            for (int i = 1; i <= iterationCount; i++)
+            {
+                double numerNew, denomNew;
+                double c;
+                if (rIsMinus1)
+                {
+                    c = probYScaled;
+                }
+                else
+                {
+                    //double c = MMath.NormalCdfMomentRatio(i, diff);
+                    RxmryIter.MoveNext();
+                    c = RxmryIter.Current;
+                }
+                if (smallX)
+                {
+                    // In this version, numer and denom are scaled by 1/x^n and then shifted.
+                    b *= bIncr * i;
+                    if (shiftNumer)
+                    {
+                        if (i == 1)
+                            numerNew = 0;
+                        else
+                            numerNew = numer + nOverX2 * (numerPrev + numerPrevPlusC * invX2) + c * b;
+                    }
+                    else
+                        numerNew = numer + nOverX2 * numerPrev + c * b;
+                    denomNew = denom + nOverX2 * (denomPrev - 1);
+                    nOverX2 += invX2;
+                }
+                else
+                {
+                    // In this version, numer and denom are scaled by 1/n!! and then shifted.
+                    if (integral) c *= x;
+                    if (i % 2 == 1)
+                    {
+                        if (i > 1)
+                        {
+                            if (rIsMinus1)
+                                cOdd *= xPlusy2 / i;
+                            else
+                                cOdd *= (i - 1) * omr2;
+                        }
+                        if (shiftNumer)
+                        {
+                            if (i == 1)
+                                numerNew = 0;
+                            else
+                            {
+                                c *= cOdd;
+                                numerNew = x * numer + c + numerPrev + numerPrevPlusC * x * x;
+                            }
+                        }
+                        else
+                        {
+                            c *= cOdd;
+                            numerNew = x * numer + c + numerPrev;
+                        }
+                        denomNew = x * denom + denomPrev - x * x;
+                    }
+                    else
+                    {
+                        if (rIsMinus1)
+                            cEven *= xPlusy2 / (i - 1);
+                        else
+                            cEven *= i * omr2;
+                        c *= cEven;
+                        numerNew = (x * numer + c + i * numerPrev) / (i + 1);
+                        denomNew = (x * denom + i * denomPrev) / (i + 1);
+                    }
                 }
                 numerPrev = numer;
                 numer = numerNew;
@@ -2282,47 +2809,55 @@ f = 1/gamma(x+1)-1
                 denom = denomNew;
                 if (i % 2 == 1)
                 {
-                    double result = numer / denom;
-                    //Console.WriteLine($"iter {i}: result={result:r} c={c:g4} numer={numer:r} denom={denom:r} numerPrev={numerPrev:r}");
-                    if ((result > double.MaxValue) || double.IsNaN(result) || result < 0)
-                        throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x} y={y} r={r} scale={scale}");
-                    if (AreEqual(result, resultPrev))
-                        return result;
+                    double numer2;
+                    if (shiftNumer)
+                    {
+                        if (smallX)
+                            numer2 = numer + numerPrevPlusC * invX2;
+                        else
+                            numer2 = numer + numerPrevPlusC;
+                    }
+                    else numer2 = numer;
+                    double result = numer2 / (denom - 1);
+                    if (TraceConFrac)
+                        Trace.WriteLine($"iter {i}: result={result:r} c={c:r} cOdd={cOdd:r} numer={numer:r} numer2={numer2:r} denom={denom:r} numerPrev={numerPrev:r}");
+                    if ((result > double.MaxValue) || double.IsNaN(result) || result < 0 || i >= iterationCount - 1)
+                        throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x:r} y={y:r} r={r:r} sqrtomr2={sqrtomr2:r} scale={scale:r}");
+                    if (AreEqual(result, resultPrev) || AbsDiff(result, resultPrev, 0) < 1e-13)
+                        break;
                     resultPrev = result;
                 }
             }
-            throw new Exception($"NormalCdfRatioConFrac2 not converging for x={x} y={y} r={r} scale={scale}");
+            return resultPrev;
         }
 
         // Returns NormalCdf divided by N(x;0,1) N((y-rx)/sqrt(1-r^2);0,1), multiplied by scale
         // requires x <= 0, r <= 0, and x-r*y <= 0 (or equivalently y < -x).
         // This version works best for -1 < x <= 0.
-        private static double NormalCdfRatioConFrac2b(double x, double y, double r, double scale)
+        private static double NormalCdfRatioConFrac2b(double x, double y, double r, double scale, double sqrtomr2)
         {
             if (x > 0)
                 throw new ArgumentException("x >= 0");
-            if (r > 0)
-                throw new ArgumentException("r > 0");
+            //if (r > 0)
+            //    throw new ArgumentException("r > 0");
             if (x - r * y > 0)
                 throw new ArgumentException("x - r*y > 0");
-            if (scale == 0)
-                return scale;
-            double omr2 = (1 - r) * (1 + r); // more accurate than 1-r*r
-            double sqrtomr2 = Math.Sqrt(omr2);
-            double diff = (x - r * y) / sqrtomr2;
-            var RdiffIter = NormalCdfMomentRatioSequence(0, diff);
-            RdiffIter.MoveNext();
-            double Rdiff = RdiffIter.Current;
-            double numer = NormalCdfRatioConFracNumer(x, y, r, scale, sqrtomr2, diff, Rdiff);
+            double omr2 = sqrtomr2 * sqrtomr2;
+            double xmry = GetXMinusRY(x, y, r, omr2) / sqrtomr2;
+            var RxmryIter = NormalCdfMomentRatioSequence(0, xmry);
+            RxmryIter.MoveNext();
+            double Rdiff = RxmryIter.Current;
+            double numer = NormalCdfRatioConFracNumer(x, y, r, scale, sqrtomr2, xmry, Rdiff);
             double numerPrev = 0;
+            // Negating here avoids negation in the loop.
             double denom = -x;
             double denomPrev = -1;
             double resultPrev = 0;
             double rDy = scale * r;
-            for (int i = 1; i < 1000; i++)
+            for (int i = 1; i <= 1001; i++)
             {
-                RdiffIter.MoveNext();
-                double c = RdiffIter.Current;
+                RxmryIter.MoveNext();
+                double c = RxmryIter.Current;
                 rDy *= sqrtomr2 * i;
                 double numerNew = x * numer + i * numerPrev + c * rDy;
                 double denomNew = x * denom + i * denomPrev;
@@ -2333,15 +2868,253 @@ f = 1/gamma(x+1)-1
                 if (i % 2 == 1)
                 {
                     double result = numer / denom;
-                    //Console.WriteLine($"iter {i}: result={result:r} c={c:g4} numer={numer:r} denom={denom:r} numerPrev={numerPrev:r}");
-                    if ((result > double.MaxValue) || double.IsNaN(result) || result < 0)
-                        throw new Exception($"NormalCdfRatioConFrac2b not converging for x={x} y={y} r={r} scale={scale}");
+                    if (TraceConFrac)
+                        Trace.WriteLine($"iter {i}: result={result:r} c={c:g4} numer={numer:r} denom={denom:r} numerPrev={numerPrev:r}");
+                    if ((result > double.MaxValue) || double.IsNaN(result) || result < 0 || i >= 1000)
+                        throw new Exception($"NormalCdfRatioConFrac2b not converging for x={x:r} y={y:r} r={r:r} scale={scale}");
                     if (AreEqual(result, resultPrev))
-                        return result;
+                        break;
                     resultPrev = result;
                 }
             }
-            throw new Exception($"NormalCdfRatioConFrac2b not converging for x={x} y={y} r={r} scale={scale}");
+            return resultPrev;
+        }
+
+        public static double NormalCdfIntegral(double x, double y, double r)
+        {
+            double omr2 = (1 - r) * (1 + r); // more accurate than 1-r*r  
+            double sqrtomr2 = Math.Sqrt(omr2);
+            return NormalCdfIntegral(x, y, r, sqrtomr2).ToDouble();
+        }
+
+        /// <summary>
+        /// Computes the integral of the cumulative bivariate normal distribution wrt x.
+        /// </summary>
+        /// <param name="x">First upper limit.</param>
+        /// <param name="y">Second upper limit.</param>
+        /// <param name="r">Correlation coefficient.</param>
+        /// <param name="sqrtomr2">sqrt(1-r*r)</param>
+        /// <returns>r such that r*exp(exponent) is the integral</returns>
+        public static ExtendedDouble NormalCdfIntegral(double x, double y, double r, double sqrtomr2)
+        {
+            if (x < double.MinValue || y < double.MinValue)
+            {
+                return ExtendedDouble.Zero();
+            }
+            if (x > double.MaxValue)
+            {
+                return ExtendedDouble.PositiveInfinity();
+            }
+            if (AreEqual(r, 0) || y > double.MaxValue)
+            {
+                var result = NormalCdf(x, y, r, sqrtomr2);
+                if (x > 0)
+                {
+                    // (x*phi(x) + N(x))/phi(x) = x + N(x)/phi(x)
+                    result *= x + 1 / NormalCdfRatio(x);
+                }
+                else
+                {
+                    // x + 1/R(x) = (x*R(x)+1)/R(x)
+                    result *= NormalCdfMomentRatio(1, x) / NormalCdfRatio(x);
+                }
+                return result;
+            }
+            double logProbX = Gaussian.GetLogProb(x, 0, 1);
+            double logProbY = Gaussian.GetLogProb(y, 0, 1);
+            if (AreEqual(sqrtomr2, 0) && AreEqual(r, 1))
+            {
+                // NormalCdf(x,y,1) = NormalCdf(min(x,y))
+                // If x <= y then NormalCdfIntegral(x,y,1) = NormalCdfIntegral(x)  (xmry <= 0, ymrx >= 0)
+                // Otherwise NormalCdfIntegral(x,y,1) = NormalCdfIntegral(y) + (x-y)*NormalCdf(y)  (xmry > 0, ymrx < 0)
+                if (x <= y)
+                {
+                    return new ExtendedDouble(NormalCdfMomentRatio(1, x), logProbX);
+                }
+                else // y < x
+                {
+                    return new ExtendedDouble(NormalCdfMomentRatio(1, y) + (x - y) * NormalCdfRatio(y), logProbY);
+                }
+            }
+            double rPlus1 = GetRPlus1(r, sqrtomr2);
+            double omr2 = sqrtomr2 * sqrtomr2;
+            double xmry = GetXMinusRY(x, y, r, omr2) / sqrtomr2;
+            if ((x >= 0 && r >= 0) || (x > -1.2 && (r > -0.5 || (y > -100 && 1 + r > 1e-12))))
+            {
+                var result = NormalCdf(x, y, r, sqrtomr2) * x;
+                double ymrx = GetXMinusRY(y, x, r, omr2) / sqrtomr2;
+                if (ymrx < 0.1 && xmry < 0.1)
+                {
+                    double exponent2;
+                    if (Math.Abs(x) >= Math.Abs(y))
+                    {
+                        exponent2 = logProbX + Gaussian.GetLogProb(ymrx, 0, 1);
+                    }
+                    else
+                    {
+                        // compute the exponent to match NormalCdf
+                        exponent2 = logProbY + Gaussian.GetLogProb(xmry, 0, 1);
+                    }
+                    // R(ymrx) + r*R(xmry)
+                    double result2 = NormalCdfRatioConFracNumer(x, y, r, 1, sqrtomr2, xmry, NormalCdfRatio(xmry));
+                    return result + new ExtendedDouble(result2, exponent2);
+                }
+                else
+                {
+                    var phiy = NormalCdfExtended(ymrx).MultiplyExp(logProbX);
+                    var phix = NormalCdfExtended(xmry).MultiplyExp(logProbY);
+                    result += phiy;
+                    result += phix * r;
+                }
+                // This is accurate when x >= 0 and r >= 0
+                //return x * MMath.NormalCdf(x, y, r) + System.Math.Exp(Gaussian.GetLogProb(x, 0, 1) + MMath.NormalCdfLn(ymrx)) + r * System.Math.Exp(Gaussian.GetLogProb(y, 0, 1) + MMath.NormalCdfLn(xmry));
+                return result;
+            }
+            // (x < 0 || r < 0) && (x <= -1.2 || Math.Abs(r) >= 0.9)
+            // which implies x <= -1.2 || ((x < 0 || r < 0) && Math.Abs(r) >= 0.9)
+            bool rIsMinus1 = AreEqual(sqrtomr2, 0) && AreEqual(r, -1);
+            double xPlusy = x + y;
+            if (rIsMinus1 && xPlusy <= 0)
+            {
+                return ExtendedDouble.Zero();
+            }
+            if (AreEqual(sqrtomr2, 0) && ((rIsMinus1 && xPlusy <= 1) || (AreEqual(r, 1) && x - y <= 1)))
+            {
+                double exponent = (y <= x) ? logProbY : logProbX;
+                return new ExtendedDouble(NormalCdfRatioConFrac(x, y, r, 1, sqrtomr2, true), exponent);
+            }
+            else
+            {
+                if (xmry > 0)
+                {
+                    // ensure x-ry <= 0 
+                    if (y > -x)
+                    {
+                        // recursive call has x-ry < 0
+                        var result = -NormalCdfIntegral(-x, -y, r, sqrtomr2);
+                        if (y - r * x > 0 && !rIsMinus1)
+                        {
+                            // Apply the identity NormalCdfIntegral(x,y,r) = 
+                            // NormalCdfIntegral(x,y,-1) - NormalCdfIntegral(-x,-y,r)
+                            return NormalCdfIntegral(x, y, -1, 0) + result;
+                        }
+                        else
+                        {
+                            // Apply the identity NormalCdfIntegral(x,y,r) = 
+                            // -NormalCdfIntegral(-x,-y,r) + x * (NormalCdf(y) - NormalCdf(-x)) + N(x;0,1) + r * N(y;0,1)
+                            var Z = NormalCdfDiff(y, -x);
+                            if (x > double.MaxValue)
+                            {
+                                return new ExtendedDouble(AreEqual(Z.Mantissa, 0) ? 0 : x, 0);
+                            }
+                            // logProbX - logProbY = -x^2/2 + y^2/2 = (y+x)*(y-x)/2
+                            ExtendedDouble n;
+                            if (logProbX > logProbY)
+                            {
+                                n = new ExtendedDouble(rPlus1 + r * ExpMinus1(xPlusy * (x - y) / 2), logProbX);
+                            }
+                            else
+                            {
+                                n = new ExtendedDouble(rPlus1 + ExpMinus1(xPlusy * (y - x) / 2), logProbY);
+                            }
+                            result += Z * x;
+                            return result + n;
+                        }
+                    }
+                    else // y <= -x
+                    {
+                        // Apply the identity NormalCdfIntegral(x,y,r) = 
+                        // NormalCdfIntegral(-x,y,-r) + x * NormalCdf(y) + r * N(y;0,1)
+                        // recursive call has x-ry < 0
+                        var result = NormalCdfIntegral(-x, y, -r, sqrtomr2);
+                        var Z = NormalCdfExtended(y);
+                        result += Z * x;
+                        return result + new ExtendedDouble(r, logProbY);
+                        // This transformation doesn't help
+                        //return -NormalCdfIntegral(x, -y, -r) + x * NormalCdf(x) + Math.Exp(logProbX);
+                    }
+                }
+                double exponent = logProbX;
+                double scale;
+                double ymrx = GetXMinusRY(y, x, r, omr2) / sqrtomr2;
+                if (ymrx < 0)
+                {
+                    // since phi(ymrx) will be small, we factor N(ymrx;0,1) out of the confrac
+                    if (Math.Abs(x) >= Math.Abs(y))
+                    {
+                        exponent += Gaussian.GetLogProb(ymrx, 0, 1);
+                    }
+                    else
+                    {
+                        // compute the exponent in a different way, to match NormalCdf
+                        exponent = logProbY + Gaussian.GetLogProb(xmry, 0, 1);
+                    }
+                    scale = 1;
+                }
+                else
+                {
+                    // leave N(ymrx;0,1) in the confrac
+                    double logProb = Gaussian.GetLogProb(ymrx, 0, 1);
+                    scale = Math.Exp(logProb);
+                }
+                if (x < -2)
+                {
+                    // should not be used when x-r*y > 0
+                    // or |r|=1
+                    return new ExtendedDouble(NormalCdfRatioConFrac(x, y, r, scale, sqrtomr2, true, true), exponent);
+                }
+                else
+                {
+                    // should not be used when x-r*y > 0
+                    // or when x > -1.2 and y > -100 and r > -0.5
+                    // experimental results:
+                    // should not be used when x == -10 and y > 10
+                    // should not be used when x == -2 and y > 2
+                    // should not be used when x == -1.5 and y > 1.5
+                    // should not be used when x == -1.1 and (y > 1.1 or r > 0)
+                    // should not be used when x == -1 and (y > 1 or r > -0.13)
+                    // (if y > -x then range of safe r decreases, and r near -1 becomes unsafe)
+                    // should not be used when x == -0.1 and (y > 0.1 or r > -0.41)
+                    // should not be used when x == -0.01 and (y > 0.01 or r > -0.42)
+                    // should not be used when x == -0.001 and (y > 0.001 or r > -0.42)
+                    // should not be used when x == 0.1 and (y > -0.1 or (y > -100 and -0.43 < r))
+                    // (this includes x-ry > 0 but also some cases where x-ry<0)
+                    // should not be used when x == 1 and (y > -1 or -0.4 < r)
+                    // should not be used when x == 2 and (y > -2 or -0.4 < r)
+                    // should not be used when x == 10 and (y > -10 or -0.2 < r)
+                    return new ExtendedDouble(NormalCdfRatioConFrac(x, y, r, scale, sqrtomr2, true), exponent);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Computes the integral of the cumulative bivariate normal distribution wrt x, divided by the cumulative bivariate normal distribution.
+        /// </summary>
+        /// <param name="x">First upper limit.</param>
+        /// <param name="y">Second upper limit.</param>
+        /// <param name="r">Correlation coefficient.</param>
+        /// <returns></returns>
+        public static double NormalCdfIntegralRatio(double x, double y, double r)
+        {
+            double omr2 = (1 - r) * (1 + r); // more accurate than 1-r*r  
+            double sqrtomr2 = Math.Sqrt(omr2);
+            return NormalCdfIntegralRatio(x, y, r, sqrtomr2);
+        }
+
+        /// <summary>
+        /// Computes the integral of the cumulative bivariate normal distribution wrt x, divided by the cumulative bivariate normal distribution.
+        /// </summary>
+        /// <param name="x">First upper limit.</param>
+        /// <param name="y">Second upper limit.</param>
+        /// <param name="r">Correlation coefficient.</param>
+        /// <param name="sqrtomr2">sqrt(1-r*r)</param>
+        /// <returns></returns>
+        public static double NormalCdfIntegralRatio(double x, double y, double r, double sqrtomr2)
+        {
+            var intZ = NormalCdfIntegral(x, y, r, sqrtomr2);
+            if (AreEqual(intZ.Mantissa, 0)) return 0;
+            var Z = NormalCdf(x, y, r, sqrtomr2);
+            return (intZ / Z).ToDouble();
         }
 
         /// <summary>
@@ -2431,122 +3204,6 @@ f = 1/gamma(x+1)-1
                     yield return rtable[tableStart - i];
                 }
             }
-        }
-
-        /// <summary>
-        /// Computes the natural logarithm of the cumulative bivariate normal distribution.
-        /// </summary>
-        /// <param name="x">First upper limit.</param>
-        /// <param name="y">Second upper limit.</param>
-        /// <param name="r">Correlation coefficient.</param>
-        /// <returns><c>ln(phi(x,y,r))</c></returns>
-        public static double NormalCdfLn(double x, double y, double r)
-        {
-            if (Double.IsNegativeInfinity(x) || Double.IsNegativeInfinity(y))
-            {
-                return Double.NegativeInfinity;
-            }
-            else if (Double.IsPositiveInfinity(x))
-            {
-                return NormalCdfLn(y);
-            }
-            else if (Double.IsPositiveInfinity(y))
-            {
-                return NormalCdfLn(x);
-            }
-            else if (r == 0)
-            {
-                return NormalCdfLn(x) + NormalCdfLn(y);
-            }
-            else if (r == 1)
-            {
-                return NormalCdfLn(Math.Min(x, y));
-            }
-            else if (r == -1)
-            {
-                if (x > 0)
-                {
-                    if (y > 0)
-                    {
-                        // 1-NormalCdf(-x) + 1-NormalCdf(-y)-1 = 1 - NormalCdf(-x) - NormalCdf(-y)
-                        return Log1MinusExp(LogSumExp(NormalCdfLn(-x), NormalCdfLn(-y)));
-                    }
-                    else
-                    {
-                        // 1-NormalCdf(-x) + NormalCdf(y) - 1 = NormalCdf(y) - NormalCdf(-x)
-                        double nclx = NormalCdfLn(-x);
-                        double diff = NormalCdfLn(y) - nclx;
-                        if (diff < 0)
-                            return double.NegativeInfinity;
-                        return LogExpMinus1(diff) + nclx;
-                    }
-                }
-                else
-                {
-                    if (y > 0)
-                    {
-                        // NormalCdf(x) - NormalCdf(-y)
-                        if (x < -y)
-                            return double.NegativeInfinity;
-                        double ncly = NormalCdfLn(-y);
-                        double diff = NormalCdfLn(x) - ncly;
-                        if (diff < 0)
-                            return double.NegativeInfinity;
-                        return LogExpMinus1(diff) + ncly;
-                    }
-                    else
-                    {
-                        // x < 0 and y < 0
-                        return double.NegativeInfinity;
-                    }
-                }
-            }
-            // at this point, both x and y are finite.
-            // swap to ensure |x| > |y|
-            if (Math.Abs(y) > Math.Abs(x))
-            {
-                double t = x;
-                x = y;
-                y = t;
-            }
-            double logOffset = double.NegativeInfinity;
-            double scale = 1;
-            // ensure x <= 0
-            if (x > 0)
-            {
-                // phi(x,y,r) = phi(inf,y,r) - phi(-x,y,-r)
-                logOffset = MMath.NormalCdfLn(y);
-                scale = -1;
-                x = -x;
-                r = -r;
-            }
-            // ensure r <= 0
-            if (r > 0)
-            {
-                // phi(x,y,r) = phi(x,inf,r) - phi(x,-y,-r)
-                double logOffset2 = MMath.NormalCdfLn(x);
-                if (scale == 1)
-                    logOffset = logOffset2;
-                else
-                {
-                    // the difference here must always be positive since y > -x
-                    // offset -= offset2;
-                    // logOffset = log(exp(logOffset) - exp(logOffset2))
-                    logOffset = MMath.LogDifferenceOfExp(logOffset, logOffset2);
-                }
-                scale *= -1;
-                y = -y;
-                r = -r;
-            }
-            double omr2 = (1 - r) * (1 + r); // more accurate than 1-r*r            
-            double ymrx = (y - r * x) / Math.Sqrt(omr2);
-            double exponent;
-            double result = NormalCdf_Helper(x, y, r, omr2, ymrx, out exponent);
-            double logResult = exponent + Math.Log(result);
-            if (scale == -1)
-                return MMath.LogDifferenceOfExp(logOffset, logResult);
-            else
-                return MMath.LogSumExp(logOffset, logResult);
         }
 
         #endregion
@@ -2692,11 +3349,10 @@ f = 1/gamma(x+1)-1
         /// <summary>
         /// Computes ((exp(x)-1)/x - 1)/x - 0.5
         /// </summary>
-        /// <param name="x">Any real number from 0 to Inf, or NaN.</param>
+        /// <param name="x">Any real number from -Inf to Inf, or NaN.</param>
         /// <returns>((exp(x)-1)/x - 1)/x - 0.5</returns>
         public static double ExpMinus1RatioMinus1RatioMinusHalf(double x)
         {
-            if (x < 0) throw new ArgumentOutOfRangeException(nameof(x), "x < 0");
             if (Math.Abs(x) < 6e-1)
             {
                 return x * (1.0 / 6 + x * (1.0 / 24 + x * (1.0 / 120 + x * (1.0 / 720 +
@@ -3797,8 +4453,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <returns></returns>
         public static double Average(double a, double b)
         {
+            // This version avoids underflow but may overflow.
             double midpoint = (a + b) / 2;
-            if (double.IsInfinity(midpoint)) midpoint = 0.5 * a + 0.5 * b;
+            if (double.IsInfinity(midpoint))
+            {
+                // This version avoids overflow but may underflow.
+                // Luckily, if we are in this branch, it cannot underflow.
+                midpoint = 0.5 * a + 0.5 * b;
+            }
             return midpoint;
         }
 
@@ -3910,7 +4572,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <summary>
         /// NormCdf(x)/NormPdf(x) for x = 0, -1, -2, -3, ..., -16
         /// </summary>
-        private static readonly double[] c_normcdf_table = 
+        private static readonly double[] c_normcdf_table =
             {
                 Sqrt2PI/2, 0.655679542418798471543871, .421369229288054473, 0.30459029871010329573361254651, .236652382913560671,
                 0.1928081047153157648774657, .162377660896867462, 0.140104183453050241599534, .123131963257932296, 0.109787282578308291230, .0990285964717319214,
