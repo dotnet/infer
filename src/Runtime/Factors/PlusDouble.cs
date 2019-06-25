@@ -7,6 +7,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using System;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
+    using Microsoft.ML.Probabilistic.Math;
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DoublePlusOp"]/doc/*'/>
     [FactorMethod(typeof(Factor), "Plus", typeof(double), typeof(double), Default = true)]
@@ -186,8 +187,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (b.IsPointMass)
                 return SumAverageConditional(a, b.Point);
             if (a.IsUniform() || b.IsUniform()) return Gaussian.Uniform();
+            if (a.Precision == b.Precision)
+            {
+                // This formula works even when Precision == 0
+                return Gaussian.FromNatural(MMath.Average(a.MeanTimesPrecision, b.MeanTimesPrecision), a.Precision / 2);
+            }
             double prec = a.Precision + b.Precision;
-            if (prec <= 0)
+            if (prec == 0)
                 throw new ImproperDistributionException(a.IsProper() ? b : a);
             return Gaussian.FromNatural((a.MeanTimesPrecision * b.Precision + b.MeanTimesPrecision * a.Precision) / prec, a.Precision * b.Precision / prec);
         }
@@ -222,8 +228,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (b.IsPointMass)
                 return AAverageConditional(Sum, b.Point);
             if (Sum.IsUniform() || b.IsUniform()) return Gaussian.Uniform();
+            if (Sum.Precision == b.Precision)
+            {
+                // This formula works even when Precision == 0
+                return Gaussian.FromNatural(MMath.Average(Sum.MeanTimesPrecision, -b.MeanTimesPrecision), Sum.Precision / 2);
+            }
             double prec = Sum.Precision + b.Precision;
-            if (prec <= 0)
+            if (prec == 0)
                 throw new ImproperDistributionException(Sum.IsProper() ? b : Sum);
             return Gaussian.FromNatural((Sum.MeanTimesPrecision * b.Precision - b.MeanTimesPrecision * Sum.Precision) / prec, Sum.Precision * b.Precision / prec);
         }

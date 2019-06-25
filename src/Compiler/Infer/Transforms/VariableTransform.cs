@@ -431,7 +431,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 IExpression arrayExpr = imie.Arguments[0];
                 IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(arrayExpr);
                 // restrict to IVariableReferenceExpression for simplicity
-                if (ivd != null && arrayExpr is IVariableReferenceExpression)
+                if (ivd != null && !context.InputAttributes.Has<PointEstimate>(ivd) && arrayExpr is IVariableReferenceExpression)
                 {
                     variablesExcludingVariableFactor.Add(ivd);
                 }

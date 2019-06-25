@@ -964,10 +964,13 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
                         communityTrainingAlgorithmPool.Release(currentBatchAlgorithm, instanceData.Ratings.Count);
                     });
             }
-            catch (AggregateException ae)
+            catch (AggregateException ex)
             {
-                // Propagate up the first in the list of exceptions
-                throw ae.InnerException;
+                // To make the Visual Studio debugger stop at the inner exception, check "Enable Just My Code" in Debug->Options.
+                // throw InnerException while preserving stack trace
+                // https://stackoverflow.com/questions/57383/in-c-how-can-i-rethrow-innerexception-without-losing-stack-trace
+                System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                throw;
             }
         }
 
