@@ -137,9 +137,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         return (new Gaussian(mp, vp)) / x;
                     }
                 }
-                if (x.IsUniform())
-                    return Gaussian.Uniform();
-                throw new ImproperMessageException(x);
+                return Gaussian.Uniform();
             }
             else if (prec < 0)
             {

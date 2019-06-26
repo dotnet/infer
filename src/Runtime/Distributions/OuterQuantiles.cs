@@ -7,18 +7,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
     using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Math;
+    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Represents a distribution using the quantiles at probabilities (0,...,n-1)/(n-1)
     /// </summary>
+    [Serializable, DataContract]
     public class OuterQuantiles : CanGetQuantile, CanGetProbLessThan
     {
         /// <summary>
         /// Numbers in increasing order.
         /// </summary>
+        [DataMember]
         private readonly double[] quantiles;
 
         public OuterQuantiles(double[] quantiles)
@@ -28,12 +33,43 @@ namespace Microsoft.ML.Probabilistic.Distributions
             this.quantiles = quantiles;
         }
 
+        public override string ToString()
+        {
+            string quantileString;
+            if (quantiles.Length <= 5)
+            {
+                quantileString = StringUtil.CollectionToString(quantiles, " ");
+            }
+            else
+            {
+                int n = quantiles.Length;
+                quantileString = $"{quantiles[0]:g2} {quantiles[1]:g2} ... {quantiles[n - 2]:g2} {quantiles[n - 1]:g2}";
+            }
+            return $"OuterQuantiles({quantiles.Length}, {quantileString})";
+        }
+
+        public double[] ToArray()
+        {
+            return quantiles;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is OuterQuantiles that)) return false;
+            return quantiles.ValueEquals(that.quantiles);
+        }
+
+        public override int GetHashCode()
+        {
+            return Hash.GetHashCodeAsSequence(quantiles);
+        }
+
         internal static void AssertFinite(double[] array, string paramName)
         {
             for (int i = 0; i < array.Length; i++)
             {
-                if (double.IsInfinity(array[i])) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]}");
-                if (double.IsNaN(array[i])) throw new ArgumentOutOfRangeException(paramName, $"{paramName}[{i}] {array[i]}");
+                if (double.IsInfinity(array[i])) throw new ArgumentOutOfRangeException(paramName, array[i], $"Array element is infinite: {paramName}[{i}]={array[i]}");
+                if (double.IsNaN(array[i])) throw new ArgumentOutOfRangeException(paramName, array[i], $"Array element is NaN: {paramName}[{i}]={array[i]}");
             }
         }
 
@@ -41,17 +77,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             for (int i = 1; i < array.Length; i++)
             {
-                if (array[i] < array[i - 1]) throw new ArgumentException($"Array is not non-decreasing: {paramName}[{i}] {array[i]} < {paramName}[{i - 1}] {array[i - 1]}", paramName);
+                if (array[i] < array[i - 1]) throw new ArgumentException($"Decreasing array elements: {paramName}[{i}] {array[i]} < {paramName}[{i - 1}] {array[i - 1]}", paramName);
             }
         }
 
-        public OuterQuantiles(int quantileCount, CanGetQuantile canGetQuantile)
+        public static OuterQuantiles FromDistribution(int quantileCount, CanGetQuantile canGetQuantile)
         {
-            this.quantiles = new double[quantileCount];
-            for (int i = 0; i < quantileCount; i++)
-            {
-                this.quantiles[i] = canGetQuantile.GetQuantile(i / (quantileCount - 1.0));
-            }
+            var quantiles = Util.ArrayInit(quantileCount, i => canGetQuantile.GetQuantile(i / (quantileCount - 1.0)));
+            return new OuterQuantiles(quantiles);
         }
 
         public double GetProbLessThan(double x)
@@ -124,19 +157,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Returns the largest quantile such that ((quantile - lowerItem)/(upperItem - lowerItem) + lowerIndex)/(n-1) &lt;= probability.
         /// </summary>
-        /// <param name="probability"></param>
+        /// <param name="probability">A number between 0 and 1.</param>
         /// <param name="lowerIndex"></param>
-        /// <param name="lowerItem"></param>
-        /// <param name="upperItem"></param>
-        /// <param name="n"></param>
+        /// <param name="lowerItem">Must be finite.</param>
+        /// <param name="upperItem">Must be finite and at least lowerItem.</param>
+        /// <param name="n">Must be greater than 1</param>
         /// <returns></returns>
         internal static double GetQuantile(double probability, double lowerIndex, double lowerItem, double upperItem, long n)
         {
-            if (n == 1) throw new ArgumentOutOfRangeException("n == 1");
+            if(probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), probability, $"{nameof(probability)} < 0");
+            if (probability > 1) throw new ArgumentOutOfRangeException(nameof(probability), probability, $"{nameof(probability)} > 1");
+            if (n <= 1) throw new ArgumentOutOfRangeException(nameof(n), n, "n <= 1");
             double pos = MMath.LargestDoubleProduct(n - 1, probability);
             double frac = MMath.LargestDoubleSum(-lowerIndex, pos);
+            if (upperItem < lowerItem) throw new ArgumentOutOfRangeException(nameof(upperItem), upperItem, $"{nameof(upperItem)} ({upperItem}) < {nameof(lowerItem)} ({lowerItem})");
+            if (upperItem == lowerItem) return lowerItem;
+            // The above check ensures diff > 0
             double diff = upperItem - lowerItem;
-            if (diff == 0) return lowerItem;
             double offset = MMath.LargestDoubleProduct(diff, frac);
             return MMath.LargestDoubleSum(lowerItem, offset);
         }

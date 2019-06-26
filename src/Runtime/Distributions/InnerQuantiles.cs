@@ -7,19 +7,22 @@ namespace Microsoft.ML.Probabilistic.Distributions
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
     using System.Text;
+    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Represents a distribution using the quantiles at probabilities (1,...,n)/(n+1)
     /// </summary>
+    [Serializable, DataContract]
     public class InnerQuantiles : CanGetQuantile, CanGetProbLessThan
     {
         /// <summary>
         /// Numbers in increasing order.
         /// </summary>
-        private readonly double[] quantiles;
+        [DataMember] private readonly double[] quantiles;
         /// <summary>
         /// Gaussian approximation of the lower tail.
         /// </summary>
@@ -40,16 +43,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             upperGaussian = GetUpperGaussian(quantiles);
         }
 
-        public InnerQuantiles(int quantileCount, CanGetQuantile canGetQuantile)
+        public static InnerQuantiles FromDistribution(int quantileCount, CanGetQuantile canGetQuantile)
         {
-            if (quantileCount == 0) throw new ArgumentException("quantileCount == 0", nameof(quantiles));
-            this.quantiles = new double[quantileCount];
-            for (int i = 0; i < quantileCount; i++)
-            {
-                this.quantiles[i] = canGetQuantile.GetQuantile((i + 1.0) / (quantileCount + 1.0));
-            }
-            lowerGaussian = GetLowerGaussian(quantiles);
-            upperGaussian = GetUpperGaussian(quantiles);
+            if (quantileCount == 0) throw new ArgumentOutOfRangeException(nameof(quantileCount), quantileCount, "quantileCount == 0");
+            var quantiles = Util.ArrayInit(quantileCount, i => canGetQuantile.GetQuantile((i + 1.0) / (quantileCount + 1.0)));
+            return new InnerQuantiles(quantiles);
         }
 
         public override string ToString()
@@ -72,16 +70,28 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return quantiles;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is InnerQuantiles that)) return false;
+            return quantiles.ValueEquals(that.quantiles);
+        }
+
+        public override int GetHashCode()
+        {
+            return Hash.GetHashCodeAsSequence(quantiles);
+        }
+
+        /// <inheritdoc/>
         public double GetProbLessThan(double x)
         {
+            int n = quantiles.Length;
             if (x < quantiles[0])
             {
-                return lowerGaussian.GetProbLessThan(x);
+                return Math.Min(lowerGaussian.GetProbLessThan(x), 1.0/(n+1));
             }
-            int n = quantiles.Length;
             if (x > quantiles[n - 1])
             {
-                return upperGaussian.GetProbLessThan(x);
+                return Math.Max(upperGaussian.GetProbLessThan(x), n/(n+1.0));
             }
             return GetProbLessThan(x, quantiles);
         }
@@ -156,7 +166,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double mean, stddev;
                 GetGaussianFromQuantiles(quantiles[0], p0, quantiles[i], p1, out mean, out stddev);
                 Gaussian result = Gaussian.FromMeanAndVariance(mean, stddev * stddev);
-                if (!result.IsProper() || double.IsNaN(result.GetMean()) || double.IsInfinity(result.GetMean()))
+                if (result.IsPointMass || !result.IsProper() || double.IsNaN(result.GetMean()) || double.IsInfinity(result.GetMean()))
                 {
                     return Gaussian.PointMass(quantiles[0]);
                 }
@@ -184,6 +194,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double p1 = (i + 1.0) / (n + 1);
                 double mean, stddev;
                 GetGaussianFromQuantiles(quantiles[n - 1], p0, quantiles[i], p1, out mean, out stddev);
+                if (double.IsNaN(mean) || double.IsInfinity(mean))
+                {
+                    return Gaussian.PointMass(quantiles[n - 1]);
+                }
                 Gaussian result = Gaussian.FromMeanAndVariance(mean, stddev * stddev);
                 if (!result.IsProper() || double.IsNaN(result.GetMean()) || double.IsInfinity(result.GetMean()))
                 {
@@ -234,11 +248,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             int n = quantiles.Length;
             if (probability < 1.0 / (n + 1.0))
             {
-                return lowerGaussian.GetQuantile(probability);
+                return Math.Min(quantiles[0], lowerGaussian.GetQuantile(probability));
             }
             if (probability > n / (n + 1.0))
             {
-                return upperGaussian.GetQuantile(probability);
+                return Math.Max(quantiles[n-1], upperGaussian.GetQuantile(probability));
             }
             if (n == 1) return quantiles[0]; // probability must be 0.5
             double pos = MMath.LargestDoubleProduct(n + 1, probability) - 1;
