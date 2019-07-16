@@ -35,7 +35,7 @@ where ![s](../BPM/Score.png) is called the score of the instance.
 
 To allow for _measurement_ and _labelling error_, we add Gaussian noise to the score:
 
-![p(y│s,e) = 1(y*s+ e greater 0)](../BPM/LinearClassifier.png) with ![p(e) = N(e\|0,1)](../BPM/GaussianNoise.png) and ![Heavidside step function H](../BPM/HeavisideDefinition.png)
+![p(y│s,e) = 1(y*(s+e) greater 0)](../BPM/LinearClassifier.png) with ![p(e) = N(e\|0,1)](../BPM/GaussianNoise.png) and ![Heavidside step function H](../BPM/HeavisideDefinition.png)
 
 This is also known as a _probit regression_ model.
 
