@@ -346,7 +346,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                         logWeights[i] += precision.GetLogProb(nodes[i]) - precMarginal.GetLogProb(nodes[i]);
                     }
                 }
-                if (xv < 1 && mean.Precision > 0)
+                if (xv < 1 && mean.Precision > 0 && !modified)
                 {
                     // Compute the message directly
                     // f(m) = int_r N(0;m,v+1/r) Ga(r;a,b) dr

@@ -39,10 +39,10 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
             IfBlock block = Variable.If(evidence);
 
-            // Set up the GP prior, which will be filled in later
+            // Set up the GP prior, a distribution over functions, which will be filled in later
             Variable<SparseGP> prior = Variable.New<SparseGP>().Named("prior");
 
-            // The sparse GP variable - a distribution over functions
+            // The sparse GP variable - a random function
             Variable<IFunction> f = Variable<IFunction>.Random(prior).Named("f");
 
             // The locations to evaluate the function
@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
 
             // The observation model
             VariableArray<bool> y = Variable.Observed(outputs, j).Named("y");
-            Variable<double> score = Variable.FunctionEvaluate(f, x[j]);
+            Variable<double> score = Variable.FunctionEvaluate(f, x[j]).Named("score");
             y[j] = (Variable.GaussianFromMeanAndVariance(score, 0.1) > 0);
 
             // Close the evidence block

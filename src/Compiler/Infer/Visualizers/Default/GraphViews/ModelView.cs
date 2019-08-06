@@ -7,7 +7,6 @@ using System.Text;
 using System.Linq;
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Collections;
-using Microsoft.ML.Probabilistic.Compiler;
 using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
@@ -41,8 +40,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
 
         protected void OnModelChange()
         {
-            var builder = new GraphBuilder();
-            graph = builder.ToGraph(modelBuilder);
+            graph = new DotGraphWriter("Model");
+            GraphBuilder.Add(graph, modelBuilder, false);
         }
 
         /// <summary>
@@ -53,10 +52,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
         {
             // References:
             // https://en.wikipedia.org/wiki/DOT_(graph_description_language)
-       
-            var builder = new GraphBuilder();
-            builder.UseContainers = true;
-            GraphWriter g = builder.ToGraph(modelBuilder);
+
+            GraphWriter g = new DotGraphWriter("Model");
+            GraphBuilder.Add(g, modelBuilder, true);
             g.Write(path);
         }
 
@@ -80,6 +78,13 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
         // condition variables that have already been linked to an expression
         private Dictionary<IModelExpression, List<Variable>> conditionVariables = new Dictionary<IModelExpression, List<Variable>>();
         private Dictionary<ConditionContext, Node> nodeOfContext = new Dictionary<ConditionContext, Node>();
+
+        public static void Add(GraphWriter g, ModelBuilder modelBuilder, bool useContainers)
+        {
+            GraphBuilder graphBuilder = new GraphBuilder();
+            graphBuilder.UseContainers = useContainers;
+            graphBuilder.Add(g, modelBuilder);
+        }
 
         public class Group
         {
@@ -145,12 +150,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
             }
         }
 
-        internal GraphWriter ToGraph(ModelBuilder mb)
+        private void Add(GraphWriter g, ModelBuilder mb)
         {
-            GraphWriter g = new DotGraphWriter("Model");
             Count = 0;
             if (mb == null)
-                return g;
+                return;
             foreach (IModelExpression me in mb.ModelExpressions)
             {
                 if (me is MethodInvoke)
@@ -178,17 +182,15 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
                 {
                     for (int j = 0; j < nodes.Count; j++)
                     {
-                        if (i == j)
-                            continue;
-                        // Glee uses the edge direction as a layout hint, so only use child nodes as sources
-                        if (!childNodes.Contains(nodes[i]))
-                            continue;
-                        Edge edge = g.AddEdge(nodes[i].ID, nodes[j].ID);
-                        edge.ArrowheadAtTarget = ArrowheadStyle.None;
+                        if (i != j && childNodes.Contains(nodes[i]))
+                        {
+                            // Graph layout tools use the edge direction as a layout hint, so only use child nodes as sources
+                            Edge edge = g.AddEdge(nodes[i].ID, nodes[j].ID);
+                            edge.ArrowheadAtTarget = ArrowheadStyle.None;
+                        }
                     }
                 }
             }
-            return g;
         }
 
         protected Variable GetBaseVariable(Variable v)
@@ -196,6 +198,19 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
             while (v.ArrayVariable != null)
                 v = (Variable)v.ArrayVariable;
             return v;
+        }
+
+        private string GetForEachSuffix(Variable ve)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var container in ve.Containers)
+            {
+                if (container is ForEachBlock forEachBlock)
+                {
+                    sb.Append($"[{forEachBlock.Index}]");
+                }
+            }
+            return sb.ToString();
         }
 
         protected Node GetNode(GraphWriter g, IModelExpression expr)
@@ -222,6 +237,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
                         else if (value.GetType().IsValueType)
                             nd.Label = value.ToString();
                     }
+                }
+                else if (ve.Containers.Count > 0)
+                {
+                    nd.Label += GetForEachSuffix(ve);
                 }
                 if (!ve.IsReadOnly)
                 {
