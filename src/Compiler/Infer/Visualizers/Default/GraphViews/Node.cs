@@ -39,7 +39,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers.GraphViews
         public object UserData { get; set; }
 
         public string Label { get; set; }
-        public Color FontColor { get; set; }
+        public Color FontColor { get; set; } = Color.Black;
         public int FontSize { get; set; }
 
         public Color FillColor { get; set; }
