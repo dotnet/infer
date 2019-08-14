@@ -71,7 +71,7 @@ namespace Infer.Loki.Tests
             settings.ExcludeProject(new Regex("^Tutorials"));
             settings.ExcludeProject(new Regex("^Visualizers"));
 
-            var testResult = await TestRunner.BuildAndRunTest(settings, new SpecialFunctionsTests().NormalCdfIntegralTest);
+            var testResult = await TestRunner.BuildAndRunTest(settings, new SpecialFunctionsTests().GammaSpecialFunctionsTest);
 
             Assert.True(testResult.DoublePrecisionPassed);
             Assert.True(testResult.HighPrecisionPassed);
