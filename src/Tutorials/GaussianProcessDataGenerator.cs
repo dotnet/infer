@@ -2,15 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Distributions.Kernels;
-using System.Linq;
 using OxyPlot;
-using System.Threading;
 using OxyPlot.Wpf;
+using System;
+using System.Threading;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {
