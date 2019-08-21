@@ -4353,35 +4353,54 @@ namespace Microsoft.ML.Probabilistic.Tests
             VariableArray<double> a = Variable.Array<double>(item).Named("a");
             Gaussian aPrior = Gaussian.FromMeanAndVariance(1.2, 3.4);
             a[item] = Variable<double>.Random(aPrior).ForEach(item);
-            VariableArray<double> b = Variable.Observed(new[] { 2.0, 3.0 }).Named("b");
+            VariableArray<double> b = Variable.Observed(default(double[]), item).Named("b");
             Variable<double> c = Variable.InnerProduct(a, b);
-            Gaussian cLike = Gaussian.FromMeanAndVariance(4, 5);
+            Variable<Gaussian> cLike = Variable.Observed(default(Gaussian));
             Variable.ConstrainEqualRandom(c, cLike);
             evBlock.CloseBlock();
-
             InferenceEngine engine = new InferenceEngine();
-            var aActual = engine.Infer<IList<Gaussian>>(a);
-            VectorGaussian vectorGaussianExpected = new VectorGaussian(item.SizeAsInt);
-            var bVector = Vector.FromArray(b.ObservedValue);
-            var aMean = (DenseVector)Util.ArrayInit(item.SizeAsInt, i => aPrior.GetMean()).ToVector();
-            var aVariance = new PositiveDefiniteMatrix(item.SizeAsInt, item.SizeAsInt);
-            aVariance.SetToDiagonal(Util.ArrayInit(item.SizeAsInt, i => aPrior.GetVariance()).ToVector());
-            var aVector = VectorGaussian.FromMeanAndVariance(aMean, aVariance);
-            InnerProductOp.AAverageConditional(cLike, bVector, vectorGaussianExpected);
-            vectorGaussianExpected.SetToProduct(vectorGaussianExpected, aVector);
-            for (int i = 0; i < aActual.Count; i++)
-            {
-                var aExpected = vectorGaussianExpected.GetMarginal(i);
-                Assert.True(aExpected.MaxDiff(aActual[i]) < 1e-10);
-            }
-            var cActual = engine.Infer<Gaussian>(c);
-            var toC = InnerProductOp.InnerProductAverageConditional(aMean, aVariance, bVector);
-            var cExpected = toC * cLike;
-            Assert.True(cExpected.MaxDiff(cActual) < 1e-10);
 
-            double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
-            double evExpected = cLike.GetLogAverageOf(toC);
-            Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-8) < 1e-10);
+            for (int trial = 0; trial <= 2; trial++)
+            {
+                if (trial == 0)
+                {
+                    b.ObservedValue = new[] { 2.0, 3.0 };
+                    cLike.ObservedValue = Gaussian.FromMeanAndVariance(4, 5);
+                }
+                else if(trial == 1)
+                {
+                    b.ObservedValue = new[] { 0.0, 0.0 };
+                    cLike.ObservedValue = Gaussian.PointMass(0);
+                }
+                else
+                {
+                    b.ObservedValue = new[] { 0.0, 2.0 };
+                    cLike.ObservedValue = Gaussian.PointMass(2.3);
+                }
+
+                var aActual = engine.Infer<IList<Gaussian>>(a);
+                VectorGaussian vectorGaussianExpected = new VectorGaussian(item.SizeAsInt);
+                var bVector = Vector.FromArray(b.ObservedValue);
+                var aMean = (DenseVector)Util.ArrayInit(item.SizeAsInt, i => aPrior.GetMean()).ToVector();
+                var aVariance = new PositiveDefiniteMatrix(item.SizeAsInt, item.SizeAsInt);
+                aVariance.SetToDiagonal(Util.ArrayInit(item.SizeAsInt, i => aPrior.GetVariance()).ToVector());
+                var aVector = VectorGaussian.FromMeanAndVariance(aMean, aVariance);
+                InnerProductOp.AAverageConditional(cLike.ObservedValue, bVector, vectorGaussianExpected);
+                vectorGaussianExpected.SetToProduct(vectorGaussianExpected, aVector);
+                for (int i = 0; i < aActual.Count; i++)
+                {
+                    var aExpected = vectorGaussianExpected.GetMarginal(i);
+                    Assert.True(aExpected.MaxDiff(aActual[i]) < 1e-10);
+                }
+                var cActual = engine.Infer<Gaussian>(c);
+                var toC = InnerProductOp.InnerProductAverageConditional(aMean, aVariance, bVector);
+                var cExpected = toC * cLike.ObservedValue;
+                Assert.True(cExpected.MaxDiff(cActual) < 1e-10);
+
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                double evExpected = cLike.ObservedValue.GetLogAverageOf(toC);
+                Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-8) < 1e-10);
+            }
         }
 
         [Fact]
