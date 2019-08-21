@@ -8,6 +8,9 @@ using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Distributions.Kernels;
 using System.Linq;
+using OxyPlot;
+using System.Threading;
+using OxyPlot.Wpf;
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {
@@ -23,18 +26,8 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 return;
             }
 
-            // The data
-            Vector[] inputs = new Vector[]
-            {
-                Vector.FromArray(new double[1] { -5 }),
-                Vector.FromArray(new double[1] { -3 }),
-                Vector.FromArray(new double[1] { -1 }),
-                Vector.FromArray(new double[1] { 1 }),
-                Vector.FromArray(new double[1] { 3 }),
-                Vector.FromArray(new double[1] { 5 })
-            };
-
-            //double[] outputs = { -5, -3, -1, 1, 3, 5 };
+            // The points to evaluate
+            Vector[] inputs = this.VectorLinSpace(-5, 5, 51);
 
             // Set up the GP prior, a distribution over functions, which will be filled in later
             Variable<SparseGP> prior = Variable.New<SparseGP>().Named("prior");
@@ -50,15 +43,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             Variable<double> score = Variable.FunctionEvaluate(f, x[j]).Named("score");
 
             // The basis
-            Vector[] basis = new Vector[]
-            {
-                Vector.FromArray(new double[1] { -5.0 }),
-                Vector.FromArray(new double[1] { -3.0 }),
-                Vector.FromArray(new double[1] { -1.0 }),
-                Vector.FromArray(new double[1] { 1.0 }),
-                Vector.FromArray(new double[1] { 3.0 }),
-                Vector.FromArray(new double[1] { 5.0 }),
-            };
+            Vector[] basis = VectorLinSpace(-5, 5, 6);
 
             // The kernel
             IKernelFunction kf;
@@ -68,18 +53,53 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             GaussianProcess gp = new GaussianProcess(new ConstantFunction(0), kf);
             prior.ObservedValue = new SparseGP(new SparseGPFixed(gp, basis));
 
-            // Infer the posterior Sparse GP
+            // Infer the posterior Sparse GP, and sample a random function from it
             SparseGP sgp = engine.Infer<SparseGP>(f);
             var randomFunc = sgp.Sample();
 
-            // Check that training set is regressed on correctly
+            // plotting boilerplate
+            var p1 = new OxyPlot.Series.LineSeries
+            {
+                Title = "Random Function"
+            };
+
             Console.WriteLine("");
             Console.WriteLine("Random function evaluations:");
             for (int i = 0; i < inputs.Length; i++)
             {
                 double post = randomFunc.Evaluate(inputs[i]);
                 Console.WriteLine("f({0}) = {1}", inputs[i], post);
+                p1.Points.Add(new DataPoint(inputs[i][0], post));
             }
+
+            var model = new PlotModel();
+            model.Series.Add(p1);
+
+            Thread thread = new Thread(() => DisplayPNG(model));
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+        }
+
+        private void DisplayPNG(PlotModel model)
+        {
+            var a = Thread.CurrentThread.GetApartmentState();
+            var outputToFile = "test-oxyplot-file.png";
+            PngExporter.Export(model, outputToFile, 600, 400, OxyColors.White);
+        }
+
+        private Vector[] VectorLinSpace(int min, int max, int len)
+        {
+            Vector[] inputs = new Vector[len];
+
+            for (int i = 0; i < len; i++)
+            {
+                double num = i / (double)(len - 1);
+                num = num * (max - min);
+                num += min;
+                inputs[i] = Vector.FromArray(new double[1] { num });
+            }
+
+            return inputs;
         }
     }
 }
