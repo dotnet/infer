@@ -57,7 +57,8 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             //new ClickModel().Run();
             //new DifficultyAbility().Run();
             //new GaussianProcessClassifier().Run();
-            new GaussianProcessRegression().Run();
+            //new GaussianProcessRegression().Run();
+            new GaussianProcessDataGenerator().Run();
             //new MultinomialRegression().Run();
             //new RecommenderSystem().Run();
             //new StudentSkills().Run();
