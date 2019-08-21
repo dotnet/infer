@@ -102,7 +102,18 @@ namespace Microsoft.ML.Probabilistic.Factors
             // b'*var(a)*b == 0
             // inv(var(a)) = Inf*bb'
             // E[a] = ip*b/(b'b)
-            throw new NotImplementedException(LowRankNotSupportedMessage);
+            result.SetToUniform();
+            bool nonzero(double x) => x != 0;
+            int nonZeroCount = B.CountAll(nonzero);
+            if (nonZeroCount == 0) return result;
+            else if (nonZeroCount == 1)
+            {
+                int index = B.FindFirstIndex(nonzero);
+                result.Precision[index, index] = double.PositiveInfinity;
+                result.MeanTimesPrecision[index] = innerProduct / B[index];
+                return result;
+            }
+            else throw new NotImplementedException(LowRankNotSupportedMessage);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="BAverageConditional(double, Vector, VectorGaussian)"]/*'/>
@@ -333,7 +344,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             //               -(avb.Outer(avb - BMean * (2 * diff)) * 2 + BVariance * diff2) / v2;
             PositiveDefiniteMatrix negativeHessian = BVariance * (innerProduct.Precision / v - diff2 / v2);
             negativeHessian.SetToSumWithOuter(negativeHessian, innerProduct.Precision / v, BMean, BMean);
-            negativeHessian.SetToSumWithOuter(negativeHessian, 4 * diff2 / (v2 * v) - 2*innerProduct.Precision/v2, avb, avbPrec);
+            negativeHessian.SetToSumWithOuter(negativeHessian, 4 * diff2 / (v2 * v) - 2 * innerProduct.Precision / v2, avb, avbPrec);
             negativeHessian.SetToSumWithOuter(negativeHessian, 2 * diff / v2, avbPrec, BMean);
             negativeHessian.SetToSumWithOuter(negativeHessian, 2 * diff / v2, BMean, avbPrec);
             negativeHessian.Symmetrize();
