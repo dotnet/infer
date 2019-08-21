@@ -201,7 +201,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else
                 {
-                    precision.SetToInverse(variance);
+                    var stability = PositiveDefiniteMatrix.Identity(variance.Cols) * 1e-5;
+                    if (variance.IsPositiveDefinite())
+                    {
+                        stability *= 0;
+                    }
+                    precision.SetToInverse(variance + stability);
                     meanTimesPrecision.SetToProduct(precision, mean);
                 }
             }
