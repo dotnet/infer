@@ -201,12 +201,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else
                 {
-                    var stability = PositiveDefiniteMatrix.Identity(variance.Cols) * 1e-5;
-                    if (variance.IsPositiveDefinite())
+                    if (!variance.IsPositiveDefinite())
                     {
-                        stability *= 0;
+                        // stabilising offset is hardcoded to 1e-5, but should be adjusted to suit
+                        var stability = 1e-5 * PositiveDefiniteMatrix.Identity(variance.Cols);
+                        variance += stability;
                     }
-                    precision.SetToInverse(variance + stability);
+                    precision.SetToInverse(variance);
                     meanTimesPrecision.SetToProduct(precision, mean);
                 }
             }
