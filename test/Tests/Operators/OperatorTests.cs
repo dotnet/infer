@@ -103,6 +103,21 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(double.IsPositiveInfinity(a) || MMath.NextDouble(a) - b > sum);
         }
 
+        [Fact]
+        public void PrecisionAverageConditional_Point_IsIncreasing()
+        {
+            foreach (var precision in DoublesAtLeastZero())
+            {
+                foreach (var yv in DoublesAtLeastZero())
+                {
+                    var result0 = GaussianOp.PrecisionAverageConditional_Point(0, yv, precision);
+                    var result = GaussianOp.PrecisionAverageConditional_Point(MMath.NextDouble(0), yv, precision);
+                    Assert.True(result.Rate >= result0.Rate);
+                    //Trace.WriteLine($"precision={precision} yv={yv}: {result0.Rate} {result.Rate}");
+                }
+            }
+        }
+
         // Test inference on a model where precision is scaled.
         internal void GammaProductTest()
         {
@@ -2063,7 +2078,7 @@ zL = (L - mx)*sqrt(prec)
             yield return MMath.NextDouble(0);
             yield return MMath.PreviousDouble(double.PositiveInfinity);
             yield return double.PositiveInfinity;
-            for (int i = 0; i <= 100; i++)
+            for (int i = 0; i <= 300; i++)
             {
                 double bigValue = System.Math.Pow(10, i);
                 yield return -bigValue;
