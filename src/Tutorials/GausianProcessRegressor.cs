@@ -11,15 +11,20 @@ using OxyPlot.Wpf;
 using OxyPlot;
 #endif
 using System.Threading;
+// #define oxyplot
+// Install OxPlot NuGet pcakages to enable graph plotting
 
 namespace Microsoft.ML.Probabilistic.Tutorials
 {
+    [Example("Applications", "A Gaussian Process regressor example")]
     public class GaussianProcessRegressor
     {
-        // Auto Insurance in Sweden dataset
-        // http://college.cengage.com/mathematics/brase/understandable_statistics/7e/students/datasets/slr/frames/slr06.html
-        private string AisCsvPath = @"..\..\..\Data\insurance.csv";
-        private string OutputPlotPath = @"..\..\..\Data\GPRegressionPredictions.png";
+        // Train Gaussian Process on the small 'Auto Insurance in Sweden' dataset
+        // Add the insurance.csv file to a folder named Data
+        private const string AisCsvPath = @"..\..\..\Data\insurance.csv";
+
+        // Path for the results plot
+        private const string OutputPlotPath = @"..\..\..\Data\GPRegressionPredictions.png";
 
         public void Run()
         {
