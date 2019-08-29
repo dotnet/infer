@@ -9,8 +9,8 @@ using Microsoft.ML.Probabilistic.Distributions.Kernels;
 #if oxyplot
 using OxyPlot.Wpf;
 using OxyPlot;
-#endif
 using System.Threading;
+#endif
 // #define oxyplot
 // Install OxPlot NuGet pcakages to enable graph plotting
 
