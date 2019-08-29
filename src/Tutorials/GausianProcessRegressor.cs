@@ -39,33 +39,44 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 return;
             }
 
-            // Modelling code
-            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
-            IfBlock block = Variable.If(evidence);
-            Variable<SparseGP> prior = Variable.New<SparseGP>().Named("prior");
-            Variable<IFunction> f = Variable<IFunction>.Random(prior).Named("f");
-            VariableArray<Vector> x = Variable.Observed(trainingInputs).Named("x");
-            Range j = x.Range.Named("j");
-            VariableArray<double> y = Variable.Observed(trainingOutputs, j).Named("y");
-            Variable<double> score = Variable.FunctionEvaluate(f, x[j]);
+            for(var i = 0; i < 2; i++)
+            {
+                // Modelling code
+                Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+                IfBlock block = Variable.If(evidence);
+                Variable<SparseGP> prior = Variable.New<SparseGP>().Named("prior");
+                Variable<IFunction> f = Variable<IFunction>.Random(prior).Named("f");
+                VariableArray<Vector> x = Variable.Observed(trainingInputs).Named("x");
+                Range j = x.Range.Named("j");
+                VariableArray<double> y = Variable.Observed(trainingOutputs, j).Named("y");
 
-            // Add some noise to the score
-            y[j] = Variable.GaussianFromMeanAndVariance(score, 0.5);
-            block.CloseBlock();
+                if (i == 0)
+                {
+                    var score = GetScore(x, f, j);
+                    y[j] = Variable.GaussianFromMeanAndVariance(score, 0.5);
+                }
+                else
+                {
+                    var noisyScore = GetNoisyScore(x, f, j, trainingOutputs);
+                    y[j] = Variable.GaussianFromMeanAndVariance(noisyScore[j], 0.5);
+                }
+                block.CloseBlock();
 
-            // Log length scale estimated as -1
-            var kf = new SquaredExponential(-1);
-            GaussianProcess gp = new GaussianProcess(new ConstantFunction(0), kf);
+                // Log length scale estimated as -1
+                var kf = new SquaredExponential(-1);
+                GaussianProcess gp = new GaussianProcess(new ConstantFunction(0), kf);
 
-            // Convert SparseGP to full Gaussian Process by evaluating at all the training points
-            prior.ObservedValue = new SparseGP(new SparseGPFixed(gp, trainingInputs.ToArray()));
-            double logOdds = engine.Infer<Bernoulli>(evidence).LogOdds;
-            Console.WriteLine("{0} evidence = {1}", kf, logOdds.ToString("g4"));
+                // Convert SparseGP to full Gaussian Process by evaluating at all the training points
+                prior.ObservedValue = new SparseGP(new SparseGPFixed(gp, trainingInputs.ToArray()));
+                double logOdds = engine.Infer<Bernoulli>(evidence).LogOdds;
+                Console.WriteLine("{0} evidence = {1}", kf, logOdds.ToString("g4"));
 
-            // Infer the posterior Sparse GP
-            SparseGP sgp = engine.Infer<SparseGP>(f);
-            //PlotPredictions(sgp, trainingInputs, trainingOutputs);
+                // Infer the posterior Sparse GP
+                SparseGP sgp = engine.Infer<SparseGP>(f);
+                //PlotPredictions(sgp, trainingInputs, trainingOutputs);
+            }
         }
+
 #if oxyplot
         private void PlotPredictions(SparseGP sgp, Vector[] trainingInputs, double[] trainingOutputs)
         {
@@ -109,6 +120,23 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             Console.WriteLine("Saved PNG to {0}", OutputPlotPath);
         }
 #endif
+
+        private Variable<double> GetScore(VariableArray<Vector> x, Variable<IFunction> f, Range j)
+        {
+            return Variable.FunctionEvaluate(f, x[j]);
+        }
+
+        private VariableArray<double> GetNoisyScore(VariableArray<Vector> x, Variable<IFunction> f, Range j, double[] trainingOutputs)
+        {
+            Variable<double> score = GetScore(x, f, j);
+            VariableArray<double> noisyScore = Variable.Observed(trainingOutputs, j).Named("noisyScore");
+            using (Variable.ForEach(j))
+            {
+                var precision = Variable.GammaFromShapeAndRate(10, 2).Named("precision");
+                noisyScore[j] = Variable.GaussianFromMeanAndPrecision(score, precision);
+            }
+            return noisyScore;
+        }
 
         private IEnumerable<(double x, double y)> LoadAISDataset()
         {
