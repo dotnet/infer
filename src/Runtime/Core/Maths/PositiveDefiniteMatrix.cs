@@ -255,6 +255,8 @@ namespace Microsoft.ML.Probabilistic.Math
             // Algorithm:
             // A = L*L'
             // inv(A) = inv(L')*inv(L)
+
+            // stabilising offset is hardcoded to 1e-5
             A = A + Identity(A.rows) * 1e-5;
             bool isPD = L.SetToCholesky(A);
             if (!isPD) throw new PositiveDefiniteMatrixException();
