@@ -11,6 +11,7 @@ using OxyPlot.Wpf;
 using OxyPlot;
 using System.Threading;
 #endif
+
 // #define oxyplot
 // Install OxPlot NuGet pcakages to enable graph plotting
 
@@ -24,7 +25,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         private const string AisCsvPath = @"..\..\..\Data\insurance.csv";
 
         // Path for the results plot
-        private const string OutputPlotPath = @"..\..\..\Data\GPRegressionPredictions.png";
+        private const string OutputPlotPath = @"..\..\..\Data\GPRegressionPredictions";
 
         public void Run()
         {
@@ -50,16 +51,21 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 Range j = x.Range.Named("j");
                 VariableArray<double> y = Variable.Observed(trainingOutputs, j).Named("y");
 
+                var likelihoodDescription = string.Empty;
                 if (i == 0)
                 {
+                    // Standard Gaussian Process
                     var score = GetScore(x, f, j);
-                    y[j] = Variable.GaussianFromMeanAndVariance(score, 0.5);
+                    y[j] = Variable.GaussianFromMeanAndVariance(score, 0.8);
                 }
                 else
                 {
+                    // Gaussian Process with Student-t likelihood
                     var noisyScore = GetNoisyScore(x, f, j, trainingOutputs);
-                    y[j] = Variable.GaussianFromMeanAndVariance(noisyScore[j], 0.5);
+                    y[j] = Variable.GaussianFromMeanAndVariance(noisyScore[j], 0.8);
+                    likelihoodDescription = " with Student-t likelihood";
                 }
+                Console.WriteLine("Training a Gaussian Process regressor{0}", likelihoodDescription);
                 block.CloseBlock();
 
                 // Log length scale estimated as -1
@@ -73,12 +79,12 @@ namespace Microsoft.ML.Probabilistic.Tutorials
 
                 // Infer the posterior Sparse GP
                 SparseGP sgp = engine.Infer<SparseGP>(f);
-                //PlotPredictions(sgp, trainingInputs, trainingOutputs);
+                //PlotPredictions(sgp, trainingInputs, trainingOutputs, likelihoodDescription);
             }
         }
 
-#if oxyplot
-        private void PlotPredictions(SparseGP sgp, Vector[] trainingInputs, double[] trainingOutputs)
+        #if oxyplot
+        private void PlotPredictions(SparseGP sgp, Vector[] trainingInputs, double[] trainingOutputs, string likelihoodDescription)
         {
             var meanSeries = new OxyPlot.Series.LineSeries { Title = "Mean function", Color = OxyColors.SkyBlue, };
             var scatterSeries = new OxyPlot.Series.ScatterSeries { Title = "Training points" };
@@ -101,7 +107,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             }
 
             var model = new PlotModel();
-            model.Title = "Gaussian Process trained on Auto Insurance in Sweden dataset";
+            model.Title = string.Format("GP{0} trained on AIS dataset", likelihoodDescription);
             model.Series.Add(meanSeries);
             model.Series.Add(scatterSeries);
             model.Series.Add(areaSeries);
@@ -113,13 +119,14 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 Title = "y (total payment for all the claims)" });
 
             // Required for plotting
-            Thread thread = new Thread(() => PngExporter.Export(model, OutputPlotPath, 600, 400, OxyColors.White));
+            var pngPath = string.Format("{0}{1}.png", OutputPlotPath, likelihoodDescription);
+            Thread thread = new Thread(() => PngExporter.Export(model, pngPath, 600, 400, OxyColors.White));
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
 
-            Console.WriteLine("Saved PNG to {0}", OutputPlotPath);
+            Console.WriteLine("Saved PNG to {0}", pngPath);
         }
-#endif
+        #endif
 
         private Variable<double> GetScore(VariableArray<Vector> x, Variable<IFunction> f, Range j)
         {
@@ -128,11 +135,13 @@ namespace Microsoft.ML.Probabilistic.Tutorials
 
         private VariableArray<double> GetNoisyScore(VariableArray<Vector> x, Variable<IFunction> f, Range j, double[] trainingOutputs)
         {
+            // The stduent-t distribution arises as the mean of a normal distribution once an unknown precision is marginalised out
             Variable<double> score = GetScore(x, f, j);
             VariableArray<double> noisyScore = Variable.Observed(trainingOutputs, j).Named("noisyScore");
             using (Variable.ForEach(j))
             {
-                var precision = Variable.GammaFromShapeAndRate(10, 2).Named("precision");
+                // The precision of the Gaussian is modelled with a Gamma distribution
+                var precision = Variable.GammaFromShapeAndRate(4, 1).Named("precision");
                 noisyScore[j] = Variable.GaussianFromMeanAndPrecision(score, precision);
             }
             return noisyScore;
