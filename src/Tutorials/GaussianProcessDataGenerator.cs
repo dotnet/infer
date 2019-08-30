@@ -98,7 +98,8 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
 
-            Console.WriteLine("Plotting complete: Generated {0} points with {1} corrupted", numData, (int)System.Math.Ceiling(numData * propCorrupt));
+            int numCorrupted = (int)System.Math.Ceiling(numData * propCorrupt);
+            Console.WriteLine("Plotting complete: Generated {0} points with {1} corrupted", numData, numCorrupted);
         }
 
         private void DisplayPNG(PlotModel model)
