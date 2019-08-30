@@ -11,7 +11,6 @@ using OxyPlot.Wpf;
 using OxyPlot;
 using System.Threading;
 #endif
-
 // #define oxyplot
 // Install OxPlot NuGet pcakages to enable graph plotting
 
@@ -51,21 +50,21 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 Range j = x.Range.Named("j");
                 VariableArray<double> y = Variable.Observed(trainingOutputs, j).Named("y");
 
-                var likelihoodDescription = string.Empty;
                 if (i == 0)
                 {
                     // Standard Gaussian Process
+                    Console.WriteLine("Training a Gaussian Process regressor");
                     var score = GetScore(x, f, j);
                     y[j] = Variable.GaussianFromMeanAndVariance(score, 0.8);
                 }
                 else
                 {
                     // Gaussian Process with Student-t likelihood
+                    Console.WriteLine("Training a Gaussian Process regressor with Student-t likelihood");
                     var noisyScore = GetNoisyScore(x, f, j, trainingOutputs);
                     y[j] = Variable.GaussianFromMeanAndVariance(noisyScore[j], 0.8);
-                    likelihoodDescription = " with Student-t likelihood";
                 }
-                Console.WriteLine("Training a Gaussian Process regressor{0}", likelihoodDescription);
+
                 block.CloseBlock();
 
                 // Log length scale estimated as -1
@@ -79,12 +78,12 @@ namespace Microsoft.ML.Probabilistic.Tutorials
 
                 // Infer the posterior Sparse GP
                 SparseGP sgp = engine.Infer<SparseGP>(f);
-                //PlotPredictions(sgp, trainingInputs, trainingOutputs, likelihoodDescription);
+                //PlotPredictions(sgp, trainingInputs, trainingOutputs, i != 0);
             }
         }
 
         #if oxyplot
-        private void PlotPredictions(SparseGP sgp, Vector[] trainingInputs, double[] trainingOutputs, string likelihoodDescription)
+        private void PlotPredictions(SparseGP sgp, Vector[] trainingInputs, double[] trainingOutputs, bool useStudentT)
         {
             var meanSeries = new OxyPlot.Series.LineSeries { Title = "Mean function", Color = OxyColors.SkyBlue, };
             var scatterSeries = new OxyPlot.Series.ScatterSeries { Title = "Training points" };
@@ -107,7 +106,18 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             }
 
             var model = new PlotModel();
-            model.Title = string.Format("GP{0} trained on AIS dataset", likelihoodDescription);
+            string pngPath;
+            if (!useStudentT)
+            {
+                model.Title = "Gaussian Process trained on AIS dataset";
+                pngPath = string.Format("{0}.png", OutputPlotPath);
+            }
+            else
+            {
+                model.Title = "Gaussian Process trained on AIS dataset (Student-t likelhood)";
+                pngPath = string.Format("{0}{1}.png", OutputPlotPath, "StudentT");
+            }
+
             model.Series.Add(meanSeries);
             model.Series.Add(scatterSeries);
             model.Series.Add(areaSeries);
@@ -119,7 +129,6 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 Title = "y (total payment for all the claims)" });
 
             // Required for plotting
-            var pngPath = string.Format("{0}{1}.png", OutputPlotPath, likelihoodDescription);
             Thread thread = new Thread(() => PngExporter.Export(model, pngPath, 600, 400, OxyColors.White));
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
@@ -135,7 +144,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
 
         private VariableArray<double> GetNoisyScore(VariableArray<Vector> x, Variable<IFunction> f, Range j, double[] trainingOutputs)
         {
-            // The stduent-t distribution arises as the mean of a normal distribution once an unknown precision is marginalised out
+            // The student-t distribution arises as the mean of a normal distribution once an unknown precision is marginalised out
             Variable<double> score = GetScore(x, f, j);
             VariableArray<double> noisyScore = Variable.Observed(trainingOutputs, j).Named("noisyScore");
             using (Variable.ForEach(j))
