@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 using Microsoft.ML.Probabilistic.Utilities;
@@ -2144,7 +2145,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             Assert.True(0 <= MMath.NormalCdfIntegral(213393529.2046707, -213393529.2046707, -1, 7.2893668811495072E-10).Mantissa);
             Assert.True(0 < MMath.NormalCdfIntegral(-0.42146853220760722, 0.42146843802130329, -0.99999999999999989, 6.2292398855983019E-09).Mantissa);
  
-            foreach (var x in OperatorTests.Doubles())
+            Parallel.ForEach (OperatorTests.Doubles(), x =>
             {
                 foreach (var y in OperatorTests.Doubles())
                 {
@@ -2153,7 +2154,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                         MMath.NormalCdfIntegral(x, y, r);
                     }
                 }
-            }
+            });
         }
 
         internal void NormalCdfIntegralTest2()
