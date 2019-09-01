@@ -26,10 +26,10 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             //InferenceEngine.DefaultEngine.Algorithm = new GibbsSampling();
 
             //Options
-            InferenceEngine.DefaultEngine.ShowProgress = true;
+            InferenceEngine.DefaultEngine.ShowProgress = false;
             InferenceEngine.DefaultEngine.ShowTimings = false;
             InferenceEngine.DefaultEngine.ShowMsl = false;
-            InferenceEngine.DefaultEngine.ShowFactorGraph = true;
+            InferenceEngine.DefaultEngine.ShowFactorGraph = false;
             InferenceEngine.DefaultEngine.ShowSchedule = false;
 
             //Tutorials
@@ -57,8 +57,8 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             //new ClickModel().Run();
             //new DifficultyAbility().Run();
             //new GaussianProcessClassifier().Run();
-            //new GaussianProcessRegression().Run();
-            new GaussianProcessDataGenerator().Run();
+            //new GaussianProcessRegressor().Run();
+            //new GaussianProcessDataGenerator().Run();
             //new MultinomialRegression().Run();
             //new RecommenderSystem().Run();
             //new StudentSkills().Run();

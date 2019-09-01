@@ -78,7 +78,10 @@ namespace Microsoft.ML.Probabilistic.Tutorials
 
                 // Infer the posterior Sparse GP
                 SparseGP sgp = engine.Infer<SparseGP>(f);
-                //PlotPredictions(sgp, trainingInputs, trainingOutputs, i != 0);
+
+                #if oxyplot
+                PlotPredictions(sgp, trainingInputs, trainingOutputs, i != 0);
+                #endif
             }
         }
 
@@ -89,6 +92,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             var scatterSeries = new OxyPlot.Series.ScatterSeries { Title = "Training points" };
             var areaSeries = new OxyPlot.Series.AreaSeries { Title = "\u00B1 2\u03C3", Color = OxyColors.PowderBlue };
 
+            double sqDiff = 0;
             for (int i = 0; i < trainingInputs.Length; i++)
             {
                 Gaussian post = sgp.Marginal(trainingInputs[i]);
@@ -103,7 +107,10 @@ namespace Microsoft.ML.Probabilistic.Tutorials
                 var stdDev = System.Math.Sqrt(1 / precision);
                 areaSeries.Points.Add(new DataPoint(xTrain, postMean + (2 * stdDev)));
                 areaSeries.Points2.Add(new DataPoint(xTrain, postMean - (2 * stdDev)));
+                sqDiff += System.Math.Pow(postMean - trainingOutputs[i], 2);
             }
+
+            Console.WriteLine("RMSE is: {0}", System.Math.Sqrt(sqDiff / trainingOutputs.Length));
 
             var model = new PlotModel();
             string pngPath;
