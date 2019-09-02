@@ -9,9 +9,13 @@
     <RootNamespace>RobustGaussianProcess</RootNamespace>
     <AssemblyName>RobustGaussianProcess</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	  <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+	  <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+	  <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+	  <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +37,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\OxyPlot.Wpf.1.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,10 +54,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GaussianProcessDataGenerator.cs" />
+    <Compile Include="GaussianProcessRegressor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-	<Compile Include="..\..\Shared\SharedAssemblyFileVersion.cs" />
+    <Compile Include="..\..\Shared\SharedAssemblyFileVersion.cs" />
     <Compile Include="..\..\Shared\SharedAssemblyInfo.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
@@ -61,8 +73,10 @@
       <Project>{df2db4de-a48c-4309-b867-cde55512bb72}</Project>
       <Name>Runtime</Name>
     </ProjectReference>
-  </ItemGroup>  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
