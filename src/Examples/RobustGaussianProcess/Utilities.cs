@@ -29,7 +29,7 @@ namespace RobustGaussianProcess
         /// </summary>
         public static Vector[] VectorRange(double min, double max, int len, bool random)
         {
-            Vector[] inputs = new Vector[len];
+            var inputs = new double[len];
             Random rng = new Random();
 
             for (int i = 0; i < len; i++)
@@ -46,10 +46,15 @@ namespace RobustGaussianProcess
                 }
                 num = num * (max - min);
                 num += min;
-                inputs[i] = Vector.FromArray(new double[1] { num });
+                inputs[i] = num;
             }
 
-            return inputs;
+            if (random)
+            {
+                inputs = inputs.OrderBy(x => x).ToArray();
+            }
+
+            return inputs.Select(x => Vector.FromArray(new double[1] { x })).ToArray();
         }
 
         public static IEnumerable<(double x, double y)> LoadAISDataset()

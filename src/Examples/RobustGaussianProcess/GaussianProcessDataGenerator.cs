@@ -12,9 +12,6 @@ namespace RobustGaussianProcess
 {
     class GaussianProcessDataGenerator
     {
-        // Path for the results plot
-        private const string OutputPlotPath = @"..\..\..\TutorialData\GPRandomDataGenerator.png";
-
         public static (Vector[] dataX, double[] dataY) GenerateRandomData(int numData, double proportionCorrupt)
         {
             InferenceEngine engine = Utilities.GetInferenceEngine();
@@ -51,7 +48,7 @@ namespace RobustGaussianProcess
                 if (i < proportionCorrupt * numData)
                 {
                     double sign = rng.NextDouble() > 0.5 ? 1 : -1;
-                    double distance = rng.NextDouble() * 3;
+                    double distance = rng.NextDouble() * 1.5;
                     post = (sign * distance) + post;
                 }
 
@@ -63,35 +60,5 @@ namespace RobustGaussianProcess
 
             return (randomInputs, randomOutputs);
         }
-
-#if oxyplot
-    private void PlotScatter(Vector[] dataX, double[] dataY)
-    {
-        var scatterSeries = new OxyPlot.Series.ScatterSeries { Title = "Random data" };
-
-        for (int i = 0; i < dataX.Length; i++)
-        {
-            scatterSeries.Points.Add(new OxyPlot.Series.ScatterPoint(dataX[i][0], dataY[i]));
-        }
-
-        var model = new PlotModel();
-        model.Title = "Random Function drawn from a GP with corrupted data points";
-        model.Series.Add(scatterSeries);
-        model.Axes.Add(new OxyPlot.Axes.LinearAxis
-        {
-            Position = OxyPlot.Axes.AxisPosition.Bottom,
-            Title = "x"
-        });
-        model.Axes.Add(new OxyPlot.Axes.LinearAxis
-        {
-            Position = OxyPlot.Axes.AxisPosition.Left,
-            Title = "y"
-        });
-
-        Utilities.PlotModel(model, OutputPlotPath);
-
-        Console.WriteLine("Saved PNG to {0}", OutputPlotPath);
-    }
-#endif
     }
 }
