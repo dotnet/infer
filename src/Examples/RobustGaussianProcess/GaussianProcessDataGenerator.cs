@@ -7,6 +7,7 @@ using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Distributions.Kernels;
 using System;
+using System.Linq;
 
 namespace RobustGaussianProcess
 {
@@ -39,23 +40,24 @@ namespace RobustGaussianProcess
             Random rng = new Random();
 
             double[] randomOutputs = new double[randomInputs.Length];
+            int numCorrupted = (int)System.Math.Ceiling(numData * proportionCorrupt);
+            var subset = Enumerable.Range(0, randomInputs.Length + 1).OrderBy(x => rng.Next()).Take(numCorrupted);
 
             // get random data
             for (int i = 0; i < randomInputs.Length; i++)
             {
                 double post = randomFunc.Evaluate(randomInputs[i]);
                 // corrupt data point if it we haven't exceed the proportion we wish to corrupt
-                if (i < proportionCorrupt * numData)
+                if (subset.Contains(i))
                 {
                     double sign = rng.NextDouble() > 0.5 ? 1 : -1;
-                    double distance = rng.NextDouble() * 1.5;
+                    double distance = rng.NextDouble() * 1;
                     post = (sign * distance) + post;
                 }
 
                 randomOutputs[i] = post;
             }
 
-            int numCorrupted = (int)System.Math.Ceiling(numData * proportionCorrupt);
             Console.WriteLine("Model complete: Generated {0} points with {1} corrupted", numData, numCorrupted);
 
             return (randomInputs, randomOutputs);

@@ -19,10 +19,10 @@ namespace RobustGaussianProcess
     {
         // Train Gaussian Process on the small 'Auto Insurance in Sweden' dataset
         // Add the insurance.csv file to a folder named Data
-        private const string AisCsvPath = @"..\..\Data\insurance.csv";
+        private const string AisCsvPath = @"..\..\..\Data\insurance.csv";
 
         // Path for the results plot
-        private const string OutputPlotPath = @"..\..\Data\GPRegressionPredictions.png";
+        private const string OutputPlotPath = @"..\..\..\Data\GPRegressionPredictions";
 
         /// <summary>
         /// Generates a 1D vector with length len having a min and max; data points are randomly distributed and ordered if specified
