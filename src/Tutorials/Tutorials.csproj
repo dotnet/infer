@@ -29,7 +29,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net461</TargetFrameworks> 
+        <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks> 
         <AddSyntheticProjectReferencesForSolutionDependencies>false</AddSyntheticProjectReferencesForSolutionDependencies>
       </PropertyGroup>
     </Otherwise>
@@ -140,7 +140,6 @@
     <Content Include="Infer.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <PackageReference Include="OxyPlot.Wpf" Version="1.0.0" />
     <EmbeddedResource Update="ExamplesViewer.resx">
       <DependentUpon>ExamplesViewer.cs</DependentUpon>
     </EmbeddedResource>
