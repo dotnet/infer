@@ -1,49 +1,51 @@
-﻿#define oxyplot
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+// #define oxyplot
+// Install OxyPlot nuget package
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Distributions.Kernels;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RobustGaussianProcess
 {
     class Program
     {
+        /// <summary>
+        /// Main for Gaussian Process regression example
+        /// Fits two datasets (real and synthetic) using a standard Gaussian Process and a Robust Student-T Gaussian Process
+        /// </summary>
         static void Main()
         {
-            FitDataset(true);
-            FitDataset(false);
+            FitDataset(useSynthetic: false);
+            FitDataset(useSynthetic: true);
         }
 
-        static void FitDataset(bool fitAIS)
+        static void FitDataset(bool useSynthetic)
         {
             Vector[] trainingInputs;
             double[] trainingOutputs;
-            string datasetName;
 
-            if (fitAIS)
+            if (!useSynthetic)
             {
-                datasetName = "AIS";
                 var trainingData = Utilities.LoadAISDataset();
                 trainingInputs = trainingData.Select(tup => Vector.FromArray(new double[1] { tup.x })).ToArray();
                 trainingOutputs = trainingData.Select(tup => tup.y).ToArray();
             }
             else
             {
-                datasetName = "Generated";
                 (trainingInputs, trainingOutputs) = GaussianProcessDataGenerator.GenerateRandomData(30, 0.3);
             }
 
             InferenceEngine engine = Utilities.GetInferenceEngine();
 
+            // First fit standard GP, then fit Student-T GP
             for (var i = 0; i < 2; i++)
             {
                 var gaussianProcessRegressor = new GaussianProcessRegressor(trainingInputs, i != 0, trainingOutputs);
-                gaussianProcessRegressor.Block.CloseBlock();
 
                 // Log length scale estimated as -1
                 var kf = new SquaredExponential(-1);
@@ -58,6 +60,7 @@ namespace RobustGaussianProcess
                 SparseGP sgp = engine.Infer<SparseGP>(gaussianProcessRegressor.F);
 
 #if oxyplot
+                string datasetName = useSynthetic ? "Synthetic" : "AIS";
                 Utilities.PlotPredictions(sgp, trainingInputs, trainingOutputs, i != 0, datasetName);
 #endif
             }

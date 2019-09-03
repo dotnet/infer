@@ -1,4 +1,7 @@
-﻿using Microsoft.ML.Probabilistic.Distributions;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;
 using System;
@@ -13,9 +16,11 @@ namespace RobustGaussianProcess
         public IfBlock Block;
         public VariableArray<Vector> X { get; }
         public Range J;
-        public Variable<double> Score { get; }
 
-        public GaussianProcessRegressor(Vector[] trainingInputs)
+        /// <summary>
+        /// Helper class to instantiate Gaussian Process regressor
+        /// </summary>
+        public GaussianProcessRegressor(Vector[] trainingInputs, bool closeBlock = true)
         {
             // Modelling code
             Evidence = Variable.Bernoulli(0.5).Named("evidence");
@@ -24,9 +29,15 @@ namespace RobustGaussianProcess
             F = Variable<IFunction>.Random(Prior).Named("f");
             X = Variable.Observed(trainingInputs).Named("x");
             J = X.Range.Named("j");
+
+            // If generating data, we can close block here
+            if (closeBlock)
+            {
+                Block.CloseBlock();
+            }
         }
 
-        public GaussianProcessRegressor(Vector[] trainingInputs, bool useStudentTLikelihood, double[] trainingOutputs) : this(trainingInputs)
+        public GaussianProcessRegressor(Vector[] trainingInputs, bool useStudentTLikelihood, double[] trainingOutputs) : this(trainingInputs, closeBlock: false)
         {
             VariableArray<double> y = Variable.Observed(trainingOutputs, J).Named("y");
 
@@ -44,13 +55,20 @@ namespace RobustGaussianProcess
                 var noisyScore = GetNoisyScore(X, F, J, trainingOutputs);
                 y[J] = Variable.GaussianFromMeanAndVariance(noisyScore[J], 0.8);
             }
+            Block.CloseBlock();
         }
 
+        /// <summary>
+        /// Score for standard Gaussian Process
+        /// </summary>
         private static Variable<double> GetScore(VariableArray<Vector> x, Variable<IFunction> f, Range j)
         {
             return Variable.FunctionEvaluate(f, x[j]);
         }
 
+        /// <summary>
+        /// Score for Gaussian Process with Student-t
+        /// </summary>
         private static VariableArray<double> GetNoisyScore(VariableArray<Vector> x, Variable<IFunction> f, Range j, double[] trainingOutputs)
         {
             // The student-t distribution arises as the mean of a normal distribution once an unknown precision is marginalised out

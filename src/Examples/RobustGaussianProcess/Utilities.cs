@@ -1,16 +1,21 @@
-﻿#define oxyplot
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+// #define oxyplot
+// Install OxyPlot nuget package
 using Microsoft.ML.Probabilistic.Algorithms;
-using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 #if oxyplot
 using OxyPlot.Wpf;
 using OxyPlot;
 using System.Threading;
+using Microsoft.ML.Probabilistic.Distributions;
 #endif
 
 namespace RobustGaussianProcess
@@ -18,7 +23,7 @@ namespace RobustGaussianProcess
     class Utilities
     {
         // Train Gaussian Process on the small 'Auto Insurance in Sweden' dataset
-        // Add the insurance.csv file to a folder named Data
+        // The insurance.csv file can be found in the Data directory
         private const string AisCsvPath = @"..\..\..\Data\insurance.csv";
 
         // Path for the results plot
@@ -55,6 +60,9 @@ namespace RobustGaussianProcess
             return inputs.Select(x => Vector.FromArray(new double[1] { x })).ToArray();
         }
 
+        /// <summary>
+        /// Read the Auto Insurance in Sweden dataset from its CSV file
+        /// </summary>
         public static IEnumerable<(double x, double y)> LoadAISDataset()
         {
             var data = new List<(double x, double y)>();
@@ -87,7 +95,7 @@ namespace RobustGaussianProcess
             y = y.Select(val => val - meanY);
 
             // Scale data to lie between 1 and -1
-            var absoluteMaxY = y.Select(val => System.Math.Abs(val)).Max();
+            var absoluteMaxY = y.Select(val => Math.Abs(val)).Max();
             y = y.Select(val => val / absoluteMaxY);
             var maxX = x.Max();
             x = x.Select(val => val / maxX);
@@ -107,24 +115,11 @@ namespace RobustGaussianProcess
             return engine;
         }
 
-        public static VariableArray<double> GetNoisyScore(Variable<double> score, Range j, double[] trainingOutputs)
-        {
-            // The student-t distribution arises as the mean of a normal distribution once an unknown precision is marginalised out
-            VariableArray<double> noisyScore = Variable.Observed(trainingOutputs, j).Named("noisyScore");
-            using (Variable.ForEach(j))
-            {
-                // The precision of the Gaussian is modelled with a Gamma distribution
-                var precision = Variable.GammaFromShapeAndRate(4, 1).Named("precision");
-                noisyScore[j] = Variable.GaussianFromMeanAndPrecision(score, precision);
-            }
-            return noisyScore;
-        }
-
 #if oxyplot
         public static void PlotGraph(PlotModel model, string graphPath)
         {
             // Required for plotting
-            Thread thread = new Thread(() => PngExporter.Export(model, graphPath, 600, 400, OxyColors.White));
+            Thread thread = new Thread(() => PngExporter.Export(model, graphPath, 800, 600, OxyColors.White));
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
         }
@@ -147,13 +142,13 @@ namespace RobustGaussianProcess
                 var mean = 0.0;
                 var precision = 0.0;
                 post.GetMeanAndPrecision(out mean, out precision);
-                var stdDev = System.Math.Sqrt(1 / precision);
+                var stdDev = Math.Sqrt(1 / precision);
                 areaSeries.Points.Add(new DataPoint(xTrain, postMean + (2 * stdDev)));
                 areaSeries.Points2.Add(new DataPoint(xTrain, postMean - (2 * stdDev)));
-                sqDiff += System.Math.Pow(postMean - trainingOutputs[i], 2);
+                sqDiff += Math.Pow(postMean - trainingOutputs[i], 2);
             }
 
-            Console.WriteLine("RMSE is: {0}", System.Math.Sqrt(sqDiff / trainingOutputs.Length));
+            Console.WriteLine("RMSE is: {0}", Math.Sqrt(sqDiff / trainingOutputs.Length));
 
             var model = new PlotModel();
             string pngPath;
@@ -164,7 +159,7 @@ namespace RobustGaussianProcess
             }
             else
             {
-                model.Title = string.Format("Gaussian Process trained on {0} dataset (Student-t likelhood)", dataset);
+                model.Title = string.Format("Gaussian Process trained on {0} dataset (Student-t likelihood)", dataset);
                 pngPath = string.Format("{0}{1}{2}.png", OutputPlotPath, "StudentT", dataset);
             }
 
@@ -178,8 +173,7 @@ namespace RobustGaussianProcess
                 Position = OxyPlot.Axes.AxisPosition.Left,
                 Title = "y" });
 
-            Utilities.PlotGraph(model, pngPath);
-
+            PlotGraph(model, pngPath);
             Console.WriteLine("Saved PNG to {0}", pngPath);
         }
 #endif

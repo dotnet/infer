@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
 using Microsoft.ML.Probabilistic.Models;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Distributions;
@@ -11,6 +10,12 @@ using System.Linq;
 
 namespace RobustGaussianProcess
 {
+    /// <summary>
+    /// Class to generate synthetic data
+    /// 1) randomly sample a 1D function from a GP;
+    /// 2) pick a random subset of 'numData' points;
+    /// 3) pick a further random proportion 'propCorrupt' of 'numData' to corrupt according to a uniform distribution with a range of -1 to 1
+    /// </summary>
     class GaussianProcessDataGenerator
     {
         public static (Vector[] dataX, double[] dataY) GenerateRandomData(int numData, double proportionCorrupt)
@@ -26,7 +31,6 @@ namespace RobustGaussianProcess
             Vector[] randomInputs = Utilities.VectorRange(0, 1, numData, null);
 
             var gaussianProcessGenerator = new GaussianProcessRegressor(randomInputs);
-            gaussianProcessGenerator.Block.CloseBlock();
 
             // The basis
             Vector[] basis = Utilities.VectorRange(0, 1, 6, rng);
@@ -42,9 +46,8 @@ namespace RobustGaussianProcess
             SparseGP sgp = engine.Infer<SparseGP>(gaussianProcessGenerator.F);
             var randomFunc = sgp.Sample();
 
-
             double[] randomOutputs = new double[randomInputs.Length];
-            int numCorrupted = (int)System.Math.Ceiling(numData * proportionCorrupt);
+            int numCorrupted = (int)Math.Ceiling(numData * proportionCorrupt);
             var subset = Enumerable.Range(0, randomInputs.Length + 1).OrderBy(x => rng.Next()).Take(numCorrupted);
 
             // get random data
