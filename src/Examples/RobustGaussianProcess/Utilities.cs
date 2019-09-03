@@ -27,16 +27,14 @@ namespace RobustGaussianProcess
         /// <summary>
         /// Generates a 1D vector with length len having a min and max; data points are randomly distributed and ordered if specified
         /// </summary>
-        public static Vector[] VectorRange(double min, double max, int len, bool random)
+        public static Vector[] VectorRange(double min, double max, int len, Random rng)
         {
             var inputs = new double[len];
-            Random rng = new Random();
+            double num;
 
             for (int i = 0; i < len; i++)
             {
-                double num = new double();
-
-                if (random)
+                if (rng != null)
                 {
                     num = rng.NextDouble();
                 }
@@ -49,7 +47,7 @@ namespace RobustGaussianProcess
                 inputs[i] = num;
             }
 
-            if (random)
+            if (rng != null)
             {
                 inputs = inputs.OrderBy(x => x).ToArray();
             }
