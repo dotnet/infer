@@ -548,6 +548,15 @@ namespace Microsoft.ML.Probabilistic.Factors
     {
         public static int QuadratureNodeCount = 1000;
 
+        public static Gaussian DAverageConditional([SkipIfUniform] GammaPower exp, [Proper] Gaussian d)
+        {
+            double scale = 1 / exp.Power;
+            Gaussian forward = GaussianProductOp.ProductAverageConditional(scale, d);
+            Gaussian message = DAverageConditional(Gamma.FromNatural(exp.Shape - exp.Power, exp.Rate), forward);
+            Gaussian backward = GaussianProductOp.BAverageConditional(message, scale);
+            return backward;
+        }
+
         public static Gaussian DAverageConditional([SkipIfUniform] Gamma exp, [Proper] Gaussian d)
         {
             // as a function of d, the factor is Ga(exp(d); shape, rate) = exp(d*(shape-1) -rate*exp(d))

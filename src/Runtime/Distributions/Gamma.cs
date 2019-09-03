@@ -319,12 +319,26 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (x <= 0)
                 throw new ArgumentException("x <= 0");
-            double a = -x * x * ddLogP;
-            if (ddLogP == 0.0)
-                a = 0.0;  // in case x is infinity
+            double a;
+            if(double.IsPositiveInfinity(x))
+            {
+                if (ddLogP < 0) return Gamma.PointMass(x);
+                else if (ddLogP == 0) a = 0.0;
+                else if (forceProper)
+                {
+                    if (dLogP <= 0) return Gamma.FromShapeAndRate(1, -dLogP);
+                    else return Gamma.PointMass(x);
+                }
+                else return Gamma.FromShapeAndRate(-x, -x - dLogP);
+            }
+            else
+            {
+                a = -x * x * ddLogP;
+                if (a+1 > double.MaxValue) return Gamma.PointMass(x);
+            }
             if (forceProper)
             {
-                if (dLogP < 0)
+                if (dLogP <= 0)
                 {
                     if (a < 0)
                         a = 0;
@@ -333,7 +347,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     double amin = x * dLogP;
                     if (a < amin)
-                        a = amin;
+                    {
+                        return Gamma.FromShapeAndRate(amin + 1, 0);
+                    }
                 }
             }
             double b = a / x - dLogP;

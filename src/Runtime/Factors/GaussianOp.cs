@@ -502,7 +502,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             // x2ddlogf = (-yv*r-0.5+r*ym*ym)/(yv*r+1)^2 - r*ym*ym/(yv*r+1)^3
             // xdlogf + x2ddlogf = (-0.5*yv*r + 0.5*r*ym*ym)/(yv*r+1)^2 - r*ym*ym/(yv*r+1)^3
             // as r->0: -0.5*r*(yv + ym*ym)
-            if (precision == 0) return Gamma.FromShapeAndRate(1.5, 0.5 * (yv + ym * ym));
+            if (precision == 0 || yv == 0) return Gamma.FromShapeAndRate(1.5, 0.5 * (yv + ym * ym));
             // point mass case
             // f(r) = N(xm;mm, xv+mv+1/r)
             // log f(r) = -0.5*log(xv+mv+1/r) - 0.5*(xm-mm)^2/(xv+mv+1/r)
@@ -512,7 +512,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             // r^2 (log f)'' = -1/(yv*r + 1) + r*ym^2/(yv*r+1)^2) + 0.5/(yv*r+1)^2 - r*ym^2/(yv*r+1)^3
             double vdenom = 1 / (yv * precision + 1);
             double ymvdenom = ym * vdenom;
-            double ymvdenom2 = precision * ymvdenom * ymvdenom;
+            double ymvdenom2 = (precision > double.MaxValue) ? 0 : (precision * ymvdenom * ymvdenom);
             //dlogf = (-0.5 * denom + 0.5 * ym2denom2) * (-v2);
             //dlogf = 0.5 * (1 - ym * ymdenom) * denom * v2;
             //dlogf = 0.5 * (v - ym * ym/(yv*precision+1))/(yv*precision + 1);

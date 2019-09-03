@@ -1929,6 +1929,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
+        [Trait("Category", "OpenBug")]
         public void Determinize10()
         {
             var builder = new StringAutomaton.Builder();

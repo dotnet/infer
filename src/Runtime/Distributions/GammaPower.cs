@@ -725,6 +725,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// Creates a new GammaPower distribution corresponding to dividing every sample by a positive constant.
+        /// </summary>
+        /// <param name="numerator">The numerator distribution</param>
+        /// <param name="denominator">The denominator constant.</param>
+        /// <returns>Result. May not be proper.</returns>
+        public static GammaPower operator /(GammaPower numerator, double denominator)
+        {
+            if (denominator <= 0) throw new ArgumentOutOfRangeException(nameof(denominator), denominator, "<= 0");
+            return GammaPower.FromShapeAndRate(numerator.Shape, numerator.Rate / denominator, numerator.Power);
+        }
+
+        /// <summary>
         /// Sets the parameters to represent the power of a source distribution to some exponent.
         /// </summary>
         /// <param name="dist">The source distribution</param>
