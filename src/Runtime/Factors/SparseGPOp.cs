@@ -70,16 +70,43 @@ namespace Microsoft.ML.Probabilistic.Factors
             result.FixedParameters = func.FixedParameters;
             result.IncludePrior = false;
 
-            double vf = func.Variance(x);
-            double my, vy;
-            y.GetMeanAndVariance(out my, out vy);
             Vector kbx = func.FixedParameters.KernelOf_X_B(x);
             Vector proj = func.FixedParameters.InvKernelOf_B_B * kbx;
-            double prec = 1.0 / (vy + vf - func.Var_B_B.QuadraticForm(proj));
-            result.InducingDist.Precision.SetToOuter(proj, proj);
-            result.InducingDist.Precision.Scale(prec);
-            result.InducingDist.MeanTimesPrecision.SetTo(proj);
-            result.InducingDist.MeanTimesPrecision.Scale(prec * my);
+            // To avoid computing Var_B_B:
+            // vf - func.Var_B_B.QuadraticForm(proj) = kxx - kbx'*beta*kbx - kbx'*inv(K)*Var_B_B*inv(K)*kbx
+            // = kxx - kbx'*(beta + inv(K)*Var_B_B*inv(K))*kbx
+            // = kxx - kbx'*(beta + inv(K)*(K - K*Beta*K)*inv(K))*kbx
+            // = kxx - kbx'*inv(K)*kbx
+            // Since Var_B_B = K - K*Beta*K
+            double kxx = func.FixedParameters.Prior.Variance(x);
+            if (y.Precision == 0)
+            {
+                result.InducingDist.Precision.SetAllElementsTo(0);
+                result.InducingDist.MeanTimesPrecision.SetTo(proj);
+                result.InducingDist.MeanTimesPrecision.Scale(y.MeanTimesPrecision);
+            }
+            else
+            {
+                double my, vy;
+                y.GetMeanAndVariance(out my, out vy);
+                double prec = 1.0 / (vy + kxx - kbx.Inner(proj));
+                //Console.WriteLine($"{vf - func.Var_B_B.QuadraticForm(proj)} {func.FixedParameters.Prior.Variance(x) - func.FixedParameters.InvKernelOf_B_B.QuadraticForm(kbx)}");
+                if (prec > double.MaxValue || prec < 0)
+                {
+                    int i = proj.IndexOfMaximum();
+                    result.InducingDist.Precision.SetAllElementsTo(0);
+                    result.InducingDist.Precision[i, i] = double.PositiveInfinity;
+                    result.InducingDist.MeanTimesPrecision.SetAllElementsTo(0);
+                    result.InducingDist.MeanTimesPrecision[i] = my;
+                }
+                else
+                {
+                    result.InducingDist.Precision.SetToOuter(proj, proj);
+                    result.InducingDist.Precision.Scale(prec);
+                    result.InducingDist.MeanTimesPrecision.SetTo(proj);
+                    result.InducingDist.MeanTimesPrecision.Scale(prec * my);
+                }
+            }
             result.ClearCachedValues();
             return result;
         }

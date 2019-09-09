@@ -36,7 +36,7 @@ namespace RobustGaussianProcess
             Vector[] basis = Utilities.VectorRange(0, 1, 6, rng);
 
             // The kernel
-            var kf = new SquaredExponential(-1);
+            var kf = new SummationKernel(new SquaredExponential(-1)) + new WhiteNoise();
 
             // Fill in the sparse GP prior
             GaussianProcess gp = new GaussianProcess(new ConstantFunction(0), kf);

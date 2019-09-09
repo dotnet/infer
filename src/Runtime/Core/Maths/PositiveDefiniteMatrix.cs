@@ -255,7 +255,6 @@ namespace Microsoft.ML.Probabilistic.Math
             // Algorithm:
             // A = L*L'
             // inv(A) = inv(L')*inv(L)
-
             bool isPD = L.SetToCholesky(A);
             if (!isPD) throw new PositiveDefiniteMatrixException();
             L.SetToInverse(L);

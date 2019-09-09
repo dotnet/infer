@@ -18,7 +18,7 @@ namespace RobustGaussianProcess
         /// </summary>
         static void Main()
         {
-            FitDataset(useSynthetic: false);
+            //FitDataset(useSynthetic: false);
             FitDataset(useSynthetic: true);
         }
 
@@ -41,12 +41,13 @@ namespace RobustGaussianProcess
             InferenceEngine engine = Utilities.GetInferenceEngine();
 
             // First fit standard GP, then fit Student-T GP
-            for (var i = 0; i < 2; i++)
+            foreach (var useStudentTLikelihood in new[] { false, true })
             {
-                var gaussianProcessRegressor = new GaussianProcessRegressor(trainingInputs, i != 0, trainingOutputs);
+                var gaussianProcessRegressor = new GaussianProcessRegressor(trainingInputs, useStudentTLikelihood, trainingOutputs);
 
                 // Log length scale estimated as -1
-                var kf = new SquaredExponential(-1);
+                var noiseVariance = 0.8;
+                var kf = new SummationKernel(new SquaredExponential(-1)) + new WhiteNoise(Math.Log(noiseVariance) / 2);
                 GaussianProcess gp = new GaussianProcess(new ConstantFunction(0), kf);
 
                 // Convert SparseGP to full Gaussian Process by evaluating at all the training points
@@ -59,7 +60,7 @@ namespace RobustGaussianProcess
 
 #if NETFULL
                 string datasetName = useSynthetic ? "Synthetic" : "AIS";
-                Utilities.PlotPredictions(sgp, trainingInputs, trainingOutputs, i != 0, datasetName);
+                Utilities.PlotPredictions(sgp, trainingInputs, trainingOutputs, useStudentTLikelihood, datasetName);
 #endif
             }
         }

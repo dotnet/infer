@@ -46,14 +46,14 @@ namespace RobustGaussianProcess
                 // Standard Gaussian Process
                 Console.WriteLine("Training a Gaussian Process regressor");
                 var score = GetScore(X, F, J);
-                y[J] = Variable.GaussianFromMeanAndVariance(score, 0.8);
+                y[J] = Variable.GaussianFromMeanAndVariance(score, 0.0);
             }
             else
             {
                 // Gaussian Process with Student-t likelihood
                 Console.WriteLine("Training a Gaussian Process regressor with Student-t likelihood");
                 var noisyScore = GetNoisyScore(X, F, J, trainingOutputs);
-                y[J] = Variable.GaussianFromMeanAndVariance(noisyScore[J], 0.8);
+                y[J] = Variable.GaussianFromMeanAndVariance(noisyScore[J], 0.0);
             }
             Block.CloseBlock();
         }
