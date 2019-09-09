@@ -24,7 +24,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <TargetFrameworks>net461</TargetFrameworks>
+        <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
       </PropertyGroup>
     </Otherwise>
   </Choose>
@@ -67,7 +67,13 @@
     <Compile Include="..\..\Shared\SharedAssemblyInfo.cs" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('NETFULL'))">
     <PackageReference Include="OxyPlot.Wpf" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\insurance.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

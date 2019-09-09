@@ -1,8 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-// #define oxyplot
-// Install OxyPlot nuget package
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Distributions.Kernels;
 using Microsoft.ML.Probabilistic.Math;
@@ -59,7 +57,7 @@ namespace RobustGaussianProcess
                 // Infer the posterior Sparse GP
                 SparseGP sgp = engine.Infer<SparseGP>(gaussianProcessRegressor.F);
 
-#if oxyplot
+#if NETFULL
                 string datasetName = useSynthetic ? "Synthetic" : "AIS";
                 Utilities.PlotPredictions(sgp, trainingInputs, trainingOutputs, i != 0, datasetName);
 #endif
