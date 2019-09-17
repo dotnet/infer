@@ -761,8 +761,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests whether the point mass computation operations fails due to a stack overflow when
-        /// an automaton becomes sufficiently large.
+        /// Tests whether <see cref="StringAutomaton.TryComputePoint"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
@@ -791,7 +791,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// Tests whether <see cref="StringAutomaton.Product"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
@@ -821,7 +822,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// Tests whether <see cref="StringAutomaton.GetLogNormalizer"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
@@ -848,7 +850,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// Tests whether <see cref="StringAutomaton.IsZero"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
