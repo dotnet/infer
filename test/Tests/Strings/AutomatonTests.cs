@@ -761,8 +761,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests whether the point mass computation operations fails due to a stack overflow when
-        /// an automaton becomes sufficiently large.
+        /// Tests whether <see cref="StringAutomaton.TryComputePoint"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
@@ -791,7 +791,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// Tests whether <see cref="StringAutomaton.Product"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
@@ -821,7 +822,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// Tests whether <see cref="StringAutomaton.GetLogNormalizer"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
         /// </summary>
         [Fact]
         [Trait("Category", "StringInference")]
@@ -848,6 +850,41 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests whether <see cref="StringAutomaton.IsZero"/> fails due to a stack overflow
+        /// when an automaton becomes sufficiently large.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void IsZeroLargeAutomaton()
+        {
+            using (var unlimited = new StringAutomaton.UnlimitedStatesComputation())
+            {
+                var zeroAutomaton = MakeAutomaton(Weight.Zero);
+                var nonZeroAutomaton = MakeAutomaton(Weight.One);
+
+                Assert.True(zeroAutomaton.IsZero());
+                Assert.False(nonZeroAutomaton.IsZero());
+            }
+
+            StringAutomaton MakeAutomaton(Weight endWeight)
+            {
+                const int StateCount = 100_000;
+
+                var builder = new StringAutomaton.Builder();
+                var state = builder.Start;
+
+                for (var i = 1; i < StateCount; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                state.SetEndWeight(endWeight);
+
+                return builder.GetAutomaton();
+            }
+        }
+
+        /// <summary>
         /// Tests creating an automaton from state and transition lists.
         /// </summary>
         [Fact]
@@ -861,6 +898,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     true,
                     false,
                     StringAutomaton.DeterminizationState.Unknown,
+                    StringAutomaton.IsZeroState.Unknown,
                     new[]
                         {
                             new StringAutomaton.StateData(0, 1, Weight.One),
@@ -878,6 +916,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     true,
                     false,
                     StringAutomaton.DeterminizationState.IsDeterminized,
+                    StringAutomaton.IsZeroState.IsNonZero,
                     new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
                     Array.Empty<StringAutomaton.Transition>()));
             Assert.True(automaton2.IsZero());
@@ -890,6 +929,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         true,
                         false,
                         StringAutomaton.DeterminizationState.IsNonDeterminizable,
+                        StringAutomaton.IsZeroState.IsZero,
                         Array.Empty<StringAutomaton.StateData>(),
                         Array.Empty<StringAutomaton.Transition>())));
 
@@ -901,6 +941,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         false,
                         false,
                         StringAutomaton.DeterminizationState.Unknown,
+                        StringAutomaton.IsZeroState.Unknown,
                         new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
                         Array.Empty<StringAutomaton.Transition>())));
 
@@ -912,6 +953,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         false,
                         false,
                         StringAutomaton.DeterminizationState.Unknown,
+                        StringAutomaton.IsZeroState.Unknown,
                         new[] { new StringAutomaton.StateData(0, 1, Weight.Zero) },
                         new[] { new StringAutomaton.Transition(Option.None, Weight.One, 1) })));
 
@@ -923,6 +965,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         true,
                         false,
                         StringAutomaton.DeterminizationState.Unknown,
+                        StringAutomaton.IsZeroState.Unknown,
                         new[] { new StringAutomaton.StateData(0, 1, Weight.One) },
                         new[] { new StringAutomaton.Transition(Option.None, Weight.One, 2) })));
         }

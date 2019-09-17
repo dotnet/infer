@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public bool UsesGroups => (this.flags & Flags.UsesGroups) != 0;
 
             /// <summary>
-            /// Gets value indicating whether this automaton is
+            /// Gets value indicating whether this automaton is determinized
             /// </summary>
             public DeterminizationState DeterminizationState =>
                 ((this.flags & Flags.DeterminizationStateKnown) == 0)
@@ -61,14 +61,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         : DeterminizationState.IsNonDeterminizable);
 
             /// <summary>
+            /// Gets value indicating whether this automaton is zero
+            /// </summary>
+            public IsZeroState IsZeroState =>
+                ((this.flags & Flags.IsZeroStateKnown) == 0)
+                    ? IsZeroState.Unknown
+                    : ((this.flags & Flags.IsZero) != 0
+                        ? IsZeroState.IsZero
+                        : IsZeroState.IsNonZero);
+
+            /// <summary>
             /// Initializes instance of <see cref="DataContainer"/>.
             /// </summary>
-            [Construction("StartStateIndex", "IsEpsilonFree", "UsesGroups", "DeterminizationState", "States", "Transitions")]
+            [Construction("StartStateIndex", "IsEpsilonFree", "UsesGroups", "DeterminizationState", "IsZeroState", "States", "Transitions")]
             public DataContainer(
                 int startStateIndex,
                 bool isEpsilonFree,
                 bool usesGroups,
                 DeterminizationState determinizationState,
+                IsZeroState isZeroState,
                 ReadOnlyArray<StateData> states,
                 ReadOnlyArray<Transition> transitions)
             {
@@ -76,20 +87,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     (isEpsilonFree ? Flags.IsEpsilonFree : 0) |
                     (usesGroups ? Flags.UsesGroups : 0) |
                     (determinizationState != DeterminizationState.Unknown ? Flags.DeterminizationStateKnown : 0) |
-                    (determinizationState == DeterminizationState.IsDeterminized ? Flags.IsDeterminized : 0);
+                    (determinizationState == DeterminizationState.IsDeterminized ? Flags.IsDeterminized : 0) |
+                    (isZeroState != IsZeroState.Unknown ? Flags.IsZeroStateKnown : 0) |
+                    (isZeroState == IsZeroState.IsZero ? Flags.IsZero : 0);
                 this.StartStateIndex = startStateIndex;
                 this.States = states;
                 this.Transitions = transitions;
             }
 
-            public DataContainer WithDeterminizationState(DeterminizationState determinizationState)
+            public DataContainer With(
+                DeterminizationState? determinizationState = null,
+                IsZeroState? isZeroState = null)
             {
                 Debug.Assert(this.DeterminizationState == DeterminizationState.Unknown);
                 return new DataContainer(
                     this.StartStateIndex,
                     this.IsEpsilonFree,
                     this.UsesGroups,
-                    determinizationState,
+                    determinizationState ?? this.DeterminizationState,
+                    isZeroState ?? this.IsZeroState,
                     this.States,
                     this.Transitions);
             }
@@ -170,6 +186,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 UsesGroups = 0x2,
                 DeterminizationStateKnown = 0x4,
                 IsDeterminized = 0x8,
+                IsZeroStateKnown = 0x10,
+                IsZero = 0x20,
             }
         }
 
@@ -178,6 +196,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Unknown,
             IsDeterminized,
             IsNonDeterminizable,
+        }
+
+        public enum IsZeroState
+        {
+            Unknown,
+            IsZero,
+            IsNonZero,
         }
     }
 }

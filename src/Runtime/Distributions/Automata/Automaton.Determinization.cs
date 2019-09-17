@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             if (this.UsesGroups)
             {
                 // Determinization will result in lost of group information, which we cannot allow
-                this.Data = this.Data.WithDeterminizationState(DeterminizationState.IsNonDeterminizable);
+                this.Data = this.Data.With(DeterminizationState.IsNonDeterminizable);
                 return false;
             }
 
@@ -99,7 +99,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
             simplification.MergeParallelTransitions(); // Determinization produces a separate transition for each segment
 
-            this.Data = builder.GetData().WithDeterminizationState(DeterminizationState.IsDeterminized);
+            this.Data = builder.GetData().With(DeterminizationState.IsDeterminized);
             this.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
             this.LogValueOverride = this.LogValueOverride;
 
