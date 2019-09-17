@@ -848,6 +848,40 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void IsZeroLargeAutomaton()
+        {
+            using (var unlimited = new StringAutomaton.UnlimitedStatesComputation())
+            {
+                var zeroAutomaton = MakeAutomaton(Weight.Zero);
+                var nonZeroAutomaton = MakeAutomaton(Weight.One);
+
+                Assert.True(zeroAutomaton.IsZero());
+                Assert.False(nonZeroAutomaton.IsZero());
+            }
+
+            StringAutomaton MakeAutomaton(Weight endWeight)
+            {
+                const int StateCount = 100_000;
+
+                var builder = new StringAutomaton.Builder();
+                var state = builder.Start;
+
+                for (var i = 1; i < StateCount; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                state.SetEndWeight(endWeight);
+
+                return builder.GetAutomaton();
+            }
+        }
+
+        /// <summary>
         /// Tests creating an automaton from state and transition lists.
         /// </summary>
         [Fact]
