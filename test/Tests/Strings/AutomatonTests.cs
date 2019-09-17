@@ -861,6 +861,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     true,
                     false,
                     StringAutomaton.DeterminizationState.Unknown,
+                    StringAutomaton.IsZeroState.Unknown,
                     new[]
                         {
                             new StringAutomaton.StateData(0, 1, Weight.One),
@@ -878,6 +879,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     true,
                     false,
                     StringAutomaton.DeterminizationState.IsDeterminized,
+                    StringAutomaton.IsZeroState.IsNonZero,
                     new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
                     Array.Empty<StringAutomaton.Transition>()));
             Assert.True(automaton2.IsZero());
@@ -890,6 +892,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         true,
                         false,
                         StringAutomaton.DeterminizationState.IsNonDeterminizable,
+                        StringAutomaton.IsZeroState.IsZero,
                         Array.Empty<StringAutomaton.StateData>(),
                         Array.Empty<StringAutomaton.Transition>())));
 
@@ -901,6 +904,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         false,
                         false,
                         StringAutomaton.DeterminizationState.Unknown,
+                        StringAutomaton.IsZeroState.Unknown,
                         new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
                         Array.Empty<StringAutomaton.Transition>())));
 
@@ -912,6 +916,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         false,
                         false,
                         StringAutomaton.DeterminizationState.Unknown,
+                        StringAutomaton.IsZeroState.Unknown,
                         new[] { new StringAutomaton.StateData(0, 1, Weight.Zero) },
                         new[] { new StringAutomaton.Transition(Option.None, Weight.One, 1) })));
 
@@ -923,6 +928,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                         true,
                         false,
                         StringAutomaton.DeterminizationState.Unknown,
+                        StringAutomaton.IsZeroState.Unknown,
                         new[] { new StringAutomaton.StateData(0, 1, Weight.One) },
                         new[] { new StringAutomaton.Transition(Option.None, Weight.One, 2) })));
         }

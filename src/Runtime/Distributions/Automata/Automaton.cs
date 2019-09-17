@@ -1006,38 +1006,45 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </remarks>
         public bool IsZero()
         {
-            if (this.IsCanonicZero())
+            // Return cached value if available
+            if (this.Data.IsZeroState != IsZeroState.Unknown)
             {
-                return true;
+                return this.Data.IsZeroState == IsZeroState.IsZero;
             }
 
-            var visitedStates = new BitArray(this.States.Count, false);
-            return DoIsZero(this.Start.Index);
+            // Calculate and cache whether this automaton is zero
+            var isZero = DoIsZero();
+            this.Data = this.Data.With(isZeroState: isZero ? IsZeroState.IsZero : IsZeroState.IsNonZero);
+            return isZero;
 
-            bool DoIsZero(int stateIndex)
+            bool DoIsZero()
             {
-                if (visitedStates[stateIndex])
-                {
-                    return true;
-                }
+                var visited = new BitArray(this.States.Count, false);
+                var stack = new Stack<int>();
+                stack.Push(this.Start.Index);
+                visited[this.Start.Index] = true;
 
-                visitedStates[stateIndex] = true;
-
-                var state = this.States[stateIndex];
-                var isZero = !state.CanEnd;
-                var transitionIndex = 0;
-                while (isZero && transitionIndex < state.Transitions.Count)
+                while (stack.Count > 0)
                 {
-                    var transition = state.Transitions[transitionIndex];
-                    if (!transition.Weight.IsZero)
+                    var stateIndex = stack.Pop();
+
+                    var state = this.States[stateIndex];
+                    if (state.CanEnd)
                     {
-                        isZero = DoIsZero(transition.DestinationStateIndex);
+                        return false;
                     }
 
-                    ++transitionIndex;
+                    foreach (var transition in state.Transitions)
+                    {
+                        if (!visited[transition.DestinationStateIndex] && !transition.Weight.IsZero)
+                        {
+                            stack.Push(transition.DestinationStateIndex);
+                            visited[transition.DestinationStateIndex] = true;
+                        }
+                    }
                 }
 
-                return isZero;
+                return true;
             }
         }
 
@@ -1620,7 +1627,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public void SetToZero()
         {
             this.Data = new DataContainer(
-                0, true, false, DeterminizationState.IsDeterminized, ZeroStates, ZeroTransitions);
+                0, true, false, DeterminizationState.IsDeterminized, IsZeroState.IsZero, ZeroStates, ZeroTransitions);
         }
 
         /// <summary>

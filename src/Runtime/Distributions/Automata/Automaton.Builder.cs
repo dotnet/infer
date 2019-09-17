@@ -428,6 +428,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     !hasEpsilonTransitions,
                     usesGroups,
                     determinizationState,
+                    IsZeroState.Unknown,
                     resultStates,
                     resultTransitions);
             }
