@@ -53,61 +53,67 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets value indicating whether this automaton is determinized
             /// </summary>
-            public DeterminizationState DeterminizationState =>
-                ((this.flags & Flags.DeterminizationStateKnown) == 0)
-                    ? DeterminizationState.Unknown
-                    : ((this.flags & Flags.IsDeterminized) != 0
-                        ? DeterminizationState.IsDeterminized
-                        : DeterminizationState.IsNonDeterminizable);
+            /// <remarks>
+            /// Null value means that this property is unknown.
+            /// False value means that this automaton can not be determinized
+            /// </remarks>
+            public bool? IsDeterminized =>
+                (this.flags & Flags.DeterminizationStateKnown) != 0
+                    ? (this.flags & Flags.IsDeterminized) != 0
+                    : (bool?)null;
 
             /// <summary>
             /// Gets value indicating whether this automaton is zero
             /// </summary>
-            public IsZeroState IsZeroState =>
-                ((this.flags & Flags.IsZeroStateKnown) == 0)
-                    ? IsZeroState.Unknown
-                    : ((this.flags & Flags.IsZero) != 0
-                        ? IsZeroState.IsZero
-                        : IsZeroState.IsNonZero);
+            /// <remarks>
+            /// Null value means that this property is unknown.
+            /// </remarks>
+            public bool? IsZero =>
+                ((this.flags & Flags.IsZeroStateKnown) != 0)
+                    ? (this.flags & Flags.IsZero) != 0
+                    : (bool?)null;
 
             /// <summary>
             /// Initializes instance of <see cref="DataContainer"/>.
             /// </summary>
-            [Construction("StartStateIndex", "IsEpsilonFree", "UsesGroups", "DeterminizationState", "IsZeroState", "States", "Transitions")]
+            [Construction("StartStateIndex", "States", "Transitions", "IsEpsilonFree", "UsesGroups", "IsDeterminized", "IsZero")]
             public DataContainer(
                 int startStateIndex,
+                ReadOnlyArray<StateData> states,
+                ReadOnlyArray<Transition> transitions,
                 bool isEpsilonFree,
                 bool usesGroups,
-                DeterminizationState determinizationState,
-                IsZeroState isZeroState,
-                ReadOnlyArray<StateData> states,
-                ReadOnlyArray<Transition> transitions)
+                bool? isDeterminized,
+                bool? isZero)
             {
                 this.flags =
                     (isEpsilonFree ? Flags.IsEpsilonFree : 0) |
                     (usesGroups ? Flags.UsesGroups : 0) |
-                    (determinizationState != DeterminizationState.Unknown ? Flags.DeterminizationStateKnown : 0) |
-                    (determinizationState == DeterminizationState.IsDeterminized ? Flags.IsDeterminized : 0) |
-                    (isZeroState != IsZeroState.Unknown ? Flags.IsZeroStateKnown : 0) |
-                    (isZeroState == IsZeroState.IsZero ? Flags.IsZero : 0);
+                    (isDeterminized.HasValue ? Flags.DeterminizationStateKnown : 0) |
+                    (isDeterminized == true ? Flags.IsDeterminized : 0) |
+                    (isZero.HasValue ? Flags.IsZeroStateKnown : 0) |
+                    (isZero == true ? Flags.IsZero : 0);
                 this.StartStateIndex = startStateIndex;
                 this.States = states;
                 this.Transitions = transitions;
             }
 
             public DataContainer With(
-                DeterminizationState? determinizationState = null,
-                IsZeroState? isZeroState = null)
+                bool? isDeterminized = null,
+                bool? isZero= null)
             {
-                Debug.Assert(this.DeterminizationState == DeterminizationState.Unknown);
+                // Can't overwrite known properties
+                Debug.Assert(isDeterminized.HasValue != this.IsDeterminized.HasValue || isDeterminized == this.IsDeterminized);
+                Debug.Assert(isZero.HasValue != this.IsZero.HasValue || isZero == this.IsZero);
+
                 return new DataContainer(
                     this.StartStateIndex,
+                    this.States,
+                    this.Transitions,
                     this.IsEpsilonFree,
                     this.UsesGroups,
-                    determinizationState ?? this.DeterminizationState,
-                    isZeroState ?? this.IsZeroState,
-                    this.States,
-                    this.Transitions);
+                    isDeterminized ?? this.IsDeterminized,
+                    isZero ?? this.IsZero);
             }
 
             /// <summary>
@@ -189,20 +195,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 IsZeroStateKnown = 0x10,
                 IsZero = 0x20,
             }
-        }
-
-        public enum DeterminizationState
-        {
-            Unknown,
-            IsDeterminized,
-            IsNonDeterminizable,
-        }
-
-        public enum IsZeroState
-        {
-            Unknown,
-            IsZero,
-            IsNonZero,
         }
     }
 }
