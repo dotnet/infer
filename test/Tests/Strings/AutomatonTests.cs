@@ -895,16 +895,16 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton1 = StringAutomaton.FromData(
                 new StringAutomaton.DataContainer(
                     0,
-                    true,
-                    false,
-                    StringAutomaton.DeterminizationState.Unknown,
-                    StringAutomaton.IsZeroState.Unknown,
                     new[]
-                        {
-                            new StringAutomaton.StateData(0, 1, Weight.One),
-                            new StringAutomaton.StateData(1, 0, Weight.One),
-                        },
-                    new[] { new StringAutomaton.Transition(DiscreteChar.PointMass('a'), Weight.One, 1) }));
+                    {
+                        new StringAutomaton.StateData(0, 1, Weight.One),
+                        new StringAutomaton.StateData(1, 0, Weight.One),
+                    },
+                    new[] { new StringAutomaton.Transition(DiscreteChar.PointMass('a'), Weight.One, 1) },
+                    isEpsilonFree: true,
+                    usesGroups: false,
+                    isDeterminized: null,
+                    isZero: null));
 
             StringInferenceTestUtilities.TestValue(automaton1, 1.0, string.Empty, "a");
             StringInferenceTestUtilities.TestValue(automaton1, 0.0, "b");
@@ -913,12 +913,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton2 = StringAutomaton.FromData(
                 new StringAutomaton.DataContainer(
                     0,
-                    true,
-                    false,
-                    StringAutomaton.DeterminizationState.IsDeterminized,
-                    StringAutomaton.IsZeroState.IsNonZero,
                     new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
-                    Array.Empty<StringAutomaton.Transition>()));
+                    Array.Empty<StringAutomaton.Transition>(),
+                    isEpsilonFree: true,
+                    usesGroups: false,
+                    isDeterminized: true,
+                    isZero: true));
             Assert.True(automaton2.IsZero());
 
             // Bad start state index
@@ -926,48 +926,48 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        true,
-                        false,
-                        StringAutomaton.DeterminizationState.IsNonDeterminizable,
-                        StringAutomaton.IsZeroState.IsZero,
                         Array.Empty<StringAutomaton.StateData>(),
-                        Array.Empty<StringAutomaton.Transition>())));
+                        Array.Empty<StringAutomaton.Transition>(),
+                        isEpsilonFree: true,
+                        usesGroups: false,
+                        isDeterminized: false,
+                        isZero: true)));
 
             // automaton is actually epsilon-free, but data says that it is
             Assert.Throws<ArgumentException>(
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        false,
-                        false,
-                        StringAutomaton.DeterminizationState.Unknown,
-                        StringAutomaton.IsZeroState.Unknown,
                         new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
-                        Array.Empty<StringAutomaton.Transition>())));
+                        Array.Empty<StringAutomaton.Transition>(),
+                        isEpsilonFree: false,
+                        usesGroups: false,
+                        isDeterminized: null,
+                        isZero: null)));
 
             // automaton is not epsilon-free
             Assert.Throws<ArgumentException>(
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        false,
-                        false,
-                        StringAutomaton.DeterminizationState.Unknown,
-                        StringAutomaton.IsZeroState.Unknown,
                         new[] { new StringAutomaton.StateData(0, 1, Weight.Zero) },
-                        new[] { new StringAutomaton.Transition(Option.None, Weight.One, 1) })));
+                        new[] { new StringAutomaton.Transition(Option.None, Weight.One, 1) },
+                        isEpsilonFree: false,
+                        usesGroups: false,
+                        isDeterminized: null,
+                        isZero: null)));
 
             // Incorrect transition index
             Assert.Throws<ArgumentException>(
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
+                        new[] { new StringAutomaton.StateData(0, 1, Weight.One) },
+                        new[] { new StringAutomaton.Transition(Option.None, Weight.One, 2) },
                         true,
                         false,
-                        StringAutomaton.DeterminizationState.Unknown,
-                        StringAutomaton.IsZeroState.Unknown,
-                        new[] { new StringAutomaton.StateData(0, 1, Weight.One) },
-                        new[] { new StringAutomaton.Transition(Option.None, Weight.One, 2) })));
+                        isDeterminized: null,
+                        isZero: null)));
         }
 
         #region ToString tests

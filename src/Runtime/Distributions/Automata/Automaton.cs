@@ -1007,14 +1007,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public bool IsZero()
         {
             // Return cached value if available
-            if (this.Data.IsZeroState != IsZeroState.Unknown)
+            if (this.Data.IsZero.HasValue)
             {
-                return this.Data.IsZeroState == IsZeroState.IsZero;
+                return this.Data.IsZero.Value;
             }
 
             // Calculate and cache whether this automaton is zero
             var isZero = DoIsZero();
-            this.Data = this.Data.With(isZeroState: isZero ? IsZeroState.IsZero : IsZeroState.IsNonZero);
+            this.Data = this.Data.With(isZero: isZero);
             return isZero;
 
             bool DoIsZero()
@@ -1427,11 +1427,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             simplification.RemoveDeadStates(); // Product can potentially create dead states
             simplification.SimplifyIfNeeded();
 
-            var bothInputsDeterminized =
-                automaton1.Data.DeterminizationState == DeterminizationState.IsDeterminized &&
-                automaton2.Data.DeterminizationState == DeterminizationState.IsDeterminized;
-            var determinizationState =
-                bothInputsDeterminized ? DeterminizationState.IsDeterminized : DeterminizationState.Unknown;
+            var bothInputsDeterminized = automaton1.Data.IsDeterminized == true && automaton2.Data.IsDeterminized == true;
+            var determinizationState = bothInputsDeterminized ? (bool?)true : null;
 
             this.Data = builder.GetData(determinizationState);
             if (this is StringAutomaton && tryDeterminize)
@@ -1627,7 +1624,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public void SetToZero()
         {
             this.Data = new DataContainer(
-                0, true, false, DeterminizationState.IsDeterminized, IsZeroState.IsZero, ZeroStates, ZeroTransitions);
+                0,
+                ZeroStates,
+                ZeroTransitions,
+                isEpsilonFree: true,
+                usesGroups: false,
+                isDeterminized: true,
+                isZero: true);
         }
 
         /// <summary>
