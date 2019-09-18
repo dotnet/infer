@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             if (this.UsesGroups)
             {
                 // Determinization will result in lost of group information, which we cannot allow
-                this.Data = this.Data.With(isDetermenized: false);
+                this.Data = this.Data.With(isDeterminized: false);
                 return false;
             }
 
@@ -87,7 +87,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     if (!EnqueueOutgoingTransitions(currentWeightedStateSet))
                     {
-                        this.Data = this.Data.With(isDetermenized: false);
+                        this.Data = this.Data.With(isDeterminized: false);
                         return false;
                     }
                 }
@@ -100,7 +100,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
             simplification.MergeParallelTransitions(); // Determinization produces a separate transition for each segment
 
-            this.Data = builder.GetData().With(isDetermenized: true);
+            this.Data = builder.GetData().With(isDeterminized: true);
             this.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
             this.LogValueOverride = this.LogValueOverride;
 
@@ -153,8 +153,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             // Checks that all transitions from state end up in the same destination. This is used
-            // as a very fast "is determenistic" check, that doesn't care about distributions.
-            // State can have determenistic transitions with different destinations. This case will be
+            // as a very fast "is deterministic" check, that doesn't care about distributions.
+            // State can have deterministic transitions with different destinations. This case will be
             // handled by slow path.
             bool AllDestinationsAreSame(int stateIndex)
             {
