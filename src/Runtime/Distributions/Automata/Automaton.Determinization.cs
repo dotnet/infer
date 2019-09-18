@@ -32,9 +32,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <remarks>See <a href="http://www.cs.nyu.edu/~mohri/pub/hwa.pdf"/> for algorithm details.</remarks>
         public bool TryDeterminize()
         {
-            if (this.Data.DeterminizationState != DeterminizationState.Unknown)
+            if (this.Data.IsDeterminized != null)
             {
-                return this.Data.DeterminizationState == DeterminizationState.IsDeterminized;
+                return this.Data.IsDeterminized == true;
             }
 
             int maxStatesBeforeStop = Math.Min(this.States.Count * 3, MaxStateCount);
@@ -44,7 +44,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             if (this.UsesGroups)
             {
                 // Determinization will result in lost of group information, which we cannot allow
-                this.Data = this.Data.With(DeterminizationState.IsNonDeterminizable);
+                this.Data = this.Data.With(isDetermenized: false);
                 return false;
             }
 
@@ -87,6 +87,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                     if (!EnqueueOutgoingTransitions(currentWeightedStateSet))
                     {
+                        this.Data = this.Data.With(isDetermenized: false);
                         return false;
                     }
                 }
@@ -99,7 +100,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var simplification = new Simplification(builder, this.PruneStatesWithLogEndWeightLessThan);
             simplification.MergeParallelTransitions(); // Determinization produces a separate transition for each segment
 
-            this.Data = builder.GetData().With(DeterminizationState.IsDeterminized);
+            this.Data = builder.GetData().With(isDetermenized: true);
             this.PruneStatesWithLogEndWeightLessThan = this.PruneStatesWithLogEndWeightLessThan;
             this.LogValueOverride = this.LogValueOverride;
 
