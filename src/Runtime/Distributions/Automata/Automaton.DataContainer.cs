@@ -99,11 +99,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             public DataContainer With(
-                bool? isDetermenized = null,
+                bool? isDeterminized = null,
                 bool? isZero= null)
             {
                 // Can't overwrite known properties
-                Debug.Assert(isDetermenized.HasValue != this.IsDeterminized.HasValue || isDetermenized == this.IsDeterminized);
+                Debug.Assert(isDeterminized.HasValue != this.IsDeterminized.HasValue || isDeterminized == this.IsDeterminized);
                 Debug.Assert(isZero.HasValue != this.IsZero.HasValue || isZero == this.IsZero);
 
                 return new DataContainer(
@@ -112,7 +112,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     this.Transitions,
                     this.IsEpsilonFree,
                     this.UsesGroups,
-                    isDetermenized ?? this.IsDeterminized,
+                    isDeterminized ?? this.IsDeterminized,
                     isZero ?? this.IsZero);
             }
 
