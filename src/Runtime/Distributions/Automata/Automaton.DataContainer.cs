@@ -76,7 +76,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Initializes instance of <see cref="DataContainer"/>.
             /// </summary>
-            [Construction("StartStateIndex", "IsEpsilonFree", "UsesGroups", "DeterminizationState", "IsZeroState", "States", "Transitions")]
+            [Construction("StartStateIndex", "States", "Transitions", "IsEpsilonFree", "UsesGroups", "IsDeterminized", "IsZero")]
             public DataContainer(
                 int startStateIndex,
                 ReadOnlyArray<StateData> states,
