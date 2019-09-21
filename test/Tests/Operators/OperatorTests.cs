@@ -104,7 +104,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         private void AssertLargestDoubleSum(double b, double sum)
         {
             double a = MMath.LargestDoubleSum(b, sum);
-            Assert.True(a - b <= sum);
+            Assert.True((double)(a - b) <= sum);
             Assert.True(double.IsPositiveInfinity(a) || MMath.NextDouble(a) - b > sum);
         }
 
@@ -2174,7 +2174,7 @@ zL = (L - mx)*sqrt(prec)
                         if (double.IsNegativeInfinity(lowerBound) && double.IsPositiveInfinity(upperBound))
                             center = 0;
                         if (double.IsInfinity(center)) continue;
-                        foreach (var x in Gaussians())
+                        foreach (var x in Gaussians().Take(10000))
                         {
                             double mx = x.GetMean();
                             if (double.IsInfinity(mx)) continue;

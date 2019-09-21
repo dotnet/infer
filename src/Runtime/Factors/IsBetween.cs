@@ -330,9 +330,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double d_p = 2 * isBetween.GetProbTrue() - 1;
                 double mx = X.GetMean();
                 double center = MMath.Average(lowerBound, upperBound);
+                double diff = upperBound - lowerBound;
                 if (d_p == 1.0)
                 {
-                    double diff = upperBound - lowerBound;
                     double sqrtPrec = Math.Sqrt(X.Precision);
                     double diffs = diff * sqrtPrec;
                     // X.Prob(U) = X.Prob(L) * exp(delta)
@@ -592,7 +592,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                         {
                             // The posterior is two point masses.
                             // Compute the moment-matched Gaussian and divide.
-                            double diff = upperBound - lowerBound;
                             Gaussian result = Gaussian.FromMeanAndVariance(center, diff * diff / 4);
                             result.SetToRatio(result, X, ForceProper);
                             return result;
@@ -621,7 +620,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                     else betaL = (X.MeanTimesPrecision - lowerBound * X.Precision) * alphaL; // -(lowerBound - mx) / vx * alphaL;
                     if (Math.Abs(betaU) > Math.Abs(betaL)) betaX = (betaX + betaL) + betaU;
                     else betaX = (betaX + betaU) + betaL;
-                    if (betaX > double.MaxValue && d_p == -1.0) return GetPointMessage();
+                    if (Math.Abs(betaX) > double.MaxValue)
+                    {
+                        if (d_p == -1.0) return GetPointMessage();
+                        else return Gaussian.Uniform();
+                    }
                     return GaussianOp.GaussianFromAlphaBeta(X, alphaX, betaX, ForceProper);
                 }
             }
