@@ -4365,8 +4365,10 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 else upperBound = (double)Math.Min(double.MaxValue, denominator * NextDouble(ratio));
                 if (double.IsNegativeInfinity(upperBound)) return upperBound; // must have ratio < -1 and denominator > 1
             }
+            int iterCount = 0;
             while (true)
             {
+                iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
                 if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
                 if ((double)(value / denominator) <= ratio)
@@ -4374,6 +4376,9 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     double value2 = NextDouble(value);
                     if (value2 == value || (double)(value2 / denominator) > ratio)
                     {
+                        // Used for performance debugging
+                        //if (iterCount > 100)
+                        //    throw new Exception();
                         return value;
                     }
                     else
@@ -4421,18 +4426,19 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             {
                 upperBound = NextDouble(b) + sum;
             }
-            long iterCount = 0;
+            int iterCount = 0;
             while (true)
             {
                 iterCount++;
-                double value = Average(lowerBound, upperBound);
+                double value = (double)Average(lowerBound, upperBound);
                 //double value = RepresentationMidpoint(lowerBound, upperBound);
                 if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, b={b:r}, sum={sum:r}");
-                if (value - b <= sum)
+                if ((double)(value - b) <= sum)
                 {
                     double value2 = NextDouble(value);
-                    if (value2 == value || value2 - b > sum)
+                    if (value2 == value || (double)(value2 - b) > sum)
                     {
+                        // Used for performance debugging
                         //if (iterCount > 100)
                         //    throw new Exception();
                         return value;

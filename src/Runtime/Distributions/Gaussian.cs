@@ -415,7 +415,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // This approach avoids rounding errors.
                 // (x - mean)^2 * Precision = (x*Precision - MeanTimesPrecision)^2/Precision
                 double diff = x * Precision - MeanTimesPrecision;
-                return 0.5 * (Math.Log(Precision) - diff * diff / Precision) - MMath.LnSqrt2PI;
+                return 0.5 * (Math.Log(Precision) - diff * (diff / Precision)) - MMath.LnSqrt2PI;
             }
             else
             {
