@@ -104,7 +104,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 else
                 {
                     Debug.Assert(currentSegmentStateWeights.ContainsKey(segmentBound.DestinationStateId), "We shouldn't exit a state we didn't enter.");
-                    Debug.Assert(!segmentBound.Weight.IsInfinity);
                     currentSegmentTotal -= segmentBound.Weight;
 
                     var prevStateWeight = currentSegmentStateWeights[segmentBound.DestinationStateId];

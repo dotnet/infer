@@ -265,9 +265,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(g, Gaussian.PointMass(double.PositiveInfinity));
 
             g.SetMeanAndPrecision(1e4, 1e306);
-            Assert.Equal(g, Gaussian.PointMass(1e4));
-            Assert.Equal(new Gaussian(1e4, 1E-306), Gaussian.PointMass(1e4));
-            Assert.Equal(new Gaussian(1e-155, 1E-312), Gaussian.PointMass(1e-155));
+            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), g);
+            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue/1e4), new Gaussian(1e4, 1E-306));
+            Assert.Equal(Gaussian.PointMass(1e-155), new Gaussian(1e-155, 1E-312));
             Gaussian.FromNatural(1, 1e-309).GetMeanAndVarianceImproper(out m, out v);
             if(v > double.MaxValue)
                 Assert.Equal(0, m);

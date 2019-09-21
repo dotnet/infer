@@ -378,8 +378,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Stores built automaton in pre-allocated <see cref="Automaton{TSequence,TElement,TElementDistribution,TSequenceManipulator,TThis}"/> object.
             /// </summary>
-            public DataContainer GetData(
-                DeterminizationState determinizationState = DeterminizationState.Unknown)
+            public DataContainer GetData(bool? isDeterminized = null)
             {
                 if (this.StartStateIndex < 0 || this.StartStateIndex >= this.states.Count)
                 {
@@ -425,11 +424,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 return new DataContainer(
                     this.StartStateIndex,
+                    resultStates,
+                    resultTransitions,
                     !hasEpsilonTransitions,
                     usesGroups,
-                    determinizationState,
-                    resultStates,
-                    resultTransitions);
+                    isDeterminized,
+                    isZero: null);
             }
 
             #endregion

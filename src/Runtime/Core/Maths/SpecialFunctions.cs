@@ -3009,7 +3009,7 @@ rr = mpf('-0.99999824265582826');
                             }
                             // logProbX - logProbY = -x^2/2 + y^2/2 = (y+x)*(y-x)/2
                             ExtendedDouble n;
-                            if (logProbX > logProbY)
+                            if (logProbX > logProbY || (logProbX == logProbY && x < y))
                             {
                                 n = new ExtendedDouble(rPlus1 + r * ExpMinus1(xPlusy * (x - y) / 2), logProbX);
                             }
@@ -4348,10 +4348,12 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             // subnormal numbers are linearly spaced, which can lead to lowerBound being too large.  Set lowerBound to zero to avoid this.
             const double maxSubnormal = 2.3e-308;
             if (lowerBound > 0 && lowerBound < maxSubnormal) lowerBound = 0;
+            else if (lowerBound < 0 && lowerBound > -maxSubnormal) lowerBound = -maxSubnormal;
             double upperBound = (double)Math.Min(double.MaxValue, denominator * NextDouble(ratio));
             if (upperBound == 0 && ratio > 0) upperBound = denominator; // must have ratio < 1
             if (double.IsNegativeInfinity(upperBound)) return upperBound; // must have ratio < -1 and denominator > 1
             if (upperBound < 0 && upperBound > -maxSubnormal) upperBound = 0;
+            else if (upperBound > 0 && upperBound < maxSubnormal) upperBound = maxSubnormal;
             if (double.IsNegativeInfinity(ratio))
             {
                 if (AreEqual(upperBound / denominator, ratio)) return upperBound;

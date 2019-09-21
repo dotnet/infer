@@ -120,9 +120,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 double prec = 1.0 / variance;
                 double meanTimesPrecision = prec * mean;
-                if ((prec > double.MaxValue) || (Math.Abs(meanTimesPrecision) > double.MaxValue))
+                if (prec > double.MaxValue)
                 {
                     Point = mean;
+                }
+                else if (Math.Abs(meanTimesPrecision) > double.MaxValue)
+                {
+                    // This can happen when precision is too high.
+                    // Lower the precision until meanTimesPrecision fits in the double-precision range.
+                    MeanTimesPrecision = Math.Sign(mean) * double.MaxValue;
+                    Precision = MeanTimesPrecision / mean;
                 }
                 else
                 {
@@ -176,9 +183,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double meanTimesPrecision = precision * mean;
                 if (Math.Abs(meanTimesPrecision) > double.MaxValue)
                 {
-                    // If the precision is so large that it causes numerical overflow, 
-                    // treat the distribution as a point mass.
-                    Point = mean;
+                    // Lower the precision until meanTimesPrecision fits in the double-precision range.
+                    MeanTimesPrecision = Math.Sign(mean) * double.MaxValue;
+                    Precision = MeanTimesPrecision / mean;
                 }
                 else
                 {
