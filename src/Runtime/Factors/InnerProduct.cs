@@ -87,8 +87,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         [NotSupported(InnerProductOp.NotSupportedMessage)]
         public static VectorGaussian BAverageLogarithm(double innerProduct, [SkipIfUniform] VectorGaussian A, VectorGaussian result)
         {
-            throw new NotSupportedException(InnerProductOp.NotSupportedMessage);
-            //return AAverageLogarithm(innerProduct, A, result);
+            return AAverageLogarithm(innerProduct, A, result);
         }
 
         private const string LowRankNotSupportedMessage = "A InnerProduct factor with fixed output is not yet implemented.";
@@ -120,29 +119,21 @@ namespace Microsoft.ML.Probabilistic.Factors
         [NotSupported(InnerProductOp.LowRankNotSupportedMessage)]
         public static VectorGaussian BAverageConditional(double innerProduct, Vector A, VectorGaussian result)
         {
-            throw new NotImplementedException(LowRankNotSupportedMessage);
-            //return AAverageConditional(innerProduct, A, result);
+            return AAverageConditional(innerProduct, A, result);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="AAverageLogarithm(double, Vector, VectorGaussian)"]/*'/>
         [NotSupported(InnerProductOp.LowRankNotSupportedMessage)]
         public static VectorGaussian AAverageLogarithm(double innerProduct, Vector B, VectorGaussian result)
         {
-            // This case could be supported if we had low-rank VectorGaussian distributions.
-            throw new NotSupportedException(LowRankNotSupportedMessage);
-            //if (result == default(VectorGaussian))
-            //    result = new VectorGaussian(B.Count);
-            //result.Point = result.Point;
-            //result.Point.SetToProduct(B, innerProduct / B.Inner(B));
-            //return result;
+            return AAverageConditional(innerProduct, B, result);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOp"]/message_doc[@name="BAverageLogarithm(double, Vector, VectorGaussian)"]/*'/>
         [NotSupported(InnerProductOp.LowRankNotSupportedMessage)]
         public static VectorGaussian BAverageLogarithm(double innerProduct, Vector A, VectorGaussian result)
         {
-            throw new NotSupportedException(LowRankNotSupportedMessage);
-            //return AAverageLogarithm(innerProduct, A, result);
+            return AAverageLogarithm(innerProduct, A, result);
         }
 
         //-- VMP ---------------------------------------------------------------------------------------------
