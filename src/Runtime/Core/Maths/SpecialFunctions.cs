@@ -4334,30 +4334,36 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                 else
                     return double.NaN;
             }
+            // denominator > 0
             if (double.IsPositiveInfinity(denominator))
             {
                 if (double.IsNaN(ratio)) return denominator;
                 else return double.MaxValue;
             }
             if (double.IsPositiveInfinity(ratio)) return ratio;
-            // denominator > 0
-            // avoid infinite bounds
-            double lowerBound = (double)Math.Max(double.MinValue, denominator * PreviousDouble(ratio));
-            if (lowerBound == 0 && ratio < 0) lowerBound = -denominator; // must have ratio > -1
-            if (double.IsPositiveInfinity(lowerBound)) lowerBound = denominator; // must have ratio > 1
-            // subnormal numbers are linearly spaced, which can lead to lowerBound being too large.  Set lowerBound to zero to avoid this.
-            const double maxSubnormal = 2.3e-308;
-            if (lowerBound > 0 && lowerBound < maxSubnormal) lowerBound = 0;
-            else if (lowerBound < 0 && lowerBound > -maxSubnormal) lowerBound = -maxSubnormal;
-            double upperBound = (double)Math.Min(double.MaxValue, denominator * NextDouble(ratio));
-            if (upperBound == 0 && ratio > 0) upperBound = denominator; // must have ratio < 1
-            if (double.IsNegativeInfinity(upperBound)) return upperBound; // must have ratio < -1 and denominator > 1
-            if (upperBound < 0 && upperBound > -maxSubnormal) upperBound = 0;
-            else if (upperBound > 0 && upperBound < maxSubnormal) upperBound = maxSubnormal;
-            if (double.IsNegativeInfinity(ratio))
+            double lowerBound, upperBound;
+            if (denominator <= 1)
             {
-                if (AreEqual(upperBound / denominator, ratio)) return upperBound;
-                else return PreviousDouble(upperBound);
+                if(double.IsNegativeInfinity(ratio))
+                {
+                    upperBound = denominator * NextDouble(ratio);
+                    if (AreEqual(upperBound / denominator, ratio)) return upperBound;
+                    else return PreviousDouble(upperBound);
+                }
+                // product cannot be infinite since ratio is not infinite.
+                double product = denominator * ratio;
+                lowerBound = PreviousDouble(product);
+                upperBound = NextDouble(product);
+            }
+            else // 1 < denominator <= double.MaxValue
+            {
+                // avoid infinite bounds
+                if (ratio == double.Epsilon) lowerBound = denominator * ratio / 2; // cannot overflow
+                else if (ratio == 0) lowerBound = 0;
+                else lowerBound = (double)Math.Max(double.MinValue, Math.Min(double.MaxValue, denominator * PreviousDouble(ratio)));
+                if (ratio == -double.Epsilon) upperBound = denominator * ratio / 2; // cannot overflow
+                else upperBound = (double)Math.Min(double.MaxValue, denominator * NextDouble(ratio));
+                if (double.IsNegativeInfinity(upperBound)) return upperBound; // must have ratio < -1 and denominator > 1
             }
             while (true)
             {

@@ -57,6 +57,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void LargestDoubleProductTest2()
         {
+            // This case needs 50 iterations
+            MMath.LargestDoubleProduct(1.7976931348623157E+308, 9.8813129168249309E-324);
+            MMath.LargestDoubleProduct(1.7976931348623157E+308, -4.94065645841247E-324);
             MMath.LargestDoubleProduct(1.0000000000000005E-09, 1.0000000000000166E-300);
             MMath.LargestDoubleProduct(1.0000000000000005E-09, -1.0000000000000166E-300);
             MMath.LargestDoubleProduct(0.00115249439895759, 4.9187693503017E-319);
