@@ -19,10 +19,11 @@ jobs:
         PLATFORM: 'x64'
       x86:
         PLATFORM: 'x86'
+    maxParallel: 2
 
   pool:
     vmImage: vs2017-win2016
-    
+
   steps:
   - task: NuGetToolInstaller@0
     inputs:
