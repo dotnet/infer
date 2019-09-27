@@ -1,3 +1,5 @@
+DO NOT MERGE THESE CHANGES. IT IS TO TEST BRANCH PROTECTION ONLY.
+
 # Infer&#46;NET
 
 **Infer&#46;NET** is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming.
