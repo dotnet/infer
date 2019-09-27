@@ -16,9 +16,9 @@ jobs:
   strategy:
     matrix:
       x64:
-        PLATFORM: 'x64'
+        TEST_PLATFORM: 'x64'
       x86:
-        PLATFORM: 'x86'
+        TEST_PLATFORM: 'x86'
     maxParallel: 2
 
   pool:
@@ -42,4 +42,4 @@ jobs:
 
   - template: vstest-fast.yml
     parameters:
-      Platform: $(PLATFORM)
+      Platform: $(TEST_PLATFORM)
