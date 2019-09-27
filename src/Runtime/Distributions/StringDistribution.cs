@@ -18,7 +18,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     /// </summary>
     [Serializable]
     [DataContract]
-    [Quality(QualityBand.Experimental)]
+    [Quality(QualityBand.Preview)]
     public class StringDistribution :
         SequenceDistribution<string, char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution>
     {

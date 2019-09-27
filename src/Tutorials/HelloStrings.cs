@@ -20,7 +20,6 @@ namespace Microsoft.ML.Probabilistic.Tutorials
             text.ObservedValue = "Hello uncertain world";
 
             var engine = new InferenceEngine();
-            engine.Compiler.RecommendedQuality = QualityBand.Experimental;
 
             if (engine.Algorithm is Algorithms.ExpectationPropagation)
             {
