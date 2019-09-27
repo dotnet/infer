@@ -12,6 +12,7 @@ trigger: none # disable CI build
 
 jobs:
 - job: Win64 # Hosted Windows agent, VS 2017, testing on x64
+  timeoutInMinutes: 120
   pool:
     vmImage: vs2017-win2016
   steps:
@@ -35,6 +36,7 @@ jobs:
       Platform: 'x64'
 
 - job: Win32 # Hosted Windows agent, VS 2017, testing on x86
+  timeoutInMinutes: 120
   pool:
     vmImage: vs2017-win2016
   steps:
