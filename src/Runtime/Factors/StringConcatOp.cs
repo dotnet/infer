@@ -12,7 +12,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="StringConcatOp"]/doc/*'/>
     [FactorMethod(typeof(Factor), "Concat", typeof(string), typeof(string))]
-    [Quality(QualityBand.Experimental)]
+    [Quality(QualityBand.Preview)]
     public static class StringConcatOp
     {
         #region EP messages
