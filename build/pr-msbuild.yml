@@ -42,4 +42,4 @@ jobs:
 
   - template: vstest-fast.yml
     parameters:
-      Platform: $(TEST_PLATFORM)
+      Platform: '$(TEST_PLATFORM)'
