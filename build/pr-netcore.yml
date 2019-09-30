@@ -7,26 +7,25 @@
 resources:
 - repo: self
   clean: true
-  
+
+queue:
+  timeoutInMinutes: 120
+
 trigger: none # disable CI build
 
 variables:
   buildConfiguration: 'Release'
 
-jobs:
-- job: PR_Netcore
-  timeoutInMinutes: 120
+steps:
+- task: DotNetCoreInstaller@0
+  inputs:
+    packageType: 'sdk' 
+    version: '2.1.403' 
 
-  steps:
-  - task: DotNetCoreInstaller@0
-    inputs:
-      packageType: 'sdk' 
-      version: '2.1.403' 
-
-  - script: |
-      dotnet build /p:DisableImplicitNuGetFallbackFolder=true --configuration $(buildConfiguration)Core Infer.sln
-    displayName: Build Solution
-      
-  - template: netcoretest-fast.yml
-    parameters:
-      Configuration: '$(buildConfiguration)Core'
+- script: |
+    dotnet build /p:DisableImplicitNuGetFallbackFolder=true --configuration $(buildConfiguration)Core Infer.sln
+  displayName: Build Solution
+    
+- template: netcoretest-fast.yml
+  parameters:
+    Configuration: '$(buildConfiguration)Core'
