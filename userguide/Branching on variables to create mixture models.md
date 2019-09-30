@@ -26,8 +26,8 @@ You can put any modelling code you like inside a Case block, including other Cas
 
 Besides **Case**, Infer.NET also supports **If** and **Switch** blocks for creating mixtures. These are summarised in the table below
 
-| **Purpose** | **Number of components** | **Examples of use** |
-|--------------------------------------------------------------|
+|       | **Purpose** | **Number of components** | **Examples of use** |
+|----------------------------------------------------------------------|
 | **If blocks** | For parts of the model that are switched on or off according to a boolean random variable. **If blocks** can be thought of as providing a mixture of two models with and without the contents of the block. | 2 | \- A mixture of a Gaussian distribution and a broad noise distribution. \- For calculating the model evidence (marginal log likelihood). |
 | **Case blocks** | For providing multi-way mixtures. **Case blocks** are switched on when an integer random variable takes a particular value. The number of case blocks in a mixture is fixed after compilation. | Many (fixed) | \- A mixture of two Gaussian distributions and a broad noise distribution. |
 | **Switch blocks** | For providing variable-sized mixtures. **Switch blocks** are equivalent to a set of similar case blocks, one for each possible value of the integer random variable. The number of cases in a switch block can be varied after compilation using an observed value. | Many (variable) | \- A mixture of Gaussians where the number of components varies at runtime. |
