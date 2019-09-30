@@ -19,7 +19,7 @@ trigger: none # disable CI build
 # since then the platform is given as a variable which cannot be passed as a parameter to a template,
 # because templates are actualized at a very early stage when the variable has no value yet.
 jobs:
-- job: Windows Build and Test x64
+- job: Win64_Build_Test
   timeoutInMinutes: 180
   
   steps:
@@ -32,7 +32,7 @@ jobs:
     parameters:
       Platform: 'x64'
 
-- job: Windows Build and Test x86
+- job: Win32_Build_Test
   timeoutInMinutes: 180
 
   steps:
@@ -46,7 +46,7 @@ jobs:
       Platform: 'x86'
 
 
-- job: Windows Evaluator
+- job: Win_Evaluator
   timeoutInMinutes: 180
 
   steps:
@@ -67,9 +67,9 @@ jobs:
 - job: Package and Publish
   timeoutInMinutes: 30
   dependsOn: 
-  - Windows Build and Test (x64)
-  - Windows Build and Test (x86)
-  - Windows Evaluator
+  - Win64_Build_Test
+  - Win32_Build_Test
+  - Win_Evaluator
   condition: eq(variables['BuildConfiguration'], 'Release')
 
   steps:
