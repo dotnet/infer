@@ -40,7 +40,7 @@ jobs:
       clean: true
       configuration: 'Release'
 
-  - script: echo 'TEST_PLATFORM: $(TEST_PLATFORM) $(STAGE_VAR) $(JOB_VAR)'
+  - script: echo 'TEST_PLATFORM: $(TEST_PLATFORM)'
 
   - template: vstest-fast.yml
     parameters:
