@@ -64,7 +64,7 @@ jobs:
       Configuration: '$(BuildConfiguration)'
 
 
-- job: Package and Publish
+- job: Package_Publish
   timeoutInMinutes: 30
   dependsOn: 
   - Win64_Build_Test
