@@ -8,9 +8,7 @@ parameters:
   Platform: 'x64' # or 'x86' or both
   
 steps:
-  - script: echo ${{ format('{0}', parameters.Platform) }}
-
-  - ${{ if contains(format('{0}', parameters.Platform), 'x64') }}:
+  - ${{ if contains(parameters.Platform, 'x64') }}:
     # Run fast test suite on x64
     - task: VSTest@2
       displayName: Unit tests x64 (sequential)
@@ -31,7 +29,7 @@ steps:
         testFiltercriteria: '(Platform!=x86)&(Category!=OpenBug)&(Category!=BadTest)&(Category!=CompilerOptionsTest)&(Category!=CsoftModel)&(Category!=ModifiesGlobals)&(Category!=DistributedTest)&(Category!=Performance)' 
         runInParallel: true
         runSettingsFile: test.runsettings
-  - ${{ if contains(format('{0}', parameters.Platform), 'x86') }}:
+  - ${{ if contains(parameters.Platform, 'x86') }}:
     # Run fast test suite on x86
     - task: VSTest@2
       displayName: Unit tests x86 (sequential)

@@ -11,19 +11,10 @@ resources:
 trigger: none # disable CI build
 
 jobs:
-- job: Windows # Hosted Windows agent, VS 2017, testing on x64/x86 using matrix strategy
+- job: Win64 # Hosted Windows agent, VS 2017, testing on x64
   timeoutInMinutes: 120
-  strategy:
-    matrix:
-      x64:
-        TEST_PLATFORM: 'x64'
-      x86:
-        TEST_PLATFORM: 'x86'
-    maxParallel: 2
-
   pool:
     vmImage: vs2017-win2016
-
   steps:
   - task: NuGetToolInstaller@0
     inputs:
@@ -40,10 +31,30 @@ jobs:
       clean: true
       configuration: 'Release'
 
-  - script: echo $(TEST_PLATFORM)
+  - template: vstest-fast.yml
+    parameters:
+      Platform: 'x64'
+
+- job: Win32 # Hosted Windows agent, VS 2017, testing on x86
+  timeoutInMinutes: 120
+  pool:
+    vmImage: vs2017-win2016
+  steps:
+  - task: NuGetToolInstaller@0
+    inputs:
+      versionSpec: '4.7.0'
+
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
+
+  - task: MSBuild@1
+    inputs:
+      solution: '**/*.sln'
+      clean: true
+      configuration: 'Release'
 
   - template: vstest-fast.yml
     parameters:
-      Platform: $(TEST_PLATFORM)
-
-  - script: echo done
+      Platform: 'x86'
