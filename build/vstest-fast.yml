@@ -7,8 +7,12 @@
 parameters:
   Platform: 'x64' # or 'x86' or both
   
+variables:
+  Platform: ${{ parameters.Platform }}
+
 steps:
-  - echo ${{ parameters.Platform }}
+  - echo $(Platform)
+  - echo ${{ parameters.Platform }}  
 
   - ${{ if contains(parameters.Platform, 'x64') }}:
     # Run fast test suite on x64

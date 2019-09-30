@@ -24,9 +24,6 @@ jobs:
   pool:
     vmImage: vs2017-win2016
 
-  variables:
-    TEST_PLATFORM_VAR: ${{ TEST_PLATFORM }}
-
   steps:
   - task: NuGetToolInstaller@0
     inputs:
@@ -43,10 +40,10 @@ jobs:
       clean: true
       configuration: 'Release'
 
-  - script: echo $(TEST_PLATFORM_VAR)
+  - script: echo $(TEST_PLATFORM)
 
   - template: vstest-fast.yml
     parameters:
-      Platform: $(TEST_PLATFORM_VAR)
+      Platform: $(TEST_PLATFORM)
 
   - script: echo done
