@@ -20,6 +20,7 @@ trigger: none # disable CI build
 # because templates are actualized at a very early stage when the variable has no value yet.
 jobs:
 - job: Win64_Build_Test
+  displayName: 'Windows: Build and Test (x64)'
   timeoutInMinutes: 180
   
   steps:
@@ -33,6 +34,7 @@ jobs:
       Platform: 'x64'
 
 - job: Win32_Build_Test
+  displayName: 'Windows: Build and Test (x86)'
   timeoutInMinutes: 180
 
   steps:
@@ -47,6 +49,7 @@ jobs:
 
 
 - job: Win_Evaluator
+  displayName: 'Windows: Running Evaluator'
   timeoutInMinutes: 180
 
   steps:
@@ -65,6 +68,7 @@ jobs:
 
 
 - job: Package_Publish
+  displayName: 'Package and Publish'
   timeoutInMinutes: 30
   dependsOn: 
   - Win64_Build_Test

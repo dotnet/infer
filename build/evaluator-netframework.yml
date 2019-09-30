@@ -9,7 +9,7 @@ parameters:
 
 steps:
 - task: Bash@3
-  displayName: 'Running Evaluator'
+  displayName: 'Running Evaluator (.NET Framework)'
   condition: not(endsWith('${{ parameters.Configuration }}', 'Core'))
   inputs:
     targetType: 'inline'
