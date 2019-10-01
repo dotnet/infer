@@ -106,7 +106,8 @@ using (Variable.ForEach(range)) {
 For example, the model at the beginning of this page can be defined for an array x as follows:
 
 ```csharp
-Range i = new  Range(4);VariableArray<double> x = Variable.Array<double>(i);  
+Range i = new  Range(4);
+VariableArray<double> x = Variable.Array<double>(i);  
 VariableArray<int> c = Variable.Array<int>(i);  
 using (Variable.ForEach(i)) {
   c[i] = Variable.Discrete(0.5, 0.5);  
