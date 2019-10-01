@@ -16,7 +16,7 @@ All these types of usage share the same generic .NET type **[Variable<T\>](../ap
 
 #### Creating new random variables
 
-One way to create random variables is to specify a prior distribution for them (you can also [create random variables as functions of other random variables](Applying functions and operators to variables.md)). There are static methods on the Variable class for creating variables with many common prior distributions, such as Gaussian, Gamma, Dirichlet, Beta, Bernouilli, Discrete etc. (see [Distribution Factors](Distribution factors.md) for a full list, and see [Variable types and their distributions](Variable types and their distributions.md) for the relationship between variables and distributions). For example, the following lines create a double random variable with a Gaussian prior of zero mean and unit variance, and a boolean random variable with a Bernouilli prior:
+One way to create random variables is to specify a prior distribution for them (you can also [create random variables as functions of other random variables](Applying functions and operators to variables.md)). There are static methods on the Variable class for creating variables with many common prior distributions, such as Gaussian, Gamma, Dirichlet, Beta, Bernoulli, Discrete etc. (see [Distribution Factors](Distribution factors.md) for a full list, and see [Variable types and their distributions](Variable types and their distributions.md) for the relationship between variables and distributions). For example, the following lines create a double random variable with a Gaussian prior of zero mean and unit variance, and a boolean random variable with a Bernoulli prior:
 
 ```csharp
 Variable<double> x = Variable.GaussianFromMeanAndVariance(0, 1);  
