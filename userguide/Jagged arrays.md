@@ -45,7 +45,8 @@ You can define a constant jagged array initialised to its equivalent .NET array 
 double[][] a = new double[][] { new double[] {1.1, 3.3}, new double[] {1.1, 2.2, 4.4} };  
 int[] innerSizes = new int[a.Length];  
 for (int i=0; i < a.Length; i++)  
-    innerSizes[i] = a[i].Length;Range outer = new Range(a.Length).Named("outer");  
+    innerSizes[i] = a[i].Length;
+Range outer = new Range(a.Length).Named("outer");  
 VariableArray<int> innerSizesVar = Variable.Constant(innerSizes, outer).Named("innerSizes");  
 Range inner = new Range(innerSizesVar[outer]).Named("outer");  
 var aConst = Variable.Constant(a, outer, inner);
