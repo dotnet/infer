@@ -16,7 +16,7 @@ A [**Range**](../apiguide/api/Microsoft.ML.Probabilistic.Models.Range.html) obje
 Range pixel = new Range(10);
 ```
 
-It is also possible to create give a range a name to be used in the generated code, e.g.
+It is also possible to give a range a name to be used in the generated code, e.g.
 
 ```csharp
 Rangeimage = new Range(4).Named("image");
