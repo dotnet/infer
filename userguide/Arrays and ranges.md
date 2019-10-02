@@ -19,7 +19,7 @@ Range pixel = new Range(10);
 It is also possible to give a range a name to be used in the generated code, e.g.
 
 ```csharp
-Rangeimage = new Range(4).Named("image");
+Range image = new Range(4).Named("image");
 ```
 
 The size of a range does not have to be fixed when defining your model, for example:
