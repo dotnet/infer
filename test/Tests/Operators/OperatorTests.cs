@@ -2732,7 +2732,7 @@ zL = (L - mx)*sqrt(prec)
                 if (i > 0)
                 {
                     Assert.True(toUpper.GetVariance() >= previousToUpper.GetVariance() - 1e-20);
-                    Assert.True(toUpper.GetMean() <= previousToUpper.GetMean());
+                    Assert.True(toUpper.IsUniform() || toUpper.GetMean() <= previousToUpper.GetMean());
                 }
                 previousToUpper = toUpper;
 

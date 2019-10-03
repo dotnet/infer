@@ -545,10 +545,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 MeanTimesPrecision = a.MeanTimesPrecision + b.MeanTimesPrecision;
                 if (Precision > double.MaxValue || Math.Abs(MeanTimesPrecision) > double.MaxValue)
                 {
-                    // (am*ap + bm*bp)/(ap + bp) = am*w + bm*(1-w)
-                    // w = 1/(1 + bp/ap)
-                    double w = 1 / (1 + b.Precision / a.Precision);
-                    Point = a.GetMean() * w + b.GetMean() * (1 - w);
+                    if (a.IsUniform()) SetTo(b);
+                    else if (b.IsUniform()) SetTo(a);
+                    else
+                    {
+                        // (am*ap + bm*bp)/(ap + bp) = am*w + bm*(1-w)
+                        // w = 1/(1 + bp/ap)
+                        double w = 1 / (1 + b.Precision / a.Precision);
+                        Point = a.GetMean() * w + b.GetMean() * (1 - w);
+                    }
                 }
             }
         }
@@ -600,8 +605,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 if (forceProper && numerator.Precision < denominator.Precision)
                 {
-                    // must not modify this before computing numerator.GetMean()
-                    MeanTimesPrecision = numerator.GetMean() * denominator.Precision - denominator.MeanTimesPrecision;
+                    if (numerator.IsUniform())
+                    {
+                        MeanTimesPrecision = -denominator.MeanTimesPrecision;
+                    }
+                    else
+                    {
+                        // must not modify this before computing numerator.GetMean()
+                        MeanTimesPrecision = numerator.GetMean() * denominator.Precision - denominator.MeanTimesPrecision;
+                    }
                     Precision = 0;
                 }
                 else

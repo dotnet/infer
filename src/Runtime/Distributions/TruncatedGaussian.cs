@@ -474,7 +474,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                return Sample(Gaussian.GetMean(), Gaussian.Precision, LowerBound, UpperBound);
+                return Sample(Gaussian.IsUniform() ? 0.0 : Gaussian.GetMean(), Gaussian.Precision, LowerBound, UpperBound);
             }
         }
 
