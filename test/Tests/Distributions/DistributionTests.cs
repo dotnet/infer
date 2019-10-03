@@ -284,7 +284,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             PointMassMomentTest(g, 7.7, 4.4, 5.5);
             SamplingTest(g, 7.7);
             g.SetToUniform();
-            GetAndSetMomentTest(g, 0.0, Double.PositiveInfinity);
+            Assert.True(g.GetVariance() == double.PositiveInfinity);
+            Assert.Throws<ImproperDistributionException>(() => g.GetMean());
 
             Gaussian g3 = new Gaussian();
             g3.SetToSum(1.0, g, System.Math.Exp(800), g2);

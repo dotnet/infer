@@ -162,7 +162,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // dlogGa/dx = (a-1)/x - b
                 // d2logGa/dx2 = -(a-1)/x^2
                 // match derivatives and solve for (a,b)
-                double shape = (1 + d.GetMean() - Math.Log(exp.Point)) * d.Precision;
+                // a = 1 - d2logZ/dx2*x^2 = 1 + dlogZ/dx*x + 1/vy = -1/vy*(log(x)-my) + 1/vy
+                // b = -d2logZ/dx2*x - dlogZ/dx = 1/vy/x
+                double shape = d.MeanTimesPrecision + (1 - Math.Log(exp.Point)) * d.Precision;
                 double rate = d.Precision / exp.Point;
                 return Gamma.FromShapeAndRate(shape, rate);
             }

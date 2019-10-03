@@ -374,6 +374,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 bufferTGa.lowerBound = Math.Log(currDist.LowerBound);
                 bufferTGa.upperBound = Math.Log(currDist.UpperBound);
                 currDeriv = currDist.Gamma.Shape - currDist.Gamma.Rate * currPoint;
+                //Trace.WriteLine($"use deriv = {(use.Gamma.Shape-1) - use.Gamma.Rate*currPoint} def deriv = {def.Gamma.Shape - def.Gamma.Rate*currPoint} total deriv = {currDeriv}");
                 if (currPoint <= 0)
                     throw new ArgumentException($"currPoint ({currPoint}) <= 0");
                 bufferTGa.SetNextPoint(Math.Log(currPoint), currDeriv);

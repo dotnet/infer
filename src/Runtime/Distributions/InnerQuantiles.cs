@@ -20,7 +20,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
     public class InnerQuantiles : CanGetQuantile, CanGetProbLessThan
     {
         /// <summary>
-        /// Numbers in increasing order.
+        /// Numbers in increasing order.  Cannot be empty.
         /// </summary>
         [DataMember] private readonly double[] quantiles;
         /// <summary>
@@ -120,6 +120,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (double.IsNaN(x)) throw new ArgumentOutOfRangeException("x is NaN");
             int n = quantiles.Length;
+            if (n == 0) throw new ArgumentOutOfRangeException(nameof(quantiles) + ".Count", n, "quantiles array is empty");
             if (x < quantiles[0])
             {
                 return GetProbLessThan(x, (IReadOnlyList<double>)quantiles);
@@ -148,6 +149,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         private static Gaussian GetLowerGaussian(IReadOnlyList<double> quantiles)
         {
             int n = quantiles.Count;
+            if (n == 0) throw new ArgumentOutOfRangeException(nameof(quantiles) + ".Count", n, "quantiles array is empty");
             // find the next quantile
             int i = 1;
             while (i < n && quantiles[i] == quantiles[0])
@@ -177,6 +179,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         private static Gaussian GetUpperGaussian(IReadOnlyList<double> quantiles)
         {
             int n = quantiles.Count;
+            if (n == 0) throw new ArgumentOutOfRangeException(nameof(quantiles) + ".Count", n, "quantiles array is empty");
             // find the previous quantile
             int i = n - 2;
             while (i >= 0 && quantiles[i] == quantiles[n - 1])
@@ -216,6 +219,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static double GetProbLessThan(double x, IReadOnlyList<double> quantiles)
         {
             int n = quantiles.Count;
+            if (n == 0) throw new ArgumentOutOfRangeException(nameof(quantiles) + ".Count", n, "quantiles array is empty");
             if (x < quantiles[0])
             {
                 return GetLowerGaussian(quantiles).GetProbLessThan(x);
