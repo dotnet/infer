@@ -17,7 +17,8 @@ In this example, our data will be an array of 100 data points sampled from a Gau
 ```csharp
 // Sample data from standard Gaussian  
 double[] data = new double[100];  
-for (int i = 0; i < data.Length; i++) data[i] = Rand.Normal(0, 1);
+for (int i = 0; i < data.Length; i++)
+  data[i] = Rand.Normal(0, 1);
 ```
 The aim will be to estimate the mean and precision (inverse variance) of this data. To do this, we need to create random variables for each of these quantities and give them broad prior distributions:
 ```csharp
