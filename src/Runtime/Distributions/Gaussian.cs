@@ -233,8 +233,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double GetMean()
         {
             if (IsPointMass) return Point;
-            else if (Precision == 0.0) return 0.0;
-            else if (Precision < 0.0) throw new ImproperDistributionException(this);
+            else if (Precision <= 0.0) throw new ImproperDistributionException(this);
             else return MeanTimesPrecision / Precision;
         }
 

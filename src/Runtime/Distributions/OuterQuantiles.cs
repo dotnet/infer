@@ -28,6 +28,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         public OuterQuantiles(double[] quantiles)
         {
+            if (quantiles == null) throw new ArgumentNullException(nameof(quantiles));
+            if (quantiles.Length == 0) throw new ArgumentException("quantiles array is empty", nameof(quantiles));
             AssertNondecreasing(quantiles, nameof(quantiles));
             AssertFinite(quantiles, nameof(quantiles));
             this.quantiles = quantiles;
@@ -101,6 +103,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static double GetProbLessThan(double x, double[] quantiles)
         {
             int n = quantiles.Length;
+            if (n == 0) throw new ArgumentException("quantiles array is empty", nameof(quantiles));
             // The index of the specified value in the specified array, if value is found; otherwise, a negative number. 
             // If value is not found and value is less than one or more elements in array, the negative number returned 
             // is the bitwise complement of the index of the first element that is larger than value. 
