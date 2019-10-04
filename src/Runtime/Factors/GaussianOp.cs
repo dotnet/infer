@@ -2574,6 +2574,10 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
+    /// <summary>
+    /// This class defines specializations for the case where precision is a point mass.
+    /// These methods have fewer inputs, allowing more efficient schedules.
+    /// </summary>
     [FactorMethod(typeof(Gaussian), "Sample", typeof(double), typeof(double), Default = false)]
     [FactorMethod(new string[] { "sample", "mean", "precision" }, typeof(Factor), "Gaussian", Default = false)]
     [Quality(QualityBand.Preview)]

@@ -310,15 +310,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Construct a Gamma distribution whose pdf has the given derivatives at a point.
         /// </summary>
-        /// <param name="x">Must be positive</param>
+        /// <param name="x">Cannot be negative</param>
         /// <param name="dLogP">Desired derivative of log-density at x</param>
         /// <param name="ddLogP">Desired second derivative of log-density at x</param>
         /// <param name="forceProper">If true and both derivatives cannot be matched by a proper distribution, match only the first.</param>
         /// <returns></returns>
         public static Gamma FromDerivatives(double x, double dLogP, double ddLogP, bool forceProper)
         {
-            if (x <= 0)
-                throw new ArgumentException("x <= 0");
+            if (x < 0)
+                throw new ArgumentOutOfRangeException(nameof(x), x, "x < 0");
             double a;
             if(double.IsPositiveInfinity(x))
             {
@@ -352,7 +352,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     }
                 }
             }
-            double b = a / x - dLogP;
+            double b = ((a == 0) ? 0 : (a / x)) - dLogP;
             if (forceProper)
             {
                 // correct roundoff errors that might make b negative
