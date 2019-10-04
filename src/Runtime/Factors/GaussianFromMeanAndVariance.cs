@@ -952,4 +952,49 @@ namespace Microsoft.ML.Probabilistic.Factors
             return SampleAverageLogarithm(sample, variance);
         }
     }
+
+    /// <summary>
+    /// This class defines specializations for the case where variance is a point mass.
+    /// These methods have fewer inputs, allowing more efficient schedules.
+    /// </summary>
+    [FactorMethod(typeof(Factor), "GaussianFromMeanAndVariance", Default = false)]
+    [Quality(QualityBand.Preview)]
+    public static class GaussianFromMeanAndVarianceOp_PointVariance
+    {
+        public static double LogEvidenceRatio(
+            double sample, [SkipIfUniform] Gaussian mean, [SkipIfUniform] Gamma variance)
+        {
+            if (!variance.IsPointMass)
+                throw new ArgumentException($"{nameof(variance)} is not a point mass");
+            return GaussianFromMeanAndVarianceOp.LogEvidenceRatio(sample, mean, variance.Point);
+        }
+
+        [Skip]
+        public static double LogEvidenceRatio(
+            [SkipIfUniform] Gaussian sample, [SkipIfUniform] Gaussian mean, [SkipIfUniform] Gamma variance)
+        {
+            if (!variance.IsPointMass)
+                throw new ArgumentException($"{nameof(variance)} is not a point mass");
+            return GaussianFromMeanAndVarianceOp.LogEvidenceRatio(sample, mean, variance.Point);
+        }
+
+        public static Gamma VarianceAverageConditional([SkipIfUniform] Gaussian sample, [SkipIfUniform] Gaussian mean, [Proper] Gamma variance)
+        {
+            if (!variance.IsPointMass)
+                throw new ArgumentException($"{nameof(variance)} is not a point mass");
+            return GaussianFromMeanAndVarianceOp.VarianceAverageConditional(sample, mean, variance);
+        }
+
+        public static Gaussian SampleAverageConditional([SkipIfUniform] Gaussian mean, [Proper] Gamma variance)
+        {
+            if (!variance.IsPointMass)
+                throw new ArgumentException($"{nameof(variance)} is not a point mass");
+            return GaussianFromMeanAndVarianceOp.SampleAverageConditional(mean, variance.Point);
+        }
+
+        public static Gaussian MeanAverageConditional([SkipIfUniform] Gaussian sample, [Proper] Gamma variance)
+        {
+            return SampleAverageConditional(sample, variance);
+        }
+    }
 }
