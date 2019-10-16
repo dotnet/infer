@@ -153,6 +153,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         #region Properties
 
+        public bool IsInitialized => this.data_ != null;
+
         #region Properties matching factory methods
 
         /// <summary>
@@ -213,7 +215,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         /// <param name="value">The character.</param>
         /// <returns>The probability of the character under this distribution.</returns>
-        public double this[char value] => FindProb(value).Value;
+        public double this[char value] => this.FindProb(value).Value;
 
         #endregion
 
