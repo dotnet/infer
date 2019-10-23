@@ -2,17 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
-using Microsoft.ML.Probabilistic.Collections;
-
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using System.Diagnostics;
 
+    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <content>
@@ -316,6 +312,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 public int CompareTo(WeightedState that) => Index.CompareTo(that.Index);
 
                 public override int GetHashCode() => (Index ^ WeightHighBits).GetHashCode();
+
+                public bool Equals(int index, Weight weight) =>
+                    (this.Index, this.Weight) == (index, weight);
+
+                public override string ToString() => $"({this.Index}, {this.Weight})";
             }
 
             /// <summary>
@@ -470,8 +471,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         weightedStates = new List<WeightedState>(1),
                     };
 
-                public void Add(int index, Weight weight) =>
-                    this.weightedStates.Add(new WeightedState(index, weight));
+                public void Add(int index, Weight weight) => this.Add(new WeightedState(index, weight));
+
+                public void Add(WeightedState weightedState) => this.weightedStates.Add(weightedState);
 
                 public void Reset() => this.weightedStates.Clear();
 
@@ -479,36 +481,71 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     Debug.Assert(this.weightedStates.Count > 0);
 
-                    var sortedStates = this.weightedStates.ToArray();
-                    if (sortedStates.Length == 1)
+                    if (this.weightedStates.Count == 1)
                     {
-                        var state = sortedStates[0];
-                        sortedStates[0] = new WeightedState(state.Index, Weight.One);
-                        return (new WeightedStateSet(sortedStates), state.Weight);
+                        // Happy path that requires no additional storage or sorting
+                        var state = this.weightedStates[0];
+                        return (new WeightedStateSet(state.Index), state.Weight);
                     }
-                    else
-                    {
-                        Array.Sort(sortedStates);
 
-                        var maxWeight = sortedStates[0].Weight;
-                        for (var i = 1; i < sortedStates.Length; ++i)
+                    this.weightedStates.Sort();
+                    this.MergeRepeatedEntries();
+                    var maxWeight = this.NormalizeWeights();
+
+                    return (new WeightedStateSet(this.weightedStates.ToArray()), maxWeight);
+                }
+
+                private void MergeRepeatedEntries()
+                {
+                    // Merge repeated entries for the same state
+                    var dst = 0;
+                    for (var i = 1; i < this.weightedStates.Count; ++i)
+                    {
+                        var srcState = this.weightedStates[i];
+                        var dstState = this.weightedStates[dst];
+                        if (srcState.Index == dstState.Index)
                         {
-                            if (sortedStates[i].Weight > maxWeight)
+                            this.weightedStates[dst] =
+                                new WeightedState(dstState.Index, dstState.Weight + srcState.Weight);
+                        }
+                        else
+                        {
+                            ++dst;
+                            if (dst != i)
                             {
-                                maxWeight = sortedStates[i].Weight;
+                                this.weightedStates[dst] = srcState;
                             }
                         }
-
-                        var normalizer = Weight.Inverse(maxWeight);
-
-                        for (var i = 0; i < sortedStates.Length; ++i)
-                        {
-                            var state = sortedStates[i];
-                            sortedStates[i] = new WeightedState(state.Index, state.Weight * normalizer);
-                        }
-
-                        return (new WeightedStateSet(sortedStates), maxWeight);
                     }
+
+                    // truncate excess
+                    ++dst;
+                    if (dst < this.weightedStates.Count)
+                    {
+                        this.weightedStates.RemoveRange(dst, this.weightedStates.Count - dst);
+                    }
+                }
+
+                private Weight NormalizeWeights()
+                {
+                    var maxWeight = this.weightedStates[0].Weight;
+                    for (var i = 1; i < this.weightedStates.Count; ++i)
+                    {
+                        if (this.weightedStates[i].Weight > maxWeight)
+                        {
+                            maxWeight = this.weightedStates[i].Weight;
+                        }
+                    }
+
+                    var normalizer = Weight.Inverse(maxWeight);
+
+                    for (var i = 0; i < this.weightedStates.Count; ++i)
+                    {
+                        var state = this.weightedStates[i];
+                        this.weightedStates[i] = new WeightedState(state.Index, state.Weight * normalizer);
+                    }
+
+                    return maxWeight;
                 }
             }
 
