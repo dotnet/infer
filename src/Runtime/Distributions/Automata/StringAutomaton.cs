@@ -132,8 +132,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             var distribution = transition.ElementDistribution.Value;
             var ranges = distribution.Ranges;
-            var commonValueStart = (int)char.MinValue;
-            var commonValue = distribution.ProbabilityOutsideRanges;
             var weightBase = transition.Weight * sourceStateResidualWeight;
 
             void AddEndPoints(int start, int end, int destinationIndex, Weight weight)
@@ -144,24 +142,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             foreach (var range in ranges)
             {
-                if (range.StartInclusive > commonValueStart && !commonValue.IsZero)
-                {
-                    AddEndPoints(commonValueStart, range.StartInclusive, transition.DestinationStateIndex, commonValue);
-                }
-
                 // Add segment endpoints
                 var pieceValue = range.Probability;
                 if (!pieceValue.IsZero)
                 {
                     AddEndPoints(range.StartInclusive, range.EndExclusive, transition.DestinationStateIndex, pieceValue);
                 }
-
-                commonValueStart = range.EndExclusive;
-            }
-
-            if (!commonValue.IsZero && (ranges.Count == 0 || ranges[ranges.Count - 1].EndExclusive != DiscreteChar.CharRangeEndExclusive))
-            {
-                AddEndPoints(commonValueStart, char.MaxValue + 1, transition.DestinationStateIndex, commonValue);
             }
         }
 
