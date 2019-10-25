@@ -1096,20 +1096,29 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// <summary>
             /// Gets or sets the start of the range (inclusive).
             /// </summary>
+            /// <remarks>
+            /// Setter is required for DataContractSerializer
+            /// </remarks>
             [DataMember]
-            public int StartInclusive { get; }
+            public int StartInclusive { get; private set; }
 
             /// <summary>
             /// Gets or sets the end of the range (exclusive).
             /// </summary>
+            /// <remarks>
+            /// Setter is required for DataContractSerializer
+            /// </remarks>
             [DataMember]
-            public int EndExclusive { get; }
+            public int EndExclusive { get; private set; }
 
             /// <summary>
             /// Gets or sets the probability associated with the range.
             /// </summary>
+            /// <remarks>
+            /// Setter is required for DataContractSerializer
+            /// </remarks>
             [DataMember]
-            public Weight Probability { get; }
+            public Weight Probability { get; private set; }
 
             /// <summary>
             /// Gets a string that represents this character range.
