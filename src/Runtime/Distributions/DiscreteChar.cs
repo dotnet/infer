@@ -765,12 +765,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             double result = 0;
             foreach (var pair in CharRangePair.CombinedRanges(this, distribution, false))
             {
-                if (!pair.Probability1.IsZero && pair.Probability2.IsZero)
-                {
-                    return double.NegativeInfinity;
-                }
-
-                double product = ValueTimesLogValue(pair.Probability1, pair.Probability2);
+                var product = ValueTimesLogValue(pair.Probability1, pair.Probability2);
                 result += product * (pair.EndExclusive - pair.StartInclusive);
             }
 
@@ -1078,7 +1073,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         [Serializable]
         [DataContract]
-        public struct CharRange
+        public struct CharRange : IComparable<CharRange>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="CharRange"/> struct
@@ -1102,19 +1097,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// Gets or sets the start of the range (inclusive).
             /// </summary>
             [DataMember]
-            public int StartInclusive { get; private set; }
+            public int StartInclusive { get; }
 
             /// <summary>
             /// Gets or sets the end of the range (exclusive).
             /// </summary>
             [DataMember]
-            public int EndExclusive { get; private set; }
+            public int EndExclusive { get; }
 
             /// <summary>
             /// Gets or sets the probability associated with the range.
             /// </summary>
             [DataMember]
-            public Weight Probability { get; private set; }
+            public Weight Probability { get; }
 
             /// <summary>
             /// Gets a string that represents this character range.
@@ -1128,6 +1123,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 this.AppendToString(sb);
                 return sb.ToString();
             }
+
+            public int CompareTo(CharRange that) =>
+                this.StartInclusive.CompareTo(that.StartInclusive);
 
             internal void AppendToString(StringBuilder stringBuilder)
             {
@@ -1852,10 +1850,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
             public static Storage GetPointMass(char point, ReadOnlyArray<CharRange> ranges)
             {
-                if (PointMasses == null)
-                {
-                    throw new NullReferenceException();
-                }
                 if (PointMasses[point] == null)
                 {
                     PointMasses[point] = Storage.CreateUncached(
@@ -1999,7 +1993,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 Debug.Assert(this.ranges.Count > 0);
 
-                this.ranges.Sort((s1, s2) => Comparer<int>.Default.Compare(s1.StartInclusive, s2.StartInclusive));
+                this.ranges.Sort();
 
                 var prevRangeEnd = 0;
                 foreach (var range in this.ranges)
