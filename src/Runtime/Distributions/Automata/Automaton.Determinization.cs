@@ -471,12 +471,39 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         weightedStates = new List<WeightedState>(1),
                     };
 
-                public void Add(int index, Weight weight) => this.Add(new WeightedState(index, weight));
+                public void Add(int index, Weight weight) =>
+                    this.weightedStates.Add(new WeightedState(index, weight));
 
-                public void Add(WeightedState weightedState) => this.weightedStates.Add(weightedState);
+                /// <summary>
+                /// Removes state that was previously added into this builder
+                /// </summary>
+                public void Remove(int index, Weight weight)
+                {
+                    // This algorithm is linear, in theory we could store all states in HashSet<> and make
+                    // this algorithm amortized O(1). In practice we still have O(n) algorithm when
+                    // constructing the final WeightedStateSet, so it's fine to have O(n) algorithm in here
+                    // even in the worst case, because runtime is anyway O(n).
+                    // In average case (small number of states in set) linear search has way better
+                    // constant costs.
+                    var lastStateIndex = this.weightedStates.Count - 1;
+                    var removedStateIndex = lastStateIndex;
+                    while (!this.weightedStates[removedStateIndex].Equals(index, weight))
+                    {
+                        --removedStateIndex;
+                    }
 
-                public void Reset() => this.weightedStates.Clear();
+                    this.weightedStates.RemoveAt(removedStateIndex);
+                }
 
+                public int StatesCount() => this.weightedStates.Count;
+
+                /// <summary>
+                /// Builds a <see cref="WeightedStateSet"/> with normalized weights. Normalizer (max weight
+                /// pre-normalization) is also returned.
+                ///
+                /// Internal state of builder is not mutated, it can be modified by Add()/Remove() calls
+                /// to obtain new WeightedStateSets.
+                /// </summary>
                 public (WeightedStateSet, Weight) Get()
                 {
                     Debug.Assert(this.weightedStates.Count > 0);
@@ -488,24 +515,25 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         return (new WeightedStateSet(state.Index), state.Weight);
                     }
 
-                    this.weightedStates.Sort();
-                    this.MergeRepeatedEntries();
-                    var maxWeight = this.NormalizeWeights();
+                    var weightsClone = new List<WeightedState>(this.weightedStates);
+                    weightsClone.Sort();
+                    MergeRepeatedEntries(weightsClone);
+                    var maxWeight = NormalizeWeights(weightsClone);
 
-                    return (new WeightedStateSet(this.weightedStates.ToArray()), maxWeight);
+                    return (new WeightedStateSet(weightsClone.ToArray()), maxWeight);
                 }
 
-                private void MergeRepeatedEntries()
+                private static void MergeRepeatedEntries(List<WeightedState> weightedStates)
                 {
                     // Merge repeated entries for the same state
                     var dst = 0;
-                    for (var i = 1; i < this.weightedStates.Count; ++i)
+                    for (var i = 1; i < weightedStates.Count; ++i)
                     {
-                        var srcState = this.weightedStates[i];
-                        var dstState = this.weightedStates[dst];
+                        var srcState = weightedStates[i];
+                        var dstState = weightedStates[dst];
                         if (srcState.Index == dstState.Index)
                         {
-                            this.weightedStates[dst] =
+                            weightedStates[dst] =
                                 new WeightedState(dstState.Index, dstState.Weight + srcState.Weight);
                         }
                         else
@@ -513,36 +541,36 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             ++dst;
                             if (dst != i)
                             {
-                                this.weightedStates[dst] = srcState;
+                                weightedStates[dst] = srcState;
                             }
                         }
                     }
 
                     // truncate excess
                     ++dst;
-                    if (dst < this.weightedStates.Count)
+                    if (dst < weightedStates.Count)
                     {
-                        this.weightedStates.RemoveRange(dst, this.weightedStates.Count - dst);
+                        weightedStates.RemoveRange(dst, weightedStates.Count - dst);
                     }
                 }
 
-                private Weight NormalizeWeights()
+                private static Weight NormalizeWeights(List<WeightedState> weightedStates)
                 {
-                    var maxWeight = this.weightedStates[0].Weight;
-                    for (var i = 1; i < this.weightedStates.Count; ++i)
+                    var maxWeight = weightedStates[0].Weight;
+                    for (var i = 1; i < weightedStates.Count; ++i)
                     {
-                        if (this.weightedStates[i].Weight > maxWeight)
+                        if (weightedStates[i].Weight > maxWeight)
                         {
-                            maxWeight = this.weightedStates[i].Weight;
+                            maxWeight = weightedStates[i].Weight;
                         }
                     }
 
                     var normalizer = Weight.Inverse(maxWeight);
 
-                    for (var i = 0; i < this.weightedStates.Count; ++i)
+                    for (var i = 0; i < weightedStates.Count; ++i)
                     {
-                        var state = this.weightedStates[i];
-                        this.weightedStates[i] = new WeightedState(state.Index, state.Weight * normalizer);
+                        var state = weightedStates[i];
+                        weightedStates[i] = new WeightedState(state.Index, state.Weight * normalizer);
                     }
 
                     return maxWeight;
