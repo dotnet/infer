@@ -38,6 +38,64 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void GammaPowerTest()
+        {
+            Variable<GammaPower> xPriorVar = Variable.Observed(default(GammaPower)).Named("xPrior");
+            Variable<double> x = Variable<double>.Random(xPriorVar).Named("x");
+            Variable<double> power = Variable.Observed(0.5).Named("power");
+            var y = x ^ power;
+            y.Name = nameof(y);
+            Variable<GammaPower> yLikeVar = Variable.Observed(default(GammaPower)).Named("yLike");
+            Variable.ConstrainEqualRandom(y, yLikeVar);
+            y.SetMarginalPrototype(yLikeVar);
+            InferenceEngine engine = new InferenceEngine();
+
+            foreach (var (xPower, yPower) in new[]
+            {
+                (-1, -0.5),
+                (-1, -1),
+                (1, 1),
+                (3, 2)
+            })
+            {
+                var xPrior = new GammaPower(2, 3, xPower);
+                xPriorVar.ObservedValue = xPrior;
+                GammaPower yLike = new GammaPower(4, 5, yPower);
+                yLikeVar.ObservedValue = yLike;
+
+                // Importance sampling
+                GammaEstimator xInvEstimator = new GammaEstimator();
+                GammaEstimator yPowerEstimator = new GammaEstimator();
+                int nSamples = 1000000;
+                for (int i = 0; i < nSamples; i++)
+                {
+                    double xSample = xPrior.Sample();
+                    double ySample = System.Math.Pow(xSample, power.ObservedValue);
+                    double logWeight = yLike.GetLogProb(ySample);
+                    double weight = System.Math.Exp(logWeight);
+                    xInvEstimator.Add(System.Math.Pow(xSample, 1 / xPrior.Power), weight);
+                    yPowerEstimator.Add(System.Math.Pow(ySample, 1 / yLike.Power), weight);
+                }
+                Gamma xInvExpected = xInvEstimator.GetDistribution(new Gamma());
+                GammaPower xExpected = GammaPower.FromGamma(xInvExpected, xPrior.Power);
+                Gamma yPowerExpected = yPowerEstimator.GetDistribution(new Gamma());
+                GammaPower yExpected = GammaPower.FromGamma(yPowerExpected, yLike.Power);
+
+                var xActual = engine.Infer<GammaPower>(x);
+                double xError = MMath.AbsDiff(xActual.GetMean(), xExpected.GetMean(), 1e-6);
+                Trace.WriteLine($"x = {xActual} should be {xExpected}, error = {xError}");
+                var yActual = engine.Infer<GammaPower>(y);
+                double yError = MMath.AbsDiff(yActual.GetMean(), yExpected.GetMean(), 1e-6);
+                Trace.WriteLine($"y = {yActual} should be {yExpected}, error = {yError}");
+                double tolerance;
+                if (yPower == 0.5 * xPower) tolerance = 1e-2;
+                else tolerance = 1e-1;
+                Assert.True(xError < tolerance);
+                Assert.True(yError < tolerance);
+            }
+        }
+
+        [Fact]
         public void VectorTimesScalarTest()
         {
             Vector aMean = Vector.FromArray(2.2, 3.3);

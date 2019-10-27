@@ -16,27 +16,44 @@ namespace Microsoft.ML.Probabilistic.Factors
     {
         // GammaPower = GammaPower ^ y  /////////////////////////////////////////////////////////
 
-        public static GammaPower PowAverageConditional([SkipIfUniform] GammaPower x, double y)
+        public static GammaPower PowAverageConditional([SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
-            return GammaPower.FromShapeAndRate(x.Shape, x.Rate, y*x.Power);
+            GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y * x.Power);
+            return ChangePower(message, result.Power);
         }
 
-        public static GammaPower XAverageConditional([SkipIfUniform] GammaPower pow, double y, GammaPower result)
+        public static GammaPower XAverageConditional([SkipIfUniform] GammaPower pow, double y, GammaPower x, GammaPower result)
         {
+            // Factor is (x^y)^(pow.Shape/pow.Power - 1) * exp(-pow.Rate*(x^y)^1/pow.Power)
+            // =propto x^(pow.Shape/(pow.Power/y) - y) * exp(-pow.Rate*x^y/pow.Power)
+            // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
+            // newShape = pow.Shape + (1-y)*(pow.Power/y)
             double power = pow.Power / y;
-            if (power != result.Power)
-                throw new NotSupportedException("Outgoing message power (" + power + ") does not match the desired power (" + result.Power + ")");
-            return GammaPower.FromShapeAndRate(pow.Shape, pow.Rate, pow.Power / y);
+            GammaPower message = GammaPower.FromShapeAndRate(pow.Shape + (1 - y) * power, pow.Rate, power);
+            //throw new NotSupportedException("Outgoing message power (" + power + ") does not match the desired power (" + result.Power + ")");
+            // This is significantly better than ChangePower(message, result.Power)
+            return ChangePower(message*ChangePower(x, message.Power), result.Power)/x;
         }
 
-        public static GammaPower PowAverageLogarithm([SkipIfUniform] GammaPower x, double y)
+        public static GammaPower ChangePower(GammaPower message, double newPower)
         {
-            return PowAverageConditional(x, y);
+            if(message.Power == newPower) return message; // same as below, but faster
+            // Project the message onto the desired power
+            // Compute the mean and variance of x^1/newPower
+            double mean = message.GetMeanPower(1 / newPower);
+            double mean2 = message.GetMeanPower(2 / newPower);
+            double variance = mean2 - mean * mean;
+            return GammaPower.FromGamma(Gamma.FromMeanAndVariance(mean, variance), newPower);
         }
 
-        public static GammaPower XAverageLogarithm([SkipIfUniform] GammaPower pow, double y, GammaPower result)
+        public static GammaPower PowAverageLogarithm([SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
-            return XAverageConditional(pow, y, result);
+            return PowAverageConditional(x, y, result);
+        }
+
+        public static GammaPower XAverageLogarithm([SkipIfUniform] GammaPower pow, double y, GammaPower x, GammaPower result)
+        {
+            return XAverageConditional(pow, y, x, result);
         }
 
         // GammaPower = Gamma ^ y //////////////////////////////////////////////////////////////
@@ -50,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (y != pow.Power)
                 throw new NotSupportedException("Incoming message " + pow + " does not match the exponent (" + y + ")");
-            return Gamma.FromShapeAndRate(pow.Shape, pow.Rate);
+            return Gamma.FromShapeAndRate(pow.Shape + (1 - y), pow.Rate);
         }
 
         public static GammaPower PowAverageLogarithm([SkipIfUniform] Gamma x, double y)

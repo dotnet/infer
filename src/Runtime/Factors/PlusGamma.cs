@@ -7,6 +7,65 @@ namespace Microsoft.ML.Probabilistic.Factors
     using System;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
+    using Microsoft.ML.Probabilistic.Math;
+
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaVmpOp"]/doc/*'/>
+    [FactorMethod(typeof(Factor), "Plus", typeof(double), typeof(double), Default = true)]
+    [Quality(QualityBand.Experimental)]
+    public static class PlusGammaOp
+    {
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="SumAverageConditional(GammaPower, double)"]/*'/>
+        public static GammaPower SumAverageConditional([SkipIfUniform] GammaPower a, double b)
+        {
+            if (double.IsInfinity(b) || double.IsNaN(b)) throw new ArgumentOutOfRangeException(nameof(b), b, $"Argument is outside the range of supported values.");
+            if (a.IsUniform()) return a;
+            else if (a.Power == 0 && b != 0) throw new ArgumentException("Cannot add {b} to {a}");
+            else if (a.IsPointMass) return GammaPower.PointMass(a.Point + b, a.Power);
+            else if (a.Power < 0 && a.Shape <= a.Power) return a; // mode is at infinity
+            else if (!a.IsProper()) throw new ImproperDistributionException(a);
+            else
+            {
+                bool shiftMode = (a.Power < 0);
+                if (shiftMode)
+                {
+                    // The mode is ((Shape - Power)/Rate)^Power
+                    // We want to shift the mode by b, preserving the Shape and Power.
+                    // This implies ((Shape - Power)/newRate)^Power = newMode
+                    // newRate = (Shape - Power)/newMode^(1/Power)
+                    return GammaPower.FromShapeAndRate(a.Shape, (a.Shape - a.Power) * Math.Pow(a.GetMode() + b, -1 / a.Power), a.Power);
+                }
+                else
+                {
+                    // The mean is Math.Exp(MMath.GammaLn(Shape + Power) - MMath.GammaLn(Shape) - Power * Math.Log(Rate))
+                    // We want to shift the mean by b, preserving the Shape and Power.
+                    // This implies s*newRate^(-Power) = newMean
+                    // newRate = (newMean/s)^(-1/Power)
+                    // If power == 1, mean is shape/rate, newRate = shape/newMean.
+                    double s = (a.Power == 1) ? a.Shape : Math.Exp(MMath.GammaLn(a.Shape + a.Power) - MMath.GammaLn(a.Shape));
+                    double r = Math.Pow(a.Rate, -a.Power);
+                    return GammaPower.FromShapeAndRate(a.Shape, Math.Pow(r + b / s, -1 / a.Power), a.Power);
+                }
+            }
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="SumAverageConditional(GammaPower, double)"]/*'/>
+        public static GammaPower SumAverageConditional(double a, [SkipIfUniform] GammaPower b)
+        {
+            return SumAverageConditional(b, a);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="AAverageConditional(GammaPower, double)"]/*'/>
+        public static GammaPower AAverageConditional([SkipIfUniform] GammaPower sum, double b)
+        {
+            return SumAverageConditional(sum, -b);
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="BAverageConditional(GammaPower, double)"]/*'/>
+        public static GammaPower BAverageConditional([SkipIfUniform] GammaPower sum, double a)
+        {
+            return AAverageConditional(sum, a);
+        }
+    }
 
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaVmpOp"]/doc/*'/>
     [FactorMethod(typeof(Factor), "Plus", typeof(double), typeof(double), Default = true)]
