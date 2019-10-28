@@ -38,7 +38,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void GammaPowerTest()
+        public void GammaPowerPowerTest()
         {
             Variable<GammaPower> xPriorVar = Variable.Observed(default(GammaPower)).Named("xPrior");
             Variable<double> x = Variable<double>.Random(xPriorVar).Named("x");
@@ -64,8 +64,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 yLikeVar.ObservedValue = yLike;
 
                 // Importance sampling
-                GammaEstimator xInvEstimator = new GammaEstimator();
-                GammaEstimator yPowerEstimator = new GammaEstimator();
+                GammaPowerEstimator xEstimator = new GammaPowerEstimator(xPrior.Power);
+                GammaPowerEstimator yEstimator = new GammaPowerEstimator(yLike.Power);
                 int nSamples = 1000000;
                 for (int i = 0; i < nSamples; i++)
                 {
@@ -73,13 +73,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                     double ySample = System.Math.Pow(xSample, power.ObservedValue);
                     double logWeight = yLike.GetLogProb(ySample);
                     double weight = System.Math.Exp(logWeight);
-                    xInvEstimator.Add(System.Math.Pow(xSample, 1 / xPrior.Power), weight);
-                    yPowerEstimator.Add(System.Math.Pow(ySample, 1 / yLike.Power), weight);
+                    xEstimator.Add(xSample, weight);
+                    yEstimator.Add(ySample, weight);
                 }
-                Gamma xInvExpected = xInvEstimator.GetDistribution(new Gamma());
-                GammaPower xExpected = GammaPower.FromGamma(xInvExpected, xPrior.Power);
-                Gamma yPowerExpected = yPowerEstimator.GetDistribution(new Gamma());
-                GammaPower yExpected = GammaPower.FromGamma(yPowerExpected, yLike.Power);
+                GammaPower xExpected = xEstimator.GetDistribution(xPrior);
+                GammaPower yExpected = yEstimator.GetDistribution(yLike);
 
                 var xActual = engine.Infer<GammaPower>(x);
                 double xError = MMath.AbsDiff(xActual.GetMean(), xExpected.GetMean(), 1e-6);
@@ -1602,10 +1600,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
             IfBlock block = Variable.If(evidence);
-            Variable<double> shape = Variable.Observed(2.5).Named("shape");
             Gamma scalePrior = Gamma.FromShapeAndRate(3, 4);
             Variable<double> scale = Variable<double>.Random(scalePrior).Named("scale");
-            Variable<double> y = Variable.GammaFromShapeAndRate(shape, 1).Named("y");
+            Gamma yPrior = Gamma.FromShapeAndRate(2.5, 1);
+            Variable<double> y = Variable<double>.Random(yPrior).Named("y");
             Variable<double> x = (y * scale).Named("x");
             Gamma xPrior = Gamma.FromShapeAndRate(5, 6);
             Variable.ConstrainEqualRandom(x, xPrior);
@@ -1614,39 +1612,126 @@ namespace Microsoft.ML.Probabilistic.Tests
             InferenceEngine engine = new InferenceEngine();
             Gamma scaleActual = engine.Infer<Gamma>(scale);
             Gamma yActual = engine.Infer<Gamma>(y);
+            Gamma xActual = engine.Infer<Gamma>(x);
             double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
             Gamma scaleExpected = new Gamma(3.335, 0.1678);
             Gamma yExpected = new Gamma(3.021, 0.5778);
+            Gamma xExpected = new Gamma(5.619, 0.1411);
             double evExpected = -0.919181055678219;
 
             if (false)
             {
                 // importance sampling
                 double totalWeight = 0;
-                Gamma yPrior = Gamma.FromShapeAndRate(shape.ObservedValue, 1);
                 GammaEstimator scaleEst = new GammaEstimator();
                 GammaEstimator yEst = new GammaEstimator();
+                GammaEstimator xEst = new GammaEstimator();
                 int numIter = 1000000;
                 for (int iter = 0; iter < numIter; iter++)
                 {
                     double scaleSample = scalePrior.Sample();
                     double ySample = yPrior.Sample();
-                    double logWeight = xPrior.GetLogProb(ySample * scaleSample);
+                    double xSample = ySample * scaleSample;
+                    double logWeight = xPrior.GetLogProb(xSample);
                     double weight = System.Math.Exp(logWeight);
                     totalWeight += weight;
                     scaleEst.Add(scaleSample, weight);
                     yEst.Add(ySample, weight);
+                    xEst.Add(xSample, weight);
                 }
                 scaleExpected = scaleEst.GetDistribution(new Gamma());
                 evExpected = System.Math.Log(totalWeight / numIter);
                 yExpected = yEst.GetDistribution(new Gamma());
+                xExpected = xEst.GetDistribution(new Gamma());
             }
-            Console.WriteLine("scale = {0} should be {1}", scaleActual, scaleExpected);
-            Console.WriteLine("y = {0} should be {1}", yActual, yExpected);
-            Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
+            double scaleError = scaleExpected.MaxDiff(scaleActual);
+            double yError = yExpected.MaxDiff(yActual);
+            double xError = xExpected.MaxDiff(xActual);
+            double evError = MMath.AbsDiff(evExpected, evActual, 1e-6);
+            Trace.WriteLine($"scale = {scaleActual} should be {scaleExpected}, error = {scaleError}");
+            Trace.WriteLine($"y = {yActual} should be {yExpected}, error = {yError}");
+            Trace.WriteLine($"x = {xActual} should be {xExpected}, error = {xError}");
+            Trace.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evError}");
             Assert.True(scaleExpected.MaxDiff(scaleActual) < 2e-2);
-            Assert.True(yExpected.MaxDiff(yActual) < 0.5);
-            Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-1);
+            Assert.True(yExpected.MaxDiff(yActual) < 2e-2);
+            Assert.True(xExpected.MaxDiff(xActual) < 1e-2);
+            Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 5e-2);
+        }
+
+        [Fact]
+        public void GammaPowerProductRRRTest()
+        {
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            Variable<GammaPower> scalePriorVar = Variable.Observed(default(GammaPower)).Named("scalePrior");
+            Variable<double> scale = Variable<double>.Random(scalePriorVar).Named("scale");
+            Variable<GammaPower> yPriorVar = Variable.Observed(default(GammaPower)).Named("yPrior");
+            Variable<double> y = Variable<double>.Random(yPriorVar).Named("y");
+            Variable<double> x = (y * scale).Named("x");
+            Variable<GammaPower> xPriorVar = Variable.Observed(default(GammaPower)).Named("xPrior");
+            Variable.ConstrainEqualRandom(x, xPriorVar);
+            block.CloseBlock();
+            InferenceEngine engine = new InferenceEngine();
+
+            foreach (double scalePower in new[] { 1, -1, 2 })
+            {
+                double yPower = scalePower;
+                double xPower = scalePower;
+                GammaPower scalePrior = GammaPower.FromShapeAndRate(1, 1, scalePower);
+                GammaPower yPrior = GammaPower.FromShapeAndRate(1, 1, yPower);
+                GammaPower xPrior = GammaPower.FromShapeAndRate(30, 1, xPower);
+                scalePriorVar.ObservedValue = scalePrior;
+                yPriorVar.ObservedValue = yPrior;
+                xPriorVar.ObservedValue = xPrior;
+
+                GammaPower scaleActual = engine.Infer<GammaPower>(scale);
+                GammaPower yActual = engine.Infer<GammaPower>(y);
+                GammaPower xActual = engine.Infer<GammaPower>(x);
+                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                GammaPower scaleExpected = new GammaPower(3.335, 0.1678, scalePower);
+                GammaPower yExpected = new GammaPower(3.021, 0.5778, yPower);
+                GammaPower xExpected = new GammaPower(3.021, 0.5778, xPower);
+                double evExpected = -0.919181055678219;
+
+                if (true)
+                {
+                    // importance sampling
+                    Rand.Restart(0);
+                    double totalWeight = 0;
+                    GammaPowerEstimator scaleEstimator = new GammaPowerEstimator(scalePower);
+                    GammaPowerEstimator yEstimator = new GammaPowerEstimator(yPower);
+                    GammaPowerEstimator xEstimator = new GammaPowerEstimator(xPower);
+                    int numIter = 10000000;
+                    for (int iter = 0; iter < numIter; iter++)
+                    {
+                        double scaleSample = scalePrior.Sample();
+                        double ySample = yPrior.Sample();
+                        double xSample = ySample * scaleSample;
+                        double logWeight = xPrior.GetLogProb(xSample);
+                        double weight = System.Math.Exp(logWeight);
+                        totalWeight += weight;
+                        scaleEstimator.Add(scaleSample, weight);
+                        yEstimator.Add(ySample, weight);
+                        xEstimator.Add(xSample, weight);
+                    }
+                    scaleExpected = scaleEstimator.GetDistribution(scalePrior);
+                    evExpected = System.Math.Log(totalWeight / numIter);
+                    yExpected = yEstimator.GetDistribution(yPrior);
+                    xExpected = xEstimator.GetDistribution(xPrior);
+                }
+                double scaleError = scaleExpected.MaxDiff(scaleActual);
+                double yError = yExpected.MaxDiff(yActual);
+                double xError = xExpected.MaxDiff(xActual);
+                double evError = MMath.AbsDiff(evExpected, evActual, 1e-6);
+                Trace.WriteLine($"scale = {scaleActual} should be {scaleExpected}, error = {scaleError}");
+                Trace.WriteLine($"y = {yActual} should be {yExpected}, error = {yError}");
+                Trace.WriteLine($"x = {xActual} should be {xExpected}, error = {xError}");
+                Trace.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evError}");
+                Assert.True(scaleError < 3);
+                Assert.True(yError < 0.5);
+                Assert.True(xError < 4);
+                Assert.True(evError < 1e-2);
+            }
         }
 
         [Fact]

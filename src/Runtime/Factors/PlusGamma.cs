@@ -21,30 +21,26 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (a.IsUniform()) return a;
             else if (a.Power == 0 && b != 0) throw new ArgumentException("Cannot add {b} to {a}");
             else if (a.IsPointMass) return GammaPower.PointMass(a.Point + b, a.Power);
-            else if (a.Power < 0 && a.Shape <= a.Power) return a; // mode is at infinity
+            else if (a.Power < 0)
+            {                
+                if (a.Shape <= a.Power) return a; // mode is at infinity
+                // The mode is ((Shape - Power)/Rate)^Power
+                // We want to shift the mode by b, preserving the Shape and Power.
+                // This implies ((Shape - Power)/newRate)^Power = newMode
+                // newRate = (Shape - Power)/newMode^(1/Power)
+                return GammaPower.FromShapeAndRate(a.Shape, (a.Shape - a.Power) * Math.Pow(a.GetMode() + b, -1 / a.Power), a.Power);
+            }
             else if (!a.IsProper()) throw new ImproperDistributionException(a);
             else
             {
-                bool shiftMode = (a.Power < 0);
-                if (shiftMode)
-                {
-                    // The mode is ((Shape - Power)/Rate)^Power
-                    // We want to shift the mode by b, preserving the Shape and Power.
-                    // This implies ((Shape - Power)/newRate)^Power = newMode
-                    // newRate = (Shape - Power)/newMode^(1/Power)
-                    return GammaPower.FromShapeAndRate(a.Shape, (a.Shape - a.Power) * Math.Pow(a.GetMode() + b, -1 / a.Power), a.Power);
-                }
-                else
-                {
-                    // The mean is Math.Exp(MMath.GammaLn(Shape + Power) - MMath.GammaLn(Shape) - Power * Math.Log(Rate))
-                    // We want to shift the mean by b, preserving the Shape and Power.
-                    // This implies s*newRate^(-Power) = newMean
-                    // newRate = (newMean/s)^(-1/Power)
-                    // If power == 1, mean is shape/rate, newRate = shape/newMean.
-                    double s = (a.Power == 1) ? a.Shape : Math.Exp(MMath.GammaLn(a.Shape + a.Power) - MMath.GammaLn(a.Shape));
-                    double r = Math.Pow(a.Rate, -a.Power);
-                    return GammaPower.FromShapeAndRate(a.Shape, Math.Pow(r + b / s, -1 / a.Power), a.Power);
-                }
+                // The mean is Math.Exp(MMath.GammaLn(Shape + Power) - MMath.GammaLn(Shape) - Power * Math.Log(Rate))
+                // We want to shift the mean by b, preserving the Shape and Power.
+                // This implies s*newRate^(-Power) = newMean
+                // newRate = (newMean/s)^(-1/Power)
+                // If power == 1, mean is shape/rate, newRate = shape/newMean.
+                double s = (a.Power == 1) ? a.Shape : Math.Exp(MMath.GammaLn(a.Shape + a.Power) - MMath.GammaLn(a.Shape));
+                double r = Math.Pow(a.Rate, -a.Power);
+                return GammaPower.FromShapeAndRate(a.Shape, Math.Pow(r + b / s, -1 / a.Power), a.Power);
             }
         }
 

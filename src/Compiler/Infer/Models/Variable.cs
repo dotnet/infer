@@ -6386,12 +6386,17 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         protected static Variable<bool> GreaterThan(Variable<T> a, Variable<T> b)
         {
-            Variable<bool> f = OperatorFactor<bool>(Operator.GreaterThan, a, b);
-            if ((object)f == null) f = OperatorFactor<bool>(Operator.LessThan, b, a);
-            if ((object)f == null) f = NotOrNull(OperatorFactor<bool>(Operator.LessThanOrEqual, a, b));
-            if ((object)f == null) f = NotOrNull(OperatorFactor<bool>(Operator.GreaterThanOrEqual, b, a));
-            if ((object)f != null) return f;
-            else if (typeof(double).IsAssignableFrom(typeof(T)))
+            return OperatorFactor<bool>(Operator.GreaterThan, a, b)
+                ?? OperatorFactor<bool>(Operator.LessThan, b, a)
+                ?? NotOrNull(OperatorFactor<bool>(Operator.LessThanOrEqual, a, b))
+                ?? NotOrNull(OperatorFactor<bool>(Operator.GreaterThanOrEqual, b, a))
+                ?? GreaterThanFromMinus(a, b)
+                ?? throw new InvalidOperationException("Neither of the operators (<,<=,>,>=) has a registered factor for argument type " + typeof(T) + ".");
+        }
+
+        private static Variable<bool> GreaterThanFromMinus(Variable<T> a, Variable<T> b)
+        {
+            if (typeof(double).IsAssignableFrom(typeof(T)))
             {
                 Variable<T> diff;
                 if (b.IsObserved && b.IsReadOnly && b.IsBase && b.ObservedValue.Equals(0.0))
@@ -6406,16 +6411,13 @@ namespace Microsoft.ML.Probabilistic.Models
                 {
                     diff = OperatorFactor<T>(Operator.Minus, a, b);
                 }
-                if ((object)diff == null)
+                if ((object)diff != null)
                 {
-                    throw new InvalidOperationException("None of the operators (<,>,-) has a registered factor for argument type " + typeof(T) + ".");
+                    return IsPositive((Variable<double>)(Variable)diff);
                 }
-                return IsPositive((Variable<double>)(Variable)diff);
+                // Fall through
             }
-            else
-            {
-                throw new InvalidOperationException("Neither of the operators (<,>) has a registered factor for argument type " + typeof(T) + ".");
-            }
+            return null;
         }
 
         private static Variable<bool> NotOrNull(Variable<bool> Variable)
@@ -6428,36 +6430,12 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         protected static Variable<bool> GreaterThanOrEqual(Variable<T> a, Variable<T> b)
         {
-            Variable<bool> f = OperatorFactor<bool>(Operator.GreaterThanOrEqual, a, b);
-            if ((object)f == null) f = OperatorFactor<bool>(Operator.LessThanOrEqual, b, a);
-            if ((object)f == null) f = NotOrNull(OperatorFactor<bool>(Operator.LessThan, a, b));
-            if ((object)f == null) f = NotOrNull(OperatorFactor<bool>(Operator.GreaterThan, b, a));
-            if ((object)f != null) return f;
-            else if (typeof(double).IsAssignableFrom(typeof(T)))
-            {
-                Variable<T> diff;
-                if (b.IsObserved && b.IsReadOnly && b.IsBase && b.ObservedValue.Equals(0.0))
-                {
-                    diff = a;
-                }
-                else if (a.IsObserved && a.IsReadOnly && a.IsBase && a.ObservedValue.Equals(0.0))
-                {
-                    return !GreaterThan(b, a);
-                }
-                else
-                {
-                    diff = OperatorFactor<T>(Operator.Minus, a, b);
-                }
-                if ((object)diff == null)
-                {
-                    throw new InvalidOperationException("None of the operators (<,>,-) has a registered factor for argument type " + typeof(T) + ".");
-                }
-                return IsPositive((Variable<double>)(Variable)diff); // should be IsPositiveOrZero
-            }
-            else
-            {
-                throw new InvalidOperationException("Neither of the operators (<,>) has a registered factor for argument type " + typeof(T) + ".");
-            }
+            return OperatorFactor<bool>(Operator.GreaterThanOrEqual, a, b) 
+                ?? OperatorFactor<bool>(Operator.LessThanOrEqual, b, a)
+                ?? NotOrNull(OperatorFactor<bool>(Operator.LessThan, a, b))
+                ?? NotOrNull(OperatorFactor<bool>(Operator.GreaterThan, b, a))
+                ?? NotOrNull(GreaterThanFromMinus(b, a))
+                ?? throw new InvalidOperationException("Neither of the operators (<,<=,>,>=) has a registered factor for argument type " + typeof(T) + ".");
         }
 
         /// <summary>

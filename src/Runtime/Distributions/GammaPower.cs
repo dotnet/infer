@@ -305,7 +305,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (Power == 0.0) return 1.0;
             else if (IsPointMass) return Point;
-            else return Math.Pow((Shape - Power) / Rate, Power);
+            else return Math.Pow(Math.Max(0, Shape - Power) / Rate, Power);
         }
 
         /// <summary>

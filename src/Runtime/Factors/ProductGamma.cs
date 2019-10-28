@@ -78,7 +78,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     throw new AllZeroException();
                 result.SetToUniform();
             }
-            else if ((Product > 0) != (B > 0))
+            else if ((Product != 0) && (Product > 0) != (B > 0))
                 throw new AllZeroException("Product and argument do not have the same sign");
             else
                 result.Point = Product / B;
@@ -641,28 +641,28 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 // int delta(ab - y) Ga(a; s, r) da = int delta(a' - y) Ga(a'/b; s, r)/b da' = Ga(y/b; s, r)/b
                 // logf = -s*log(b) - y*r/b
-                double p = 1 / b;
-                double p2 = p * p;
+                double ib = 1 / b;
+                double ib2 = ib * ib;
                 double shape = A.Shape;
                 double c = product.Point * A.Rate;
-                double dlogf = -shape * p + c * p2;
-                double ddlogf = shape * p2 - 2 * c * p2 * p;
-                double dddlogf = -2 * shape * p * p2 + 6 * c * p2 * p2;
-                double d4logf = 6 * shape * p2 * p2 - 24 * c * p2 * p2 * p;
+                double dlogf = -shape * ib + c * ib2;
+                double ddlogf = shape * ib2 - 2 * c * ib2 * ib;
+                double dddlogf = -2 * shape * ib * ib2 + 6 * c * ib2 * ib2;
+                double d4logf = 6 * shape * ib2 * ib2 - 24 * c * ib2 * ib2 * ib;
                 return new double[] { dlogf, ddlogf, dddlogf, d4logf };
             }
             else if (A.IsPointMass)
             {
-                // Ga(ab; y_a, y_b)
-                // logf = (y_a-1)*log(b) - y_b*ab
-                double p = 1 / b;
-                double p2 = p * p;
+                // Ga(ab; y_s, y_r)
+                // logf = (y_s-1)*log(b) - y_r*ab
+                double ib = 1 / b;
+                double ib2 = ib * ib;
                 double c = product.Rate * A.Point;
                 double shape = product.Shape - 1;
-                double dlogf = shape * p - c;
-                double ddlogf = -shape * p2;
-                double dddlogf = 2 * shape * p * p2;
-                double d4logf = -6 * shape * p2 * p2;
+                double dlogf = shape * ib - c;
+                double ddlogf = -shape * ib2;
+                double dddlogf = 2 * shape * ib * ib2;
+                double d4logf = -6 * shape * ib2 * ib2;
                 return new double[] { dlogf, ddlogf, dddlogf, d4logf };
             }
             else
@@ -781,10 +781,10 @@ namespace Microsoft.ML.Probabilistic.Factors
                 throw new NotImplementedException();
             if (q.IsUniform())
                 q = Q(product, A, B);
-            double x = q.GetMean();
-            double[] g = new double[] { x, 1, 0, 0 };
+            double bPoint = q.GetMean();
+            double[] bDerivatives = new double[] { bPoint, 1, 0, 0 };
             double bMean, bVariance;
-            GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, product, A), out bMean, out bVariance);
+            GaussianOp_Laplace.LaplaceMoments(q, bDerivatives, dlogfs(bPoint, product, A), out bMean, out bVariance);
             Gamma bMarginal = Gamma.FromMeanAndVariance(bMean, bVariance);
             Gamma result = new Gamma();
             result.SetToRatio(bMarginal, B, true);
@@ -801,26 +801,26 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (product.IsPointMass)
                 throw new NotImplementedException();
 
-            double yMean, yVariance;
-            double x = q.GetMean();
-            double x2 = x * x;
+            double productMean, productVariance;
+            double bPoint = q.GetMean();
             double r = product.Rate;
             double r2 = r * r;
-            double p = 1 / (x * r + A.Rate);
-            double p2 = p * p;
+            double denom = 1 / (bPoint * r + A.Rate);
+            double denom2 = denom * denom;
             double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape);
             // yMean = shape2*b/(b y_r + a_r)
-            // yVariance = E[shape2*(shape2+1)*b^2/(b y_r + a_r)^2] - aMean^2 = var(shape2*b/(b y_r + a_r)) + E[shape2*b^2/(b y_r + a_r)^2]
-            //           = shape2^2*var(b/(b y_r + a_r)) + shape2*(var(b/(b y_r + a_r)) + (aMean/shape2)^2)
-            double[] g = new double[] { x * p, A.Rate * p2, -2 * p2 * p * A.Rate * r, 6 * p2 * p2 * A.Rate * r2 };
-            double pMean, pVariance;
-            GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, product, A), out pMean, out pVariance);
-            yMean = shape2 * pMean;
-            yVariance = shape2 * shape2 * pVariance + shape2 * (pVariance + pMean * pMean);
+            // yVariance = E[shape2*(shape2+1)*b^2/(b y_r + a_r)^2] - yMean^2 
+            //           = var(shape2*b/(b y_r + a_r)) + E[shape2*b^2/(b y_r + a_r)^2]
+            //           = shape2^2*var(b/(b y_r + a_r)) + shape2*(var(b/(b y_r + a_r)) + (yMean/shape2)^2)
+            double[] gDerivatives = new double[] { bPoint * denom, A.Rate * denom2, -2 * denom2 * denom * A.Rate * r, 6 * denom2 * denom2 * A.Rate * r2 };
+            double gMean, gVariance;
+            GaussianOp_Laplace.LaplaceMoments(q, gDerivatives, dlogfs(bPoint, product, A), out gMean, out gVariance);
+            productMean = shape2 * gMean;
+            productVariance = shape2 * shape2 * gVariance + shape2 * (gVariance + gMean * gMean);
 
-            Gamma yMarginal = Gamma.FromMeanAndVariance(yMean, yVariance);
+            Gamma productMarginal = Gamma.FromMeanAndVariance(productMean, productVariance);
             Gamma result = new Gamma();
-            result.SetToRatio(yMarginal, product, true);
+            result.SetToRatio(productMarginal, product, true);
             if (double.IsNaN(result.Shape) || double.IsNaN(result.Rate))
                 throw new InferRuntimeException("result is nan");
             return result;
@@ -834,7 +834,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (A.IsPointMass)
                 throw new NotImplementedException();
             double aMean, aVariance;
-            double x = q.GetMean();
+            double bPoint = q.GetMean();
             if (product.IsPointMass)
             {
                 // Z = int Ga(y/b; s, r)/b Ga(b; b_s, b_r) db
@@ -842,30 +842,29 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // E[a^2] = E[y^2/b^2]
                 // aVariance = E[a^2] - aMean^2
                 double y = product.Point;
-                double p = 1 / x;
-                double p2 = p * p;
-                double[] g = new double[] { p, -p2, 2 * p2 * p, -6 * p2 * p2 };
+                double ib = 1 / bPoint;
+                double ib2 = ib * ib;
+                double[] g = new double[] { ib, -ib2, 2 * ib2 * ib, -6 * ib2 * ib2 };
                 double pMean, pVariance;
-                GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, product, A), out pMean, out pVariance);
+                GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(bPoint, product, A), out pMean, out pVariance);
                 aMean = y * pMean;
                 aVariance = y * y * pVariance;
             }
             else
             {
-                double x2 = x * x;
                 double r = product.Rate;
                 double r2 = r * r;
-                double p = 1 / (x * r + A.Rate);
-                double p2 = p * p;
+                double g = 1 / (bPoint * r + A.Rate);
+                double g2 = g * g;
                 double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape);
                 // aMean = shape2/(b y_r + a_r)
                 // aVariance = E[shape2*(shape2+1)/(b y_r + a_r)^2] - aMean^2 = var(shape2/(b y_r + a_r)) + E[shape2/(b y_r + a_r)^2]
                 //           = shape2^2*var(1/(b y_r + a_r)) + shape2*(var(1/(b y_r + a_r)) + (aMean/shape2)^2)
-                double[] g = new double[] { p, -r * p2, 2 * p2 * p * r2, -6 * p2 * p2 * r2 * r };
-                double pMean, pVariance;
-                GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, product, A), out pMean, out pVariance);
-                aMean = shape2 * pMean;
-                aVariance = shape2 * shape2 * pVariance + shape2 * (pVariance + pMean * pMean);
+                double[] gDerivatives = new double[] { g, -r * g2, 2 * g2 * g * r2, -6 * g2 * g2 * r2 * r };
+                double gMean, gVariance;
+                GaussianOp_Laplace.LaplaceMoments(q, gDerivatives, dlogfs(bPoint, product, A), out gMean, out gVariance);
+                aMean = shape2 * gMean;
+                aVariance = shape2 * shape2 * gVariance + shape2 * (gVariance + gMean * gMean);
             }
             Gamma aMarginal = Gamma.FromMeanAndVariance(aMean, aVariance);
             Gamma result = new Gamma();
