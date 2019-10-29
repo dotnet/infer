@@ -16,22 +16,24 @@ In designing this model, we start off by thinking about the nature of the click 
 We could include m directly in the model as a parameter to a Binomial factor, but this example adopts a different approach where the posterior for m is calculated outside the model. This posterior can be analytically and simply calculated as a beta distribution. We then use moment-matching to project this distribution onto a Gaussian distribution (the reason for this is that we will later be introducing a Gaussian score variable corresponding to this observation). All of this can be very simply done using the Infer.NET class libraries. For simplicity, we just assume for now that the observation distributions are in a single array, though this will change later.
 
 ```csharp
-Gaussian[] observationDistrib= new Gaussian[clicks.Length];  
-for (int i = 0; i < clicks.Length; i++)  
+Gaussian[] observationDistrib= new Gaussian[clicks.Length];
+for (int i = 0; i < clicks.Length; i++)
 {    
-    int nC = clicks[i];    // Number of clicks int nE = exams[i]; // Number of examinations int nNC = nE - nC; // Number of non-clicks  
-    Beta b = new Beta(1.0 + nC, 1.0 + nNC);  
-    double m, v;  
-    b.GetMeanAndVariance(out m, out v);  
-    observationDistrib[i] = Gaussian.FromMeanAndVariance(m, v);  
+    int nC = clicks[i];    // Number of clicks
+    int nE = exams[i]; // Number of examinations
+    int nNC = nE - nC; // Number of non-clicks
+    Beta b = new Beta(1.0 + nC, 1.0 + nNC);
+    double m, v;
+    b.GetMeanAndVariance(out m, out v);
+    observationDistrib[i] = Gaussian.FromMeanAndVariance(m, v);
 }
 ```
 
 We can then imagine, for each query/document pair (index **i**), a Gaussian 'click score' variable **scoresC\[i\]** representing a click probability. The corresponding **observationDistrib\[i\]** represents a distribution over observations for a given query/document pair, and we constrain **scoresC\[i**\] to be a random sample from that distribution. In Infer.NET, the set of click scores and corresponding observations can be indexed by a **Range** object which can be used when specifying this constraint:
 
 ```csharp
-Range r = new Range("N", observationDistrib);  
-...  
+Range r = new Range("N", observationDistrib);
+...
 Variable.ConstrainEqualRandom(scoresC[r], observationDistrib[r]);
 ```
 
