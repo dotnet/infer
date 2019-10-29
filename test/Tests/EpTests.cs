@@ -1618,8 +1618,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 Gamma scalePrior = Gamma.FromShapeAndRate(3, 4);
                 Gamma yPrior = Gamma.FromShapeAndRate(2.5, 1);
-                scalePrior = Gamma.FromShapeAndRate(1, 1);
-                yPrior = Gamma.FromShapeAndRate(1, 1);
+                //scalePrior = Gamma.FromShapeAndRate(1, 1);
+                //yPrior = Gamma.FromShapeAndRate(1, 1);
                 scalePriorVar.ObservedValue = scalePrior;
                 yPriorVar.ObservedValue = yPrior;
                 xPriorVar.ObservedValue = xPrior;
@@ -1645,7 +1645,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     evExpected = -0.919181055678219;
                 }
 
-                if (true)
+                if (false)
                 {
                     // importance sampling
                     double totalWeight = 0;
@@ -1678,10 +1678,10 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Trace.WriteLine($"y = {yActual} should be {yExpected}, error = {yError}");
                 Trace.WriteLine($"x = {xActual} should be {xExpected}, error = {xError}");
                 Trace.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evError}");
-                //Assert.True(scaleExpected.MaxDiff(scaleActual) < 2e-2);
-                //Assert.True(yExpected.MaxDiff(yActual) < 2e-2);
-                //Assert.True(xExpected.MaxDiff(xActual) < 1e-2);
-                //Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 5e-2);
+                Assert.True(scaleExpected.MaxDiff(scaleActual) < 2e-2);
+                Assert.True(yExpected.MaxDiff(yActual) < 2e-2);
+                Assert.True(xExpected.MaxDiff(xActual) < 1e-2);
+                Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 5e-2);
             }
         }
 

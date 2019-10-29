@@ -1501,10 +1501,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                     Gamma r = new Gamma();
                     r.SetToRatio(numerator, denominator, true);
                     //Trace.WriteLine($"ratio: {r} ratio*denom: {r * denominator} (numerator was {numerator})");
-                    Assert.True(r.Shape >= 0);
+                    Assert.True(r.Shape >= 1);
                     Assert.True(r.Rate >= 0);
                     Assert.True(MMath.AbsDiff((r * denominator).GetMean(), numerator.GetMean(), 1e-8) < 1e-10);
-                    if (denominator.IsUniform()) Assert.Equal(numerator, r);
+                    // It is counter-intuitive that uniform denominator doesn't return numerator.
+                    //if (denominator.IsUniform()) Assert.Equal(numerator, r);
                 }
             }
         }

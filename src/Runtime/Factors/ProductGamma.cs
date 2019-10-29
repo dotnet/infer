@@ -574,7 +574,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(x, ratio, A), out bMean, out bVariance);
             Gamma bMarginal = Gamma.FromMeanAndVariance(bMean, bVariance);
             Gamma result = new Gamma();
-            result.SetToRatio(bMarginal, B, true);
+            result.SetToRatio(bMarginal, B, GammaProductOp_Laplace.ForceProper);
             return result;
         }
 
@@ -622,7 +622,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             Gamma aMarginal = Gamma.FromMeanAndVariance(aMean, aVariance);
             Gamma result = new Gamma();
-            result.SetToRatio(aMarginal, A, true);
+            result.SetToRatio(aMarginal, A, GammaProductOp_Laplace.ForceProper);
             if (double.IsNaN(result.Shape) || double.IsNaN(result.Rate))
                 throw new InferRuntimeException("result is nan");
             return result;
@@ -635,6 +635,8 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Experimental)]
     public static class GammaProductOp_Laplace
     {
+        public static bool ForceProper = true;
+
         // derivatives of the factor marginalized over Product and A
         private static double[] dlogfs(double b, Gamma product, Gamma A)
         {
@@ -790,7 +792,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             GaussianOp_Laplace.LaplaceMoments(q, bDerivatives, dlogfs(bPoint, product, A), out bMean, out bVariance);
             Gamma bMarginal = Gamma.FromMeanAndVariance(bMean, bVariance);
             Gamma result = new Gamma();
-            result.SetToRatio(bMarginal, B, true);
+            result.SetToRatio(bMarginal, B, ForceProper);
             return result;
         }
 
@@ -823,7 +825,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             Gamma productMarginal = Gamma.FromMeanAndVariance(productMean, productVariance);
             Gamma result = new Gamma();
-            result.SetToRatio(productMarginal, product, true);
+            result.SetToRatio(productMarginal, product, ForceProper);
             if (double.IsNaN(result.Shape) || double.IsNaN(result.Rate))
                 throw new InferRuntimeException("result is nan");
             return result;
@@ -871,7 +873,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             Gamma aMarginal = Gamma.FromMeanAndVariance(aMean, aVariance);
             Gamma result = new Gamma();
-            result.SetToRatio(aMarginal, A, true);
+            result.SetToRatio(aMarginal, A, ForceProper);
             if (double.IsNaN(result.Shape) || double.IsNaN(result.Rate))
                 throw new InferRuntimeException("result is nan");
             return result;

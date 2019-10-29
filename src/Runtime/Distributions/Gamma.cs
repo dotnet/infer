@@ -903,7 +903,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 Rate = 0;
                 Shape = 1 + Math.Max(0, numerator.Shape - denominator.Shape);
             }
-            else if (forceProper && (numerator.Shape + 1 < denominator.Shape || numerator.Rate < denominator.Rate))
+            else if (forceProper && (numerator.Shape < denominator.Shape || numerator.Rate < denominator.Rate))
             {
                 double mean = numerator.GetMean();
                 double shape = mean * denominator.Rate + (1 - denominator.Shape);

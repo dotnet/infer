@@ -188,7 +188,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double bMean, bVariance;
             GaussianOp_Laplace.LaplaceMoments(q, bDerivatives, dlogfs(bPoint, product, A), out bMean, out bVariance);
             GammaPower bMarginal = GammaPower.FromMeanAndVariance(bMean, bVariance, result.Power);
-            result.SetToRatio(bMarginal, B, true);
+            result.SetToRatio(bMarginal, B, GammaProductOp_Laplace.ForceProper);
             return result;
         }
 
@@ -222,7 +222,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             productVariance = shape2 * shape2 * gVariance + shape2 * (gVariance + gMean * gMean);
 
             GammaPower productMarginal = GammaPower.FromGamma(Gamma.FromMeanAndVariance(productMean, productVariance), result.Power);
-            result.SetToRatio(productMarginal, product, true);
+            result.SetToRatio(productMarginal, product, GammaProductOp_Laplace.ForceProper);
             if (double.IsNaN(result.Shape) || double.IsNaN(result.Rate))
                 throw new InferRuntimeException("result is nan");
             return result;
@@ -274,7 +274,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 aVariance = shape2 * shape2 * gVariance + shape2 * (gVariance + gMean * gMean);
             }
             GammaPower aMarginal = GammaPower.FromGamma(Gamma.FromMeanAndVariance(aMean, aVariance), result.Power);
-            result.SetToRatio(aMarginal, A, true);
+            result.SetToRatio(aMarginal, A, GammaProductOp_Laplace.ForceProper);
             if (double.IsNaN(result.Shape) || double.IsNaN(result.Rate))
                 throw new InferRuntimeException("result is nan");
             return result;
