@@ -2009,6 +2009,38 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests determinization of an automaton with hugely different weights
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void Determinize11()
+        {
+            var builder = new StringAutomaton.Builder();
+
+            builder.Start
+                .AddTransition(DiscreteChar.InRange('a', 'c'), Weight.FromLogValue(-1000))
+                .AddTransition(DiscreteChar.PointMass('x'), Weight.One)
+                .SetEndWeight(Weight.One);
+            builder.Start
+                .AddTransition(DiscreteChar.PointMass('b'), Weight.One)
+                .SetEndWeight(Weight.One);
+
+            var automaton = builder.GetAutomaton();
+
+            Assert.False(automaton.IsDeterministic());
+            var determinized = automaton.TryDeterminize();
+
+            Assert.True(determinized);
+            Assert.True(automaton.IsDeterministic());
+
+            // "cx" vanishes from automaton language with naive implementation of segments overlap
+            // due to numerical errors
+            var dist = StringDistribution.FromWeightFunction(automaton);
+            StringInferenceTestUtilities.TestIfIncludes(dist, "ax", "bx", "cx", "b");
+        }
+
+
+        /// <summary>
         /// Tests whether the inability to determinize an automaton is handled correctly.
         /// </summary>
         [Fact]

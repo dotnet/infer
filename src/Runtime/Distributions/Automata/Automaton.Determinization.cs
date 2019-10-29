@@ -2,17 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
-using Microsoft.ML.Probabilistic.Collections;
-
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using System.Diagnostics;
 
+    using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <content>
@@ -316,6 +312,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 public int CompareTo(WeightedState that) => Index.CompareTo(that.Index);
 
                 public override int GetHashCode() => (Index ^ WeightHighBits).GetHashCode();
+
+                public bool Equals(int index, Weight weight) =>
+                    this.Index == index && this.Weight == weight;
+
+                public override string ToString() => $"({this.Index}, {this.Weight})";
             }
 
             /// <summary>
@@ -473,42 +474,106 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 public void Add(int index, Weight weight) =>
                     this.weightedStates.Add(new WeightedState(index, weight));
 
-                public void Reset() => this.weightedStates.Clear();
+                /// <summary>
+                /// Removes state that was previously added into this builder
+                /// </summary>
+                public void Remove(int index, Weight weight)
+                {
+                    // This algorithm is linear, in theory we could store all states in HashSet<> and make
+                    // this algorithm amortized O(1). In practice we still have O(n) algorithm when
+                    // constructing the final WeightedStateSet, so it's fine to have O(n) algorithm in here
+                    // even in the worst case, because runtime is anyway O(n).
+                    // In average case (small number of states in set) linear search has way better
+                    // constant costs.
+                    var lastStateIndex = this.weightedStates.Count - 1;
+                    var removedStateIndex = lastStateIndex;
+                    while (!this.weightedStates[removedStateIndex].Equals(index, weight))
+                    {
+                        --removedStateIndex;
+                    }
 
+                    this.weightedStates.RemoveAt(removedStateIndex);
+                }
+
+                public int StatesCount() => this.weightedStates.Count;
+
+                /// <summary>
+                /// Builds a <see cref="WeightedStateSet"/> with normalized weights. Normalizer (max weight
+                /// pre-normalization) is also returned.
+                ///
+                /// Internal state of builder is not mutated, it can be modified by Add()/Remove() calls
+                /// to obtain new WeightedStateSets.
+                /// </summary>
                 public (WeightedStateSet, Weight) Get()
                 {
                     Debug.Assert(this.weightedStates.Count > 0);
 
-                    var sortedStates = this.weightedStates.ToArray();
-                    if (sortedStates.Length == 1)
+                    if (this.weightedStates.Count == 1)
                     {
-                        var state = sortedStates[0];
-                        sortedStates[0] = new WeightedState(state.Index, Weight.One);
-                        return (new WeightedStateSet(sortedStates), state.Weight);
+                        // Happy path that requires no additional storage or sorting
+                        var state = this.weightedStates[0];
+                        return (new WeightedStateSet(state.Index), state.Weight);
                     }
-                    else
-                    {
-                        Array.Sort(sortedStates);
 
-                        var maxWeight = sortedStates[0].Weight;
-                        for (var i = 1; i < sortedStates.Length; ++i)
+                    var weightsClone = new List<WeightedState>(this.weightedStates);
+                    weightsClone.Sort();
+                    MergeRepeatedEntries(weightsClone);
+                    var maxWeight = NormalizeWeights(weightsClone);
+
+                    return (new WeightedStateSet(weightsClone.ToArray()), maxWeight);
+                }
+
+                private static void MergeRepeatedEntries(List<WeightedState> weightedStates)
+                {
+                    // Merge repeated entries for the same state
+                    var dst = 0;
+                    for (var i = 1; i < weightedStates.Count; ++i)
+                    {
+                        var srcState = weightedStates[i];
+                        var dstState = weightedStates[dst];
+                        if (srcState.Index == dstState.Index)
                         {
-                            if (sortedStates[i].Weight > maxWeight)
+                            weightedStates[dst] =
+                                new WeightedState(dstState.Index, dstState.Weight + srcState.Weight);
+                        }
+                        else
+                        {
+                            ++dst;
+                            if (dst != i)
                             {
-                                maxWeight = sortedStates[i].Weight;
+                                weightedStates[dst] = srcState;
                             }
                         }
-
-                        var normalizer = Weight.Inverse(maxWeight);
-
-                        for (var i = 0; i < sortedStates.Length; ++i)
-                        {
-                            var state = sortedStates[i];
-                            sortedStates[i] = new WeightedState(state.Index, state.Weight * normalizer);
-                        }
-
-                        return (new WeightedStateSet(sortedStates), maxWeight);
                     }
+
+                    // truncate excess
+                    ++dst;
+                    if (dst < weightedStates.Count)
+                    {
+                        weightedStates.RemoveRange(dst, weightedStates.Count - dst);
+                    }
+                }
+
+                private static Weight NormalizeWeights(List<WeightedState> weightedStates)
+                {
+                    var maxWeight = weightedStates[0].Weight;
+                    for (var i = 1; i < weightedStates.Count; ++i)
+                    {
+                        if (weightedStates[i].Weight > maxWeight)
+                        {
+                            maxWeight = weightedStates[i].Weight;
+                        }
+                    }
+
+                    var normalizer = Weight.Inverse(maxWeight);
+
+                    for (var i = 0; i < weightedStates.Count; ++i)
+                    {
+                        var state = weightedStates[i];
+                        weightedStates[i] = new WeightedState(state.Index, state.Weight * normalizer);
+                    }
+
+                    return maxWeight;
                 }
             }
 
