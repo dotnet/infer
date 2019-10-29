@@ -314,7 +314,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 public override int GetHashCode() => (Index ^ WeightHighBits).GetHashCode();
 
                 public bool Equals(int index, Weight weight) =>
-                    (this.Index, this.Weight) == (index, weight);
+                    this.Index == index && this.Weight == weight;
 
                 public override string ToString() => $"({this.Index}, {this.Weight})";
             }
