@@ -102,13 +102,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             foreach (var range in ranges)
             {
-                {
-                    var fullWeight = range.Probability * weightBase;
-                    segmentBounds.Add(new TransitionCharSegmentBound(
-                        range.StartInclusive, transition.DestinationStateIndex, fullWeight, false));
-                    segmentBounds.Add(new TransitionCharSegmentBound(
-                        range.EndExclusive, transition.DestinationStateIndex, fullWeight, true));
-                }
+                var fullWeight = range.Probability * weightBase;
+                segmentBounds.Add(new TransitionCharSegmentBound(
+                    range.StartInclusive, transition.DestinationStateIndex, fullWeight, false));
+                segmentBounds.Add(new TransitionCharSegmentBound(
+                    range.EndExclusive, transition.DestinationStateIndex, fullWeight, true));
             }
         }
 
