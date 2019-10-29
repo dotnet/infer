@@ -5,6 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Factors
 {
     using System;
+    using System.Diagnostics;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
@@ -88,6 +89,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return Gamma.PointMass(B.Point);
             if (A.IsPointMass)
                 throw new NotImplementedException();
+            if (product.Rate == 0)
+                return Gamma.FromShapeAndRate(B.Shape, B.Rate);
             double x;
             if (product.IsPointMass)
             {
@@ -112,9 +115,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // logf = (y_s/y_p-1)*y_p*log(b') - (s+y_s-pa)*log(r + b')
                 x = GammaFromShapeAndRateOp_Slow.FindMaximum(shape1, shape2, A.Rate, B.Rate / product.Rate);
                 if (x == 0)
-                    x = 1e-8;
+                    x = 1e-100;
                 x /= product.Rate;
-                Console.WriteLine($"x = {x}");
             }
             double[] dlogfss = dlogfs(x, product, A);
             double dlogf = dlogfss[0];
@@ -155,7 +157,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaPowerProductOp_Laplace"]/message_doc[@name="LogEvidenceRatio(GammaPower, GammaPower, GammaPower, GammaPower, Gamma)"]/*'/>
-        public static double LogEvidenceRatio(GammaPower product, GammaPower A, GammaPower B, GammaPower to_product, Gamma q)
+        public static double LogEvidenceRatio([SkipIfUniform] GammaPower product, GammaPower A, GammaPower B, GammaPower to_product, Gamma q)
         {
             return LogAverageFactor(product, A, B, q) - to_product.GetLogAverageOf(product);
         }
@@ -173,6 +175,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GammaProductOp.BAverageConditional(product, A.Point, result);
             if (B.IsPointMass)
                 throw new NotImplementedException();
+            if (product.IsUniform()) return product;
             if (q.IsUniform())
                 q = Q(product, A, B);
             double bPoint = q.GetMean();
@@ -226,12 +229,13 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaPowerProductOp_Laplace"]/message_doc[@name="AAverageConditional(GammaPower, GammaPower, GammaPower, Gamma, GammaPower)"]/*'/>
-        public static GammaPower AAverageConditional(GammaPower product, GammaPower A, [SkipIfUniform] GammaPower B, Gamma q, GammaPower result)
+        public static GammaPower AAverageConditional([SkipIfUniform] GammaPower product, GammaPower A, [SkipIfUniform] GammaPower B, Gamma q, GammaPower result)
         {
             if (B.IsPointMass)
                 return GammaProductOp.AAverageConditional(product, B.Point, result);
             if (A.IsPointMass)
                 throw new NotImplementedException();
+            if (product.IsUniform()) return product;
             double aMean, aVariance;
             double bPoint = q.GetMean();
             if (product.IsPointMass)

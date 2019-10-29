@@ -5,6 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Factors
 {
     using System;
+    using System.Diagnostics;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
@@ -699,6 +700,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return B;
             if (A.IsPointMass)
                 throw new NotImplementedException();
+            if (product.Rate == 0)
+                return B;
             double x;
             if (product.IsPointMass)
             {
@@ -719,7 +722,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // let b' = b*y_r and maximize over b'
                 x = GammaFromShapeAndRateOp_Slow.FindMaximum(shape1, shape2, A.Rate, B.Rate / product.Rate);
                 if (x == 0)
-                    return B;
+                    x = 1e-100;
                 x /= product.Rate;
             }
             double[] dlogfss = dlogfs(x, product, A);
@@ -827,7 +830,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GammaProductOp_Laplace"]/message_doc[@name="AAverageConditional(Gamma, Gamma, Gamma, Gamma)"]/*'/>
-        public static Gamma AAverageConditional(Gamma product, Gamma A, [SkipIfUniform] Gamma B, Gamma q)
+        public static Gamma AAverageConditional([SkipIfUniform] Gamma product, Gamma A, [SkipIfUniform] Gamma B, Gamma q)
         {
             if (B.IsPointMass)
                 return GammaProductOp.AAverageConditional(product, B.Point);

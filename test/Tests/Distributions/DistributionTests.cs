@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Xunit;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
@@ -58,7 +59,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             g.ToString();
             Gamma gamma = new Gamma(1, 1);
             double expectedProbLessThan = gamma.GetProbLessThan(2);
-            Assert.Equal(expectedProbLessThan, 1-g.GetProbLessThan(0.5), 1e-10);
+            Assert.Equal(expectedProbLessThan, 1 - g.GetProbLessThan(0.5), 1e-10);
             Assert.Equal(2, gamma.GetQuantile(expectedProbLessThan), 1e-10);
             Assert.Equal(0.5, g.GetQuantile(1 - expectedProbLessThan), 1e-10);
 
@@ -266,10 +267,10 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             g.SetMeanAndPrecision(1e4, 1e306);
             Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), g);
-            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue/1e4), new Gaussian(1e4, 1E-306));
+            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), new Gaussian(1e4, 1E-306));
             Assert.Equal(Gaussian.PointMass(1e-155), new Gaussian(1e-155, 1E-312));
             Gaussian.FromNatural(1, 1e-309).GetMeanAndVarianceImproper(out m, out v);
-            if(v > double.MaxValue)
+            if (v > double.MaxValue)
                 Assert.Equal(0, m);
             Gaussian.Uniform().GetMeanAndVarianceImproper(out m, out v);
             Assert.Equal(0, m);
@@ -300,7 +301,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             GaussianSetToProduct_ProducesPointMass(Gaussian.FromMeanAndPrecision(1, double.MaxValue));
             GaussianSetToProduct_ProducesPointMass(Gaussian.FromMeanAndPrecision(0.9, double.MaxValue));
-            GaussianSetToProduct_ProducesPointMass(Gaussian.FromMeanAndPrecision(10, double.MaxValue/10));
+            GaussianSetToProduct_ProducesPointMass(Gaussian.FromMeanAndPrecision(10, double.MaxValue / 10));
         }
 
         private void GaussianSetToProduct_ProducesPointMass(Gaussian g)
@@ -317,8 +318,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GammaSetToProduct_ProducesPointMassTest()
         {
             GammaSetToProduct_ProducesPointMass(Gamma.FromShapeAndRate(double.MaxValue, double.MaxValue));
-            GammaSetToProduct_ProducesPointMass(Gamma.FromShapeAndRate(double.MaxValue/10, double.MaxValue));
-            GammaSetToProduct_ProducesPointMass(Gamma.FromShapeAndRate(double.MaxValue, double.MaxValue/10));
+            GammaSetToProduct_ProducesPointMass(Gamma.FromShapeAndRate(double.MaxValue / 10, double.MaxValue));
+            GammaSetToProduct_ProducesPointMass(Gamma.FromShapeAndRate(double.MaxValue, double.MaxValue / 10));
         }
 
         private void GammaSetToProduct_ProducesPointMass(Gamma g)
@@ -434,7 +435,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             PositiveDefiniteMatrix B = new PositiveDefiniteMatrix(4, 4);
             B.SetToDiagonal(Vector.FromArray(1, 0, 3, 4));
 
-            VectorGaussianMoments vg1 = new VectorGaussianMoments(Vector.FromArray(6,5,4,3), A);
+            VectorGaussianMoments vg1 = new VectorGaussianMoments(Vector.FromArray(6, 5, 4, 3), A);
             VectorGaussianMoments vg2 = new VectorGaussianMoments(Vector.FromArray(1, 2, 3, 4), B);
             var product = vg1 * vg2;
 
@@ -501,7 +502,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndScale(2.5, 1e-320));
             Assert.Equal(Gamma.PointMass(0), new Gamma(2.5, 1e-320));
             Assert.Equal(Gamma.PointMass(0), new Gamma(2.5, 0));
-            Assert.Equal(Gamma.PointMass(1e-300), Gamma.FromShapeAndRate(2, 1e300)^1e10);
+            Assert.Equal(Gamma.PointMass(1e-300), Gamma.FromShapeAndRate(2, 1e300) ^ 1e10);
 
             ProductWithUniformTest(g);
             Gamma g2 = new Gamma();
@@ -1484,25 +1485,28 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaSetToRatioProperTest()
         {
-            Gamma numerator = Gamma.FromShapeAndRate(4, 5);
-            Gamma denominator = Gamma.FromShapeAndRate(6, 3);
-            Gamma r = new Gamma();
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True(MMath.AbsDiff((r * denominator).GetMean(), numerator.GetMean(), 1e-8) < 1e-10);
-
-            denominator.SetShapeAndRate(6, 7);
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True(MMath.AbsDiff((r * denominator).GetMean(), numerator.GetMean(), 1e-8) < 1e-10);
-
-            denominator.SetShapeAndRate(3, 7);
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True(MMath.AbsDiff((r * denominator).GetMean(), numerator.GetMean(), 1e-8) < 1e-10);
+            foreach (Gamma numerator in new[] {
+                Gamma.FromShapeAndRate(0.5, 0.5),
+                Gamma.FromShapeAndRate(4, 5),
+            })
+            {
+                foreach (var denominator in new[]
+                {
+                    Gamma.Uniform(),
+                    Gamma.FromShapeAndRate(6, 3),
+                    Gamma.FromShapeAndRate(6,7),
+                    Gamma.FromShapeAndRate(3,7)
+                })
+                {
+                    Gamma r = new Gamma();
+                    r.SetToRatio(numerator, denominator, true);
+                    //Trace.WriteLine($"ratio: {r} ratio*denom: {r * denominator} (numerator was {numerator})");
+                    Assert.True(r.Shape >= 0);
+                    Assert.True(r.Rate >= 0);
+                    Assert.True(MMath.AbsDiff((r * denominator).GetMean(), numerator.GetMean(), 1e-8) < 1e-10);
+                    if (denominator.IsUniform()) Assert.Equal(numerator, r);
+                }
+            }
         }
 
         [Fact]
@@ -1510,24 +1514,18 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             int dim = 1;
             Wishart numerator = Wishart.FromShapeAndRate(4, PositiveDefiniteMatrix.IdentityScaledBy(dim, 5));
-            Wishart denominator = Wishart.FromShapeAndRate(6, PositiveDefiniteMatrix.IdentityScaledBy(dim, 3));
-            Wishart r = new Wishart(dim);
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True((r * denominator).GetMean().MaxDiff(numerator.GetMean()) < 1e-10);
-
-            denominator.SetShapeAndRate(6, PositiveDefiniteMatrix.IdentityScaledBy(dim, 7));
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True((r * denominator).GetMean().MaxDiff(numerator.GetMean()) < 1e-10);
-
-            denominator.SetShapeAndRate(3, PositiveDefiniteMatrix.IdentityScaledBy(dim, 7));
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True((r * denominator).GetMean().MaxDiff(numerator.GetMean()) < 1e-10);
+            foreach (Wishart denominator in new[] {
+                Wishart.FromShapeAndRate(6, PositiveDefiniteMatrix.IdentityScaledBy(dim, 3)),
+                Wishart.FromShapeAndRate(6, PositiveDefiniteMatrix.IdentityScaledBy(dim, 7)),
+                Wishart.FromShapeAndRate(3, PositiveDefiniteMatrix.IdentityScaledBy(dim, 7)),
+            })
+            {
+                Wishart r = new Wishart(dim);
+                r.SetToRatio(numerator, denominator, true);
+                //Trace.WriteLine($"ratio: {r} ratio*denom: {r * denominator} (numerator was {numerator})");
+                Assert.True(r.Shape >= (dim + 1) / 2.0);
+                Assert.True((r * denominator).GetMean().MaxDiff(numerator.GetMean()) < 1e-10);
+            }
         }
 
         [Fact]
@@ -1579,7 +1577,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             stringDistributionTest(dist1, dist2);
             stringDistributionTest(dist1, dist3);
             stringDistributionTest(dist2, dist3);
-            
+
             StringDistributionPointMassTest(dist1, "ab");
             StringDistributionPointMassTest(dist2, "Abc");
             StringDistributionPointMassTest(dist3, "ABcd");

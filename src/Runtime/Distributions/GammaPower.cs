@@ -706,7 +706,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new ArgumentException("numerator.Power (" + numerator.Power + ") != denominator.Power (" + denominator.Power + ")");
             }
-            else if (forceProper && (numerator.Shape < denominator.Shape || numerator.Rate < denominator.Rate))
+            else if (forceProper && (numerator.Shape + Power < denominator.Shape || numerator.Rate < denominator.Rate))
             {
                 // constraints: shape >= power, rate >= 0, ((shape-power)+denominator.shape)/(rate + denominator.rate) = numerator.shape/numerator.rate
                 double m = numerator.Shape / numerator.Rate;

@@ -320,7 +320,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (x < 0)
                 throw new ArgumentOutOfRangeException(nameof(x), x, "x < 0");
             double a;
-            if(double.IsPositiveInfinity(x))
+            if (double.IsPositiveInfinity(x))
             {
                 if (ddLogP < 0) return Gamma.PointMass(x);
                 else if (ddLogP == 0) a = 0.0;
@@ -334,7 +334,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else
             {
                 a = -x * x * ddLogP;
-                if (a+1 > double.MaxValue) return Gamma.PointMass(x);
+                if (a + 1 > double.MaxValue) return Gamma.PointMass(x);
             }
             if (forceProper)
             {
@@ -489,11 +489,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new ImproperDistributionException(this);
             }
-            else if(MMath.AreEqual(probability, 0))
+            else if (MMath.AreEqual(probability, 0))
             {
                 return 0;
             }
-            else if(MMath.AreEqual(probability, 1))
+            else if (MMath.AreEqual(probability, 1))
             {
                 return double.PositiveInfinity;
             }
@@ -507,15 +507,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // Binary search
                 double lowerBound = 0;
                 double upperBound = double.MaxValue;
-                while(lowerBound < upperBound)
+                while (lowerBound < upperBound)
                 {
                     double average = MMath.Average(lowerBound, upperBound);
                     double p = GetProbLessThan(average);
-                    if(p == probability)
+                    if (p == probability)
                     {
                         return average;
                     }
-                    else if(p < probability)
+                    else if (p < probability)
                     {
                         lowerBound = MMath.NextDouble(average);
                     }
@@ -903,7 +903,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 Rate = 0;
                 Shape = 1 + Math.Max(0, numerator.Shape - denominator.Shape);
             }
-            else if (forceProper && (numerator.Shape < denominator.Shape || numerator.Rate < denominator.Rate))
+            else if (forceProper && (numerator.Shape + 1 < denominator.Shape || numerator.Rate < denominator.Rate))
             {
                 double mean = numerator.GetMean();
                 double shape = mean * denominator.Rate + (1 - denominator.Shape);
