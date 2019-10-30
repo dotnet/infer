@@ -31,13 +31,17 @@ namespace Microsoft.ML.Probabilistic.Factors
             double power = pow.Power / y;
             GammaPower message = GammaPower.FromShapeAndRate(pow.Shape + (1 - y) * power, pow.Rate, power);
             //throw new NotSupportedException("Outgoing message power (" + power + ") does not match the desired power (" + result.Power + ")");
+            if (message.IsUniform()) return GammaPower.Uniform(result.Power);
             // This is significantly better than ChangePower(message, result.Power)
+            // Ideally it should return uniform when message is uniform.  
+            // Therefore the denominator should be ChangePower(ChangePower(x, message.Power), result.Power) instead of x.
             return ChangePower(message*ChangePower(x, message.Power), result.Power)/x;
         }
 
         public static GammaPower ChangePower(GammaPower message, double newPower)
         {
             if(message.Power == newPower) return message; // same as below, but faster
+            if (message.IsUniform()) return GammaPower.Uniform(newPower);
             // Project the message onto the desired power
             // Compute the mean and variance of x^1/newPower
             double mean = message.GetMeanPower(1 / newPower);

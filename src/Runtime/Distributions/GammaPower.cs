@@ -270,7 +270,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetMeanLog()
         {
-            if (IsPointMass) return Math.Log(Point);
+            if (Power == 0.0) return 0.0;
+            else if (IsPointMass) return Math.Log(Point);
             else if (!IsProper()) throw new ImproperDistributionException(this);
             else return Power * (MMath.Digamma(Shape) - Math.Log(Rate));
         }
@@ -281,10 +282,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetMeanPower(double power)
         {
-            if (power == 0.0) return 1.0;
+            if (power == 0.0 || Power == 0.0) return 1.0;
             else if (IsPointMass) return Math.Pow(Point, power);
-            //else if (Rate == 0.0) return (power > 0) ? Double.PositiveInfinity : 0.0;
-            else if (!IsProper()) throw new ImproperDistributionException(this);
+            else if (Rate == 0.0) return (power > 0) ? Double.PositiveInfinity : 0.0;
+            else if (Shape <= 0 || Rate < 0) throw new ImproperDistributionException(this);
             else
             {
                 double power2 = Power * power;
@@ -305,6 +306,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (Power == 0.0) return 1.0;
             else if (IsPointMass) return Point;
+            else if (Shape <= Power && Rate == 0) throw new ImproperDistributionException(this);
             else return Math.Pow(Math.Max(0, Shape - Power) / Rate, Power);
         }
 
