@@ -1537,8 +1537,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     if (range.StartInclusive != prevEnd)
                     {
                         builder.AddRange(new CharRange(prevEnd, range.StartInclusive, Weight.One));
-                        prevEnd = range.EndExclusive;
                     }
+
+                    prevEnd = range.EndExclusive;
                 }
 
                 if (prevEnd != CharRangeEndExclusive)
