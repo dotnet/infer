@@ -1178,7 +1178,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         private struct CharRangePair
         {
             /// <summary>
-            /// Gets or sets start of the range (inclusive).
+            /// Gets or sets the start of the range (inclusive).
             /// </summary>
             public int StartInclusive { get; private set; }
 
@@ -1188,12 +1188,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public int EndExclusive { get; private set; }
 
             /// <summary>
-            /// Gets or sets first probability value associated with the range.
+            /// Gets or sets the first probability value associated with the range.
             /// </summary>
             public Weight Probability1 { get; private set; }
 
             /// <summary>
-            /// Gets or sets second probability value associated with the range.
+            /// Gets or sets the second probability value associated with the range.
             /// </summary>
             public Weight Probability2 { get; private set; }
 
