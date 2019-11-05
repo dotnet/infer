@@ -26,26 +26,27 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void LargeTransducer()
         {
-            StringAutomaton.MaxStateCount = 1200000; // Something big
-            var bigAutomatonBuilder = new StringAutomaton.Builder();
-            bigAutomatonBuilder.AddStates(StringAutomaton.MaxStateCount - bigAutomatonBuilder.StatesCount);
-            Func<Option<DiscreteChar>, Weight, ValueTuple<Option<PairDistribution<char, DiscreteChar>>, Weight>> transitionConverter =
-                (dist, weight) => ValueTuple.Create(Option.Some(PairDistribution<char, DiscreteChar>.FromFirstSecond(dist, dist)), weight);
-
-            var bigAutomaton = bigAutomatonBuilder.GetAutomaton();
-            
-            Assert.Throws<AutomatonTooLargeException>(() => StringTransducer.FromAutomaton(bigAutomaton, transitionConverter));
-
-            // Shouldn't throw if the maximum number of states is increased
-            int prevMaxStateCount = StringTransducer.MaxStateCount;
-            try
+            var largeStatesCount = 1200000; // bigger than default MaxStatesCount in automata
+            using (var unlimitedAutomatonStates = new StringAutomaton.UnlimitedStatesComputation())
             {
-                StringTransducer.MaxStateCount = StringAutomaton.MaxStateCount;
-                StringTransducer.FromAutomaton(bigAutomaton, transitionConverter);
-            }
-            finally
-            {
-                StringTransducer.MaxStateCount = prevMaxStateCount;
+                var bigAutomatonBuilder = new StringAutomaton.Builder();
+                bigAutomatonBuilder.AddStates(largeStatesCount - bigAutomatonBuilder.StatesCount);
+                Func<Option<DiscreteChar>, Weight, ValueTuple<Option<PairDistribution<char, DiscreteChar>>, Weight>>
+                    transitionConverter =
+                        (dist, weight) =>
+                            ValueTuple.Create(
+                                Option.Some(PairDistribution<char, DiscreteChar>.FromFirstSecond(dist, dist)), weight);
+
+                var bigAutomaton = bigAutomatonBuilder.GetAutomaton();
+
+                Assert.Throws<AutomatonTooLargeException>(() =>
+                    StringTransducer.FromAutomaton(bigAutomaton, transitionConverter));
+
+                // Shouldn't throw if the maximum number of states is increased
+                using (var unlimitedTransducerStates = new StringTransducer.UnlimitedStatesComputation())
+                {
+                    StringTransducer.FromAutomaton(bigAutomaton, transitionConverter);
+                }
             }
         }
         
