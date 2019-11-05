@@ -91,6 +91,50 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(maxDiff < 0.01);
         }
 
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void ComplementWorks()
+        {
+            TestComplement(DiscreteChar.PointMass('\0'));
+            TestComplement(DiscreteChar.PointMass('a'));
+            TestComplement(DiscreteChar.PointMass(char.MaxValue));
+
+            var a = DiscreteChar.PointMass('a');
+            var b = DiscreteChar.PointMass('b');
+
+            var ab = default(DiscreteChar);
+            ab.SetToSum(1, a, 2, b);
+
+            // 2 subsequent ranges
+            Assert.Equal(2, ab.Ranges.Count);
+            TestComplement(ab);
+
+            void TestComplement(DiscreteChar dist)
+            {
+                var uniformDist = dist.Clone();
+                uniformDist.SetToPartialUniform();
+
+                var complement = dist.Complement();
+
+                // complement should always be partial uniform
+                Assert.True(complement.IsPartialUniform());
+
+                // overlap is zero
+                Assert.True(double.IsNegativeInfinity(dist.GetLogAverageOf(complement)));
+                Assert.True(double.IsNegativeInfinity(uniformDist.GetLogAverageOf(complement)));
+
+                // union is covers the whole range
+                var sum = default(DiscreteChar);
+                sum.SetToSum(1, dist, 1, complement);
+                sum.SetToPartialUniform();
+                Assert.True(sum.IsUniform());
+
+                // Doing complement again will cover the same set of characters
+                var complement2 = complement.Complement();
+                Assert.Equal(uniformDist, complement2);
+            }
+        }
+
         /// <summary>
         /// Tests the support of a character distribution.
         /// </summary>
