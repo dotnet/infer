@@ -530,7 +530,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             var builder = StorageBuilder.Create();
-            foreach (var pair in CharRangePair.CombinedRanges(distribution1, distribution2))
+            foreach (var pair in CharRangePair.IntersectRanges(distribution1, distribution2))
             {
                 var probProduct = pair.Probability1 * pair.Probability2;
                 builder.AddRange(new CharRange(pair.StartInclusive, pair.EndExclusive, probProduct));
@@ -582,7 +582,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 weight1 *= invW;
                 weight2 *= invW;
                 var builder = StorageBuilder.Create();
-                foreach (var pair in CharRangePair.CombinedRanges(distribution1, distribution2, false))
+                foreach (var pair in CharRangePair.CombineRanges(distribution1, distribution2))
                 {
                     var probSum = (weight1 * pair.Probability1) + (weight2 * pair.Probability2);
                     builder.AddRange(new CharRange(pair.StartInclusive, pair.EndExclusive, probSum));
@@ -610,7 +610,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             var result = Weight.Zero;
-            foreach (var pair in CharRangePair.CombinedRanges(this, distribution))
+            foreach (var pair in CharRangePair.IntersectRanges(this, distribution))
             {
                 result += Weight.Product(
                     pair.Probability1,
@@ -675,7 +675,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             var builder = StorageBuilder.Create();
 
-            foreach (var pair in CharRangePair.CombinedRanges(numerator, denominator, false))
+            foreach (var pair in CharRangePair.CombineRanges(numerator, denominator))
             {
                 var probRatio = DivideProb(pair.Probability1, pair.Probability2);
                 builder.AddRange(new CharRange(pair.StartInclusive, pair.EndExclusive, probRatio));
@@ -738,7 +738,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             var result = Weight.Zero;
-            foreach (var pair in CharRangePair.CombinedRanges(this, distribution))
+            foreach (var pair in CharRangePair.IntersectRanges(this, distribution))
             {
                 if (pair.Probability2.IsZero && power < 0)
                 {
@@ -763,7 +763,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double GetAverageLog(DiscreteChar distribution)
         {
             double result = 0;
-            foreach (var pair in CharRangePair.CombinedRanges(this, distribution, false))
+            foreach (var pair in CharRangePair.CombineRanges(this, distribution))
             {
                 var product = ValueTimesLogValue(pair.Probability1, pair.Probability2);
                 result += product * (pair.EndExclusive - pair.StartInclusive);
@@ -1173,27 +1173,27 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Represents a pair of character ranges with the same start and end, but different probability values.
+        /// Represents a character range with 2 different probabilities attached to it.
         /// </summary>
         private struct CharRangePair
         {
             /// <summary>
-            /// Gets or sets the start of the ranges (inclusive).
+            /// Gets or sets the start of the range (inclusive).
             /// </summary>
             public int StartInclusive { get; private set; }
 
             /// <summary>
-            /// Gets or sets the end of the ranges (exclusive).
+            /// Gets or sets the end of the range (exclusive).
             /// </summary>
             public int EndExclusive { get; private set; }
 
             /// <summary>
-            /// Gets or sets the probability value associated with the first range.
+            /// Gets or sets the first probability value associated with the range.
             /// </summary>
             public Weight Probability1 { get; private set; }
 
             /// <summary>
-            /// Gets or sets the probability value associated with the second range.
+            /// Gets or sets the second probability value associated with the range.
             /// </summary>
             public Weight Probability2 { get; private set; }
 
@@ -1237,160 +1237,112 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// </summary>
             /// <param name="distribution1">The first distribution.</param>
             /// <param name="distribution2">The second distribution</param>
-            /// <param name="excludeZeroProb">
-            /// Whether to exclude non-interesting ranges with zero probability.
-            /// </param>
-            public static IEnumerable<CharRangePair> CombinedRanges(DiscreteChar distribution1, DiscreteChar distribution2, bool excludeZeroProb = true) =>
-                CombinedRanges(distribution1.Data, distribution2.Data, excludeZeroProb);
-
-            internal static IEnumerable<CharRangePair> CombinedRanges(Storage state1, Storage state2, bool excludeZeroProb)
+            public static IEnumerable<CharRangePair> IntersectRanges(
+                DiscreteChar distribution1, DiscreteChar distribution2)
             {
-                if (excludeZeroProb)
+                var ranges1 = distribution1.Ranges;
+                var ranges2 = distribution2.Ranges;
+
+                var rangeIndex1 = 0;
+                var rangeIndex2 = 0;
+
+                while (rangeIndex1 < ranges1.Count && rangeIndex2 < ranges2.Count)
                 {
-                    int rangeIndex1 = 0;
-                    int rangeIndex2 = 0;
-
-                    while (rangeIndex1 < state1.Ranges.Count && rangeIndex2 < state2.Ranges.Count)
+                    var range1 = ranges1[rangeIndex1];
+                    var range2 = ranges2[rangeIndex2];
+                    if (range1.StartInclusive >= range2.EndExclusive)
                     {
-                        var range1 = state1.Ranges[rangeIndex1];
-                        var range2 = state2.Ranges[rangeIndex2];
-                        if (range1.StartInclusive <= range2.StartInclusive)
-                        {
-                            if (range2.StartInclusive < range1.EndExclusive)
-                            {
-                                // We have an intersection
-                                int endExclusive = Math.Min(range1.EndExclusive, range2.EndExclusive);
-                                yield return new CharRangePair()
-                                {
-                                    StartInclusive = range2.StartInclusive,
-                                    EndExclusive = endExclusive,
-                                    Probability1 = range1.Probability,
-                                    Probability2 = range2.Probability
-                                };
-
-                                if (range1.EndExclusive == endExclusive)
-                                {
-                                    rangeIndex1++;
-                                }
-
-                                if (range2.EndExclusive == endExclusive)
-                                {
-                                    rangeIndex2++;
-                                }
-                            }
-                            else
-                            {
-                                // Can be no more intersections with range 1
-                                rangeIndex1++;
-                            }
-                        }
-                        else
-                        {
-                            if (range1.StartInclusive < range2.EndExclusive)
-                            {
-                                int endExclusive = Math.Min(range1.EndExclusive, range2.EndExclusive);
-                                yield return new CharRangePair()
-                                {
-                                    StartInclusive = range1.StartInclusive,
-                                    EndExclusive = endExclusive,
-                                    Probability1 = range1.Probability,
-                                    Probability2 = range2.Probability
-                                };
-
-                                if (range1.EndExclusive == endExclusive)
-                                {
-                                    rangeIndex1++;
-                                }
-
-                                if (range2.EndExclusive == endExclusive)
-                                {
-                                    rangeIndex2++;
-                                }
-                            }
-                            else
-                            {
-                                // Can be no more intersections with range 2
-                                rangeIndex2++;
-                            }
-                        }
+                        ++rangeIndex2;
                     }
-                }
-                else
-                {
-                    // The implementation of this function has been optimized heavily. If you decide to change something,
-                    // please make sure that the performance is unaffected.
-                    int currentStartInclusive = 0;
-                    int currentEndExclusive = 0;
-                    int rangeIndex1 = 0;
-                    int rangeIndex2 = 0;
-                    Weight currentProbability1 = Weight.Zero;
-                    Weight currentProbability2 = Weight.Zero;
-
-                    while (currentStartInclusive != CharRangeEndExclusive)
+                    else if (range2.StartInclusive >= range1.EndExclusive)
                     {
-                        currentStartInclusive = currentEndExclusive;
-                        if (currentStartInclusive == CharRangeEndExclusive)
+                        ++rangeIndex1;
+                    }
+                    else
+                    {
+                        yield return new CharRangePair()
                         {
-                            yield break;
-                        }
+                            StartInclusive = Math.Max(range1.StartInclusive, range2.StartInclusive),
+                            EndExclusive = Math.Min(range1.EndExclusive, range2.EndExclusive),
+                            Probability1 = range1.Probability,
+                            Probability2 = range2.Probability,
+                        };
 
-                        if (rangeIndex1 < state1.Ranges.Count &&
-                            state1.Ranges[rangeIndex1].EndExclusive == currentStartInclusive)
+                        if (range1.EndExclusive <= range2.EndExclusive)
                         {
                             ++rangeIndex1;
                         }
 
-                        if (rangeIndex2 < state2.Ranges.Count &&
-                            state2.Ranges[rangeIndex2].EndExclusive == currentStartInclusive)
+                        if (range2.EndExclusive <= range1.EndExclusive)
                         {
                             ++rangeIndex2;
                         }
-
-                        if (rangeIndex1 < state1.Ranges.Count)
-                        {
-                            if (state1.Ranges[rangeIndex1].StartInclusive > currentStartInclusive)
-                            {
-                                currentEndExclusive = state1.Ranges[rangeIndex1].StartInclusive;
-                                currentProbability1 = Weight.Zero;
-                            }
-                            else
-                            {
-                                currentEndExclusive = state1.Ranges[rangeIndex1].EndExclusive;
-                                currentProbability1 = state1.Ranges[rangeIndex1].Probability;
-                            }
-                        }
-                        else
-                        {
-                            currentProbability1 = Weight.Zero;
-                            currentEndExclusive = CharRangeEndExclusive;
-                        }
-
-                        if (rangeIndex2 < state2.Ranges.Count)
-                        {
-                            if (state2.Ranges[rangeIndex2].StartInclusive > currentStartInclusive)
-                            {
-                                currentEndExclusive = Math.Min(currentEndExclusive, state2.Ranges[rangeIndex2].StartInclusive);
-                                currentProbability2 = Weight.Zero;
-                            }
-                            else
-                            {
-                                currentEndExclusive = Math.Min(currentEndExclusive, state2.Ranges[rangeIndex2].EndExclusive);
-                                currentProbability2 = state2.Ranges[rangeIndex2].Probability;
-                            }
-                        }
-                        else
-                        {
-                            currentProbability2 = Weight.Zero;
-                        }
-
-                        yield return new CharRangePair()
-                        {
-                            StartInclusive = currentStartInclusive,
-                            EndExclusive = currentEndExclusive,
-                            Probability1 = currentProbability1,
-                            Probability2 = currentProbability2
-                        };
                     }
+                }
+            }
+
+            /// <summary>
+            /// Returns all ranges which have non-zero probability in either of disrtibutions.
+            /// </summary>
+            /// <param name="distribution1">The first distribution.</param>
+            /// <param name="distribution2">The second distribution</param>
+            public static IEnumerable<CharRangePair> CombineRanges(
+                DiscreteChar distribution1, DiscreteChar distribution2)
+            {
+                return CombineRanges(distribution1.Data.Ranges, distribution2.Data.Ranges);
+            }
+
+            internal static IEnumerable<CharRangePair> CombineRanges(
+                ReadOnlyArray<CharRange> ranges1, ReadOnlyArray<CharRange> ranges2)
+            {
+                var rangeIndex1 = 0;
+                var rangeIndex2 = 0;
+                var prevEndExclusive = 0;
+
+                while (prevEndExclusive != CharRangeEndExclusive)
+                {
+                    var startInclusive = prevEndExclusive;
+                    var endExclusive = CharRangeEndExclusive;
+                    var probability1 = ProcessRange(
+                        ranges1, startInclusive, ref rangeIndex1, ref endExclusive);
+                    var probability2 = ProcessRange(
+                        ranges2, startInclusive, ref rangeIndex2, ref endExclusive);
+
+                    yield return new CharRangePair()
+                    {
+                        StartInclusive = startInclusive,
+                        EndExclusive = endExclusive,
+                        Probability1 = probability1,
+                        Probability2 = probability2
+                    };
+
+                    prevEndExclusive = endExclusive;
+                }
+
+                Weight ProcessRange(
+                    ReadOnlyArray<CharRange> ranges,
+                    int startInclusive,
+                    ref int index,
+                    ref int endExclusive)
+                {
+                    if (index < ranges.Count && ranges[index].EndExclusive == startInclusive)
+                    {
+                        ++index;
+                    }
+
+                    if (index >= ranges.Count)
+                    {
+                        return Weight.Zero;
+                    }
+
+                    if (ranges[index].StartInclusive > startInclusive)
+                    {
+                        endExclusive = Math.Min(endExclusive, ranges[index].StartInclusive);
+                        return Weight.Zero;
+                    }
+
+                    endExclusive = Math.Min(endExclusive, ranges[index].EndExclusive);
+                    return ranges[index].Probability;
                 }
             }
         }
@@ -1553,7 +1505,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public double MaxDiff(Storage other)
             {
                 double result = 0;
-                foreach (var pair in CharRangePair.CombinedRanges(this, other, false))
+                foreach (var pair in CharRangePair.CombineRanges(this.Ranges, other.Ranges))
                 {
                     result = Math.Max(result, Weight.AbsoluteDifference(pair.Probability1, pair.Probability2).Value);
                 }
