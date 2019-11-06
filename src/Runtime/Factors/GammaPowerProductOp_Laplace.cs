@@ -87,9 +87,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (B.IsPointMass)
                 return Gamma.PointMass(B.Point);
-            if (A.IsPointMass)
-                throw new NotImplementedException();
-            if (product.Rate == 0)
+            if (product.Rate == 0 || A.IsPointMass)
                 return Gamma.FromShapeAndRate(B.Shape, B.Rate);
             double x;
             if (product.IsPointMass)
@@ -174,7 +172,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (A.IsPointMass)
                 return GammaProductOp.BAverageConditional(product, A.Point, result);
             if (B.IsPointMass)
-                throw new NotImplementedException();
+                return GammaPower.Uniform(result.Power); // TODO
             if (product.IsUniform()) return product;
             if (q.IsUniform())
                 q = Q(product, A, B);
@@ -193,6 +191,8 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (B.IsPointMass)
                 return GammaProductOp.ProductAverageConditional(A, B.Point);
+            if (B.IsUniform())
+                return GammaPower.Uniform(result.Power);
             if (A.IsPointMass)
                 return GammaProductOp.ProductAverageConditional(A.Point, B);
             if (product.IsPointMass)
@@ -202,24 +202,70 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             if (A.Power != product.Power) throw new NotSupportedException($"A.Power ({A.Power}) != product.Power ({product.Power})");
             if (B.Power != product.Power) throw new NotSupportedException($"B.Power ({B.Power}) != product.Power ({product.Power})");
-            double productMean, productVariance;
-            double bPoint = q.GetMean();
+            double qPoint = q.GetMean();
             double r = product.Rate;
             double r2 = r * r;
-            double denom = 1 / (bPoint * r + A.Rate);
+            double denom = 1 / (qPoint * r + A.Rate);
             double denom2 = denom * denom;
             double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape) + (1 - A.Power);
-            // yMean = shape2*b^(pb)/(b y_r + a_r)
-            // yVariance = E[shape2*(shape2+1)*b^2/(b y_r + a_r)^2] - yMean^2 
-            //           = var(shape2*b/(b y_r + a_r)) + E[shape2*b^2/(b y_r + a_r)^2]
-            //           = shape2^2*var(b/(b y_r + a_r)) + shape2*(var(b/(b y_r + a_r)) + (yMean/shape2)^2)
-            double[] gDerivatives = new double[] { bPoint * denom, A.Rate * denom2, -2 * denom2 * denom * A.Rate * r, 6 * denom2 * denom2 * A.Rate * r2 };
-            double gMean, gVariance;
-            GaussianOp_Laplace.LaplaceMoments(q, gDerivatives, dlogfs(bPoint, product, A), out gMean, out gVariance);
-            productMean = shape2 * gMean;
-            productVariance = shape2 * shape2 * gVariance + shape2 * (gVariance + gMean * gMean);
+            GammaPower productMarginal;
+            if (shape2 > 2)
+            {
+                // Compute the moments of product^(-1/product.Power)
+                // Here q = b^(1/b.Power)
+                // E[a^(-1/a.Power) b^(-1/b.Power)] = E[(q r + a_r)/(shape2-1)/q]
+                // var(a^(-1/a.Power) b^(-1/b.Power)) = E[(q r + a_r)^2/(shape2-1)/(shape2-2)/q^2] - E[a^(-1/a.Power) b^(-1/b.Power)]^2
+                //          = (var((q r + a_r)/q) + E[(q r + a_r)/q]^2)/(shape2-1)/(shape2-2) - E[(q r + a_r)/q]^2/(shape2-1)^2
+                //          = var((q r + a_r)/q)/(shape2-1)/(shape2-2) + E[(q r + a_r)/(shape2-1)/q]^2/(shape2-2)
+                double iq = 1 / qPoint;
+                double iq2 = iq * iq;
+                double[] iqDerivatives = new double[] { iq, -iq2, 2 * iq2 * iq, -6 * iq2 * iq2 };
+                double iqMean, iqVariance;
+                GaussianOp_Laplace.LaplaceMoments(q, iqDerivatives, dlogfs(qPoint, product, A), out iqMean, out iqVariance);
+                double ipMean = (r + A.Rate * iqMean) / (shape2 - 1);
+                double ipVariance = (iqVariance * A.Rate * A.Rate / (shape2 - 1) + ipMean * ipMean) / (shape2 - 2);
+                productMarginal = GammaPower.FromMeanAndVariance(ipMean, ipVariance, -1);
+                productMarginal = GammaPower.FromShapeAndRate(productMarginal.Shape, productMarginal.Rate, result.Power);
+                bool check = false;
+                if (check)
+                {
+                    // Importance sampling
+                    MeanVarianceAccumulator mvaQ = new MeanVarianceAccumulator();
+                    MeanVarianceAccumulator mvaInvProduct = new MeanVarianceAccumulator();
+                    Gamma bPrior = Gamma.FromShapeAndRate(B.Shape, B.Rate);
+                    //q = bPrior;
+                    double shift = (product.Shape - product.Power) * Math.Log(qPoint) - shape2 * Math.Log(A.Rate + qPoint * r) + bPrior.GetLogProb(qPoint) - q.GetLogProb(qPoint);
+                    for (int i = 0; i < 1000000; i++)
+                    {
+                        double qSample = q.Sample();
+                        // logf = (y_s-y_p)*log(b) - (s+y_s-pa)*log(r + b*y_r)
+                        double logf = (product.Shape - product.Power) * Math.Log(qSample) - shape2 * Math.Log(A.Rate + qSample * r) + bPrior.GetLogProb(qSample) - q.GetLogProb(qSample);
+                        double weight = Math.Exp(logf - shift);
+                        mvaQ.Add(1/qSample, weight);
+                        double invProduct = (r + A.Rate / qSample) / (shape2 - 1);
+                        mvaInvProduct.Add(invProduct, weight);
+                    }
+                    Trace.WriteLine($"q = {mvaQ}, {iqMean}, {iqVariance}");
+                    Trace.WriteLine($"invA = {mvaInvProduct} {mvaInvProduct.Variance * (shape2 - 1) / (shape2 - 2) + mvaInvProduct.Mean * mvaInvProduct.Mean / (shape2 - 2)}, {ipMean}, {ipVariance}");
+                    Trace.WriteLine($"productMarginal = {productMarginal}");
+                }
+            }
+            else
+            {
+                // Compute the moments of y = product^(1/product.Power)
+                // yMean = E[shape2*b/(b y_r + a_r)]
+                // yVariance = E[shape2*(shape2+1)*b^2/(b y_r + a_r)^2] - yMean^2 
+                //           = var(shape2*b/(b y_r + a_r)) + E[shape2*b^2/(b y_r + a_r)^2]
+                //           = shape2^2*var(b/(b y_r + a_r)) + shape2*(var(b/(b y_r + a_r)) + (yMean/shape2)^2)
+                // Let g = b/(b y_r + a_r)
+                double[] gDerivatives = new double[] { qPoint * denom, A.Rate * denom2, -2 * denom2 * denom * A.Rate * r, 6 * denom2 * denom2 * A.Rate * r2 };
+                double gMean, gVariance;
+                GaussianOp_Laplace.LaplaceMoments(q, gDerivatives, dlogfs(qPoint, product, A), out gMean, out gVariance);
+                double yMean = shape2 * gMean;
+                double yVariance = shape2 * shape2 * gVariance + shape2 * (gVariance + gMean * gMean);
+                productMarginal = GammaPower.FromGamma(Gamma.FromMeanAndVariance(yMean, yVariance), result.Power);
+            }
 
-            GammaPower productMarginal = GammaPower.FromGamma(Gamma.FromMeanAndVariance(productMean, productVariance), result.Power);
             result.SetToRatio(productMarginal, product, GammaProductOp_Laplace.ForceProper);
             if (double.IsNaN(result.Shape) || double.IsNaN(result.Rate))
                 throw new InferRuntimeException("result is nan");
@@ -232,25 +278,24 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (B.IsPointMass)
                 return GammaProductOp.AAverageConditional(product, B.Point, result);
             if (A.IsPointMass)
-                throw new NotImplementedException();
+                return GammaPower.Uniform(A.Power); // TODO
             if (product.IsUniform()) return product;
-            double aMean, aVariance;
-            double bPoint = q.GetMean();
+            double qPoint = q.GetMean();
             GammaPower aMarginal;
             if (product.IsPointMass)
             {
-                // Z = int Ga(y/b; s, r)/b Ga(b; b_s, b_r) db
-                // E[a] = E[y/b]
-                // E[a^2] = E[y^2/b^2]
+                // Z = int Ga(y/q; s, r)/q Ga(q; q_s, q_r) dq
+                // E[a] = E[product/q]
+                // E[a^2] = E[product^2/q^2]
                 // aVariance = E[a^2] - aMean^2
-                double y = product.Point;
-                double ib = 1 / bPoint;
-                double ib2 = ib * ib;
-                double[] g = new double[] { ib, -ib2, 2 * ib2 * ib, -6 * ib2 * ib2 };
-                double pMean, pVariance;
-                GaussianOp_Laplace.LaplaceMoments(q, g, dlogfs(bPoint, product, A), out pMean, out pVariance);
-                aMean = y * pMean;
-                aVariance = y * y * pVariance;
+                double productPoint = product.Point;
+                double iq = 1 / qPoint;
+                double iq2 = iq * iq;
+                double[] iqDerivatives = new double[] { iq, -iq2, 2 * iq2 * iq, -6 * iq2 * iq2 };
+                double iqMean, iqVariance;
+                GaussianOp_Laplace.LaplaceMoments(q, iqDerivatives, dlogfs(qPoint, product, A), out iqMean, out iqVariance);
+                double aMean = productPoint * iqMean;
+                double aVariance = productPoint * productPoint * iqVariance;
                 aMarginal = GammaPower.FromGamma(Gamma.FromMeanAndVariance(aMean, aVariance), result.Power);
             }
             else
@@ -259,53 +304,61 @@ namespace Microsoft.ML.Probabilistic.Factors
                 if (B.Power != product.Power) throw new NotSupportedException($"B.Power ({B.Power}) != product.Power ({product.Power})");
                 double r = product.Rate;
                 double r2 = r * r;
-                double g = 1 / (bPoint * r + A.Rate);
+                double g = 1 / (qPoint * r + A.Rate);
                 double g2 = g * g;
                 double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape) + (1 - A.Power);
                 // From above:
                 // a^(y_s-pa + a_s-1) exp(-(y_r b + a_r)*a)
                 if (shape2 > 2)
                 {
-                    // E[1/a] = E[(b y_r + a_r)/(shape2-1)]
-                    // var(1/a) = E[(b y_r + a_r)^2/(shape2-1)/(shape2-2)] - E[1/a]^2
-                    //          = (var(b y_r + a_r) + E[(b y_r + a_r)]^2)/(shape2-1)/(shape2-2) - E[(b y_r + a_r)]^2/(shape2-1)^2
-                    //          = var(b y_r + a_r)/(shape2-1)/(shape2-2) + E[(b y_r + a_r)/(shape2-1)]^2/(shape2-2)
-                    double[] bDerivatives = new double[] { bPoint, 1, 0, 0 };
-                    double bMean, bVariance;
-                    GaussianOp_Laplace.LaplaceMoments(q, bDerivatives, dlogfs(bPoint, product, A), out bMean, out bVariance);
-                    double iaMean = (bMean * r + A.Rate) / (shape2 - 1);
-                    double iaVariance = (bVariance * r2 / (shape2 - 1) + iaMean * iaMean) / (shape2 - 2);
+                    // Compute the moments of a^(-1/a.Power)
+                    // Here q = b^(1/b.Power)
+                    // E[a^(-1/a.Power)] = E[(q r + a_r)/(shape2-1)]
+                    // var(a^(-1/a.Power)) = E[(q r + a_r)^2/(shape2-1)/(shape2-2)] - E[a^(-1/a.Power)]^2
+                    //          = (var(q r + a_r) + E[(q r + a_r)]^2)/(shape2-1)/(shape2-2) - E[(q r + a_r)]^2/(shape2-1)^2
+                    //          = var(q r + a_r)/(shape2-1)/(shape2-2) + E[(q r + a_r)/(shape2-1)]^2/(shape2-2)
+                    double[] qDerivatives = new double[] { qPoint, 1, 0, 0 };
+                    double qMean, qVariance;
+                    GaussianOp_Laplace.LaplaceMoments(q, qDerivatives, dlogfs(qPoint, product, A), out qMean, out qVariance);
+                    double iaMean = (qMean * r + A.Rate) / (shape2 - 1);
+                    double iaVariance = (qVariance * r2 / (shape2 - 1) + iaMean * iaMean) / (shape2 - 2);
                     aMarginal = GammaPower.FromMeanAndVariance(iaMean, iaVariance, -1);
                     aMarginal = GammaPower.FromShapeAndRate(aMarginal.Shape, aMarginal.Rate, result.Power);
-                    // Importance sampling
-                    MeanVarianceAccumulator mvaB = new MeanVarianceAccumulator();
-                    MeanVarianceAccumulator mvaInvA = new MeanVarianceAccumulator();
-                    Gamma bPrior = Gamma.FromShapeAndRate(B.Shape, B.Rate);
-                    q = bPrior;
-                    double shift = (product.Shape - product.Power) * Math.Log(bPoint) - shape2 * Math.Log(A.Rate + bPoint * r) + bPrior.GetLogProb(bPoint) - q.GetLogProb(bPoint);
-                    for (int i = 0; i < 1000000; i++)
+                    bool check = false;
+                    if (check)
                     {
-                        double bSample = q.Sample();
-                        // logf = (y_s-y_p)*log(b) - (s+y_s-pa)*log(r + b*y_r)
-                        double logf = (product.Shape - product.Power) * Math.Log(bSample) - shape2 * Math.Log(A.Rate + bSample * r) + bPrior.GetLogProb(bSample) - q.GetLogProb(bSample);
-                        double weight = Math.Exp(logf - shift);
-                        mvaB.Add(bSample, weight);
-                        double invA = (bSample * r + A.Rate) / (shape2 - 1);
-                        mvaInvA.Add(invA, weight);
+                        // Importance sampling
+                        MeanVarianceAccumulator mvaB = new MeanVarianceAccumulator();
+                        MeanVarianceAccumulator mvaInvA = new MeanVarianceAccumulator();
+                        Gamma bPrior = Gamma.FromShapeAndRate(B.Shape, B.Rate);
+                        q = bPrior;
+                        double shift = (product.Shape - product.Power) * Math.Log(qPoint) - shape2 * Math.Log(A.Rate + qPoint * r) + bPrior.GetLogProb(qPoint) - q.GetLogProb(qPoint);
+                        for (int i = 0; i < 1000000; i++)
+                        {
+                            double bSample = q.Sample();
+                            // logf = (y_s-y_p)*log(b) - (s+y_s-pa)*log(r + b*y_r)
+                            double logf = (product.Shape - product.Power) * Math.Log(bSample) - shape2 * Math.Log(A.Rate + bSample * r) + bPrior.GetLogProb(bSample) - q.GetLogProb(bSample);
+                            double weight = Math.Exp(logf - shift);
+                            mvaB.Add(bSample, weight);
+                            double invA = (bSample * r + A.Rate) / (shape2 - 1);
+                            mvaInvA.Add(invA, weight);
+                        }
+                        Trace.WriteLine($"b = {mvaB}, {qMean}, {qVariance}");
+                        Trace.WriteLine($"invA = {mvaInvA} {mvaInvA.Variance * (shape2 - 1) / (shape2 - 2) + mvaInvA.Mean * mvaInvA.Mean / (shape2 - 2)}, {iaMean}, {iaVariance}");
+                        Trace.WriteLine($"aMarginal = {aMarginal}");
                     }
-                    Trace.WriteLine($"b = {mvaB}, {bMean}, {bVariance}");
-                    Trace.WriteLine($"invA = {mvaInvA} {mvaInvA.Variance*(shape2-1)/(shape2-2) + mvaInvA.Mean*mvaInvA.Mean/(shape2-2)}, {iaMean}, {iaVariance}");
                 }
                 else
                 {
+                    // Compute the moments of a^(1/a.Power)
                     // aMean = shape2/(b y_r + a_r)
                     // aVariance = E[shape2*(shape2+1)/(b y_r + a_r)^2] - aMean^2 = var(shape2/(b y_r + a_r)) + E[shape2/(b y_r + a_r)^2]
                     //           = shape2^2*var(1/(b y_r + a_r)) + shape2*(var(1/(b y_r + a_r)) + (aMean/shape2)^2)
                     double[] gDerivatives = new double[] { g, -r * g2, 2 * g2 * g * r2, -6 * g2 * g2 * r2 * r };
                     double gMean, gVariance;
-                    GaussianOp_Laplace.LaplaceMoments(q, gDerivatives, dlogfs(bPoint, product, A), out gMean, out gVariance);
-                    aMean = shape2 * gMean;
-                    aVariance = shape2 * shape2 * gVariance + shape2 * (gVariance + gMean * gMean);
+                    GaussianOp_Laplace.LaplaceMoments(q, gDerivatives, dlogfs(qPoint, product, A), out gMean, out gVariance);
+                    double aMean = shape2 * gMean;
+                    double aVariance = shape2 * shape2 * gVariance + shape2 * (gVariance + gMean * gMean);
                     aMarginal = GammaPower.FromGamma(Gamma.FromMeanAndVariance(aMean, aVariance), result.Power);
                 }
             }

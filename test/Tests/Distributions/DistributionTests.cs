@@ -55,6 +55,20 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerTest()
         {
+            Assert.Equal(0, GammaPower.FromShapeAndRate(2, 0, -1).GetMean());
+            Assert.Equal(0, GammaPower.FromShapeAndRate(2, 0, -1).GetVariance());
+
+            foreach (var gammaPower in new[] {
+                GammaPower.FromShapeAndRate(3, 2, -4.0552419045546273),
+                new GammaPower(0.04591, 19.61, -1),
+            })
+            {
+                Assert.False(double.IsNaN(gammaPower.GetVariance()));
+                gammaPower.GetMeanAndVariance(out double mean, out double variance);
+                Assert.False(double.IsNaN(mean));
+                Assert.False(double.IsNaN(variance));
+            }
+
             GammaPower g = new GammaPower(1, 1, -1);
             g.ToString();
             Gamma gamma = new Gamma(1, 1);
@@ -63,12 +77,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(2, gamma.GetQuantile(expectedProbLessThan), 1e-10);
             Assert.Equal(0.5, g.GetQuantile(1 - expectedProbLessThan), 1e-10);
 
-            GammaPower(1);
-            GammaPower(-1);
-            GammaPower(2);
+            GammaPowerMomentTest(1);
+            GammaPowerMomentTest(-1);
+            GammaPowerMomentTest(2);
         }
 
-        private void GammaPower(double power)
+        private void GammaPowerMomentTest(double power)
         {
             GammaPower g = new GammaPower(9.9, 1, power);
             GammaPower g2 = new GammaPower(4.4, 3.3, power);
@@ -79,6 +93,17 @@ namespace Microsoft.ML.Probabilistic.Tests
             PointMassMomentTest(g, 7.7, 4.4, 5.5);
             SamplingTest(g, 7.7);
             g.SetToUniform();
+        }
+
+        [Fact]
+        public void GammaPowerMeanAndVarianceFuzzTest()
+        {
+            foreach(var gammaPower in OperatorTests.GammaPowers())
+            {
+                gammaPower.GetMeanAndVariance(out double mean, out double variance);
+                Assert.False(double.IsNaN(mean));
+                Assert.False(double.IsNaN(variance));
+            }
         }
 
         //[Fact]
@@ -197,6 +222,24 @@ namespace Microsoft.ML.Probabilistic.Tests
                 double mean2, variance;
                 g.GetMeanAndVariance(out mean2, out variance);
                 Assert.Equal(mean, mean2);
+            }
+        }
+
+        /// <summary>
+        /// Checks that TruncatedGamma.GetMeanPower does not return infinity or NaN for proper distributions.
+        /// </summary>
+        [Fact]
+        public void TruncatedGamma_GetMeanPower()
+        {
+            double shape = 1;
+            TruncatedGamma g = new TruncatedGamma(shape, 1, 1, double.PositiveInfinity);
+            for (int i = 0; i < 100; i++)
+            {
+                var meanPower = g.GetMeanPower(-i);
+                Trace.WriteLine($"GetMeanPower({-i}) = {meanPower}");
+                Assert.False(double.IsNaN(meanPower));
+                Assert.False(double.IsInfinity(meanPower));
+                if (i == 1) Assert.Equal(MMath.GammaUpper(shape-1, 1, false)/MMath.GammaUpper(shape, 1, false), meanPower, 1e-8);
             }
         }
 

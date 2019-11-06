@@ -6,6 +6,7 @@ using System;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Factors.Attributes;
+using System.Diagnostics;
 
 namespace Microsoft.ML.Probabilistic.Factors
 {
@@ -14,50 +15,187 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Experimental)]
     public static class PowerOp
     {
+        // Gamma = TruncatedGamma ^ y  /////////////////////////////////////////////////////////
+
+        public static Gamma PowAverageConditional(Gamma pow, [SkipIfUniform] TruncatedGamma x, double y)
+        {
+            double mean = x.GetMeanPower(y);
+            if (x.LowerBound > 0)
+            {
+                double meanInverse = x.GetMeanPower(-y);
+                return GammaFromMeanAndMeanInverse(mean, meanInverse);
+            }
+            else
+            {
+                double variance = x.GetMeanPower(2 * y) - mean * mean;
+                return Gamma.FromMeanAndVariance(mean, variance);
+            }
+        }
+
+        public static Gamma GammaFromMeanAndMeanInverse(double mean, double meanInverse)
+        {
+            // mean = a/b
+            // meanInverse = b/(a-1)
+            // a = mean*meanInverse / (mean*meanInverse - 1)
+            // b = a/mean
+            double rate = meanInverse / (mean * meanInverse - 1);
+            double shape = mean * rate;
+            return Gamma.FromShapeAndRate(shape, rate);
+        }
+
+        public static TruncatedGamma XAverageConditional([SkipIfUniform] Gamma pow, TruncatedGamma x, double y)
+        {
+            // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
+            if (pow.IsUniform()) return TruncatedGamma.Uniform();
+            // Factor is (x^y)^(pow.Shape/pow.Power - 1) * exp(-pow.Rate*(x^y)^1/pow.Power)
+            // =propto x^(pow.Shape/(pow.Power/y) - y) * exp(-pow.Rate*x^y/pow.Power)
+            // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
+            // newShape = pow.Shape + (1-y)*(pow.Power/y)
+            double power = 1 / y;
+            GammaPower message = GammaPower.FromShapeAndRate((pow.Shape - 1) + power, pow.Rate, power);
+            return new TruncatedGamma(ChangePower(message, x.ToGamma()));
+        }
+
+        // Gamma = Gamma ^ y  /////////////////////////////////////////////////////////
+
+        public static Gamma PowAverageConditional(Gamma pow, [SkipIfUniform] Gamma x, double y, Gamma result)
+        {
+            GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y);
+            return ChangePower(message, pow);
+        }
+
+        public static Gamma XAverageConditional([SkipIfUniform] Gamma pow, Gamma x, double y, Gamma result)
+        {
+            // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
+            if (pow.IsUniform()) return Gamma.Uniform();
+            // Factor is (x^y)^(pow.Shape/pow.Power - 1) * exp(-pow.Rate*(x^y)^1/pow.Power)
+            // =propto x^(pow.Shape/(pow.Power/y) - y) * exp(-pow.Rate*x^y/pow.Power)
+            // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
+            // newShape = pow.Shape + (1-y)*(pow.Power/y)
+            double power = 1 / y;
+            GammaPower message = GammaPower.FromShapeAndRate((pow.Shape - 1) + power, pow.Rate, power);
+            return ChangePower(message, x);
+        }
+
+        public static Gamma ChangePower(GammaPower message, Gamma context)
+        {
+            if (context.IsProper())
+            {
+                return ChangePower(message * ChangePower(GammaPower.FromGamma(context, 1), message.Power)) / context;
+            }
+            else
+            {
+                return ChangePower(message);
+            }
+        }
+
+        public static Gamma ChangePower(GammaPower message)
+        {
+            if (message.Power == 1) return Gamma.FromShapeAndRate(message.Shape, message.Rate); // same as below, but faster
+            if (message.IsUniform()) return Gamma.Uniform();
+            message.GetMeanAndVariance(out double mean, out double variance);
+            return Gamma.FromMeanAndVariance(mean, variance);
+        }
+
         // GammaPower = GammaPower ^ y  /////////////////////////////////////////////////////////
 
-        public static GammaPower PowAverageConditional([SkipIfUniform] GammaPower x, double y, GammaPower result)
+        public static GammaPower PowAverageConditional(GammaPower pow, [SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
+            var toX = GammaPower.FromShapeAndRate(pow.Shape, pow.Rate, pow.Power / y);
+            toX = ChangePower(toX, x.Power);
+            GammaPower xMarginal = x * toX;
+            Trace.WriteLine($"xMarginal = {xMarginal}");
             GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y * x.Power);
             return ChangePower(message, result.Power);
         }
 
-        public static GammaPower XAverageConditional([SkipIfUniform] GammaPower pow, double y, GammaPower x, GammaPower result)
+        public static GammaPower XAverageConditional([SkipIfUniform] GammaPower pow, GammaPower x, double y, GammaPower result)
         {
+            // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
+            if (pow.IsUniform()) return GammaPower.Uniform(result.Power);
             // Factor is (x^y)^(pow.Shape/pow.Power - 1) * exp(-pow.Rate*(x^y)^1/pow.Power)
             // =propto x^(pow.Shape/(pow.Power/y) - y) * exp(-pow.Rate*x^y/pow.Power)
             // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
             // newShape = pow.Shape + (1-y)*(pow.Power/y)
             double power = pow.Power / y;
-            GammaPower message = GammaPower.FromShapeAndRate(pow.Shape + (1 - y) * power, pow.Rate, power);
-            //throw new NotSupportedException("Outgoing message power (" + power + ") does not match the desired power (" + result.Power + ")");
-            if (message.IsUniform()) return GammaPower.Uniform(result.Power);
-            // This is significantly better than ChangePower(message, result.Power)
-            // Ideally it should return uniform when message is uniform.  
-            // Therefore the denominator should be ChangePower(ChangePower(x, message.Power), result.Power) instead of x.
-            return ChangePower(message*ChangePower(x, message.Power), result.Power)/x;
+            var toPow = PowAverageConditional(pow, x, y, pow);
+            GammaPower powMarginal = pow * toPow;
+            GammaPower message2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
+            Trace.WriteLine($"message2 = {message2} ChangePower = {ChangePower(message2, result.Power)} toPow = {toPow}");
+            GammaPower message = GammaPower.FromShapeAndRate((pow.Shape - pow.Power) + power, pow.Rate, power);
+            return ChangePower(message, result.Power, x);
+        }
+
+        public static GammaPower ChangePower(GammaPower message, double newPower, GammaPower context)
+        {
+            if (context.IsProper())
+            {
+                // This is significantly better than ChangePower(message, result.Power)
+                // Ideally it should return uniform when message is uniform.  
+                // Therefore the denominator should be equal to ChangePower(ChangePower(context, message.Power), result.Power).
+                // This happens when ChangePower always preserves the same moments.
+                var context2 = ChangePower(context, message.Power);
+                var tilted = message * context2;
+                Trace.WriteLine($"tilted = {tilted} context2 = {context2}");
+                return ChangePower(tilted, newPower) / context;
+            }
+            else
+            {
+                return ChangePower(message, newPower);
+            }
         }
 
         public static GammaPower ChangePower(GammaPower message, double newPower)
         {
-            if(message.Power == newPower) return message; // same as below, but faster
+            if (message.Power == newPower) return message; // same as below, but faster
             if (message.IsUniform()) return GammaPower.Uniform(newPower);
+            // Making two hops ensures that the desired mean powers are finite.
+            if (message.Power > 0 && newPower < 0 && newPower != -1) return ChangePower(ChangePower(message, -1), newPower);
+            if (message.Power < 0 && newPower > 0 && newPower != 1) return ChangePower(ChangePower(message, 1), newPower);
             // Project the message onto the desired power
-            // Compute the mean and variance of x^1/newPower
-            double mean = message.GetMeanPower(1 / newPower);
-            double mean2 = message.GetMeanPower(2 / newPower);
-            double variance = mean2 - mean * mean;
-            return GammaPower.FromGamma(Gamma.FromMeanAndVariance(mean, variance), newPower);
+            if (newPower == 1 || newPower == -1 || newPower == 2)
+            {
+                message.GetMeanAndVariance(out double mean, out double variance);
+                if (!double.IsPositiveInfinity(mean))
+                    return GammaPower.FromMeanAndVariance(mean, variance, newPower);
+                // Fall through
+            }
+            bool useMean = false;
+            if(useMean)
+            {
+                // Constraints:
+                // mean = Gamma(Shape + newPower)/Gamma(Shape)/Rate^newPower =approx (Shape/Rate)^newPower
+                // mean2 = Gamma(Shape + 2*newPower)/Gamma(Shape)/Rate^(2*newPower) =approx ((Shape + newPower)/Rate)^newPower * (Shape/Rate)^newPower
+                // mean2/mean^2 = Gamma(Shape + 2*newPower)*Gamma(Shape)/Gamma(Shape + newPower)^2 =approx ((Shape + newPower)/Shape)^newPower
+                // Shape =approx newPower/((mean2/mean^2)^(1/newPower) - 1)
+                // Rate = Shape/mean^(1/newPower)
+                message.GetMeanAndVariance(out double mean, out double variance);
+                double meanp = System.Math.Pow(mean, 1 / newPower);
+                double mean2p = System.Math.Pow(variance + mean * mean, 1 / newPower);
+                double shape = newPower / (mean2p / meanp / meanp - 1);
+                if (double.IsInfinity(shape)) return GammaPower.PointMass(mean, newPower);
+                double rate = shape / meanp;
+                return GammaPower.FromShapeAndRate(shape, rate, newPower);
+            }
+            else
+            {
+                // Compute the mean and variance of x^1/newPower
+                double mean = message.GetMeanPower(1 / newPower);
+                double mean2 = message.GetMeanPower(2 / newPower);
+                double variance = System.Math.Max(0, mean2 - mean * mean);
+                if (double.IsPositiveInfinity(mean*mean)) variance = mean;
+                return GammaPower.FromGamma(Gamma.FromMeanAndVariance(mean, variance), newPower);
+            }
         }
 
         public static GammaPower PowAverageLogarithm([SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
-            return PowAverageConditional(x, y, result);
+            return PowAverageConditional(GammaPower.Uniform(result.Power), x, y, result);
         }
 
-        public static GammaPower XAverageLogarithm([SkipIfUniform] GammaPower pow, double y, GammaPower x, GammaPower result)
+        public static GammaPower XAverageLogarithm([SkipIfUniform] GammaPower pow, GammaPower x, double y, GammaPower result)
         {
-            return XAverageConditional(pow, y, x, result);
+            return XAverageConditional(pow, x, y, result);
         }
 
         // GammaPower = Gamma ^ y //////////////////////////////////////////////////////////////

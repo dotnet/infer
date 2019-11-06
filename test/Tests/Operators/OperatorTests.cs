@@ -2121,6 +2121,36 @@ zL = (L - mx)*sqrt(prec)
         }
 
         /// <summary>
+        /// Generates a representative set of proper Gamma distributions.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<Gamma> Gammas()
+        {
+            foreach(var shape in DoublesGreaterThanZero())
+            {
+                foreach(var rate in DoublesGreaterThanZero())
+                {
+                    yield return Gamma.FromShapeAndRate(shape, rate);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generates a representative set of proper GammaPower distributions.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<GammaPower> GammaPowers()
+        {
+            foreach(var gamma in Gammas())
+            {
+                foreach(var power in Doubles())
+                {
+                    yield return GammaPower.FromGamma(gamma, power);
+                }
+            }
+        }
+
+        /// <summary>
         /// Generates a representative set of proper Gaussian distributions.
         /// </summary>
         /// <returns></returns>

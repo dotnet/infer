@@ -930,6 +930,8 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (B.IsPointMass)
                 return Gamma.PointMass(A * B.Point);
+            if (A == 0)
+                return Gamma.PointMass(0);
             return Gamma.FromShapeAndRate(B.Shape, B.Rate / A);
         }
 
@@ -944,6 +946,8 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (B.IsPointMass)
                 return GammaPower.PointMass(A * B.Point, B.Power);
+            if (A == 0)
+                return GammaPower.PointMass(0, B.Power);
             return GammaPower.FromShapeAndRate(B.Shape, B.Rate * Math.Pow(A, -1/B.Power), B.Power);
         }
 

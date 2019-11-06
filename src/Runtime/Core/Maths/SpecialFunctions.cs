@@ -757,15 +757,27 @@ namespace Microsoft.ML.Probabilistic.Math
             else // x >= 6
             {
                 double sum = LnSqrt2PI;
-                while (x < 10)
+                while (x < GammaLnLargeX)
                 {
                     sum -= Math.Log(x);
                     x++;
                 }
-                // x >= 10
+                // x >= GammaLnLargeX
                 // Use asymptotic series
                 return GammaLnSeries(x) + (x - 0.5) * Math.Log(x) - x + sum;
             }
+        }
+
+        /// <summary>
+        /// Computes the logarithm of the Pochhammer function: GammaLn(x + n) - GammaLn(x)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static double PochhammerLn(double x, double n)
+        {
+            if (x > GammaLnLargeX && x + n > GammaLnLargeX) return (x - 0.5) * Math.Log(1 + n / x) + n * (Math.Log(x + n) - 1) + GammaLnSeries(x + n) - GammaLnSeries(x);
+            else return MMath.GammaLn(x + n) - MMath.GammaLn(x);
         }
 
         /* Python code to generate this table (must not be indented):
@@ -1102,10 +1114,11 @@ for k in range(2,26):
         /// <summary>
         /// Compute the regularized upper incomplete Gamma function: int_x^inf t^(a-1) exp(-t) dt / Gamma(a)
         /// </summary>
-        /// <param name="a">The shape parameter, &gt; 0</param>
+        /// <param name="a">The shape parameter.  Must be &gt; 0 if regularized is true or x is 0.</param>
         /// <param name="x">The lower bound of the integral, &gt;= 0</param>
+        /// <param name="regularized">If true, result is divided by Gamma(a)</param>
         /// <returns></returns>
-        public static double GammaUpper(double a, double x)
+        public static double GammaUpper(double a, double x, bool regularized = true)
         {
             // special cases:
             // GammaUpper(1,x) = exp(-x)
@@ -1113,6 +1126,11 @@ for k in range(2,26):
             // GammaUpper(a,x) = GammaUpper(a-1,x) + x^(a-1) exp(-x) / Gamma(a)
             if (x < 0)
                 throw new ArgumentException($"x ({x}) < 0");
+            if (!regularized)
+            {
+                if (a < 1) return GammaUpperConFrac(a, x, regularized);
+                else return Gamma(a) * GammaUpper(a, x, true);
+            }
             if (a <= 0)
                 throw new ArgumentException($"a ({a}) <= 0");
             if (x == 0) return 1; // avoid 0/0
@@ -1394,14 +1412,16 @@ f = 1/gamma(x+1)-1
         /// <summary>
         /// Compute the regularized upper incomplete Gamma function by a continued fraction
         /// </summary>
-        /// <param name="a">A real number &gt; 0</param>
+        /// <param name="a">A real number.  Must be &gt; 0 if regularized is true.</param>
         /// <param name="x">A real number &gt;= 1.1</param>
+        /// <param name="regularized">If true, result is divded by Gamma(a)</param>
         /// <returns></returns>
-        private static double GammaUpperConFrac(double a, double x)
+        private static double GammaUpperConFrac(double a, double x, bool regularized = true)
         {
-            double scale = GammaUpperScale(a, x);
+            double scale = regularized ? GammaUpperScale(a, x) : Math.Exp(a * Math.Log(x) - x);
             if (scale == 0)
                 return scale;
+            if (x > double.MaxValue) return 0.0;
             // the confrac coefficients are:
             // a_i = -i*(i-a)
             // b_i = x+1-a+2*i
@@ -1439,7 +1459,7 @@ f = 1/gamma(x+1)-1
         private static double GammaLnSeries(double x)
         {
             // GammaLnSeries(10) = 0.008330563433362871
-            if (x < 10)
+            if (x < GammaLnLargeX)
             {
                 return MMath.GammaLn(x) - (x - 0.5) * Math.Log(x) + x - LnSqrt2PI;
             }
@@ -2502,7 +2522,7 @@ rr = mpf('-0.99999824265582826');
                 double rPlus1 = omr2 / (1 - r);
                 return xPlusy - rPlus1 * y;
             }
-            else if (r > 0.75 && Math.Abs(x-y) < 0.5 * Math.Abs(y))
+            else if (r > 0.75 && Math.Abs(x - y) < 0.5 * Math.Abs(y))
             {
                 double omr = omr2 / (1 + r);
                 return x - y + omr * y;
@@ -3423,6 +3443,8 @@ rr = mpf('-0.99999824265582826');
                 return 0.0;
             else if (x > y)
                 return Math.Exp(x + MMath.Log1MinusExp(y - x));
+            else if (double.IsNaN(x) || double.IsNaN(y)) 
+                return double.NaN;
             else
                 return -DifferenceOfExp(y, x);
         }
@@ -4344,7 +4366,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             double lowerBound, upperBound;
             if (denominator <= 1)
             {
-                if(double.IsNegativeInfinity(ratio))
+                if (double.IsNegativeInfinity(ratio))
                 {
                     upperBound = denominator * NextDouble(ratio);
                     if (AreEqual(upperBound / denominator, ratio)) return upperBound;
@@ -4524,6 +4546,8 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         public const double Digamma1 = -EulerGamma;
 
         private const double TOLERANCE = 1.0e-7;
+
+        private const double GammaLnLargeX = 10;
 
         /// <summary>
         /// Math.Sqrt(2*Math.PI)
