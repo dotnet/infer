@@ -769,15 +769,38 @@ namespace Microsoft.ML.Probabilistic.Math
         }
 
         /// <summary>
-        /// Computes the logarithm of the Pochhammer function: GammaLn(x + n) - GammaLn(x)
+        /// Computes the logarithm of the Pochhammer function, divided by n: (GammaLn(x + n) - GammaLn(x))/n
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="n"></param>
+        /// <param name="x">A real number &gt; 0</param>
+        /// <param name="n">If zero, result is 0.</param>
         /// <returns></returns>
-        public static double PochhammerLn(double x, double n)
+        public static double RisingFactorialLnOverN(double x, double n)
         {
-            if (x > GammaLnLargeX && x + n > GammaLnLargeX) return (x - 0.5) * Math.Log(1 + n / x) + n * (Math.Log(x + n) - 1) + GammaLnSeries(x + n) - GammaLnSeries(x);
-            else return MMath.GammaLn(x + n) - MMath.GammaLn(x);
+            // To ensure that the result increases with n, we group terms in n.
+            if (x <= 0) throw new ArgumentOutOfRangeException(nameof(x), x, "x <= 0");
+            else if (n == 0) return 0;
+            else if (x < 1e-16 && x + n < 1e-16)
+            {
+                // GammaLn(x) = -log(x)
+                return -Log1Plus(n / x) / n;
+            }
+            else if (Math.Abs(n / x) < 1e-6)
+            {
+                // x >= 1e-6 ensures that Tetragamma doesn't overflow
+                // For small x, Digamma(x) = -1/x, Trigamma(x) = 1/x^2, Tetragamma(x) = -1/x^3
+                // To ignore the next term, we need 1/x to dominate n^3/x^4, i.e. 1 >> n^3/x^3
+                return MMath.Digamma(x) + 0.5 * n * (MMath.Trigamma(x) + n / 3 * MMath.Tetragamma(x));
+            }
+            else if (x > GammaLnLargeX && x + n > GammaLnLargeX)
+            {
+                double nOverX = n / x;
+                if (Math.Abs(nOverX) < 1e-8)
+                    // log(1 + x) = x - 0.5*x^2  when x^2 << 1
+                    return Log1Plus(nOverX) - 0.5 * (1 - 0.5 / x) * nOverX + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 0.5 / x + Math.Log(x);
+                else
+                    return (1 + x / n - 0.5 / n) * Log1Plus(nOverX) + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 1 + Math.Log(x);
+            }
+            else return (MMath.GammaLn(x + n) - MMath.GammaLn(x)) / n;
         }
 
         /* Python code to generate this table (must not be indented):
@@ -3443,7 +3466,7 @@ rr = mpf('-0.99999824265582826');
                 return 0.0;
             else if (x > y)
                 return Math.Exp(x + MMath.Log1MinusExp(y - x));
-            else if (double.IsNaN(x) || double.IsNaN(y)) 
+            else if (double.IsNaN(x) || double.IsNaN(y))
                 return double.NaN;
             else
                 return -DifferenceOfExp(y, x);

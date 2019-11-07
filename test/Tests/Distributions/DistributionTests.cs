@@ -53,21 +53,34 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void GammaPowerFromMeanAndMeanLogTest()
+        {
+            double mean = 3;
+            double meanLog = 0.4;
+            double power = 5;
+            GammaPower gammaPower = GammaPower.FromMeanAndMeanLog(mean, meanLog, power);
+            Assert.Equal(mean, gammaPower.GetMean(), 1e-1);
+            Assert.Equal(meanLog, gammaPower.GetMeanLog(), 1e-1);
+        }
+
+        [Fact]
         public void GammaPowerTest()
         {
-            Assert.Equal(0, GammaPower.FromShapeAndRate(2, 0, -1).GetMean());
-            Assert.Equal(0, GammaPower.FromShapeAndRate(2, 0, -1).GetVariance());
-
             foreach (var gammaPower in new[] {
                 GammaPower.FromShapeAndRate(3, 2, -4.0552419045546273),
                 new GammaPower(0.04591, 19.61, -1),
             })
             {
-                Assert.False(double.IsNaN(gammaPower.GetVariance()));
                 gammaPower.GetMeanAndVariance(out double mean, out double variance);
                 Assert.False(double.IsNaN(mean));
                 Assert.False(double.IsNaN(variance));
+                Assert.False(mean < 0);
+                Assert.False(variance < 0);
+                Assert.Equal(variance, gammaPower.GetVariance());
             }
+
+            Assert.Equal(0, GammaPower.FromShapeAndRate(2, 0, -1).GetMean());
+            Assert.Equal(0, GammaPower.FromShapeAndRate(2, 0, -1).GetVariance());
 
             GammaPower g = new GammaPower(1, 1, -1);
             g.ToString();
@@ -103,6 +116,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 gammaPower.GetMeanAndVariance(out double mean, out double variance);
                 Assert.False(double.IsNaN(mean));
                 Assert.False(double.IsNaN(variance));
+                Assert.False(mean < 0);
+                Assert.False(variance < 0);
             }
         }
 

@@ -81,10 +81,11 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new DistributionTests().GammaPowerMeanAndVarianceFuzzTest();
-            //new EpTests().GammaPowerProductRRRTest();
+            //new DistributionTests().GammaPowerMeanAndVarianceFuzzTest();
+            //new DistributionTests().GammaPowerTest();
+            //new DistributionTests().GammaPowerFromMeanAndMeanLogTest();
+            new EpTests().GammaPowerProductRRRTest();
             //new EpTests().GammaPowerPowerTest();
-            //new EpTests().GammaPowerPower_ReturnsShapeGreaterThan2();
 
             if (false)
             {

@@ -5,6 +5,7 @@
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.Serialization;
 
     using Factors.Attributes;
@@ -88,7 +89,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="variance">Where to put the variance</param>
         public void GetMeanAndVariance(out double mean, out double variance)
         {
-            if(Power == 0)
+            if (Power == 0)
             {
                 mean = 1;
                 variance = 0;
@@ -104,14 +105,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                mean = GetMean();
+                double logMean = GetLogMeanPower(1);
+                mean = Math.Exp(logMean);
                 if (Rate == 0 && Shape + 2 * Power == 0 && 2 * Power < -1) variance = 0;
                 else if (Shape + 2 * Power <= 0) variance = double.PositiveInfinity;
-                else variance = MMath.DifferenceOfExp(MMath.PochhammerLn(Shape, 2 * Power), 2 * MMath.PochhammerLn(Shape, Power)) * Math.Pow(Rate, -2 * Power);
-                // If Power is large but Shape is small:
-                // GammaLn(Shape + 2*Power) - 2*GammaLn(Shape + Power) =
-                // (Shape+2*Power-0.5)*log(Shape+2*Power) - (Shape+2*Power) - 2*(Shape+Power-0.5)*log(Shape+Power) + 2*(Shape+Power) =
-                // 
+                else
+                {
+                    double logMean2 = GetLogMeanPower(2);
+                    if (logMean2 > double.MaxValue) variance = double.PositiveInfinity;
+                    else variance = MMath.DifferenceOfExp(logMean2, 2 * logMean);
+                }
             }
         }
 
@@ -256,7 +259,24 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public static GammaPower FromMeanAndMeanLog(double mean, double meanLog, double power)
         {
-            return FromGamma(Gamma.FromMeanAndMeanLog(Math.Pow(mean, 1 / power), meanLog / power), power);
+            // Constraints:
+            // mean = Gamma(Shape + power)/Gamma(Shape)/Rate^power
+            // meanLog = power*(digamma(Shape) - log(Rate))
+            double logMeanOverPower = Math.Log(mean) / power;
+            double meanLogOverPower = meanLog / power;
+            double shape = 1;
+            double logRate = 0;
+            for (int iter = 0; iter < 1000; iter++)
+            {
+                double oldLogRate = logRate;
+                double oldShape = shape;
+                logRate = MMath.RisingFactorialLnOverN(shape, power) / power - logMeanOverPower;
+                shape = Math.Exp(meanLogOverPower + logRate) + 0.5;
+                //Console.WriteLine($"shape = {shape:r}, logRate = {logRate:r}");
+                if (MMath.AreEqual(oldLogRate, logRate) && MMath.AreEqual(oldShape, shape)) break;
+                if (double.IsNaN(shape)) throw new Exception("Failed to converge");
+            }
+            return FromShapeAndRate(shape, Math.Exp(logRate), power);
         }
 
         /// <summary>
@@ -288,8 +308,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetMeanPower(double power)
         {
-            if (power == 0.0 || Power == 0.0) return 1.0;
-            else if (IsPointMass) return Math.Pow(Point, power);
+            return Math.Exp(GetLogMeanPower(power));
+        }
+
+        /// <summary>
+        /// Computes log(E[x^power])
+        /// </summary>
+        /// <returns></returns>
+        public double GetLogMeanPower(double power)
+        {
+            if (power == 0.0 || Power == 0.0) return 0.0;
+            else if (IsPointMass) return power * Math.Log(Point);
             //else if (Rate == 0.0) return (Power * power > 0) ? Double.PositiveInfinity : 0.0;
             else if (Shape <= 0 || Rate < 0) throw new ImproperDistributionException(this);
             else
@@ -303,12 +332,42 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         // Example: GammaPower.FromShapeAndRate(1,0,-1).GetMeanPower(1) is undefined
                         if (power2 == -1) throw new ImproperDistributionException(this);
                         // Example: GammaPower.FromShapeAndRate(0,0,-1).GetMeanPower(1) = 0
-                        else if (power2 < -1) return 0;
+                        else if (power2 < -1) return double.NegativeInfinity;
                     }
                     //throw new ArgumentException($"Cannot compute E[x^{power}] since shape ({Shape}) <= {-power2}");
                     return Double.PositiveInfinity;
                 }
-                else return Math.Exp(MMath.PochhammerLn(Shape, power2) - power2 * Math.Log(Rate));
+                else if (power2 > double.MaxValue) return double.PositiveInfinity;
+                else if (Shape + power2 > 1e10 && Math.Abs(power2) >= 1)
+                {
+                    // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
+                    // To ensure that variance >= 0, this code must ensure that the coefficient of power2 increases with power2.
+                    // This is done by grouping terms in power2.
+                    if (Shape > 1e10)
+                    {
+                        double power2OverShape = power2 / Shape;
+                        if (Math.Abs(power2OverShape) < 1e-8)
+                        {
+                            // log(1 + x) = x - 0.5*x^2  when x^2 << 1
+                            //Trace.WriteLine($"power2 = {power2:r} coeff = {MMath.Log1Plus(power2OverShape) - 0.5 * (1 - 0.5 / Shape) * power2OverShape:r} first = {MMath.Log1Plus(power2OverShape):r} second = {-0.5 * (1 - 0.5 / Shape) * power2OverShape:r}");
+                            return power2 * (MMath.Log1Plus(power2OverShape) - 0.5 * (1 - 0.5 / Shape) * power2OverShape - 0.5 / Shape + Math.Log(Shape) - Math.Log(Rate));
+                        }
+                        else
+                        {
+                            // Stirling approx for GammaLn(Shape + power2) and GammaLn(Shape)
+                            return power2 * (MMath.Log1Plus(power2OverShape) * (1 + (Shape - 0.5) / power2) - 1 + Math.Log(Shape) - Math.Log(Rate));
+                        }
+                    }
+                    else
+                    {
+                        // Stirling approx for GammaLn(Shape + power2) only
+                        return power2 * (Math.Log(Shape + power2) * (1 + (Shape - 0.5) / power2) - Shape / power2 - MMath.GammaLn(Shape) / power2 - 1 - Math.Log(Rate));
+                    }
+                }
+                else
+                {
+                    return power2 * (MMath.RisingFactorialLnOverN(Shape, power2) - Math.Log(Rate));
+                }
             }
         }
 

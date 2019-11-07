@@ -22,6 +22,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (A.Power != product.Power) throw new NotSupportedException($"A.Power ({A.Power}) != product.Power ({product.Power})");
             if (product.IsPointMass)
             {
+                double productPointPower = Math.Pow(product.Point, 1 / A.Power);
+                if (productPointPower > double.MaxValue) return new double[] { 0, 0, 0, 0 };
                 // int delta(a^pa * b^pb - y) Ga(a; s, r) da 
                 // = int delta(a' - y) Ga(a'^(1/pa)/b^(pb/pa); s, r) a'^(1/pa-1)/b^(pb/pa)/pa da' 
                 // = Ga(y^(1/pa)/b^(pb/pa); s, r) y^(1/pa-1)/b^(pb/pa)/pa
@@ -29,7 +31,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double ib = 1 / b;
                 double ib2 = ib * ib;
                 double s = A.Shape;
-                double c = A.Rate * Math.Pow(product.Point, 1 / A.Power) / b;
+                double c = A.Rate * productPointPower / b;
                 double dlogf = -s * ib + c * ib;
                 double ddlogf = s * ib2 - 2 * c * ib2 * ib;
                 double dddlogf = -2 * s * ib * ib2 + 6 * c * ib2 * ib2;
@@ -87,23 +89,26 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (B.IsPointMass)
                 return Gamma.PointMass(B.Point);
-            if (product.Rate == 0 || A.IsPointMass)
+            if (A.IsPointMass)
                 return Gamma.FromShapeAndRate(B.Shape, B.Rate);
+            if (A.Power != product.Power) throw new NotSupportedException($"A.Power ({A.Power}) != product.Power ({product.Power})");
+            if (B.Power != product.Power) throw new NotSupportedException($"B.Power ({B.Power}) != product.Power ({product.Power})");
             double x;
             if (product.IsPointMass)
             {
+                if (product.Point == 0) return Gamma.PointMass(0);
+                double productPointPower = Math.Pow(product.Point, 1 / A.Power);
+                // y = product^(1/power)
                 // logf = -a_s*log(b) - y*a_r/b
                 // logp = b_s*log(b) - b_r*b
                 // dlogfp = (b_s-a_s)/b - b_r + y*a_r/b^2 = 0
                 // -b_r b^2 + (b_s-a_s) b + y*a_r = 0
                 double shape = B.Shape - A.Shape;
-                double y = product.Point;
-                x = (Math.Sqrt(shape * shape + 4 * B.Rate * A.Rate * y) + shape) / 2 / B.Rate;
+                x = (Math.Sqrt(shape * shape + 4 * B.Rate * A.Rate * productPointPower) + shape) / 2 / B.Rate;
             }
             else
             {
-                if (A.Power != product.Power) throw new NotSupportedException($"A.Power ({A.Power}) != product.Power ({product.Power})");
-                if (B.Power != product.Power) throw new NotSupportedException($"B.Power ({B.Power}) != product.Power ({product.Power})");
+                if(product.Rate == 0) return Gamma.FromShapeAndRate(B.Shape, B.Rate);
                 double shape1 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(B.Shape, product.Shape) + (1 - product.Power);
                 double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(A.Shape, product.Shape) + (1 - A.Power);
                 // find the maximum of the factor marginalized over Product and A, times B
@@ -129,23 +134,29 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GammaProductOp.LogAverageFactor(product, A, B.Point);
             if (A.IsPointMass)
                 return GammaProductOp.LogAverageFactor(product, A.Point, B);
-            double x = q.GetMean();
+            double qPoint = q.GetMean();
             double logf;
             if (product.IsPointMass)
             {
-                // Ga(y/b; s, r)/b
-                double y = product.Point;
-                logf = (A.Shape - 1) * Math.Log(y) - A.Shape * Math.Log(x) - A.Rate * y / x - A.GetLogNormalizer();
+                // Ga(y/q; s, r)/q
+                if (qPoint == 0)
+                {
+                    if (product.Point == 0)
+                        logf = A.GetLogProb(0);
+                    else
+                        logf = double.NegativeInfinity;
+                }
+                else logf = A.GetLogProb(product.Point / qPoint) / qPoint;
             }
             else
             {
-                // int Ga^y_p(a^pa b^pb; y_s, y_r) Ga(a; s, r) da = b^(y_s-y_p) / (r + b y_r)^(y_s + s-pa)  Gamma(y_s+s-pa)
+                // int Ga^y_p(a^pa b^pb; y_s, y_r) Ga(a; s, r) da = q^(y_s-y_p) / (r + q y_r)^(y_s + s-pa)  Gamma(y_s+s-pa)
                 double shape = product.Shape - product.Power;
                 double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape) + (1 - A.Power);
-                logf = shape * Math.Log(x) - shape2 * Math.Log(A.Rate + x * product.Rate) +
+                logf = shape * Math.Log(qPoint) - shape2 * Math.Log(A.Rate + qPoint * product.Rate) +
                   MMath.GammaLn(shape2) - Gamma.FromShapeAndRate(A.Shape, A.Rate).GetLogNormalizer() - product.GetLogNormalizer();
             }
-            double logz = logf + Gamma.FromShapeAndRate(B.Shape, B.Rate).GetLogProb(x) - q.GetLogProb(x);
+            double logz = logf + Gamma.FromShapeAndRate(B.Shape, B.Rate).GetLogProb(qPoint) - q.GetLogProb(qPoint);
             return logz;
         }
 
@@ -196,7 +207,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             if (A.IsPointMass)
                 return GammaProductOp.ProductAverageConditional(A.Point, B);
             if (product.IsPointMass)
-                throw new NotImplementedException();
+                return GammaPower.Uniform(result.Power); // TODO
             if (product.Rate == 0 && A.Rate == 0)
                 return GammaPower.Uniform(result.Power);
 
@@ -289,14 +300,18 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // E[a^2] = E[product^2/q^2]
                 // aVariance = E[a^2] - aMean^2
                 double productPoint = product.Point;
-                double iq = 1 / qPoint;
-                double iq2 = iq * iq;
-                double[] iqDerivatives = new double[] { iq, -iq2, 2 * iq2 * iq, -6 * iq2 * iq2 };
-                double iqMean, iqVariance;
-                GaussianOp_Laplace.LaplaceMoments(q, iqDerivatives, dlogfs(qPoint, product, A), out iqMean, out iqVariance);
-                double aMean = productPoint * iqMean;
-                double aVariance = productPoint * productPoint * iqVariance;
-                aMarginal = GammaPower.FromGamma(Gamma.FromMeanAndVariance(aMean, aVariance), result.Power);
+                if (productPoint == 0) aMarginal = GammaPower.PointMass(0, result.Power);
+                else
+                {
+                    double iq = 1 / qPoint;
+                    double iq2 = iq * iq;
+                    double[] iqDerivatives = new double[] { iq, -iq2, 2 * iq2 * iq, -6 * iq2 * iq2 };
+                    double iqMean, iqVariance;
+                    GaussianOp_Laplace.LaplaceMoments(q, iqDerivatives, dlogfs(qPoint, product, A), out iqMean, out iqVariance);
+                    double aMean = productPoint * iqMean;
+                    double aVariance = productPoint * productPoint * iqVariance;
+                    aMarginal = GammaPower.FromGamma(Gamma.FromMeanAndVariance(aMean, aVariance), result.Power);
+                }
             }
             else
             {

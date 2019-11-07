@@ -99,12 +99,30 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         // GammaPower = GammaPower ^ y  /////////////////////////////////////////////////////////
 
+        public static double LogAverageFactor(GammaPower pow, GammaPower x, double y)
+        {
+            // GetLogAverageOf = 
+            // gammaln(shape1+shape2-power) - (shape1+shape2-power)*log(rate1+rate2) - log(|power|)
+            // -gammaln(shape1) + shape1 * log(rate1)
+            // -gammaln(shape2) + shape2 * log(rate2)
+            // d/dshape2 = digamma(shape1+shape2-power) - digamma(shape2) - log(rate1/rate2 + 1)
+            // d/drate2 = -(shape1+shape2-power)/(rate1+rate2) + shape2/rate2
+            GammaPower toPow = PowAverageConditional(pow, x, y, pow);
+            return toPow.GetLogAverageOf(pow);
+        }
+
         public static GammaPower PowAverageConditional(GammaPower pow, [SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
-            var toX = GammaPower.FromShapeAndRate(pow.Shape, pow.Rate, pow.Power / y);
-            toX = ChangePower(toX, x.Power);
-            GammaPower xMarginal = x * toX;
-            Trace.WriteLine($"xMarginal = {xMarginal}");
+            bool debug = false;
+            if (debug)
+            {
+                var toX = GammaPower.FromShapeAndRate(pow.Shape, pow.Rate, pow.Power / y);
+                toX = GammaPower.FromShapeAndRate(pow.Shape - pow.Power + pow.Power / y, pow.Rate, pow.Power / y);
+                toX = ChangePower(toX, x.Power);
+                GammaPower xMarginal = x * toX;
+                GammaPower powMarginal = ChangePower(GammaPower.FromShapeAndRate(xMarginal.Shape, xMarginal.Rate, y), result.Power);
+                Trace.WriteLine($"push forward: xMarginal = {xMarginal} powMarginal = {powMarginal}");
+            }
             GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y * x.Power);
             return ChangePower(message, result.Power);
         }
@@ -120,10 +138,24 @@ namespace Microsoft.ML.Probabilistic.Factors
             double power = pow.Power / y;
             var toPow = PowAverageConditional(pow, x, y, pow);
             GammaPower powMarginal = pow * toPow;
-            GammaPower message2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
-            Trace.WriteLine($"message2 = {message2} ChangePower = {ChangePower(message2, result.Power)} toPow = {toPow}");
-            GammaPower message = GammaPower.FromShapeAndRate((pow.Shape - pow.Power) + power, pow.Rate, power);
-            return ChangePower(message, result.Power, x);
+            // xMarginal2 is the exact distribution of pow^(1/y) where pow has distribution powMarginal
+            GammaPower xMarginal2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
+            GammaPower xMarginal = ChangePower(xMarginal2, result.Power);
+            bool debug = false;
+            if (debug)
+            {
+                var projection = FromMeanPowerAndMeanLog(xMarginal2.GetMeanPower(1 / xMarginal2.Power), xMarginal2.GetMeanLog(), 1 / xMarginal2.Power);
+                var xMarginal3 = GammaPower.FromShapeAndRate(projection.Shape, projection.Rate, 1);
+                Trace.WriteLine($"pull backward: xMarginal = {xMarginal} powMarginal = {powMarginal} xMarginal2 = {xMarginal2} xMarginal3 = {xMarginal3}");
+            }
+            return xMarginal / x;
+        }
+
+        public static Gamma FromMeanPowerAndMeanLog(double meanPower, double meanLog, double power)
+        {
+            // We want E[log(x)] = meanLog but this sets E[log(x^power)] = meanLog, so we scale meanLog
+            var gammaPower = GammaPower.FromMeanAndMeanLog(meanPower, meanLog * power, power);
+            return Gamma.FromShapeAndRate(gammaPower.Shape, gammaPower.Rate);
         }
 
         public static GammaPower ChangePower(GammaPower message, double newPower, GammaPower context)
