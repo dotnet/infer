@@ -40,12 +40,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             private int numRemovedTransitions = 0;
 
             /// <summary>
+            /// Cached value of <see cref="MaxStateCount"/>. Getting MaxStateCount involves checking
+            /// thread static variable value and a comparison. Caching this property values is a little
+            /// faster.
+            /// </summary>
+            private readonly int maxStateCount;
+
+            /// <summary>
             /// Creates a new empty <see cref="Builder"/>.
             /// </summary>
             public Builder(int startStateCount = 1)
             {
                 this.states = new List<LinkedStateData>();
                 this.transitions = new List<LinkedTransitionNode>();
+                this.maxStateCount = MaxStateCount;
                 this.AddStates(startStateCount);
             }
 
@@ -112,9 +120,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public StateBuilder AddState()
             {
-                if (this.states.Count >= maxStateCount)
+                if (this.states.Count >= this.maxStateCount)
                 {
-                    throw new AutomatonTooLargeException(MaxStateCount);
+                    throw new AutomatonTooLargeException(this.maxStateCount);
                 }
 
                 var index = this.states.Count;

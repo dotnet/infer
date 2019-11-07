@@ -44,19 +44,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         protected PairListAutomaton sequencePairToWeight = new PairListAutomaton();
 
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the maximum number of states a transducer can have.
-        /// </summary>
-        public static int MaxStateCount
-        {
-            get { return PairListAutomaton.MaxStateCount; }
-            set { PairListAutomaton.MaxStateCount = value; }
-        }
-        
-        #endregion
-
         #region Factory methods
 
         /// <summary>
@@ -555,6 +542,17 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         #endregion
 
         #region Nested classes
+
+        public class UnlimitedStatesComputation : IDisposable
+        {
+            private readonly PairListAutomaton.UnlimitedStatesComputation unlimitedAutomatonStatesComputation;
+
+            public UnlimitedStatesComputation() =>
+                this.unlimitedAutomatonStatesComputation = new PairListAutomaton.UnlimitedStatesComputation();
+
+            public void Dispose() =>
+                this.unlimitedAutomatonStatesComputation.Dispose();
+        }
 
         /// <summary>
         /// Represents an automaton that maps lists of element pairs to real values. Such automata are used to represent transducers internally.
