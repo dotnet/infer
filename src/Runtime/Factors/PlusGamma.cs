@@ -19,7 +19,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (double.IsInfinity(b) || double.IsNaN(b)) throw new ArgumentOutOfRangeException(nameof(b), b, $"Argument is outside the range of supported values.");
             if (a.IsUniform()) return a;
-            else if (a.Power == 0 && b != 0) throw new ArgumentException("Cannot add {b} to {a}");
+            else if (a.Power == 0 && b != 0) throw new ArgumentException($"Cannot add {b} to {a}");
             else if (a.IsPointMass) return GammaPower.PointMass(a.Point + b, a.Power);
             else if (a.Power < 0)
             {                
@@ -38,9 +38,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // This implies s*newRate^(-Power) = newMean
                 // newRate = (newMean/s)^(-1/Power)
                 // If power == 1, mean is shape/rate, newRate = shape/newMean.
-                double s = (a.Power == 1) ? a.Shape : Math.Exp(MMath.GammaLn(a.Shape + a.Power) - MMath.GammaLn(a.Shape));
+                double s = (a.Power == 1) ? a.Shape : Math.Exp(MMath.RisingFactorialLnOverN(a.Shape, a.Power)*a.Power);
                 double r = Math.Pow(a.Rate, -a.Power);
-                return GammaPower.FromShapeAndRate(a.Shape, Math.Pow(r + b / s, -1 / a.Power), a.Power);
+                double newRate = Math.Pow(r + b / s, -1 / a.Power);
+                if (newRate == 0) throw new ArgumentException($"Cannot add {b} to {a}");
+                return GammaPower.FromShapeAndRate(a.Shape, newRate, a.Power);
             }
         }
 

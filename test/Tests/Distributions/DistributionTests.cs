@@ -64,6 +64,78 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void Gamma_GetMode_MaximizesGetLogProb()
+        {
+            foreach (var gamma in OperatorTests.Gammas())
+            {
+                double max = double.NegativeInfinity;
+                foreach (var x in OperatorTests.DoublesAtLeastZero())
+                {
+                    double logProb = gamma.GetLogProb(x);
+                    Assert.False(double.IsNaN(logProb));
+                    if (logProb > max)
+                    {
+                        max = logProb;
+                    }
+                }
+                double mode = gamma.GetMode();
+                Assert.False(double.IsNaN(mode));
+                double logProbBelowMode = gamma.GetLogProb(MMath.PreviousDouble(mode));
+                Assert.False(double.IsNaN(logProbBelowMode));
+                double logProbAboveMode = gamma.GetLogProb(MMath.NextDouble(mode));
+                Assert.False(double.IsNaN(logProbAboveMode));
+                double logProbAtMode = gamma.GetLogProb(mode);
+                Assert.False(double.IsNaN(logProbAtMode));
+                logProbAtMode = System.Math.Max(System.Math.Max(logProbAtMode, logProbAboveMode), logProbBelowMode);
+                const double smallestNormalized = 1e-308;
+                Assert.True(logProbAtMode >= max ||
+                    MMath.AbsDiff(logProbAtMode, max, 1e-8) < 1e-4 ||
+                    (mode == 0 && gamma.GetLogProb(smallestNormalized) >= max)
+                    );
+            }
+        }
+
+        [Fact]
+        public void GammaPower_GetMode_MaximizesGetLogProb()
+        {
+            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 1).GetLogProb(double.PositiveInfinity)));
+            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 0.1).GetLogProb(1.4324949192823266E+63)));
+            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, -4.94065645841247E-324).GetLogProb(1)));
+            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 4.94065645841247E-324).GetLogProb(double.PositiveInfinity)));
+            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1e-4 - 100, double.Epsilon, -100).GetMode()));
+            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, -1.7976931348623157E+308).GetLogProb(0)));
+            Assert.False(double.IsPositiveInfinity(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1e17).GetLogProb(1e-4)));
+            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1.7976931348623157E+308).GetMode()));
+            foreach (var gammaPower in OperatorTests.GammaPowers())
+            {
+                double max = double.NegativeInfinity;
+                foreach (var x in OperatorTests.DoublesAtLeastZero())
+                {
+                    double logProb = gammaPower.GetLogProb(x);
+                    Assert.False(double.IsNaN(logProb));
+                    if(logProb > max)
+                    {
+                        max = logProb;
+                    }
+                }
+                double mode = gammaPower.GetMode();
+                Assert.False(double.IsNaN(mode));
+                double logProbBelowMode = gammaPower.GetLogProb(MMath.PreviousDouble(mode));
+                Assert.False(double.IsNaN(logProbBelowMode));
+                double logProbAboveMode = gammaPower.GetLogProb(MMath.NextDouble(mode));
+                Assert.False(double.IsNaN(logProbAboveMode));
+                double logProbAtMode = gammaPower.GetLogProb(mode);
+                Assert.False(double.IsNaN(logProbAtMode));
+                logProbAtMode = System.Math.Max(System.Math.Max(logProbAtMode, logProbAboveMode), logProbBelowMode);
+                const double smallestNormalized = 1e-308;
+                Assert.True(logProbAtMode >= max || 
+                    MMath.AbsDiff(logProbAtMode, max, 1e-8) < 1e-8 ||
+                    (mode <= double.Epsilon && gammaPower.GetLogProb(smallestNormalized) >= max)                    
+                    );
+            }
+        }
+
+        [Fact]
         public void GammaPowerTest()
         {
             foreach (var gammaPower in new[] {

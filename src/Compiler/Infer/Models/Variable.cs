@@ -1602,7 +1602,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// contains more than two <c>Range</c> objects.</exception>
         public static IVariableArray Array<T>(IList<Range> ranges)
         {
-            if (ranges.Count == 0) throw new ArgumentException("Range list is empty.",nameof(ranges));
+            if (ranges.Count == 0) throw new ArgumentException("Range list is empty.", nameof(ranges));
             else if (ranges.Count == 1) return Variable.Array<T>(ranges[0]);
             else if (ranges.Count == 2) return Variable.Array<T>(ranges[0], ranges[1]);
             else throw new NotSupportedException("More than two ranges were specified, high rank arrays are not yet supported.");
@@ -5560,7 +5560,7 @@ namespace Microsoft.ML.Probabilistic.Models
                 MethodInfo method = type.GetMethod("CreateVariableArrayFromItem", BindingFlags.NonPublic | BindingFlags.Static);
                 return (IVariableArray)Util.Invoke(method, null, array, headRanges);
             }
-            
+
             Variable<T> itemPrototype = (Variable<T>)item.Clone();
 
             VariableArray<T> variableArray = new VariableArray<T>(itemPrototype, ranges[0]);
@@ -6405,9 +6405,13 @@ namespace Microsoft.ML.Probabilistic.Models
                 }
                 else if (a.IsObserved && a.IsReadOnly && a.IsBase && a.ObservedValue.Equals(0.0))
                 {
-                    return !GreaterThanOrEqual(b, a);
+                    diff = OperatorFactor<T>(Operator.Negative, b);
                 }
                 else
+                {
+                    diff = null;
+                }
+                if ((object)diff == null)
                 {
                     diff = OperatorFactor<T>(Operator.Minus, a, b);
                 }
@@ -6430,7 +6434,7 @@ namespace Microsoft.ML.Probabilistic.Models
         /// </summary>
         protected static Variable<bool> GreaterThanOrEqual(Variable<T> a, Variable<T> b)
         {
-            return OperatorFactor<bool>(Operator.GreaterThanOrEqual, a, b) 
+            return OperatorFactor<bool>(Operator.GreaterThanOrEqual, a, b)
                 ?? OperatorFactor<bool>(Operator.LessThanOrEqual, b, a)
                 ?? NotOrNull(OperatorFactor<bool>(Operator.LessThan, a, b))
                 ?? NotOrNull(OperatorFactor<bool>(Operator.GreaterThan, b, a))

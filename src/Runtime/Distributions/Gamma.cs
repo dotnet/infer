@@ -604,6 +604,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 else if (rate < 0) return x;
                 // fall through when rate == 0
             }
+            if (shape > 1e10 && IsProper(shape, rate))
+            {
+                // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
+                // Also log(1-1/x) = -1/x - 0.5/x^2  for x > 1e10
+                // We compute the density in a way that ensures the maximum is at the mode returned by GetMode.
+                double mode = (shape - 1) / rate; // cannot be zero
+                double xOverMode = x / mode;
+                if (double.IsPositiveInfinity(xOverMode)) return double.NegativeInfinity;
+                else return (shape - 1) * (Math.Log(xOverMode) + (1 - xOverMode)) + (0.5 + 0.5 / shape) / shape + Math.Log(rate) - 0.5 * Math.Log(shape);
+            }
             double result = 0;
             if (shape != 1) result += (shape - 1) * Math.Log(x);
             if (rate != 0) result -= x * rate;

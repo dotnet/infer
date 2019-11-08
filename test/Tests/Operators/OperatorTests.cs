@@ -23,6 +23,22 @@ namespace Microsoft.ML.Probabilistic.Tests
     public class OperatorTests
     {
         [Fact]
+        public void PlusGammaOpTest()
+        {
+            foreach(var gammaPower in GammaPowers().Where(g => g.Power != 0 && g.Shape > 1))
+            {
+                Assert.True(gammaPower.IsProper());
+                foreach(var shift in DoublesAtLeastZero().Where(x => !double.IsInfinity(x)))
+                {
+                    var result = PlusGammaOp.SumAverageConditional(gammaPower, shift);
+                    double expected = gammaPower.GetMean() + shift;
+                    double actual = result.GetMean();
+                    Assert.True(MMath.AbsDiff(expected, actual, 1e-8) < 1e-8);
+                }
+            }
+        }
+
+        [Fact]
         public void AverageTest()
         {
             foreach (var a in Doubles())
@@ -2143,7 +2159,7 @@ zL = (L - mx)*sqrt(prec)
         {
             foreach(var gamma in Gammas())
             {
-                foreach(var power in Doubles())
+                foreach(var power in Doubles().Where(x => !double.IsInfinity(x)))
                 {
                     yield return GammaPower.FromGamma(gamma, power);
                 }
