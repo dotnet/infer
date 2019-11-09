@@ -98,6 +98,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPower_GetMode_MaximizesGetLogProb()
         {
+            Assert.False(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -10000000000).GetLogProb(1.0000000000000025E-45) > GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -10000000000).GetLogProb(1));
+            Assert.False(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1000000000).GetLogProb(1.1) > GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1000000000).GetLogProb(1));
+            Assert.False(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, 1000000000).GetLogProb(1.1) > GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, 1000000000).GetLogProb(1));
             Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 1).GetLogProb(double.PositiveInfinity)));
             Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 0.1).GetLogProb(1.4324949192823266E+63)));
             Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, -4.94065645841247E-324).GetLogProb(1)));
@@ -108,6 +111,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1.7976931348623157E+308).GetMode()));
             foreach (var gammaPower in OperatorTests.GammaPowers())
             {
+                double argmax = double.NaN;
                 double max = double.NegativeInfinity;
                 foreach (var x in OperatorTests.DoublesAtLeastZero())
                 {
@@ -116,6 +120,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     if(logProb > max)
                     {
                         max = logProb;
+                        argmax = x;
                     }
                 }
                 double mode = gammaPower.GetMode();

@@ -518,22 +518,63 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (x < 0) return double.NegativeInfinity;
             if (power == 0.0) return (x == 1.0) ? 0.0 : Double.NegativeInfinity;
+            if (double.IsPositiveInfinity(x)) // Avoid subtracting infinities below
+            {
+                if (power > 0)
+                {
+                    if (rate > 0) return -x;
+                    else if (rate < 0) return x;
+                    // Fall through when rate == 0
+                }
+                else // This case avoids inf/inf below
+                {
+                    if (shape > power) return -x;
+                    else if (shape < power) return x;
+                    // Fall through when shape == power
+                }
+            }
+            // We compute the density in a way that ensures the maximum is at the mode returned by GetMode.
+            // mode = ((shape - power)/rate)^power
+            double mode = GetMode(shape, rate, power);
+            // The part of the log-density that depends on x is:
+            //   (shape/power-1)*log(x) - rate*x^(1/power)
+            // = (shape/power-1)*(log(x) - power/(shape-power)*rate*x^(1/power))
+            // = (shape/power-1)*(log(x) - power*(x/mode)^(1/power))
+            // = (shape/power-1)*(log(x/mode) - power*(x/mode)^(1/power) + log(mode))
+            // = (shape/power-1)*(log(x/mode) - power*(x/mode)^(1/power)) + (shape-power)*log((shape-power)/rate)
+
             if (shape > 1e10 && IsProper(shape, rate, power))
             {
                 // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
-                // We compute the density in a way that ensures the maximum is at the mode returned by GetMode.
-                // mode = ((shape - power)/rate)^power
-                double mode = GetMode(shape, rate, power);
+                double result2 = ((shape - power) * Math.Log(1 - power / shape) + power) + power * Math.Log(rate) + (0.5 - power) * Math.Log(shape) - Math.Log(Math.Abs(power));
+            }
                 if (mode > 0)
                 {
-                    double result2 = ((shape - power) * Math.Log(1 - power / shape) + power) + power * Math.Log(rate) + (0.5 - power) * Math.Log(shape) - Math.Log(Math.Abs(power));
-                    double xOverMode = x / mode;
+                // mode > 0 implies shape != power
+                double xOverMode = x / mode;
                     double invPower = 1.0 / power;
                     double xOverModeInvPower = Math.Pow(xOverMode, invPower);
-                    if (double.IsPositiveInfinity(xOverModeInvPower)) return double.NegativeInfinity; // assumes shape > power
-                    double u = Math.Log(xOverMode) + power * (1 - xOverModeInvPower);
-                    if (u != 0) // avoid inf * 0
-                        result2 += (shape / power - 1) * u;
+                    if (double.IsPositiveInfinity(xOverModeInvPower)) return double.NegativeInfinity;
+                    double xOverModeLn = Math.Log(xOverMode);
+                    double xOverModeLnOverPower = xOverModeLn / power;
+                    double xTerm;
+                    if (Math.Abs(xOverModeLnOverPower) < 1e-8)
+                    {
+                        // ExpMinus1(x) = x + 0.5*x^2  when abs(x) < 1e-8
+                        // u - power*(u/power + 0.5*u^2/power^2) = u - u - 0.5*u^2/power
+                        // xTerm = -(0.5 + MMath.ExpMinus1RatioMinus1RatioMinusHalf(xOverModeLnOverPower)) * xOverModeLnOverPower * xOverModeLn;
+                        xTerm = -0.5 * xOverModeLnOverPower * xOverModeLn;
+                    }
+                    else if (Math.Abs(xOverModeInvPower - 1) < 1e-4)
+                    {
+                        xTerm = xOverModeLn - power * MMath.ExpMinus1(xOverModeLnOverPower);
+                    }
+                    else
+                    {
+                        xTerm = xOverModeLn + power * (1 - xOverModeInvPower);
+                    }
+                    if (xTerm != 0) // avoid inf * 0
+                        result2 += (shape / power - 1) * xTerm;
                     return result2;
                 }
             }

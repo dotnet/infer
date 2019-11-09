@@ -598,8 +598,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static double GetLogProb(double x, double shape, double rate)
         {
             if (x < 0) return double.NegativeInfinity;
-            if (double.IsPositiveInfinity(x))
-            {
+            if (double.IsPositiveInfinity(x)) // Avoid subtracting infinities below
+            {               
                 if (rate > 0) return -x;
                 else if (rate < 0) return x;
                 // fall through when rate == 0
