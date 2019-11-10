@@ -25,17 +25,17 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void PlusGammaOpTest()
         {
-            foreach(var gammaPower in GammaPowers().Where(g => g.Power != 0 && g.Shape > 1))
+            Parallel.ForEach(GammaPowers().Where(g => g.Power != 0 && g.Shape > 1), gammaPower =>
             {
                 Assert.True(gammaPower.IsProper());
-                foreach(var shift in DoublesAtLeastZero().Where(x => !double.IsInfinity(x)))
+                foreach (var shift in DoublesAtLeastZero().Where(x => !double.IsInfinity(x)))
                 {
                     var result = PlusGammaOp.SumAverageConditional(gammaPower, shift);
                     double expected = gammaPower.GetMean() + shift;
                     double actual = result.GetMean();
                     Assert.True(MMath.AbsDiff(expected, actual, 1e-8) < 1e-8);
                 }
-            }
+            });
         }
 
         [Fact]

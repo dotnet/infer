@@ -102,6 +102,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GammaPower_GetMode_MaximizesGetLogProb()
         {
             long count = 0;
+            // TODO: choose a random subset
             Parallel.ForEach(new[] {
                 GammaPower.FromShapeAndRate(double.MaxValue, 4.94065645841247E-324, -1.0),
                 GammaPower.FromShapeAndRate(1E+18, 1E+18, 100000000000.0),
