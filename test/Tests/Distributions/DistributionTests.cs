@@ -5,11 +5,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Xunit;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Utilities;
 using GaussianArray2D = Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D<Microsoft.ML.Probabilistic.Distributions.Gaussian, double>;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -98,18 +101,24 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPower_GetMode_MaximizesGetLogProb()
         {
-            Assert.False(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -10000000000).GetLogProb(1.0000000000000025E-45) > GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -10000000000).GetLogProb(1));
-            Assert.False(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1000000000).GetLogProb(1.1) > GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1000000000).GetLogProb(1));
-            Assert.False(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, 1000000000).GetLogProb(1.1) > GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, 1000000000).GetLogProb(1));
-            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 1).GetLogProb(double.PositiveInfinity)));
-            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 0.1).GetLogProb(1.4324949192823266E+63)));
-            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, -4.94065645841247E-324).GetLogProb(1)));
-            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 4.94065645841247E-324).GetLogProb(double.PositiveInfinity)));
-            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1e-4 - 100, double.Epsilon, -100).GetMode()));
-            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, -1.7976931348623157E+308).GetLogProb(0)));
-            Assert.False(double.IsPositiveInfinity(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1e17).GetLogProb(1e-4)));
-            Assert.False(double.IsNaN(GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1.7976931348623157E+308).GetMode()));
-            foreach (var gammaPower in OperatorTests.GammaPowers())
+            long count = 0;
+            Parallel.ForEach(new[] {
+                GammaPower.FromShapeAndRate(double.MaxValue, 4.94065645841247E-324, -1.0),
+                GammaPower.FromShapeAndRate(1E+18, 1E+18, 100000000000.0),
+                GammaPower.FromShapeAndRate(100000000000.0, double.MaxValue, double.MinValue), 
+                GammaPower.FromShapeAndRate(100000000000.0, 4.94065645841247E-324, double.MaxValue),
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -10000000000),
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1000000000),
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, 1000000000),
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 1),
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 0.1),
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, -4.94065645841247E-324),
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 4.94065645841247E-324),
+                GammaPower.FromShapeAndRate(1e-4 - 100, double.Epsilon, -100),
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, -1.7976931348623157E+308),
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1e17),
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1.7976931348623157E+308),
+            }.Concat(OperatorTests.GammaPowers()), gammaPower =>
             {
                 double argmax = double.NaN;
                 double max = double.NegativeInfinity;
@@ -117,7 +126,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 {
                     double logProb = gammaPower.GetLogProb(x);
                     Assert.False(double.IsNaN(logProb));
-                    if(logProb > max)
+                    if (logProb > max)
                     {
                         max = logProb;
                         argmax = x;
@@ -133,11 +142,15 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Assert.False(double.IsNaN(logProbAtMode));
                 logProbAtMode = System.Math.Max(System.Math.Max(logProbAtMode, logProbAboveMode), logProbBelowMode);
                 const double smallestNormalized = 1e-308;
-                Assert.True(logProbAtMode >= max || 
+                Assert.True(logProbAtMode >= max ||
                     MMath.AbsDiff(logProbAtMode, max, 1e-8) < 1e-8 ||
-                    (mode <= double.Epsilon && gammaPower.GetLogProb(smallestNormalized) >= max)                    
+                    (mode <= double.Epsilon && gammaPower.GetLogProb(smallestNormalized) >= max)
                     );
-            }
+                Interlocked.Add(ref count, 1);
+                if(count % 100000 == 0)
+                    Trace.WriteLine($"{count} cases passed");
+            });
+            Trace.WriteLine($"{count} cases passed");
         }
 
         [Fact]
