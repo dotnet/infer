@@ -28,15 +28,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             long count = 0;
             Parallel.ForEach(new[] {
-                GammaPower.FromShapeAndRate(10.0, 4.94065645841247E-324, -10000000.0),
-                GammaPower.FromShapeAndRate(10.0, 4.94065645841247E-324, -1E+134),
-                GammaPower.FromShapeAndRate(10.0, 4.94065645841247E-324, -1E+232),
-                GammaPower.FromShapeAndRate(10.0, 4.94065645841247E-324, -1000000000.0),
-                GammaPower.FromShapeAndRate(10.0, 4.94065645841247E-324, -10000000000000.0),
-                GammaPower.FromShapeAndRate(10.0, double.MaxValue, 1E+29),
-                GammaPower.FromShapeAndRate(double.MaxValue, 1E+279, 10.0),
                 GammaPower.FromShapeAndRate(double.MaxValue, double.MaxValue, 100000000000000.0),
-            }.Concat(GammaPowers()).Where(g => g.Power != 0 && g.Shape > 1), gammaPower =>
+            }.Concat(GammaPowers()).Where(g => g.Power != 0 && g.Shape > 1).Take(100000), gammaPower =>
             {
                 Assert.True(gammaPower.IsPointMass || gammaPower.IsProper());
                 GammaPower gammaPower1 = GammaPower.FromShapeAndRate(gammaPower.Shape, double.Epsilon, gammaPower.Power);
@@ -1371,10 +1364,10 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaLower_IsIncreasingInX()
         {
-            Parallel.ForEach (DoublesGreaterThanZero(), a =>
-            {
-                IsIncreasingForAtLeastZero(x => MMath.GammaLower(a, x));
-            });
+            Parallel.ForEach(DoublesGreaterThanZero(), a =>
+           {
+               IsIncreasingForAtLeastZero(x => MMath.GammaLower(a, x));
+           });
         }
 
         [Fact]
@@ -2217,9 +2210,9 @@ zL = (L - mx)*sqrt(prec)
         /// <returns></returns>
         public static IEnumerable<Gamma> Gammas()
         {
-            foreach(var shape in DoublesGreaterThanZero())
+            foreach (var shape in DoublesGreaterThanZero())
             {
-                foreach(var rate in DoublesGreaterThanZero())
+                foreach (var rate in DoublesGreaterThanZero())
                 {
                     yield return Gamma.FromShapeAndRate(shape, rate);
                 }
@@ -2232,9 +2225,9 @@ zL = (L - mx)*sqrt(prec)
         /// <returns></returns>
         public static IEnumerable<GammaPower> GammaPowers()
         {
-            foreach(var gamma in Gammas())
+            foreach (var gamma in Gammas())
             {
-                foreach(var power in Doubles().Where(x => !double.IsInfinity(x)))
+                foreach (var power in Doubles().Where(x => !double.IsInfinity(x)))
                 {
                     yield return GammaPower.FromGamma(gamma, power);
                 }
@@ -2283,12 +2276,12 @@ zL = (L - mx)*sqrt(prec)
             double precMaxUlpErrorLowerBound = 0;
             double precMaxUlpErrorUpperBound = 0;
             Bernoulli precMaxUlpErrorIsBetween = new Bernoulli();
-            foreach(var isBetween in new[] { Bernoulli.PointMass(true), Bernoulli.PointMass(false), new Bernoulli(0.1) })
+            foreach (var isBetween in new[] { Bernoulli.PointMass(true), Bernoulli.PointMass(false), new Bernoulli(0.1) })
             {
-                Parallel.ForEach (DoublesLessThanZero(), lowerBound =>
+                Parallel.ForEach(DoublesLessThanZero(), lowerBound =>
                 {
                     //Console.WriteLine($"isBetween = {isBetween}, lowerBound = {lowerBound:r}");
-                    foreach (var upperBound in new[] { -lowerBound })// UpperBounds(lowerBound))
+                    foreach (var upperBound in new[] { -lowerBound }.Concat(UpperBounds(lowerBound)).Take(1))
                     {
                         //Console.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
                         double center = MMath.Average(lowerBound, upperBound);
@@ -2357,15 +2350,13 @@ zL = (L - mx)*sqrt(prec)
             double maxUlpError = 0;
             double maxUlpErrorLowerBound = 0;
             double maxUlpErrorUpperBound = 0;
-            IEnumerable<double> lowerBounds = Doubles();
             // maxUlpError = 22906784576, lowerBound = -0.010000000000000002, upperBound = -0.01
-            lowerBounds = new double[] { 0 };
-            Parallel.ForEach(lowerBounds, lowerBound =>
+            bool trace = false;
+            Parallel.ForEach(new double[] { 0 }.Concat(Doubles()).Take(1), lowerBound =>
             {
-                foreach (double upperBound in new double[] { 1 })
-                //Parallel.ForEach(UpperBounds(lowerBound), upperBound =>
+                foreach (double upperBound in new double[] { 1 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
-                    Trace.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
+                    if (trace) Trace.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
                     foreach (var x in Gaussians())
                     {
                         if (x.IsPointMass) continue;
@@ -2400,8 +2391,8 @@ zL = (L - mx)*sqrt(prec)
                             }
                         }
                     }
-                    Trace.WriteLine($"maxUlpError = {maxUlpError}, lowerBound = {maxUlpErrorLowerBound:r}, upperBound = {maxUlpErrorUpperBound:r}");
-                }//);
+                    if (trace) Trace.WriteLine($"maxUlpError = {maxUlpError}, lowerBound = {maxUlpErrorLowerBound:r}, upperBound = {maxUlpErrorUpperBound:r}");
+                }
             });
             Assert.True(maxUlpError < 1e3);
         }
@@ -2416,16 +2407,13 @@ zL = (L - mx)*sqrt(prec)
             double precMaxUlpErrorLowerBound = 0;
             double precMaxUlpErrorUpperBound = 0;
             Bernoulli isBetween = new Bernoulli(1.0);
-            foreach (double lowerBound in new[] { -10000.0 })// Doubles())
-            //foreach (double lowerBound in Doubles())
+            bool trace = false;
+            foreach (double lowerBound in new[] { -10000.0 }.Concat(Doubles()).Take(1))
             {
-                foreach (double upperBound in new[] { -9999.9999999999982 })
-                //foreach (double upperBound in UpperBounds(lowerBound))
-                //Parallel.ForEach(UpperBounds(lowerBound), upperBound =>
+                foreach (double upperBound in new[] { -9999.9999999999982 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
-                    Trace.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
-                    //foreach (var x in new[] { Gaussian.FromNatural(-0.1, 0.010000000000000002) })// Gaussians())
-                    Parallel.ForEach (Gaussians().Where(g => !g.IsPointMass), x =>
+                    if (trace) Trace.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
+                    Parallel.ForEach(Gaussians().Where(g => !g.IsPointMass), x =>
                     {
                         double mx = x.GetMean();
                         Gaussian toX = DoubleIsBetweenOp.XAverageConditional(isBetween, x, lowerBound, upperBound);
@@ -2505,9 +2493,12 @@ zL = (L - mx)*sqrt(prec)
                             }
                         }
                     });
-                }//);
-                Trace.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:r}, upperBound = {meanMaxUlpErrorUpperBound:r}");
-                Trace.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:r}, upperBound = {precMaxUlpErrorUpperBound:r}");
+                }
+                if (trace)
+                {
+                    Trace.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:r}, upperBound = {meanMaxUlpErrorUpperBound:r}");
+                    Trace.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:r}, upperBound = {precMaxUlpErrorUpperBound:r}");
+                }
             }
             // meanMaxUlpError = 4271.53318407361, lowerBound = -1.0000000000000006E-12, upperBound = inf
             // precMaxUlpError = 5008, lowerBound = 1E+40, upperBound = 1.00000001E+40
@@ -2525,19 +2516,15 @@ zL = (L - mx)*sqrt(prec)
             double precMaxUlpErrorLowerBound = 0;
             double precMaxUlpErrorUpperBound = 0;
             Bernoulli isBetween = new Bernoulli(1.0);
-            foreach (double lowerBound in new[] { -1000.0 })// Doubles())
-            //foreach (double lowerBound in Doubles())
+            bool trace = false;
+            foreach (double lowerBound in new[] { -1000.0 }.Concat(Doubles()).Take(1))
             {
-                foreach (double upperBound in new[] { 0.0 })
-                //foreach (double upperBound in UpperBounds(lowerBound))
-                //Parallel.ForEach(UpperBounds(lowerBound), upperBound =>
+                foreach (double upperBound in new[] { 0.0 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
-                    Console.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
+                    if (trace) Console.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
                     double center = (lowerBound + upperBound) / 2;
                     if (double.IsNegativeInfinity(lowerBound) && double.IsPositiveInfinity(upperBound))
                         center = 0;
-                    //foreach (var x in new[] { Gaussian.FromNatural(0, 1e55) })// Gaussians())
-                    //foreach (var x in Gaussians())
                     Parallel.ForEach(Gaussians(), x =>
                     {
                         double mx = x.GetMean();
@@ -2604,9 +2591,12 @@ zL = (L - mx)*sqrt(prec)
                             }
                         }
                     });
-                }//);
-                Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:r}, upperBound = {meanMaxUlpErrorUpperBound:r}");
-                Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:r}, upperBound = {precMaxUlpErrorUpperBound:r}");
+                }
+                if (trace)
+                {
+                    Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:r}, upperBound = {meanMaxUlpErrorUpperBound:r}");
+                    Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:r}, upperBound = {precMaxUlpErrorUpperBound:r}");
+                }
             }
             // meanMaxUlpError = 104.001435643838, lowerBound = -1.0000000000000022E-37, upperBound = 9.9000000000000191E-36
             // precMaxUlpError = 4960, lowerBound = -1.0000000000000026E-47, upperBound = -9.9999999000000263E-48
@@ -2625,14 +2615,13 @@ zL = (L - mx)*sqrt(prec)
             double precMaxUlpError = 0;
             double precMaxUlpErrorLowerBound = 0;
             double precMaxUlpErrorUpperBound = 0;
-            foreach (double lowerBound in new[] { 0 })
-            //foreach (double lowerBound in Doubles())
+            bool trace = false;
+            foreach (double lowerBound in new[] { 0.0 }.Concat(Doubles()).Take(1))
             {
-                foreach (double upperBound in new[] { 1 })// DoublesGreaterThanZero())
-                //Parallel.ForEach(UpperBounds(lowerBound), upperBound =>
+                foreach (double upperBound in new[] { 1.0 }.Concat(UpperBounds(lowerBound)).Take(1))
                 {
-                    Console.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
-                    Parallel.ForEach (Gaussians(), x =>
+                    if (trace) Console.WriteLine($"lowerBound = {lowerBound:r}, upperBound = {upperBound:r}");
+                    Parallel.ForEach(Gaussians(), x =>
                     {
                         Gaussian toX = DoubleIsBetweenOp.XAverageConditional(true, x, lowerBound, upperBound);
                         Gaussian xPost;
@@ -2694,9 +2683,12 @@ zL = (L - mx)*sqrt(prec)
                             }
                         }
                     });
-                }//);
-                Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:r}, upperBound = {meanMaxUlpErrorUpperBound:r}");
-                Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:r}, upperBound = {precMaxUlpErrorUpperBound:r}");
+                }
+                if (trace)
+                {
+                    Console.WriteLine($"meanMaxUlpError = {meanMaxUlpError}, lowerBound = {meanMaxUlpErrorLowerBound:r}, upperBound = {meanMaxUlpErrorUpperBound:r}");
+                    Console.WriteLine($"precMaxUlpError = {precMaxUlpError}, lowerBound = {precMaxUlpErrorLowerBound:r}, upperBound = {precMaxUlpErrorUpperBound:r}");
+                }
             }
             // meanMaxUlpError = 33584, lowerBound = -1E+30, upperBound = 9.9E+31
             // precMaxUlpError = 256, lowerBound = -1, upperBound = 0

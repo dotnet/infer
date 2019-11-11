@@ -616,7 +616,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             double result = 0;
             if (shape != 1) result += (shape - 1) * Math.Log(x);
-            if (rate != 0) result -= x * rate;
+            if (rate != 0 && x != 0) result -= x * rate;
             if (IsProper(shape, rate))
             {
                 result += shape * Math.Log(rate) - MMath.GammaLn(shape);

@@ -1695,6 +1695,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-1);
         }
 
+        // TODO: make this test more like GammaPowerProductRRRTest
         [Fact]
         public void GammaProductRRRTest()
         {
@@ -1803,8 +1804,12 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var groundTruthArray = new[]
             {
+                ((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.MaxValue, 1)),
+                 (GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndScale(9, 0.1, 1), GammaPower.FromShapeAndRate(101, double.MaxValue, 1), 0.79850769622135)),
+                ((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1)),
+                 (GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndScale(9, 0.1, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1), 0.79850769622135)),
                 ((GammaPower.FromShapeAndRate(2.25, 0.625, -1), GammaPower.FromShapeAndRate(100000002, 100000001, -1), GammaPower.PointMass(5, -1)),
-                 (GammaPower.FromShapeAndRate(900000010.126543, 4500000042.2299366, -1.0), GammaPower.FromShapeAndRate(900000011.34876525, 36000000.481172837, -1.0), GammaPower.PointMass(5, -1), -1129437926.7670608)),
+                 (GammaPower.FromShapeAndRate(99999999.000000119, 19999999.375000019, -1.0), GammaPower.FromShapeAndRate(100000000.0, 100000001.125, -1.0), GammaPower.PointMass(5, -1), -6.5380532346178)),
                 ((GammaPower.FromShapeAndRate(2.25, 0.625, -1), GammaPower.FromShapeAndRate(100000002, 100000001, -1), GammaPower.PointMass(0, -1)),
                  (GammaPower.PointMass(0, -1.0), GammaPower.PointMass(0, -1.0), GammaPower.PointMass(0, -1), double.NegativeInfinity)),
                 ((GammaPower.FromShapeAndRate(0.83228652924877289, 0.31928405884349487, -1), GammaPower.FromShapeAndRate(1.7184321234630087, 0.709692740551586, -1), GammaPower.FromShapeAndRate(491, 1583.0722891566263, -1)),
@@ -1815,8 +1820,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                  (GammaPower.FromShapeAndRate(9.31900740051435, 1.7964933711493432, 1.0), GammaPower.FromShapeAndRate(9.2434278607621678, 1.7794585918328409, 1.0), GammaPower.FromShapeAndRate(26.815751741761741, 1.0848182432245914, 1.0), -10.6738675986344)),
                 ((GammaPower.FromShapeAndRate(3, 1, -1), GammaPower.FromShapeAndRate(4, 1, -1), GammaPower.Uniform(-1)),
                  (GammaPower.FromShapeAndRate(3, 1, -1), GammaPower.FromShapeAndRate(4, 1, -1), GammaPower.FromShapeAndRate(2.508893738311099, 0.25145071304806094, -1.0), 0)),
-                //((GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.Uniform(-1)),
-                // (GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.FromShapeAndRate(1, 1, -1), new GammaPower(0.3332, 3, -1), 0)),
+                ((GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.Uniform(-1)),
+                 (GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.FromShapeAndRate(1, 1, -1), new GammaPower(0.3332, 3, -1), 0)),
                 ((GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.FromShapeAndRate(30, 1, -1)),
                  (GammaPower.FromShapeAndRate(11.057594449558747, 2.0731054100295871, -1.0), GammaPower.FromShapeAndRate(11.213079710986863, 2.1031756133562678, -1.0), GammaPower.FromShapeAndRate(28.815751741667615, 1.0848182432207041, -1.0), -4.22210057295786)),
                 ((GammaPower.FromShapeAndRate(1, 1, 2), GammaPower.FromShapeAndRate(1, 1, 2), GammaPower.Uniform(2)),
@@ -1857,6 +1862,11 @@ namespace Microsoft.ML.Probabilistic.Tests
                             if (iter % 1000000 == 0) Trace.WriteLine($"iter = {iter}");
                             double bSample = bPrior.Sample();
                             double aSample = aPrior.Sample();
+                            if(productPrior.Rate > 1e100)
+                            {
+                                bSample = 0;
+                                aSample = 0;
+                            }
                             double productSample = aSample * bSample;
                             double logWeight = productPrior.GetLogProb(productSample);
                             double weight = System.Math.Exp(logWeight);
@@ -1892,7 +1902,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     }
                     Assert.True(bError < 10);
                     Assert.True(aError < 2);
-                    Assert.True(productError < 6);
+                    Assert.True(productError < 9);
                     Assert.True(evError < 3e-2);
                 }
             }

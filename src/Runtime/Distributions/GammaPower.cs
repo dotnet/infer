@@ -589,7 +589,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     {
                         double invPower = 1.0 / power;
                         double xInvPower = Math.Pow(x, invPower);
-                        double xInvPowerRate = -xInvPower * rate;
+                        double xInvPowerRate = (xInvPower == 0) ? 0 : -xInvPower * rate;
                         if (double.IsInfinity(xInvPowerRate) && x != 0 && !double.IsPositiveInfinity(x))
                         {
                             // recompute another way to avoid overflow
@@ -695,17 +695,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
 
         /// <summary>
         /// Asks whether this GammaPower instance is proper or not. A GammaPower distribution
-        /// is proper only if Shape > 0 and Rate > 0 and Power is not infinite.
+        /// is proper only if Shape > 0 and 0 &lt; Rate &lt; infinity and Power is not infinite.
         /// </summary>
         /// <returns>True if proper, false otherwise</returns>
         public bool IsProper()
         {
-            return (Shape > 0) && (Rate > 0) && !double.IsInfinity(Power);
+            return (Shape > 0) && (Rate > 0) && !double.IsPositiveInfinity(Rate) && !double.IsInfinity(Power);
         }
 
         /// <summary>
         /// Asks whether a GammaPower distribution is proper or not. A GammaPower distribution
-        /// is proper only if Shape > 0 and Rate > 0 and Power is not infinite.
+        /// is proper only if Shape > 0 and 0 &lt; Rate &lt; infinity and Power is not infinite.
         /// </summary>
         /// <param name="shape">shape parameter</param>
         /// <param name="rate">rate parameter</param>
@@ -713,7 +713,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>True if proper, false otherwise</returns>
         public static bool IsProper(double shape, double rate, double power)
         {
-            return (shape > 0) && (rate > 0) && !double.IsInfinity(power);
+            return (shape > 0) && (rate > 0) && !double.IsPositiveInfinity(rate) && !double.IsInfinity(power);
         }
 
         /// <summary>

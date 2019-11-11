@@ -81,9 +81,10 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            //new DistributionTests().GammaPower_GetMode_MaximizesGetLogProb();
-            new OperatorTests().PlusGammaOpTest();
+            new DistributionTests().GammaPower_GetMode_MaximizesGetLogProb();
+            //new OperatorTests().PlusGammaOpTest();
             //new OperatorTests().LargestDoubleRatioTest();
+            //new EpTests().GammaPowerProductRRRTest();
 
             if (false)
             {

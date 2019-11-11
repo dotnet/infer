@@ -102,24 +102,9 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GammaPower_GetMode_MaximizesGetLogProb()
         {
             long count = 0;
-            // TODO: choose a random subset
             Parallel.ForEach(new[] {
-                GammaPower.FromShapeAndRate(double.MaxValue, 4.94065645841247E-324, -1.0),
-                GammaPower.FromShapeAndRate(1E+18, 1E+18, 100000000000.0),
-                GammaPower.FromShapeAndRate(100000000000.0, double.MaxValue, double.MinValue), 
-                GammaPower.FromShapeAndRate(100000000000.0, 4.94065645841247E-324, double.MaxValue),
-                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -10000000000),
-                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1000000000),
-                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, 1000000000),
-                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 1),
-                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 0.1),
-                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, -4.94065645841247E-324),
-                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, 4.94065645841247E-324),
-                GammaPower.FromShapeAndRate(1e-4 - 100, double.Epsilon, -100),
-                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 4.94065645841247E-324, -1.7976931348623157E+308),
-                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1e17),
                 GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1.7976931348623157E+308),
-            }.Concat(OperatorTests.GammaPowers()), gammaPower =>
+            }.Concat(OperatorTests.GammaPowers()).Take(100000), gammaPower =>
             {
                 double argmax = double.NaN;
                 double max = double.NegativeInfinity;

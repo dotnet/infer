@@ -1810,6 +1810,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             double a1 = -2 * x * ddlogf - x * x * dddlogf;
             double da = -x * x * ddg + dx * a1;
             m = g[0] + (MMath.Digamma(a) - Math.Log(a)) * da;
+            if (double.IsNaN(m)) throw new Exception("m is nan");
             if (g.Length > 3)
             {
                 double dddg = g[3];
@@ -1821,6 +1822,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 v = dg * dx + (MMath.Trigamma(a) - 1 / a) * da * da + (MMath.Digamma(a) - Math.Log(a)) * dda;
                 //if (v < 0)
                 //    throw new Exception("v < 0");
+                if (double.IsNaN(v)) throw new Exception("v is nan");
             }
             else
             {
