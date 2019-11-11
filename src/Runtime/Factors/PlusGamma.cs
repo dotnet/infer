@@ -18,30 +18,58 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static GammaPower SumAverageConditional([SkipIfUniform] GammaPower a, double b)
         {
             if (double.IsInfinity(b) || double.IsNaN(b)) throw new ArgumentOutOfRangeException(nameof(b), b, $"Argument is outside the range of supported values.");
-            if (a.IsUniform()) return a;
-            else if (a.Power == 0 && b != 0) throw new ArgumentException($"Cannot add {b} to {a}");
+            if (a.IsUniform() || b == 0) return a;
+            else if (a.Power == 0) throw new ArgumentException($"Cannot add {b} to {a}");
             else if (a.IsPointMass) return GammaPower.PointMass(a.Point + b, a.Power);
             else if (a.Power < 0)
-            {                
-                if (a.Shape <= a.Power) return a; // mode is at infinity
+            {
+                if (a.Shape <= a.Power) return a; // mode is at zero
                 // The mode is ((Shape - Power)/Rate)^Power
                 // We want to shift the mode by b, preserving the Shape and Power.
                 // This implies ((Shape - Power)/newRate)^Power = newMode
                 // newRate = (Shape - Power)/newMode^(1/Power)
-                return GammaPower.FromShapeAndRate(a.Shape, (a.Shape - a.Power) * Math.Pow(a.GetMode() + b, -1 / a.Power), a.Power);
+                //         = (a.Shape - a.Power) * Math.Pow(a.GetMode() + b, -1 / a.Power);
+                //double logMode = a.Power * (Math.Log(Math.Max(0, a.Shape - a.Power)) - Math.Log(a.Rate));
+                //if (logMode > double.MaxValue) return a; // mode is at infinity
+                double logShapeMinusPower = Math.Log(a.Shape - a.Power);
+                double mode = a.GetMode();
+                if (mode > double.MaxValue) return a; // mode is at infinity
+                double newMode = mode + b;
+                double newLogMode = Math.Log(newMode);
+                // Find newLogRate to satisfy a.Power*(logShapeMinusPower - newLogRate) <= newLogMode
+                // logShapeMinusPower - newLogRate >= newLogMode/a.Power
+                // newLogRate - logShapeMinusPower <= -newLogMode/a.Power
+                double newLogModeOverPower = MMath.LargestDoubleRatio(-a.Power, newLogMode);
+                double newLogRate = MMath.LargestDoubleSum(logShapeMinusPower, newLogModeOverPower);
+                if ((logShapeMinusPower - newLogRate) * a.Power > newLogMode) throw new Exception();
+                // Ideally this would find largest newRate such that log(newRate) <= newLogRate
+                double newRate = Math.Exp(newLogRate);
+                if (logShapeMinusPower == newLogRate) newRate = a.Shape - a.Power;
+                if (a.Rate > 0) newRate = Math.Max(double.Epsilon, newRate);
+                if (!double.IsPositiveInfinity(a.Rate)) newRate = Math.Min(double.MaxValue, newRate);
+                return GammaPower.FromShapeAndRate(a.Shape, newRate, a.Power);
             }
             else if (!a.IsProper()) throw new ImproperDistributionException(a);
             else
             {
-                // The mean is Math.Exp(MMath.GammaLn(Shape + Power) - MMath.GammaLn(Shape) - Power * Math.Log(Rate))
+                // The mean is Math.Exp(Power * (MMath.RisingFactorialLnOverN(Shape, Power) - Math.Log(Rate)))
                 // We want to shift the mean by b, preserving the Shape and Power.
-                // This implies s*newRate^(-Power) = newMean
-                // newRate = (newMean/s)^(-1/Power)
-                // If power == 1, mean is shape/rate, newRate = shape/newMean.
-                double s = (a.Power == 1) ? a.Shape : Math.Exp(MMath.RisingFactorialLnOverN(a.Shape, a.Power)*a.Power);
-                double r = Math.Pow(a.Rate, -a.Power);
-                double newRate = Math.Pow(r + b / s, -1 / a.Power);
-                if (newRate == 0) throw new ArgumentException($"Cannot add {b} to {a}");
+                // This implies log(newRate) = MMath.RisingFactorialLnOverN(Shape, Power) - log(newMean)/Power
+                double logShape = MMath.RisingFactorialLnOverN(a.Shape, a.Power);
+                //double logMean = a.GetLogMeanPower(1);
+                //double newLogMean = (b > 0) ? 
+                //    MMath.LogSumExp(logMean, Math.Log(b)) :
+                //    MMath.LogDifferenceOfExp(logMean, Math.Log(-b));
+                double newLogMean = Math.Log(a.GetMean() + b);
+                // If logShape is big, this difference can lose accuracy
+                // Find newLogRate to satisfy logShape - newLogRate <= newLogMean/a.Power
+                double newLogMeanOverPower = MMath.LargestDoubleRatio(a.Power, newLogMean);
+                double newLogRate = -MMath.LargestDoubleSum(-logShape, newLogMeanOverPower);
+                // check: (logShape - newLogRate)*a.Power <= newLogMean
+                if ((logShape - newLogRate) * a.Power > newLogMean) throw new Exception();
+                double newRate = Math.Exp(newLogRate);
+                newRate = Math.Max(double.Epsilon, newRate);
+                if (!double.IsPositiveInfinity(a.Rate)) newRate = Math.Min(double.MaxValue, newRate);
                 return GammaPower.FromShapeAndRate(a.Shape, newRate, a.Power);
             }
         }

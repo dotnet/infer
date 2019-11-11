@@ -13,6 +13,7 @@ using Microsoft.ML.Probabilistic.Math;
 namespace Microsoft.ML.Probabilistic.Tests
 {
     using System.Diagnostics;
+    using System.Threading;
     using System.Threading.Tasks;
     using Utilities;
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
@@ -25,17 +26,71 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void PlusGammaOpTest()
         {
-            Parallel.ForEach(GammaPowers().Where(g => g.Power != 0 && g.Shape > 1), gammaPower =>
+            long count = 0;
+            Parallel.ForEach(new[] {
+                GammaPower.FromShapeAndRate(10.0, 4.94065645841247E-324, -10000000.0),
+                GammaPower.FromShapeAndRate(10.0, 4.94065645841247E-324, -1E+134),
+                GammaPower.FromShapeAndRate(10.0, 4.94065645841247E-324, -1E+232),
+                GammaPower.FromShapeAndRate(10.0, 4.94065645841247E-324, -1000000000.0),
+                GammaPower.FromShapeAndRate(10.0, 4.94065645841247E-324, -10000000000000.0),
+                GammaPower.FromShapeAndRate(10.0, double.MaxValue, 1E+29),
+                GammaPower.FromShapeAndRate(double.MaxValue, 1E+279, 10.0),
+                GammaPower.FromShapeAndRate(double.MaxValue, double.MaxValue, 100000000000000.0),
+            }.Concat(GammaPowers()).Where(g => g.Power != 0 && g.Shape > 1), gammaPower =>
             {
-                Assert.True(gammaPower.IsProper());
+                Assert.True(gammaPower.IsPointMass || gammaPower.IsProper());
+                GammaPower gammaPower1 = GammaPower.FromShapeAndRate(gammaPower.Shape, double.Epsilon, gammaPower.Power);
+                GammaPower gammaPower2 = GammaPower.FromShapeAndRate(gammaPower.Shape, double.MaxValue, gammaPower.Power);
+                double mean1 = gammaPower1.GetMean();
+                double mean2 = gammaPower2.GetMean();
+                double largestMean = System.Math.Max(mean1, mean2);
+                double smallestMean = System.Math.Min(mean1, mean2);
+                double mode1 = gammaPower1.GetMode();
+                double mode2 = gammaPower2.GetMode();
+                double largestMode = System.Math.Max(mode1, mode2);
+                double smallestMode = System.Math.Min(mode1, mode2);
                 foreach (var shift in DoublesAtLeastZero().Where(x => !double.IsInfinity(x)))
                 {
                     var result = PlusGammaOp.SumAverageConditional(gammaPower, shift);
-                    double expected = gammaPower.GetMean() + shift;
-                    double actual = result.GetMean();
-                    Assert.True(MMath.AbsDiff(expected, actual, 1e-8) < 1e-8);
+                    Assert.True((gammaPower.IsPointMass && result.IsPointMass) || result.IsProper());
+                    if (gammaPower.Power < 0)
+                    {
+                        double expected = gammaPower.GetMode() + shift;
+                        if (!gammaPower.IsPointMass)
+                        {
+                            //expected = System.Math.Pow(System.Math.Pow(expected, 1 / gammaPower.Power), gammaPower.Power);
+                        }
+                        expected = System.Math.Max(smallestMode, System.Math.Min(largestMode, expected));
+                        double actual = result.GetMode();
+                        Assert.False(double.IsNaN(actual));
+                        double belowActual = GammaPower.FromShapeAndRate(result.Shape, MMath.PreviousDouble(result.Rate), result.Power).GetMode();
+                        double aboveActual = GammaPower.FromShapeAndRate(result.Shape, MMath.NextDouble(result.Rate), result.Power).GetMode();
+                        Assert.True(MMath.AbsDiff(expected, actual, 1) < double.PositiveInfinity ||
+                            MMath.AbsDiff(expected, belowActual, 1e-8) < 1e-8 ||
+                            MMath.AbsDiff(expected, aboveActual, 1e-8) < 1e-8);
+                    }
+                    else
+                    {
+                        double expected = gammaPower.GetMean() + shift;
+                        if (!gammaPower.IsPointMass)
+                        {
+                            //expected = System.Math.Pow(System.Math.Pow(expected, 1 / gammaPower.Power), gammaPower.Power);
+                        }
+                        expected = System.Math.Max(smallestMean, System.Math.Min(largestMean, expected));
+                        double actual = result.GetMean();
+                        Assert.False(double.IsNaN(actual));
+                        double belowActual = GammaPower.FromShapeAndRate(result.Shape, MMath.PreviousDouble(result.Rate), result.Power).GetMean();
+                        double aboveActual = GammaPower.FromShapeAndRate(result.Shape, MMath.NextDouble(result.Rate), result.Power).GetMean();
+                        Assert.True(MMath.AbsDiff(expected, actual, 1) < double.PositiveInfinity ||
+                            MMath.AbsDiff(expected, belowActual, 1e-8) < 1e-8 ||
+                            MMath.AbsDiff(expected, aboveActual, 1e-8) < 1e-8);
+                    }
                 }
+                Interlocked.Add(ref count, 1);
+                if (count % 100000 == 0)
+                    Trace.WriteLine($"{count} cases passed");
             });
+            Trace.WriteLine($"{count} cases passed");
         }
 
         [Fact]
@@ -65,6 +120,26 @@ namespace Microsoft.ML.Probabilistic.Tests
                     Assert.True(midpoint <= System.Math.Max(a, b));
                 }
             }
+        }
+
+        [Fact]
+        public void LargestDoubleRatioTest()
+        {
+            foreach (var denominator in DoublesGreaterThanZero())
+            {
+                if (double.IsPositiveInfinity(denominator)) continue;
+                foreach (var ratio in Doubles())
+                {
+                    AssertLargestDoubleRatio(denominator, ratio);
+                }
+            }
+        }
+
+        private void AssertLargestDoubleRatio(double denominator, double ratio)
+        {
+            double numerator = MMath.LargestDoubleRatio(denominator, ratio);
+            Assert.True((double)(numerator * denominator) <= ratio);
+            Assert.True(double.IsPositiveInfinity(numerator) || (double)(MMath.NextDouble(numerator) * denominator) > ratio);
         }
 
         /// <summary>

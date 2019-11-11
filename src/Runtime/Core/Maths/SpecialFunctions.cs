@@ -798,7 +798,7 @@ namespace Microsoft.ML.Probabilistic.Math
                     // log(1 + x) = x - 0.5*x^2  when x^2 << 1
                     return Log1Plus(nOverX) - 0.5 * (1 - 0.5 / x) * nOverX + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 0.5 / x + Math.Log(x);
                 else
-                    return (1 + x / n - 0.5 / n) * Log1Plus(nOverX) + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 1 + Math.Log(x);
+                    return (1 + (x - 0.5) / n) * Log1Plus(nOverX) + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 1 + Math.Log(x);
             }
             else return (MMath.GammaLn(x + n) - MMath.GammaLn(x)) / n;
         }
@@ -4358,6 +4358,86 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             if (double.IsNegativeInfinity(value)) return value;
             long bits = BitConverter.DoubleToInt64Bits(value);
             return BitConverter.Int64BitsToDouble(bits - 1);
+        }
+
+        /// <summary>
+        /// Returns the largest value such that value * denominator &lt;= product.
+        /// </summary>
+        /// <param name="denominator"></param>
+        /// <param name="ratio"></param>
+        /// <returns></returns>
+        internal static double LargestDoubleRatio(double denominator, double ratio)
+        {
+            if (denominator < 0) return LargestDoubleRatio(-denominator, -ratio);
+            if (denominator == 0)
+            {
+                if (double.IsNaN(ratio)) return double.PositiveInfinity;
+                else if (ratio >= 0)
+                    return double.MaxValue;
+                else
+                    return double.NaN;
+            }
+            // denominator > 0
+            if (double.IsPositiveInfinity(ratio)) return ratio;
+            if (double.IsPositiveInfinity(denominator))
+            {
+                if (double.IsNaN(ratio)) return 0;
+                else return PreviousDouble(0);
+            }
+            double lowerBound, upperBound;
+            if (denominator >= 1)
+            {
+                if (double.IsNegativeInfinity(ratio))
+                {
+                    upperBound = NextDouble(ratio) / denominator;
+                    if (AreEqual(upperBound * denominator, ratio)) return upperBound;
+                    else return PreviousDouble(upperBound);
+                }
+                // product cannot be infinite since ratio is not infinite.
+                double product = ratio / denominator;
+                lowerBound = PreviousDouble(product);
+                upperBound = NextDouble(product);
+            }
+            else // 0 < denominator < 1
+            {
+                // avoid infinite bounds
+                if (ratio == double.Epsilon) lowerBound = ratio / denominator / 2; // cannot overflow
+                else if (ratio == 0) lowerBound = 0;
+                else lowerBound = (double)Math.Max(double.MinValue, Math.Min(double.MaxValue, PreviousDouble(ratio) / denominator));
+                if (ratio == -double.Epsilon) upperBound = ratio / denominator / 2; // cannot overflow
+                else upperBound = (double)Math.Min(double.MaxValue, NextDouble(ratio) / denominator);
+                if (double.IsNegativeInfinity(upperBound)) return upperBound; // must have ratio < -1 and denominator > 1
+            }
+            int iterCount = 0;
+            while (true)
+            {
+                iterCount++;
+                double value = (double)Average(lowerBound, upperBound);
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                if ((double)(value * denominator) <= ratio)
+                {
+                    double value2 = NextDouble(value);
+                    if (value2 == value || (double)(value2 * denominator) > ratio)
+                    {
+                        // Used for performance debugging
+                        //if (iterCount > 100)
+                        //    throw new Exception();
+                        return value;
+                    }
+                    else
+                    {
+                        // value is too low
+                        lowerBound = value2;
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                    }
+                }
+                else
+                {
+                    // value is too high
+                    upperBound = PreviousDouble(value);
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                }
+            }
         }
 
         /// <summary>

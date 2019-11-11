@@ -83,6 +83,7 @@ namespace TestApp
 
             //new DistributionTests().GammaPower_GetMode_MaximizesGetLogProb();
             new OperatorTests().PlusGammaOpTest();
+            //new OperatorTests().LargestDoubleRatioTest();
 
             if (false)
             {
