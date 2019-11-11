@@ -184,7 +184,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 else if (InterpolationType == 1)
                 {
                     // Find frac such that (lowerRank - 0.5 + frac) / itemCount == probability
-                    double scaledProbability = MMath.LargestDoubleProduct(itemCount, probability);
+                    double scaledProbability = MMath.LargestDoubleProduct(probability, itemCount);
                     if (scaledProbability < 0.5) return lowerBound;
                     if (scaledProbability >= itemCount - 0.5) return upperBound;
                     // probability of lowerItem ranges from (lowerRank-lowerWeight+0.5) / itemCount
@@ -213,7 +213,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 }
                 else
                 {
-                    double scaledProbability = MMath.LargestDoubleProduct(itemCount - 1, probability);
+                    double scaledProbability = MMath.LargestDoubleProduct(probability, itemCount - 1);
                     // probability of lowerItem ranges from (lowerRank-lowerWeight) / (itemCount - 1)
                     // to (lowerRank - 1) / (itemCount - 1).
                     if (scaledProbability == lowerRank - lowerWeight) return lowerItem;

@@ -34,12 +34,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double logShapeMinusPower = Math.Log(a.Shape - a.Power);
                 double mode = a.GetMode();
                 if (mode > double.MaxValue) return a; // mode is at infinity
-                double newMode = mode + b;
+                double newMode = Math.Max(0, mode + b);
                 double newLogMode = Math.Log(newMode);
                 // Find newLogRate to satisfy a.Power*(logShapeMinusPower - newLogRate) <= newLogMode
                 // logShapeMinusPower - newLogRate >= newLogMode/a.Power
                 // newLogRate - logShapeMinusPower <= -newLogMode/a.Power
-                double newLogModeOverPower = MMath.LargestDoubleRatio(-a.Power, newLogMode);
+                double newLogModeOverPower = MMath.LargestDoubleRatio(newLogMode, -a.Power);
                 double newLogRate = MMath.LargestDoubleSum(logShapeMinusPower, newLogModeOverPower);
                 if ((logShapeMinusPower - newLogRate) * a.Power > newLogMode) throw new Exception();
                 // Ideally this would find largest newRate such that log(newRate) <= newLogRate
@@ -49,7 +49,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 if (!double.IsPositiveInfinity(a.Rate)) newRate = Math.Min(double.MaxValue, newRate);
                 return GammaPower.FromShapeAndRate(a.Shape, newRate, a.Power);
             }
-            else if (!a.IsProper()) throw new ImproperDistributionException(a);
+            else if (!a.IsProper()) return a;
             else
             {
                 // The mean is Math.Exp(Power * (MMath.RisingFactorialLnOverN(Shape, Power) - Math.Log(Rate)))
@@ -60,10 +60,11 @@ namespace Microsoft.ML.Probabilistic.Factors
                 //double newLogMean = (b > 0) ? 
                 //    MMath.LogSumExp(logMean, Math.Log(b)) :
                 //    MMath.LogDifferenceOfExp(logMean, Math.Log(-b));
-                double newLogMean = Math.Log(a.GetMean() + b);
+                double newMean = Math.Max(0, a.GetMean() + b);
+                double newLogMean = Math.Log(newMean);
                 // If logShape is big, this difference can lose accuracy
                 // Find newLogRate to satisfy logShape - newLogRate <= newLogMean/a.Power
-                double newLogMeanOverPower = MMath.LargestDoubleRatio(a.Power, newLogMean);
+                double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, a.Power);
                 double newLogRate = -MMath.LargestDoubleSum(-logShape, newLogMeanOverPower);
                 // check: (logShape - newLogRate)*a.Power <= newLogMean
                 if ((logShape - newLogRate) * a.Power > newLogMean) throw new Exception();

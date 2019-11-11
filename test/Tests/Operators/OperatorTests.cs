@@ -137,7 +137,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private void AssertLargestDoubleRatio(double denominator, double ratio)
         {
-            double numerator = MMath.LargestDoubleRatio(denominator, ratio);
+            double numerator = MMath.LargestDoubleRatio(ratio, denominator);
             Assert.True((double)(numerator * denominator) <= ratio);
             Assert.True(double.IsPositiveInfinity(numerator) || (double)(MMath.NextDouble(numerator) * denominator) > ratio);
         }
@@ -149,12 +149,12 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void LargestDoubleProductTest2()
         {
             // This case needs 50 iterations
-            MMath.LargestDoubleProduct(1.7976931348623157E+308, 9.8813129168249309E-324);
-            MMath.LargestDoubleProduct(1.7976931348623157E+308, -4.94065645841247E-324);
-            MMath.LargestDoubleProduct(1.0000000000000005E-09, 1.0000000000000166E-300);
-            MMath.LargestDoubleProduct(1.0000000000000005E-09, -1.0000000000000166E-300);
-            MMath.LargestDoubleProduct(0.00115249439895759, 4.9187693503017E-319);
-            MMath.LargestDoubleProduct(0.00115249439895759, -4.9187693503017E-319);
+            MMath.LargestDoubleProduct(9.8813129168249309E-324, 1.7976931348623157E+308);
+            MMath.LargestDoubleProduct(-4.94065645841247E-324, 1.7976931348623157E+308);
+            MMath.LargestDoubleProduct(1.0000000000000166E-300, 1.0000000000000005E-09);
+            MMath.LargestDoubleProduct(-1.0000000000000166E-300, 1.0000000000000005E-09);
+            MMath.LargestDoubleProduct(4.9187693503017E-319, 0.00115249439895759);
+            MMath.LargestDoubleProduct(-4.9187693503017E-319, 0.00115249439895759);
         }
 
         [Fact]
@@ -172,7 +172,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         private void AssertLargestDoubleProduct(double denominator, double ratio)
         {
-            double numerator = MMath.LargestDoubleProduct(denominator, ratio);
+            double numerator = MMath.LargestDoubleProduct(ratio, denominator);
             Assert.True((double)(numerator / denominator) <= ratio);
             Assert.True(double.IsPositiveInfinity(numerator) || (double)(MMath.NextDouble(numerator) / denominator) > ratio);
         }

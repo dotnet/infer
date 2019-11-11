@@ -4363,49 +4363,49 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <summary>
         /// Returns the largest value such that value * denominator &lt;= product.
         /// </summary>
+        /// <param name="numerator"></param>
         /// <param name="denominator"></param>
-        /// <param name="ratio"></param>
         /// <returns></returns>
-        internal static double LargestDoubleRatio(double denominator, double ratio)
+        internal static double LargestDoubleRatio(double numerator, double denominator)
         {
-            if (denominator < 0) return LargestDoubleRatio(-denominator, -ratio);
+            if (denominator < 0) return LargestDoubleRatio(-numerator, -denominator);
             if (denominator == 0)
             {
-                if (double.IsNaN(ratio)) return double.PositiveInfinity;
-                else if (ratio >= 0)
+                if (double.IsNaN(numerator)) return double.PositiveInfinity;
+                else if (numerator >= 0)
                     return double.MaxValue;
                 else
                     return double.NaN;
             }
             // denominator > 0
-            if (double.IsPositiveInfinity(ratio)) return ratio;
+            if (double.IsPositiveInfinity(numerator)) return numerator;
             if (double.IsPositiveInfinity(denominator))
             {
-                if (double.IsNaN(ratio)) return 0;
+                if (double.IsNaN(numerator)) return 0;
                 else return PreviousDouble(0);
             }
             double lowerBound, upperBound;
             if (denominator >= 1)
             {
-                if (double.IsNegativeInfinity(ratio))
+                if (double.IsNegativeInfinity(numerator))
                 {
-                    upperBound = NextDouble(ratio) / denominator;
-                    if (AreEqual(upperBound * denominator, ratio)) return upperBound;
+                    upperBound = NextDouble(numerator) / denominator;
+                    if (AreEqual(upperBound * denominator, numerator)) return upperBound;
                     else return PreviousDouble(upperBound);
                 }
-                // product cannot be infinite since ratio is not infinite.
-                double product = ratio / denominator;
-                lowerBound = PreviousDouble(product);
-                upperBound = NextDouble(product);
+                // ratio cannot be infinite since numerator is not infinite.
+                double ratio = numerator / denominator;
+                lowerBound = PreviousDouble(ratio);
+                upperBound = NextDouble(ratio);
             }
             else // 0 < denominator < 1
             {
                 // avoid infinite bounds
-                if (ratio == double.Epsilon) lowerBound = ratio / denominator / 2; // cannot overflow
-                else if (ratio == 0) lowerBound = 0;
-                else lowerBound = (double)Math.Max(double.MinValue, Math.Min(double.MaxValue, PreviousDouble(ratio) / denominator));
-                if (ratio == -double.Epsilon) upperBound = ratio / denominator / 2; // cannot overflow
-                else upperBound = (double)Math.Min(double.MaxValue, NextDouble(ratio) / denominator);
+                if (numerator == double.Epsilon) lowerBound = numerator / denominator / 2; // cannot overflow
+                else if (numerator == 0) lowerBound = 0;
+                else lowerBound = (double)Math.Max(double.MinValue, Math.Min(double.MaxValue, PreviousDouble(numerator) / denominator));
+                if (numerator == -double.Epsilon) upperBound = numerator / denominator / 2; // cannot overflow
+                else upperBound = (double)Math.Min(double.MaxValue, NextDouble(numerator) / denominator);
                 if (double.IsNegativeInfinity(upperBound)) return upperBound; // must have ratio < -1 and denominator > 1
             }
             int iterCount = 0;
@@ -4413,11 +4413,11 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             {
                 iterCount++;
                 double value = (double)Average(lowerBound, upperBound);
-                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
-                if ((double)(value * denominator) <= ratio)
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                if ((double)(value * denominator) <= numerator)
                 {
                     double value2 = NextDouble(value);
-                    if (value2 == value || (double)(value2 * denominator) > ratio)
+                    if (value2 == value || (double)(value2 * denominator) > numerator)
                     {
                         // Used for performance debugging
                         //if (iterCount > 100)
@@ -4428,14 +4428,14 @@ else if (m < 20.0 - 60.0/11.0 * s) {
                     {
                         // value is too low
                         lowerBound = value2;
-                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
                     }
                 }
                 else
                 {
                     // value is too high
                     upperBound = PreviousDouble(value);
-                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={ratio:r}");
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
                 }
             }
         }
@@ -4443,12 +4443,12 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <summary>
         /// Returns the largest value such that value/denominator &lt;= ratio.
         /// </summary>
-        /// <param name="denominator"></param>
         /// <param name="ratio"></param>
+        /// <param name="denominator"></param>
         /// <returns></returns>
-        internal static double LargestDoubleProduct(double denominator, double ratio)
+        internal static double LargestDoubleProduct(double ratio, double denominator)
         {
-            if (denominator < 0) return LargestDoubleProduct(-denominator, -ratio);
+            if (denominator < 0) return LargestDoubleProduct(-ratio, -denominator);
             if (denominator == 0)
             {
                 if (double.IsNaN(ratio)) return 0;
