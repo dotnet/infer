@@ -210,9 +210,15 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return GammaPower.Uniform(result.Power); // TODO
             if (product.Rate == 0 && A.Rate == 0)
                 return GammaPower.Uniform(result.Power);
-
             if (A.Power != product.Power) throw new NotSupportedException($"A.Power ({A.Power}) != product.Power ({product.Power})");
             if (B.Power != product.Power) throw new NotSupportedException($"B.Power ({B.Power}) != product.Power ({product.Power})");
+            if (A.Rate == 0)
+            {
+                if (B.Rate == 0) return GammaPower.FromShapeAndRate(Math.Min(A.Shape, B.Shape), 0, result.Power);
+                else return A;
+            }
+            if (B.Rate == 0) return B;
+
             double qPoint = q.GetMean();
             double r = product.Rate;
             double r2 = r * r;
