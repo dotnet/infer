@@ -60,18 +60,21 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // = int a^(y_s-pa + s-1) b^(y_s-y_p) exp(-(y_r b + r)*a) da
                 // = b^(y_s-y_p) / (r + b y_r)^(y_s-pa + s) 
                 // logf = (y_s-y_p)*log(b) - (s+y_s-pa)*log(r + b*y_r)
-                double r = product.Rate;
-                double denom = 1 / (A.Rate + b * r);
-                double denom2 = denom * denom;
                 double b2 = b * b;
                 double s = product.Shape - product.Power;
                 double c = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape) + (1 - A.Power);
-                double ddenom = r;
-                double dlogf = s / b - c * denom * ddenom;
-                double ddenom2 = ddenom * ddenom;
-                double ddlogf = -s / b2 + c * denom2 * ddenom2;
-                double dddlogf = 2 * s / (b * b2) - 2 * c * denom * denom2 * ddenom * ddenom2;
-                double d4logf = -6 * s / (b2 * b2) + 6 * c * denom2 * denom2 * ddenom2 * ddenom2;
+                double denom = 1 / (A.Rate / product.Rate + b);
+                double denom2 = denom * denom;
+                if (product.Rate == 0)
+                {
+                    c = 0;
+                    denom = 0;
+                    denom2 = 0;
+                }
+                double dlogf = s / b - c * denom;
+                double ddlogf = -s / b2 + c * denom2;
+                double dddlogf = 2 * s / (b * b2) - 2 * c * denom * denom2;
+                double d4logf = -6 * s / (b2 * b2) + 6 * c * denom2 * denom2;
                 return new double[] { dlogf, ddlogf, dddlogf, d4logf };
             }
         }
@@ -108,18 +111,23 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
             else
             {
-                if(product.Rate == 0) return Gamma.FromShapeAndRate(B.Shape, B.Rate);
                 double shape1 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(B.Shape, product.Shape) + (1 - product.Power);
-                double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(A.Shape, product.Shape) + (1 - A.Power);
-                // find the maximum of the factor marginalized over Product and A, times B
-                // From above:
-                // logf = (y_s/y_p-1)*pb*log(b) - (s+y_s-pa)*log(r + b^(pb/y_p)*y_r)
-                // let b' = b^(pb/y_p)*y_r and maximize over b'
-                // logf = (y_s/y_p-1)*y_p*log(b') - (s+y_s-pa)*log(r + b')
-                x = GammaFromShapeAndRateOp_Slow.FindMaximum(shape1, shape2, A.Rate, B.Rate / product.Rate);
-                if (x == 0)
-                    x = 1e-100;
-                x /= product.Rate;
+                if (product.Rate == 0)
+                {
+                    x = GammaFromShapeAndRateOp_Slow.FindMaximum(shape1, 0, A.Rate, B.Rate);
+                    if (x == 0)
+                        x = 1e-100;
+                }
+                else
+                {
+                    double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(A.Shape, product.Shape) + (1 - A.Power);
+                    // find the maximum of the factor marginalized over Product and A, times B
+                    // From above:
+                    // logf = (y_s/y_p-1)*pb*log(b) - (s+y_s-pa)*log(r + b^(pb/y_p)*y_r)
+                    x = GammaFromShapeAndRateOp_Slow.FindMaximum(shape1, shape2, A.Rate / product.Rate, B.Rate);
+                    if (x == 0)
+                        x = 1e-100;
+                }
             }
             double[] dlogfss = dlogfs(x, product, A);
             double dlogf = dlogfss[0];
