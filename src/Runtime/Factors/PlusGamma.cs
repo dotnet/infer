@@ -41,7 +41,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // newLogRate - logShapeMinusPower <= -newLogMode/a.Power
                 double newLogModeOverPower = MMath.LargestDoubleRatio(newLogMode, -a.Power);
                 double newLogRate = MMath.LargestDoubleSum(logShapeMinusPower, newLogModeOverPower);
-                if ((logShapeMinusPower - newLogRate) * a.Power > newLogMode) throw new Exception();
+                if ((double)((logShapeMinusPower - newLogRate) * a.Power) > newLogMode) throw new Exception();
                 // Ideally this would find largest newRate such that log(newRate) <= newLogRate
                 double newRate = Math.Exp(newLogRate);
                 if (logShapeMinusPower == newLogRate) newRate = a.Shape - a.Power;
@@ -67,7 +67,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double newLogMeanOverPower = MMath.LargestDoubleRatio(newLogMean, a.Power);
                 double newLogRate = -MMath.LargestDoubleSum(-logShape, newLogMeanOverPower);
                 // check: (logShape - newLogRate)*a.Power <= newLogMean
-                if ((logShape - newLogRate) * a.Power > newLogMean) throw new Exception();
+                if ((double)((logShape - newLogRate) * a.Power) > newLogMean) throw new Exception();
                 double newRate = Math.Exp(newLogRate);
                 newRate = Math.Max(double.Epsilon, newRate);
                 if (!double.IsPositiveInfinity(a.Rate)) newRate = Math.Min(double.MaxValue, newRate);
