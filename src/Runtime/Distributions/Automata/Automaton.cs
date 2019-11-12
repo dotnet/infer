@@ -75,7 +75,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// The maximum number of states an automaton can have.
         /// </summary>
-        private static int maxStateCount = 50000;
+        private static int maxStateCount = 300_000;
+
+        /// <summary>
+        /// The maximum number of states an automaton can have in current thread.
+        /// </summary>
+        /// <remarks>
+        /// If non-zero, this value overrides the default <see cref="GlobalMaxStateCount"/>.
+        /// This value is used by <see cref="UnlimitedStatesComputation"/> to temporary increase
+        /// the state count limit in a thread-safe manner.
+        /// </remarks>
+        [ThreadStatic]
+        private static int threadMaxStateCountOverride;
 
         /// <summary>
         /// Whether to use the Regex builder for the ToString method.
@@ -145,17 +156,26 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         public double? PruneStatesWithLogEndWeightLessThan { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of states an automaton can have.
+        /// Gets or sets the maximum number of states an automaton can have. This setting is shared
+        /// by all threads of the program.
         /// </summary>
-        public static int MaxStateCount
+        /// <remarks>
+        /// This value can only be set because it is intended to be a program-level setting.
+        /// For inspecting the value use the <see cref="MaxStateCount"/>.
+        /// </remarks>
+        public static int GlobalMaxStateCount
         {
-            get => maxStateCount;
-
             set
             {
                 Argument.CheckIfInRange(value > 0, nameof(value), "The maximum number of states must be positive.");
                 maxStateCount = value;
             }
+        }
+
+        public static int MaxStateCount
+        {
+            get => threadMaxStateCountOverride != 0 ? threadMaxStateCountOverride : maxStateCount;
+            internal set => threadMaxStateCountOverride = value;
         }
 
         /// <summary>
@@ -2617,12 +2637,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             private readonly int originalMaxStateCount;
 
             /// <summary>
-            /// Initilizes a new instance of the <see cref="UnlimitedStatesComputation"/> class.
+            /// Initializes a new instance of the <see cref="UnlimitedStatesComputation"/> class.
             /// </summary>
             public UnlimitedStatesComputation()
             {
-                originalMaxStateCount = StringAutomaton.MaxStateCount;
-                StringAutomaton.MaxStateCount = int.MaxValue;
+                originalMaxStateCount = threadMaxStateCountOverride;
+                threadMaxStateCountOverride = int.MaxValue;
             }
 
             /// <summary>
@@ -2630,12 +2650,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public void CheckStateCount(TThis automaton)
             {
-                if(automaton.States.Count > originalMaxStateCount) throw new AutomatonTooLargeException(originalMaxStateCount);
+                if (automaton.States.Count > originalMaxStateCount)
+                {
+                    throw new AutomatonTooLargeException(originalMaxStateCount);
+                }
             }
 
             public void Dispose()
             {
-                StringAutomaton.MaxStateCount = originalMaxStateCount;
+                threadMaxStateCountOverride = originalMaxStateCount;
             }
         }
         #endregion
@@ -2673,7 +2696,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             // This state is serialized only for its index.
             this.Start.Write(writeDouble, writeInt32, writeElementDistribution);
-            
+
             writeInt32(this.States.Count);
             foreach (var state in this.States)
             {
@@ -2722,7 +2745,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             }
 
             var numStates = readInt32();
-            
+
             for (var i = 0; i < numStates; i++)
             {
                 State.ReadTo(ref builder, readInt32, readDouble, readElementDistribution);
@@ -2733,3 +2756,4 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         #endregion
     }
 }
+
