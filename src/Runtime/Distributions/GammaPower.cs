@@ -170,6 +170,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new NotImplementedException("Not implemented for power " + Power);
             }
+            CheckForPointMass();
         }
 
         /// <summary>
@@ -195,9 +196,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="power"></param>
         public void SetShapeAndRate(double shape, double rate, double power)
         {
+            this.Power = power;
             this.Shape = shape;
             this.Rate = rate;
-            this.Power = power;
+            CheckForPointMass();
+        }
+
+        private void CheckForPointMass()
+        {
+            if (!IsPointMass && Rate > double.MaxValue)
+            {
+                Rate = Math.Pow(0, Power);
+                SetToPointMass();
+            }
         }
 
         /// <summary>
@@ -211,9 +222,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static GammaPower FromShapeAndRate(double shape, double rate, double power)
         {
             GammaPower result = new GammaPower();
-            result.Shape = shape;
-            result.Rate = rate;
-            result.Power = power;
+            result.SetShapeAndRate(shape, rate, power);
             return result;
         }
 
@@ -225,9 +234,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="power"></param>
         public void SetShapeAndScale(double shape, double scale, double power)
         {
+            this.Power = power;
             this.Shape = shape;
             this.Rate = 1.0 / scale;
-            this.Power = power;
+            CheckForPointMass();
         }
 
         /// <summary>
@@ -519,8 +529,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             double logRate = Math.Log(rate);
             double logx = Math.Log(x);
-            double logShapeMinusPower = Math.Log(shape - power);
-            double logMode = power * (logShapeMinusPower - logRate);
+            double logShapeMinusPower = Math.Log(Math.Max(0, shape - power));
+            double logMode = Math.Log(GetMode(shape, rate, power));  // power * (logShapeMinusPower - logRate);
             if (!double.IsNegativeInfinity(logMode))
             {
                 // We compute the density in a way that ensures the maximum is at the mode returned by GetMode.
@@ -536,43 +546,47 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // = -(shape-power)*(ExpMinus1RatioMinus1RatioMinusHalf(log(x/mode)/power) + 0.5)*(log(x/mode)/power)^2) + (shape-power)*(log((shape-power)/rate) - 1)
                 double xOverModeLn = logx - logMode;
                 double xOverModeLnOverPower = xOverModeLn / power;
-                double result;
-                if (double.IsNegativeInfinity(xOverModeLnOverPower)) result = (shape / power - 1) * logx;
-                else if (double.IsPositiveInfinity(xOverModeLnOverPower) || double.IsPositiveInfinity(MMath.ExpMinus1RatioMinus1RatioMinusHalf(xOverModeLnOverPower))) return (power - shape) * double.PositiveInfinity;
-                else result = -(shape - power) * (MMath.ExpMinus1RatioMinus1RatioMinusHalf(xOverModeLnOverPower) + 0.5) * xOverModeLnOverPower * xOverModeLnOverPower;
-                if (IsProper(shape, rate, power))
+                if (Math.Abs(xOverModeLnOverPower) < 10)
                 {
-                    // Remaining terms are: 
-                    // shape * Math.Log(rate) - MMath.GammaLn(shape) - Math.Log(Math.Abs(power)) + (shape - power) * (Math.Log((shape - power) / rate) - 1)
-                    if (shape > 1e10)
+                    double result;
+                    if (double.IsNegativeInfinity(xOverModeLnOverPower)) result = (shape / power - 1) * logx;
+                    else if (double.IsPositiveInfinity(xOverModeLnOverPower) || double.IsPositiveInfinity(MMath.ExpMinus1RatioMinus1RatioMinusHalf(xOverModeLnOverPower))) return (power - shape) * double.PositiveInfinity;
+                    else result = -(shape - power) * (MMath.ExpMinus1RatioMinus1RatioMinusHalf(xOverModeLnOverPower) + 0.5) * xOverModeLnOverPower * xOverModeLnOverPower;
+                    if (IsProper(shape, rate, power))
                     {
-                        //result += power * (1 + Math.Log(rate)) - Math.Log(Math.Abs(power));
-                        // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
-                        //result += (shape - power) * Math.Log(1 - power / shape) + (0.5 - power) * Math.Log(shape);
-                        result += shape * Math.Log(1 - power / shape) + power * (1 + logRate - logShapeMinusPower) + 0.5 * Math.Log(shape) - Math.Log(Math.Abs(power));
+                        // Remaining terms are: 
+                        // shape * Math.Log(rate) - MMath.GammaLn(shape) - Math.Log(Math.Abs(power)) + (shape - power) * (Math.Log((shape - power) / rate) - 1)
+                        if (shape > 1e10)
+                        {
+                            //result += power * (1 + Math.Log(rate)) - Math.Log(Math.Abs(power));
+                            // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
+                            //result += (shape - power) * Math.Log(1 - power / shape) + (0.5 - power) * Math.Log(shape);
+                            result += shape * Math.Log(1 - power / shape) + power * (1 + logRate - logShapeMinusPower) + 0.5 * Math.Log(shape) - Math.Log(Math.Abs(power));
+                        }
+                        else
+                        {
+                            //result += (shape - power) * Math.Log(shape - power) - shape - MMath.GammaLn(shape);
+                            result += (shape - power) * (logShapeMinusPower - logRate - 1);
+                            result += shape * logRate - MMath.GammaLn(shape) - Math.Log(Math.Abs(power));
+                        }
                     }
                     else
                     {
-                        //result += (shape - power) * Math.Log(shape - power) - shape - MMath.GammaLn(shape);
                         result += (shape - power) * (logShapeMinusPower - logRate - 1);
-                        result += shape * logRate - MMath.GammaLn(shape) - Math.Log(Math.Abs(power));
                     }
+                    return result;
                 }
-                else
-                {
-                    result += (shape - power) * (logShapeMinusPower - logRate - 1);
-                }
-                return result;
+                // Fall through
             }
-            else
+
             {
                 double result = 0;
                 double logxOverPower = logx / power;
-                if(logx == 0) // avoid inf * 0
+                if (logx == 0) // avoid inf * 0
                 {
                     result -= rate;
                 }
-                else if(Math.Abs(logxOverPower) < 1e-8)
+                else if (Math.Abs(logxOverPower) < 1e-8)
                 {
                     // The part of the log-density that depends on x is:
                     //   (shape/power-1)*log(x) - rate*x^(1/power)
@@ -587,15 +601,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     if (shape != power && x != 1) result += (shape / power - 1) * logx;
                     if (rate != 0)
                     {
-                        double invPower = 1.0 / power;
-                        double xInvPower = Math.Pow(x, invPower);
-                        double xInvPowerRate = (xInvPower == 0) ? 0 : -xInvPower * rate;
+                        double xInvPowerRate = -Math.Exp(logxOverPower + logRate);
                         if (double.IsInfinity(xInvPowerRate) && x != 0 && !double.IsPositiveInfinity(x))
                         {
                             // recompute another way to avoid overflow
-                            double ratePower = Math.Pow(rate, power);
-                            if (!double.IsInfinity(ratePower))
-                                xInvPowerRate = -Math.Pow(x * ratePower, invPower);
+                            double logRatePower = logRate * power;
+                            if (!double.IsInfinity(logRatePower))
+                                xInvPowerRate = -Math.Exp((logx + logRatePower) / power);
                         }
                         if (double.IsInfinity(xInvPowerRate)) return xInvPowerRate;
                         result += xInvPowerRate;
@@ -612,7 +624,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                         if (double.IsNegativeInfinity(minusLogNormalizer) && double.IsPositiveInfinity(result))
                         {
                             // Recompute a different way to avoid subtracting infinities
-                            result = -logx - rate*Math.Exp(logxOverPower) + shape * (logx / power + logRate - logShape + 1) + 0.5 * logShape - Math.Log(Math.Abs(power));
+                            result = -logx - rate * Math.Exp(logxOverPower) + shape * (logx / power + logRate - logShape + 1) + 0.5 * logShape - Math.Log(Math.Abs(power));
                         }
                         else result += minusLogNormalizer;
                     }
@@ -862,6 +874,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 Shape = a.Shape + b.Shape - a.Power;
                 Rate = a.Rate + b.Rate;
+                CheckForPointMass();
             }
         }
 
@@ -934,6 +947,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 Shape = numerator.Shape - denominator.Shape + Power;
                 Rate = numerator.Rate - denominator.Rate;
             }
+            CheckForPointMass();
         }
 
         /// <summary>
@@ -983,12 +997,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     Point = dist.Point;
                 }
-                return;
             }
             else
             {
                 Shape = (dist.Shape - dist.Power) * exponent + dist.Power;
                 Rate = dist.Rate * exponent;
+                CheckForPointMass();
             }
         }
 
@@ -1095,6 +1109,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             Shape = shape;
             Rate = 1.0 / scale;
             Power = power;
+            CheckForPointMass();
         }
 
         /// <summary>

@@ -81,11 +81,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new DistributionTests().GammaPower_GetMode_MaximizesGetLogProb();
-            //new OperatorTests().PlusGammaOpTest();
-            //new OperatorTests().LargestDoubleRatioTest();
-            //new EpTests().GammaPowerProductRRRTest();
-
             if (false)
             {
                 // Run all tests (need to run in 64-bit else OutOfMemory due to loading many DLLs)

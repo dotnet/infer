@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             y.SetMarginalPrototype(yLikeVar);
             InferenceEngine engine = new InferenceEngine();
 
-            foreach(var powerValue in linspace(10, 20, 100))
+            foreach(var powerValue in linspace(10, 20, 10))
             {
                 TruncatedGamma xPrior = new TruncatedGamma(Gamma.FromShapeAndRate(3, 3), 1, double.PositiveInfinity);
                 xPriorVar.ObservedValue = xPrior;
@@ -126,7 +126,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
-        // TODO
         [Fact]
         public void GammaPowerPowerTest()
         {
@@ -1695,94 +1694,83 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-1);
         }
 
-        // TODO: make this test more like GammaPowerProductRRRTest
         [Fact]
         public void GammaProductRRRTest()
         {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
             IfBlock block = Variable.If(evidence);
-            Variable<Gamma> scalePriorVar = Variable.Observed(default(Gamma)).Named("scalePrior");
-            Variable<double> scale = Variable<double>.Random(scalePriorVar).Named("scale");
-            Variable<Gamma> yPriorVar = Variable.Observed(default(Gamma)).Named("yPrior");
-            Variable<double> y = Variable<double>.Random(yPriorVar).Named("y");
-            Variable<double> x = (y * scale).Named("x");
-            Variable<Gamma> xPriorVar = Variable.Observed(default(Gamma)).Named("xPrior");
-            Variable.ConstrainEqualRandom(x, xPriorVar);
+            Variable<Gamma> bPriorVar = Variable.Observed(default(Gamma)).Named("bPrior");
+            Variable<double> b = Variable<double>.Random(bPriorVar).Named("b");
+            Variable<Gamma> aPriorVar = Variable.Observed(default(Gamma)).Named("aPrior");
+            Variable<double> a = Variable<double>.Random(aPriorVar).Named("a");
+            Variable<double> product = (a * b).Named("product");
+            Variable<Gamma> productPriorVar = Variable.Observed(default(Gamma)).Named("productPrior");
+            Variable.ConstrainEqualRandom(product, productPriorVar);
             block.CloseBlock();
             InferenceEngine engine = new InferenceEngine();
 
-            foreach (Gamma xPrior in new[]
+            var groundTruthArray = new[]
             {
-                Gamma.FromShapeAndRate(5, 6),
-                Gamma.Uniform()
-            })
-            {
-                Gamma scalePrior = Gamma.FromShapeAndRate(3, 4);
-                Gamma yPrior = Gamma.FromShapeAndRate(2.5, 1);
-                //scalePrior = Gamma.FromShapeAndRate(1, 1);
-                //yPrior = Gamma.FromShapeAndRate(1, 1);
-                scalePriorVar.ObservedValue = scalePrior;
-                yPriorVar.ObservedValue = yPrior;
-                xPriorVar.ObservedValue = xPrior;
+                ((Gamma.FromShapeAndRate(3, 4), Gamma.FromShapeAndRate(2.5, 1), Gamma.FromShapeAndRate(5, 6)),
+                 (new Gamma(3.335, 0.1678), new Gamma(3.021, 0.5778), new Gamma(5.619, 0.1411), -0.919181055678219)),
+                ((Gamma.FromShapeAndRate(3, 4), Gamma.FromShapeAndRate(2.5, 1), Gamma.Uniform()),
+                 (Gamma.FromShapeAndRate(3, 4), Gamma.FromShapeAndRate(2.5, 1), new Gamma(1.154, 1.625), 0)),
+            };
 
-                Gamma scaleActual = engine.Infer<Gamma>(scale);
-                Gamma yActual = engine.Infer<Gamma>(y);
-                Gamma xActual = engine.Infer<Gamma>(x);
+            foreach (var groundTruth in groundTruthArray)
+            {
+                var (bPrior, aPrior, productPrior) = groundTruth.Item1;
+                var (bExpected, aExpected, productExpected, evExpected) = groundTruth.Item2;
+                bPriorVar.ObservedValue = bPrior;
+                aPriorVar.ObservedValue = aPrior;
+                productPriorVar.ObservedValue = productPrior;
+
+                Gamma bActual = engine.Infer<Gamma>(b);
+                Gamma aActual = engine.Infer<Gamma>(a);
+                Gamma productActual = engine.Infer<Gamma>(product);
                 double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
-                Gamma scaleExpected, yExpected, xExpected;
-                double evExpected;
-                if (xPrior.IsUniform())
-                {
-                    scaleExpected = scalePrior;
-                    yExpected = yPrior;
-                    xExpected = new Gamma(1.154, 1.625);
-                    evExpected = 0;
-                }
-                else
-                {
-                    scaleExpected = new Gamma(3.335, 0.1678);
-                    yExpected = new Gamma(3.021, 0.5778);
-                    xExpected = new Gamma(5.619, 0.1411);
-                    evExpected = -0.919181055678219;
-                }
 
                 if (false)
                 {
                     // importance sampling
                     double totalWeight = 0;
-                    GammaEstimator scaleEst = new GammaEstimator();
-                    GammaEstimator yEst = new GammaEstimator();
-                    GammaEstimator xEst = new GammaEstimator();
+                    GammaEstimator bEst = new GammaEstimator();
+                    GammaEstimator aEst = new GammaEstimator();
+                    GammaEstimator productEst = new GammaEstimator();
                     int numIter = 1000000;
                     for (int iter = 0; iter < numIter; iter++)
                     {
-                        double scaleSample = scalePrior.Sample();
-                        double ySample = yPrior.Sample();
-                        double xSample = ySample * scaleSample;
-                        double logWeight = xPrior.GetLogProb(xSample);
+                        double bSample = bPrior.Sample();
+                        double aSample = aPrior.Sample();
+                        double productSample = aSample * bSample;
+                        double logWeight = productPrior.GetLogProb(productSample);
                         double weight = System.Math.Exp(logWeight);
                         totalWeight += weight;
-                        scaleEst.Add(scaleSample, weight);
-                        yEst.Add(ySample, weight);
-                        xEst.Add(xSample, weight);
+                        bEst.Add(bSample, weight);
+                        aEst.Add(aSample, weight);
+                        productEst.Add(productSample, weight);
                     }
-                    scaleExpected = scaleEst.GetDistribution(new Gamma());
+                    bExpected = bEst.GetDistribution(new Gamma());
                     evExpected = System.Math.Log(totalWeight / numIter);
-                    yExpected = yEst.GetDistribution(new Gamma());
-                    xExpected = xEst.GetDistribution(new Gamma());
+                    aExpected = aEst.GetDistribution(new Gamma());
+                    productExpected = productEst.GetDistribution(new Gamma());
                 }
-                double scaleError = scaleExpected.MaxDiff(scaleActual);
-                double yError = yExpected.MaxDiff(yActual);
-                double xError = xExpected.MaxDiff(xActual);
+                double bError = bExpected.MaxDiff(bActual);
+                double aError = aExpected.MaxDiff(aActual);
+                double productError = productExpected.MaxDiff(productActual);
                 double evError = MMath.AbsDiff(evExpected, evActual, 1e-6);
-                Trace.WriteLine($"scale = {scaleActual} should be {scaleExpected}, error = {scaleError}");
-                Trace.WriteLine($"y = {yActual}[variance={yActual.GetVariance()}] should be {yExpected}[variance={yExpected.GetVariance()}], error = {yError}");
-                Trace.WriteLine($"x = {xActual} should be {xExpected}, error = {xError}");
-                Trace.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evError}");
-                Assert.True(scaleExpected.MaxDiff(scaleActual) < 2e-2);
-                Assert.True(yExpected.MaxDiff(yActual) < 2e-2);
-                Assert.True(xExpected.MaxDiff(xActual) < 1e-2);
-                Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 5e-2);
+                bool trace = true;
+                if (trace)
+                {
+                    Trace.WriteLine($"b = {bActual} should be {bExpected}, error = {bError}");
+                    Trace.WriteLine($"a = {aActual}[variance={aActual.GetVariance()}] should be {aExpected}[variance={aExpected.GetVariance()}], error = {aError}");
+                    Trace.WriteLine($"product = {productActual} should be {productExpected}, error = {productError}");
+                    Trace.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evError}");
+                }
+                Assert.True(bError < 2e-2);
+                Assert.True(aError < 2e-2);
+                Assert.True(productError < 1e-2);
+                Assert.True(evError < 5e-2);
             }
         }
 

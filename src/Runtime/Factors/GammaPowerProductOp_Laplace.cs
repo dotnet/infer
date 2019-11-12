@@ -329,7 +329,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                 //           = var(shape2*b/(b y_r + a_r)) + E[shape2*b^2/(b y_r + a_r)^2]
                 //           = shape2^2*var(b/(b y_r + a_r)) + shape2*(var(b/(b y_r + a_r)) + (yMean/shape2)^2)
                 // Let g = b/(b y_r + a_r)
-                double[] gDerivatives = new double[] { qPoint * denom, A.Rate * denom2, -2 * denom2 * denom * A.Rate * r, 6 * denom2 * denom2 * A.Rate * r2 };
+                double[] gDerivatives = (denom == 0) 
+                    ? new double[] { 0, 0, 0, 0 }
+                    : new double[] { qPoint * denom, A.Rate * denom2, -2 * denom2 * denom * A.Rate * r, 6 * denom2 * denom2 * A.Rate * r2 };
                 double gMean, gVariance;
                 GaussianOp_Laplace.LaplaceMoments(q, gDerivatives, dlogfs(qPoint, product, A), out gMean, out gVariance);
                 double yMean = shape2 * gMean;

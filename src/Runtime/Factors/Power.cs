@@ -148,7 +148,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 var xMarginal3 = GammaPower.FromShapeAndRate(projection.Shape, projection.Rate, 1);
                 Trace.WriteLine($"pull backward: xMarginal = {xMarginal} powMarginal = {powMarginal} xMarginal2 = {xMarginal2} xMarginal3 = {xMarginal3}");
             }
-            return xMarginal / x;
+            result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
+            return result;
         }
 
         public static Gamma FromMeanPowerAndMeanLog(double meanPower, double meanLog, double power)

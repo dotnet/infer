@@ -69,7 +69,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void Gamma_GetMode_MaximizesGetLogProb()
         {
-            foreach (var gamma in OperatorTests.Gammas())
+            Parallel.ForEach(OperatorTests.Gammas().Take(100000), gamma =>
             {
                 double max = double.NegativeInfinity;
                 foreach (var x in OperatorTests.DoublesAtLeastZero())
@@ -95,7 +95,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     MMath.AbsDiff(logProbAtMode, max, 1e-8) < 1e-4 ||
                     (mode == 0 && gamma.GetLogProb(smallestNormalized) >= max)
                     );
-            }
+            });
         }
 
         [Fact]
@@ -157,6 +157,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             Assert.Equal(0, GammaPower.FromShapeAndRate(2, 0, -1).GetMean());
             Assert.Equal(0, GammaPower.FromShapeAndRate(2, 0, -1).GetVariance());
+            Assert.True(GammaPower.FromShapeAndRate(2, double.PositiveInfinity, -1).IsPointMass);
 
             GammaPower g = new GammaPower(1, 1, -1);
             g.ToString();
@@ -187,7 +188,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerMeanAndVarianceFuzzTest()
         {
-            foreach(var gammaPower in OperatorTests.GammaPowers())
+            foreach(var gammaPower in OperatorTests.GammaPowers().Take(100000))
             {
                 gammaPower.GetMeanAndVariance(out double mean, out double variance);
                 Assert.False(double.IsNaN(mean));
