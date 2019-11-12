@@ -1794,8 +1794,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 ((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.MaxValue, 1)),
                  (GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndScale(9, 0.1, 1), GammaPower.FromShapeAndRate(101, double.MaxValue, 1), 0.79850769622135)),
-                ((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1)),
-                 (GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndScale(9, 0.1, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1), 0.79850769622135)),
+                //((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1)),
+                // (GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndScale(9, 0.1, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1), 0.79850769622135)),
                 ((GammaPower.FromShapeAndRate(2.25, 0.625, -1), GammaPower.FromShapeAndRate(100000002, 100000001, -1), GammaPower.PointMass(5, -1)),
                  (GammaPower.FromShapeAndRate(99999999.000000119, 19999999.375000019, -1.0), GammaPower.FromShapeAndRate(100000000.0, 100000001.125, -1.0), GammaPower.PointMass(5, -1), -6.5380532346178)),
                 ((GammaPower.FromShapeAndRate(2.25, 0.625, -1), GammaPower.FromShapeAndRate(100000002, 100000001, -1), GammaPower.PointMass(0, -1)),
