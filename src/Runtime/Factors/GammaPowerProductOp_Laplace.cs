@@ -167,7 +167,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     else
                         logf = double.NegativeInfinity;
                 }
-                else logf = A.GetLogProb(product.Point / qPoint) / qPoint;
+                else logf = A.GetLogProb(product.Point / qPoint) - Math.Log(qPoint);
             }
             else
             {
