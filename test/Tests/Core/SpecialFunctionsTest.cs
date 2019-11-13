@@ -993,7 +993,7 @@ mp.dps = 500
 mp.pretty = True
 gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
             */
-            double[,] gammaUpper_pairs = new double[,] {
+            double[,] gammaUpperRegularized_pairs = new double[,] {
                 {1e-20,0.3,9.0567665167584664E-21},
                 {1e-6,1e-1,0.000001822923025350097857684},
                 {System.Math.Pow(0.5,5),1,0.0070733414923541296841667565874 },
@@ -1033,7 +1033,20 @@ gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
                 {double.PositiveInfinity,1,1 },
                 {double.Epsilon,0,1 },
             };
-            CheckFunctionValues("GammaUpper", MMath.GammaUpper, gammaUpper_pairs);
+            CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
+
+            /* In python mpmath:
+from mpmath import *
+mp.dps = 500
+mp.pretty = True
+gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
+            */
+            double[,] gammaUpper_pairs = new double[,] {
+                {1e-20,0.3,0.9056766516758467124267199175638778988963728798249333},
+                {1e-6,1e-1,1.8229219731321746872065707723366373632},
+                {2,1,0.73575888234288464319104754 },
+            };
+            CheckFunctionValues("GammaUpper", (a, x) => MMath.GammaUpper(a, x, false), gammaUpper_pairs);
         }
 
         [Fact]

@@ -757,15 +757,50 @@ namespace Microsoft.ML.Probabilistic.Math
             else // x >= 6
             {
                 double sum = LnSqrt2PI;
-                while (x < 10)
+                while (x < GammaLnLargeX)
                 {
                     sum -= Math.Log(x);
                     x++;
                 }
-                // x >= 10
+                // x >= GammaLnLargeX
                 // Use asymptotic series
                 return GammaLnSeries(x) + (x - 0.5) * Math.Log(x) - x + sum;
             }
+        }
+
+        /// <summary>
+        /// Computes the logarithm of the Pochhammer function, divided by n: (GammaLn(x + n) - GammaLn(x))/n
+        /// </summary>
+        /// <param name="x">A real number &gt; 0</param>
+        /// <param name="n">If zero, result is 0.</param>
+        /// <returns></returns>
+        public static double RisingFactorialLnOverN(double x, double n)
+        {
+            // To ensure that the result increases with n, we group terms in n.
+            if (x <= 0) throw new ArgumentOutOfRangeException(nameof(x), x, "x <= 0");
+            else if (n == 0) return 0;
+            else if (x < 1e-16 && x + n < 1e-16)
+            {
+                // GammaLn(x) = -log(x)
+                return -Log1Plus(n / x) / n;
+            }
+            else if (Math.Abs(n / x) < 1e-6)
+            {
+                // x >= 1e-6 ensures that Tetragamma doesn't overflow
+                // For small x, Digamma(x) = -1/x, Trigamma(x) = 1/x^2, Tetragamma(x) = -1/x^3
+                // To ignore the next term, we need 1/x to dominate n^3/x^4, i.e. 1 >> n^3/x^3
+                return MMath.Digamma(x) + 0.5 * n * (MMath.Trigamma(x) + n / 3 * MMath.Tetragamma(x));
+            }
+            else if (x > GammaLnLargeX && x + n > GammaLnLargeX)
+            {
+                double nOverX = n / x;
+                if (Math.Abs(nOverX) < 1e-8)
+                    // log(1 + x) = x - 0.5*x^2  when x^2 << 1
+                    return Log1Plus(nOverX) - 0.5 * (1 - 0.5 / x) * nOverX + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 0.5 / x + Math.Log(x);
+                else
+                    return (1 + (x - 0.5) / n) * Log1Plus(nOverX) + (GammaLnSeries(x + n) - GammaLnSeries(x)) / n - 1 + Math.Log(x);
+            }
+            else return (MMath.GammaLn(x + n) - MMath.GammaLn(x)) / n;
         }
 
         /* Python code to generate this table (must not be indented):
@@ -1102,10 +1137,11 @@ for k in range(2,26):
         /// <summary>
         /// Compute the regularized upper incomplete Gamma function: int_x^inf t^(a-1) exp(-t) dt / Gamma(a)
         /// </summary>
-        /// <param name="a">The shape parameter, &gt; 0</param>
+        /// <param name="a">The shape parameter.  Must be &gt; 0 if regularized is true or x is 0.</param>
         /// <param name="x">The lower bound of the integral, &gt;= 0</param>
+        /// <param name="regularized">If true, result is divided by Gamma(a)</param>
         /// <returns></returns>
-        public static double GammaUpper(double a, double x)
+        public static double GammaUpper(double a, double x, bool regularized = true)
         {
             // special cases:
             // GammaUpper(1,x) = exp(-x)
@@ -1113,6 +1149,11 @@ for k in range(2,26):
             // GammaUpper(a,x) = GammaUpper(a-1,x) + x^(a-1) exp(-x) / Gamma(a)
             if (x < 0)
                 throw new ArgumentException($"x ({x}) < 0");
+            if (!regularized)
+            {
+                if (a < 1) return GammaUpperConFrac(a, x, regularized);
+                else return Gamma(a) * GammaUpper(a, x, true);
+            }
             if (a <= 0)
                 throw new ArgumentException($"a ({a}) <= 0");
             if (x == 0) return 1; // avoid 0/0
@@ -1394,14 +1435,16 @@ f = 1/gamma(x+1)-1
         /// <summary>
         /// Compute the regularized upper incomplete Gamma function by a continued fraction
         /// </summary>
-        /// <param name="a">A real number &gt; 0</param>
+        /// <param name="a">A real number.  Must be &gt; 0 if regularized is true.</param>
         /// <param name="x">A real number &gt;= 1.1</param>
+        /// <param name="regularized">If true, result is divded by Gamma(a)</param>
         /// <returns></returns>
-        private static double GammaUpperConFrac(double a, double x)
+        private static double GammaUpperConFrac(double a, double x, bool regularized = true)
         {
-            double scale = GammaUpperScale(a, x);
+            double scale = regularized ? GammaUpperScale(a, x) : Math.Exp(a * Math.Log(x) - x);
             if (scale == 0)
                 return scale;
+            if (x > double.MaxValue) return 0.0;
             // the confrac coefficients are:
             // a_i = -i*(i-a)
             // b_i = x+1-a+2*i
@@ -1439,7 +1482,7 @@ f = 1/gamma(x+1)-1
         private static double GammaLnSeries(double x)
         {
             // GammaLnSeries(10) = 0.008330563433362871
-            if (x < 10)
+            if (x < GammaLnLargeX)
             {
                 return MMath.GammaLn(x) - (x - 0.5) * Math.Log(x) + x - LnSqrt2PI;
             }
@@ -2502,7 +2545,7 @@ rr = mpf('-0.99999824265582826');
                 double rPlus1 = omr2 / (1 - r);
                 return xPlusy - rPlus1 * y;
             }
-            else if (r > 0.75 && Math.Abs(x-y) < 0.5 * Math.Abs(y))
+            else if (r > 0.75 && Math.Abs(x - y) < 0.5 * Math.Abs(y))
             {
                 double omr = omr2 / (1 + r);
                 return x - y + omr * y;
@@ -3423,6 +3466,8 @@ rr = mpf('-0.99999824265582826');
                 return 0.0;
             else if (x > y)
                 return Math.Exp(x + MMath.Log1MinusExp(y - x));
+            else if (double.IsNaN(x) || double.IsNaN(y))
+                return double.NaN;
             else
                 return -DifferenceOfExp(y, x);
         }
@@ -4316,14 +4361,94 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         }
 
         /// <summary>
+        /// Returns the largest value such that value * denominator &lt;= product.
+        /// </summary>
+        /// <param name="numerator"></param>
+        /// <param name="denominator"></param>
+        /// <returns></returns>
+        internal static double LargestDoubleRatio(double numerator, double denominator)
+        {
+            if (denominator < 0) return LargestDoubleRatio(-numerator, -denominator);
+            if (denominator == 0)
+            {
+                if (double.IsNaN(numerator)) return double.PositiveInfinity;
+                else if (numerator >= 0)
+                    return double.MaxValue;
+                else
+                    return double.NaN;
+            }
+            // denominator > 0
+            if (double.IsPositiveInfinity(numerator)) return numerator;
+            if (double.IsPositiveInfinity(denominator))
+            {
+                if (double.IsNaN(numerator)) return 0;
+                else return PreviousDouble(0);
+            }
+            double lowerBound, upperBound;
+            if (denominator >= 1)
+            {
+                if (double.IsNegativeInfinity(numerator))
+                {
+                    upperBound = NextDouble(numerator) / denominator;
+                    if (AreEqual(upperBound * denominator, numerator)) return upperBound;
+                    else return PreviousDouble(upperBound);
+                }
+                // ratio cannot be infinite since numerator is not infinite.
+                double ratio = numerator / denominator;
+                lowerBound = PreviousDouble(ratio);
+                upperBound = NextDouble(ratio);
+            }
+            else // 0 < denominator < 1
+            {
+                // avoid infinite bounds
+                if (numerator == double.Epsilon) lowerBound = numerator / denominator / 2; // cannot overflow
+                else if (numerator == 0) lowerBound = 0;
+                else lowerBound = (double)Math.Max(double.MinValue, Math.Min(double.MaxValue, PreviousDouble(numerator) / denominator));
+                if (numerator == -double.Epsilon) upperBound = numerator / denominator / 2; // cannot overflow
+                else upperBound = (double)Math.Min(double.MaxValue, NextDouble(numerator) / denominator);
+                if (double.IsNegativeInfinity(upperBound)) return upperBound; // must have ratio < -1 and denominator > 1
+            }
+            int iterCount = 0;
+            while (true)
+            {
+                iterCount++;
+                double value = (double)Average(lowerBound, upperBound);
+                if (value < lowerBound || value > upperBound) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                if ((double)(value * denominator) <= numerator)
+                {
+                    double value2 = NextDouble(value);
+                    if (value2 == value || (double)(value2 * denominator) > numerator)
+                    {
+                        // Used for performance debugging
+                        //if (iterCount > 100)
+                        //    throw new Exception();
+                        return value;
+                    }
+                    else
+                    {
+                        // value is too low
+                        lowerBound = value2;
+                        if (lowerBound > upperBound || double.IsNaN(lowerBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                    }
+                }
+                else
+                {
+                    // value is too high
+                    upperBound = PreviousDouble(value);
+                    if (lowerBound > upperBound || double.IsNaN(upperBound)) throw new Exception($"value={value:r}, lowerBound={lowerBound:r}, upperBound={upperBound:r}, denominator={denominator:r}, ratio={numerator:r}");
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns the largest value such that value/denominator &lt;= ratio.
         /// </summary>
-        /// <param name="denominator"></param>
         /// <param name="ratio"></param>
+        /// <param name="denominator"></param>
         /// <returns></returns>
-        internal static double LargestDoubleProduct(double denominator, double ratio)
+        internal static double LargestDoubleProduct(double ratio, double denominator)
         {
-            if (denominator < 0) return LargestDoubleProduct(-denominator, -ratio);
+            if (denominator < 0) return LargestDoubleProduct(-ratio, -denominator);
             if (denominator == 0)
             {
                 if (double.IsNaN(ratio)) return 0;
@@ -4344,7 +4469,7 @@ else if (m < 20.0 - 60.0/11.0 * s) {
             double lowerBound, upperBound;
             if (denominator <= 1)
             {
-                if(double.IsNegativeInfinity(ratio))
+                if (double.IsNegativeInfinity(ratio))
                 {
                     upperBound = denominator * NextDouble(ratio);
                     if (AreEqual(upperBound / denominator, ratio)) return upperBound;
@@ -4524,6 +4649,8 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         public const double Digamma1 = -EulerGamma;
 
         private const double TOLERANCE = 1.0e-7;
+
+        private const double GammaLnLargeX = 10;
 
         /// <summary>
         /// Math.Sqrt(2*Math.PI)

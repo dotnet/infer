@@ -320,7 +320,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if (x < 0)
                 throw new ArgumentOutOfRangeException(nameof(x), x, "x < 0");
             double a;
-            if(double.IsPositiveInfinity(x))
+            if (double.IsPositiveInfinity(x))
             {
                 if (ddLogP < 0) return Gamma.PointMass(x);
                 else if (ddLogP == 0) a = 0.0;
@@ -334,7 +334,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else
             {
                 a = -x * x * ddLogP;
-                if (a+1 > double.MaxValue) return Gamma.PointMass(x);
+                if (a + 1 > double.MaxValue) return Gamma.PointMass(x);
             }
             if (forceProper)
             {
@@ -489,11 +489,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 throw new ImproperDistributionException(this);
             }
-            else if(MMath.AreEqual(probability, 0))
+            else if (MMath.AreEqual(probability, 0))
             {
                 return 0;
             }
-            else if(MMath.AreEqual(probability, 1))
+            else if (MMath.AreEqual(probability, 1))
             {
                 return double.PositiveInfinity;
             }
@@ -507,15 +507,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // Binary search
                 double lowerBound = 0;
                 double upperBound = double.MaxValue;
-                while(lowerBound < upperBound)
+                while (lowerBound < upperBound)
                 {
                     double average = MMath.Average(lowerBound, upperBound);
                     double p = GetProbLessThan(average);
-                    if(p == probability)
+                    if (p == probability)
                     {
                         return average;
                     }
-                    else if(p < probability)
+                    else if (p < probability)
                     {
                         lowerBound = MMath.NextDouble(average);
                     }
@@ -598,15 +598,25 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static double GetLogProb(double x, double shape, double rate)
         {
             if (x < 0) return double.NegativeInfinity;
-            if (double.IsPositiveInfinity(x))
-            {
+            if (x > double.MaxValue) // Avoid subtracting infinities below
+            {               
                 if (rate > 0) return -x;
                 else if (rate < 0) return x;
                 // fall through when rate == 0
             }
+            if (shape > 1e10 && IsProper(shape, rate))
+            {
+                // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
+                // Also log(1-1/x) = -1/x - 0.5/x^2  for x > 1e10
+                // We compute the density in a way that ensures the maximum is at the mode returned by GetMode.
+                double mode = (shape - 1) / rate; // cannot be zero
+                double xOverMode = x / mode;
+                if (xOverMode > double.MaxValue) return double.NegativeInfinity;
+                else return (shape - 1) * (Math.Log(xOverMode) + (1 - xOverMode)) + (0.5 + 0.5 / shape) / shape + Math.Log(rate) - 0.5 * Math.Log(shape);
+            }
             double result = 0;
             if (shape != 1) result += (shape - 1) * Math.Log(x);
-            if (rate != 0) result -= x * rate;
+            if (rate != 0 && x != 0) result -= x * rate;
             if (IsProper(shape, rate))
             {
                 result += shape * Math.Log(rate) - MMath.GammaLn(shape);

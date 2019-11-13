@@ -151,7 +151,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 return MMath.NextDouble(quantiles[n - 1]);
             }
             if (n == 1) return quantiles[0];
-            double pos = MMath.LargestDoubleProduct(n - 1, probability);
+            double pos = MMath.LargestDoubleProduct(probability, n - 1);
             int lower = (int)Math.Floor(pos);
             if (lower == n - 1) return quantiles[lower];
             return GetQuantile(probability, lower, quantiles[lower], quantiles[lower + 1], n);
@@ -171,13 +171,13 @@ namespace Microsoft.ML.Probabilistic.Distributions
             if(probability < 0) throw new ArgumentOutOfRangeException(nameof(probability), probability, $"{nameof(probability)} < 0");
             if (probability > 1) throw new ArgumentOutOfRangeException(nameof(probability), probability, $"{nameof(probability)} > 1");
             if (n <= 1) throw new ArgumentOutOfRangeException(nameof(n), n, "n <= 1");
-            double pos = MMath.LargestDoubleProduct(n - 1, probability);
+            double pos = MMath.LargestDoubleProduct(probability, n - 1);
             double frac = MMath.LargestDoubleSum(-lowerIndex, pos);
             if (upperItem < lowerItem) throw new ArgumentOutOfRangeException(nameof(upperItem), upperItem, $"{nameof(upperItem)} ({upperItem}) < {nameof(lowerItem)} ({lowerItem})");
             if (upperItem == lowerItem) return lowerItem;
             // The above check ensures diff > 0
             double diff = upperItem - lowerItem;
-            double offset = MMath.LargestDoubleProduct(diff, frac);
+            double offset = MMath.LargestDoubleProduct(frac, diff);
             return MMath.LargestDoubleSum(lowerItem, offset);
         }
     }

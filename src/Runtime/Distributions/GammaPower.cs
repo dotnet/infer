@@ -5,13 +5,14 @@
 namespace Microsoft.ML.Probabilistic.Distributions
 {
     using System;
+    using System.Diagnostics;
     using System.Runtime.Serialization;
 
     using Factors.Attributes;
     using Math;
     using Microsoft.ML.Probabilistic.Serialization;
     using Utilities;
-    
+
     /// <summary>
     /// The distribution of a Gamma variable raised to a power.  The Weibull distribution is a special case.
     /// </summary>
@@ -77,14 +78,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>Variance</returns>
         public double GetVariance()
         {
-            if (IsPointMass) return 0;
-            else if (Rate == 0.0) return Double.PositiveInfinity;
-            else if (!IsProper()) throw new ImproperDistributionException(this);
-            else
-            {
-                double mean = GetMean();
-                return GetMeanPower(2) - mean*mean;
-            }
+            GetMeanAndVariance(out double mean, out double variance);
+            return variance;
         }
 
         /// <summary>
@@ -94,24 +89,32 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="variance">Where to put the variance</param>
         public void GetMeanAndVariance(out double mean, out double variance)
         {
+            if (Power == 0)
+            {
+                mean = 1;
+                variance = 0;
+            }
             if (IsPointMass)
             {
                 mean = Point;
                 variance = 0;
             }
-            else if (Rate == 0.0)
-            {
-                mean = Double.PositiveInfinity;
-                variance = Double.PositiveInfinity;
-            }
-            else if (!IsProper())
+            else if (!IsProper() && Rate != 0)
             {
                 throw new ImproperDistributionException(this);
             }
             else
             {
-                mean = GetMean();
-                variance = GetMeanPower(2) - mean*mean;
+                double logMean = GetLogMeanPower(1);
+                mean = Math.Exp(logMean);
+                if (Rate == 0 && Shape + 2 * Power == 0 && 2 * Power < -1) variance = 0;
+                else if (Shape + 2 * Power <= 0) variance = double.PositiveInfinity;
+                else
+                {
+                    double logMean2 = GetLogMeanPower(2);
+                    if (logMean2 > double.MaxValue) variance = double.PositiveInfinity;
+                    else variance = MMath.DifferenceOfExp(logMean2, 2 * logMean);
+                }
             }
         }
 
@@ -122,6 +125,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="variance">Variance</param>
         public void SetMeanAndVariance(double mean, double variance)
         {
+            if (double.IsNaN(mean)) throw new ArgumentOutOfRangeException(nameof(mean), mean, "mean is NaN");
+            if (double.IsNaN(variance)) throw new ArgumentOutOfRangeException(nameof(variance), variance, "variance is NaN");
             if (variance == 0)
             {
                 Point = mean;
@@ -138,29 +143,34 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 // mean = a/b
                 // variance = a/b^2
-                Rate = mean/variance;
-                Shape = mean*Rate;
+                Rate = mean / variance;
+                Shape = mean * Rate;
             }
             else if (Power == -1)
             {
                 // mean = b/(a-1)
                 // variance = b^2/(a-1)^2/(a-2)
-                Shape = mean*mean/variance + 2;
-                Rate = mean*(Shape - 1);
+                double mean2 = mean * mean;
+                double r = double.IsPositiveInfinity(mean2) ? 1.0 : mean2 / variance;
+                Shape = r + 2;
+                Rate = mean * (Shape - 1);
+                if (double.IsNaN(Shape)) throw new Exception();
             }
             else if (Power == 2)
             {
                 // mean = a*(a+1)/b^2
                 // variance = a*(a+1)*(4*a+6)/b^4
-                double r = mean*mean/variance;
-                double b = 2*r - 0.5;
-                Shape = Math.Sqrt(b*b + 6*r) + b;
-                Rate = Math.Sqrt(Shape*(Shape + 1)/mean);
+                double mean2 = mean * mean;
+                double r = double.IsPositiveInfinity(mean2) ? 1.0 : mean2 / variance;
+                double b = 2 * r - 0.5;
+                Shape = Math.Sqrt(b * b + 6 * r) + b;
+                Rate = Math.Sqrt(Shape * (Shape + 1) / mean);
             }
             else
             {
                 throw new NotImplementedException("Not implemented for power " + Power);
             }
+            CheckForPointMass();
         }
 
         /// <summary>
@@ -186,9 +196,19 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="power"></param>
         public void SetShapeAndRate(double shape, double rate, double power)
         {
+            this.Power = power;
             this.Shape = shape;
             this.Rate = rate;
-            this.Power = power;
+            CheckForPointMass();
+        }
+
+        private void CheckForPointMass()
+        {
+            if (!IsPointMass && Rate > double.MaxValue)
+            {
+                Rate = Math.Pow(0, Power);
+                SetToPointMass();
+            }
         }
 
         /// <summary>
@@ -202,9 +222,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static GammaPower FromShapeAndRate(double shape, double rate, double power)
         {
             GammaPower result = new GammaPower();
-            result.Shape = shape;
-            result.Rate = rate;
-            result.Power = power;
+            result.SetShapeAndRate(shape, rate, power);
             return result;
         }
 
@@ -216,13 +234,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <param name="power"></param>
         public void SetShapeAndScale(double shape, double scale, double power)
         {
-            this.Shape = shape;
-            this.Rate = 1.0/scale;
             this.Power = power;
+            this.Shape = shape;
+            this.Rate = 1.0 / scale;
+            CheckForPointMass();
         }
 
         /// <summary>
-        /// Constructs a Gamma distribution with the given shape and scale parameters.
+        /// Constructs a GammaPower distribution with the given shape and scale parameters.
         /// </summary>
         /// <param name="shape">shape</param>
         /// <param name="scale">scale</param>
@@ -233,6 +252,42 @@ namespace Microsoft.ML.Probabilistic.Distributions
             GammaPower result = new GammaPower();
             result.SetShapeAndScale(shape, scale, power);
             return result;
+        }
+
+        /// <summary>
+        /// Constructs a GammaPower distribution with the given mean and mean logarithm.
+        /// </summary>
+        /// <param name="mean">Desired expected value.</param>
+        /// <param name="meanLog">Desired expected logarithm.</param>
+        /// <param name="power">Desired power.</param>
+        /// <returns>A new GammaPower distribution.</returns>
+        /// <remarks>This function is equivalent to maximum-likelihood estimation of a Gamma distribution
+        /// from data given by sufficient statistics.
+        /// This function is significantly slower than the other constructors since it
+        /// involves nonlinear optimization. The algorithm is a generalized Newton iteration, 
+        /// described in "Estimating a Gamma distribution" by T. Minka, 2002.
+        /// </remarks>
+        public static GammaPower FromMeanAndMeanLog(double mean, double meanLog, double power)
+        {
+            // Constraints:
+            // mean = Gamma(Shape + power)/Gamma(Shape)/Rate^power
+            // meanLog = power*(digamma(Shape) - log(Rate))
+            // digamma(Shape) =approx log(Shape - 0.5)
+            double logMeanOverPower = Math.Log(mean) / power;
+            double meanLogOverPower = meanLog / power;
+            double shape = 1;
+            double logRate = 0;
+            for (int iter = 0; iter < 1000; iter++)
+            {
+                double oldLogRate = logRate;
+                double oldShape = shape;
+                logRate = MMath.RisingFactorialLnOverN(shape, power) - logMeanOverPower;
+                shape = Math.Exp(meanLogOverPower + logRate) + 0.5;
+                //Console.WriteLine($"shape = {shape:r}, logRate = {logRate:r}");
+                if (MMath.AreEqual(oldLogRate, logRate) && MMath.AreEqual(oldShape, shape)) break;
+                if (double.IsNaN(shape)) throw new Exception("Failed to converge");
+            }
+            return FromShapeAndRate(shape, Math.Exp(logRate), power);
         }
 
         /// <summary>
@@ -252,9 +307,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetMeanLog()
         {
-            if (IsPointMass) return Math.Log(Point);
+            if (Power == 0.0) return 0.0;
+            else if (IsPointMass) return Math.Log(Point);
             else if (!IsProper()) throw new ImproperDistributionException(this);
-            else return Power*(MMath.Digamma(Shape) - Math.Log(Rate));
+            else return Power * (MMath.Digamma(Shape) - Math.Log(Rate));
         }
 
         /// <summary>
@@ -263,19 +319,40 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetMeanPower(double power)
         {
-            if (power == 0.0) return 1.0;
-            else if (IsPointMass) return Math.Pow(Point, power);
-            //else if (Rate == 0.0) return (power > 0) ? Double.PositiveInfinity : 0.0;
-            else if (!IsProper()) throw new ImproperDistributionException(this);
+            return Math.Exp(GetLogMeanPower(power));
+        }
+
+        /// <summary>
+        /// Computes log(E[x^power])
+        /// </summary>
+        /// <returns></returns>
+        public double GetLogMeanPower(double power)
+        {
+            if (power == 0.0 || Power == 0.0) return 0.0;
+            else if (IsPointMass) return power * Math.Log(Point);
+            //else if (Rate == 0.0) return (Power * power > 0) ? Double.PositiveInfinity : 0.0;
+            else if (Shape <= 0 || Rate < 0) throw new ImproperDistributionException(this);
             else
             {
-                double power2 = Power*power;
+                double power2 = Power * power;
                 if (Shape + power2 <= 0)
                 {
+                    if (Shape + power2 == 0 && Rate == 0)
+                    {
+                        // Near zero, GammaLn(x) = -log(x)-log(x+1) so if rate=0 we get -(power2+1)*log(0)
+                        // Example: GammaPower.FromShapeAndRate(1,0,-1).GetMeanPower(1) is undefined
+                        if (power2 == -1) throw new ImproperDistributionException(this);
+                        // Example: GammaPower.FromShapeAndRate(0,0,-1).GetMeanPower(1) = 0
+                        else if (power2 < -1) return double.NegativeInfinity;
+                    }
                     //throw new ArgumentException($"Cannot compute E[x^{power}] since shape ({Shape}) <= {-power2}");
                     return Double.PositiveInfinity;
                 }
-                else return Math.Exp(MMath.GammaLn(Shape + power2) - MMath.GammaLn(Shape) - power2*Math.Log(Rate));
+                else if (power2 > double.MaxValue) return double.PositiveInfinity;
+                else
+                {
+                    return power2 * (MMath.RisingFactorialLnOverN(Shape, power2) - Math.Log(Rate));
+                }
             }
         }
 
@@ -287,7 +364,45 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (Power == 0.0) return 1.0;
             else if (IsPointMass) return Point;
-            else return Math.Pow((Shape - Power) / Rate, Power);
+            else if (Shape <= Power && Rate == 0) throw new ImproperDistributionException(this);
+            else return GetMode(Shape, Rate, Power);
+        }
+
+        /// <summary>
+        /// Returns x where GetLogProb(x, shape, rate, power) is highest.
+        /// </summary>
+        /// <param name="shape">Shape parameter</param>
+        /// <param name="rate">Rate parameter</param>
+        /// <param name="power">Power parameter</param>
+        /// <returns></returns>
+        public static double GetMode(double shape, double rate, double power)
+        {
+            // Compute Math.Pow((shape - power)/rate, power) without overflow.
+            double shapeMinusPower = Math.Max(0, shape - power);
+            bool alwaysUseExp = true;
+            if (alwaysUseExp)
+            {
+                double logMode = Math.Log(shapeMinusPower) - Math.Log(rate);
+                return Math.Exp(logMode * power);
+            }
+            else
+            {
+                // This approach is more accurate but harder to invert
+                double x = shapeMinusPower / rate;
+                // The ratio can overflow if rate < 1 and shapeMinusPower > 1e-30
+                // The ratio can underflow if rate > 1 and shapeMinusPower < 1
+                if ((power >= -1 || power < 1) && (x == 0 || double.IsPositiveInfinity(x)))
+                {
+                    // x may have overflowed or underflowed.
+                    // log(shapeMinusPower) - log(rate) can never overflow or underflow.
+                    double logMode = Math.Log(shapeMinusPower) - Math.Log(rate);
+                    return Math.Exp(logMode * power);
+                }
+                else
+                {
+                    return Math.Pow(x, power);
+                }
+            }
         }
 
         /// <summary>
@@ -377,7 +492,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>True if uniform, false otherwise</returns>
         public bool IsUniform()
         {
-            return (Shape == Power) && (Rate == 0);
+            return !IsPointMass && (Shape == Power) && (Rate == 0);
         }
 
         /// <summary>
@@ -395,14 +510,131 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </remarks>
         public static double GetLogProb(double x, double shape, double rate, double power)
         {
+            if (x < 0) return double.NegativeInfinity;
             if (power == 0.0) return (x == 1.0) ? 0.0 : Double.NegativeInfinity;
-            double invPower = 1.0/power;
-            double result = (shape*invPower - 1)*Math.Log(x) - Math.Pow(x, invPower)*rate;
-            if (IsProper(shape, rate))
+            if (double.IsPositiveInfinity(x)) // Avoid subtracting infinities below
             {
-                result += shape*Math.Log(rate) - MMath.GammaLn(shape) - Math.Log(Math.Abs(power));
+                if (power > 0)
+                {
+                    if (rate > 0) return -x;
+                    else if (rate < 0) return x;
+                    // Fall through when rate == 0
+                }
+                else // This case avoids inf/inf below
+                {
+                    if (shape > power) return -x;
+                    else if (shape < power) return x;
+                    // Fall through when shape == power
+                }
             }
-            return result;
+            double logRate = Math.Log(rate);
+            double logx = Math.Log(x);
+            double logShapeMinusPower = Math.Log(Math.Max(0, shape - power));
+            double logMode = Math.Log(GetMode(shape, rate, power));  // power * (logShapeMinusPower - logRate);
+            if (!double.IsNegativeInfinity(logMode))
+            {
+                // We compute the density in a way that ensures the maximum is at the mode returned by GetMode.
+                // mode = ((shape - power)/rate)^power
+                // The part of the log-density that depends on x is:
+                //   (shape/power-1)*log(x) - rate*x^(1/power)
+                // = (shape/power-1)*(log(x) - power/(shape-power)*rate*x^(1/power))
+                // = (shape/power-1)*(log(x) - power*(x/mode)^(1/power))
+                // = (shape/power-1)*(log(x/mode) - power*(x/mode)^(1/power) + log(mode))
+                // = (shape/power-1)*(log(x/mode) - power*(x/mode)^(1/power)) + (shape-power)*log((shape-power)/rate)
+                // = (shape-power)*(log(x/mode)/power - exp(log(x/mode)/power)) + (shape-power)*log((shape-power)/rate)
+                // = (shape-power)*(log(x/mode)/power + 1 - exp(log(x/mode)/power)) + (shape-power)*(log((shape-power)/rate) - 1)
+                // = -(shape-power)*(ExpMinus1RatioMinus1RatioMinusHalf(log(x/mode)/power) + 0.5)*(log(x/mode)/power)^2) + (shape-power)*(log((shape-power)/rate) - 1)
+                double xOverModeLn = logx - logMode;
+                double xOverModeLnOverPower = xOverModeLn / power;
+                if (Math.Abs(xOverModeLnOverPower) < 10)
+                {
+                    double result;
+                    if (double.IsNegativeInfinity(xOverModeLnOverPower)) result = (shape / power - 1) * logx;
+                    else if (double.IsPositiveInfinity(xOverModeLnOverPower) || double.IsPositiveInfinity(MMath.ExpMinus1RatioMinus1RatioMinusHalf(xOverModeLnOverPower))) return (power - shape) * double.PositiveInfinity;
+                    else result = -(shape - power) * (MMath.ExpMinus1RatioMinus1RatioMinusHalf(xOverModeLnOverPower) + 0.5) * xOverModeLnOverPower * xOverModeLnOverPower;
+                    if (IsProper(shape, rate, power))
+                    {
+                        // Remaining terms are: 
+                        // shape * Math.Log(rate) - MMath.GammaLn(shape) - Math.Log(Math.Abs(power)) + (shape - power) * (Math.Log((shape - power) / rate) - 1)
+                        if (shape > 1e10)
+                        {
+                            //result += power * (1 + Math.Log(rate)) - Math.Log(Math.Abs(power));
+                            // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
+                            //result += (shape - power) * Math.Log(1 - power / shape) + (0.5 - power) * Math.Log(shape);
+                            result += shape * Math.Log(1 - power / shape) + power * (1 + logRate - logShapeMinusPower) + 0.5 * Math.Log(shape) - Math.Log(Math.Abs(power));
+                        }
+                        else
+                        {
+                            //result += (shape - power) * Math.Log(shape - power) - shape - MMath.GammaLn(shape);
+                            result += (shape - power) * (logShapeMinusPower - logRate - 1);
+                            result += shape * logRate - MMath.GammaLn(shape) - Math.Log(Math.Abs(power));
+                        }
+                    }
+                    else
+                    {
+                        result += (shape - power) * (logShapeMinusPower - logRate - 1);
+                    }
+                    return result;
+                }
+                // Fall through
+            }
+
+            {
+                double result = 0;
+                double logxOverPower = logx / power;
+                if (logx == 0) // avoid inf * 0
+                {
+                    result -= rate;
+                }
+                else if (Math.Abs(logxOverPower) < 1e-8)
+                {
+                    // The part of the log-density that depends on x is:
+                    //   (shape/power-1)*log(x) - rate*x^(1/power)
+                    // = (shape/power-1)*log(x) - rate*exp(log(x)/power))
+                    //   (when abs(log(x)/power) < 1e-8, exp(log(x)/power) = 1 + log(x)/power + 0.5*log(x)^2/power^2)
+                    // = (shape/power-1)*log(x) - rate*(1 + log(x)/power + 0.5*log(x)^2/power^2)
+                    // = ((shape - rate)/power - 1)*log(x) - rate*(1 + 0.5*log(x)^2/power^2)
+                    result += ((shape - rate) / power - 1) * logx - rate * (1 + 0.5 * logxOverPower * logxOverPower);
+                }
+                else
+                {
+                    if (shape != power && x != 1) result += (shape / power - 1) * logx;
+                    if (rate != 0)
+                    {
+                        double xInvPowerRate = -Math.Exp(logxOverPower + logRate);
+                        if (double.IsInfinity(xInvPowerRate) && x != 0 && !double.IsPositiveInfinity(x))
+                        {
+                            // recompute another way to avoid overflow
+                            double logRatePower = logRate * power;
+                            if (!double.IsInfinity(logRatePower))
+                                xInvPowerRate = -Math.Exp((logx + logRatePower) / power);
+                        }
+                        if (double.IsInfinity(xInvPowerRate)) return xInvPowerRate;
+                        result += xInvPowerRate;
+                    }
+                }
+                if (IsProper(shape, rate, power))
+                {
+                    double minusLogNormalizer;
+                    if (shape > 1e10)
+                    {
+                        double logShape = Math.Log(shape);
+                        // In double precision, we can assume GammaLn(x) = (x-0.5)*log(x) - x for x > 1e10
+                        minusLogNormalizer = shape * (logRate - logShape + 1) + 0.5 * logShape - Math.Log(Math.Abs(power));
+                        if (double.IsNegativeInfinity(minusLogNormalizer) && double.IsPositiveInfinity(result))
+                        {
+                            // Recompute a different way to avoid subtracting infinities
+                            result = -logx - rate * Math.Exp(logxOverPower) + shape * (logx / power + logRate - logShape + 1) + 0.5 * logShape - Math.Log(Math.Abs(power));
+                        }
+                        else result += minusLogNormalizer;
+                    }
+                    else
+                    {
+                        result += shape * logRate - MMath.GammaLn(shape) - Math.Log(Math.Abs(power));
+                    }
+                }
+                return result;
+            }
         }
 
         /// <summary>
@@ -412,7 +644,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>log(Gamma(x;shape,rate,power))</returns>
         public double GetLogProb(double x)
         {
-            if (IsPointMass)
+            if (Power == 0)
+            {
+                return (x == 1) ? 0.0 : double.NegativeInfinity;
+            }
+            else if (IsPointMass)
             {
                 return (x == Point) ? 0.0 : Double.NegativeInfinity;
             }
@@ -434,7 +670,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsProper())
             {
-                return MMath.GammaLn(Shape) - Shape*Math.Log(Rate) + Math.Log(Math.Abs(Power));
+                return MMath.GammaLn(Shape) - Shape * Math.Log(Rate) + Math.Log(Math.Abs(Power));
             }
             else
             {
@@ -462,33 +698,34 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else
             {
                 // that is not a point mass.
-                double invPower = 1.0/that.Power;
-                double result = (that.Shape*invPower - 1)*GetMeanLog() - GetMeanPower(invPower)*that.Rate;
+                double invPower = 1.0 / that.Power;
+                double result = (that.Shape * invPower - 1) * GetMeanLog() - GetMeanPower(invPower) * that.Rate;
                 result -= that.GetLogNormalizer();
                 return result;
             }
         }
 
         /// <summary>
-        /// Asks whether this Gamma instance is proper or not. A Gamma distribution
-        /// is proper only if Shape > 0 and Rate > 0.
+        /// Asks whether this GammaPower instance is proper or not. A GammaPower distribution
+        /// is proper only if Shape > 0 and 0 &lt; Rate &lt; infinity and Power is not infinite.
         /// </summary>
         /// <returns>True if proper, false otherwise</returns>
         public bool IsProper()
         {
-            return (Shape > 0) && (Rate > 0);
+            return (Shape > 0) && (Rate > 0) && !double.IsPositiveInfinity(Rate) && !double.IsInfinity(Power);
         }
 
         /// <summary>
-        /// Asks whether a Gamma distribution is proper or not. A Gamma distribution
-        /// is proper only if Shape > 0 and Rate > 0.
+        /// Asks whether a GammaPower distribution is proper or not. A GammaPower distribution
+        /// is proper only if Shape > 0 and 0 &lt; Rate &lt; infinity and Power is not infinite.
         /// </summary>
-        /// <param name="shape">shape parameter for the Gamma</param>
-        /// <param name="rate">rate parameter for the Gamma</param>
+        /// <param name="shape">shape parameter</param>
+        /// <param name="rate">rate parameter</param>
+        /// <param name="power">power parameter</param>
         /// <returns>True if proper, false otherwise</returns>
-        public static bool IsProper(double shape, double rate)
+        public static bool IsProper(double shape, double rate, double power)
         {
-            return (shape > 0) && (rate > 0);
+            return (shape > 0) && (rate > 0) && !double.IsPositiveInfinity(rate) && !double.IsInfinity(power);
         }
 
         /// <summary>
@@ -508,7 +745,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                GammaPower product = this*that;
+                GammaPower product = this * that;
                 //if (!product.IsProper()) throw new ArgumentException("The product is improper");
                 return product.GetLogNormalizer() - this.GetLogNormalizer() - that.GetLogNormalizer();
             }
@@ -524,7 +761,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (IsPointMass)
             {
-                return power*that.GetLogProb(Point);
+                return power * that.GetLogProb(Point);
             }
             else if (that.IsPointMass)
             {
@@ -533,8 +770,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                var product = this*(that ^ power);
-                return product.GetLogNormalizer() - this.GetLogNormalizer() - power*that.GetLogNormalizer();
+                var product = this * (that ^ power);
+                return product.GetLogNormalizer() - this.GetLogNormalizer() - power * that.GetLogNormalizer();
             }
         }
 
@@ -551,7 +788,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                return Math.Pow(Rand.Gamma(Shape)/Rate, Power);
+                return Math.Pow(Rand.Gamma(Shape) / Rate, Power);
             }
         }
 
@@ -576,7 +813,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         [Stochastic]
         public static double Sample(double shape, double scale, double power)
         {
-            return Math.Pow(Rand.Gamma(shape)*scale, power);
+            return Math.Pow(Rand.Gamma(shape) * scale, power);
         }
 
         /// <summary>
@@ -637,6 +874,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             {
                 Shape = a.Shape + b.Shape - a.Power;
                 Rate = a.Rate + b.Rate;
+                CheckForPointMass();
             }
         }
 
@@ -691,11 +929,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else if (forceProper && (numerator.Shape < denominator.Shape || numerator.Rate < denominator.Rate))
             {
                 // constraints: shape >= power, rate >= 0, ((shape-power)+denominator.shape)/(rate + denominator.rate) = numerator.shape/numerator.rate
-                double m = numerator.Shape/numerator.Rate;
-                double shape = m*denominator.Rate - denominator.Shape + Power;
+                double m = numerator.Shape / numerator.Rate;
+                double shape = m * denominator.Rate - denominator.Shape + Power;
                 if (shape < Power)
                 {
-                    Rate = denominator.Shape/m - denominator.Rate;
+                    Rate = denominator.Shape / m - denominator.Rate;
                     Shape = Power;
                 }
                 else
@@ -709,6 +947,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 Shape = numerator.Shape - denominator.Shape + Power;
                 Rate = numerator.Rate - denominator.Rate;
             }
+            CheckForPointMass();
         }
 
         /// <summary>
@@ -758,12 +997,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 {
                     Point = dist.Point;
                 }
-                return;
             }
             else
             {
-                Shape = (dist.Shape - dist.Power)*exponent + dist.Power;
-                Rate = dist.Rate*exponent;
+                Shape = (dist.Shape - dist.Power) * exponent + dist.Power;
+                Rate = dist.Rate * exponent;
+                CheckForPointMass();
             }
         }
 
@@ -802,7 +1041,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public double MaxDiff(object thatd)
         {
             if (!(thatd is GammaPower)) return Double.PositiveInfinity;
-            GammaPower that = (GammaPower) thatd;
+            GammaPower that = (GammaPower)thatd;
             double diff1 = MMath.AbsDiff(Rate, that.Rate);
             double diff2 = MMath.AbsDiff(Shape, that.Shape);
             double diff3 = MMath.AbsDiff(Power, that.Power);
@@ -868,8 +1107,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public GammaPower(double shape, double scale, double power)
         {
             Shape = shape;
-            Rate = 1.0/scale;
+            Rate = 1.0 / scale;
             Power = power;
+            CheckForPointMass();
         }
 
         /// <summary>
@@ -915,6 +1155,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns>A new point mass Gamma distribution</returns>
         public static GammaPower PointMass(double mean, double power)
         {
+            if (power == 0 && mean != 1) throw new ArgumentOutOfRangeException(nameof(mean), mean, $"mean = {mean} is incompatible with power = 0");
             GammaPower result = new GammaPower();
             result.Power = power;
             result.Point = mean;
@@ -938,7 +1179,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                double scale = 1.0/Rate;
+                double scale = 1.0 / Rate;
                 string s = "GammaPower(" + Shape.ToString("g4") + ", " + scale.ToString("g4") + ", " + Power.ToString("g4") + ")";
                 if (IsProper())
                 {

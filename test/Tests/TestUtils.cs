@@ -25,6 +25,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     using Microsoft.ML.Probabilistic.Math;
     using Xunit.Sdk;
     using Microsoft.ML.Probabilistic.Models;
+    using Microsoft.ML.Probabilistic.Factors;
 
     public static class TestUtils
     {
@@ -812,6 +813,14 @@ namespace Microsoft.ML.Probabilistic.Tests
                         Factors.GaussianProductOp.ForceProper = productForceProper;
                     });
             }
+        }
+
+        /// <summary>
+        /// A test that uses this property must have Trait("Category", "ModifiesGlobals")
+        /// </summary>
+        public static IDisposable TemporarilyAllowGammaImproperProducts
+        {
+            get { return new TemporaryHelper(() => GammaProductOp_Laplace.ForceProper = false, () => GammaProductOp_Laplace.ForceProper = true); }
         }
 
         public static IDisposable TemporarilyAllowBetaImproperSums

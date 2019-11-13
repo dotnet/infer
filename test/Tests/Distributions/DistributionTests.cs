@@ -4,11 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Xunit;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using Microsoft.ML.Probabilistic.Utilities;
 using GaussianArray2D = Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D<Microsoft.ML.Probabilistic.Distributions.Gaussian, double>;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -52,22 +56,123 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        public void GammaPowerFromMeanAndMeanLogTest()
+        {
+            double mean = 3;
+            double meanLog = 0.4;
+            double power = 5;
+            GammaPower gammaPower = GammaPower.FromMeanAndMeanLog(mean, meanLog, power);
+            Assert.Equal(mean, gammaPower.GetMean(), 1e-1);
+            Assert.Equal(meanLog, gammaPower.GetMeanLog(), 1e-1);
+        }
+
+        [Fact]
+        public void Gamma_GetMode_MaximizesGetLogProb()
+        {
+            Parallel.ForEach(OperatorTests.Gammas()/*.Take(100000)*/, gamma =>
+            {
+                double max = double.NegativeInfinity;
+                foreach (var x in OperatorTests.DoublesAtLeastZero())
+                {
+                    double logProb = gamma.GetLogProb(x);
+                    Assert.False(double.IsNaN(logProb));
+                    if (logProb > max)
+                    {
+                        max = logProb;
+                    }
+                }
+                double mode = gamma.GetMode();
+                Assert.False(double.IsNaN(mode));
+                double logProbBelowMode = gamma.GetLogProb(MMath.PreviousDouble(mode));
+                Assert.False(double.IsNaN(logProbBelowMode));
+                double logProbAboveMode = gamma.GetLogProb(MMath.NextDouble(mode));
+                Assert.False(double.IsNaN(logProbAboveMode));
+                double logProbAtMode = gamma.GetLogProb(mode);
+                Assert.False(double.IsNaN(logProbAtMode));
+                logProbAtMode = System.Math.Max(System.Math.Max(logProbAtMode, logProbAboveMode), logProbBelowMode);
+                const double smallestNormalized = 1e-308;
+                Assert.True(logProbAtMode >= max ||
+                    MMath.AbsDiff(logProbAtMode, max, 1e-8) < 1e-4 ||
+                    (mode == 0 && gamma.GetLogProb(smallestNormalized) >= max)
+                    );
+            });
+        }
+
+        [Fact]
+        public void GammaPower_GetMode_MaximizesGetLogProb()
+        {
+            long count = 0;
+            Parallel.ForEach(new[] {
+                GammaPower.FromShapeAndRate(1.7976931348623157E+308, 1.7976931348623157E+308, -1.7976931348623157E+308),
+            }.Concat(OperatorTests.GammaPowers()).Take(100000), gammaPower =>
+            {
+                double argmax = double.NaN;
+                double max = double.NegativeInfinity;
+                foreach (var x in OperatorTests.DoublesAtLeastZero())
+                {
+                    double logProb = gammaPower.GetLogProb(x);
+                    Assert.False(double.IsNaN(logProb));
+                    if (logProb > max)
+                    {
+                        max = logProb;
+                        argmax = x;
+                    }
+                }
+                double mode = gammaPower.GetMode();
+                Assert.False(double.IsNaN(mode));
+                double logProbBelowMode = gammaPower.GetLogProb(MMath.PreviousDouble(mode));
+                Assert.False(double.IsNaN(logProbBelowMode));
+                double logProbAboveMode = gammaPower.GetLogProb(MMath.NextDouble(mode));
+                Assert.False(double.IsNaN(logProbAboveMode));
+                double logProbAtMode = gammaPower.GetLogProb(mode);
+                Assert.False(double.IsNaN(logProbAtMode));
+                logProbAtMode = System.Math.Max(System.Math.Max(logProbAtMode, logProbAboveMode), logProbBelowMode);
+                const double smallestNormalized = 1e-308;
+                Assert.True(logProbAtMode >= max ||
+                    MMath.AbsDiff(logProbAtMode, max, 1e-8) < 1e-8 ||
+                    (mode <= double.Epsilon && gammaPower.GetLogProb(smallestNormalized) >= max)
+                    );
+                Interlocked.Add(ref count, 1);
+                if(count % 100000 == 0)
+                    Trace.WriteLine($"{count} cases passed");
+            });
+            Trace.WriteLine($"{count} cases passed");
+        }
+
+        [Fact]
         public void GammaPowerTest()
         {
+            foreach (var gammaPower in new[] {
+                GammaPower.FromShapeAndRate(3, 2, -4.0552419045546273),
+                new GammaPower(0.04591, 19.61, -1),
+            })
+            {
+                gammaPower.GetMeanAndVariance(out double mean, out double variance);
+                Assert.False(double.IsNaN(mean));
+                Assert.False(double.IsNaN(variance));
+                Assert.False(mean < 0);
+                Assert.False(variance < 0);
+                Assert.Equal(variance, gammaPower.GetVariance());
+            }
+
+            Assert.Equal(0, GammaPower.FromShapeAndRate(2, 0, -1).GetMean());
+            Assert.Equal(0, GammaPower.FromShapeAndRate(2, 0, -1).GetVariance());
+            Assert.True(GammaPower.FromShapeAndRate(2, double.PositiveInfinity, -1).IsPointMass);
+
             GammaPower g = new GammaPower(1, 1, -1);
             g.ToString();
             Gamma gamma = new Gamma(1, 1);
             double expectedProbLessThan = gamma.GetProbLessThan(2);
-            Assert.Equal(expectedProbLessThan, 1-g.GetProbLessThan(0.5), 1e-10);
+            Assert.Equal(expectedProbLessThan, 1 - g.GetProbLessThan(0.5), 1e-10);
             Assert.Equal(2, gamma.GetQuantile(expectedProbLessThan), 1e-10);
             Assert.Equal(0.5, g.GetQuantile(1 - expectedProbLessThan), 1e-10);
 
-            GammaPower(1);
-            GammaPower(-1);
-            GammaPower(2);
+            GammaPowerMomentTest(1);
+            GammaPowerMomentTest(-1);
+            GammaPowerMomentTest(2);
         }
 
-        private void GammaPower(double power)
+        private void GammaPowerMomentTest(double power)
         {
             GammaPower g = new GammaPower(9.9, 1, power);
             GammaPower g2 = new GammaPower(4.4, 3.3, power);
@@ -78,6 +183,32 @@ namespace Microsoft.ML.Probabilistic.Tests
             PointMassMomentTest(g, 7.7, 4.4, 5.5);
             SamplingTest(g, 7.7);
             g.SetToUniform();
+        }
+
+        [Fact]
+        public void GammaPowerMeanAndVarianceFuzzTest()
+        {
+            foreach(var gammaPower in OperatorTests.GammaPowers().Take(100000))
+            {
+                gammaPower.GetMeanAndVariance(out double mean, out double variance);
+                Assert.False(double.IsNaN(mean));
+                Assert.False(double.IsNaN(variance));
+                Assert.False(mean < 0);
+                Assert.False(variance < 0);
+            }
+        }
+
+        [Fact]
+        public void GammaMeanAndVarianceFuzzTest()
+        {
+            foreach (var gamma in OperatorTests.Gammas())
+            {
+                gamma.GetMeanAndVariance(out double mean, out double variance);
+                Assert.False(double.IsNaN(mean));
+                Assert.False(double.IsNaN(variance));
+                Assert.False(mean < 0);
+                Assert.False(variance < 0);
+            }
         }
 
         //[Fact]
@@ -199,6 +330,24 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        /// <summary>
+        /// Checks that TruncatedGamma.GetMeanPower does not return infinity or NaN for proper distributions.
+        /// </summary>
+        [Fact]
+        public void TruncatedGamma_GetMeanPower()
+        {
+            double shape = 1;
+            TruncatedGamma g = new TruncatedGamma(shape, 1, 1, double.PositiveInfinity);
+            for (int i = 0; i < 100; i++)
+            {
+                var meanPower = g.GetMeanPower(-i);
+                Trace.WriteLine($"GetMeanPower({-i}) = {meanPower}");
+                Assert.False(double.IsNaN(meanPower));
+                Assert.False(double.IsInfinity(meanPower));
+                if (i == 1) Assert.Equal(MMath.GammaUpper(shape-1, 1, false)/MMath.GammaUpper(shape, 1, false), meanPower, 1e-8);
+            }
+        }
+
         [Fact]
         public void GaussianTest()
         {
@@ -266,10 +415,10 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             g.SetMeanAndPrecision(1e4, 1e306);
             Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), g);
-            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue/1e4), new Gaussian(1e4, 1E-306));
+            Assert.Equal(Gaussian.FromMeanAndPrecision(1e4, double.MaxValue / 1e4), new Gaussian(1e4, 1E-306));
             Assert.Equal(Gaussian.PointMass(1e-155), new Gaussian(1e-155, 1E-312));
             Gaussian.FromNatural(1, 1e-309).GetMeanAndVarianceImproper(out m, out v);
-            if(v > double.MaxValue)
+            if (v > double.MaxValue)
                 Assert.Equal(0, m);
             Gaussian.Uniform().GetMeanAndVarianceImproper(out m, out v);
             Assert.Equal(0, m);
@@ -300,7 +449,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             GaussianSetToProduct_ProducesPointMass(Gaussian.FromMeanAndPrecision(1, double.MaxValue));
             GaussianSetToProduct_ProducesPointMass(Gaussian.FromMeanAndPrecision(0.9, double.MaxValue));
-            GaussianSetToProduct_ProducesPointMass(Gaussian.FromMeanAndPrecision(10, double.MaxValue/10));
+            GaussianSetToProduct_ProducesPointMass(Gaussian.FromMeanAndPrecision(10, double.MaxValue / 10));
         }
 
         private void GaussianSetToProduct_ProducesPointMass(Gaussian g)
@@ -317,8 +466,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void GammaSetToProduct_ProducesPointMassTest()
         {
             GammaSetToProduct_ProducesPointMass(Gamma.FromShapeAndRate(double.MaxValue, double.MaxValue));
-            GammaSetToProduct_ProducesPointMass(Gamma.FromShapeAndRate(double.MaxValue/10, double.MaxValue));
-            GammaSetToProduct_ProducesPointMass(Gamma.FromShapeAndRate(double.MaxValue, double.MaxValue/10));
+            GammaSetToProduct_ProducesPointMass(Gamma.FromShapeAndRate(double.MaxValue / 10, double.MaxValue));
+            GammaSetToProduct_ProducesPointMass(Gamma.FromShapeAndRate(double.MaxValue, double.MaxValue / 10));
         }
 
         private void GammaSetToProduct_ProducesPointMass(Gamma g)
@@ -434,7 +583,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             PositiveDefiniteMatrix B = new PositiveDefiniteMatrix(4, 4);
             B.SetToDiagonal(Vector.FromArray(1, 0, 3, 4));
 
-            VectorGaussianMoments vg1 = new VectorGaussianMoments(Vector.FromArray(6,5,4,3), A);
+            VectorGaussianMoments vg1 = new VectorGaussianMoments(Vector.FromArray(6, 5, 4, 3), A);
             VectorGaussianMoments vg2 = new VectorGaussianMoments(Vector.FromArray(1, 2, 3, 4), B);
             var product = vg1 * vg2;
 
@@ -501,7 +650,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             Assert.Equal(Gamma.PointMass(0), Gamma.FromShapeAndScale(2.5, 1e-320));
             Assert.Equal(Gamma.PointMass(0), new Gamma(2.5, 1e-320));
             Assert.Equal(Gamma.PointMass(0), new Gamma(2.5, 0));
-            Assert.Equal(Gamma.PointMass(1e-300), Gamma.FromShapeAndRate(2, 1e300)^1e10);
+            Assert.Equal(Gamma.PointMass(1e-300), Gamma.FromShapeAndRate(2, 1e300) ^ 1e10);
 
             ProductWithUniformTest(g);
             Gamma g2 = new Gamma();
@@ -1484,25 +1633,29 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaSetToRatioProperTest()
         {
-            Gamma numerator = Gamma.FromShapeAndRate(4, 5);
-            Gamma denominator = Gamma.FromShapeAndRate(6, 3);
-            Gamma r = new Gamma();
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True(MMath.AbsDiff((r * denominator).GetMean(), numerator.GetMean(), 1e-8) < 1e-10);
-
-            denominator.SetShapeAndRate(6, 7);
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True(MMath.AbsDiff((r * denominator).GetMean(), numerator.GetMean(), 1e-8) < 1e-10);
-
-            denominator.SetShapeAndRate(3, 7);
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True(MMath.AbsDiff((r * denominator).GetMean(), numerator.GetMean(), 1e-8) < 1e-10);
+            foreach (Gamma numerator in new[] {
+                Gamma.FromShapeAndRate(0.5, 0.5),
+                Gamma.FromShapeAndRate(4, 5),
+            })
+            {
+                foreach (var denominator in new[]
+                {
+                    Gamma.Uniform(),
+                    Gamma.FromShapeAndRate(6, 3),
+                    Gamma.FromShapeAndRate(6,7),
+                    Gamma.FromShapeAndRate(3,7)
+                })
+                {
+                    Gamma r = new Gamma();
+                    r.SetToRatio(numerator, denominator, true);
+                    //Trace.WriteLine($"ratio: {r} ratio*denom: {r * denominator} (numerator was {numerator})");
+                    Assert.True(r.Shape >= 1);
+                    Assert.True(r.Rate >= 0);
+                    Assert.True(MMath.AbsDiff((r * denominator).GetMean(), numerator.GetMean(), 1e-8) < 1e-10);
+                    // It is counter-intuitive that uniform denominator doesn't return numerator.
+                    //if (denominator.IsUniform()) Assert.Equal(numerator, r);
+                }
+            }
         }
 
         [Fact]
@@ -1510,24 +1663,18 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             int dim = 1;
             Wishart numerator = Wishart.FromShapeAndRate(4, PositiveDefiniteMatrix.IdentityScaledBy(dim, 5));
-            Wishart denominator = Wishart.FromShapeAndRate(6, PositiveDefiniteMatrix.IdentityScaledBy(dim, 3));
-            Wishart r = new Wishart(dim);
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True((r * denominator).GetMean().MaxDiff(numerator.GetMean()) < 1e-10);
-
-            denominator.SetShapeAndRate(6, PositiveDefiniteMatrix.IdentityScaledBy(dim, 7));
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True((r * denominator).GetMean().MaxDiff(numerator.GetMean()) < 1e-10);
-
-            denominator.SetShapeAndRate(3, PositiveDefiniteMatrix.IdentityScaledBy(dim, 7));
-            r.SetToRatio(numerator, denominator, true);
-            Console.WriteLine("ratio: {0}", r);
-            Console.WriteLine("ratio*denom: {0} (numerator was {1})", r * denominator, numerator);
-            Assert.True((r * denominator).GetMean().MaxDiff(numerator.GetMean()) < 1e-10);
+            foreach (Wishart denominator in new[] {
+                Wishart.FromShapeAndRate(6, PositiveDefiniteMatrix.IdentityScaledBy(dim, 3)),
+                Wishart.FromShapeAndRate(6, PositiveDefiniteMatrix.IdentityScaledBy(dim, 7)),
+                Wishart.FromShapeAndRate(3, PositiveDefiniteMatrix.IdentityScaledBy(dim, 7)),
+            })
+            {
+                Wishart r = new Wishart(dim);
+                r.SetToRatio(numerator, denominator, true);
+                //Trace.WriteLine($"ratio: {r} ratio*denom: {r * denominator} (numerator was {numerator})");
+                Assert.True(r.Shape >= (dim + 1) / 2.0);
+                Assert.True((r * denominator).GetMean().MaxDiff(numerator.GetMean()) < 1e-10);
+            }
         }
 
         [Fact]
@@ -1579,7 +1726,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             stringDistributionTest(dist1, dist2);
             stringDistributionTest(dist1, dist3);
             stringDistributionTest(dist2, dist3);
-            
+
             StringDistributionPointMassTest(dist1, "ab");
             StringDistributionPointMassTest(dist2, "Abc");
             StringDistributionPointMassTest(dist3, "ABcd");

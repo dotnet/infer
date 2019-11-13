@@ -5194,6 +5194,45 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        [Trait("Category", "CsoftModel")]
+        public void GatedGammaPowerProductRRCTest()
+        {
+            double priorB = 0.1;
+            double meanX = 0.4;
+            double meanLogX = 1.4;
+            double y = 0.3;
+            double power = -0.5;
+            GammaPower priorZ = new GammaPower(0.2, 1.2, power);
+            GammaPower priorX = GammaPower.FromMeanAndMeanLog(meanX, meanLogX, power);
+
+            InferenceEngine engine = new InferenceEngine();
+            engine.Compiler.DeclarationProvider = Microsoft.ML.Probabilistic.Compiler.RoslynDeclarationProvider.Instance;
+            var ca = engine.Compiler.Compile(GatedGammaPowerProductRRCModel, priorB, priorX, y, priorZ);
+            ca.Execute(20);
+
+            GammaPower xy = GammaPower.FromMeanAndMeanLog(meanX * y, meanLogX + System.Math.Log(y), power);
+            double sumCondT = System.Math.Exp(priorZ.GetLogAverageOf(xy));
+            double Z = priorB * sumCondT + (1 - priorB);
+            double postB = priorB * sumCondT / Z;
+
+            Bernoulli bDist = ca.Marginal<Bernoulli>("b");
+            Console.WriteLine("b = {0} (should be {1})", bDist, postB);
+            Assert.True(System.Math.Abs(bDist.GetProbTrue() - postB) < 1e-4);
+        }
+
+        private void GatedGammaPowerProductRRCModel(double priorB, GammaPower priorX, double y, GammaPower priorZ)
+        {
+            bool b = Factor.Bernoulli(priorB);
+            double x = Factor.Random(priorX);
+            if (b)
+            {
+                double z = Factor.Product(x, y);
+                Constrain.EqualRandom(z, priorZ);
+            }
+            InferNet.Infer(b, nameof(b));
+        }
+
+        [Fact]
         public void GatedGammaProductCRCTest()
         {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
@@ -5222,6 +5261,46 @@ namespace Microsoft.ML.Probabilistic.Tests
                     {
                         evExpected = Gamma.FromShapeAndRate(shape, rate / scale.ObservedValue).GetLogProb(x.ObservedValue);
                         yExpected = Gamma.PointMass(1);
+                    }
+
+                    Console.WriteLine("y = {0} should be {1}", yActual, yExpected);
+                    Console.WriteLine("evidence = {0} should be {1}", evActual, evExpected);
+                    Assert.True(yExpected.MaxDiff(yActual) < 1e-8);
+                    Assert.True(MMath.AbsDiff(evExpected, evActual, 1e-6) < 1e-8);
+                }
+            }
+        }
+
+        [Fact]
+        public void GatedGammaPowerProductCRCTest()
+        {
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            double shape = 2.5;
+            double rate = 1;
+            double power = -0.5;
+            Variable<double> scale = Variable.Observed(0.0);
+            Variable<double> y = Variable.Random(GammaPower.FromShapeAndRate(shape, rate, power)).Named("y");
+            Variable<double> x = (y * scale).Named("x");
+            x.ObservedValue = 0.0;
+            block.CloseBlock();
+
+            InferenceEngine engine = new InferenceEngine();
+            foreach (var alg in new IAlgorithm[] { new ExpectationPropagation(), new VariationalMessagePassing() })
+            {
+                engine.Algorithm = alg;
+                foreach (var xObserved in new[] { 0.0, 2.0 })
+                {
+                    x.ObservedValue = xObserved;
+                    scale.ObservedValue = xObserved;
+                    GammaPower yActual = engine.Infer<GammaPower>(y);
+                    double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+                    GammaPower yExpected = GammaPower.FromShapeAndRate(shape, rate, power);
+                    double evExpected = 0;
+                    if (xObserved != 0)
+                    {
+                        evExpected = GammaPower.FromShapeAndRate(shape, rate / System.Math.Pow(scale.ObservedValue, 1/power), power).GetLogProb(x.ObservedValue);
+                        yExpected = GammaPower.PointMass(1, power);
                     }
 
                     Console.WriteLine("y = {0} should be {1}", yActual, yExpected);
