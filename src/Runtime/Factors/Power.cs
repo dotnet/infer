@@ -17,7 +17,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     {
         // Gamma = TruncatedGamma ^ y  /////////////////////////////////////////////////////////
 
-        public static Gamma PowAverageConditional(Gamma pow, [SkipIfUniform] TruncatedGamma x, double y)
+        public static Gamma PowAverageConditional([SkipIfUniform] TruncatedGamma x, double y)
         {
             double mean = x.GetMeanPower(y);
             if (x.LowerBound > 0)
@@ -52,16 +52,22 @@ namespace Microsoft.ML.Probabilistic.Factors
             // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
             // newShape = pow.Shape + (1-y)*(pow.Power/y)
             double power = 1 / y;
-            GammaPower message = GammaPower.FromShapeAndRate((pow.Shape - 1) + power, pow.Rate, power);
-            return new TruncatedGamma(ChangePower(message, x.ToGamma()));
+            var toPow = PowAverageConditional(x, y);
+            var powMarginal = pow * toPow;
+            // xMarginal2 is the exact distribution of pow^(1/y) where pow has distribution powMarginal
+            GammaPower xMarginal2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
+            var xMarginal = new TruncatedGamma(GammaFromGammaPower(xMarginal2));
+            var result = xMarginal;
+            result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
+            return result;
         }
 
         // Gamma = Gamma ^ y  /////////////////////////////////////////////////////////
 
-        public static Gamma PowAverageConditional(Gamma pow, [SkipIfUniform] Gamma x, double y, Gamma result)
+        public static Gamma PowAverageConditional([SkipIfUniform] Gamma x, double y, Gamma result)
         {
             GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y);
-            return ChangePower(message, pow);
+            return GammaFromGammaPower(message);
         }
 
         public static Gamma XAverageConditional([SkipIfUniform] Gamma pow, Gamma x, double y, Gamma result)
@@ -73,23 +79,16 @@ namespace Microsoft.ML.Probabilistic.Factors
             // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
             // newShape = pow.Shape + (1-y)*(pow.Power/y)
             double power = 1 / y;
-            GammaPower message = GammaPower.FromShapeAndRate((pow.Shape - 1) + power, pow.Rate, power);
-            return ChangePower(message, x);
+            var toPow = PowAverageConditional(x, y, pow);
+            var powMarginal = pow * toPow;
+            // xMarginal2 is the exact distribution of pow^(1/y) where pow has distribution powMarginal
+            GammaPower xMarginal2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
+            Gamma xMarginal = GammaFromGammaPower(xMarginal2);
+            result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
+            return result;
         }
 
-        public static Gamma ChangePower(GammaPower message, Gamma context)
-        {
-            if (context.IsProper())
-            {
-                return ChangePower(message * ChangePower(GammaPower.FromGamma(context, 1), message.Power)) / context;
-            }
-            else
-            {
-                return ChangePower(message);
-            }
-        }
-
-        public static Gamma ChangePower(GammaPower message)
+        public static Gamma GammaFromGammaPower(GammaPower message)
         {
             if (message.Power == 1) return Gamma.FromShapeAndRate(message.Shape, message.Rate); // same as below, but faster
             if (message.IsUniform()) return Gamma.Uniform();
@@ -107,24 +106,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             // -gammaln(shape2) + shape2 * log(rate2)
             // d/dshape2 = digamma(shape1+shape2-power) - digamma(shape2) - log(rate1/rate2 + 1)
             // d/drate2 = -(shape1+shape2-power)/(rate1+rate2) + shape2/rate2
-            GammaPower toPow = PowAverageConditional(pow, x, y, pow);
+            GammaPower toPow = PowAverageConditional(x, y, pow);
             return toPow.GetLogAverageOf(pow);
         }
 
-        public static GammaPower PowAverageConditional(GammaPower pow, [SkipIfUniform] GammaPower x, double y, GammaPower result)
+        public static GammaPower PowAverageConditional([SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
-            bool debug = false;
-            if (debug)
-            {
-                var toX = GammaPower.FromShapeAndRate(pow.Shape, pow.Rate, pow.Power / y);
-                toX = GammaPower.FromShapeAndRate(pow.Shape - pow.Power + pow.Power / y, pow.Rate, pow.Power / y);
-                toX = ChangePower(toX, x.Power);
-                GammaPower xMarginal = x * toX;
-                GammaPower powMarginal = ChangePower(GammaPower.FromShapeAndRate(xMarginal.Shape, xMarginal.Rate, y), result.Power);
-                Trace.WriteLine($"push forward: xMarginal = {xMarginal} powMarginal = {powMarginal}");
-            }
             GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y * x.Power);
-            return ChangePower(message, result.Power);
+            return GammaPowerFromDifferentPower(message, result.Power);
         }
 
         public static GammaPower XAverageConditional([SkipIfUniform] GammaPower pow, GammaPower x, double y, GammaPower result)
@@ -136,18 +125,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
             // newShape = pow.Shape + (1-y)*(pow.Power/y)
             double power = pow.Power / y;
-            var toPow = PowAverageConditional(pow, x, y, pow);
+            var toPow = PowAverageConditional(x, y, pow);
             GammaPower powMarginal = pow * toPow;
             // xMarginal2 is the exact distribution of pow^(1/y) where pow has distribution powMarginal
             GammaPower xMarginal2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
-            GammaPower xMarginal = ChangePower(xMarginal2, result.Power);
-            bool debug = false;
-            if (debug)
-            {
-                var projection = FromMeanPowerAndMeanLog(xMarginal2.GetMeanPower(1 / xMarginal2.Power), xMarginal2.GetMeanLog(), 1 / xMarginal2.Power);
-                var xMarginal3 = GammaPower.FromShapeAndRate(projection.Shape, projection.Rate, 1);
-                Trace.WriteLine($"pull backward: xMarginal = {xMarginal} powMarginal = {powMarginal} xMarginal2 = {xMarginal2} xMarginal3 = {xMarginal3}");
-            }
+            GammaPower xMarginal = GammaPowerFromDifferentPower(xMarginal2, result.Power);
             result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
             return result;
         }
@@ -159,32 +141,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gamma.FromShapeAndRate(gammaPower.Shape, gammaPower.Rate);
         }
 
-        public static GammaPower ChangePower(GammaPower message, double newPower, GammaPower context)
-        {
-            if (context.IsProper())
-            {
-                // This is significantly better than ChangePower(message, result.Power)
-                // Ideally it should return uniform when message is uniform.  
-                // Therefore the denominator should be equal to ChangePower(ChangePower(context, message.Power), result.Power).
-                // This happens when ChangePower always preserves the same moments.
-                var context2 = ChangePower(context, message.Power);
-                var tilted = message * context2;
-                Trace.WriteLine($"tilted = {tilted} context2 = {context2}");
-                return ChangePower(tilted, newPower) / context;
-            }
-            else
-            {
-                return ChangePower(message, newPower);
-            }
-        }
-
-        public static GammaPower ChangePower(GammaPower message, double newPower)
+        public static GammaPower GammaPowerFromDifferentPower(GammaPower message, double newPower)
         {
             if (message.Power == newPower) return message; // same as below, but faster
             if (message.IsUniform()) return GammaPower.Uniform(newPower);
             // Making two hops ensures that the desired mean powers are finite.
-            if (message.Power > 0 && newPower < 0 && newPower != -1) return ChangePower(ChangePower(message, -1), newPower);
-            if (message.Power < 0 && newPower > 0 && newPower != 1) return ChangePower(ChangePower(message, 1), newPower);
+            if (message.Power > 0 && newPower < 0 && newPower != -1) return GammaPowerFromDifferentPower(GammaPowerFromDifferentPower(message, -1), newPower);
+            if (message.Power < 0 && newPower > 0 && newPower != 1) return GammaPowerFromDifferentPower(GammaPowerFromDifferentPower(message, 1), newPower);
             // Project the message onto the desired power
             if (newPower == 1 || newPower == -1 || newPower == 2)
             {
@@ -223,7 +186,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         public static GammaPower PowAverageLogarithm([SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
-            return PowAverageConditional(GammaPower.Uniform(result.Power), x, y, result);
+            return PowAverageConditional(x, y, result);
         }
 
         public static GammaPower XAverageLogarithm([SkipIfUniform] GammaPower pow, GammaPower x, double y, GammaPower result)

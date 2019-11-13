@@ -198,6 +198,19 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        [Fact]
+        public void GammaMeanAndVarianceFuzzTest()
+        {
+            foreach (var gamma in OperatorTests.Gammas())
+            {
+                gamma.GetMeanAndVariance(out double mean, out double variance);
+                Assert.False(double.IsNaN(mean));
+                Assert.False(double.IsNaN(variance));
+                Assert.False(mean < 0);
+                Assert.False(variance < 0);
+            }
+        }
+
         //[Fact]
         internal void WrappedGaussianTest()
         {

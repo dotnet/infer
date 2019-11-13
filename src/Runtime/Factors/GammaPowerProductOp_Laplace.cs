@@ -17,7 +17,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     public static class GammaPowerProductOp_Laplace
     {
         // derivatives of the factor marginalized over Product and A
-        private static double[] dlogfs(double b, GammaPower product, GammaPower A)
+        internal static double[] dlogfs(double b, GammaPower product, GammaPower A)
         {
             if (A.Power != product.Power) throw new NotSupportedException($"A.Power ({A.Power}) != product.Power ({product.Power})");
             if (product.IsPointMass)
@@ -33,9 +33,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double s = A.Shape;
                 double c = A.Rate * productPointPower / b;
                 double dlogf = -s * ib + c * ib;
-                double ddlogf = s * ib2 - 2 * c * ib2 * ib;
-                double dddlogf = -2 * s * ib * ib2 + 6 * c * ib2 * ib2;
-                double d4logf = 6 * s * ib2 * ib2 - 24 * c * ib2 * ib2 * ib;
+                double ddlogf = s * ib2 - 2 * c * ib2;
+                double dddlogf = -2 * s * ib * ib2 + 6 * c * ib2 * ib;
+                double d4logf = 6 * s * ib2 * ib2 - 24 * c * ib2 * ib2;
                 return new double[] { dlogf, ddlogf, dddlogf, d4logf };
             }
             else if (A.IsPointMass)
@@ -129,8 +129,6 @@ namespace Microsoft.ML.Probabilistic.Factors
                 if (product.Rate == 0)
                 {
                     x = GammaFromShapeAndRateOp_Slow.FindMaximum(shape1, 0, A.Rate, B.Rate);
-                    if (x == 0)
-                        x = 1e-100;
                 }
                 else
                 {
@@ -139,9 +137,9 @@ namespace Microsoft.ML.Probabilistic.Factors
                     // From above:
                     // logf = (y_s/y_p-1)*pb*log(b) - (s+y_s-pa)*log(r + b^(pb/y_p)*y_r)
                     x = GammaFromShapeAndRateOp_Slow.FindMaximum(shape1, shape2, A.Rate / product.Rate, B.Rate);
-                    if (x == 0)
-                        x = 1e-100;
                 }
+                if (x == 0)
+                    x = 1e-100;
             }
             double[] dlogfss = dlogfs(x, product, A);
             double dlogf = dlogfss[0];
@@ -176,23 +174,23 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // int Ga^y_p(a^pa b^pb; y_s, y_r) Ga(a; s, r) da = q^(y_s-y_p) / (r + q y_r)^(y_s + s-pa)  Gamma(y_s+s-pa)
                 double shape = product.Shape - product.Power;
                 double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape) + (1 - A.Power);
-                if(IsProper(product) && product.Shape > A.Shape)
+                if (IsProper(product) && product.Shape > A.Shape)
                 {
                     // same as below but product.GetLogNormalizer() is inlined and combined with other terms
                     double AShapeMinusPower = A.Shape - A.Power;
-                    logf = shape * Math.Log(qPoint) 
+                    logf = shape * Math.Log(qPoint)
                         - Gamma.FromShapeAndRate(A.Shape, A.Rate).GetLogNormalizer()
                         - product.Shape * Math.Log(A.Rate / product.Rate + qPoint)
                         - Math.Log(Math.Abs(product.Power));
-                    if (AShapeMinusPower != 0) 
+                    if (AShapeMinusPower != 0)
                         logf += AShapeMinusPower * (MMath.RisingFactorialLnOverN(product.Shape, AShapeMinusPower) - Math.Log(A.Rate + qPoint * product.Rate));
                 }
                 else
                 {
-                    logf = shape * Math.Log(qPoint) 
-                        - shape2 * Math.Log(A.Rate + qPoint * product.Rate) 
-                        + MMath.GammaLn(shape2) 
-                        - Gamma.FromShapeAndRate(A.Shape, A.Rate).GetLogNormalizer() 
+                    logf = shape * Math.Log(qPoint)
+                        - shape2 * Math.Log(A.Rate + qPoint * product.Rate)
+                        + MMath.GammaLn(shape2)
+                        - Gamma.FromShapeAndRate(A.Shape, A.Rate).GetLogNormalizer()
                         - product.GetLogNormalizer();
                     // normalizer is -MMath.GammaLn(Shape) + Shape * Math.Log(Rate) - Math.Log(Math.Abs(Power))
                 }
@@ -270,12 +268,9 @@ namespace Microsoft.ML.Probabilistic.Factors
 
             double qPoint = q.GetMean();
             double r = product.Rate;
-            double r2 = r * r;
-            double denom = 1 / (qPoint * r + A.Rate);
-            double denom2 = denom * denom;
             double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(product.Shape, A.Shape) + (1 - A.Power);
             GammaPower productMarginal;
-            if (shape2 > 2)
+            if (shape2 > 2 && result.Power < 0)
             {
                 // Compute the moments of product^(-1/product.Power)
                 // Here q = b^(1/b.Power)
@@ -329,9 +324,12 @@ namespace Microsoft.ML.Probabilistic.Factors
                 //           = var(shape2*b/(b y_r + a_r)) + E[shape2*b^2/(b y_r + a_r)^2]
                 //           = shape2^2*var(b/(b y_r + a_r)) + shape2*(var(b/(b y_r + a_r)) + (yMean/shape2)^2)
                 // Let g = b/(b y_r + a_r)
-                double[] gDerivatives = (denom == 0) 
+                double denom = qPoint * r + A.Rate;
+                double denom2 = denom * denom;
+                double rOverDenom = r / denom;
+                double[] gDerivatives = (denom == 0)
                     ? new double[] { 0, 0, 0, 0 }
-                    : new double[] { qPoint * denom, A.Rate * denom2, -2 * denom2 * denom * A.Rate * r, 6 * denom2 * denom2 * A.Rate * r2 };
+                    : new double[] { qPoint / denom, A.Rate / denom2, -2 * A.Rate / denom2 * rOverDenom, 6 * A.Rate / denom2 * rOverDenom * rOverDenom };
                 double gMean, gVariance;
                 GaussianOp_Laplace.LaplaceMoments(q, gDerivatives, dlogfs(qPoint, product, A), out gMean, out gVariance);
                 double yMean = shape2 * gMean;

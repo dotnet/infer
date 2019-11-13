@@ -49,10 +49,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                     if (gammaPower.Power < 0)
                     {
                         double expected = gammaPower.GetMode() + shift;
-                        if (!gammaPower.IsPointMass)
-                        {
-                            //expected = System.Math.Pow(System.Math.Pow(expected, 1 / gammaPower.Power), gammaPower.Power);
-                        }
                         expected = System.Math.Max(smallestMode, System.Math.Min(largestMode, expected));
                         double actual = result.GetMode();
                         Assert.False(double.IsNaN(actual));
@@ -65,10 +61,6 @@ namespace Microsoft.ML.Probabilistic.Tests
                     else
                     {
                         double expected = gammaPower.GetMean() + shift;
-                        if (!gammaPower.IsPointMass)
-                        {
-                            //expected = System.Math.Pow(System.Math.Pow(expected, 1 / gammaPower.Power), gammaPower.Power);
-                        }
                         expected = System.Math.Max(smallestMean, System.Math.Min(largestMean, expected));
                         double actual = result.GetMean();
                         Assert.False(double.IsNaN(actual));

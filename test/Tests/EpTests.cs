@@ -39,7 +39,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void GammaPower_ReturnsShapeGreaterThan2()
+        public void GammaPower_ReturnsShapeGreaterThan1()
         {
             Variable<TruncatedGamma> xPriorVar = Variable.Observed(default(TruncatedGamma)).Named("xPrior");
             Variable<double> x = Variable<double>.Random(xPriorVar).Named("x");
@@ -51,7 +51,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             y.SetMarginalPrototype(yLikeVar);
             InferenceEngine engine = new InferenceEngine();
 
-            foreach(var powerValue in linspace(10, 20, 10))
+            foreach(var powerValue in linspace(1, 10, 10))
             {
                 TruncatedGamma xPrior = new TruncatedGamma(Gamma.FromShapeAndRate(3, 3), 1, double.PositiveInfinity);
                 xPriorVar.ObservedValue = xPrior;
@@ -77,8 +77,12 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
                 Gamma xExpected = xEstimator.GetDistribution(new Gamma());
                 Gamma yExpected = yEstimator.GetDistribution(yLike);
-                Trace.WriteLine($"power = {powerValue}: y = {yActual}[E^-1={yActual.GetMeanPower(-1)}] should be {yExpected}[E^-1={mva.Mean}]");
-                //Assert.True(yActual.Shape > 2);
+                double yActualMeanInverse = yActual.GetMeanPower(-1);
+                double meanInverseError = MMath.AbsDiff(mva.Mean, yActualMeanInverse, 1e-8);
+                Trace.WriteLine($"power = {powerValue}: y = {yActual}[E^-1={yActual.GetMeanPower(-1)}] should be {yExpected}[E^-1={mva.Mean}], error = {meanInverseError}");
+                Assert.True(yActual.Shape > 1);
+                Assert.True(MMath.AbsDiff(yExpected.GetMean(), yActual.GetMean(), 1e-8) < 1);
+                Assert.True(meanInverseError < 1e-2);
             }
         }
 
@@ -121,17 +125,21 @@ namespace Microsoft.ML.Probabilistic.Tests
                 }
                 Gamma xExpected = xEstimator.GetDistribution(new Gamma());
                 Gamma yExpected = yEstimator.GetDistribution(new Gamma());
-                Trace.WriteLine($"power = {powerValue}: y = {yActual}[E^-1={yActual.GetMeanPower(-1)}] should be {yExpected}[E^-1={mva.Mean}]");
+                double yActualMeanInverse = yActual.GetMeanPower(-1);
+                double meanInverseError = MMath.AbsDiff(mva.Mean, yActualMeanInverse, 1e-8);
+                Trace.WriteLine($"power = {powerValue}: y = {yActual}[E^-1={yActualMeanInverse}] should be {yExpected}[E^-1={mva.Mean}], error = {meanInverseError}");
                 Assert.True(yActual.Shape > 2);
+                Assert.True(MMath.AbsDiff(yExpected.GetMean(), yActual.GetMean(), 1e-8) < 1);
+                //Assert.True(meanInverseError < 10);
             }
         }
 
         [Fact]
         public void GammaPowerPowerTest()
         {
-            Assert.False(double.IsNaN(PowerOp.ChangePower(new GammaPower(1.333, 1.5, 1), 0.01).Shape));
+            Assert.False(double.IsNaN(PowerOp.GammaPowerFromDifferentPower(new GammaPower(1.333, 1.5, 1), 0.01).Shape));
             Assert.True(PowerOp.XAverageConditional(new GammaPower(7, 0.1111, -1), new GammaPower(16.19, 0.06154, 1), 2.2204460492503136E-16, GammaPower.Uniform(1)).IsProper());
-            Assert.True(PowerOp.PowAverageConditional(GammaPower.FromShapeAndRate(2.6728118446259792, 7.9319544835991014, -1), GammaPower.FromShapeAndRate(9.0744065303642287, 8.7298765698182414, 1), 1.6327904641199278, GammaPower.Uniform(-1)).IsProper());
+            Assert.True(PowerOp.PowAverageConditional(GammaPower.FromShapeAndRate(9.0744065303642287, 8.7298765698182414, 1), 1.6327904641199278, GammaPower.Uniform(-1)).IsProper());
             Assert.False(PowerOp.XAverageConditional(GammaPower.Uniform(-1), GammaPower.FromShapeAndRate(1, 1, 1), 4.0552419045546273, GammaPower.Uniform(1)).IsPointMass);
 
             Variable<GammaPower> xPriorVar = Variable.Observed(default(GammaPower)).Named("xPrior");
@@ -1695,6 +1703,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        [Trait("Category", "ModifiesGlobals")]
         public void GammaProductRRRTest()
         {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
@@ -1711,66 +1720,77 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var groundTruthArray = new[]
             {
+                ((Gamma.FromShapeAndRate(1, 2), Gamma.FromShapeAndRate(10, 10), Gamma.FromShapeAndRate(101, double.MaxValue)),
+                 (Gamma.PointMass(0), Gamma.FromShapeAndScale(9, 0.1), Gamma.PointMass(5.6183114927306835E-307), 0.79850769622135)),
+                ((Gamma.FromShapeAndRate(1, 2), Gamma.FromShapeAndRate(10, 10), Gamma.FromShapeAndRate(101, double.PositiveInfinity)),
+                 (Gamma.PointMass(0), Gamma.PointMass(0), Gamma.FromShapeAndRate(101, double.PositiveInfinity), double.NegativeInfinity)),
+                ((Gamma.FromShapeAndRate(1, 1), Gamma.FromShapeAndRate(1, 1), Gamma.Uniform()),
+                 (Gamma.FromShapeAndRate(1, 1), Gamma.FromShapeAndRate(1, 1), new Gamma(0.3332, 3), 0)),
+                ((Gamma.FromShapeAndRate(1, 1), Gamma.FromShapeAndRate(1, 1), Gamma.FromShapeAndRate(30, 1)),
+                 (Gamma.FromShapeAndRate(9.31900740051435, 1.7964933711493432), Gamma.FromShapeAndRate(9.2434278607621678, 1.7794585918328409), Gamma.FromShapeAndRate(26.815751741761741, 1.0848182432245914), -10.6738675986344)),
                 ((Gamma.FromShapeAndRate(3, 4), Gamma.FromShapeAndRate(2.5, 1), Gamma.FromShapeAndRate(5, 6)),
                  (new Gamma(3.335, 0.1678), new Gamma(3.021, 0.5778), new Gamma(5.619, 0.1411), -0.919181055678219)),
                 ((Gamma.FromShapeAndRate(3, 4), Gamma.FromShapeAndRate(2.5, 1), Gamma.Uniform()),
-                 (Gamma.FromShapeAndRate(3, 4), Gamma.FromShapeAndRate(2.5, 1), new Gamma(1.154, 1.625), 0)),
+                 (Gamma.FromShapeAndRate(3, 4), Gamma.FromShapeAndRate(2.5, 1), new Gamma(1.154, 1.625), 0.0)),
             };
 
-            foreach (var groundTruth in groundTruthArray)
+            using (TestUtils.TemporarilyAllowGammaImproperProducts)
             {
-                var (bPrior, aPrior, productPrior) = groundTruth.Item1;
-                var (bExpected, aExpected, productExpected, evExpected) = groundTruth.Item2;
-                bPriorVar.ObservedValue = bPrior;
-                aPriorVar.ObservedValue = aPrior;
-                productPriorVar.ObservedValue = productPrior;
-
-                Gamma bActual = engine.Infer<Gamma>(b);
-                Gamma aActual = engine.Infer<Gamma>(a);
-                Gamma productActual = engine.Infer<Gamma>(product);
-                double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
-
-                if (false)
+                foreach (var groundTruth in groundTruthArray)
                 {
-                    // importance sampling
-                    double totalWeight = 0;
-                    GammaEstimator bEst = new GammaEstimator();
-                    GammaEstimator aEst = new GammaEstimator();
-                    GammaEstimator productEst = new GammaEstimator();
-                    int numIter = 1000000;
-                    for (int iter = 0; iter < numIter; iter++)
+                    var (bPrior, aPrior, productPrior) = groundTruth.Item1;
+                    var (bExpected, aExpected, productExpected, evExpected) = groundTruth.Item2;
+                    bPriorVar.ObservedValue = bPrior;
+                    aPriorVar.ObservedValue = aPrior;
+                    productPriorVar.ObservedValue = productPrior;
+
+                    Gamma bActual = engine.Infer<Gamma>(b);
+                    Gamma aActual = engine.Infer<Gamma>(a);
+                    Gamma productActual = engine.Infer<Gamma>(product);
+                    double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+
+                    if (false)
                     {
-                        double bSample = bPrior.Sample();
-                        double aSample = aPrior.Sample();
-                        double productSample = aSample * bSample;
-                        double logWeight = productPrior.GetLogProb(productSample);
-                        double weight = System.Math.Exp(logWeight);
-                        totalWeight += weight;
-                        bEst.Add(bSample, weight);
-                        aEst.Add(aSample, weight);
-                        productEst.Add(productSample, weight);
+                        // importance sampling
+                        double totalWeight = 0;
+                        GammaEstimator bEst = new GammaEstimator();
+                        GammaEstimator aEst = new GammaEstimator();
+                        GammaEstimator productEst = new GammaEstimator();
+                        int numIter = 1000000;
+                        for (int iter = 0; iter < numIter; iter++)
+                        {
+                            double bSample = bPrior.Sample();
+                            double aSample = aPrior.Sample();
+                            double productSample = aSample * bSample;
+                            double logWeight = productPrior.GetLogProb(productSample);
+                            double weight = System.Math.Exp(logWeight);
+                            totalWeight += weight;
+                            bEst.Add(bSample, weight);
+                            aEst.Add(aSample, weight);
+                            productEst.Add(productSample, weight);
+                        }
+                        bExpected = bEst.GetDistribution(new Gamma());
+                        evExpected = System.Math.Log(totalWeight / numIter);
+                        aExpected = aEst.GetDistribution(new Gamma());
+                        productExpected = productEst.GetDistribution(new Gamma());
                     }
-                    bExpected = bEst.GetDistribution(new Gamma());
-                    evExpected = System.Math.Log(totalWeight / numIter);
-                    aExpected = aEst.GetDistribution(new Gamma());
-                    productExpected = productEst.GetDistribution(new Gamma());
+                    double bError = bExpected.MaxDiff(bActual);
+                    double aError = aExpected.MaxDiff(aActual);
+                    double productError = productExpected.MaxDiff(productActual);
+                    double evError = MMath.AbsDiff(evExpected, evActual, 1e-6);
+                    bool trace = false;
+                    if (trace)
+                    {
+                        Trace.WriteLine($"b = {bActual} should be {bExpected}, error = {bError}");
+                        Trace.WriteLine($"a = {aActual}[variance={aActual.GetVariance()}] should be {aExpected}[variance={aExpected.GetVariance()}], error = {aError}");
+                        Trace.WriteLine($"product = {productActual} should be {productExpected}, error = {productError}");
+                        Trace.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evError}");
+                    }
+                    Assert.True(bError < 3e-2);
+                    Assert.True(aError < 1);
+                    Assert.True(productError < 3e-2);
+                    Assert.True(evError < 5e-2);
                 }
-                double bError = bExpected.MaxDiff(bActual);
-                double aError = aExpected.MaxDiff(aActual);
-                double productError = productExpected.MaxDiff(productActual);
-                double evError = MMath.AbsDiff(evExpected, evActual, 1e-6);
-                bool trace = true;
-                if (trace)
-                {
-                    Trace.WriteLine($"b = {bActual} should be {bExpected}, error = {bError}");
-                    Trace.WriteLine($"a = {aActual}[variance={aActual.GetVariance()}] should be {aExpected}[variance={aExpected.GetVariance()}], error = {aError}");
-                    Trace.WriteLine($"product = {productActual} should be {productExpected}, error = {productError}");
-                    Trace.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evError}");
-                }
-                Assert.True(bError < 2e-2);
-                Assert.True(aError < 2e-2);
-                Assert.True(productError < 1e-2);
-                Assert.True(evError < 5e-2);
             }
         }
 
@@ -1793,9 +1813,9 @@ namespace Microsoft.ML.Probabilistic.Tests
             var groundTruthArray = new[]
             {
                 ((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.MaxValue, 1)),
-                 (GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndScale(9, 0.1, 1), GammaPower.FromShapeAndRate(101, double.MaxValue, 1), 0.79850769622135)),
-                //((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1)),
-                // (GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndScale(9, 0.1, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1), 0.79850769622135)),
+                 (GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndScale(9, 0.1, 1), GammaPower.PointMass(5.6183114927306835E-307, 1), 0.79850769622135)),
+                ((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1)),
+                 (GammaPower.PointMass(0, 1.0), GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1), double.NegativeInfinity)),
                 ((GammaPower.FromShapeAndRate(2.25, 0.625, -1), GammaPower.FromShapeAndRate(100000002, 100000001, -1), GammaPower.PointMass(5, -1)),
                  (GammaPower.FromShapeAndRate(99999999.000000119, 19999999.375000019, -1.0), GammaPower.FromShapeAndRate(100000000.0, 100000001.125, -1.0), GammaPower.PointMass(5, -1), -6.5380532346178)),
                 ((GammaPower.FromShapeAndRate(2.25, 0.625, -1), GammaPower.FromShapeAndRate(100000002, 100000001, -1), GammaPower.PointMass(0, -1)),
