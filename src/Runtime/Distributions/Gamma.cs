@@ -598,7 +598,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public static double GetLogProb(double x, double shape, double rate)
         {
             if (x < 0) return double.NegativeInfinity;
-            if (double.IsPositiveInfinity(x)) // Avoid subtracting infinities below
+            if (x > double.MaxValue) // Avoid subtracting infinities below
             {               
                 if (rate > 0) return -x;
                 else if (rate < 0) return x;
@@ -611,7 +611,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // We compute the density in a way that ensures the maximum is at the mode returned by GetMode.
                 double mode = (shape - 1) / rate; // cannot be zero
                 double xOverMode = x / mode;
-                if (double.IsPositiveInfinity(xOverMode)) return double.NegativeInfinity;
+                if (xOverMode > double.MaxValue) return double.NegativeInfinity;
                 else return (shape - 1) * (Math.Log(xOverMode) + (1 - xOverMode)) + (0.5 + 0.5 / shape) / shape + Math.Log(rate) - 0.5 * Math.Log(shape);
             }
             double result = 0;

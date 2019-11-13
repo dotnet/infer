@@ -69,7 +69,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void Gamma_GetMode_MaximizesGetLogProb()
         {
-            Parallel.ForEach(OperatorTests.Gammas().Take(100000), gamma =>
+            Parallel.ForEach(OperatorTests.Gammas()/*.Take(100000)*/, gamma =>
             {
                 double max = double.NegativeInfinity;
                 foreach (var x in OperatorTests.DoublesAtLeastZero())
