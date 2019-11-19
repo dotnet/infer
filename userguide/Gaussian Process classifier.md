@@ -30,10 +30,10 @@ Each element of xdata is a vector of input values, and the corresponding element
 A Gaussian Process is a distribution over functions. In Infer.NET, a function from `Vector` to `double` is denoted by the type `IFunction`. Therefore a random function has type `Variable<IFunction>`. Such variables can be given a Gaussian Process prior, and when you infer the variable, you get a Gaussian Process posterior. Infer.NET implements an efficient type of Gaussian Process called a _sparse Gaussian Process_ that allows you to control the cost of inference by specifying a basis on which the function will be represented. For the moment, we will skip the details of defining a sparse Gaussian Process and focus on creating and using random functions. Here is the code to create a random function:
 
 ```csharp
-// Set up the GP prior, which will be filled in later  
+// Set up the GP prior, a distribution over functions, which will be filled in later  
 Variable<SparseGP> prior = Variable.New<SparseGP>().Named("prior");  
 
-// The sparse GP variable - a distribution over functions  
+// The sparse GP variable - a random function
 Variable<IFunction> f = Variable<IFunction>.Random(prior).Named("f");
 ```
 

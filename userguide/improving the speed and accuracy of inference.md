@@ -18,7 +18,7 @@ There are often multiple ways of using Infer.NET to solve a particular problem. 
 
 *   _Specify the exact set of variables to be inferred_
 
-    Use the **OptimiseForVariables** property on the inference engine to specify exactly which variables you want to infer. This is more efficient than the **Infer()** method which opportunistically computes all marginals that may be needed (see **[Mixture of Gaussians](Mixture of Gaussians tutorial.md)** for an example).
+    Use the **OptimiseForVariables** property on the inference engine to specify exactly which variables you want to infer. This is more efficient than the **Infer()** method which always computes all variable marginals.
 
 *   _Reuse memory for the marginals_  
     Set **Compiler.ReturnCopies** to false on the inference engine. This causes the engine to modify the previous marginal distributions in place. However, be warned that you need to copy the marginal distributions yourself if you want to save them. 
