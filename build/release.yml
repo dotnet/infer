@@ -12,7 +12,7 @@ resources:
   
 trigger: none # disable CI build
   
-# Build and test on MacOS
+# Build on MacOS
 
 jobs:
 - job: macOS # Hosted MacOS agent
@@ -28,11 +28,7 @@ jobs:
       dotnet build --configuration $(BuildConfiguration)Core Infer.sln
     displayName: Build Solution
       
-  - template: netcoretest-fast.yml
-    parameters:
-      Configuration: '$(BuildConfiguration)Core'
-
-# Build and test on Linux
+# Build on Linux
 
 - job: Linux # Hosted Linux agent
   pool:
@@ -47,11 +43,7 @@ jobs:
       dotnet build --configuration $(BuildConfiguration)Core Infer.sln
     displayName: Build Solution
 
-  - template: netcoretest-fast.yml
-    parameters:
-      Configuration: '$(BuildConfiguration)Core'
-
-# Assign assembly versions, build, test and publish versioned assemblies
+# Assign assembly versions, build, and publish versioned assemblies
 
 - job: Windows # Hosted Windows agent, VS 2017
   pool:
@@ -81,10 +73,6 @@ jobs:
       solution: '**/*.sln'
       clean: true
       configuration: $(BuildConfiguration)
-
-  - template: vstest-fast.yml
-    parameters:
-      Platform: 'x64'
 
   - task: Bash@3
     displayName: 'Gathering built assemblies'
