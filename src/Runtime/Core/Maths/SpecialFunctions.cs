@@ -36,6 +36,27 @@ namespace Microsoft.ML.Probabilistic.Math
     /// </remarks>
     public static class MMath
     {
+        public static uint NumericalPrecisionBits { get; private set; } = 53;
+
+        public static void SetNumericalPrecision(uint value)
+        {
+            if (NumericalPrecisionBits != value)
+            {
+                if (double.IsNaN(value) || value <= 0)
+                    throw new ArgumentException(nameof(value));
+
+                var newSeries = new PrecomputedSeriesCollection(value);
+                lock(precisionSettingLockObject)
+                {
+                    NumericalPrecisionBits = value;
+                    PrecomputedSeries = newSeries;
+                }
+            }
+        }
+
+        static object precisionSettingLockObject = new object();
+        static PrecomputedSeriesCollection PrecomputedSeries { get; set; } = new PrecomputedSeriesCollection(NumericalPrecisionBits);
+
         #region Bessel functions
 
         /// <summary>
@@ -906,11 +927,11 @@ for k in range(2,26):
                     x++;
                 }
                 double dx = x - 2;
-                double sum2 = 0;
-                for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
-                {
-                    sum2 = dx * (gammaTaylorCoefficients[i] * (i + 2) + sum2);
-                }
+                double sum2 = PrecomputedSeries.DigammaAt2.Evaluate(dx);// 0;
+                //for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
+                //{
+                //    sum2 = dx * (gammaTaylorCoefficients[i] * (i + 2) + sum2);
+                //}
                 result2 += sum2;
                 return result2;
             }
@@ -930,11 +951,11 @@ for k in range(2,26):
             double invX = 1 / x;
             result += Math.Log(x) - 0.5 * invX;
             double invX2 = invX * invX;
-            double sum = 0;
-            for (int i = c_digamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_digamma_series[i] + sum);
-            }
+            double sum = PrecomputedSeries.CDigamma.Evaluate(invX2);// 0;
+            //for (int i = c_digamma_series.Length - 1; i >= 0; i--)
+            //{
+            //    sum = invX2 * (c_digamma_series[i] + sum);
+            //}
             result -= sum;
             return result;
         }
