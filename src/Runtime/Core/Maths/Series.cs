@@ -53,7 +53,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         /// </summary>
         public TruncatedPowerSeries CDigamma { get; }
 
-        public PrecomputedSeriesCollection(double precision)
+        public PrecomputedSeriesCollection(uint precisionBits)
         {
             GammaAt2 = new TruncatedPowerSeries(new[]
             {
