@@ -927,11 +927,7 @@ for k in range(2,26):
                     x++;
                 }
                 double dx = x - 2;
-                double sum2 = PrecomputedSeries.DigammaAt2.Evaluate(dx);// 0;
-                //for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
-                //{
-                //    sum2 = dx * (gammaTaylorCoefficients[i] * (i + 2) + sum2);
-                //}
+                double sum2 = PrecomputedSeries.DigammaAt2.Evaluate(dx);
                 result2 += sum2;
                 return result2;
             }
@@ -951,24 +947,10 @@ for k in range(2,26):
             double invX = 1 / x;
             result += Math.Log(x) - 0.5 * invX;
             double invX2 = invX * invX;
-            double sum = PrecomputedSeries.CDigamma.Evaluate(invX2);// 0;
-            //for (int i = c_digamma_series.Length - 1; i >= 0; i--)
-            //{
-            //    sum = invX2 * (c_digamma_series[i] + sum);
-            //}
+            double sum = PrecomputedSeries.CDigamma.Evaluate(invX2);
             result -= sum;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the digamma function.
-        /// Each coefficient is B_{2j}/(2j) where B_{2j} are the Bernoulli numbers, starting from j=1
-        /// </summary>
-        private static readonly double[] c_digamma_series =
-        {
-            1.0/12, -1.0/120, 1.0/252, -1.0/240, 1.0/132,
-            -691.0/32760, 1.0/12, /* -3617.0/8160, 43867.0/14364, -174611.0/6600 */
-        };
 
         /// <summary>
         /// Evaluates Trigamma(x), the derivative of Digamma(x).
