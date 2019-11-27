@@ -135,6 +135,10 @@ f(0.5 1) = Gaussian(-0.1306, 0.09745) (correct)
 
 Notice that the model is only compiled once, while inference is repeated three times (once for each prior). In this case, the neural net covariance function provides the best fit, and classifies all of the training data correctly.
 
+### Longer example
+
+You can find a longer example in the [RobustGaussianProcess](https://github.com/dotnet/infer/tree/master/src/Examples/RobustGaussianProcess) folder.
+
 ### References for sparse Gaussian Processes
 
 L. Csato, M. Opper. "[Sparse representation for Gaussian process models](http://academic.research.microsoft.com/Paper/560692.html)." In Advances in Neural Information Processing Systems 13. MIT Press, pp. 444-450, 2000. 
