@@ -147,12 +147,32 @@ jobs:
       msbuildVersion: 14.0
     condition: in(variables.SignType, 'real', 'test')
 
-  - task: MSBuild@1
+  - task: UseDotNet@2
     inputs:
-      solution: 'Infer.sln'
-      configuration: '$(BuildConfiguration)'
-      msbuildArguments: '/t:Pack /p:NoBuild=true;version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages;PackageOutputPath=$(Build.SourcesDirectory)/bin/packages /restore'
-      msbuildVersion: 15.0
+      packageType: 'sdk'
+      version: '3.x'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'restore'
+      projects: 'Infer.sln'
+      feedsToUse: 'select'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'pack'
+      packagesToPack: 'Infer.sln'
+      packDirectory: '$(Build.SourcesDirectory)/bin/packages'
+      nobuild: true
+      versioningScheme: 'byBuildNumber'
+      buildProperties: 'bin=$(Build.SourcesDirectory)/bin/obj/packages'
+
+#  - task: MSBuild@1
+#    inputs:
+#      solution: 'Infer.sln'
+#      configuration: '$(BuildConfiguration)'
+#      msbuildArguments: '/t:Pack /p:NoBuild=true;version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages;PackageOutputPath=$(Build.SourcesDirectory)/bin/packages /restore'
+#      msbuildVersion: 15.0
 
   - task: MSBuild@1
     displayName: Sign Packages
