@@ -151,7 +151,7 @@ jobs:
     displayName: 'Creating NuGet packages'
     inputs:
       command: 'pack'
-      packagesToPack: 'build/*.nuspec'
+      packagesToPack: 'Infer.sln'
       nobuild: true
       buildProperties: 'version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages'
       packDirectory: '$(Build.SourcesDirectory)/bin/packages'
