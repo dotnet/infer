@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(MSBuildProjectDirectory)..\..\..\..\build\nuget-properties.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\nuget-properties.props" />
 
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
