@@ -766,11 +766,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 // Use Taylor series at x=2
                 // Reference: https://dlmf.nist.gov/5.7#E3
                 double dx = x - 2;
-                double sum = 0;
-                for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
-                {
-                    sum = dx * (gammaTaylorCoefficients[i] + sum);
-                }
+                double sum = PrecomputedSeries.GammaAt2.Evaluate(dx);
                 sum = dx * (1 + Digamma1 + sum);
                 result += sum;
                 return result;
@@ -823,39 +819,6 @@ namespace Microsoft.ML.Probabilistic.Math
             }
             else return (MMath.GammaLn(x + n) - MMath.GammaLn(x)) / n;
         }
-
-        /* Python code to generate this table (must not be indented):
-for k in range(2,26):
-		print("            %0.20g," % ((-1)**k*(zeta(k)-1)/k))
-         */
-        private static readonly double[] gammaTaylorCoefficients =
-        {
-            0.32246703342411320303,
-            -0.06735230105319810201,
-            0.020580808427784546416,
-            -0.0073855510286739856768,
-            0.0028905103307415229257,
-            -0.0011927539117032610189,
-            0.00050966952474304234172,
-            -0.00022315475845357938579,
-            9.945751278180853098e-05,
-            -4.4926236738133142046e-05,
-            2.0507212775670691067e-05,
-            -9.4394882752683967152e-06,
-            4.3748667899074873274e-06,
-            -2.0392157538013666132e-06,
-            9.551412130407419353e-07,
-            -4.4924691987645661855e-07,
-            2.1207184805554664645e-07,
-            -1.0043224823968100408e-07,
-            4.7698101693639803983e-08,
-            -2.2711094608943166813e-08,
-            1.0838659214896952939e-08,
-            -5.1834750419700474714e-09,
-            2.4836745438024780616e-09,
-            -1.1921401405860913615e-09,
-            5.7313672416788612175e-10,
-        };
 
         private static double[] DigammaLookup;
 
@@ -3310,7 +3273,7 @@ rr = mpf('-0.99999824265582826');
             {
                 // use the Taylor series for log(1+x) around x=0
                 // Maple command: series(log(1+x),x);
-                return x * (1 - x * (0.5 - x * (1.0 / 3 - x * (0.25 - x * (1.0 / 5)))));
+                return PrecomputedSeries.Log1Plus.Evaluate(x);
             }
             else
             {
@@ -3363,7 +3326,7 @@ rr = mpf('-0.99999824265582826');
             if (x < -7.5)
             {
                 double y = Math.Exp(x);
-                return -y * (1 + y * (0.5 + y * (1.0 / 3 + y * (0.25))));
+                return PrecomputedSeries.Log1Minus.Evaluate(y);
             }
             else
             {

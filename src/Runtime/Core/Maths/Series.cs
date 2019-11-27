@@ -53,6 +53,8 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         /// Each coefficient is B_{2j}/(2j) where B_{2j} are the Bernoulli numbers, starting from j=1
         /// </summary>
         public TruncatedPowerSeries CDigamma { get; }
+        public TruncatedPowerSeries Log1Plus { get; }
+        public TruncatedPowerSeries Log1Minus { get; }
 
         public PrecomputedSeriesCollection(uint precisionBits)
         {
@@ -61,14 +63,27 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             {
                 GammaAt2 = new TruncatedPowerSeries(gammaAt2Coefficients.Take(26).ToArray());
                 CDigamma = new TruncatedPowerSeries(cDigammaCoefficients.Take(8).ToArray());
+                Log1Plus = TruncatedPowerSeries.Generate(6, Log1PlusCoefficient);
+                Log1Minus = TruncatedPowerSeries.Generate(5, Log1MinusCoefficient);
             }
             else
             {
                 GammaAt2 = new TruncatedPowerSeries(gammaAt2Coefficients.ToArray());
                 CDigamma = new TruncatedPowerSeries(cDigammaCoefficients.ToArray());
+                Log1Plus = TruncatedPowerSeries.Generate(16, Log1PlusCoefficient);
+                Log1Minus = TruncatedPowerSeries.Generate(16, Log1MinusCoefficient);
             }
             DigammaAt2 = TruncatedPowerSeries.Generate(GammaAt2.Coefficients.Length, i => GammaAt2.Coefficients[i] * (i + 1));
         }
+
+        #region Coefficient generators
+
+        private static double Log1PlusCoefficient(int n) => n == 0 ? 0.0 : (n % 2 == 0 ? -1.0 : 1.0) / n;
+        private static double Log1MinusCoefficient(int n) => n == 0 ? 0.0 : -1.0 / n;
+
+        #endregion
+
+        #region Precomputed coefficients
 
         /* Python code to generate this table (must not be indented):
 from __future__ import division
@@ -224,5 +239,7 @@ for k in range(1,22):
             //-482414483548501.6875,
             //20040310656516252,
         };
+
+        #endregion
     }
 }
