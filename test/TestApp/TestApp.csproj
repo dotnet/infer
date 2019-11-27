@@ -1,13 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\Infer.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>Microsoft.ML.Probabilistic.TestApp</AssemblyName>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>false</Prefer32Bit>
     <DefineConstants>TRACE;SUPPRESS_UNREACHABLE_CODE_WARNINGS</DefineConstants>

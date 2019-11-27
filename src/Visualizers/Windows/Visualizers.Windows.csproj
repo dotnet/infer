@@ -3,13 +3,7 @@
 
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\Infer.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>Microsoft.ML.Probabilistic.Compiler.Visualizers.Windows</AssemblyName>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
     <DefineConstants>TRACE;SUPPRESS_XMLDOC_WARNINGS, SUPPRESS_UNREACHABLE_CODE_WARNINGS, SUPPRESS_AMBIGUOUS_REFERENCE_WARNINGS</DefineConstants>
     <NoWarn>1591</NoWarn>
     <RootNamespace>Microsoft.ML.Probabilistic.Compiler.Visualizers</RootNamespace>

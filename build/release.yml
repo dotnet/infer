@@ -165,7 +165,7 @@ jobs:
       packDirectory: '$(Build.SourcesDirectory)/bin/packages'
       nobuild: true
       versioningScheme: 'byBuildNumber'
-      buildProperties: 'OutDir=$(Build.SourcesDirectory)/bin/obj/packages;BuildProjectReferences=false'
+      buildProperties: 'BaseOutputPath=$(Build.SourcesDirectory)/bin/obj/packages;BuildProjectReferences=false'
 
 #  - task: MSBuild@1
 #    inputs:

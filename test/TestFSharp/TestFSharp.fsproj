@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
+
   <PropertyGroup>
 		<OutputType>Exe</OutputType>
-    <WarningLevel>5</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
   </PropertyGroup>

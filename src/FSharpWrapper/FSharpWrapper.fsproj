@@ -1,12 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\Infer.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>Microsoft.ML.Probabilistic.FSharp</AssemblyName>
-    <WarningLevel>5</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
     <Configurations>Debug;Release</Configurations>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Microsoft.ML.Probabilistic.FSharp.XML</DocumentationFile>
   </PropertyGroup>

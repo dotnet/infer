@@ -1,15 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
+
   <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\Infer.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>TestPublic</AssemblyName>
     <RootNamespace>TestPublic</RootNamespace>
     <MonoSupport>false</MonoSupport>
     <DefineConstants>TRACE</DefineConstants>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
     <NoWarn>1591</NoWarn>
     <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
   </PropertyGroup>

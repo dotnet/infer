@@ -1,15 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\common.props" />
+
   <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\Infer.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>Microsoft.ML.Probabilistic.Learners.Tests</AssemblyName>
     <RootNamespace>Microsoft.ML.Probabilistic.Learners.Tests</RootNamespace>
     <DefineConstants>TRACE</DefineConstants>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <CodeAnalysisRuleSet>..\..\..\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
     <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
   </PropertyGroup>
   <Choose>

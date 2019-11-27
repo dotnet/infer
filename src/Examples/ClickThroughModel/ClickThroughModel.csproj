@@ -1,15 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\build\common.props" />
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net461</TargetFramework>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Configurations>Debug;DebugFull;DebugCore;Release;ReleaseFull;ReleaseCore</Configurations>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <SharedVersionOutputDirectory>..\..\Shared</SharedVersionOutputDirectory>
-    <IsPackable>false</IsPackable>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
 
