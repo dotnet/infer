@@ -116,9 +116,7 @@ for(int i = 0; i < zinit.Length; i++)
 (Distribution<int>.Array(zinit));
 ```
 
-If 
-
-you now run the inference again, you should get results similar to the following (modulo the randomness that we have introduced):
+If you now run the inference again, you should get results similar to the following (modulo the randomness that we have introduced):
 
 ```
 Dist over pi=Dirichlet(180 122)  
