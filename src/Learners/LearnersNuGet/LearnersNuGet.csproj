@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NuspecFile>LearnersNuGet.nuspec</NuspecFile>
+    <NuspecProperties>minClientVersion=4.0;bin=bin\$(Configuration);version=$(version)</NuspecProperties>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Classifier\Classifier.csproj" />
+    <ProjectReference Include="..\Recommender\Recommender.csproj" />
+  </ItemGroup>
+</Project>

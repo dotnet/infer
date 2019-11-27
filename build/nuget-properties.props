@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Authors>Microsoft</Authors>
+    <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains the Infer.NET Compiler, which takes model descriptions written using the Infer.NET API and converts them into inference code.</Description>
+    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <ProjectUrl>https://dotnet.github.io/infer</ProjectUrl>
+    <PackageIcon>infernet.png</PackageIcon>
+    <PackageTags>Infer.NET machine learning Bayesian inference probabilistic</PackageTags>
+    <RepositoryUrl>https://github.com/dotnet/infer.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildProjectDirectory)\..\..\docs\images\infernet.png" Pack="true" PackagePath="\" />
+    <None Include="$(OutDir)$(AssemblyName).pdb" Pack="true" PackagePath="\lib\netstandard2.0\" />
+  </ItemGroup>
+</Project>

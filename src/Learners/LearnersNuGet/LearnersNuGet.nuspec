@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<package>
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata>
     <id>Microsoft.ML.Probabilistic.Learners</id>
     <title>Microsoft.ML.Probabilistic.Learners</title>
@@ -14,15 +14,16 @@
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
     <tags>Infer.NET machine learning Bayesian inference probabilistic</tags>
     <developmentDependency>false</developmentDependency>
-    <minClientVersion>4.0</minClientVersion>
     <language>en-US</language>
     <repository type="git" url="https://github.com/dotnet/infer.git" />
     <dependencies>
-      <dependency id="Microsoft.ML.Probabilistic" version="$version$" />
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.ML.Probabilistic" version="$version$" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\docs\images\infernet.png" target="images\infernet.png" />
+    <file src="..\..\..\docs\images\infernet.png" target="images\infernet.png" />
     <file src="$bin$\netstandard2.0\Microsoft.ML.Probabilistic.Learners.dll" target="lib\netstandard2.0" />
     <file src="$bin$\netstandard2.0\Microsoft.ML.Probabilistic.Learners.xml" target="lib\netstandard2.0" />
     <file src="$bin$\netstandard2.0\Microsoft.ML.Probabilistic.Learners.pdb" target="lib\netstandard2.0" />
