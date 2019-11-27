@@ -147,14 +147,15 @@ jobs:
       msbuildVersion: 14.0
     condition: in(variables.SignType, 'real', 'test')
 
-  - task: NuGetCommand@2
+  - task: DotNetCoreCLI@2
     displayName: 'Creating NuGet packages'
     inputs:
-      command: pack
-      packagesToPack: build/*.nuspec
-      includeSymbols: true
-      buildProperties: version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages
-      packDestination: $(Build.SourcesDirectory)/bin/packages
+      command: 'pack'
+      packagesToPack: 'build/*.nuspec'
+      nobuild: true
+      includesymbols: true
+      buildProperties: 'version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages'
+      packDirectory: '$(Build.SourcesDirectory)/bin/packages'
 
   - task: MSBuild@1
     displayName: Sign Packages
