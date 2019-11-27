@@ -944,10 +944,10 @@ namespace Microsoft.ML.Probabilistic.Math
             const double c_trigamma_large = 8;
             const double c_trigamma_small = 1e-4;
 
-            /* Use Taylor series if argument <= small */
+            /* Shift the argument and use Taylor series at 1 if argument <= small */
             if (x <= c_trigamma_small)
             {
-                return (1.0 / (x * x) + Zeta2 + M2Zeta3 * x);
+                return (1.0 / (x * x) + PrecomputedSeries.TrigammaAt1.Evaluate(x));
             }
 
             result = 0.0;
@@ -963,20 +963,10 @@ namespace Microsoft.ML.Probabilistic.Math
             // This expansion can be computed in Maple via asympt(Psi(1,x),x)
             double invX2 = 1 / (x * x);
             result += 0.5 * invX2;
-            double sum = 0;
-            for (int i = c_trigamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_trigamma_series[i] + sum);
-            }
+            double sum = PrecomputedSeries.CTrigamma.Evaluate(invX2);
             result += (1 + sum) / x;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the trigamma function.
-        /// Each coefficient is B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=1
-        /// </summary>
-        private static readonly double[] c_trigamma_series = { 1.0 / 6, -1.0 / 30, 1.0 / 42, -1.0 / 30, 5.0 / 66, -691.0 / 2730, 7.0 / 6, -3617.0 / 510 };
 
         /// <summary>
         ///  Evaluates Tetragamma, the forth derivative of logGamma(x)

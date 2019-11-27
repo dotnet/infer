@@ -50,9 +50,13 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         public TruncatedPowerSeries DigammaAt2 { get; }
         /// <summary>
         /// Coefficients of de Moivre's expansion for the digamma function.
-        /// Each coefficient is B_{2j}/(2j) where B_{2j} are the Bernoulli numbers, starting from j=1
         /// </summary>
         public TruncatedPowerSeries CDigamma { get; }
+        public TruncatedPowerSeries TrigammaAt1 { get; }
+        /// <summary>
+        /// Coefficients of de Moivre's expansion for the trigamma function.
+        /// </summary>
+        public TruncatedPowerSeries CTrigamma { get; }
         public TruncatedPowerSeries Log1Plus { get; }
         public TruncatedPowerSeries Log1Minus { get; }
 
@@ -63,6 +67,8 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             {
                 GammaAt2 = new TruncatedPowerSeries(gammaAt2Coefficients.Take(26).ToArray());
                 CDigamma = new TruncatedPowerSeries(cDigammaCoefficients.Take(8).ToArray());
+                TrigammaAt1 = new TruncatedPowerSeries(trigammaAt1Coefficients.Take(2).ToArray());
+                CTrigamma = new TruncatedPowerSeries(cTrigammaCoefficients.Take(9).ToArray());
                 Log1Plus = TruncatedPowerSeries.Generate(6, Log1PlusCoefficient);
                 Log1Minus = TruncatedPowerSeries.Generate(5, Log1MinusCoefficient);
             }
@@ -70,6 +76,8 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             {
                 GammaAt2 = new TruncatedPowerSeries(gammaAt2Coefficients.ToArray());
                 CDigamma = new TruncatedPowerSeries(cDigammaCoefficients.ToArray());
+                TrigammaAt1 = new TruncatedPowerSeries(trigammaAt1Coefficients.ToArray());
+                CTrigamma = new TruncatedPowerSeries(cTrigammaCoefficients.ToArray());
                 Log1Plus = TruncatedPowerSeries.Generate(16, Log1PlusCoefficient);
                 Log1Minus = TruncatedPowerSeries.Generate(16, Log1MinusCoefficient);
             }
@@ -238,6 +246,71 @@ for k in range(1,22):
             //12850850499305.083984375,
             //-482414483548501.6875,
             //20040310656516252,
+        };
+
+        /* Python code to generate this table (must not be indented):
+from __future__ import division
+from sympy import *
+for k in range(0,20):
+		print("            %0.34g," % ((-1)**k * (k + 1) * zeta(k + 2)).evalf(34))
+         */
+        private static readonly double[] trigammaAt1Coefficients = new[]
+        {
+            1.644934066848226406065691662661266,
+            -2.40411380631918847328165611543227,
+            3.246969701133414432092649803962559,
+            -4.147711020573479956397022760938853,
+            5.086715309922245964457943045999855,
+            -6.050095664291537111978414031909779,
+            7.028541493385610294808429898694158,
+            -8.016067142608656936886291077826172,
+            9.0089511761503633380243627470918,
+            -10.00494188604119472074671648442745,
+            11.00270695208638827011782268527895,
+            -12.00147256017094221647312224376947,
+            13.00079622575576365761662600561976,
+            -14.00042823530829849687506793998182,
+            15.00022923389112960990132705774158,
+            -16.00012219516220568493736209347844,
+            17.00006489398550613145744137000293,
+            -18.00003434782889755183532543014735,
+            19.00001812527864331059390679001808,
+            -20.00000953865973585266146983485669,
+        };
+
+        /* Coefficients of de Moivre's expansion for the digamma function.
+         Each coefficient is B_{2j}/(2j) where B_{2j} are the Bernoulli numbers, starting from j=1
+         Python code to generate this table (must not be indented):
+from __future__ import division
+from sympy import *
+print("            0,")
+for k in range(1,22):
+		print("            %0.34g," % (bernoulli(2 * k)).evalf(34))
+        */
+        private static readonly double[] cTrigammaCoefficients = new[]
+        {
+            0.0,
+            0.1666666666666666574148081281236955,
+            -0.03333333333333333287074040640618477,
+            0.02380952380952380820211544687481364,
+            -0.03333333333333333287074040640618477,
+            0.07575757575757575967845269815370557,
+            -0.2531135531135531024915508169215173,
+            1.166666666666666740681534975010436,
+            -7.092156862745097711808739404659718,
+            54.97117794486215558436015271581709,
+            //-529.1242424242424249314353801310062,
+            //6192.12318840579700918169692158699,
+            //-86580.25311355311714578419923782349,
+            //1425517.166666666744276881217956543,
+            //-27298231.06781609356403350830078125,
+            //601580873.90064239501953125,
+            //-15116315767.0921573638916015625,
+            //429614643061.16668701171875,
+            //-13711655205088.33203125,
+            //488332318973593.1875,
+            //-19296579341940068,
+            //841693047573682560,
         };
 
         #endregion
