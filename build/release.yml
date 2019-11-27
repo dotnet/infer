@@ -150,8 +150,7 @@ jobs:
   - task: MSBuild@1
     inputs:
       solution: 'Infer.sln'
-      platform: '$(Platform)'
-      configuration: '$(Configuration)'
+      configuration: '$(BuildConfiguration)'
       msbuildArguments: '/t:Pack /p:NoBuild=true;version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages;PackageOutputPath=$(Build.SourcesDirectory)/bin/packages'
 
   - task: MSBuild@1
