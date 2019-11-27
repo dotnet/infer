@@ -147,14 +147,11 @@ jobs:
       msbuildVersion: 14.0
     condition: in(variables.SignType, 'real', 'test')
 
-  - task: DotNetCoreCLI@2
-    displayName: 'Creating NuGet packages'
+  - task: MSBuild@1
     inputs:
-      command: 'pack'
-      packagesToPack: 'Infer.sln'
-      nobuild: true
-      buildProperties: 'version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages'
-      packDirectory: '$(Build.SourcesDirectory)/bin/packages'
+      solution: 'Infer.sln'
+      configuration: '$(BuildConfiguration)'
+      msbuildArguments: '/t:Pack /p:NoBuild=true;version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages;PackageOutputPath=$(Build.SourcesDirectory)/bin/packages'
 
   - task: MSBuild@1
     displayName: Sign Packages
