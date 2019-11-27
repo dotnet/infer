@@ -41,7 +41,7 @@ Only the forward messages are shown, the backward message are identical but with
 | b_uses[i] = new bool[6]; | b_uses_F[i] = new DistributionArray<Bernoulli>(marginalPrototypeExpression,6); | Uses channel (same as for definition channel in this case) |
 | jarray[i] = new bool[sizes[i]]; | b_uses_F[i] = new DistributionArray<Bernoulli>(marginalPrototypeExpression,sizes[i]); | |
 
-#### Methods calls
+#### Method calls
 
 Static method calls are converted into multiple message operators - typically one for the return value (if any) and one for each argument. Operators are not created for deterministic arguments. The operator method which is called will depend on the original static method and the algorithm being used. Operators assign to backwards messages for arguments and forward messages for return values.
  

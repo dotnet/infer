@@ -7,8 +7,6 @@ layout: default
 
 This library provides numerical routines needed for machine learning applications. It includes linear algebra, special functions, and random number generation. It can be used separately from the rest of Infer.NET.
 
-The library is pure .NET and Microsoft-owned. It is usable throughout Microsoft. 
-
 The library can be configured to use Lapack (a native library for linear algebra) instead of the .NET implementation. This makes the code faster but less portable.
 
 Current features:
