@@ -147,21 +147,12 @@ jobs:
       msbuildVersion: 14.0
     condition: in(variables.SignType, 'real', 'test')
 
-  - task: UseDotNet@2
-    displayName: 'Use .NET Core sdk'
+  - task: MSBuild@1
     inputs:
-      packageType: sdk
-      version: 2.2.203
-      installationPath: $(Agent.ToolsDirectory)/dotnet
-
-  - task: DotNetCoreCLI@2
-    displayName: 'Creating NuGet packages'
-    inputs:
-      command: 'pack'
-      packagesToPack: 'Infer.sln'
-      nobuild: true
-      buildProperties: 'version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages'
-      packDirectory: '$(Build.SourcesDirectory)/bin/packages'
+      solution: 'Infer.sln'
+      platform: '$(Platform)'
+      configuration: '$(Configuration)'
+      msbuildArguments: '/t:Pack /p:NoBuild=true;version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages;PackageOutputPath=$(Build.SourcesDirectory)/bin/packages'
 
   - task: MSBuild@1
     displayName: Sign Packages
