@@ -153,7 +153,6 @@ jobs:
       command: 'pack'
       packagesToPack: 'build/*.nuspec'
       nobuild: true
-      includesymbols: true
       buildProperties: 'version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages'
       packDirectory: '$(Build.SourcesDirectory)/bin/packages'
 
