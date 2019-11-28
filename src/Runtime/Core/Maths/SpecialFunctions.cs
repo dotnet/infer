@@ -983,7 +983,7 @@ namespace Microsoft.ML.Probabilistic.Math
                          c_tetragamma_small = 1e-4;
             /* Use Taylor series if argument <= small */
             if (x < c_tetragamma_small)
-                return -2 / (x * x * x) + M2Zeta3 + 6 * Zeta4 * x;
+                return -2 / (x * x * x) + PrecomputedSeries.TetragammaAt1.Evaluate(x);
             double result = 0;
             /* Reduce to Tetragamma(x+n) where ( X + N ) >= L */
             while (x < c_tetragamma_large)
@@ -996,20 +996,10 @@ namespace Microsoft.ML.Probabilistic.Math
             // Milton Abramowitz and Irene A. Stegun, Handbook of Mathematical Functions, Section 6.4
             double invX2 = 1 / (x * x);
             result += -invX2 / x;
-            double sum = 0;
-            for (int i = c_tetragamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_tetragamma_series[i] + sum);
-            }
+            double sum = PrecomputedSeries.CTetragamma.Evaluate(invX2);
             result += sum;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the quadgamma function.
-        /// Each coefficient is -(2j+1) B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=0
-        /// </summary>
-        private static readonly double[] c_tetragamma_series = { -1, -.5, +1 / 6.0, -1 / 6.0, +3 / 10.0, -5 / 6.0, 691.0 / 210, -35.0 / 2 };
 
         /// <summary>
         /// Computes the natural logarithm of the multivariate Gamma function.
@@ -1445,23 +1435,12 @@ f = 1/gamma(x+1)-1
             else
             {
                 // the series is:  sum_{i=1}^inf B_{2i} / (2i*(2i-1)*x^(2i-1))
-                double sum = 0;
-                double term = 1.0 / x;
-                double delta = term * term;
-                for (int i = 0; i < c_gammaln_series.Length; i++)
-                {
-                    sum += c_gammaln_series[i] * term;
-                    term *= delta;
-                }
+                double invX = 1.0 / x;
+                double invX2 = invX * invX;
+                double sum = invX * PrecomputedSeries.CGammaln.Evaluate(invX2);
                 return sum;
             }
         }
-
-        private static double[] c_gammaln_series =
-        {
-            1.0 / (6 * 2), -1.0 / (30 * 4 * 3), 1.0 / (42 * 6 * 5), -1.0 / (30 * 8 * 7),
-            5.0/(66*10*9), -691.0/(2730*12*11), 7.0/(6*14*13)
-        };
 
         #endregion
 

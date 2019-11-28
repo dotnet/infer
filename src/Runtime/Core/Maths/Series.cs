@@ -57,6 +57,12 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         /// Coefficients of de Moivre's expansion for the trigamma function.
         /// </summary>
         public TruncatedPowerSeries CTrigamma { get; }
+        public TruncatedPowerSeries TetragammaAt1 { get; }
+        /// <summary>
+        /// Coefficients of de Moivre's expansion for the tetragamma function.
+        /// </summary>
+        public TruncatedPowerSeries CTetragamma { get; }
+        public TruncatedPowerSeries CGammaln { get; }
         public TruncatedPowerSeries Log1Plus { get; }
         public TruncatedPowerSeries Log1Minus { get; }
 
@@ -69,6 +75,9 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 CDigamma = new TruncatedPowerSeries(cDigammaCoefficients.Take(8).ToArray());
                 TrigammaAt1 = new TruncatedPowerSeries(trigammaAt1Coefficients.Take(2).ToArray());
                 CTrigamma = new TruncatedPowerSeries(cTrigammaCoefficients.Take(9).ToArray());
+                TetragammaAt1 = new TruncatedPowerSeries(tetragammaAt1Coefficients.Take(2).ToArray());
+                CTetragamma = new TruncatedPowerSeries(cTetragammaCoefficients.Take(9).ToArray());
+                CGammaln = new TruncatedPowerSeries(cGammalnCoefficients.Take(7).ToArray());
                 Log1Plus = TruncatedPowerSeries.Generate(6, Log1PlusCoefficient);
                 Log1Minus = TruncatedPowerSeries.Generate(5, Log1MinusCoefficient);
             }
@@ -78,6 +87,9 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 CDigamma = new TruncatedPowerSeries(cDigammaCoefficients.ToArray());
                 TrigammaAt1 = new TruncatedPowerSeries(trigammaAt1Coefficients.ToArray());
                 CTrigamma = new TruncatedPowerSeries(cTrigammaCoefficients.ToArray());
+                TetragammaAt1 = new TruncatedPowerSeries(tetragammaAt1Coefficients.ToArray());
+                CTetragamma = new TruncatedPowerSeries(cTetragammaCoefficients.ToArray());
+                CGammaln = new TruncatedPowerSeries(cGammalnCoefficients.ToArray());
                 Log1Plus = TruncatedPowerSeries.Generate(16, Log1PlusCoefficient);
                 Log1Minus = TruncatedPowerSeries.Generate(16, Log1MinusCoefficient);
             }
@@ -279,7 +291,7 @@ for k in range(0,20):
         };
 
         /* Coefficients of de Moivre's expansion for the digamma function.
-         Each coefficient is B_{2j}/(2j) where B_{2j} are the Bernoulli numbers, starting from j=1
+         Each coefficient is B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=1
          Python code to generate this table (must not be indented):
 from __future__ import division
 from sympy import *
@@ -311,6 +323,101 @@ for k in range(1,22):
             //488332318973593.1875,
             //-19296579341940068,
             //841693047573682560,
+        };
+
+        /* Python code to generate this table (must not be indented):
+from __future__ import division
+from sympy import *
+for k in range(0,20):
+		print("            %0.34g," % ((-1)**(k + 1) * (k + 1) * (k + 2) * zeta(k + 3)).evalf(34))
+         */
+        private static readonly double[] tetragammaAt1Coefficients = new[]
+        {
+            -2.40411380631918847328165611543227,
+            6.493939402266828864185299607925117,
+            -12.44313306172043986919106828281656,
+            20.34686123968898385783177218399942,
+            -30.25047832145768467171365045942366,
+            42.17124896031366176885057939216495,
+            -56.11246999826060743998823454603553,
+            72.0716094092029067041949019767344,
+            -90.04447697437075248672044835984707,
+            110.0270695208638898066055844537914,
+            -132.0161981618803679339180234819651,
+            156.0095547090691638913995120674372,
+            -182.0055670590078875648032408207655,
+            210.0032092744758074331912212073803,
+            -240.0018329274330994849151466041803,
+            272.0010383037680981033190619200468,
+            -306.0005839130912477230594959110022,
+            342.0003262550155795906903222203255,
+            -380.0001812345349776478542480617762,
+            420.0001001492111640800430905073881,
+        };
+
+        /* Coefficients of de Moivre's expansion for the digamma function.
+         Each coefficient is -(2j+1) B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=0
+         Python code to generate this table (must not be indented):
+from __future__ import division
+from sympy import *
+print("            0.0,")
+for k in range(0,21):
+		print("            %0.34g," % (-(2 * k + 1) * bernoulli(2 * k)).evalf(34))
+        */
+        private static readonly double[] cTetragammaCoefficients = new[]
+        {
+            0.0,
+            -1,
+            -0.5,
+            0.1666666666666666574148081281236955,
+            -0.1666666666666666574148081281236955,
+            0.2999999999999999888977697537484346,
+            -0.833333333333333370340767487505218,
+            3.290476190476190332390160619979724,
+            -17.5,
+            //120.5666666666666628771054092794657,
+            //-1044.452380952380963208270259201527,
+            //11111.6090909090908098733052611351,
+            //-142418.8333333333430346101522445679,
+            //2164506.327838827855885028839111328,
+            //-38488963.5,
+            //791648700.966666698455810546875,
+            //-18649007090.91991424560546875,
+            //498838420314.04119873046875,
+            //-15036512507140.833984375,
+            //507331242588268.3125,
+            //-19044960439970132,
+            //791159753019542784,
+        };
+
+        /* Python code to generate this table (must not be indented):
+from __future__ import division
+from sympy import *
+for k in range(1,21):
+		print("            %0.34g," % (bernoulli(2 * k) / (2 * k * (2 * k - 1))).evalf(34))
+        */
+        private static readonly double[] cGammalnCoefficients = new[]
+        {
+            0.08333333333333332870740406406184775,
+            -0.002777777777777777883788656865249322,
+            0.0007936507936507936501052684619139654,
+            -0.0005952380952380952917890599707106958,
+            0.0008417508417508417139715759525131489,
+            -0.001917526917526917633674554686251668,
+            0.006410256410256410034009810772204219,
+            -0.02955065359477124231624145522800973,
+            0.179644372368830573805098538286984,
+            -1.392432216905901132264489206136204,
+            13.40286404416839260989036120008677,
+            //-156.8482846260020266981882741674781,
+            //2193.103333333333466725889593362808,
+            //-36108.77125372498994693160057067871,
+            //691472.2688513130415230989456176758,
+            //-15238221.53940741531550884246826172,
+            //382900751.391414165496826171875,
+            //-10882266035.7843914031982421875,
+            //347320283765.00225830078125,
+            //-12369602142269.275390625,
         };
 
         #endregion
