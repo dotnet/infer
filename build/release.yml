@@ -150,31 +150,27 @@ jobs:
     condition: in(variables.SignType, 'real', 'test')
 
   - task: UseDotNet@2
+    displayName: Get dotnet 3.x
     inputs:
       packageType: 'sdk'
       version: '3.x'
 
   - task: DotNetCoreCLI@2
+    displayName: Restore Infer.sln to enable packaging.
     inputs:
       command: 'restore'
       projects: 'Infer.sln'
       feedsToUse: 'select'
 
   - task: DotNetCoreCLI@2
+    displayName: Create NuGet packages from Infer.sln.
     inputs:
       command: 'pack'
       packagesToPack: 'Infer.sln'
       packDirectory: '$(Build.SourcesDirectory)/bin/packages'
-      nobuild: true
+      nobuild: true # We must not rebuild, otherwise we overwrite the signed assemblies.
       versioningScheme: 'byBuildNumber'
-      buildProperties: 'BaseOutputPath=$(Build.SourcesDirectory)/bin/obj/packages;BuildProjectReferences=false;version=$(Build.BuildNumber)'
-
-#  - task: MSBuild@1
-#    inputs:
-#      solution: 'Infer.sln'
-#      configuration: '$(BuildConfiguration)'
-#      msbuildArguments: '/t:Pack /p:NoBuild=true;version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages;PackageOutputPath=$(Build.SourcesDirectory)/bin/packages /restore'
-#      msbuildVersion: 15.0
+      buildProperties: 'BaseOutputPath=$(Build.SourcesDirectory)/bin/obj/packages;BuildProjectReferences=false;version=$(Build.BuildNumber)' # BaseOutputPath is set to the location the signed assemblies have been copied to. version is used for NuSpec substitution in LearnersNuGet.csproj.
 
   - task: MSBuild@1
     displayName: Sign Packages

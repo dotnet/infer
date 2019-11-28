@@ -3,12 +3,21 @@
   <Import Project="$(MSBuildThisFileDirectory)\common.props" />
 
   <PropertyGroup>
+    <!--
+    If you try to override output path directly from the command line (or release.yml) then
+    you lose the target-framework subdirectories (for example, instead of building into $(OutputPath)\netstandard2.0
+    you just build into $(OutputPath)) - this usually isn't what you want. The workaround here
+    is to set an intermediate variable BaseOutputPath from the command line (or release.yml) and
+    then set that to OutputPath here, which preserves the target-framework subdirectories.
+    -->
     <OutputPath>$(BaseOutputPath)</OutputPath>
     <Authors>Microsoft</Authors>
     <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains the Infer.NET Compiler, which takes model descriptions written using the Infer.NET API and converts them into inference code.</Description>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <ProjectUrl>https://dotnet.github.io/infer</ProjectUrl>
+    
+    <!-- This is the path to the image within the package. -->
     <PackageIcon>infernet.png</PackageIcon>
     <PackageTags>Infer.NET machine learning Bayesian inference probabilistic</PackageTags>
     <RepositoryUrl>https://github.com/dotnet/infer.git</RepositoryUrl>
@@ -17,7 +26,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- This image is referenced by PackageIcon. -->
     <None Include="$(MSBuildThisFileDirectory)\..\docs\images\infernet.png" Pack="true" PackagePath="\" />
+    
+    <!--
+    NuGet's IncludeSymbols setting creates a separate symbols NuGet package, but we would like the
+    symbols included in the same package - hence this workaround.
+    -->
     <None Include="$(OutDir)$(AssemblyName).pdb" Pack="true" PackagePath="\lib\$(TargetFramework)\" />
   </ItemGroup>
 </Project>
