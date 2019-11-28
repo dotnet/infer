@@ -3,7 +3,7 @@
     <OutputPath>$(BaseOutputPath)</OutputPath>
     <TargetFramework>netstandard2.0</TargetFramework>
     <NuspecFile>LearnersNuGet.nuspec</NuspecFile>
-    <NuspecProperties>minClientVersion=4.0;bin=bin\$(Configuration);version=$(version)</NuspecProperties>
+    <NuspecProperties>minClientVersion=4.0;bin=$(BaseOutputPath);version=$(version)</NuspecProperties>
   </PropertyGroup>
 
   <ItemGroup>
