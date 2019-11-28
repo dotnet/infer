@@ -36,9 +36,9 @@ namespace Microsoft.ML.Probabilistic.Math
     /// </remarks>
     public static class MMath
     {
-        public static uint NumericalPrecisionBits { get; private set; } = 53;
+        internal static uint NumericalPrecisionBits { get; private set; } = 53;
 
-        public static void SetNumericalPrecision(uint value)
+        internal static void SetNumericalPrecision(uint value)
         {
             if (NumericalPrecisionBits != value)
             {
