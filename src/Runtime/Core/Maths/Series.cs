@@ -44,7 +44,31 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         }
     }
 
-    class PrecomputedSeriesCollection
+    struct PowerSeries
+    {
+        readonly Func<int, double> coefGenerator;
+
+        public PowerSeries(Func<int, double> coefGenerator)
+        {
+            this.coefGenerator = coefGenerator;
+        }
+
+        public double Evaluate(double x)
+        {
+            double sum = coefGenerator(0);
+            double term = 1;
+            for (int i = 1; ; i++)
+            {
+                double oldSum = sum;
+                term *= x;
+                sum += term * coefGenerator(i);
+                if (sum == oldSum) break;
+            }
+            return sum;
+        }
+    }
+
+    class Series
     {
         public TruncatedPowerSeries GammaAt2 { get; }
         public TruncatedPowerSeries DigammaAt2 { get; }
@@ -63,10 +87,10 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         /// </summary>
         public TruncatedPowerSeries CTetragamma { get; }
         public TruncatedPowerSeries CGammaln { get; }
-        public TruncatedPowerSeries Log1Plus { get; }
-        public TruncatedPowerSeries Log1Minus { get; }
+        public PowerSeries Log1Plus { get; }
+        public PowerSeries Log1Minus { get; }
 
-        public PrecomputedSeriesCollection(uint precisionBits)
+        public Series(uint precisionBits)
         {
             uint doublePrecisionCutOff = 53;
             if (precisionBits <= doublePrecisionCutOff)
@@ -78,8 +102,6 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 TetragammaAt1 = new TruncatedPowerSeries(tetragammaAt1Coefficients.Take(2).ToArray());
                 CTetragamma = new TruncatedPowerSeries(cTetragammaCoefficients.Take(9).ToArray());
                 CGammaln = new TruncatedPowerSeries(cGammalnCoefficients.Take(7).ToArray());
-                Log1Plus = TruncatedPowerSeries.Generate(6, Log1PlusCoefficient);
-                Log1Minus = TruncatedPowerSeries.Generate(5, Log1MinusCoefficient);
             }
             else
             {
@@ -90,10 +112,10 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 TetragammaAt1 = new TruncatedPowerSeries(tetragammaAt1Coefficients.ToArray());
                 CTetragamma = new TruncatedPowerSeries(cTetragammaCoefficients.ToArray());
                 CGammaln = new TruncatedPowerSeries(cGammalnCoefficients.ToArray());
-                Log1Plus = TruncatedPowerSeries.Generate(16, Log1PlusCoefficient);
-                Log1Minus = TruncatedPowerSeries.Generate(16, Log1MinusCoefficient);
             }
             DigammaAt2 = TruncatedPowerSeries.Generate(GammaAt2.Coefficients.Length, i => GammaAt2.Coefficients[i] * (i + 1));
+            Log1Plus = new PowerSeries(Log1PlusCoefficient);
+            Log1Minus = new PowerSeries(Log1MinusCoefficient);
         }
 
         #region Coefficient generators

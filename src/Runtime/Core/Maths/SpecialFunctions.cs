@@ -45,17 +45,17 @@ namespace Microsoft.ML.Probabilistic.Math
                 if (double.IsNaN(value) || value <= 0)
                     throw new ArgumentException(nameof(value));
 
-                var newSeries = new PrecomputedSeriesCollection(value);
+                var newSeries = new Series(value);
                 lock(precisionSettingLockObject)
                 {
                     NumericalPrecisionBits = value;
-                    PrecomputedSeries = newSeries;
+                    Series = newSeries;
                 }
             }
         }
 
         static object precisionSettingLockObject = new object();
-        static PrecomputedSeriesCollection PrecomputedSeries { get; set; } = new PrecomputedSeriesCollection(NumericalPrecisionBits);
+        static Series Series { get; set; } = new Series(NumericalPrecisionBits);
 
         #region Bessel functions
 
@@ -766,7 +766,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 // Use Taylor series at x=2
                 // Reference: https://dlmf.nist.gov/5.7#E3
                 double dx = x - 2;
-                double sum = PrecomputedSeries.GammaAt2.Evaluate(dx);
+                double sum = Series.GammaAt2.Evaluate(dx);
                 sum = dx * (1 + Digamma1 + sum);
                 result += sum;
                 return result;
@@ -890,7 +890,7 @@ namespace Microsoft.ML.Probabilistic.Math
                     x++;
                 }
                 double dx = x - 2;
-                double sum2 = PrecomputedSeries.DigammaAt2.Evaluate(dx);
+                double sum2 = Series.DigammaAt2.Evaluate(dx);
                 result2 += sum2;
                 return result2;
             }
@@ -910,7 +910,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double invX = 1 / x;
             result += Math.Log(x) - 0.5 * invX;
             double invX2 = invX * invX;
-            double sum = PrecomputedSeries.CDigamma.Evaluate(invX2);
+            double sum = Series.CDigamma.Evaluate(invX2);
             result -= sum;
             return result;
         }
@@ -947,7 +947,7 @@ namespace Microsoft.ML.Probabilistic.Math
             /* Shift the argument and use Taylor series at 1 if argument <= small */
             if (x <= c_trigamma_small)
             {
-                return (1.0 / (x * x) + PrecomputedSeries.TrigammaAt1.Evaluate(x));
+                return (1.0 / (x * x) + Series.TrigammaAt1.Evaluate(x));
             }
 
             result = 0.0;
@@ -963,7 +963,7 @@ namespace Microsoft.ML.Probabilistic.Math
             // This expansion can be computed in Maple via asympt(Psi(1,x),x)
             double invX2 = 1 / (x * x);
             result += 0.5 * invX2;
-            double sum = PrecomputedSeries.CTrigamma.Evaluate(invX2);
+            double sum = Series.CTrigamma.Evaluate(invX2);
             result += (1 + sum) / x;
             return result;
         }
@@ -983,7 +983,7 @@ namespace Microsoft.ML.Probabilistic.Math
                          c_tetragamma_small = 1e-4;
             /* Use Taylor series if argument <= small */
             if (x < c_tetragamma_small)
-                return -2 / (x * x * x) + PrecomputedSeries.TetragammaAt1.Evaluate(x);
+                return -2 / (x * x * x) + Series.TetragammaAt1.Evaluate(x);
             double result = 0;
             /* Reduce to Tetragamma(x+n) where ( X + N ) >= L */
             while (x < c_tetragamma_large)
@@ -996,7 +996,7 @@ namespace Microsoft.ML.Probabilistic.Math
             // Milton Abramowitz and Irene A. Stegun, Handbook of Mathematical Functions, Section 6.4
             double invX2 = 1 / (x * x);
             result += -invX2 / x;
-            double sum = PrecomputedSeries.CTetragamma.Evaluate(invX2);
+            double sum = Series.CTetragamma.Evaluate(invX2);
             result += sum;
             return result;
         }
@@ -1437,7 +1437,7 @@ f = 1/gamma(x+1)-1
                 // the series is:  sum_{i=1}^inf B_{2i} / (2i*(2i-1)*x^(2i-1))
                 double invX = 1.0 / x;
                 double invX2 = invX * invX;
-                double sum = invX * PrecomputedSeries.CGammaln.Evaluate(invX2);
+                double sum = invX * Series.CGammaln.Evaluate(invX2);
                 return sum;
             }
         }
@@ -3238,11 +3238,11 @@ rr = mpf('-0.99999824265582826');
         public static double Log1Plus(double x)
         {
             Assert.IsTrue(Double.IsNaN(x) || x >= -1);
-            if (x > -1e-3 && x < 2e-3)
+            if (x > -1e-3 && x < 6e-2)
             {
                 // use the Taylor series for log(1+x) around x=0
                 // Maple command: series(log(1+x),x);
-                return PrecomputedSeries.Log1Plus.Evaluate(x);
+                return Series.Log1Plus.Evaluate(x);
             }
             else
             {
@@ -3287,15 +3287,15 @@ rr = mpf('-0.99999824265582826');
         /// <param name="x">A non-positive real number: -Inf &lt;= x &lt;= 0, or NaN.</param>
         /// <returns>log(1-exp(x)), which is always &lt;= 0.</returns>
         /// <remarks>This function provides higher accuracy than a direct evaluation of <c>log(1-exp(x))</c>,
-        /// particularly when x &lt; -7.5 or x > -1e-5.</remarks>
+        /// particularly when x &lt; -5 or x > -1e-5.</remarks>
         public static double Log1MinusExp(double x)
         {
             if (x > 0)
                 throw new ArgumentException("x (" + x + ") > 0");
-            if (x < -7.5)
+            if (x < -3.5)
             {
-                double y = Math.Exp(x);
-                return PrecomputedSeries.Log1Minus.Evaluate(y);
+                double expx = Math.Exp(x);
+                return Series.Log1Minus.Evaluate(expx);
             }
             else
             {
