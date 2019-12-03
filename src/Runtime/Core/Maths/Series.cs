@@ -61,8 +61,12 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             {
                 double oldSum = sum;
                 term *= x;
-                sum += term * coefGenerator(i);
-                if (sum == oldSum) break;
+                double coefficient = coefGenerator(i);
+                if (coefficient != 0)
+                {
+                    sum += term * coefficient;
+                    if (sum == oldSum) break;
+                }
             }
             return sum;
         }

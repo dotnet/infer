@@ -285,6 +285,8 @@ log(1+mpf('1e-3'))
             double[,] log1plus_pairs = new double[,]
                 {
                     {0, 0},
+                    {1e-1, 0.09531017980432486004395212328 },
+                    {6.3e-2, 0.06109509935981087637675438 },
                     {6.1e-2, 0.059211859631846083 },
                     {5.5e-2, 0.05354076692802981828874 },
                     {5.3e-2, 0.051643233151838449580494 },
@@ -334,6 +336,8 @@ log(1+mpf('1e-3'))
                     {1e-8, 1e-8 - 0.5e-16 + 1e-24/3},
                     {1e-14, 1e-14 - 0.5e-28 + 1e-42/3},
                     {-1e-8, -0.00000001000000005000000033333333583333},
+                    {-1e-7, -0.0000001000000050000003333333583333353333335 },
+                    {-1e-6, -0.0000010000005000003333335833335333335 },
                     {-1e-5, -0.0000100000500003333358333533335},
                     {-1e-4, -0.0001000050003333583353335},
                     {-1e-3, -0.0010005003335835335},
@@ -23995,6 +23999,18 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 {
                     x[k] = pairs[i, k];
                     args[k] = x[k];
+                }
+                bool showTiming = false;
+                if(showTiming)
+                {
+                    Stopwatch watch = Stopwatch.StartNew();
+                    int repetitionCount = 100000;
+                    for (int repetition = 0; repetition < repetitionCount; repetition++)
+                    {
+                        Util.DynamicInvoke(fcn, args);
+                    }
+                    watch.Stop();
+                    Trace.WriteLine($"  ({watch.ElapsedTicks} ticks for {repetitionCount} calls)");
                 }
                 double fx = pairs[i, x.Count];
                 double result = (double)Util.DynamicInvoke(fcn, args);

@@ -1182,7 +1182,16 @@ namespace Microsoft.ML.Probabilistic.Math
             if (a <= 20)
                 throw new Exception("a <= 20");
             double xOverAMinus1 = (x - a) / a;
-            double phi = xOverAMinus1 - MMath.Log1Plus(xOverAMinus1);
+            double phi;
+            if (Math.Abs(xOverAMinus1) < 1e-1)
+            {
+                double XMinusLog1PlusCoefficient(int n) => (n <= 1) ? 0.0 : (n % 2 == 0 ? 1.0 : -1.0) / n;
+                phi = new PowerSeries(XMinusLog1PlusCoefficient).Evaluate(xOverAMinus1);
+            }
+            else
+            {
+                phi = xOverAMinus1 - MMath.Log1Plus(xOverAMinus1);
+            }
             double y = a * phi;
             double z = Math.Sqrt(2 * phi);
             if (x <= a)
