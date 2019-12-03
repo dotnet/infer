@@ -44,10 +44,18 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         }
     }
 
+    /// <summary>
+    /// Represents a mathematical power series of the form c0 + c1*x + c2*x^2 + c3*x^3 + ...
+    /// </summary>
     struct PowerSeries
     {
         readonly Func<int, double> coefGenerator;
 
+        /// <summary>
+        /// Constructs a power series.
+        /// </summary>
+        /// <param name="coefGenerator">Provides the coefficients in the series, where the constant term is index zero. 
+        /// Every zero coefficient must eventually be followed by a nonzero coefficient.</param>
         public PowerSeries(Func<int, double> coefGenerator)
         {
             this.coefGenerator = coefGenerator;
@@ -62,6 +70,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 double oldSum = sum;
                 term *= x;
                 double coefficient = coefGenerator(i);
+                // To ensure termination, every zero coefficient must eventually be followed by a nonzero coefficient.
                 if (coefficient != 0)
                 {
                     sum += term * coefficient;
