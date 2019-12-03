@@ -143,6 +143,8 @@ using (Variable.Case(c,1))
 
 Here _`y`_ is a local variable because it is created inside the Case for c=0. It cannot be used outside the Case c=0. Inferring _`y`_ will give its distribution conditional on c=0. Note the difference with how _`x`_ is created (_`x`_ is not a local variable and can be used in other cases).
 
+See the [Clinical trial tutorial](Clinical trial tutorial.md) for an example.
+
 ### Theory
 
 The theory behind branching, how it changes the factor graph, and how it interacts with message-passing inference algorithms is described in the paper [Gates: A Graphical Notation for Mixture Models](https://www.microsoft.com/en-us/research/publication/gates-a-graphical-notation-for-mixture-models/).

@@ -72,12 +72,12 @@ The variable **probAll** is both declared and defined inside the if block, since
 We have now fully defined the model and can go ahead and infer the distributions of interest.
 
 ```csharp
-InferenceEngine ie = new InferenceEngine();  
-Console.WriteLine("Probability treatment has an effect = " + ie.Infer(isEffective));
+InferenceEngine engine = new InferenceEngine();  
+Console.WriteLine("Probability treatment has an effect = " + engine.Infer(isEffective));
 Console.WriteLine("Probability of good outcome if given treatment = "  
-                   + (float)ie.Infer<Beta>(probIfTreated).GetMean());  
+                   + (float)engine.Infer<Beta>(probIfTreated).GetMean());  
 Console.WriteLine("Probability of good outcome if control = "  
-                   + (float)ie.Infer<Beta>(probIfControl).GetMean());
+                   + (float)engine.Infer<Beta>(probIfControl).GetMean());
 ```
 
 When we run this code, it prints out: 
@@ -89,5 +89,17 @@ Probability of good outcome if control = 0.2857143
 ```
 
 Hence, there is some evidence from this data that the treatment has an effect and, furthermore, the effect is a positive one.
+
+### Factor graph
+
+This is what the factor graph of this model *should* look like (and what you will get if you save it in [DGML format](inference engine settings.md#savefactorgraphtofolder)):
+
+![A factor graph with gates](Clinical trial factor graph.png)
+
+However, if you tick the box in the Examples Browser to show the factor graph, or equivalently set `engine.ShowFactorGraph = true`, you will see the following:
+
+![A factor graph without gates](Clinical trial factor graph without gates.svg)
+
+Due to a limitation of the graph drawing tool, the 'if' blocks in the code are not explicitly drawn.  Instead, the variable **isEffective** points to **controlGroup** and **treatedGroup** via a **condition** edge.  The condition edge selects which parent of **controlGroup** and **treatedGroup** is active.
 
 If you find these tutorials to be effective, you can move on to the [next](Mixture of Gaussians tutorial.md).
