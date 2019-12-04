@@ -1,21 +1,35 @@
-<?xml version="1.0"?>
-<package>
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata>
     <id>Microsoft.ML.Probabilistic.Learners</id>
+    <title>Microsoft.ML.Probabilistic.Learners</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
-    <licenseUrl>https://github.com/dotnet/infer/blob/master/LICENSE.txt</licenseUrl>
+    <owners>Microsoft</owners>
+    <license type="expression">MIT</license>
     <projectUrl>https://dotnet.github.io/infer</projectUrl>
+    <icon>images\infernet.png</icon>
+
+    <!--
+    At some point the URL will be removed, but for now certain interfaces have not been updated to use the
+    embedded icon.
+    -->
     <iconUrl>https://raw.githubusercontent.com/dotnet/infer/master/docs/images/infernet.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains complete machine learning applications including a classifier and a recommender system.</description>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
     <tags>Infer.NET machine learning Bayesian inference probabilistic</tags>
+    <developmentDependency>false</developmentDependency>
+    <language>en-US</language>
+    <repository type="git" url="https://github.com/dotnet/infer.git" />
     <dependencies>
-      <dependency id="Microsoft.ML.Probabilistic" version="$version$" />
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.ML.Probabilistic" version="$version$" />
+      </group>
     </dependencies>
   </metadata>
   <files>
+    <file src="..\..\..\docs\images\infernet.png" target="images\infernet.png" />
     <file src="$bin$\netstandard2.0\Microsoft.ML.Probabilistic.Learners.dll" target="lib\netstandard2.0" />
     <file src="$bin$\netstandard2.0\Microsoft.ML.Probabilistic.Learners.xml" target="lib\netstandard2.0" />
     <file src="$bin$\netstandard2.0\Microsoft.ML.Probabilistic.Learners.pdb" target="lib\netstandard2.0" />
