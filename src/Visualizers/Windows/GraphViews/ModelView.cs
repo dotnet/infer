@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Xml;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.ML.Probabilistic.Models;
@@ -57,81 +56,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Visualizers
         {
             Form f = WindowsVisualizer.FormHelper.ShowInForm(gviewer, title, maximise);
             Application.Run(f);
-        }
-
-        /// <summary>
-        /// Write the graph to a file in DGML format
-        /// </summary>
-        /// <param name="path"></param>
-        public void WriteDgml(string path)
-        {
-            // References:
-            // http://en.wikipedia.org/wiki/DGML
-            // http://msdn.microsoft.com/library/ee842619.aspx
-            // http://ceyhunciper.wordpress.com/category/dgml/
-            // http://www.lovettsoftware.com/blogengine.net/post/2010/07/16/DGML-with-Style.aspx
-            GraphViews.GraphWriter g = new DgmlWriter("Model");
-            GraphViews.GraphBuilder.Add(g, modelBuilder, true);
-            g.Write(path);
-        }
-    }
-
-    internal class DgmlWriter : GraphViews.GraphWriter
-    {
-        public DgmlWriter(string name) : base(name) { }
-
-        public override void Write(string path)
-        {
-            var settings = new XmlWriterSettings();
-            settings.Indent = true;
-            Func<Color, string> colorToString = c => c.ToString().Trim('"');
-            using (var writer = XmlWriter.Create(path, settings))
-            {
-                writer.WriteStartElement("DirectedGraph", "http://schemas.microsoft.com/vs/2009/dgml");
-                writer.WriteStartElement("Nodes");
-                foreach (string key in nodes.Keys)
-                {
-                    GraphViews.Node node = (GraphViews.Node)nodes[key];
-                    writer.WriteStartElement("Node");
-                    writer.WriteAttributeString("Id", key);
-                    writer.WriteAttributeString("Label", node.Label);
-                    writer.WriteAttributeString("FontSize", node.FontSize.ToString());
-                    writer.WriteAttributeString("Foreground", node.FontColor.ToString());
-                    writer.WriteAttributeString("Background", node.FillColor.ToString());
-                    if (node.Shape == GraphViews.ShapeStyle.None)
-                        writer.WriteAttributeString("Shape", "None");
-                    if (node.UserData is GraphViews.GraphBuilder.Group)
-                        writer.WriteAttributeString("Group", "Expanded");
-                    else
-                    {
-                        // The Shape attribute in DGML can only be used to remove the outline.
-                        // To actually change the shape, use the NodeRadius attribute.
-                        if (node.Shape == GraphViews.ShapeStyle.Box)
-                            writer.WriteAttributeString("NodeRadius", "0");
-                        else if (node.Shape == GraphViews.ShapeStyle.Ellipse)
-                            writer.WriteAttributeString("NodeRadius", "100");
-                    }
-                    // The Outline attribute seems to be ignored.
-                    //writer.WriteAttributeString("Outline", colorToString(node.Attr.Color));
-                    writer.WriteEndElement();
-                }
-                writer.WriteEndElement();
-                writer.WriteStartElement("Links");
-                foreach (GraphViews.Edge edge in edges)
-                {
-                    writer.WriteStartElement("Link");
-                    writer.WriteAttributeString("Source", edge.Source.ID);
-                    writer.WriteAttributeString("Target", edge.Target.ID);
-                    writer.WriteAttributeString("Label", edge.Label);
-                    writer.WriteAttributeString("FontSize", edge.FontSize.ToString() ?? Microsoft.Msagl.Drawing.Label.DefaultFontSize.ToString());
-                    // Sadly there is no way to change the arrow head style in DGML.
-                    if (edge.UserData is GraphViews.GraphBuilder.Group)
-                        writer.WriteAttributeString("Category", "Contains");
-                    writer.WriteEndElement();
-                }
-                writer.WriteEndElement();
-                writer.WriteEndElement();
-            }
         }
     }
 

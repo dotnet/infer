@@ -783,6 +783,7 @@ namespace Microsoft.ML.Probabilistic.Tutorials
         private void factorGraphCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             InferenceEngine.DefaultEngine.ShowFactorGraph = factorGraphCheckBox.Checked;
+            InferenceEngine.DefaultEngine.SaveFactorGraphToFolder = factorGraphCheckBox.Checked ? "." : null;
         }
 
         private void mslCheckBox_CheckedChanged(object sender, EventArgs e)

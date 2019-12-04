@@ -146,6 +146,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 CheckStronglyConnected(g);
             ComputeDistances();
             float[] edgeCost = GetEdgeCosts3();
+            if (debug) RecordNodes();
             if (verbose)
                 WriteEdgeCosts(edgeCost);
             if (debug && verbose)
@@ -3888,6 +3889,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
             string nodeString = (node >= dg.dependencyGraph.Nodes.Count) ? "group" : dg.NodeToShortString(node);
             return $"{node} {groupString}{nodeString}";
+        }
+
+        private void RecordNodes()
+        {
+            RecordText("Nodes", dg.dependencyGraph.Nodes.Select(NodeToString));
         }
 
         private void RecordSchedule(string name, IEnumerable<NodeIndex> schedule)
