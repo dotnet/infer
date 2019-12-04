@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+  This project is used to create a NuGet package from a nuspec file during msbuild Pack.
+  We are using a nuspec file so that we can can include assemblies from separate projects
+  in the build.
+  
+  This project itself generates a dummy assembly, but this is not included in the generated
+  NuGet package.
+  -->
+  
+  <PropertyGroup>
+    <!--
+    If you try to override output path directly from the command line (or release.yml) then
+    you lose the target-framework subdirectories (for example, instead of building into $(OutputPath)\netstandard2.0
+    you just build into $(OutputPath)) - this usually isn't what you want. The workaround here
+    is to set an intermediate variable BaseOutputPath from the command line (or release.yml) and
+    then set that to OutputPath here, which preserves the target-framework subdirectories.
+    
+    We only replace OutputPath in this manner when BaseOutputPath has been set; otherwise
+    we use the usual default to enable easy local testing of NuGet generation. Note we
+    must set OutputPath explicitly, because its default value has not yet been populated.
+    -->
+    <OutputPath>bin\$(Configuration)</OutputPath>
+    <OutputPath Condition="'$(BaseOutputPath)' != ''">$(BaseOutputPath)</OutputPath>
+
+    <!--
+    This default is provided so that it is easy to create NuGet packages locally for testing
+    without specifying the version.
+    -->
+    <Version Condition="'$(Version)' == ''">1.0.0.0</Version>
+    
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NuspecFile>LearnersNuGet.nuspec</NuspecFile>
+    
+    <!--
+    It is necessary to forward required values through to the NuSpec since this is not automatic.
+    -->
+    <NuspecProperties>minClientVersion=4.0;bin=$(OutputPath);version=$(version)</NuspecProperties>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Classifier\Classifier.csproj" />
+    <ProjectReference Include="..\Recommender\Recommender.csproj" />
+  </ItemGroup>
+</Project>

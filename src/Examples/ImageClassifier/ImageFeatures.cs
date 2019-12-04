@@ -13,9 +13,10 @@ namespace ImageClassifier
 {
     public class ImageFeatures
     {
+        public const string folder = @"..\..\..\Images\";
+
         public void ComputeImageFeatures()
         {
-            string folder = @"..\..\Images\";
             string[] filenames = File.ReadAllLines(folder + "Images.txt");
             Dictionary<string, Vector> labels = ReadLabels(folder + "Labels.txt");
             Dictionary<string, Vector> features = new Dictionary<string, Vector>();
