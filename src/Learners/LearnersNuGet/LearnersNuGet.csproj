@@ -15,15 +15,27 @@
     you just build into $(OutputPath)) - this usually isn't what you want. The workaround here
     is to set an intermediate variable BaseOutputPath from the command line (or release.yml) and
     then set that to OutputPath here, which preserves the target-framework subdirectories.
+    
+    We only replace OutputPath in this manner when BaseOutputPath has been set; otherwise
+    we use the usual default to enable easy local testing of NuGet generation. Note we
+    must set OutputPath explicitly, because its default value has not yet been populated.
     -->
-    <OutputPath>$(BaseOutputPath)</OutputPath>
+    <OutputPath>bin\$(Configuration)</OutputPath>
+    <OutputPath Condition="'$(BaseOutputPath)' != ''">$(BaseOutputPath)</OutputPath>
+
+    <!--
+    This default is provided so that it is easy to create NuGet packages locally for testing
+    without specifying the version.
+    -->
+    <Version Condition="'$(Version)' == ''">1.0.0.0</Version>
+    
     <TargetFramework>netstandard2.0</TargetFramework>
     <NuspecFile>LearnersNuGet.nuspec</NuspecFile>
     
     <!--
-    It is necessary to forward required values through to the nuspec since this is not automatic
+    It is necessary to forward required values through to the NuSpec since this is not automatic.
     -->
-    <NuspecProperties>minClientVersion=4.0;bin=$(BaseOutputPath);version=$(version)</NuspecProperties>
+    <NuspecProperties>minClientVersion=4.0;bin=$(OutputPath);version=$(version)</NuspecProperties>
   </PropertyGroup>
 
   <ItemGroup>

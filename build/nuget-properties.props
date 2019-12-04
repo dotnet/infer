@@ -12,10 +12,9 @@
     -->
     <OutputPath>$(BaseOutputPath)</OutputPath>
     <Authors>Microsoft</Authors>
-    <Description>Infer.NET is a framework for running Bayesian inference in graphical models. It can also be used for probabilistic programming. This package contains the Infer.NET Compiler, which takes model descriptions written using the Infer.NET API and converts them into inference code.</Description>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <ProjectUrl>https://dotnet.github.io/infer</ProjectUrl>
+    <PackageProjectUrl>https://dotnet.github.io/infer</PackageProjectUrl>
     
     <!-- This is the path to the image within the package. -->
     <PackageIcon>infernet.png</PackageIcon>
