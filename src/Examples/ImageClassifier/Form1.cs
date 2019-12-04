@@ -8,8 +8,6 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.ML.Probabilistic.Compiler.Reflection;
-using Microsoft.ML.Probabilistic;
 using System.IO;
 using System.Diagnostics;
 using Microsoft.ML.Probabilistic.Math;
@@ -27,7 +25,7 @@ namespace ImageClassifier
         Label[] probLabels;
         MRC.SortedSet<int> testSet = new MRC.SortedSet<int>();
         Dictionary<int, bool> labelMap = new Dictionary<int, bool>();
-        public string folder = @"..\..\Images\";
+        public string folder = ImageFeatures.folder;
 
         public Form1()
         {
