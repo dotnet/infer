@@ -764,7 +764,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return d.GetMean();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="X(Gamma, Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="ExpOp_Laplace"]/message_doc[@name="X2(Gamma, Gaussian, double)"]/*'/>
         public static double X2([SkipIfUniform] Gamma exp, [Proper] Gaussian d, double x)
         {
             // perform one Newton update of X
