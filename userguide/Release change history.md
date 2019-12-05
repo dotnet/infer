@@ -5,6 +5,36 @@ layout: default
 
 ## Release change history
 
+#### 0.3.1912.403 (4th December 2019)
+
+* MatchboxRecommender allows TraitCount=0
+* Compiler:
+  * ShowFactorGraph appends array indexing to a variable's name when it is local to a ForEachBlock.
+  * ModelCompiler.TraceAllMessages activates Tracing.Trace for all variables
+  * Tracing.Trace uses System.Diagnostics.Trace
+* Collections:
+  * Added Collections.Option<T> and ReadOnlyArray<T>
+  * Deleted unused and incomplete HashedList class
+  * Added EnumerableExtensions.ValueEquals and Util.AreEqual, removed Util.ValueEquals and SafeEquals
+* Maths:
+  * MMath.GammaUpper,GammaLower have unregularized option
+  * Added MMath.Average, NextDouble, PreviousDouble, RisingFactorialLnOverN, NormalCdfRatioLn, NormalCdfDiff, NormalCdfExtended, NormalCdfIntegral, NormalCdfIntegralRatio
+  * Added Maths.ExtendedDouble
+* Distributions:
+  * Gaussian.GetMean throws if Precision == 0, instead of returning 0.
+  * Added Gamma.GetQuantile
+  * Added GammaPower.FromMeanAndMeanLog, GetLogMeanPower, GetMode, GetProbLessThan, GetQuantile. 
+  * Added TruncatedGamma.GetMeanPower
+  * Added GammaPowerEstimator
+  * Added IrregularQuantiles
+  * Added SequenceDistribution.Concatenate
+  * Replaced NonSerializedPropertyAttribute with IgnoreDataMemberAttribute
+* Factors:
+  * New message operators: GaussianFromMeanAndVarianceOp_PointVariance, GammaPowerProductOp_Laplace, PlusGammaOp
+	* Added support for GammaPower distributions to Exp, Power, Product
+  * Softmax factor throws when output is observed under VMP.
+  * VectorSoftmaxOp_KM11.XAverageLogarithm allows softmax to be a point mass as long as some x[i] is a point mass.
+
 #### 0.3 (5th October 2018)
 
 *   Open source release on GitHub, with MIT license.
