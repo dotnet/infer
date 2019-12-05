@@ -230,7 +230,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitOp{T}"]/message_doc[@name="CasesAverageConditional{TDist, TBernoulliList}(TDist, IList{TDist}, TBernoulliList)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitOp{T}"]/message_doc[@name="CasesAverageConditional{TDist}(TDist, TDist, int)"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the variable exiting the gate.</typeparam>
         public static Bernoulli CasesAverageConditional<TDist>(
             [SkipIfUniform] TDist exit, [Indexed] TDist values, [IgnoreDependency] int resultIndex)
@@ -416,7 +416,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitOp{T}"]/message_doc[@name="CasesAverageConditional{TDist, TBernoulliList}(TDist, IList{T}, TBernoulliList)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitOp{T}"]/message_doc[@name="CasesAverageConditional{TDist}(TDist, IList{T}, int)"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the variable exiting the gate.</typeparam>
         public static Bernoulli CasesAverageConditional<TDist>(TDist exit, IList<T> values, int resultIndex)
             where TDist : CanGetLogProb<T>
@@ -501,7 +501,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
 #if true
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitOp{T}"]/message_doc[@name="CasesAverageLogarithm{TDist, TBernoulliList}(TDist, IList{TDist}, TBernoulliList)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GateExitOp{T}"]/message_doc[@name="CasesAverageLogarithm{TDist}(TDist, IList{TDist}, int)"]/*'/>
         /// <typeparam name="TDist">The type of the distribution over the variable exiting the gate.</typeparam>
         [NoTriggers] // see VmpTests.GateExitTriggerTest
         public static Bernoulli CasesAverageLogarithm<TDist>(

@@ -134,7 +134,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Beta.Uniform();
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="LogisticOp"]/message_doc[@name="LogisticAverageConditional(Beta, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="LogisticOp"]/message_doc[@name="LogisticAverageConditional(Beta, Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Beta LogisticAverageConditional(Beta logistic, [Proper] Gaussian x, Gaussian falseMsg, Gaussian to_x)
         {
             if (x.IsPointMass)

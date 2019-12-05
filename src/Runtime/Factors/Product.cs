@@ -1056,7 +1056,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return ahat;
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="ProductAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="ProductAverageConditional(Gaussian, Gaussian, Gaussian, double)"]/*'/>
         public static Gaussian ProductAverageConditional([NoInit] Gaussian Product, Gaussian A, Gaussian B, [Fresh] double ahat)
         {
             if (Product.IsUniform())
@@ -1134,7 +1134,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian, double)"]/*'/>
         public static Gaussian AAverageConditional([SkipIfUniform] Gaussian Product, [NoInit] Gaussian A, Gaussian B, [Fresh] double ahat)
         {
             if (Product.IsUniform()) return Product;
@@ -1143,7 +1143,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="BAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="BAverageConditional(Gaussian, Gaussian, Gaussian, double)"]/*'/>
         public static Gaussian BAverageConditional([SkipIfUniform] Gaussian Product, Gaussian A, [NoInit] Gaussian B, [Fresh] double ahat)
         {
             if (Product.IsUniform()) return Product;
