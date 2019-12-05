@@ -9,7 +9,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Factors.Attributes;
     using Microsoft.ML.Probabilistic.Math;
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaVmpOp"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/doc/*'/>
     [FactorMethod(typeof(Factor), "Plus", typeof(double), typeof(double), Default = true)]
     [Quality(QualityBand.Experimental)]
     public static class PlusGammaOp
@@ -75,7 +75,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="SumAverageConditional(GammaPower, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="SumAverageConditional(double, GammaPower)"]/*'/>
         public static GammaPower SumAverageConditional(double a, [SkipIfUniform] GammaPower b)
         {
             return SumAverageConditional(b, a);
