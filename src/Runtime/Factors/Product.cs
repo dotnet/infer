@@ -14,25 +14,25 @@ namespace Microsoft.ML.Probabilistic.Factors
     /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/doc/*'/>
     public class GaussianProductOpBase
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp"]/message_doc[@name="ProductAverageConditional(double, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="ProductAverageConditional(double, Gaussian)"]/*'/>
         public static Gaussian ProductAverageConditional(double A, [SkipIfUniform] Gaussian B)
         {
             return GaussianProductVmpOp.ProductAverageLogarithm(A, B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp"]/message_doc[@name="ProductAverageConditional(Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="ProductAverageConditional(Gaussian, double)"]/*'/>
         public static Gaussian ProductAverageConditional([SkipIfUniform] Gaussian A, double B)
         {
             return ProductAverageConditional(B, A);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp"]/message_doc[@name="ProductAverageConditional(double, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="ProductAverageConditional(double, double)"]/*'/>
         public static Gaussian ProductAverageConditional(double a, double b)
         {
             return Gaussian.PointMass(a * b);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp"]/message_doc[@name="AAverageConditional(Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="AAverageConditional(Gaussian, double)"]/*'/>
         public static Gaussian AAverageConditional([SkipIfUniform] Gaussian Product, double B)
         {
             if (Product.IsPointMass)
@@ -45,7 +45,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp"]/message_doc[@name="AAverageConditional(double, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="AAverageConditional(double, double)"]/*'/>
         public static Gaussian AAverageConditional(double Product, double B)
         {
             if (B == 0)
@@ -58,13 +58,13 @@ namespace Microsoft.ML.Probabilistic.Factors
                 return Gaussian.PointMass(Product / B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp"]/message_doc[@name="BAverageConditional(Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="BAverageConditional(Gaussian, double)"]/*'/>
         public static Gaussian BAverageConditional([SkipIfUniform] Gaussian Product, double A)
         {
             return AAverageConditional(Product, A);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp"]/message_doc[@name="BAverageConditional(double, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpBase"]/message_doc[@name="BAverageConditional(double, double)"]/*'/>
         public static Gaussian BAverageConditional(double Product, double A)
         {
             return AAverageConditional(Product, A);
@@ -73,7 +73,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
     public class GaussianProductOpEvidenceBase : GaussianProductOpBase
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp"]/message_doc[@name="LogAverageFactor(Gaussian, Gaussian, double, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogAverageFactor(Gaussian, Gaussian, double, Gaussian)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogAverageFactor(Gaussian product, Gaussian a, double b, [Fresh] Gaussian to_product)
         {
@@ -81,14 +81,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return to_product.GetLogAverageOf(product);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogAverageFactor(Gaussian, double, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogAverageFactor(Gaussian, double, Gaussian, Gaussian)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogAverageFactor(Gaussian product, double a, Gaussian b, [Fresh] Gaussian to_product)
         {
             return LogAverageFactor(product, b, a, to_product);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogAverageFactor(double, Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogAverageFactor(double, Gaussian, double)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogAverageFactor(double product, Gaussian a, double b)
         {
@@ -96,35 +96,35 @@ namespace Microsoft.ML.Probabilistic.Factors
             return to_product.GetLogProb(product);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogAverageFactor(double, double, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogAverageFactor(double, double, Gaussian)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogAverageFactor(double product, double a, Gaussian b)
         {
             return LogAverageFactor(product, b, a);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogAverageFactor(double, double, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogAverageFactor(double, double, double)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogAverageFactor(double product, double a, double b)
         {
             return (product == Factor.Product(a, b)) ? 0.0 : Double.NegativeInfinity;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogEvidenceRatio(double, double, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogEvidenceRatio(double, double, double)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogEvidenceRatio(double product, double a, double b)
         {
             return LogAverageFactor(product, a, b);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogAverageFactor(Gaussian, double, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogAverageFactor(Gaussian, double, double)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogAverageFactor(Gaussian product, double a, double b)
         {
             return product.GetLogProb(Factor.Product(a, b));
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogEvidenceRatio(Gaussian, Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogEvidenceRatio(Gaussian, Gaussian, double)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         [Skip]
         public static double LogEvidenceRatio(Gaussian product, Gaussian a, double b)
@@ -132,7 +132,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogEvidenceRatio(Gaussian, double, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogEvidenceRatio(Gaussian, double, Gaussian)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         [Skip]
         public static double LogEvidenceRatio(Gaussian product, double a, Gaussian b)
@@ -140,7 +140,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return LogEvidenceRatio(product, b, a);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogEvidenceRatio(Gaussian, double, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogEvidenceRatio(Gaussian, double, double)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         [Skip]
         public static double LogEvidenceRatio(Gaussian product, double a, double b)
@@ -148,14 +148,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogEvidenceRatio(double, Gaussian, double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogEvidenceRatio(double, Gaussian, double)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogEvidenceRatio(double product, Gaussian a, double b)
         {
             return LogAverageFactor(product, a, b);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductEvidenceOp"]/message_doc[@name="LogEvidenceRatio(double, double, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOpEvidenceBase"]/message_doc[@name="LogEvidenceRatio(double, double, Gaussian)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogEvidenceRatio(double product, double a, Gaussian b)
         {
@@ -941,7 +941,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Experimental)]
     public class GaussianProductOp_LaplaceProp : GaussianProductOpEvidenceBase
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="ProductAverageConditional(Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_LaplaceProp"]/message_doc[@name="ProductAverageConditional(Gaussian, Gaussian)"]/*'/>
         public static Gaussian ProductAverageConditional(Gaussian A, Gaussian B)
         {
             return GaussianProductVmpOp.ProductAverageLogarithm(A, B);
@@ -974,7 +974,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return GaussianOp.GaussianFromAlphaBeta(Product, dlogz, -ddlogz, true);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_LaplaceProp"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian AAverageConditional(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_A)
         {
             Gaussian Apost = A * to_A;
@@ -996,13 +996,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gaussian.FromNatural(r * ahat + dlogf, r);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="BAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_LaplaceProp"]/message_doc[@name="BAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian BAverageConditional(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_B)
         {
             return AAverageConditional(Product, B, A, to_B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="LogAverageFactor(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_LaplaceProp"]/message_doc[@name="LogAverageFactor(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogAverageFactor([SkipIfUniform] Gaussian Product, [SkipIfUniform] Gaussian A, [SkipIfUniform] Gaussian B, Gaussian to_A)
         {
@@ -1017,7 +1017,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gaussian.GetLogProb(mx, ahat * mb, vx + ahat * ahat * vb) + A.GetLogProb(ahat) - Apost.GetLogProb(ahat);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="LogEvidenceRatio(Gaussian, Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_LaplaceProp"]/message_doc[@name="LogEvidenceRatio(Gaussian, Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
         [FactorMethod(typeof(Factor), "Product", typeof(double), typeof(double))]
         public static double LogEvidenceRatio([SkipIfUniform] Gaussian Product, [SkipIfUniform] Gaussian A, [SkipIfUniform] Gaussian B, Gaussian to_A, Gaussian to_product)
         {
@@ -1245,7 +1245,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static bool modified = true;
         public static bool offDiagonal = false;
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="ProductAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="ProductAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian ProductAverageConditional([NoInit] Gaussian Product, Gaussian A, Gaussian B, Gaussian to_A, Gaussian to_B)
         {
             if (Product.IsUniform())
@@ -1317,7 +1317,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return GaussianOp.GaussianFromAlphaBeta(Product, dlogz, -ddlogz, true);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="AAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian AAverageConditional([SkipIfUniform] Gaussian Product, [NoInit] Gaussian A, Gaussian B, Gaussian to_A)
         {
             if (A.IsPointMass)
@@ -1374,13 +1374,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gaussian.FromNatural(r * ahat + ga, r);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="BAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="BAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
         public static Gaussian BAverageConditional([SkipIfUniform] Gaussian Product, Gaussian A, [NoInit] Gaussian B, Gaussian to_B)
         {
             return AAverageConditional(Product, B, A, to_B);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="LogAverageFactor(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="LogAverageFactor(Gaussian, Gaussian, Gaussian, Gaussian)"]/*'/>
         public static double LogAverageFactor([SkipIfUniform] Gaussian Product, [SkipIfUniform] Gaussian A, [SkipIfUniform] Gaussian B, Gaussian to_A)
         {
             double mx, vx;
@@ -1394,7 +1394,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gaussian.GetLogProb(mx, ahat * mb, vx + ahat * ahat * vb) + A.GetLogProb(ahat) - Apost.GetLogProb(ahat);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace"]/message_doc[@name="LogEvidenceRatio(Gaussian, Gaussian, Gaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianProductOp_Laplace2"]/message_doc[@name="LogEvidenceRatio(Gaussian, Gaussian, Gaussian)"]/*'/>
         [Skip]
         public static double LogEvidenceRatio([SkipIfUniform] Gaussian Product, [SkipIfUniform] Gaussian A, [SkipIfUniform] Gaussian B)
         {
@@ -2193,7 +2193,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Mature)]
     public static class GaussianRatioVmpOp
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianRatioVmpOp"]/message_doc[@name="AverageLogFactor()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GaussianRatioVmpOp"]/message_doc[@name="AverageLogFactor(Gaussian)"]/*'/>
         /// <remarks><para>
         /// Variational Message Passing does not support a Ratio factor with fixed output or random denominator
         /// </para></remarks>

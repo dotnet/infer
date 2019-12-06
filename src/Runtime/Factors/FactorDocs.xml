@@ -17569,16 +17569,16 @@
         <para>The outgoing message is the factor viewed as a function of <c>a</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
-    <message_doc name="BAverageConditional{GaussianList}(double, double, GaussianList)">
+    <message_doc name="BAverageConditional{GaussianList}(double, double[], GaussianList)">
       <summary>EP message to <c>b</c>.</summary>
       <param name="innerProduct">Constant value for <c>innerProduct</c>.</param>
-      <param name="A">Incoming message from <c>a</c>.</param>
+      <param name="A">Constant value for <c>a</c>.</param>
       <param name="result">Modified to contain the outgoing message.</param>
       <returns>
         <paramref name="result" />
       </returns>
       <remarks>
-        <para>The outgoing message is a distribution matching the moments of <c>b</c> as the random arguments are varied. The formula is <c>proj[p(b) sum_(a) p(a) factor(innerProduct,a,b)]/p(b)</c>.</para>
+        <para>The outgoing message is the factor viewed as a function of <c>b</c> conditioned on the given values.</para>
       </remarks>
     </message_doc>
   </message_op_class>

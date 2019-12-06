@@ -199,7 +199,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         private const string NotSupportedMessage = "Variational Message Passing does not support a InnerProduct factor with fixed output.";
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="AAverageLogarithm(double)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductArrayOp"]/message_doc[@name="AAverageLogarithm{GaussianList}(double)"]/*'/>
         [NotSupported(InnerProductArrayOp.NotSupportedMessage)]
         public static GaussianList AAverageLogarithm<GaussianList>(double innerProduct)
                where GaussianList : IList<Gaussian>

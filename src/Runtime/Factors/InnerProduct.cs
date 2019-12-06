@@ -146,7 +146,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="InnerProductAverageLogarithm(Vector, PositiveDefiniteMatrix, Vector, PositiveDefiniteMatrix)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="InnerProductAverageLogarithm(DenseVector, PositiveDefiniteMatrix, DenseVector, PositiveDefiniteMatrix)"]/*'/>
         public static Gaussian InnerProductAverageLogarithm(DenseVector AMean, PositiveDefiniteMatrix AVariance, DenseVector BMean, PositiveDefiniteMatrix BVariance)
         {
             Gaussian result = new Gaussian();
@@ -157,7 +157,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="InnerProductAverageLogarithm(Vector, Vector, PositiveDefiniteMatrix)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="InnerProductAverageLogarithm(Vector, DenseVector, PositiveDefiniteMatrix)"]/*'/>
         public static Gaussian InnerProductAverageLogarithm(Vector A, DenseVector BMean, PositiveDefiniteMatrix BVariance)
         {
             Gaussian result = new Gaussian();
@@ -175,7 +175,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return new Gaussian();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="InnerProductAverageLogarithm(Vector, PositiveDefiniteMatrix, Vector)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="InnerProductAverageLogarithm(DenseVector, PositiveDefiniteMatrix, Vector)"]/*'/>
         public static Gaussian InnerProductAverageLogarithm(DenseVector AMean, PositiveDefiniteMatrix AVariance, Vector B)
         {
             return InnerProductAverageLogarithm(B, AMean, AVariance);
@@ -202,7 +202,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return DenseVector.Zero(B.Dimension);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="BMean(VectorGaussian, PositiveDefiniteMatrix, Vector)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="BMean(VectorGaussian, PositiveDefiniteMatrix, DenseVector)"]/*'/>
         [Fresh]
         public static DenseVector BMean([Proper] VectorGaussian B, PositiveDefiniteMatrix BVariance, DenseVector result)
         {
@@ -230,14 +230,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return DenseVector.Zero(A.Dimension);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="AMean(VectorGaussian, PositiveDefiniteMatrix, Vector)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="AMean(VectorGaussian, PositiveDefiniteMatrix, DenseVector)"]/*'/>
         [Fresh]
         public static DenseVector AMean([Proper] VectorGaussian A, PositiveDefiniteMatrix AVariance, DenseVector result)
         {
             return (DenseVector)A.GetMean(result, AVariance);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="AAverageLogarithm(Gaussian, VectorGaussian, Vector, PositiveDefiniteMatrix, VectorGaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="AAverageLogarithm(Gaussian, VectorGaussian, DenseVector, PositiveDefiniteMatrix, VectorGaussian)"]/*'/>
         public static VectorGaussian AAverageLogarithm(
             [SkipIfUniform] Gaussian innerProduct, [SkipIfUniform] VectorGaussian B, DenseVector BMean, PositiveDefiniteMatrix BVariance, VectorGaussian result)
         {
@@ -269,7 +269,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="BAverageLogarithm(Gaussian, VectorGaussian, Vector, PositiveDefiniteMatrix, VectorGaussian)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="BAverageLogarithm(Gaussian, VectorGaussian, DenseVector, PositiveDefiniteMatrix, VectorGaussian)"]/*'/>
         public static VectorGaussian BAverageLogarithm(
             [SkipIfUniform] Gaussian innerProduct, [SkipIfUniform] VectorGaussian A, DenseVector AMean, PositiveDefiniteMatrix AVariance, VectorGaussian result)
         {
@@ -284,7 +284,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         // ----------------------- AverageConditional ------------------------------
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="InnerProductAverageConditional(Vector, Vector, PositiveDefiniteMatrix)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="InnerProductAverageConditional(Vector, DenseVector, PositiveDefiniteMatrix)"]/*'/>
         public static Gaussian InnerProductAverageConditional(Vector A, DenseVector BMean, PositiveDefiniteMatrix BVariance)
         {
             return InnerProductAverageLogarithm(A, BMean, BVariance);
@@ -297,7 +297,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return new Gaussian();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="InnerProductAverageConditional(Vector, PositiveDefiniteMatrix, Vector)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="InnerProductAverageConditional(DenseVector, PositiveDefiniteMatrix, Vector)"]/*'/>
         public static Gaussian InnerProductAverageConditional(DenseVector AMean, PositiveDefiniteMatrix AVariance, Vector B)
         {
             return InnerProductAverageConditional(B, AMean, AVariance);
@@ -357,7 +357,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="LogEvidenceRatio(double, Vector, Vector, PositiveDefiniteMatrix)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="LogEvidenceRatio(double, Vector, DenseVector, PositiveDefiniteMatrix)"]/*'/>
         public static double LogEvidenceRatio(double innerProduct, Vector A, DenseVector BMean, PositiveDefiniteMatrix BVariance)
         {
             return LogAverageFactor(innerProduct, A, BMean, BVariance);
@@ -370,7 +370,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return LogEvidenceRatio(innerProduct, B, a);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="LogEvidenceRatio(double, Vector, PositiveDefiniteMatrix, Vector)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="LogEvidenceRatio(double, DenseVector, PositiveDefiniteMatrix, Vector)"]/*'/>
         public static double LogEvidenceRatio(double innerProduct, DenseVector AMean, PositiveDefiniteMatrix AVariance, Vector B)
         {
             return LogEvidenceRatio(innerProduct, B, AMean, AVariance);
@@ -382,14 +382,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return to_innerProduct.GetLogAverageOf(innerProduct);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="LogAverageFactor(double, Vector, Vector, PositiveDefiniteMatrix)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="LogAverageFactor(double, Vector, DenseVector, PositiveDefiniteMatrix)"]/*'/>
         public static double LogAverageFactor(double innerProduct, Vector A, DenseVector BMean, PositiveDefiniteMatrix BVariance)
         {
             Gaussian to_innerProduct = InnerProductAverageConditional(A, BMean, BVariance);
             return to_innerProduct.GetLogProb(innerProduct);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="LogAverageFactor(double, Vector, PositiveDefiniteMatrix, Vector)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="InnerProductOpBase"]/message_doc[@name="LogAverageFactor(double, DenseVector, PositiveDefiniteMatrix, Vector)"]/*'/>
         public static double LogAverageFactor(double innerProduct, DenseVector AMean, PositiveDefiniteMatrix AVariance, Vector B)
         {
             return LogAverageFactor(innerProduct, B, AMean, AVariance);
