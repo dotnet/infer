@@ -90,6 +90,11 @@ namespace MontyHall
                 cProbs[q] = 1.0 / 3.0;
             }
 
+            string fmtStr = "{0:0.0000}";
+            Lbl1.Content = String.Format(fmtStr, cProbs[0]);
+            Lbl2.Content = String.Format(fmtStr, cProbs[1]);
+            Lbl3.Content = String.Format(fmtStr, cProbs[2]);
+
             label1.Content = "P ( Car Inside )\nP ( Host Chooses )";
 
             if (Door1.Width == 20)
