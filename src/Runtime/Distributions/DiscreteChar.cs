@@ -235,6 +235,31 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// Creates a scaled distribution from an existing distribution. Probabilities are scaled so that the
+        /// maximum probability is as specified. The resulting instance is not normalized.
+        /// </summary>
+        /// <param name="distribution">The original distribution which may be normalized or not.</param>
+        /// <param name="maximumProbability">The maximum probability.</param>
+        /// <remarks>Scaling in this way is useful within the context of using <see cref="StringDistribution"/>
+        /// to create more realistic language model priors.
+        /// </remarks>
+        /// <remarks>The scaled distribution is always uncached.</remarks>
+        /// <returns>The scaled distribution.</returns>
+        public static DiscreteChar CreateScaled(DiscreteChar distribution, double maximumProbability)
+        {
+            var scaledRanges = new List<CharRange>(distribution.Ranges);
+            StorageBuilder.NormalizeProbabilities(scaledRanges, maximumProbability);
+            var uncachedStorage = Storage.CreateUncached(
+                scaledRanges.ToArray(),
+                distribution.Data.Point,
+                distribution.Data.CharClasses,
+                distribution.Data.RegexRepresentation,
+                distribution.Data.SymbolRepresentation);
+
+           return new DiscreteChar(uncachedStorage);
+        }
+
+        /// <summary>
         /// Creates a uniform distribution over characters.
         /// </summary>
         /// <returns>The created distribution.</returns>
@@ -1896,7 +1921,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             private readonly List<CharRange> ranges;
 
             /// <summary>
-            /// Precomuted character class.
+            /// Precomputed character class.
             /// </summary>
             private readonly CharClasses charClasses;
 
@@ -1974,7 +1999,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
             public Storage GetResult()
             {
                 this.MergeNeighboringRanges();
-                this.NormalizeProbabilities();
+                NormalizeProbabilities(this.ranges);
                 return Storage.Create(
                     this.ranges.ToArray(),
                     this.charClasses,
@@ -2015,16 +2040,32 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             /// <summary>
-            /// Normalizes probabilities in ranges
+            /// Normalizes probabilities in ranges.
             /// </summary>
-            private void NormalizeProbabilities()
+            /// <param name="ranges">The ranges.</param>
+            /// <param name="maximumProbability">Allows rescaling to a non-normalized distribution in which this is the maximum probability.</param>
+            /// <exception cref="ArgumentException">Thrown if maximumProbability has a value &lt; 0 or &gt; 1.</exception>
+            public static void NormalizeProbabilities(IList<CharRange> ranges, double? maximumProbability = null)
             {
-                var normalizer = this.ComputeInvNormalizer();
-                for (int i = 0; i < this.ranges.Count; ++i)
+                var normalizer = ComputeInvNormalizer(ranges);
+                if (maximumProbability.HasValue)
                 {
-                    var range = this.ranges[i];
-                    this.ranges[i] = new CharRange(
-                        range.StartInclusive, range.EndExclusive, range.Probability * normalizer);
+                    if (maximumProbability < 0 || maximumProbability > 1)
+                    {
+                        throw new ArgumentException("Maximum probability must be between 0 and 1");
+                    }
+
+                    var maximumRangeProbability = ranges.Max(r => r.Probability);
+                    normalizer *= (Weight.FromValue(maximumProbability.Value) / maximumRangeProbability);
+                }
+
+                for (var i = 0; i < ranges.Count; ++i)
+                {
+                    var range = ranges[i];
+                    var probability = range.Probability * normalizer;
+
+                    ranges[i] = new CharRange(
+                        range.StartInclusive, range.EndExclusive, probability);
                 }
             }
 
@@ -2032,11 +2073,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
             /// Computes the normalizer of this distribution.
             /// </summary>
             /// <returns>The computed normalizer.</returns>
-            private Weight ComputeInvNormalizer()
+            private static Weight ComputeInvNormalizer(IEnumerable<CharRange> ranges)
             {
-                Weight normalizer = Weight.Zero;
+                var normalizer = Weight.Zero;
 
-                foreach (var range in this.ranges)
+                foreach (var range in ranges)
                 {
                     normalizer += Weight.FromValue(range.EndExclusive - range.StartInclusive) * range.Probability;
                 }

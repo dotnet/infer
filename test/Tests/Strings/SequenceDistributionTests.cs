@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Text.RegularExpressions;
+
 namespace Microsoft.ML.Probabilistic.Tests
 {
     using System;
@@ -541,6 +543,73 @@ namespace Microsoft.ML.Probabilistic.Tests
                 StringDistribution.OneOf(StringDistribution.String("zzz"), StringDistribution.Repeat('z')).EnumerateSupport().ToArray();
 
             });
+        }
+
+        [Fact]
+        public void WordModel()
+        {
+            // We want to build a word model as a reasonably simple StringDistribution. It
+            // should satisfy the following:
+            // (1) The probability of a word of moderate length (say length 6) should not be
+            //     significantly less than the probability of a short word (of length 2 or 3, say)
+            // (2) The probability of a specific word conditioned on its length matches that of
+            //     words in the target language.
+            // We achieve this by putting non-normalized character distributions on the edges. The
+            // StringDistribution is unaware that these are non-normalized.
+            // The StringDistribution itself is non-normalizable.
+
+            const double TargetProb1 = 0.05;
+            const double Ratio1 = 0.4;
+            const double TargetProb2 = TargetProb1 * Ratio1;
+            const double Ratio2 = 0.2;
+            const double TargetProb3 = TargetProb2 * Ratio2;
+            const double TargetProb4 = TargetProb3 * Ratio2;
+            const double TargetProb5 = TargetProb4 * Ratio2;
+            const double Ratio3 = 1.0;
+            const double TargetProb6 = TargetProb5 * Ratio3;
+            const double TargetProb7 = TargetProb6 * Ratio3;
+            const double TargetProb8 = TargetProb7 * Ratio3;
+            const double Ratio4 = 0.9;
+            const double TargetProb9 = TargetProb8 * Ratio4;
+            const double TargetProb10 = TargetProb9 * Ratio4;
+
+            var targetProbabilitiesPerLength = new double[]
+            {
+                TargetProb1, TargetProb2, TargetProb3, TargetProb4, TargetProb5, TargetProb6, TargetProb7, TargetProb8, TargetProb9, TargetProb10
+            };
+
+            var charDistUpper = DiscreteChar.Upper();
+            var charDistLower = DiscreteChar.Lower();
+
+            var charDistUpperScaled = DiscreteChar.CreateScaled(charDistUpper, TargetProb1);
+            var charDistLowerScaled1 = DiscreteChar.CreateScaled(charDistLower, Ratio1);
+            var charDistLowerScaled2 = DiscreteChar.CreateScaled(charDistLower, Ratio2);
+            var charDistLowerScaled3 = DiscreteChar.CreateScaled(charDistLower, Ratio3);
+            var charDistLowerScaledEnd = DiscreteChar.CreateScaled(charDistLower, Ratio4);
+
+            var wordModel = StringDistribution.WordModel(
+                new List<DiscreteChar>
+                {
+                    charDistUpperScaled,
+                    charDistLowerScaled1,
+                    charDistLowerScaled2,
+                    charDistLowerScaled2,
+                    charDistLowerScaled2,
+                    charDistLowerScaled3,
+                    charDistLowerScaled3,
+                    charDistLowerScaled3,
+                    charDistLowerScaledEnd
+                });
+
+            const string Word = "Abcdefghij";
+
+            const double Eps = 1e-10;
+            for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
+            {
+                var currentWord = Word.Substring(0, i + 1);
+                var probCurrentWord = Math.Exp(wordModel.GetLogProb(currentWord));
+                Assert.Equal(targetProbabilitiesPerLength[i], probCurrentWord, Eps);
+            }
         }
 
         #region Sampling tests

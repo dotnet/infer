@@ -261,6 +261,28 @@ namespace Microsoft.ML.Probabilistic.Distributions
             return FromWorkspace(result.GetAutomaton());
         }
 
+
+        /// <summary>
+        /// Creates a distribution over sequences induced by a given list of distributions over sequence elements
+        /// where the sequence can optionally end at any length. The last distribution in the list is used for a self-loop,
+        /// allowing any length sequence.
+        /// </summary>
+        /// <param name="elementDistributions">Enumerable of distributions over sequence elements and the transition weights.</param>
+        /// <returns>The created distribution.</returns>
+        public static TThis WordModel(IList<TElementDistribution> elementDistributions)
+        {
+            var result = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
+            var last = result.Start;
+            for (var i = 0; i < elementDistributions.Count - 1; i++)
+            {
+                last = last.AddTransition(elementDistributions[i], Weight.One);
+                last.SetEndWeight(Weight.One);
+            }
+
+            last.AddSelfTransition(elementDistributions.Last(), Weight.One);
+            return FromWorkspace(result.GetAutomaton());
+        }
+
         /// <summary>
         /// Creates a distribution which is a uniform mixture of a given set of distributions.
         /// </summary>

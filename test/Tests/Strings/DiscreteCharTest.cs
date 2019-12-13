@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.ML.Probabilistic.Math;
 
 namespace Microsoft.ML.Probabilistic.Tests
@@ -10,13 +11,15 @@ namespace Microsoft.ML.Probabilistic.Tests
     using System.Collections.Generic;
     using Xunit;
     using Microsoft.ML.Probabilistic.Distributions;
-    using Assert = Xunit.Assert;
+    using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 
     /// <summary>
     /// Tests for <see cref="DiscreteChar"/>.
     /// </summary>
     public class DiscreteCharTest
     {
+        const double Eps = 1e-10;
+
         /// <summary>
         /// Runs a set of common distribution tests for <see cref="DiscreteChar"/>.
         /// </summary>
@@ -63,7 +66,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 return;
             }
 
-            Assert.True(false);
+            Xunit.Assert.True(false);
         }
 
         [Fact]
@@ -88,7 +91,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var unif = Vector.Constant(numChars, 1.0 / numChars);
             var maxDiff = hist.MaxDiff(unif);
 
-            Assert.True(maxDiff < 0.01);
+            Xunit.Assert.True(maxDiff < 0.01);
         }
 
         [Fact]
@@ -106,7 +109,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             ab.SetToSum(1, a, 2, b);
 
             // 2 subsequent ranges
-            Assert.Equal(2, ab.Ranges.Count);
+            Xunit.Assert.Equal(2, ab.Ranges.Count);
             TestComplement(ab);
 
             void TestComplement(DiscreteChar dist)
@@ -117,22 +120,55 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var complement = dist.Complement();
 
                 // complement should always be partial uniform
-                Assert.True(complement.IsPartialUniform());
+                Xunit.Assert.True(complement.IsPartialUniform());
 
                 // overlap is zero
-                Assert.True(double.IsNegativeInfinity(dist.GetLogAverageOf(complement)));
-                Assert.True(double.IsNegativeInfinity(uniformDist.GetLogAverageOf(complement)));
+                Xunit.Assert.True(double.IsNegativeInfinity(dist.GetLogAverageOf(complement)));
+                Xunit.Assert.True(double.IsNegativeInfinity(uniformDist.GetLogAverageOf(complement)));
 
                 // union is covers the whole range
                 var sum = default(DiscreteChar);
                 sum.SetToSum(1, dist, 1, complement);
                 sum.SetToPartialUniform();
-                Assert.True(sum.IsUniform());
+                Xunit.Assert.True(sum.IsUniform());
 
                 // Doing complement again will cover the same set of characters
                 var complement2 = complement.Complement();
-                Assert.Equal(uniformDist, complement2);
+                Xunit.Assert.Equal(uniformDist, complement2);
             }
+        }
+
+        [Fact]
+        public void ScaledDistribution()
+        {
+            var dist = DiscreteChar.LetterOrDigit();
+            var probLetter = Math.Exp(dist.GetLogProb('j'));
+            var probNumber = Math.Exp(dist.GetLogProb('5'));
+
+            var maximumProbability = 0.7;
+            var scaledDist = DiscreteChar.CreateScaled(dist, maximumProbability);
+            var scaledProbLetter = Math.Exp(scaledDist.GetLogProb('j'));
+            var scaledProbNumber = Math.Exp(scaledDist.GetLogProb('5'));
+
+            Assert.Equal(scaledProbLetter, maximumProbability, Eps);
+            Assert.Equal(scaledProbNumber, maximumProbability, Eps);
+
+            // Check that cache has not been compromised.
+            Assert.Equal(probLetter, Math.Exp(dist.GetLogProb('j')), Eps);
+            Assert.Equal(probNumber, Math.Exp(dist.GetLogProb('5')), Eps);
+
+            // Check that an exception is thrown if a bad maximumProbability is passed down.
+            Xunit.Assert.Throws<ArgumentException>(() =>
+            {
+                var badProbability = 1.2;
+                DiscreteChar.CreateScaled(dist, badProbability);
+            });
+
+            Xunit.Assert.Throws<ArgumentException>(() =>
+            {
+                var badProbability = -0.2;
+                DiscreteChar.CreateScaled(dist, badProbability);
+            });
         }
 
         /// <summary>
@@ -142,7 +178,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <param name="distribution">The distribution.</param>
         /// <param name="included">A list of characters that must be included in the support of the distribution.</param>
         /// <param name="excluded">A list of characters that must not be included in the support of the distribution.</param>
-        private static void TestSupport(
+            private static void TestSupport(
             string distributionName,
             DiscreteChar distribution,
             IEnumerable<char> included,
