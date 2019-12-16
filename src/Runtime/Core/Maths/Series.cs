@@ -6,15 +6,43 @@ using System.Linq;
 
 namespace Microsoft.ML.Probabilistic.Core.Maths
 {
+    /// <summary>
+    /// Represents a truncated power series (effectively, a polynomial) of the form
+    /// c0 + c1*x + c2*x^2 + c3*x^3 + ... + cN*x^N
+    /// </summary>
     struct TruncatedPowerSeries
     {
+        /// <summary>
+        /// Coefficients of the truncated power series.
+        /// Coefficients[k] is the coefficient near x^k, so Coefficients[0] is the constant term.
+        /// </summary>
         public double[] Coefficients { get; }
 
+        /// <summary>
+        /// Constructs a truncated power series.
+        /// </summary>
+        /// <param name="coefficients">
+        /// Coefficients of the truncated power series.
+        /// <paramref name="coefficients"/>[k] is the coefficient near x^k, so <paramref name="coefficients"/>[0] is the constant term.
+        /// </param>
         public TruncatedPowerSeries(double[] coefficients)
         {
             this.Coefficients = coefficients;
         }
 
+        /// <summary>
+        /// Factory function to generate a truncated power series.
+        /// All coefficients of the generated series are computed, when this function is called.
+        /// </summary>
+        /// <param name="length">
+        /// Number of coefficients including the constant term to generate.
+        /// The highest power of x in the resulting series will be (<paramref name="length"/> - 1)
+        /// </param>
+        /// <param name="coefGenerator">
+        /// Provides the coefficients in the series, where the constant term is index zero.
+        /// Coefficients[k] = <paramref name="coefGenerator"/>(k)
+        /// </param>
+        /// <returns>Generated truncated power series.</returns>
         public static TruncatedPowerSeries Generate(int length, Func<int, double> coefGenerator)
         {
             double[] coefficients = new double[length];
@@ -24,6 +52,21 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             return new TruncatedPowerSeries(coefficients);
         }
 
+        /// <summary>
+        /// Factory function to generate a truncated power series.
+        /// All coefficients of the generated series are computed, when this function is called.
+        /// Coefficients with smaller indexes are used to compute coefficients with bigger indexes.
+        /// </summary>
+        /// <param name="length">
+        /// Number of coefficients including the constant term to generate.
+        /// The highest power of x in the resulting series will be (<paramref name="length"/> - 1)
+        /// </param>
+        /// <param name="coefGenerator">
+        /// Provides the coefficients in the series, where the constant term is index zero.
+        /// The second argument is the coefficients with indexes smaller than that of the coefficient being computed.
+        /// Coefficients[k] = <paramref name="coefGenerator"/>(k, Coefficients[0..k-1])
+        /// </param>
+        /// <returns>Generated truncated power series.</returns>
         public static TruncatedPowerSeries Generate(int length, Func<int, IList<double>, double> coefGenerator)
         {
             List<double> coefficients = new List<double>(length);
