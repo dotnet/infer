@@ -88,18 +88,18 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         /// <summary>
         /// Coefficients of de Moivre's expansion for the digamma function.
         /// </summary>
-        public TruncatedPowerSeries CDigamma { get; }
+        public TruncatedPowerSeries DigammaAsymptotic { get; }
         public TruncatedPowerSeries TrigammaAt1 { get; }
         /// <summary>
         /// Coefficients of de Moivre's expansion for the trigamma function.
         /// </summary>
-        public TruncatedPowerSeries CTrigamma { get; }
+        public TruncatedPowerSeries TrigammaAsymptotic { get; }
         public TruncatedPowerSeries TetragammaAt1 { get; }
         /// <summary>
         /// Coefficients of de Moivre's expansion for the tetragamma function.
         /// </summary>
-        public TruncatedPowerSeries CTetragamma { get; }
-        public TruncatedPowerSeries CGammaln { get; }
+        public TruncatedPowerSeries TetragammaAsymptotic { get; }
+        public TruncatedPowerSeries GammalnAsymptotic { get; }
         public PowerSeries Log1Plus { get; }
         public PowerSeries Log1Minus { get; }
 
@@ -109,22 +109,22 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             if (precisionBits <= doublePrecisionCutOff)
             {
                 GammaAt2 = new TruncatedPowerSeries(gammaAt2Coefficients.Take(26).ToArray());
-                CDigamma = new TruncatedPowerSeries(cDigammaCoefficients.Take(8).ToArray());
+                DigammaAsymptotic = new TruncatedPowerSeries(digammaAsymptoticCoefficients.Take(8).ToArray());
                 TrigammaAt1 = new TruncatedPowerSeries(trigammaAt1Coefficients.Take(2).ToArray());
-                CTrigamma = new TruncatedPowerSeries(cTrigammaCoefficients.Take(9).ToArray());
+                TrigammaAsymptotic = new TruncatedPowerSeries(trigammaAsymptoticCoefficients.Take(9).ToArray());
                 TetragammaAt1 = new TruncatedPowerSeries(tetragammaAt1Coefficients.Take(2).ToArray());
-                CTetragamma = new TruncatedPowerSeries(cTetragammaCoefficients.Take(9).ToArray());
-                CGammaln = new TruncatedPowerSeries(cGammalnCoefficients.Take(7).ToArray());
+                TetragammaAsymptotic = new TruncatedPowerSeries(tetragammaAsymptoticCoefficients.Take(9).ToArray());
+                GammalnAsymptotic = new TruncatedPowerSeries(gammalnAsymptoticCoefficients.Take(7).ToArray());
             }
             else
             {
                 GammaAt2 = new TruncatedPowerSeries(gammaAt2Coefficients.ToArray());
-                CDigamma = new TruncatedPowerSeries(cDigammaCoefficients.ToArray());
+                DigammaAsymptotic = new TruncatedPowerSeries(digammaAsymptoticCoefficients.ToArray());
                 TrigammaAt1 = new TruncatedPowerSeries(trigammaAt1Coefficients.ToArray());
-                CTrigamma = new TruncatedPowerSeries(cTrigammaCoefficients.ToArray());
+                TrigammaAsymptotic = new TruncatedPowerSeries(trigammaAsymptoticCoefficients.ToArray());
                 TetragammaAt1 = new TruncatedPowerSeries(tetragammaAt1Coefficients.ToArray());
-                CTetragamma = new TruncatedPowerSeries(cTetragammaCoefficients.ToArray());
-                CGammaln = new TruncatedPowerSeries(cGammalnCoefficients.ToArray());
+                TetragammaAsymptotic = new TruncatedPowerSeries(tetragammaAsymptoticCoefficients.ToArray());
+                GammalnAsymptotic = new TruncatedPowerSeries(gammalnAsymptoticCoefficients.ToArray());
             }
             DigammaAt2 = TruncatedPowerSeries.Generate(GammaAt2.Coefficients.Length, i => GammaAt2.Coefficients[i] * (i + 1));
             Log1Plus = new PowerSeries(Log1PlusCoefficient);
@@ -269,7 +269,7 @@ print("            0,")
 for k in range(1,22):
 		print("            " + str(bernoulli(2 * k) / (2 * k)).replace("/", ".0 / ") + ".0,")
         */
-        private static readonly double[] cDigammaCoefficients = new[]
+        private static readonly double[] digammaAsymptoticCoefficients = new[]
         {
             0.0,
             1.0 / 12.0,
@@ -334,7 +334,7 @@ print("            0,")
 for k in range(1,22):
 		print("            " + str(bernoulli(2 * k)).replace("/", ".0 / ") + ".0,")
         */
-        private static readonly double[] cTrigammaCoefficients = new[]
+        private static readonly double[] trigammaAsymptoticCoefficients = new[]
         {
             0.0,
             1.0 / 6.0,
@@ -399,7 +399,7 @@ print("            0.0,")
 for k in range(0,21):
 		print("            " + str(-(2 * k + 1) * bernoulli(2 * k)).replace("/", ".0 / ") + ".0,")
         */
-        private static readonly double[] cTetragammaCoefficients = new[]
+        private static readonly double[] tetragammaAsymptoticCoefficients = new[]
         {
             0.0,
             -1.0,
@@ -431,7 +431,7 @@ from sympy import *
 for k in range(1,21):
 		print("            " + str(bernoulli(2 * k) / (2 * k * (2 * k - 1))).replace("/", ".0 / ") + ".0,")
         */
-        private static readonly double[] cGammalnCoefficients = new[]
+        private static readonly double[] gammalnAsymptoticCoefficients = new[]
         {
             1.0 / 12.0,
             -1.0 / 360.0,

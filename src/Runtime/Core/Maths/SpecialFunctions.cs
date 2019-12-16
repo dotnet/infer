@@ -910,7 +910,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double invX = 1 / x;
             result += Math.Log(x) - 0.5 * invX;
             double invX2 = invX * invX;
-            double sum = Series.CDigamma.Evaluate(invX2);
+            double sum = Series.DigammaAsymptotic.Evaluate(invX2);
             result -= sum;
             return result;
         }
@@ -963,7 +963,7 @@ namespace Microsoft.ML.Probabilistic.Math
             // This expansion can be computed in Maple via asympt(Psi(1,x),x)
             double invX2 = 1 / (x * x);
             result += 0.5 * invX2;
-            double sum = Series.CTrigamma.Evaluate(invX2);
+            double sum = Series.TrigammaAsymptotic.Evaluate(invX2);
             result += (1 + sum) / x;
             return result;
         }
@@ -996,7 +996,7 @@ namespace Microsoft.ML.Probabilistic.Math
             // Milton Abramowitz and Irene A. Stegun, Handbook of Mathematical Functions, Section 6.4
             double invX2 = 1 / (x * x);
             result += -invX2 / x;
-            double sum = Series.CTetragamma.Evaluate(invX2);
+            double sum = Series.TetragammaAsymptotic.Evaluate(invX2);
             result += sum;
             return result;
         }
@@ -1446,7 +1446,7 @@ f = 1/gamma(x+1)-1
                 // the series is:  sum_{i=1}^inf B_{2i} / (2i*(2i-1)*x^(2i-1))
                 double invX = 1.0 / x;
                 double invX2 = invX * invX;
-                double sum = invX * Series.CGammaln.Evaluate(invX2);
+                double sum = invX * Series.GammalnAsymptotic.Evaluate(invX2);
                 return sum;
             }
         }
