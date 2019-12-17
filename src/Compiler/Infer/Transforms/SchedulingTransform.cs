@@ -464,8 +464,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 double maxBackOverLength;
                 int maxBack;
                 maxBack = scheduler.MaxBackEdgeCount(schedule, out maxBackOverLength);
-                Console.WriteLine("schedule.Count = {0}, max back = {1}, product = {2}, max back/length = {3}, product = {4}",
-                          schedule.Count, maxBack, schedule.Count * maxBack, maxBackOverLength, schedule.Count * maxBackOverLength);
+                Trace.WriteLine($"schedule.Count = {schedule.Count}, max back = {maxBack}, product = {schedule.Count * maxBack}, max back/length = {maxBackOverLength}, product = {schedule.Count * maxBackOverLength}");
             }
             if (initSchedule.Count > 0)
             {
@@ -593,7 +592,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             {
                 if (debug)
                 {
-                    Console.WriteLine("offsetVarsToDelete: {0}", offsetVarsToDelete);
+                    Debug.WriteLine($"offsetVarsToDelete: {offsetVarsToDelete}");
                     if (g.dependencyGraph.Nodes.Count < 100 && false)
                         DrawOffsetEdges(g);
                 }

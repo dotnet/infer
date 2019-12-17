@@ -1,16 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(MSBuildThisFileDirectory)..\..\build\common.props" />
 
   <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\Infer.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>Microsoft.ML.Probabilistic.Tests</AssemblyName>
     <RootNamespace>Microsoft.ML.Probabilistic.Tests</RootNamespace>
     <MonoSupport>false</MonoSupport>
     <DefineConstants>TRACE;SUPPRESS_UNREACHABLE_CODE_WARNINGS</DefineConstants>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
     <NoWarn>1591</NoWarn>
     <DefineConstants Condition=" '$(MonoSupport)' != 'false' ">$(DefineConstants);MONO_SUPPORT</DefineConstants>
     <Configurations>Debug;Release;DebugFull;DebugCore;ReleaseFull;ReleaseCore</Configurations>
