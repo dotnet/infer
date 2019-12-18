@@ -565,7 +565,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             const double TargetProb3 = TargetProb2 * Ratio2;
             const double TargetProb4 = TargetProb3 * Ratio2;
             const double TargetProb5 = TargetProb4 * Ratio2;
-            const double Ratio3 = 1.0;
+            const double Ratio3 = 0.999;
             const double TargetProb6 = TargetProb5 * Ratio3;
             const double TargetProb7 = TargetProb6 * Ratio3;
             const double TargetProb8 = TargetProb7 * Ratio3;
@@ -587,7 +587,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             var charDistLowerScaled3 = DiscreteChar.CreateScaled(charDistLower, Ratio3);
             var charDistLowerScaledEnd = DiscreteChar.CreateScaled(charDistLower, Ratio4);
 
-            var wordModel = StringDistribution.WordModel(
+            var wordModel = StringDistribution.Concatenate(
                 new List<DiscreteChar>
                 {
                     charDistUpperScaled,
@@ -599,7 +599,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                     charDistLowerScaled3,
                     charDistLowerScaled3,
                     charDistLowerScaledEnd
-                });
+                },
+                true,
+                true);
 
             const string Word = "Abcdefghij";
 

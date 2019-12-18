@@ -244,42 +244,38 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Creates a distribution over sequences induced by a given list of distributions over sequence elements.
-        /// </summary>
-        /// <param name="sequence">Enumerable of distributions over sequence elements.</param>
-        /// <returns>The created distribution.</returns>
-        public static TThis Concatenate(IEnumerable<TElementDistribution> sequence)
-        {
-            var result = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
-            var last = result.Start;
-            foreach (var elem in sequence)
-            {
-                last = last.AddTransition(elem, Weight.One);
-            }
-            
-            last.SetEndWeight(Weight.One);
-            return FromWorkspace(result.GetAutomaton());
-        }
-
-
-        /// <summary>
         /// Creates a distribution over sequences induced by a given list of distributions over sequence elements
-        /// where the sequence can optionally end at any length. The last distribution in the list is used for a self-loop,
-        /// allowing any length sequence.
+        /// where the sequence can optionally end at any length, and the last element can optionally repeat without limit.
         /// </summary>
         /// <param name="elementDistributions">Enumerable of distributions over sequence elements and the transition weights.</param>
+        /// <param name="allowEarlyEnd">Allow the sequence to end at any point.</param>
+        /// <param name="repeatLastElement">Repeat the last element.</param>
         /// <returns>The created distribution.</returns>
-        public static TThis WordModel(IList<TElementDistribution> elementDistributions)
+        public static TThis Concatenate(IEnumerable<TElementDistribution> elementDistributions, bool allowEarlyEnd = false, bool repeatLastElement = false)
         {
             var result = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
             var last = result.Start;
-            for (var i = 0; i < elementDistributions.Count - 1; i++)
+            var elementDistributionArray = elementDistributions.ToArray();
+            for (var i = 0; i < elementDistributionArray.Length - 1; i++)
             {
-                last = last.AddTransition(elementDistributions[i], Weight.One);
-                last.SetEndWeight(Weight.One);
+                last = last.AddTransition(elementDistributionArray[i], Weight.One);
+                if (allowEarlyEnd)
+                {
+                    last.SetEndWeight(Weight.One);
+                }
             }
 
-            last.AddSelfTransition(elementDistributions.Last(), Weight.One);
+            var lastElement = elementDistributionArray[elementDistributionArray.Length - 1];
+            if (repeatLastElement)
+            {
+                last.AddSelfTransition(lastElement, Weight.One);
+            }
+            else
+            {
+                last = last.AddTransition(lastElement, Weight.One);
+            }
+
+            last.SetEndWeight(Weight.One);
             return FromWorkspace(result.GetAutomaton());
         }
 
