@@ -839,7 +839,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
             {
                 Console.WriteLine("Compilation failed with " + cr.Errors.Count + " error(s)");
                 foreach (string err in cr.Errors) Console.WriteLine(err);
-                throw new CompilationFailedException("Errors found when compiling generated code for: " + itds[0].Name);
+                throw new CompilationFailedException($"Errors found when compiling generated code for: {itds[0].Name}{Environment.NewLine}{string.Join($"{Environment.NewLine}Error{Environment.NewLine}", cr.Errors)}");
             }
             Stopwatch watch = null;
             if (ShowProgress)
