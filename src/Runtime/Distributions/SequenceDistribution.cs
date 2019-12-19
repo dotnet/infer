@@ -1621,6 +1621,17 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// Converges an improper sequence distribution
+        /// </summary>
+        /// <param name="dist">The original distribution.</param>
+        /// <returns>The converged distribution.</returns>
+        public static TThis Converge(TThis dist)
+        {
+            var converger = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.GetConverger(dist.sequenceToWeight);
+            return dist.Product(FromWorkspace(converger));
+        }
+
+        /// <summary>
         /// Checks if <paramref name="obj"/> equals to this distribution (i.e. represents the same distribution over sequences).
         /// </summary>
         /// <param name="obj">The object to compare this distribution with.</param>

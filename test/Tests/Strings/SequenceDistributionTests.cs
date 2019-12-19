@@ -550,8 +550,8 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             // We want to build a word model as a reasonably simple StringDistribution. It
             // should satisfy the following:
-            // (1) The probability of a word of moderate length (say length 6) should not be
-            //     significantly less than the probability of a short word (of length 2 or 3, say)
+            // (1) The probability of a word of moderate length should not be
+            //     significantly less than the probability of a shorter word.
             // (2) The probability of a specific word conditioned on its length matches that of
             //     words in the target language.
             // We achieve this by putting non-normalized character distributions on the edges. The
@@ -611,6 +611,17 @@ namespace Microsoft.ML.Probabilistic.Tests
                 var currentWord = Word.Substring(0, i + 1);
                 var probCurrentWord = Math.Exp(wordModel.GetLogProb(currentWord));
                 Assert.Equal(targetProbabilitiesPerLength[i], probCurrentWord, Eps);
+            }
+
+            var convergedWordModel = StringDistribution.Converge(wordModel);
+
+            // Check that properties of word model hold after applying converger.
+            for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
+            {
+                var currentWord = Word.Substring(0, i + 1);
+                var probCurrentWord = Math.Exp(convergedWordModel.GetLogProb(currentWord));
+                Xunit.Assert.True(targetProbabilitiesPerLength[i] > probCurrentWord);
+                Xunit.Assert.True(probCurrentWord > 0.8 * targetProbabilitiesPerLength[i]);
             }
         }
 
