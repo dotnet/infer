@@ -3325,7 +3325,7 @@ rr = mpf('-0.99999824265582826');
         {
             if (Math.Abs(x) < 2e-3)
             {
-                return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+                return Series.ExpMinus1.Evaluate(x);
             }
             else
             {

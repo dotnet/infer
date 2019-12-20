@@ -124,6 +124,97 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         }
     }
 
+    /// <summary>
+    /// Represents a result of a series coefficient generation attempt.
+    /// </summary>
+    /// <typeparam name="State">A type that represents the state passed between
+    /// the computations of consequitive coefficients</typeparam>
+    struct CoefficientGenerationResult<State>
+    {
+        /// <summary>
+        /// true, if the coefficient was successfully generated,
+        /// false, if the series was finite and ended somewhere before the requested coefficient.
+        /// </summary>
+        public bool success;
+        /// <summary>
+        /// value of the computed coefficient, if success == true,
+        /// undefined otherwise
+        /// </summary>
+        public double coefficient;
+        /// <summary>
+        /// state that can be used to generate the next coefficient, if success == true,
+        /// undefined otherwise
+        /// </summary>
+        public State newState;
+    }
+
+    /// <summary>
+    /// Provides the coefficients in the series, where the constant term is index zero.
+    /// A state is expected to be passed between the computations of consequitive coefficients
+    /// by the caller.
+    /// When the constant term (index zero) is computed, default(State) is passed to the delegate,
+    /// for a coefficient at index = n, a state obtained when computing the coefficient
+    /// at index = n - 1 is passed.
+    /// </summary>
+    /// <typeparam name="State">A type that represents the state passed between
+    /// the computations of consequitive coefficients</typeparam>
+    /// <param name="index">Index of the target coefficient</param>
+    /// <param name="prevState">A state obtained, while computing coefficient with <paramref name="index" />
+    /// one less than the current one, or default(State) when <paramref name="index" /> == 0. </param>
+    /// <returns>A result of a series coefficient generation attempt.</returns>
+    /// <remarks>
+    /// For small coefficient generation functions, like Series.ExpMinus1Coefficient,
+    /// manually calling this delegate is about 2.5 times faster that using IEnumerable.
+    /// </remarks>
+    delegate CoefficientGenerationResult<State> CoefficientGenerator<State>(int index, State prevState);
+    
+    /// <summary>
+    /// Represents a mathematical power series of the form c0 + c1*x + c2*x^2 + c3*x^3 + ...
+    /// Allows stateful computation of the coefficients.
+    /// </summary>
+    struct PowerSeries<State>
+    {
+        readonly CoefficientGenerator<State> coefGenerator;
+
+        /// <summary>
+        /// Constructs a power series.
+        /// </summary>
+        /// <param name="coefGenerator">
+        /// Provides the coefficients in the series, where the constant term is index zero.
+        /// A state is expected to be passed between the computations of consequitive coefficients
+        /// by the caller.
+        /// When the constant term (index zero) is computed, default(State) is passed to the delegate,
+        /// for a coefficient at index = n, a state obtained when computing the coefficient
+        /// at index = n - 1 is passed.
+        /// </param>
+        public PowerSeries(CoefficientGenerator<State> coefGenerator)
+        {
+            this.coefGenerator = coefGenerator;
+        }
+
+        public double Evaluate(double x)
+        {
+            double sum = 0.0;
+            double term = 1.0;
+            double oldSum = double.NaN;
+            int i = 0;
+            var genResult = coefGenerator(0, default);
+            while (genResult.success)
+            {
+                oldSum = sum;
+                if (genResult.coefficient != 0)
+                {
+                    sum += term * genResult.coefficient;
+                    if (sum == oldSum) break;
+                }
+                ++i;
+                term *= x;
+                genResult = coefGenerator(i, genResult.newState);
+            }
+            return sum;
+        }
+    }
+
     class Series
     {
         public TruncatedPowerSeries GammaAt2 { get; }
@@ -145,6 +236,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         public TruncatedPowerSeries GammalnAsymptotic { get; }
         public PowerSeries Log1Plus { get; }
         public PowerSeries Log1Minus { get; }
+        public PowerSeries<double> ExpMinus1 { get; }
 
         public Series(uint precisionBits)
         {
@@ -172,12 +264,22 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             DigammaAt2 = TruncatedPowerSeries.Generate(GammaAt2.Coefficients.Length, i => GammaAt2.Coefficients[i] * (i + 1));
             Log1Plus = new PowerSeries(Log1PlusCoefficient);
             Log1Minus = new PowerSeries(Log1MinusCoefficient);
+            ExpMinus1 = new PowerSeries<double>(ExpMinus1Coefficient);
         }
 
         #region Coefficient generators
 
         private static double Log1PlusCoefficient(int n) => n == 0 ? 0.0 : (n % 2 == 0 ? -1.0 : 1.0) / n;
         private static double Log1MinusCoefficient(int n) => n == 0 ? 0.0 : -1.0 / n;
+        private static CoefficientGenerationResult<double> ExpMinus1Coefficient(int n, double prev)
+        {
+            if (n == 0)
+                return new CoefficientGenerationResult<double>() { success = true, coefficient = 0.0, newState = 1.0 };
+            double next = prev / n;
+            if (next == 0.0)
+                return new CoefficientGenerationResult<double>() { success = false, coefficient = 0.0, newState = 0.0 };
+            return new CoefficientGenerationResult<double>() { success = true, coefficient = next, newState = next };
+        }
 
         #endregion
 
