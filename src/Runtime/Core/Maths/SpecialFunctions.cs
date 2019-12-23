@@ -3342,9 +3342,7 @@ rr = mpf('-0.99999824265582826');
         {
             if (Math.Abs(x) < 6e-1)
             {
-                return x * (1.0 / 6 + x * (1.0 / 24 + x * (1.0 / 120 + x * (1.0 / 720 +
-                    x * (1.0 / 5040 + x * (1.0 / 40320 + x * (1.0 / 362880 + x * (1.0 / 3628800 +
-                    x * (1.0 / 39916800 + x * (1.0 / 479001600 + x * (1.0 / 6227020800 + x * (1.0 / 87178291200))))))))))));
+                return Series.ExpMinus1RatioMinus1RatioMinusHalf.Evaluate(x);
             }
             else if (double.IsPositiveInfinity(x))
             {
@@ -3370,7 +3368,7 @@ rr = mpf('-0.99999824265582826');
         {
             if (x < 1e-3)
             {
-                return Math.Log(x) + x * (0.5 + x * (1.0 / 24 + x * (-1.0 / 2880)));
+                return Math.Log(x) + Series.LogExpMinus1RatioAt0.Evaluate(x);
             }
             else if (x > 50)
             {

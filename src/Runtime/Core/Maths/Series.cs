@@ -237,6 +237,8 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         public PowerSeries Log1Plus { get; }
         public PowerSeries Log1Minus { get; }
         public PowerSeries<double> ExpMinus1 { get; }
+        public PowerSeries<double> ExpMinus1RatioMinus1RatioMinusHalf { get; }
+        public TruncatedPowerSeries LogExpMinus1RatioAt0 { get; }
 
         public Series(uint precisionBits)
         {
@@ -250,6 +252,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 TetragammaAt1 = new TruncatedPowerSeries(tetragammaAt1Coefficients.Take(2).ToArray());
                 TetragammaAsymptotic = new TruncatedPowerSeries(tetragammaAsymptoticCoefficients.Take(9).ToArray());
                 GammalnAsymptotic = new TruncatedPowerSeries(gammalnAsymptoticCoefficients.Take(7).ToArray());
+                LogExpMinus1RatioAt0 = new TruncatedPowerSeries(logExpMinus1RatioAt0Coefficients.Take(5).ToArray());
             }
             else
             {
@@ -260,11 +263,13 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 TetragammaAt1 = new TruncatedPowerSeries(tetragammaAt1Coefficients.ToArray());
                 TetragammaAsymptotic = new TruncatedPowerSeries(tetragammaAsymptoticCoefficients.ToArray());
                 GammalnAsymptotic = new TruncatedPowerSeries(gammalnAsymptoticCoefficients.ToArray());
+                LogExpMinus1RatioAt0 = new TruncatedPowerSeries(logExpMinus1RatioAt0Coefficients.ToArray());
             }
             DigammaAt2 = TruncatedPowerSeries.Generate(GammaAt2.Coefficients.Length, i => GammaAt2.Coefficients[i] * (i + 1));
             Log1Plus = new PowerSeries(Log1PlusCoefficient);
             Log1Minus = new PowerSeries(Log1MinusCoefficient);
             ExpMinus1 = new PowerSeries<double>(ExpMinus1Coefficient);
+            ExpMinus1RatioMinus1RatioMinusHalf = new PowerSeries<double>(ExpMinus1RatioMinus1RatioMinusHalfCoefficient);
         }
 
         #region Coefficient generators
@@ -276,6 +281,15 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             if (n == 0)
                 return new CoefficientGenerationResult<double>() { success = true, coefficient = 0.0, newState = 1.0 };
             double next = prev / n;
+            if (next == 0.0)
+                return new CoefficientGenerationResult<double>() { success = false, coefficient = 0.0, newState = 0.0 };
+            return new CoefficientGenerationResult<double>() { success = true, coefficient = next, newState = next };
+        }
+        private static CoefficientGenerationResult<double> ExpMinus1RatioMinus1RatioMinusHalfCoefficient(int n, double prev)
+        {
+            if (n == 0)
+                return new CoefficientGenerationResult<double>() { success = true, coefficient = 0.0, newState = 1.0 / 2 };
+            double next = prev / (n + 2);
             if (next == 0.0)
                 return new CoefficientGenerationResult<double>() { success = false, coefficient = 0.0, newState = 0.0 };
             return new CoefficientGenerationResult<double>() { success = true, coefficient = next, newState = next };
@@ -598,6 +612,38 @@ for k in range(1,21):
             //-26315271553053477373.0 / 2418179400.0,
             //154210205991661.0 / 444.0,
             //-261082718496449122051.0 / 21106800.0,
+        };
+
+        /* Python code to generate this table (must not be indented):
+from __future__ import division
+from sympy import *
+x = symbols('x')
+for c in reversed(Poly(log((exp(x) - 1) / x).series(x, 0, 22).removeO()).all_coeffs()):
+	print("            " + str(c).replace("/", ".0 / ") + ".0,")
+        */
+        private static readonly double[] logExpMinus1RatioAt0Coefficients = new[]
+        {
+            0.0,
+            1.0 / 2.0,
+            1.0 / 24.0,
+            0.0,
+            -1.0 / 2880.0,
+            0.0,
+            1.0 / 181440.0,
+            0.0,
+            -1.0 / 9676800.0,
+            0.0,
+            1.0 / 479001600.0,
+            0.0,
+            -691.0 / 15692092416000.0,
+            0.0,
+            1.0 / 1046139494400.0,
+            0.0,
+            -3617.0 / 170729965486080000.0,
+            0.0,
+            43867.0 / 91963695909076992000.0,
+            0.0,
+            -174611.0 / 16057153253965824000000.0,
         };
 
         #endregion
