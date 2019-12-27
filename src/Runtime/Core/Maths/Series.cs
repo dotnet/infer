@@ -198,7 +198,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             double term = 1.0;
             double oldSum = double.NaN;
             int i = 0;
-            var genResult = coefGenerator(0, default);
+            var genResult = coefGenerator(0, default(State));
             while (genResult.success)
             {
                 oldSum = sum;
