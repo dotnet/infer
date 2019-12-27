@@ -1782,7 +1782,7 @@ f = 1/gamma(x+1)-1
                 // log(NormalCdf(x)) = log(1-NormalCdf(-x))
                 double y = NormalCdf(-x);
                 // log(1-y)
-                return -y * (1 + y * (0.5 + y * (1.0 / 3 + y * (0.25))));
+                return Series.Log1Minus.Evaluate(y);
             }
             else if (x >= large)
             {
@@ -1794,13 +1794,7 @@ f = 1/gamma(x+1)-1
                 double z = 1 / (x * x);
                 // asymptotic series for log(normcdf)
                 // Maple command: subs(x=-x,asympt(log(normcdf(-x)),x));
-                double s = z * (c_normcdfln_series[0] + z *
-                              (c_normcdfln_series[1] + z *
-                               (c_normcdfln_series[2] + z *
-                                (c_normcdfln_series[3] + z *
-                                 (c_normcdfln_series[4] + z *
-                                  (c_normcdfln_series[5] + z *
-                                   c_normcdfln_series[6]))))));
+                double s = Series.NormcdflnAsymptotic.Evaluate(z);
                 return s - LnSqrt2PI - 0.5 * x * x - Math.Log(-x);
             }
         }
@@ -4643,14 +4637,6 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// Zeta4 = pi^4/90 = polygamma(3,1)/6
         /// </summary>
         private const double Zeta4 = 1.0823232337111381915;
-
-        /// <summary>
-        /// Coefficients of the asymptotic expansion of NormalCdfLn.
-        /// </summary>
-        private static readonly double[] c_normcdfln_series =
-            {
-                -1, 5.0/2, -37.0/3, 353.0/4, -4081.0/5, 55205.0/6, -854197.0/7
-            };
 
         /// <summary>
         /// NormCdf(x)/NormPdf(x) for x = 0, -1, -2, -3, ..., -16

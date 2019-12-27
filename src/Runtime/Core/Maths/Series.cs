@@ -239,6 +239,10 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         public PowerSeries<double> ExpMinus1 { get; }
         public PowerSeries<double> ExpMinus1RatioMinus1RatioMinusHalf { get; }
         public TruncatedPowerSeries LogExpMinus1RatioAt0 { get; }
+        /// <summary>
+        /// Asymptotic expansion of NormalCdfLn
+        /// </summary>
+        public TruncatedPowerSeries NormcdflnAsymptotic { get; }
 
         public Series(uint precisionBits)
         {
@@ -253,6 +257,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 TetragammaAsymptotic = new TruncatedPowerSeries(tetragammaAsymptoticCoefficients.Take(9).ToArray());
                 GammalnAsymptotic = new TruncatedPowerSeries(gammalnAsymptoticCoefficients.Take(7).ToArray());
                 LogExpMinus1RatioAt0 = new TruncatedPowerSeries(logExpMinus1RatioAt0Coefficients.Take(5).ToArray());
+                NormcdflnAsymptotic = new TruncatedPowerSeries(normcdflnAsymptoticCoefficients.Take(8).ToArray());
             }
             else
             {
@@ -264,6 +269,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 TetragammaAsymptotic = new TruncatedPowerSeries(tetragammaAsymptoticCoefficients.ToArray());
                 GammalnAsymptotic = new TruncatedPowerSeries(gammalnAsymptoticCoefficients.ToArray());
                 LogExpMinus1RatioAt0 = new TruncatedPowerSeries(logExpMinus1RatioAt0Coefficients.ToArray());
+                NormcdflnAsymptotic = new TruncatedPowerSeries(normcdflnAsymptoticCoefficients.ToArray());
             }
             DigammaAt2 = TruncatedPowerSeries.Generate(GammaAt2.Coefficients.Length, i => GammaAt2.Coefficients[i] * (i + 1));
             Log1Plus = new PowerSeries(Log1PlusCoefficient);
@@ -644,6 +650,71 @@ for c in reversed(Poly(log((exp(x) - 1) / x).series(x, 0, 22).removeO()).all_coe
             43867.0 / 91963695909076992000.0,
             0.0,
             -174611.0 / 16057153253965824000000.0,
+        };
+
+        /* Python code to generate this table (must not be indented):
+from __future__ import division
+from sympy import *
+def next(v):
+    idx = 1
+    while idx < len(v) and v[idx] == 0:
+        idx = idx + 1
+    if idx == len(v): return False
+    v0 = v[0]
+    v[0] = 0
+    v[idx] = v[idx] - 1
+    v[idx - 1] = v0 + 1
+    return True
+
+# Formula for mth coefficient of the normcdfln asymptotic:
+# \sum_{n=1}^m (-1)^{n+m+1} / n * \sum_{l1, l2, ..., ln \in N, l1 + l2 + ... + ln = m} (2 * l1 - 1)!! * (2 * l2 - 1)!! * ... * (2 * ln - 1)!!
+# Can be obtained by composing the Taylor expansion for log(1 + x) and asymtotic expansion for erfc
+def A(m):
+    result = S((-1)**(2 + m)) * factorial2(2 * m - 1)
+    for n in range(2,m+1):
+        coef = S((-1)**(n + 1 + m)) / n
+        deltas = []
+        for k in range(0, n):
+            deltas.append(0)
+        deltas[-1] = m - n
+        accSum = S(0)
+        while True:
+            accProd = S(1)
+            for delta in deltas:
+                accProd = accProd * factorial2(2 * (delta + 1) - 1)
+            accSum = accSum + accProd
+            if not next(deltas):
+                break
+        result = result + coef * accSum
+    return result
+
+print("            0.0,")
+for k in range(1,21):
+    print("            " + str(A(k)).replace("/", ".0 / ") + ".0,")
+        */
+        private static readonly double[] normcdflnAsymptoticCoefficients = new[]
+        {
+            0.0,
+            -1.0,
+            5.0 / 2.0,
+            -37.0 / 3.0,
+            353.0 / 4.0,
+            -4081.0 / 5.0,
+            55205.0 / 6.0,
+            -854197.0 / 7.0,
+            14876033.0 / 8.0,
+            -288018721.0 / 9.0,
+            1227782785.0 / 2.0,
+            -142882295557.0 / 11.0,
+            3606682364513.0 / 12.0,
+            -98158402127761.0 / 13.0,
+            //2865624738913445.0 / 14.0,
+            //-89338394736560917.0 / 15.0,
+            //2962542872271918593.0 / 16.0,
+            //-104128401379446177601.0 / 17.0,
+            //3867079042971339087365.0 / 18.0,
+            //-151312533647578564021477.0 / 19.0,
+            //6222025717549801744754273.0 / 20.0,
         };
 
         #endregion
