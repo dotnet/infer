@@ -2,15 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Microsoft.ML.Probabilistic.Collections;
+
 namespace Microsoft.ML.Probabilistic.Tests
 {
     using System;
     using System.Linq;
+
     using Xunit;
     using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
     using Microsoft.ML.Probabilistic.Distributions;
     using Microsoft.ML.Probabilistic.Distributions.Automata;
-    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Tests for transducers.
@@ -24,24 +26,27 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Trait("Category", "StringInference")]
         public void LargeTransducer()
         {
-            StringAutomaton.MaxStateCount = 1200000; // Something big
-            StringAutomaton bigAutomaton = StringAutomaton.Zero();
-            bigAutomaton.AddStates(StringAutomaton.MaxStateCount - bigAutomaton.States.Count);
-            Func<DiscreteChar, Weight, Tuple<Option<PairDistribution<char, DiscreteChar>>, Weight>> transitionConverter =
-                (dist, weight) => Tuple.Create(Option.Some(PairDistribution<char, DiscreteChar>.FromFirstSecond(dist, dist)), weight);
-            
-            Assert.Throws<AutomatonTooLargeException>(() => StringTransducer.FromAutomaton(bigAutomaton, transitionConverter));
+            var largeStatesCount = 1200000; // bigger than default MaxStatesCount in automata
+            using (var unlimitedAutomatonStates = new StringAutomaton.UnlimitedStatesComputation())
+            {
+                var bigAutomatonBuilder = new StringAutomaton.Builder();
+                bigAutomatonBuilder.AddStates(largeStatesCount - bigAutomatonBuilder.StatesCount);
+                Func<Option<DiscreteChar>, Weight, ValueTuple<Option<PairDistribution<char, DiscreteChar>>, Weight>>
+                    transitionConverter =
+                        (dist, weight) =>
+                            ValueTuple.Create(
+                                Option.Some(PairDistribution<char, DiscreteChar>.FromFirstSecond(dist, dist)), weight);
 
-            // Shouldn't throw if the maximum number of states is increased
-            int prevMaxStateCount = StringTransducer.MaxStateCount;
-            try
-            {
-                StringTransducer.MaxStateCount = StringAutomaton.MaxStateCount;
-                StringTransducer.FromAutomaton(bigAutomaton, transitionConverter);
-            }
-            finally
-            {
-                StringTransducer.MaxStateCount = prevMaxStateCount;
+                var bigAutomaton = bigAutomatonBuilder.GetAutomaton();
+
+                Assert.Throws<AutomatonTooLargeException>(() =>
+                    StringTransducer.FromAutomaton(bigAutomaton, transitionConverter));
+
+                // Shouldn't throw if the maximum number of states is increased
+                using (var unlimitedTransducerStates = new StringTransducer.UnlimitedStatesComputation())
+                {
+                    StringTransducer.FromAutomaton(bigAutomaton, transitionConverter);
+                }
             }
         }
         
@@ -514,8 +519,6 @@ namespace Microsoft.ML.Probabilistic.Tests
         {
             StringTransducer transducer = StringTransducer.Consume(StringAutomaton.Constant(3.0));
             StringTransducer transpose1 = StringTransducer.Transpose(transducer);
-            StringTransducer transpose2 = transducer.Clone();
-            transpose2.TransposeInPlace();
 
             var pairs = new[]
             {
@@ -529,11 +532,42 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 double referenceValue1 = transducer.GetValue(valuePair[0], valuePair[1]);
                 Assert.Equal(referenceValue1, transpose1.GetValue(valuePair[1], valuePair[0]));
-                Assert.Equal(referenceValue1, transpose2.GetValue(valuePair[1], valuePair[0]));
 
                 double referenceValue2 = transducer.GetValue(valuePair[1], valuePair[0]);
                 Assert.Equal(referenceValue2, transpose1.GetValue(valuePair[0], valuePair[1]));
-                Assert.Equal(referenceValue2, transpose2.GetValue(valuePair[0], valuePair[1]));
+            }
+        }
+
+        /// <summary>
+        /// Tests whether the point mass computation operations fails due to a stack overflow when an automaton becomes sufficiently large.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void ProjectSourceLargeAutomaton()
+        {
+            using (var unlimited = new StringAutomaton.UnlimitedStatesComputation())
+            {
+                const int StateCount = 100_000;
+
+                var builder = new StringAutomaton.Builder();
+                var state = builder.Start;
+
+                for (var i = 1; i < StateCount; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                state.SetEndWeight(Weight.One);
+
+                var automaton = builder.GetAutomaton();
+                var point = new string('a', StateCount - 1);
+                var copyTransducer = StringTransducer.Copy();
+
+                var projectedAutomaton = copyTransducer.ProjectSource(automaton);
+                var projectedPoint = copyTransducer.ProjectSource(point);
+
+                StringInferenceTestUtilities.TestValue(projectedAutomaton, 1.0, point);
+                StringInferenceTestUtilities.TestValue(projectedPoint, 1.0, point);
             }
         }
     }

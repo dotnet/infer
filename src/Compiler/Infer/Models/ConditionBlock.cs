@@ -177,15 +177,10 @@ namespace Microsoft.ML.Probabilistic.Models
             get { return range; }
         }
 
-        private Variable<int> indexVar;
-
         /// <summary>
         /// The index variable associated with the range
         /// </summary>
-        public Variable<int> Index
-        {
-            get { return indexVar; }
-        }
+        public Variable<int> Index { get; private set; }
 
         /// <summary>
         /// Constructs 'for each' block from a range
@@ -235,7 +230,7 @@ namespace Microsoft.ML.Probabilistic.Models
         internal override void OpenBlock()
         {
             CheckRangeCanBeOpened(range);
-            indexVar = new Variable<int>(range); // Needs to be here to prevent error when creating grid with .Index syntax
+            Index = new Variable<int>(range); // Needs to be here to prevent error when creating grid with .Index syntax
 
             base.OpenBlock();
         }

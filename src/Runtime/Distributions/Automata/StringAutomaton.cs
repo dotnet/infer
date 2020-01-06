@@ -2,17 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Microsoft.ML.Probabilistic.Collections;
+
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
-    using System.Linq;
-    using System.Runtime.Serialization;
-
-    using Microsoft.ML.Probabilistic.Math;
-    using Microsoft.ML.Probabilistic.Utilities;
 
     /// <summary>
     /// Represents a weighted finite state automaton defined on <see cref="string"/>.
@@ -25,164 +22,91 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// Constructor used during deserialization by Newtonsoft.Json and BinaryFormatter .
-        /// </summary>
-        protected StringAutomaton(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-
-        /// <summary>
         /// Computes a set of outgoing transitions from a given state of the determinization result.
         /// </summary>
-        /// <param name="sourceState">The source state of the determinized automaton represented as 
+        /// <param name="sourceStateSet">The source state of the determinized automaton represented as 
         /// a set of (stateId, weight) pairs, where state ids correspond to states of the original automaton.</param>
         /// <returns>
-        /// A collection of (element distribution, weight, weighted state set) triples corresponding to outgoing transitions from <paramref name="sourceState"/>.
+        /// A collection of (element distribution, weight, weighted state set) triples corresponding to outgoing
+        /// transitions from <paramref name="sourceStateSet"/>.
         /// The first two elements of a tuple define the element distribution and the weight of a transition.
         /// The third element defines the outgoing state.
         /// </returns>
-        protected override IEnumerable<Tuple<DiscreteChar, Weight, Determinization.WeightedStateSet>> GetOutgoingTransitionsForDeterminization(
-            Determinization.WeightedStateSet sourceState)
+        protected override IEnumerable<Determinization.OutgoingTransition> GetOutgoingTransitionsForDeterminization(
+            Determinization.WeightedStateSet sourceStateSet)
         {
-            const double LogEps = -35; // Don't add transitions with log-weight less than this as they have been produced by numerical inaccuracies
-            
-            // Build a list of numbered non-zero probability character segment bounds (they are numbered here due to perf. reasons)
-            var segmentBounds = new List<Tuple<int, TransitionCharSegmentBound>>();
-            foreach (KeyValuePair<int, Weight> stateIdWeight in sourceState)
+            var destinationStateSetBuilder = Determinization.WeightedStateSetBuilder.Create();
+
+            var segmentBounds = CollectCharSegmentBounds(sourceStateSet);
+            var currentSegmentStart = 0;
+
+            foreach (var segmentBound in segmentBounds)
             {
-
-                var state = this.States[stateIdWeight.Key];
-                for (int i = 0; i < state.TransitionCount; ++i)
-                {
-                    AddTransitionCharSegmentBounds(state.GetTransition(i), stateIdWeight.Value, segmentBounds);
-                }
-            }
-
-            // Sort segment bounds left-to-right, start-to-end
-            var sortedIndexedSegmentBounds = segmentBounds.OrderBy(tup => tup.Item2);
-
-            // Produce an outgoing transition for each unique subset of overlapping segments
-            var result = new List<Tuple<DiscreteChar, Weight, Determinization.WeightedStateSet>>();
-            Weight currentSegmentStateWeightSum = Weight.Zero;
-            var currentSegmentStateWeights = segmentBounds.Select(b => b.Item2.DestinationStateId).Distinct().ToDictionary(d => d, d => Weight.Zero);
-            var activeSegments = new HashSet<TransitionCharSegmentBound>();
-            int currentSegmentStart = char.MinValue;
-            foreach (var tup in sortedIndexedSegmentBounds)
-            {
-                TransitionCharSegmentBound segmentBound = tup.Item2;
-
-                if (currentSegmentStateWeightSum.LogValue > LogEps && currentSegmentStart < segmentBound.Bound)
+                if (currentSegmentStart != segmentBound.Position &&
+                    destinationStateSetBuilder.StatesCount() > 0)
                 {
                     // Flush previous segment
-                    char segmentEnd = (char)(segmentBound.Bound - 1);
-                    int segmentLength = segmentEnd - currentSegmentStart + 1;
-                    DiscreteChar elementDist = DiscreteChar.InRange((char)currentSegmentStart, segmentEnd);
+                    var (destinationStateSet, destinationStateSetWeight) = destinationStateSetBuilder.Get();
+                    var segmentLength = segmentBound.Position - currentSegmentStart;
+                    yield return new Determinization.OutgoingTransition(
+                        DiscreteChar.InRange((char)currentSegmentStart, (char)(segmentBound.Position - 1)),
+                        Weight.FromValue(segmentLength) * destinationStateSetWeight,
+                        destinationStateSet);
 
-                    var destinationState = new Determinization.WeightedStateSet();
-                    foreach (KeyValuePair<int, Weight> stateIdWithWeight in currentSegmentStateWeights)
-                    {
-                        if (stateIdWithWeight.Value.LogValue > LogEps)
-                        {
-                            Weight stateWeight = Weight.Product(stateIdWithWeight.Value, Weight.Inverse(currentSegmentStateWeightSum));
-                            destinationState.Add(stateIdWithWeight.Key, stateWeight);
-                        }
-                    }
-
-                    Weight transitionWeight = Weight.Product(Weight.FromValue(segmentLength), currentSegmentStateWeightSum);
-                    result.Add(Tuple.Create(elementDist, transitionWeight, destinationState));
                 }
 
                 // Update current segment
-                currentSegmentStart = segmentBound.Bound;
-
-                if (segmentBound.IsStart)
+                currentSegmentStart = segmentBound.Position;
+                if (segmentBound.IsEnd)
                 {
-                    activeSegments.Add(segmentBound);
-                    currentSegmentStateWeightSum = Weight.Sum(currentSegmentStateWeightSum, segmentBound.Weight);
-                    currentSegmentStateWeights[segmentBound.DestinationStateId] = Weight.Sum(currentSegmentStateWeights[segmentBound.DestinationStateId], segmentBound.Weight);
+                    destinationStateSetBuilder.Remove(segmentBound.DestinationStateId, segmentBound.Weight);
                 }
                 else
                 {
-                    Debug.Assert(currentSegmentStateWeights.ContainsKey(segmentBound.DestinationStateId), "We shouldn't exit a state we didn't enter.");
-                    activeSegments.Remove(segmentBounds[tup.Item1 - 1].Item2);  // End follows start in original.
-                    if (double.IsInfinity(segmentBound.Weight.Value))
-                    {
-                        // Cannot subtract because of the infinities involved.
-                        currentSegmentStateWeightSum = activeSegments.Select(sb => sb.Weight).Aggregate(Weight.Zero, (acc, w) => Weight.Sum(acc, w));
-                        currentSegmentStateWeights[segmentBound.DestinationStateId] =
-                            activeSegments.Where(sb => sb.DestinationStateId == segmentBound.DestinationStateId).Select(sb => sb.Weight).Aggregate(Weight.Zero, (acc, w) => Weight.Sum(acc, w));
-                    }
-                    else
-                    {
-                        currentSegmentStateWeightSum = activeSegments.Count == 0 ? Weight.Zero : Weight.AbsoluteDifference(currentSegmentStateWeightSum, segmentBound.Weight);
+                    destinationStateSetBuilder.Add(segmentBound.DestinationStateId, segmentBound.Weight);
+                }
+            }
+        }
 
-                        Weight prevStateWeight = currentSegmentStateWeights[segmentBound.DestinationStateId];
-                        currentSegmentStateWeights[segmentBound.DestinationStateId] = Weight.AbsoluteDifference(
-                            prevStateWeight, segmentBound.Weight);
-                    }
+        private List<TransitionCharSegmentBound> CollectCharSegmentBounds(
+            Determinization.WeightedStateSet sourceStateSet)
+        {
+            var segmentBounds = new List<TransitionCharSegmentBound>();
+            for (var i = 0; i < sourceStateSet.Count; ++i)
+            {
+                var sourceState = sourceStateSet[i];
+                var state = this.States[sourceState.Index];
+                foreach (var transition in state.Transitions)
+                {
+                    AddTransitionCharSegmentBounds(transition, sourceState.Weight, segmentBounds);
                 }
             }
 
-            return result;
+            segmentBounds.Sort();
+            return segmentBounds;
         }
 
         /// <summary>
-        /// Given a transition and the residual weight of its source state, adds weighted non-zero probability character segments
-        /// associated with the transition to the list.
+        /// Given a transition and the residual weight of its source state, adds weighted non-zero
+        /// probability character ranges asociated with the transition to the list.
         /// </summary>
         /// <param name="transition">The transition.</param>
         /// <param name="sourceStateResidualWeight">The logarithm of the residual weight of the source state of the transition.</param>
-        /// <param name="bounds">The list for storing numbered segment bounds.</param>
+        /// <param name="segmentBounds">The list for storing weighted ranges.</param>
         private static void AddTransitionCharSegmentBounds(
-            Transition transition, Weight sourceStateResidualWeight, List<Tuple<int, TransitionCharSegmentBound>> bounds)
+            Transition transition, Weight sourceStateResidualWeight, List<TransitionCharSegmentBound> segmentBounds)
         {
-            var probs = (PiecewiseVector)transition.ElementDistribution.Value.GetProbs();
-            int commonValueStart = char.MinValue;
-            Weight commonValue = Weight.FromValue(probs.CommonValue);
-            Weight weightBase = Weight.Product(transition.Weight, sourceStateResidualWeight);
-            TransitionCharSegmentBound newSegmentBound;
+            var distribution = transition.ElementDistribution.Value;
+            var ranges = distribution.Ranges;
+            var weightBase = transition.Weight * sourceStateResidualWeight;
 
-            ////if (double.IsInfinity(weightBase.Value))
-            ////{
-            ////    Console.WriteLine("Weight base infinity");
-            ////}
-
-            for (int i = 0; i < probs.Pieces.Count; ++i)
+            foreach (var range in ranges)
             {
-                ConstantVector piece = probs.Pieces[i];
-                if (piece.Start > commonValueStart && !commonValue.IsZero)
-                {
-                    // Add endpoints for the common value
-                    Weight segmentWeight = Weight.Product(commonValue, weightBase);
-                    newSegmentBound = new TransitionCharSegmentBound(commonValueStart, transition.DestinationStateIndex, segmentWeight, true);
-                    bounds.Add(new Tuple<int, TransitionCharSegmentBound>(bounds.Count, newSegmentBound));
-                    newSegmentBound = new TransitionCharSegmentBound(piece.Start, transition.DestinationStateIndex, segmentWeight, false);
-                    bounds.Add(new Tuple<int, TransitionCharSegmentBound>(bounds.Count, newSegmentBound));
-                }
-
-                // Add segment endpoints
-                Weight pieceValue = Weight.FromValue(piece.Value);
-                if (!pieceValue.IsZero)
-                {
-                    Weight segmentWeight = Weight.Product(pieceValue, weightBase);
-                    newSegmentBound = new TransitionCharSegmentBound(piece.Start, transition.DestinationStateIndex, segmentWeight, true);
-                    bounds.Add(new Tuple<int, TransitionCharSegmentBound>(bounds.Count, newSegmentBound));
-                    newSegmentBound = new TransitionCharSegmentBound(piece.End + 1, transition.DestinationStateIndex, segmentWeight, false);
-                    bounds.Add(new Tuple<int, TransitionCharSegmentBound>(bounds.Count,newSegmentBound));    
-                }
-                
-                commonValueStart = piece.End + 1;
-            }
-
-            if (!commonValue.IsZero && (probs.Pieces.Count == 0 || probs.Pieces[probs.Pieces.Count - 1].End != char.MaxValue))
-            {
-                // Add endpoints for the last common value segment
-                Weight segmentWeight = Weight.Product(commonValue, weightBase);
-                newSegmentBound = new TransitionCharSegmentBound(commonValueStart, transition.DestinationStateIndex, segmentWeight, true);
-                bounds.Add(new Tuple<int, TransitionCharSegmentBound>(bounds.Count, newSegmentBound));
-                newSegmentBound = new TransitionCharSegmentBound(char.MaxValue + 1, transition.DestinationStateIndex, segmentWeight, false);
-                bounds.Add(new Tuple<int, TransitionCharSegmentBound>(bounds.Count, newSegmentBound));
+                var fullWeight = range.Probability * weightBase;
+                segmentBounds.Add(new TransitionCharSegmentBound(
+                    range.StartInclusive, transition.DestinationStateIndex, fullWeight, false));
+                segmentBounds.Add(new TransitionCharSegmentBound(
+                    range.EndExclusive, transition.DestinationStateIndex, fullWeight, true));
             }
         }
 
@@ -191,31 +115,41 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         private struct TransitionCharSegmentBound : IComparable<TransitionCharSegmentBound>
         {
+            private const int IsEndFlag = 1 << 31;
+            private const int DestinationIdMask = 0x7fffffff;
+
+            /// <summary>
+            /// Low 31 bits encode state id. High (sign) bit encodes "isEnd"
+            /// </summary>
+            /// <remarks>
+            /// Such encoding is used to fit whole struct into 16 bytes.
+            /// </remarks>
+            private readonly int destinationStateId;
+
             /// <summary>
             /// Initializes a new instance of the <see cref="TransitionCharSegmentBound"/> struct.
             /// </summary>
-            /// <param name="bound">The bound (segment start or segment end + 1).</param>
+            /// <param name="position">The bound (segment start or segment end + 1).</param>
             /// <param name="destinationStateId">The destination state id of the transition that produced the segment.</param>
             /// <param name="weight">The weight of the segment.</param>
-            /// <param name="isStart">Whether this instance represents the start of the segment.</param>
-            public TransitionCharSegmentBound(int bound, int destinationStateId, Weight weight, bool isStart)
+            /// <param name="isEnd">Whether this instance represents the start of the segment.</param>
+            public TransitionCharSegmentBound(int position, int destinationStateId, Weight weight, bool isEnd)
                 : this()
             {
-                this.Bound = bound;
-                this.DestinationStateId = destinationStateId;
+                this.Position = position;
+                this.destinationStateId = destinationStateId | (isEnd ? IsEndFlag : 0);
                 this.Weight = weight;
-                this.IsStart = isStart;
             }
 
             /// <summary>
             /// Gets the bound (segment start or segment end + 1).
             /// </summary>
-            public int Bound { get; private set; }
+            public int Position { get; }
 
             /// <summary>
             /// Gets the destination state id of the transition that produced this segment.
             /// </summary>
-            public int DestinationStateId { get; private set; }
+            public int DestinationStateId => this.destinationStateId & DestinationIdMask;
 
             /// <summary>
             /// Gets the weight of the segment.
@@ -231,68 +165,31 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets a value indicating whether this instance represents the start of the segment.
             /// </summary>
-            public bool IsStart { get; private set; }
+            public bool IsEnd => (this.destinationStateId & IsEndFlag) != 0;
 
             /// <summary>
             /// Compares this instance to a given one.
             /// </summary>
-            /// <param name="other">The other instance.</param>
-            /// <returns>The comparison result.</returns>
+            /// <param name="that">The other instance.</param>
+            /// <returns>The that result.</returns>
             /// <remarks>
-            /// Instances are first compared by <see cref="Bound"/>, and then by <see cref="IsStart"/> (start goes before end).
+            /// Instances are first compared by <see cref="Position"/>, and then by <see cref="IsEnd"/>
+            /// (end goes before start).
             /// </remarks>
-            public int CompareTo(TransitionCharSegmentBound other)
-            {
-                if (this.Bound != other.Bound)
-                {
-                    return this.Bound.CompareTo(other.Bound);
-                }
-
-                return other.IsStart.CompareTo(this.IsStart);
-            }
+            public int CompareTo(TransitionCharSegmentBound that) =>
+                (Bound: this.Position, this.destinationStateId).CompareTo((that.Position, that.destinationStateId));
 
             /// <summary>
             /// Returns a string representation of this instance.
             /// </summary>
             /// <returns>String representation of this instance.</returns>
-            public override string ToString()
-            {
-                return String.Format(
+            public override string ToString() =>
+                string.Format(
                     "Bound: {0}, Dest: {1}, Weight: {2}, {3}",
-                    this.Bound,
+                    this.Position,
                     this.DestinationStateId,
                     this.Weight,
-                    this.IsStart ? "Start" : "End");
-            }
-
-            /// <summary>
-            /// Overrides equals.
-            /// </summary>
-            /// <param name="obj">An object.</param>
-            /// <returns>True if equal, false otherwise.</returns>
-            public override bool Equals(object obj)
-            {
-                return
-                    obj is TransitionCharSegmentBound that &&
-                    this.DestinationStateId == that.DestinationStateId &&
-                    this.Bound == that.Bound &&
-                    this.IsStart == that.IsStart &&
-                    this.Weight == that.Weight;
-            }
-
-            /// <summary>
-            /// Get a hash code for the instance
-            /// </summary>
-            /// <returns>The hash code.</returns>
-            public override int GetHashCode()
-            {
-                // Make hash code from the main distinguishers. Could
-                // consider adding in IsStart here as well, but currently
-                // only start segments are put in a hashset/dictionary.
-                return Hash.Combine(
-                    this.DestinationStateId.GetHashCode(),
-                    this.Bound.GetHashCode());
-            }
+                    this.IsEnd ? "End" : "Start");
         }
 
         /// <summary>

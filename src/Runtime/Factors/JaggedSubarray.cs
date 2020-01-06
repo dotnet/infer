@@ -363,7 +363,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             for (int j = 0; j < indices_i_Count; j++)
             {
                 DistributionType value = result[j];
-                value.SetToRatio(marginal[indices_i[j]], items[j]);
+                value.SetToRatio(marginal[indices_i[j]], items[j], GaussianOp.ForceProper);
                 result[j] = value;
             }
             return result;
@@ -904,7 +904,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         public static ItemType ItemsAverageConditional<ArrayType, DistributionType, ItemType>(
             [Indexed, Cancels] ItemType items, // items dependency must be ignored for Sequential schedule
-            [IgnoreDependency] ArrayType array,
+            ArrayType array,
             [SkipIfAllUniform] ArrayType to_marginal,
             IList<IList<int>> indices,
             int resultIndex,
@@ -922,7 +922,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             for (int j = 0; j < indices_i_Count; j++)
             {
                 DistributionType value = result[j];
-                value.SetToRatio(to_marginal[indices_i[j]], items[j]);
+                value.SetToRatio(to_marginal[indices_i[j]], items[j], GaussianOp.ForceProper);
                 result[j] = value;
             }
             return result;
@@ -936,7 +936,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             ArrayType result)
             where ArrayType : SettableToRatio<ArrayType>
         {
-            result.SetToRatio(to_marginal, array);
+            result.SetToRatio(to_marginal, array, GaussianOp.ForceProper);
             return result;
         }
 

@@ -48,10 +48,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             // Specify transitions
             foreach (var state in automaton.States)
             {
-                for (int i = 0; i < state.TransitionCount; ++i)
+                foreach (var transition in state.Transitions)
                 {
-                    var transition = state.GetTransition(i);
-                    
                     string transitionLabel;
                     if (transition.IsEpsilon)
                     {

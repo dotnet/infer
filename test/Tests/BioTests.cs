@@ -352,7 +352,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             Nrows = 1;
             Ncols = 0;
             string myStr;
-            StreamReader mySR;
             char[] sep = {'\t', ','};
             for (int pass = 0; pass < 2; pass++)
             {
@@ -361,28 +360,29 @@ namespace Microsoft.ML.Probabilistic.Tests
                     M = new double[Nrows,Ncols];
                     Nrows = 0;
                 }
-                mySR = new StreamReader(ifn);
-                mySR.ReadLine(); // Skip over header line
-                //overwrite number seperator to use US-style(. for decimal separation)
-                NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
-                while ((myStr = mySR.ReadLine()) != null)
+                using (var mySR = new StreamReader(ifn))
                 {
-                    string[] mySplitStr = myStr.Split(sep);
-                    Ncols = mySplitStr.Length;
-                    if (1 == pass)
+                    mySR.ReadLine(); // Skip over header line
+                    //overwrite number seperator to use US-style(. for decimal separation)
+                    NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
+                    while ((myStr = mySR.ReadLine()) != null)
                     {
-                        //parse the doubles into the array.
-                        for (int i = 0; i < Ncols; i++)
+                        string[] mySplitStr = myStr.Split(sep);
+                        Ncols = mySplitStr.Length;
+                        if (1 == pass)
                         {
-                            string str = mySplitStr[i];
-                            M[Nrows, i] = Double.Parse(str, nfi);
+                            //parse the doubles into the array.
+                            for (int i = 0; i < Ncols; i++)
+                            {
+                                string str = mySplitStr[i];
+                                M[Nrows, i] = Double.Parse(str, nfi);
+                            }
                         }
+
+
+                        Nrows++;
                     }
-
-
-                    Nrows++;
                 }
-                mySR.Close();
             }
             return M;
         }

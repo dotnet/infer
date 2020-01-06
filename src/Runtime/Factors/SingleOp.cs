@@ -46,9 +46,8 @@ namespace Microsoft.ML.Probabilistic.Factors
             {
                 StringAutomaton.State state = startEpsilonClosure.GetStateByIndex(stateIndex);
                 Weight stateLogWeight = startEpsilonClosure.GetStateWeightByIndex(stateIndex);
-                for (int transitionIndex = 0; transitionIndex < state.TransitionCount; ++transitionIndex)
+                foreach (var transition in state.Transitions)
                 {
-                    StringAutomaton.Transition transition = state.GetTransition(transitionIndex);
                     if (!transition.IsEpsilon)
                     {
                         StringAutomaton.State destState = probFunc.States[transition.DestinationStateIndex];
@@ -87,7 +86,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             logValues1.SetToFunction(
                 logValues1,
                 logValues2,
-                (x, y) => Weight.Sum(Weight.FromLogValue(x), Weight.Product(values2Scale, Weight.FromLogValue(y))).LogValue);
+                (x, y) => (Weight.FromLogValue(x) + values2Scale * Weight.FromLogValue(y)).LogValue);
             return logValues1;
         }
     }

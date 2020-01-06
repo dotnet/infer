@@ -499,14 +499,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else
             {
                 double Z = GetNormalizer();
-                if(Z == 0)
+                if (Z == 0)
                 {
                     double mean = this.Gamma.GetMean();
                     return Math.Min(UpperBound, Math.Max(LowerBound, mean));
                 }
                 // if Z is not zero, then Z1 cannot be zero.
                 double Z1 = MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * UpperBound) - MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * LowerBound);
-                double sum = this.Gamma.Shape/this.Gamma.Rate * Z1;
+                double sum = this.Gamma.Shape / this.Gamma.Rate * Z1;
                 return sum / Z;
             }
         }
@@ -536,16 +536,18 @@ namespace Microsoft.ML.Probabilistic.Distributions
             else
             {
                 double Z = GetNormalizer();
-                if(Z == 0)
+                if (Z == 0)
                 {
                     mean = Math.Min(UpperBound, Math.Max(LowerBound, this.Gamma.GetMean()));
                     variance = 0.0;
                     return;
                 }
                 double m = this.Gamma.Shape / this.Gamma.Rate;
-                double sum = m * (MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * UpperBound) - MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * LowerBound));
-                mean = sum / Z;
-                double sum2 = m * (this.Gamma.Shape+1)/this.Gamma.Rate * (MMath.GammaLower(this.Gamma.Shape + 2, this.Gamma.Rate * UpperBound) - MMath.GammaLower(this.Gamma.Shape + 2, this.Gamma.Rate * LowerBound));
+                // t = x * Rate
+                // dt = dx * Rate
+                double Z1 = MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * UpperBound) - MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * LowerBound);
+                mean = m * Z1 / Z;
+                double sum2 = m * (this.Gamma.Shape + 1) / this.Gamma.Rate * (MMath.GammaLower(this.Gamma.Shape + 2, this.Gamma.Rate * UpperBound) - MMath.GammaLower(this.Gamma.Shape + 2, this.Gamma.Rate * LowerBound));
                 variance = sum2 / Z - mean * mean;
             }
         }
@@ -559,6 +561,40 @@ namespace Microsoft.ML.Probabilistic.Distributions
             double mean, var;
             GetMeanAndVariance(out mean, out var);
             return var;
+        }
+
+        /// <summary>
+        /// Computes E[x^power]
+        /// </summary>
+        /// <returns></returns>
+        public double GetMeanPower(double power)
+        {
+            if (power == 0.0) return 1.0;
+            else if (IsPointMass) return Math.Pow(Point, power);
+            //else if (Rate == 0.0) return (power > 0) ? Double.PositiveInfinity : 0.0;
+            else if (!IsProper()) throw new ImproperDistributionException(this);
+            else if (this.Gamma.Shape <= -power && LowerBound == 0)
+            {
+                throw new ArgumentException("Cannot compute E[x^" + power + "] for " + this + " (shape <= " + (-power) + ")");
+            }
+            else
+            {
+                double Z = GetNormalizer();
+                double shapePlusPower = this.Gamma.Shape + power;
+                double Z1;
+                bool regularized = shapePlusPower >= 1;
+                if (regularized)
+                {
+                    Z1 = Math.Exp(MMath.GammaLn(shapePlusPower) - MMath.GammaLn(this.Gamma.Shape)) * 
+                        (MMath.GammaLower(shapePlusPower, this.Gamma.Rate * UpperBound) - MMath.GammaLower(shapePlusPower, this.Gamma.Rate * LowerBound));
+                }
+                else
+                {
+                    Z1 = Math.Exp(- MMath.GammaLn(this.Gamma.Shape)) * 
+                        (MMath.GammaUpper(shapePlusPower, this.Gamma.Rate * LowerBound, regularized) - MMath.GammaUpper(shapePlusPower, this.Gamma.Rate * UpperBound, regularized));
+                }
+                return Math.Pow(this.Gamma.Rate, -power) * Z1 / Z;
+            }
         }
 
         /// <summary>

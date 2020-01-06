@@ -185,8 +185,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         /// <param name="i">Position in the Items array</param>
         public void RemoveAt(int i)
         {
-            if (Moved != null)
-                Moved(Items[i], -1);
+            Moved?.Invoke(Items[i], -1);
             Items[i] = Items[Count - 1];
             Items.RemoveAt(Count - 1);
             if (i < Count) SiftDown(i);
@@ -224,10 +223,10 @@ namespace Microsoft.ML.Probabilistic.Collections
                 i = Parent(i))
             {
                 Items[i] = Items[Parent(i)];
-                if (Moved != null) Moved(Items[i], i);
+                Moved?.Invoke(Items[i], i);
             }
             Items[i] = item;
-            if (Moved != null) Moved(Items[i], i);
+            Moved?.Invoke(Items[i], i);
         }
 
         /// <summary>
@@ -259,8 +258,7 @@ namespace Microsoft.ML.Probabilistic.Collections
                 Items[smallest] = item;
                 SiftDown(smallest);
             }
-            // this can be simplified in C# 6
-            if (Moved != null) Moved(Items[i], i);
+            Moved?.Invoke(Items[i], i);
         }
 
         /// <summary>

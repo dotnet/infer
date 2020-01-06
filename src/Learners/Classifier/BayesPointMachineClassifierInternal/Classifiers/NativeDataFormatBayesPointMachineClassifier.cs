@@ -631,11 +631,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         /// <param name="iterationChangedEventArgs">The information describing the change in iterations.</param>
         private void OnIterationChanged(object sender, BayesPointMachineClassifierIterationChangedEventArgs iterationChangedEventArgs)
         {
-            EventHandler<BayesPointMachineClassifierIterationChangedEventArgs> handler = this.IterationChanged;
-            if (handler != null)
-            {
-                handler(this, iterationChangedEventArgs);
-            }
+            this.IterationChanged?.Invoke(this, iterationChangedEventArgs);
         }
 
         /// <summary>
@@ -645,11 +641,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
         private void OnBatchedIterationChanged(int completedIteration)
         {
             // Raise IterationChanged event
-            EventHandler<BayesPointMachineClassifierIterationChangedEventArgs> handler = this.IterationChanged;
-            if (handler != null)
-            {
-                handler(this, new BayesPointMachineClassifierIterationChangedEventArgs(completedIteration, this.InferenceAlgorithms.WeightDistributions));
-            }
+            this.IterationChanged?.Invoke(this, new BayesPointMachineClassifierIterationChangedEventArgs(completedIteration, this.InferenceAlgorithms.WeightDistributions));
         }
 
         #endregion

@@ -44,19 +44,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         protected PairListAutomaton sequencePairToWeight = new PairListAutomaton();
 
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the maximum number of states a transducer can have.
-        /// </summary>
-        public static int MaxStateCount
-        {
-            get { return PairListAutomaton.MaxStateCount; }
-            set { PairListAutomaton.MaxStateCount = value; }
-        }
-        
-        #endregion
-
         #region Factory methods
 
         /// <summary>
@@ -71,7 +58,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var result = new TThis();
             result.sequencePairToWeight.SetToFunction(
                 srcAutomaton,
-                (dist, weight, group) => Tuple.Create(
+                (dist, weight, group) => ValueTuple.Create(
                     dist.HasValue
                         ? Option.Some(PairDistributionBase<TSrcElement, TSrcElementDistribution, TDestElement, TDestElementDistribution, TPairDistribution>.FromFirst(dist))
                         : Option.None,
@@ -112,7 +99,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var result = new TThis();
             result.sequencePairToWeight.SetToFunction(
                 destAutomaton,
-                (dist, weight, group) => Tuple.Create(
+                (dist, weight, group) => ValueTuple.Create(
                     dist.HasValue
                         ? Option.Some(PairDistributionBase<TSrcElement, TSrcElementDistribution, TDestElement, TDestElementDistribution, TPairDistribution>.FromSecond(dist))
                         : Option.None,
@@ -318,25 +305,100 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         /// <param name="srcAutomaton">The automaton to project.</param>
         /// <returns>The projection.</returns>
+        /// <remarks>
+        /// The code of this method has a lot in common with the code of Automaton.SetToProduct.
+        /// Unfortunately, it's not clear how to avoid the duplication in the current design.
+        /// </remarks>
         public TDestAutomaton ProjectSource(TSrcAutomaton srcAutomaton)
         {
             Argument.CheckIfNotNull(srcAutomaton, "srcAutomaton");
 
-            var result = new TDestAutomaton();
-            result.SetToZero();
-
-            if (!srcAutomaton.IsCanonicZero() && !this.sequencePairToWeight.IsCanonicZero())
+            var mappingAutomaton = this.sequencePairToWeight;
+            if (srcAutomaton.IsCanonicZero() || mappingAutomaton.IsCanonicZero())
             {
-                // The projected automaton must be epsilon-free
-                srcAutomaton.MakeEpsilonFree();
-
-                var destStateCache = new Dictionary<(int, int), Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State>();
-                result.Start = this.BuildProjectionOfAutomaton(result, this.sequencePairToWeight.Start, srcAutomaton.Start, destStateCache);
-                result.RemoveDeadStates();
-                result.SimplifyIfNeeded();
+                return Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Zero();
             }
 
-            return result;
+            // The projected automaton must be epsilon-free
+            srcAutomaton.MakeEpsilonFree();
+
+            var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
+            var destStateCache = new Dictionary<(int, int), int>();
+            var stack = new Stack<(int state1, int state2, int destStateIndex)>();
+
+            // Creates destination state and schedules projection computation for it.
+            // If computation is already scheduled or done the state index is simply taken from cache
+            int CreateDestState(
+                PairListAutomaton.State mappingState,
+                Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.State srcState)
+            {
+                var destPair = (mappingState.Index, srcState.Index);
+                if (!destStateCache.TryGetValue(destPair, out var destStateIndex))
+                {
+                    var destState = result.AddState();
+                    destState.SetEndWeight(mappingState.EndWeight * srcState.EndWeight);
+                    stack.Push((mappingState.Index, srcState.Index, destState.Index));
+                    destStateCache[destPair] = destState.Index;
+                    destStateIndex = destState.Index;
+                }
+
+                return destStateIndex;
+            }
+
+            // Populate the stack with start destination state
+            result.StartStateIndex = CreateDestState(mappingAutomaton.Start, srcAutomaton.Start);
+
+            while (stack.Count > 0)
+            {
+                var (mappingStateIndex, srcStateIndex, destStateIndex) = stack.Pop();
+
+                var mappingState = mappingAutomaton.States[mappingStateIndex];
+                var srcState = srcAutomaton.States[srcStateIndex];
+                var destState = result[destStateIndex];
+
+                // Iterate over transitions from mappingState
+                foreach (var mappingTransition in mappingState.Transitions)
+                {
+                    var childMappingState = mappingState.Owner.States[mappingTransition.DestinationStateIndex];
+
+                    // Epsilon transition case
+                    if (IsSrcEpsilon(mappingTransition))
+                    {
+                        var destElementDistribution =
+                            mappingTransition.ElementDistribution.HasValue
+                                ? mappingTransition.ElementDistribution.Value.Second
+                                : Option.None;
+                        var childDestStateIndex = CreateDestState(childMappingState, srcState);
+                        destState.AddTransition(destElementDistribution, mappingTransition.Weight, childDestStateIndex, mappingTransition.Group);
+                        continue;
+                    }
+
+                    // Iterate over states and transitions in the closure of srcState
+                    foreach (var srcTransition in srcState.Transitions)
+                    {
+                        Debug.Assert(!srcTransition.IsEpsilon, "The automaton being projected must be epsilon-free.");
+                        
+                        var srcChildState = srcState.Owner.States[srcTransition.DestinationStateIndex];
+
+                        var projectionLogScale = mappingTransition.ElementDistribution.Value.ProjectFirst(
+                            srcTransition.ElementDistribution.Value, out var destElementDistribution);
+                        if (double.IsNegativeInfinity(projectionLogScale))
+                        {
+                            continue;
+                        }
+
+                        var destWeight = Weight.Product(mappingTransition.Weight, srcTransition.Weight, Weight.FromLogValue(projectionLogScale));
+                        var childDestStateIndex = CreateDestState(childMappingState, srcChildState);
+                        destState.AddTransition(destElementDistribution, destWeight, childDestStateIndex, mappingTransition.Group);
+                    }
+                }
+            }
+
+            var simplification = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Simplification(result, null);
+            simplification.RemoveDeadStates();
+            simplification.SimplifyIfNeeded();
+
+            return result.GetAutomaton();
         }
 
         /// <summary>
@@ -348,22 +410,99 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Using this method is more efficient than applying <see cref="ProjectSource(TSrcAutomaton)"/>
         /// to the automaton representation of a projected sequence.
         /// </remarks>
+        /// <remarks>
+        /// The code of this method has a lot in common with the code of Automaton.SetToProduct.
+        /// Unfortunately, it's not clear how to avoid the duplication in the current design.
+        /// </remarks>
         public TDestAutomaton ProjectSource(TSrcSequence srcSequence)
         {
             Argument.CheckIfNotNull(srcSequence, "srcSequence");
 
-            var result = new TDestAutomaton();
-            result.SetToZero();
-
-            if (!this.sequencePairToWeight.IsCanonicZero())
+            var mappingAutomaton = this.sequencePairToWeight;
+            if (mappingAutomaton.IsCanonicZero())
             {
-                var destStateCache = new Dictionary<(int, int), Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State>();
-                result.Start = this.BuildProjectionOfSequence(result, this.sequencePairToWeight.Start, srcSequence, 0, destStateCache);
-                result.RemoveDeadStates();
-                result.SimplifyIfNeeded();
+                return Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Zero();
             }
 
-            return result;
+            var sourceSequenceManipulator =
+                Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.SequenceManipulator;
+            var srcSequenceLength = sourceSequenceManipulator.GetLength(srcSequence);
+            
+            var result = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Builder();
+            var destStateCache = new Dictionary<(int, int), int>();
+            var stack = new Stack<(int state1, int state2, int destStateIndex)>();
+
+            // Creates destination state and schedules projection computation for it.
+            // If computation is already scheduled or done the state index is simply taken from cache
+            int CreateDestState(PairListAutomaton.State mappingState, int srcSequenceIndex)
+            {
+                var destPair = (mappingState.Index, srcSequenceIndex);
+                if (!destStateCache.TryGetValue(destPair, out var destStateIndex))
+                {
+                    var destState = result.AddState();
+                    destState.SetEndWeight(
+                        srcSequenceIndex == srcSequenceLength
+                            ? mappingState.EndWeight
+                            : Weight.Zero);
+                    stack.Push((mappingState.Index, srcSequenceIndex, destState.Index));
+                    destStateCache[destPair] = destState.Index;
+                    destStateIndex = destState.Index;
+                }
+
+                return destStateIndex;
+            }
+
+            // Populate the stack with start destination state
+            result.StartStateIndex = CreateDestState(mappingAutomaton.Start, 0);
+
+            while (stack.Count > 0)
+            {
+                var (mappingStateIndex, srcSequenceIndex, destStateIndex) = stack.Pop();
+
+                var mappingState = mappingAutomaton.States[mappingStateIndex];
+                var destState = result[destStateIndex];
+
+                // Enumerate transitions from the current mapping state
+                foreach (var mappingTransition in mappingState.Transitions)
+                {
+                    var destMappingState = mappingState.Owner.States[mappingTransition.DestinationStateIndex];
+
+                    // Epsilon transition case
+                    if (IsSrcEpsilon(mappingTransition))
+                    {
+                        var destElementWeights =
+                            mappingTransition.ElementDistribution.HasValue
+                                ? mappingTransition.ElementDistribution.Value.Second
+                                : Option.None;
+                        var childDestStateIndex = CreateDestState(destMappingState, srcSequenceIndex);
+                        destState.AddTransition(destElementWeights, mappingTransition.Weight, childDestStateIndex, mappingTransition.Group);
+                        continue;
+                    }
+
+                    // Normal transition case - Find epsilon-reachable states
+                    if (srcSequenceIndex < srcSequenceLength)
+                    {
+                        var srcSequenceElement = sourceSequenceManipulator.GetElement(srcSequence, srcSequenceIndex);
+
+                        var projectionLogScale = mappingTransition.ElementDistribution.Value.ProjectFirst(
+                            srcSequenceElement, out var destElementDistribution);
+                        if (double.IsNegativeInfinity(projectionLogScale))
+                        {
+                            continue;
+                        }
+
+                        var weight = mappingTransition.Weight * Weight.FromLogValue(projectionLogScale);
+                        var childDestState = CreateDestState(destMappingState,srcSequenceIndex + 1);
+                        destState.AddTransition(destElementDistribution, weight, childDestState, mappingTransition.Group);
+                    }
+                }
+            }
+
+            var simplification = new Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.Simplification(result, null);
+            simplification.RemoveDeadStates();
+            simplification.SimplifyIfNeeded();
+
+            return result.GetAutomaton();
         }
 
         /// <summary>
@@ -400,160 +539,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         private static bool IsSrcEpsilon(PairListAutomaton.Transition transition) =>
             !transition.ElementDistribution.HasValue || !transition.ElementDistribution.Value.First.HasValue;
 
-        /// <summary>
-        /// Recursively builds the projection of a given sequence onto this transducer.
-        /// </summary>
-        /// <param name="destAutomaton">The projection being built.</param>
-        /// <param name="mappingState">The currently traversed state of the transducer.</param>
-        /// <param name="srcSequence">The sequence being projected.</param>
-        /// <param name="srcSequenceIndex">The current index in the sequence being projected.</param>
-        /// <param name="destStateCache">The cache of the created projection states.</param>
-        /// <returns>The state of the projection corresponding to the given mapping state and the position in the projected sequence.</returns>
-        private Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State BuildProjectionOfSequence(
-            TDestAutomaton destAutomaton,
-            PairListAutomaton.State mappingState,
-            TSrcSequence srcSequence,
-            int srcSequenceIndex,
-            Dictionary<(int, int), Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State> destStateCache)
-        {
-            //// The code of this method has a lot in common with the code of Automaton<>.BuildProduct.
-            //// Unfortunately, it's not clear how to avoid the duplication in the current design.
-
-            var sourceSequenceManipulator =
-                Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.SequenceManipulator;
-
-            var statePair = (mappingState.Index, srcSequenceIndex);
-            Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State destState;
-            if (destStateCache.TryGetValue(statePair, out destState))
-            {
-                return destState;
-            }
-
-            destState = destAutomaton.AddState();
-            destStateCache.Add(statePair, destState);
-
-            int srcSequenceLength = sourceSequenceManipulator.GetLength(srcSequence);
-
-            // Enumerate transitions from the current mapping state
-            for (int i = 0; i < mappingState.TransitionCount; i++)
-            {
-                var mappingTransition = mappingState.GetTransition(i);
-                var destMappingState = mappingState.Owner.States[mappingTransition.DestinationStateIndex];
-
-                // Epsilon transition case
-                if (IsSrcEpsilon(mappingTransition))
-                {
-                    var destElementWeights =
-                        mappingTransition.ElementDistribution.HasValue
-                            ? mappingTransition.ElementDistribution.Value.Second
-                            : Option.None;
-                    var childDestState = this.BuildProjectionOfSequence(
-                        destAutomaton, destMappingState, srcSequence, srcSequenceIndex, destStateCache);
-                    destState.AddTransition(destElementWeights, mappingTransition.Weight, childDestState, mappingTransition.Group);
-                    continue;
-                }
-
-                // Normal transition case - Find epsilon-reachable states
-                if (srcSequenceIndex < srcSequenceLength)
-                {
-                    var srcSequenceElement = sourceSequenceManipulator.GetElement(srcSequence, srcSequenceIndex);
-
-                    double projectionLogScale = mappingTransition.ElementDistribution.Value.ProjectFirst(
-                        srcSequenceElement, out var destElementDistribution);
-                    if (double.IsNegativeInfinity(projectionLogScale))
-                    {
-                        continue;
-                    }
-
-                    Weight weight = Weight.Product(mappingTransition.Weight, Weight.FromLogValue(projectionLogScale));
-                    var childDestState = this.BuildProjectionOfSequence(
-                        destAutomaton, destMappingState, srcSequence, srcSequenceIndex + 1, destStateCache);
-                    destState.AddTransition(destElementDistribution, weight, childDestState, mappingTransition.Group);
-                }
-            }
-
-            destState.SetEndWeight(srcSequenceIndex == srcSequenceLength ? mappingState.EndWeight : Weight.Zero);
-            return destState;
-        }
-
-        /// <summary>
-        /// Recursively builds the projection of a given automaton onto this transducer.
-        /// The projected automaton must be epsilon-free.
-        /// </summary>
-        /// <param name="destAutomaton">The projection being built.</param>
-        /// <param name="mappingState">The currently traversed state of the transducer.</param>
-        /// <param name="srcState">The currently traversed state of the automaton being projected.</param>
-        /// <param name="destStateCache">The cache of the created projection states.</param>
-        /// <returns>The state of the projection corresponding to the given mapping state and the position in the projected sequence.</returns>
-        private Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State BuildProjectionOfAutomaton(
-            TDestAutomaton destAutomaton,
-            PairListAutomaton.State mappingState,
-            Automaton<TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton>.State srcState,
-            Dictionary<(int, int), Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State> destStateCache)
-        {
-            Debug.Assert(!mappingState.IsNull && srcState != null, "Valid states must be provided.");
-            Debug.Assert(!ReferenceEquals(srcState.Owner, destAutomaton), "Cannot build a projection in place.");
-            
-            //// The code of this method has a lot in common with the code of Automaton<>.BuildProduct.
-            //// Unfortunately, it's not clear how to avoid the duplication in the current design.
-
-            // State already exists, return its index
-            var statePair = (mappingState.Index, srcState.Index);
-            Automaton<TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton>.State destState;
-            if (destStateCache.TryGetValue(statePair, out destState))
-            {
-                return destState;
-            }
-
-            destState = destAutomaton.AddState();
-            destStateCache.Add(statePair, destState);
-
-            // Iterate over transitions from mappingState
-            for (int mappingTransitionIndex = 0; mappingTransitionIndex < mappingState.TransitionCount; mappingTransitionIndex++)
-            {
-                var mappingTransition = mappingState.GetTransition(mappingTransitionIndex);
-                var childMappingState = mappingState.Owner.States[mappingTransition.DestinationStateIndex];
-
-                // Epsilon transition case
-                if (IsSrcEpsilon(mappingTransition))
-                {
-                    var destElementDistribution =
-                        mappingTransition.ElementDistribution.HasValue
-                            ? mappingTransition.ElementDistribution.Value.Second
-                            : Option.None;
-                    var childDestState = this.BuildProjectionOfAutomaton(destAutomaton, childMappingState, srcState, destStateCache);
-                    destState.AddTransition(destElementDistribution, mappingTransition.Weight, childDestState, mappingTransition.Group);
-                    continue;
-                }
-
-                // Iterate over states and transitions in the closure of srcState
-                for (int srcTransitionIndex = 0; srcTransitionIndex < srcState.TransitionCount; srcTransitionIndex++)
-                {
-                    var srcTransition = srcState.GetTransition(srcTransitionIndex);
-                    Debug.Assert(!srcTransition.IsEpsilon, "The automaton being projected must be epsilon-free.");
-                    
-                    var srcChildState = srcState.Owner.States[srcTransition.DestinationStateIndex];
-
-                    double projectionLogScale = mappingTransition.ElementDistribution.Value.ProjectFirst(
-                        srcTransition.ElementDistribution.Value, out var destElementDistribution);
-                    if (double.IsNegativeInfinity(projectionLogScale))
-                    {
-                        continue;
-                    }
-
-                    Weight destWeight = Weight.Product(mappingTransition.Weight, srcTransition.Weight, Weight.FromLogValue(projectionLogScale));
-                    var childDestState = this.BuildProjectionOfAutomaton(destAutomaton, childMappingState, srcChildState, destStateCache);
-                    destState.AddTransition(destElementDistribution, destWeight, childDestState, mappingTransition.Group);
-                }
-            }
-
-            destState.SetEndWeight(Weight.Product(mappingState.EndWeight, srcState.EndWeight));
-            return destState;
-        }
-
         #endregion
 
         #region Nested classes
+
+        public class UnlimitedStatesComputation : IDisposable
+        {
+            private readonly PairListAutomaton.UnlimitedStatesComputation unlimitedAutomatonStatesComputation;
+
+            public UnlimitedStatesComputation() =>
+                this.unlimitedAutomatonStatesComputation = new PairListAutomaton.UnlimitedStatesComputation();
+
+            public void Dispose() =>
+                this.unlimitedAutomatonStatesComputation.Dispose();
+        }
 
         /// <summary>
         /// Represents an automaton that maps lists of element pairs to real values. Such automata are used to represent transducers internally.
@@ -571,7 +570,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// The first two elements of a tuple define the element distribution and the weight of a transition.
             /// The third element defines the outgoing state.
             /// </returns>
-            protected override IEnumerable<Tuple<TPairDistribution, Weight, Determinization.WeightedStateSet>> GetOutgoingTransitionsForDeterminization(
+            protected override IEnumerable<Determinization.OutgoingTransition> GetOutgoingTransitionsForDeterminization(
                 Determinization.WeightedStateSet sourceState)
             {
                 throw new NotImplementedException("Determinization is not yet supported for this type of automata.");

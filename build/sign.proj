@@ -4,7 +4,7 @@
     <PackageAssetsPath>$(RepoRoot)bin/obj/packages/</PackageAssetsPath>
     <PackageOutputPath>$(RepoRoot)bin/packages/</PackageOutputPath>
     <IntermediateOutputRootPath>$(RepoRoot)bin/obj/Release/</IntermediateOutputRootPath>
-    <MicroBuildToolsPath>$(RepoRoot)MicroBuild.Core.0.3.0\build\</MicroBuildToolsPath>
+    <MicroBuildToolsPath>$(RepoRoot)MicroBuild.Core.0.3.1\build\</MicroBuildToolsPath>
   </PropertyGroup>
 
   <!-- This will be overridden if we're building with MicroBuild. -->
@@ -38,7 +38,7 @@
     <!-- If we are not signing nuget packages we default to sign binaries -->
     <ItemGroup Condition="'$(SignNugetPackages)' != 'true'">
       <FilesToSign Include="$(OutDir)**/*.dll">
-        <Authenticode>Microsoft</Authenticode>
+        <Authenticode>3PartySHA2</Authenticode>
       </FilesToSign>
     </ItemGroup>
 

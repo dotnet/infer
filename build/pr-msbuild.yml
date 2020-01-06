@@ -10,8 +10,12 @@ resources:
   
 trigger: none # disable CI build
 
+# Cannot use matrix strategy to create jobs for different platforms, 
+# since then the platform is given as a variable which cannot be passed as a parameter to a template,
+# because templates are actualized at a very early stage when the variable has no value yet.
 jobs:
 - job: Win64 # Hosted Windows agent, VS 2017, testing on x64
+  timeoutInMinutes: 120
   pool:
     vmImage: vs2017-win2016
   steps:
@@ -35,6 +39,7 @@ jobs:
       Platform: 'x64'
 
 - job: Win32 # Hosted Windows agent, VS 2017, testing on x86
+  timeoutInMinutes: 120
   pool:
     vmImage: vs2017-win2016
   steps:

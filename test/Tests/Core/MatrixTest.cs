@@ -10,6 +10,7 @@ using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 using System.Collections.Generic;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Utilities;
+using System.Diagnostics;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -1853,6 +1854,28 @@ namespace Microsoft.ML.Probabilistic.Tests
             for (int j = 0; j < bVector.Length; j++)
                 for (int k = 0; k < cVector.Length; k++)
                     Predivide(bVector[j], cVector[k]);
+        }
+
+        [Fact]
+        public void SetToLeastSquaresTest()
+        {
+            Matrix X = Matrix.FromArray(new double[,] { { 1, -2 }, { 1, -1 } });
+            DenseVector Y = DenseVector.FromArray(double.MinValue, -31);
+            DenseVector Yorig = (DenseVector)Y.Clone();
+            DenseVector A = DenseVector.Zero(2);
+            A.SetToLeastSquares(Y, X);
+            // X[1] - X[0] = {0, 1} therefore A[1] = Y[1]-Y[0]
+            //A[1] = Y[1] - Y[0];
+            //A[0] = (Y[1] - X[1,1] * A[1])/X[1,0];
+            // The above does not yield Y=X*A, therefore there is no exact solution.
+            // The solution that minimizes squared error is:
+            //A[1] = double.MaxValue / 2;
+            //A[0] = double.MaxValue / 2;
+            DenseVector Y2 = DenseVector.Zero(2);
+            Y2.SetToProduct(X, A);
+            double maxdiff = Y.MaxDiff(Y2);
+            Assert.True(maxdiff < double.MaxValue * 0.66);
+            Assert.True(Yorig.Equals(Y));
         }
 
         private void MatrixVector(Matrix M, Vector v, Sparsity resultSparsity)

@@ -60,8 +60,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         }
 
         /// <summary>
-        /// If true, all messages after each iteration will be logged to csv files in a folder named with the model name.
-        /// Use MatlabWriter.WriteFromCsvFolder to convert these to a mat file.
+        /// If true, all variables will implicitly have a TraceMessages attribute.
         /// </summary>
         public bool TraceAllMessages { get; set; }
 
@@ -753,7 +752,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
         {
             if (null == dp)
                 throw new InferCompilerException("A type declaration provider has not been set for this instance of the model compiler");
-            return CompileWithoutParams(dp.GetTypeDeclaration(method != null ? method.DeclaringType : null, true),
+            return CompileWithoutParams(dp.GetTypeDeclaration(method?.DeclaringType, true),
                                         method, new AttributeRegistry<object, ICompilerAttribute>(true));
         }
 
@@ -786,9 +785,7 @@ namespace Microsoft.ML.Probabilistic.Compiler
                 {
                     foreach (CodeTransformer ct in tc.transformers)
                     {
-                        DeadCodeTransform bst = ct.Transform as DeadCodeTransform;
-                        //SchedulingTransform bst = ct.Transform as SchedulingTransform;
-                        if (bst != null)
+                        if (ct.Transform is DeadCodeTransform bst)
                         {
                             foreach (ITypeDeclaration itd2 in ct.transformMap.Values)
                             {
@@ -989,7 +986,10 @@ namespace Microsoft.ML.Probabilistic.Compiler
             if (OptimiseInferenceCode)
                 tc.AddTransform(new DeadCode2Transform(this));
             tc.AddTransform(new ParallelScheduleTransform());
-            if (TraceAllMessages)
+            // All messages after each iteration will be logged to csv files in a folder named with the model name.
+            // Use MatlabWriter.WriteFromCsvFolder to convert these to a mat file.
+            bool useTracingTransform = false;
+            if (TraceAllMessages && useTracingTransform)
                 tc.AddTransform(new TracingTransform());
             bool useArraySizeTracing = false;
             if (useArraySizeTracing)

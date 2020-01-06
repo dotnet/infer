@@ -97,7 +97,7 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public static uint Sum(this IEnumerable<uint> source)
         {
-            return source.Aggregate((a, b) => a + b);
+            return source.Aggregate(0U, (a, b) => a + b);
         }
 
         public static uint Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, uint> selector)
@@ -107,7 +107,7 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public static ulong Sum(this IEnumerable<ulong> source)
         {
-            return source.Aggregate((a, b) => a + b);
+            return source.Aggregate(0UL, (a, b) => a + b);
         }
 
         public static ulong Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, ulong> selector)
@@ -128,16 +128,22 @@ namespace Microsoft.ML.Probabilistic.Collections
             return true;
         }
 
+        public static bool JaggedValueEquals<T>(this IEnumerable<IEnumerable<T>> a, IEnumerable<IEnumerable<T>> b)
+        {
+            if (b == null) return false;
+            else return TrueForAll(a, b, AreEqual);
+        }
+
+        public static bool ValueEquals<T>(this IEnumerable<T> a, IEnumerable<T> b)
+        {
+            return AreEqual(a, b);
+        }
+
         public static bool AreEqual<T>(IEnumerable<T> a, IEnumerable<T> b)
         {
             if (a == null) return (b == null);
-            else return TrueForAll(a, b, ItemsAreEqual<T>);
-        }
-
-        private static bool ItemsAreEqual<T>(T a, T b)
-        {
-            if ((object) a == null) return ((object) b == null);
-            else return a.Equals(b);
+            else if (b == null) return false;
+            else return TrueForAll(a, b, Util.AreEqual);
         }
 
         public static bool AreEqual(IEnumerable a, IEnumerable b)
@@ -343,8 +349,10 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public static bool EqualLists(IList<T> x, IList<T> y)
         {
+            if (x == null) return y == null;
+            if (y == null) return false;
             if (x.Count != y.Count) return false;
-            for (int i = 0; i < x.Count; i++) if (!x[i].Equals(y[i])) return false;
+            for (int i = 0; i < x.Count; i++) if (!Util.AreEqual(x[i], y[i])) return false;
             return true;
         }
 

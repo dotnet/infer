@@ -5,12 +5,15 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using Assert = Microsoft.ML.Probabilistic.Tests.AssertHelper;
 using Microsoft.ML.Probabilistic.Utilities;
 using Microsoft.ML.Probabilistic.Collections;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
+using Microsoft.ML.Probabilistic.Core.Maths;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -19,11 +22,10 @@ namespace Microsoft.ML.Probabilistic.Tests
     {
         public const double TOLERANCE = 1e-15;
 
-        public delegate double MathFcn(double x);
-
-        public delegate double MathFcn2(double x1, double x2);
-
-        public delegate double MathFcn3(double x1, double x2, double x3);
+        public delegate double MathFcn(double arg);
+        public delegate double MathFcn2(double arg1, double arg2);
+        public delegate double MathFcn3(double arg1, double arg2, double arg3);
+        public delegate double MathFcn4(double arg1, double arg2, double arg3, double arg4);
 
         public struct Test
         {
@@ -274,12 +276,44 @@ digamma(mpf('9.5'))
                 };
             CheckFunctionValues("LogisticLn", MMath.LogisticLn, logisticln_pairs);
 
-            // In python mpmath:
-            // log(1+mpf('1e-3'))
+            /* In python mpmath:
+from mpmath import *
+mp.dps = 500
+mp.pretty = True
+log(1+mpf('1e-3'))
+             */
             double[,] log1plus_pairs = new double[,]
                 {
                     {0, 0},
+                    {1e-1, 0.09531017980432486004395212328 },
+                    {6.3e-2, 0.06109509935981087637675438 },
+                    {6.1e-2, 0.059211859631846083 },
+                    {5.5e-2, 0.05354076692802981828874 },
+                    {5.3e-2, 0.051643233151838449580494 },
+                    {5.1e-2, 0.0497420918948140735608097 },
+                    {4.1e-2, 0.0401817896328318316949477 },
+                    {3.1e-2, 0.0305292050348228732504307413911 },
+                    {2.7e-2, 0.0266419309464211781724586 },
+                    {2.5e-2, 0.0246926125903715010143 },
+                    {2.3e-2, 0.0227394869694894293323787753769 },
+                    {2.1e-2, 0.0207825391825285036221723649 },
+                    {2e-2, 0.019802627296179713026029 },
+                    {19e-3, 0.0188217542405877614354916031 },
+                    {17e-3, 0.0168571170664228993186476034 },
+                    {16e-3, 0.0158733491562901492451628 },
+                    {15e-3, 0.014888612493750654835409744978 },
+                    {14e-3, 0.013902905168991420865477877458 },
+                    {13e-3, 0.0129162252665463284388365486353 },
+                    {12e-3, 0.011928570865273801649186 },
+                    {11e-3, 0.0109399400383343638461374275 },
                     {1e-2, .995033085316808284821535754426e-2},
+                    {9e-3, 0.008959741371471904443146461327328 },
+                    {8e-3, 0.007968169649176873510797339 },
+                    {7e-3, 0.0069756137364252420995222 },
+                    {6e-3, 0.005982071677547463782018873 },
+                    {5e-3, 0.0049875415110390736121022 },
+                    {4e-3, 0.003992021269537452999075117871513754627 },
+                    {3e-3, 0.00299550897979847881161 },
                     {2e-3, 0.001998002662673056018253771 },
                     {1.9e-3, 0.001898197283080252703101569277 },
                     {1.5e-3, 0.00149887612373589185400014886673 },
@@ -301,22 +335,42 @@ digamma(mpf('9.5'))
                     {1e-7, 1e-7 - 0.5e-14 + 1e-21/3 - 1e-28/4},
                     {1e-8, 1e-8 - 0.5e-16 + 1e-24/3},
                     {1e-14, 1e-14 - 0.5e-28 + 1e-42/3},
-                    {-1e-2, -0.01005033585350144118},
-                    {-1e-3, -0.0010005003335835335},
-                    {-1e-4, -0.0001000050003333583353335},
-                    {-1e-5, -0.0000100000500003333358333533335},
                     {-1e-8, -0.00000001000000005000000033333333583333},
+                    {-1e-7, -0.0000001000000050000003333333583333353333335 },
+                    {-1e-6, -0.0000010000005000003333335833335333335 },
+                    {-1e-5, -0.0000100000500003333358333533335},
+                    {-1e-4, -0.0001000050003333583353335},
+                    {-1e-3, -0.0010005003335835335},
+                    {-2e-3, -0.0020020026706730773516511 },
+                    {-3e-3, -0.00300450902029872181325 },
+                    {-4e-3, -0.00400802139753881834879266 },
+                    {-5e-3, -0.0050125418235442820430937 },
+                    {-6e-3, -0.0060180723255630162019349666387 },
+                    {-1e-2, -0.01005033585350144118},
+                    {-2e-2, -0.020202707317519448408045301 },
+                    {-3e-2, -0.0304592074847085459192612876647667 },
                     {Double.PositiveInfinity, Double.PositiveInfinity},
                     {Double.NaN, Double.NaN}
                 };
             CheckFunctionValues("Log1Plus", MMath.Log1Plus, log1plus_pairs);
 
-            // In python mpmath:
-            // log(1-exp(mpf('1e-3')))
+            /* In python mpmath:
+from mpmath import *
+mp.dps = 500
+mp.pretty = True
+log(1-exp(mpf('-3')))
+            */
             double[,] log1MinusExp_pairs = new double[,]
                 {
                     {0, Double.NegativeInfinity},
+                    {-1, -0.4586751453870818910216436450673297 },
+                    {-2, -0.145413457868859056972648150099474 },
+                    {-2.5, -0.08565048374203818116996505081 },
+                    {-3, -0.0510691809427015865387237405222592504 },
+                    {-3.5, -0.0306627162554596336513956 },
+                    {-3.75, -0.02379870175015311452567632265 },
                     {-4, -0.01848544682588656052892134374 },
+                    {-4.5, -0.011171162268296935826765483324276 },
                     {-5, -0.006760749449488557825921134 },
                     {-6, -0.00248182936895952777979782 },
                     {-7, -0.9122979828390684565844296e-3},
@@ -372,7 +426,6 @@ x = mpf("1e-4")
                     {1e-2, 0.0016708416805754216545690286 },
                     {1e-3, 0.000166708341668055753993 },
                     {1e-4, 0.0000166670833416668055575397},
-                    /*
                     {-1e-4, -0.0000166662500083331944464},
                     {-1e-3, -0.000166625008331944642832344 },
                     {-1e-2, -0.0016625083194642609402281996344222792 },
@@ -386,7 +439,6 @@ x = mpf("1e-4")
                     {-6e-1, -0.08663434418325990936539 },
                     {-1, -0.132120558828557678404476229838539},
                     {Double.NegativeInfinity, -0.5},
-                    */
                     {Double.PositiveInfinity, Double.PositiveInfinity},
                     {Double.NaN, Double.NaN}
                 };
@@ -993,7 +1045,7 @@ mp.dps = 500
 mp.pretty = True
 gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
             */
-            double[,] gammaUpper_pairs = new double[,] {
+            double[,] gammaUpperRegularized_pairs = new double[,] {
                 {1e-20,0.3,9.0567665167584664E-21},
                 {1e-6,1e-1,0.000001822923025350097857684},
                 {System.Math.Pow(0.5,5),1,0.0070733414923541296841667565874 },
@@ -1033,73 +1085,26 @@ gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
                 {double.PositiveInfinity,1,1 },
                 {double.Epsilon,0,1 },
             };
-            CheckFunctionValues("GammaUpper", MMath.GammaUpper, gammaUpper_pairs);
-        }
+            CheckFunctionValues("GammaUpperRegularized", (a,x) => MMath.GammaUpper(a, x, true), gammaUpperRegularized_pairs);
 
-        private static void CheckFunctionValues(string name, MathFcn fcn, double[,] pairs, double assertTolerance = 1e-11)
-        {
-            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
-        }
-
-        private static void CheckFunctionValues(string name, MathFcn2 fcn, double[,] pairs, double assertTolerance = 1e-11)
-        {
-            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
-        }
-
-        private static void CheckFunctionValues(string name, MathFcn3 fcn, double[,] pairs, double assertTolerance = 1e-11)
-        {
-            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
-        }
-
-        private static void CheckFunctionValues(string name, Delegate fcn, double[,] pairs, double assertTolerance)
-        {
-            Vector x = Vector.Zero(pairs.GetLength(1) - 1);
-            object[] args = new object[x.Count];
-            for (int i = 0; i < pairs.GetLength(0); i++)
-            {
-                for (int k = 0; k < x.Count; k++)
-                {
-                    x[k] = pairs[i, k];
-                    args[k] = x[k];
-                }
-                double fx = pairs[i, x.Count];
-                double result = (double)Util.DynamicInvoke(fcn, args);
-                if (!double.IsNaN(result) && System.Math.Sign(result) != System.Math.Sign(fx) && fx != 0)
-                {
-                    string strMsg = string.Format("{0}({1})\t has wrong sign (result = {2})", name, x.ToString("r"), result);
-                    Console.WriteLine(strMsg);
-                    Assert.True(false, strMsg);
-                }
-                double err = System.Math.Abs(result - fx);
-                if (fx != 0)
-                    err /= System.Math.Abs(fx);
-                if (Double.IsInfinity(fx))
-                {
-                    err = (result == fx) ? 0 : Double.PositiveInfinity;
-                }
-                if (Double.IsNaN(fx))
-                {
-                    err = Double.IsNaN(result) ? 0 : Double.NaN;
-                }
-                if (err < TOLERANCE)
-                {
-                    Console.WriteLine("{0}({1})\t ok", name, x.ToString("r"));
-                }
-                else
-                {
-                    string strMsg = String.Format("{0}({1})\t wrong by {2}", name, x.ToString("r"), err.ToString("g2"));
-                    Console.WriteLine(strMsg);
-                    //Console.WriteLine("{0}({1}) = {2} should be {3}", name, x.ToString("r"), result.ToString("r"), fx.ToString("r"));
-                    if (err > assertTolerance || double.IsNaN(err))
-                        Assert.True(false, strMsg);
-                }
-            }
+            /* In python mpmath:
+from mpmath import *
+mp.dps = 500
+mp.pretty = True
+gammainc(mpf('1'),mpf('1'),mpf('inf'),regularized=True)
+            */
+            double[,] gammaUpper_pairs = new double[,] {
+                {1e-20,0.3,0.9056766516758467124267199175638778988963728798249333},
+                {1e-6,1e-1,1.8229219731321746872065707723366373632},
+                {2,1,0.73575888234288464319104754 },
+            };
+            CheckFunctionValues("GammaUpper", (a, x) => MMath.GammaUpper(a, x, false), gammaUpper_pairs);
         }
 
         [Fact]
         public void NormalCdfRatioTest()
         {
-            double r0 = MMath.Sqrt2PI/2;
+            double r0 = MMath.Sqrt2PI / 2;
             Assert.Equal(r0, MMath.NormalCdfRatio(0));
             Assert.Equal(r0, MMath.NormalCdfRatio(6.6243372842224754E-170));
             Assert.Equal(r0, MMath.NormalCdfRatio(-6.6243372842224754E-170));
@@ -1829,21 +1834,23 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         }
 
         /// <summary>
-        /// Used to debug MMath.NormalCdfLn
+        /// Used to tune MMath.NormalCdfLn.  The best tuning minimizes the number of messages printed.
         /// </summary>
         internal void NormalCdf2Test2()
         {
+            // Call both routines now to speed up later calls.
             MMath.NormalCdf(-2, -2, -0.5);
             NormalCdf_Quadrature(-2, -2, -0.5);
             Stopwatch watch = new Stopwatch();
-            double xmin = -1;
-            double xmax = 0;
-            double n = 10;
+            double xmin = 0.1;
+            double xmax = 0.1;
+            double n = 20;
             double xinc = (xmax - xmin) / (n - 1);
             for (int xi = 0; xi < n; xi++)
             {
+                if (xinc == 0 && xi > 0) break;
                 double x = xmin + xi * xinc;
-                double ymin = x;
+                double ymin = -System.Math.Abs(x)*10;
                 double ymax = -ymin;
                 double yinc = (ymax - ymin) / (n - 1);
                 for (int yi = 0; yi < n; yi++)
@@ -1851,8 +1858,14 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     double y = ymin + yi * yinc;
                     double rmin = -0.999999;
                     double rmax = -0.000001;
-                    rmin = -0.6;
-                    rmax = -0.5;
+                    rmin = MMath.NextDouble(-1);
+                    rmax = -1 + 1e-6;
+                    //rmax = -0.5;
+                    //rmax = 0.1;
+                    //rmax = -0.58;
+                    //rmax = -0.9;
+                    //rmin = -0.5;
+                    rmax = 1;
                     double rinc = (rmax - rmin) / (n - 1);
                     for (int ri = 0; ri < n; ri++)
                     {
@@ -1862,7 +1875,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                         double result1 = double.NaN;
                         try
                         {
-                            result1 = MMath.NormalCdfLn(x, y, r);
+                            result1 = MMath.NormalCdfIntegral(x, y, r);
                         }
                         catch
                         {
@@ -1881,8 +1894,9 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                         {
                         }
                         long ticks2 = watch.ElapsedTicks;
-                        if (double.IsNaN(result1) || ticks > 10 * ticks2)
-                            Trace.WriteLine($"({x},{y},{r}): {good} {ticks} {ticks2} {result1} {result2}");
+                        bool overtime = ticks > 10 * ticks2;
+                        if (double.IsNaN(result1) /*|| overtime*/)
+                            Trace.WriteLine($"({x:r},{y:r},{r:r},{x-r*y}): {good} {ticks} {ticks2} {result1} {result2}");
                     }
                 }
             }
@@ -1905,7 +1919,7 @@ exp(x*x/4)*pcfu(0.5+n,-x)
         }
 
         // Used to debug MMath.NormalCdf
-        internal static void NormalCdf2Test3()
+        internal void NormalCdf2Test3()
         {
             double x, y, r;
             bool first = true;
@@ -1935,17 +1949,27 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 x = -1.5;
                 y = 1.5;
                 r = -0.49;
+
+                x = -1.6450031341281908;
+                y = 1.2645625117080999;
+                r = -0.054054238344620031;
+
+                x = -0.5;
+                y = -0.5;
+                r = 0.001;
+
                 Console.WriteLine(1 - r * r);
 
                 Console.WriteLine("NormalCdfBrute: {0}", NormalCdfBrute(0, x, y, r));
                 Console.WriteLine("NormalCdf_Quadrature: {0}", NormalCdf_Quadrature(x, y, r));
                 //Console.WriteLine("{0}", NormalCdfAlt2(x, y, r));
                 //Console.WriteLine("NormalCdfAlt: {0}", NormalCdfAlt(x, y, r));
-                //Console.WriteLine("NormalCdfTaylor: {0}", NormalCdfTaylor(x, y, r));
-                Console.WriteLine("NormalCdfConFrac3: {0}", NormalCdfConFrac3(x, y, r));
+                //Console.WriteLine("NormalCdfTaylor: {0}", MMath.NormalCdfRatioTaylor(x, y, r));
+                //Console.WriteLine("NormalCdfConFrac3: {0}", NormalCdfConFrac3(x, y, r));
                 //Console.WriteLine("NormalCdfConFrac4: {0}", NormalCdfConFrac4(x, y, r));
                 //Console.WriteLine("NormalCdfConFrac5: {0}", NormalCdfConFrac5(x, y, r));
                 Console.WriteLine("MMath.NormalCdf: {0}", MMath.NormalCdf(x, y, r));
+                Console.WriteLine("MMath.NormalCdfLn: {0}", MMath.NormalCdfLn(x, y, r));
                 for (int i = 1; i < 50; i++)
                 {
                     //Console.WriteLine("{0}: {1}", i, NormalCdfBrute(i, x, y, r));
@@ -1977,10 +2001,21 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             double r2 = -0.95, y2 = 100;
             double xy1 = System.Math.Max(0.0, MMath.NormalCdf(x) + MMath.NormalCdf(y) - 1);
 
+            Assert.True(0 < MMath.NormalCdf(6.8419544775976187E-08, -5.2647906596206016E-08, -1, 3.1873689658872377E-10).Mantissa);
+
             // In sage:
             // integral(1/(2*pi*sqrt(1-t*t))*exp(-(x*x+y*y-2*t*x*y)/(2*(1-t*t))),t,-1,r).n(digits=200);
             double[,] normalcdf2_pairs = new double[,]
                 {
+                    { -0.025562923054653991, 0.015700461401932524, -0.99999824265582826, 9.5694701738831278E-12 },
+                    { -1.9315113095095533, 1.8359512109009408, 0.52222045656167426, 0.026703981978683056 },
+                    { -16, -16.8, 0.5, 0 },
+                    { -1E-19, 1.1000000000000002E-19, -1, 0.398942280401433e-20 },
+                    { -20, 21, -1, 2.75362411532694E-89 },
+                    { -9945842.6290678252, 9945822.06800303, -0.98919581102480514, 0 },
+                    { -312498.36862450332, 312498.298221121, -0.999989333908269, 0 },
+                    { -1.143307502481119, 0.49983795334601688, -0.65, 0.0306849096621242 },
+                    { -1.143307502481119, 0.64555140288768986, -0.53867143302788545, 0.049792920736062646 },
                     {-1.5, 1.5, -0.49, 0.04889082718786 },
                     {-1.5, 1.5, -0.50, 0.048484159276754 },
                     {-1.5, 1.5, -0.51, 0.0480706563619095 },
@@ -1995,14 +2030,18 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     {-10,-0.5,-0.5, 5.94859187434255E-34},
                     {10,1,0.5, System.Math.Exp(-0.17275377902345) },
                     {-17.16232660642066, 13.435028842544401, -0.67419986246324193, 2.5244995486068114E-66 },
-                    {-2,1.3,-0.5, 0.0125543619945072},
+                    { -1.5235871609407412, 0.069296909625515962, -0.027053117898400668, 0.0323181622672724 },
+                    { -1.64500313412819, 1.2645625117081, -0.05405423834462, 0.0437792307578264 },
+                    { -2,1.3,-0.5, 0.0125543619945072},
                     {-2,1.5,-0.5, 0.0145466302871907},
+                    {-3,3,-0.404040595959596, 0.0013030754478730753 },
                     {x, y, 0, MMath.NormalCdf(x)*MMath.NormalCdf(y)},
                     {x, y, 1, MMath.NormalCdf(System.Math.Min(x, y))},
                     {x, y, -1, xy1},
                     {0.6, -1, -1, 0.0},
                     {-1, 0.6, -1, 0.0},
                     {-1, -1, -1, 0.0},
+                    {-0.5,0.5,-0.4, 0.160231262969512 },
                     {x, y, 0.95,0.0817971046701358 + xy1 },
                     {x,y,-0.95, 2.08560436479985e-17 + xy1},
                     {x, y, 0.9, 0.0726860333050785 + xy1},
@@ -2032,6 +2071,13 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             // log(integrate(1/(2*pi*sqrt(1-t*t))*exp(-(2*1.5*1.5 + 2*t*1.5*1.5)/(2*(1-t*t))),t,-1,-0.5))
             double[,] normalcdfln2_pairs = new double[,]
                 {
+                    { -20, -21, 0.5, -287.59599647373 },
+                    { -14, -14.700000000000001, 0.5, -143.75347547431542 },
+                    { -1E-19, 1.1000000000000002E-19, -1, System.Math.Log(0.398942280401433e-20) },
+                    { -20, 21, -1, System.Math.Log(2.75362411532694E-89) },
+                    { -9945842.6290678252, 9945822.06800303, -0.98919581102480514, -49459892801108.422 },
+                    { -312498.36862450332, 312498.298221121, -0.999989333908269, -48827615210.059265 },
+                    { -1.5235871609407412, 0.069296909625515962, -0.027053117898400668, -3.43212590748818 },
                     { -63, 63, -0.4637494637494638, -1989.56232505372569173398 },
                     {-0.1,-0.1, -0.999999, -10018.30269574383335648},
                     {-0.1,-0.1, -0.99999, -1014.8501635587853745},
@@ -2049,9 +2095,16 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     {-1, 0.6, -1, double.NegativeInfinity},
                     {-1, -1, -1, double.NegativeInfinity},
                     {1, y2, r2, System.Math.Log(0.841344746068543)},
+                    {-0.01,0.00175879396984925,-0.590954773869347, -1.9123400906813246 },
+                    {-0.5,0.5,-0.4, -1.83113711376467 },
+                    {-0.5,0.464824120603015,-0.523618090452261, -1.990034060610423},
+                    {-0.6,0.6,-0.4, -1.8931285572857055 },
+                    {-0.6,0.6,-0.488442211055276, -1.977994514649918 },
+                    {-0.7,0.7,-0.456281407035176, -2.0179010527218026 },
                     {-1.999999999999, 0, -9.9999999999950042E-07, -4.47633340779343 },
                     {-2.9,-2.9,-0.49, System.Math.Log(3.55239065152386E-10)},
                     {-2, -2, -0.9, -47.0355622406161041990406706314832},
+                    {-2,2,-0.484848515151515, -3.9692750279327953 },
                     {-3, -3.5, -0.72, -44.175239867478986},
                     {-4.5, -4.5, -0.6, -57.1114368213654},
                     //{ 8,y2,r2, 0 },
@@ -2064,6 +2117,314 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                     {x, double.PositiveInfinity, 0.5, MMath.NormalCdfLn(x)}
                 };
             CheckFunctionValues("NormalCdfLn2", new MathFcn3(MMath.NormalCdfLn), normalcdfln2_pairs);
+
+            double[,] normalcdfRatioLn2_pairs = new double[,]
+                {
+                    { 379473319.22020543, -379473319.22020543, -0.99999999999999978, 4.0991122317442558E-10, -21.61306377550903 },
+                    { -9945842.6290678252, 9945822.06800303, -0.98919581102480514, 0.14660029826360518, 268535429229.67789 },
+                    { -312498.36862450332, 312498.298221121, -0.999989333908269, 0.0046186653587789346, 249505.2149799816 },
+                };
+            CheckFunctionValues("NormalCdfRatioLn2", new MathFcn4(MMath.NormalCdfRatioLn), normalcdfRatioLn2_pairs);
+
+            double[,] normalcdfIntegral_pairs = new double[,]
+                {
+                    { -10, -100000000000, -0.1, 0 },
+                    { 1, -100, -0.010000000000000002, 0 },
+                    { 4.3993699214502984E-08, 2.1162549143007975E-09, -1, 4.2410115039363254E-16 },
+                    { 54.144028629649441, 16.352706352205796, -1, 54.144028629649441 },
+                    { double.PositiveInfinity, -57.9771953893382, -1, double.PositiveInfinity },
+                    { -x, double.PositiveInfinity, -1, MMath.NormalCdfMomentRatio(1,-x)*System.Math.Exp(Gaussian.GetLogProb(-x,0,1)) },
+                    { 1E-08, 1E-08, -0.999999999999999, 0 },
+                    { -1, -8.9473684210526319, -0.999999999999999, 0 },
+                    { 19.073484197181429, -19.073488459566978, -0.99999999999996048, 4.37349630514655E-147 },
+                    { -0.4999, 0.5, -0.9999, 1.7769677765658425E-05 },
+                    { 0.021034851174404436, -0.37961242087533614, -0.999999997317639, 0 },
+                    { -0.013170888687821042, 0.013170891631143039, -1, 1.7278974097756908E-18 },
+                    { -2, -2, 1, 0.008490702616829637 },
+                    { 2, 2, 1, 2.0084907026168297 },
+                    { 2, 1.9, 1, 2.0081826951426729 },
+                    { 0.73080682429779031, -0.57951293845369067, -0.99999152863368379, 0.0037455902014599447 },
+                    { -0.94102098773740084, -1.2461486442846208, 0.5240076921033775, 0.035369263379357981 },
+                    { 0.89626183425208061, -0.94178051490858161, -0.77953292732402091, 0.03003800734061967 },
+                    { 1.144658872358864, -1.2215859551105948, -0.81617290357740435, 0.017564280718115784 },
+                    { double.PositiveInfinity, -0.40225579098340325, -0.4697418841876283, double.PositiveInfinity },
+                    { -1.08E+31, 790.80368892437889, -0.94587440643473975, 0 },
+                    { -1.081776354231671E+31, 790.80368892437889, -0.94587440643473975, 0 },
+                    { 790.80368892437889, -108177636171.16806, -0.94587440643473975, 0 },
+                    { double.PositiveInfinity, 1, -0.5, double.PositiveInfinity },
+                    { double.NegativeInfinity, 0.87287156094396956, -0.87287156094396956, 0 },
+                    { -0.1, 0.5, -0.1, 0.22610911461618027 }, // 0.233962568815606
+                    { -0.33333333333333331, -1.5, 0.16666666666666666, 0.02599549974965194 }, // 0.022270228761468
+                    { -0.33333333333333331, 1.5, -0.16666666666666666, 0.22824061454942 }, // 0.2319658855376
+                    { 1003, -1001, 0, 0 },
+                    { -1001, double.PositiveInfinity, 0, MMath.NormalCdfMomentRatio(1, -1001)*System.Math.Exp(Gaussian.GetLogProb(-1001,0,1)) },
+                    { -0.5, double.PositiveInfinity, 0.1, MMath.NormalCdfMomentRatio(1, -0.5)*System.Math.Exp(Gaussian.GetLogProb(-0.5,0,1)) },
+                    { 0.5, 0.1, 0.9999, 0.666826770860778 },
+                    { -2499147.006377392, 2499147.273918618, -1, 0 },
+                    { -8, 8.4, -1, 6.3985926111712448E-17 }, // confrac converges rapidly
+                    { 50, 0.5, -1, 34.221057736936238 }, // 461
+                    { 5, 0.5, -1, 3.1052470330674216 }, // 77
+                    { 0.5, 0.5, -1, 0.19146246127401312 }, // 29
+                    { -0.4999, 0.5, -1, 1.7603559714981849E-09 },
+                    { -0.499, 0.5, -1, 1.7606199115326087E-07 },
+                    { -0.49, 0.5, -1, 1.7632494692391017E-05 },
+                    { 0.1, 0.5, -0.9, 0.10185469947014977 },
+                    { 0.1, 0.5, -0.9999, 0.068051457100492874 },
+                    { 0.1, 0.5, -1, 0.06801625056781653 },
+                    { 0.1, -0.5, -1, 0 },
+                    { 0.1, -0.5, -0.9999, 2.5567149109314317E-183 },
+                    { 0.1, -0.5, 0.9999, 0.38288387410422181 },
+                    { 0.5, 0.1, -1, 0.0707579285628088 },
+                    { 0.5, 0.1, -0.9999, 0.0707976238175565 },
+                    { -0.5, 0.1, -1, 0 },
+                    { -0.5, 0.1, -0.9999, 2.5563333094766041E-183 },
+                    { -0.1, 0.5, -1, 0.0297237583130139 },
+                    { -0.1, 0.5, -0.9999, 0.029758964845705 },
+                    { -0.1, -0.5, 0.9999, 0.32117636635902441 },
+                    { -0.1, -1, 0.9999, 0.22608100205354575 },
+                };
+            CheckFunctionValues("NormalCdfIntegral", new MathFcn3(MMath.NormalCdfIntegral), normalcdfIntegral_pairs);
+
+            double[,] normalcdfIntegralRatio_pairs = new double[,]
+                {
+                    { -39062.492380206008, 39062.501110681893, -0.99999983334056686, 2.5600004960154716E-05 },
+                    { -2499147.006377392, 2499147.273918618, -1, 4.001365255616626E-07 }, // 4.0013422697176734E-07 4.0009884107980741E-07
+                    { -0.12449767319913681, double.PositiveInfinity, -0.99757523672528092, 0.75429721821181472 },
+                    { -213393529.2046707, 213393529.2046707, -1, 0 },
+                    { -824.43680216388009, -23300.713731480908, -0.99915764591723821, 6.9859450855259114E-08 },
+                    { 790.80368892437889, -1081777102.2326407, -0.94587440643473975, 1.0293108592794333E-10 },
+                    { 790.80368892437889, -1081776354979.6719, -0.94587440643473975, 1.0293107755790882E-13 },
+                    { -40, 42, -1, 0.0249688472072654 },
+                    { 0.1, 0.5, -0.9, 0.426708959089942 },
+                    { 0.1, 0.5, -0.9999, 0.29422529836665412 },
+                    { double.NegativeInfinity, 0, -0.1, 0 },
+                    { 0, double.NegativeInfinity, -0.1, 0 },
+                };
+            CheckFunctionValues("NormalCdfIntegralRatio", new MathFcn3(MMath.NormalCdfIntegralRatio), normalcdfIntegralRatio_pairs);
+        }
+
+        [Fact]
+        public void NormalCdfIntegralTest()
+        {
+            Assert.True(0 <= MMath.NormalCdfIntegral(1.9018718309533485E+77, -1.9018718309533485E+77, -1, 8.17880416082724E-79).Mantissa);
+            Assert.True(0 <= MMath.NormalCdfIntegral(213393529.2046707, -213393529.2046707, -1, 7.2893668811495072E-10).Mantissa);
+            Assert.True(0 < MMath.NormalCdfIntegral(-0.42146853220760722, 0.42146843802130329, -0.99999999999999989, 6.2292398855983019E-09).Mantissa);
+ 
+            Parallel.ForEach (OperatorTests.Doubles(), x =>
+            {
+                foreach (var y in OperatorTests.Doubles())
+                {
+                    foreach (var r in OperatorTests.Doubles().Where(d => d >= -1 && d <= 1))
+                    {
+                        MMath.NormalCdfIntegral(x, y, r);
+                    }
+                }
+            });
+        }
+
+        internal void NormalCdfIntegralTest2()
+        {
+            double x = 0.0093132267868981222;
+            double y = -0.0093132247056551785;
+            double r = -1;
+            y = -2499147.006377392;
+            x = 2499147.273918618;
+            //MMath.TraceConFrac = true;
+            //MMath.TraceConFrac2 = true;
+            for (int i = 0; i < 100; i++)
+            {
+                //x = 2.1 * (i + 1);
+                //y = -2 * (i + 1);
+                //x = -2 * (i + 1);
+                //y = 2.1 * (i + 1);
+                //x = -System.Math.Pow(10, -i);
+                //y = -x * 1.1;
+                x = -0.33333333333333331;
+                y = -1.5;
+                r = 0.16666666666666666;
+                x = -0.4999;
+                y = 0.5;
+                x = -0.1;
+                y = 0.5;
+                r = -0.1;
+
+                x = -824.43680216388009;
+                y = -23300.713731480908;
+                r = -0.99915764591723821;
+                x = -0.94102098773740084;
+                x = 1 + i * 0.01;
+                y = 2;
+                r = 1;
+
+                x = 0.021034851174404436;
+                y = -0.37961242087533614;
+                //x = -0.02;
+                //y += -1;
+                //x -= -1;
+                r = -1 + System.Math.Pow(10, -i);
+
+                //x = i * 0.01;
+                //y = -1;
+                //r = -1 + 1e-8;
+
+                // 1.81377005549484E-40 with exponent
+                // flipped is 1.70330340479022E-40
+                //x = -1;
+                //y = -8.9473684210526319;
+                //x = System.Math.Pow(10, -i);
+                //y = x;
+                //r = -0.999999999999999;
+
+                //x = -0.94102098773740084;
+                //y = -1.2461486442846208;
+                //r = 0.5240076921033775;
+
+                x = 790.80368892437889;
+                y = -1081776354979.6719;
+                y = -System.Math.Pow(10, i);
+                r = -0.94587440643473975;
+
+                x = -39062.492380206008;
+                y = 39062.501110681893;
+                r = -0.99999983334056686;
+
+                //x = -2;
+                //y = 1.5789473684210522;
+                //r = -0.78947368421052622;
+
+                //x = -1.1;
+                //y = -1.1;
+                //r = 0.052631578947368474;
+
+                //x = 0.001;
+                //y = -0.0016842105263157896;
+                //r = -0.4;
+
+                //x = 0.1;
+                //x = 2000;
+                //y = -2000;
+                //r = -0.99999999999999989;
+
+                x = double.MinValue;
+                y = double.MinValue;
+                r = 0.1;
+
+
+                Trace.WriteLine($"(x,y,r) = {x:r}, {y:r}, {r:r}");
+
+                double intZOverZ;
+                try
+                {
+                    intZOverZ = MMath.NormalCdfIntegralRatio(x, y, r);
+                }
+                catch
+                {
+                    intZOverZ = double.NaN;
+                }
+                Trace.WriteLine($"intZOverZ = {intZOverZ:r}");
+
+                double intZ0 = NormalCdfIntegralBasic(x, y, r);
+                double intZ1 = 0; // NormalCdfIntegralFlip(x, y, r);
+                double intZr = 0;// NormalCdfIntegralBasic2(x, y, r);
+                ExtendedDouble intZ;
+                double sqrtomr2 = System.Math.Sqrt((1 - r) * (1 + r));
+                try
+                {
+                    intZ = MMath.NormalCdfIntegral(x, y, r, sqrtomr2);
+                }
+                catch
+                {
+                    intZ = ExtendedDouble.NaN();
+                }
+                //double intZ = intZ0;
+                Trace.WriteLine($"intZ = {intZ:r} {intZ.ToDouble():r} {intZ0:r} {intZ1:r} {intZr:r}");
+                if (intZ.Mantissa < 0) throw new Exception();
+                //double intZ2 = NormalCdfIntegralBasic(y, x, r);
+                //Trace.WriteLine($"intZ2 = {intZ2} {r*intZ}");
+                double Z = MMath.NormalCdf(x, y, r);
+                if (Z < 0) throw new Exception();
+            }
+        }
+
+        private double NormalCdfIntegralFlip(double x, double y, double r)
+        {
+            double logProbX = Gaussian.GetLogProb(x, 0, 1);
+            return -MMath.NormalCdfIntegral(x, -y, -r) + x * MMath.NormalCdf(x) + System.Math.Exp(logProbX);
+        }
+
+        private double NormalCdfIntegralTaylor(double x, double y, double r)
+        {
+            double omr2 = 1 - r * r;
+            double sqrtomr2 = System.Math.Sqrt(omr2);
+            double ymrx = y / sqrtomr2;
+            double dx0 = MMath.NormalCdf(0, y, r);
+            double ddx0 = System.Math.Exp(Gaussian.GetLogProb(0, 0, 1) + MMath.NormalCdfLn(ymrx));
+            // \phi_{xx} &= -x \phi_x - r \phi_r
+            double dddx0 = -r * System.Math.Exp(Gaussian.GetLogProb(0, 0, 1) + Gaussian.GetLogProb(ymrx, 0, 1));
+            Trace.WriteLine($"dx0 = {dx0} {ddx0} {dddx0}");
+            return MMath.NormalCdfIntegral(0, y, r) + x * dx0 + 0.5 * x * x * ddx0 + 1.0 / 6 * x * x * x * dddx0;
+        }
+
+        private double NormalCdfIntegralBasic2(double x, double y, double r)
+        {
+            double omr2 = 1 - r * r;
+            double sqrtomr2 = System.Math.Sqrt(omr2);
+            double ymrx = (y - r * x) / sqrtomr2;
+            double xmry = (x - r * y) / sqrtomr2;
+            double func(double t)
+            {
+                return (y - r * x + r * t) * System.Math.Exp(Gaussian.GetLogProb(t, x, 1) + MMath.NormalCdfLn(ymrx + r * t / sqrtomr2));
+            }
+            func(0);
+            double func2(double t)
+            {
+                double ymrxt = ymrx + r * t / sqrtomr2;
+                return sqrtomr2 * System.Math.Exp(Gaussian.GetLogProb(t, x, 1) + Gaussian.GetLogProb(ymrxt, 0, 1)) * (MMath.NormalCdfMomentRatio(1, ymrxt) - 1);
+            }
+            func2(0);
+            //return -MMath.NormalCdf(x, y, r) * (y / r - x) + Integrate(func2) / r;
+            double func3(double t)
+            {
+                double xmryt = xmry + r * t / sqrtomr2;
+                return sqrtomr2 * System.Math.Exp(Gaussian.GetLogProb(t, y, 1) + Gaussian.GetLogProb(xmryt, 0, 1)) * MMath.NormalCdfMomentRatio(1, xmryt);
+            }
+            //double Z = MMath.NormalCdf(x, y, r, out double exponent);
+            double Z3 = Integrate(func3);
+            //return System.Math.Exp(exponent)*(-Z * (y / r - x) - omr2 / r * MMath.NormalCdfRatio(xmry)) + Z3/r;
+            return Z3;
+        }
+
+        private static double Integrate(Func<double, double> func)
+        {
+            double sum = 0;
+            var ts = EpTests.linspace(0, 1, 100000);
+            double inc = ts[1] - ts[0];
+            for (int i = 0; i < ts.Length; i++)
+            {
+                double t = ts[i];
+                double term = func(t);
+                if (i == 0 || i == ts.Length - 1) term /= 2;
+                sum += term * inc;
+            }
+            return sum;
+        }
+
+        private double NormalCdfIntegralBasic(double x, double y, double r)
+        {
+            double omr2 = 1 - r * r;
+            double sqrtomr2 = System.Math.Sqrt(omr2);
+            double ymrx = (y - r * x) / sqrtomr2;
+            double xmry = (x - r * y) / sqrtomr2;
+            // should use this whenever x > 0 and Rymrx >= Rxmry (y-r*x >= x-r*y implies y*(1+r) >= x*(1+r) therefore y >= x)
+            // we need a special routine to compute 2nd half without cancellation and without dividing by phir
+            // what about x > y > 0?
+            //double t = MMath.NormalCdfIntegral(-x, y, -r) + x * MMath.NormalCdf(y) + r * System.Math.Exp(Gaussian.GetLogProb(y, 0, 1));
+            //Console.WriteLine(t);
+            double phix = System.Math.Exp(Gaussian.GetLogProb(x, 0, 1) + MMath.NormalCdfLn(ymrx));
+            double phiy = System.Math.Exp(Gaussian.GetLogProb(y, 0, 1) + MMath.NormalCdfLn(xmry));
+            //Trace.WriteLine($"phix = {phix} phiy = {phiy}");
+            return x * MMath.NormalCdf(x, y, r) + phix + r * phiy;
+            //return y * MMath.NormalCdf(x, y, r) + r * System.Math.Exp(Gaussian.GetLogProb(x, 0, 1) + MMath.NormalCdfLn(ymrx)) + System.Math.Exp(Gaussian.GetLogProb(y, 0, 1) + MMath.NormalCdfLn(xmry));
         }
 
         [Fact]
@@ -2496,10 +2857,10 @@ exp(x*x/4)*pcfu(0.5+n,-x)
                 {
                     //Console.WriteLine("denom/dfact = {0}", denom / dfact);
                     double result = -numer / denom;
-                    //Console.WriteLine("iter {0}: {1}", i, result);
+                    Console.WriteLine("iter {0}: {1}", i, result);
                     if (double.IsInfinity(result) || double.IsNaN(result))
                         throw new Exception();
-                    if (result == rprev)
+                    if (MMath.AreEqual(result, rprev))
                         return result;
                     rprev = result;
                 }
@@ -23606,6 +23967,82 @@ exp(x*x/4)*pcfu(0.5+n,-x)
             Assert.Equal(double.MaxValue, MMath.Median(new[] { double.MaxValue }));
             Assert.Equal(double.MaxValue, MMath.Median(new[] { double.MaxValue, double.MaxValue }));
             Assert.Equal(3, MMath.Median(new[] { double.MaxValue, 3, double.MinValue }));
+        }
+
+        private static void CheckFunctionValues(string name, MathFcn fcn, double[,] pairs, double assertTolerance = 1e-11)
+        {
+            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
+        }
+
+        private static void CheckFunctionValues(string name, MathFcn2 fcn, double[,] pairs, double assertTolerance = 1e-11)
+        {
+            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
+        }
+
+        private static void CheckFunctionValues(string name, MathFcn3 fcn, double[,] pairs, double assertTolerance = 1e-11)
+        {
+            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
+        }
+
+        private static void CheckFunctionValues(string name, MathFcn4 fcn, double[,] pairs, double assertTolerance = 1e-11)
+        {
+            CheckFunctionValues(name, (Delegate)fcn, pairs, assertTolerance);
+        }
+
+        private static void CheckFunctionValues(string name, Delegate fcn, double[,] pairs, double assertTolerance)
+        {
+            Vector x = Vector.Zero(pairs.GetLength(1) - 1);
+            object[] args = new object[x.Count];
+            for (int i = 0; i < pairs.GetLength(0); i++)
+            {
+                for (int k = 0; k < x.Count; k++)
+                {
+                    x[k] = pairs[i, k];
+                    args[k] = x[k];
+                }
+                bool showTiming = false;
+                if(showTiming)
+                {
+                    Stopwatch watch = Stopwatch.StartNew();
+                    int repetitionCount = 100000;
+                    for (int repetition = 0; repetition < repetitionCount; repetition++)
+                    {
+                        Util.DynamicInvoke(fcn, args);
+                    }
+                    watch.Stop();
+                    Trace.WriteLine($"  ({watch.ElapsedTicks} ticks for {repetitionCount} calls)");
+                }
+                double fx = pairs[i, x.Count];
+                double result = (double)Util.DynamicInvoke(fcn, args);
+                if (!double.IsNaN(result) && System.Math.Sign(result) != System.Math.Sign(fx) && fx != 0)
+                {
+                    string strMsg = $"{name}({x:r})\t has wrong sign (result = {result:r})";
+                    Trace.WriteLine(strMsg);
+                    Assert.True(false, strMsg);
+                }
+                double err = System.Math.Abs(result - fx);
+                if (fx != 0)
+                    err /= System.Math.Abs(fx);
+                if (Double.IsInfinity(fx))
+                {
+                    err = (result == fx) ? 0 : Double.PositiveInfinity;
+                }
+                if (Double.IsNaN(fx))
+                {
+                    err = Double.IsNaN(result) ? 0 : Double.NaN;
+                }
+                if (err < TOLERANCE)
+                {
+                    Trace.WriteLine($"{name}({x:r})\t ok");
+                }
+                else
+                {
+                    string strMsg = $"{name}({x:r})\t wrong by {err.ToString("g2")} (result = {result:r})";
+                    Trace.WriteLine(strMsg);
+                    if (err > assertTolerance || double.IsNaN(err))
+                        Assert.True(false, strMsg);
+                }
+            }
         }
     }
 }

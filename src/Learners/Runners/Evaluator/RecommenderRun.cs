@@ -110,10 +110,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
         public void Execute()
         {
             // Report that the run has been started
-            if (this.Started != null)
-            {
-                this.Started(this, EventArgs.Empty);
-            }
+            this.Started?.Invoke(this, EventArgs.Empty);
 
             try
             {
@@ -166,12 +163,8 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
                     TimeSpan totalFoldTime = totalFoldTimer.Elapsed;
 
                     // Report that the fold has been processed
-                    if (this.FoldProcessed != null)
-                    {
-                        this.FoldProcessed(
-                            this,
-                            new RecommenderRunFoldProcessedEventArgs(i, totalFoldTime, foldTrainingTime, foldPredictionTime, foldEvaluationTime, foldMetrics));
-                    }
+                    this.FoldProcessed?.Invoke(this,
+                        new RecommenderRunFoldProcessedEventArgs(i, totalFoldTime, foldTrainingTime, foldPredictionTime, foldEvaluationTime, foldMetrics));
 
                     // Merge the timings
                     totalTrainingTime += foldTrainingTime;
@@ -191,19 +184,12 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners
 
                 // Report that the run has been completed
                 TimeSpan totalTime = totalTimer.Elapsed;
-                if (this.Completed != null)
-                {
-                    this.Completed(
-                        this,
-                        new RecommenderRunCompletedEventArgs(totalTime, totalTrainingTime, totalPredictionTime, totalEvaluationTime, metrics));
-                }
+                this.Completed?.Invoke(this,
+                    new RecommenderRunCompletedEventArgs(totalTime, totalTrainingTime, totalPredictionTime, totalEvaluationTime, metrics));
             }
             catch (Exception e)
             {
-                if (this.Interrupted != null)
-                {
-                    this.Interrupted(this, new RecommenderRunInterruptedEventArgs(e));
-                }
+                this.Interrupted?.Invoke(this, new RecommenderRunInterruptedEventArgs(e));
             }
         }
     }

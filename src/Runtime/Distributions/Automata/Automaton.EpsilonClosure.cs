@@ -2,29 +2,21 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
-
 namespace Microsoft.ML.Probabilistic.Distributions.Automata
 {
     using System.Collections.Generic;
     using Microsoft.ML.Probabilistic.Collections;
-    using Microsoft.ML.Probabilistic.Distributions;
-    using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Utilities;
 
     /// <content>
     /// Contains the class used to represent the epsilon closure of a state of an automaton.
     /// </content>
     public abstract partial class Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>
-        where TSequence : class, IEnumerable<TElement>
-        where TElementDistribution : IDistribution<TElement>, SettableToProduct<TElementDistribution>, SettableToWeightedSumExact<TElementDistribution>, CanGetLogAverageOf<TElementDistribution>, SettableToPartialUniform<TElementDistribution>, new()
-        where TSequenceManipulator : ISequenceManipulator<TSequence, TElement>, new()
-        where TThis : Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis>, new()
     {
         /// <summary>
         /// Represents the epsilon closure of a state.
         /// </summary>
-        public class EpsilonClosure
+        public struct EpsilonClosure
         {
             /// <summary>
             /// The default capacity of <see cref="weightedStates"/>.
@@ -34,7 +26,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// The list of the states in the closure.
             /// </summary>
-            private readonly List<Pair<State, Weight>> weightedStates = new List<Pair<State, Weight>>(DefaultStateListCapacity);
+            private readonly List<(State, Weight)> weightedStates;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="EpsilonClosure"/> class.
@@ -42,14 +34,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <param name="state">The state, which epsilon closure this instance will represent.</param>
             internal EpsilonClosure(State state)
             {
-                Argument.CheckIfValid(!state.IsNull, nameof(state));
+                weightedStates = new List<(State, Weight)>(DefaultStateListCapacity);
 
                 // Optimize for a very common case: a single-node closure
                 bool singleNodeClosure = true;
                 Weight selfLoopWeight = Weight.Zero;
-                for (int i = 0; i < state.TransitionCount; ++i)
+                foreach (var transition in state.Transitions)
                 {
-                    Transition transition = state.GetTransition(i);
                     if (transition.IsEpsilon)
                     {
                         if (transition.DestinationStateIndex != state.Index)
@@ -58,15 +49,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                             break;
                         }
 
-                        selfLoopWeight = Weight.Sum(selfLoopWeight, transition.Weight);
+                        selfLoopWeight += transition.Weight;
                     }
                 }
 
                 if (singleNodeClosure)
                 {
                     Weight stateWeight = Weight.ApproximateClosure(selfLoopWeight);
-                    this.weightedStates.Add(Pair.Create(state, stateWeight));
-                    this.EndWeight = Weight.Product(stateWeight, state.EndWeight);
+                    this.weightedStates.Add((state, stateWeight));
+                    this.EndWeight = stateWeight * state.EndWeight;
                 }
                 else
                 {
@@ -77,11 +68,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         for (int j = 0; j < component.Size; ++j)
                         {
                             State componentState = component.GetStateByIndex(j);
-                            this.weightedStates.Add(Pair.Create(componentState, condensation.GetWeightFromRoot(componentState)));
+                            this.weightedStates.Add((componentState, condensation.GetWeightFromRoot(componentState)));
                         }
                     }
 
-                    this.EndWeight = condensation.GetWeightToEnd(state);
+                    this.EndWeight = condensation.GetWeightToEnd(state.Index);
                 }
             }
 
@@ -94,10 +85,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets the number of states in the closure.
             /// </summary>
-            public int Size
-            {
-                get { return this.weightedStates.Count; }
-            }
+            public int Size => this.weightedStates.Count;
 
             /// <summary>
             /// Gets a state by its index.
@@ -108,7 +96,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 Argument.CheckIfInRange(index >= 0 && index < this.weightedStates.Count, "index", "An invalid closure state index given.");
 
-                return this.weightedStates[index].First;
+                return this.weightedStates[index].Item1;
             }
 
             /// <summary>
@@ -121,7 +109,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 Argument.CheckIfInRange(index >= 0 && index < this.weightedStates.Count, "index", "An invalid closure state index given.");
 
-                return this.weightedStates[index].Second;
+                return this.weightedStates[index].Item2;
             }
         }
     }

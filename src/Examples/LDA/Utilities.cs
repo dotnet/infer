@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.ML.Probabilistic.Distributions;
 using Microsoft.ML.Probabilistic.Math;
 using System.IO;
+using System.Linq;
 
 namespace LDAExample
 {
@@ -71,7 +72,7 @@ namespace LDAExample
                 // Draw the number of unique topics in the doc.
                 int numUniqueTopicsPerDoc = Math.Min(1 + Poisson.Sample(1.0), numTopics);
                 double expectedRepeatOfTopicInDoc = 
-                    averageDocLength / numUniqueTopicsPerDoc;
+                    (double)averageDocLength / numUniqueTopicsPerDoc;
                 int[] shuffledTopicIndices = Rand.Perm(numTopics);
                 for (int j = 0; j < numUniqueTopicsPerDoc; j++)
                 {
@@ -167,25 +168,17 @@ namespace LDAExample
         /// <returns></returns>
         public static Dictionary<int, int>[] LoadWordCounts(string fileName)
         {
-            List<Dictionary<int, int>> ld = new List<Dictionary<int, int>>();
-            using (StreamReader sr = new StreamReader(fileName))
+            return File.ReadLines(fileName).Select(str =>
             {
-                string str = null;
-                while ((str = sr.ReadLine()) != null)
+                string[] split = str.Split(' ', ':');
+                int numUniqueTerms = int.Parse(split[0]);
+                var dict = new Dictionary<int, int>();
+                for (int i = 0; i < (split.Length - 1) / 2; i++)
                 {
-                    string[] split = str.Split(' ', ':');
-                    int numUniqueTerms = int.Parse(split[0]);
-                    var dict = new Dictionary<int, int>();
-                    for (int i = 0; i < (split.Length - 1) / 2; i++)
-                    {
-                        dict.Add(int.Parse(split[2 * i + 1]), int.Parse(split[2 * i + 2]));
-                    }
-
-                    ld.Add(dict);
+                    dict.Add(int.Parse(split[2 * i + 1]), int.Parse(split[2 * i + 2]));
                 }
-            }
-
-            return ld.ToArray();
+                return dict;
+            }).ToArray();
         }
 
         /// <summary>
@@ -195,18 +188,7 @@ namespace LDAExample
         /// <returns></returns>
         public static Dictionary<int, string> LoadVocabulary(string fileName)
         {
-            Dictionary<int, string> vocab = new Dictionary<int, string>();
-            using (StreamReader sr = new StreamReader(fileName))
-            {
-                string str = null;
-                int idx = 0;
-                while ((str = sr.ReadLine()) != null)
-                {
-                    vocab.Add(idx++, str);
-                }
-            }
-
-            return vocab;
+            return File.ReadLines(fileName).Select((str, idx) => Tuple.Create(str, idx)).ToDictionary(tup => tup.Item2, tup => tup.Item1);
         }
 
         /// <summary>

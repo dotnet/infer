@@ -2,11 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
-
-namespace Microsoft.ML.Probabilistic.Utilities
+namespace Microsoft.ML.Probabilistic.Collections
 {
     using System;
+    using System.Collections.Generic;
 
     using Microsoft.ML.Probabilistic.Serialization;
 
@@ -88,6 +87,7 @@ namespace Microsoft.ML.Probabilistic.Utilities
 
         public static bool operator !=(Option<T> a, Option<T> b) => !(a == b);
 
+        /// <inheritdoc/>
         public override bool Equals(object other)
         {
             if (other is Option<T> that)
@@ -100,8 +100,10 @@ namespace Microsoft.ML.Probabilistic.Utilities
                 : other == null;
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode() => this.HasValue ? this.value.GetHashCode() : 0;
 
+        /// <inheritdoc/>
         public override string ToString() => this.HasValue ? this.value.ToString() : "(null)";
     }
 
@@ -138,6 +140,18 @@ namespace Microsoft.ML.Probabilistic.Utilities
             }
 
             return new Option<T>(value);
+        }
+
+        /// <summary>
+        /// Helper function to create <see cref="Option{T}"/> from <see cref="Nullable{T}"/>.
+        /// </summary>
+        public static Option<T> FromNullable<T>(T? nullable)
+            where T : struct
+        {
+            return
+                nullable == null
+                    ? new Option<T>()
+                    : new Option<T>(nullable.Value);
         }
 
         /// <summary>

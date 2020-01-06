@@ -132,17 +132,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
 
         public void OnAddNode(NodeType node)
         {
-            if (AddNode != null) AddNode(node);
+            AddNode?.Invoke(node);
         }
 
         public void OnBeginCycle()
         {
-            if (BeginCycle != null) BeginCycle();
+            BeginCycle?.Invoke();
         }
 
         public void OnEndCycle()
         {
-            if (EndCycle != null) EndCycle();
+            EndCycle?.Invoke();
         }
     }
 
@@ -325,17 +325,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Graphs
 
         public void OnAddEdge(EdgeType edge)
         {
-            if (AddEdge != null) AddEdge(edge);
+            AddEdge?.Invoke(edge);
         }
 
         public void OnBeginCycle()
         {
-            if (BeginCycle != null) BeginCycle();
+            BeginCycle?.Invoke();
         }
 
         public void OnEndCycle()
         {
-            if (EndCycle != null) EndCycle();
+            EndCycle?.Invoke();
         }
     }
 }

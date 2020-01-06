@@ -761,11 +761,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 // Make a temporary copy of the event to avoid a race condition
                 // if the last subscriber unsubscribes immediately after the null check and before the event is raised.
-                EventHandler<ProgressChangedEventArgs> handler = this.ProgressChanged;
-                if (handler != null)
-                {
-                    handler(this, e);
-                }
+                this.ProgressChanged?.Invoke(this, e);
             }
 
             /// <summary>Reset all messages to their initial values.  Sets NumberOfIterationsDone to 0.</summary>

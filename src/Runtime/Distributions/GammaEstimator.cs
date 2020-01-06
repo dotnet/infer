@@ -24,18 +24,10 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <summary>
         /// Where to accumulate means and variances
         /// </summary>
-        public MeanVarianceAccumulator mva;
+        public MeanVarianceAccumulator mva = new MeanVarianceAccumulator();
 
         /// <summary>
-        /// Creates a new Gamma estimator
-        /// </summary>
-        public GammaEstimator()
-        {
-            mva = new MeanVarianceAccumulator();
-        }
-
-        /// <summary>
-        /// Retrieves the Gamma estimator
+        /// Retrieves the estimated Gamma
         /// </summary>
         /// <param name="result">Where to put the result</param>
         /// <returns>The resulting distribution</returns>
@@ -54,6 +46,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
           Add(distribution, 1.0);
         }
+
+        /// <summary>
+        /// Adds a Gamma distribution item to the estimator
+        /// </summary>
+        /// <param name="distribution">The distribution instance to add</param>
+        /// <param name="weight">The weight of the sample</param>
         public void Add(Gamma distribution, double weight)
         {
             double x, noiseVariance;

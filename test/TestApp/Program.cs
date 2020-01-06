@@ -104,8 +104,6 @@ namespace TestApp
 #endif
             watch.Stop();
             Console.WriteLine("elapsed time = {0}ms", watch.ElapsedMilliseconds);
-
-            Console.ReadKey();
         }
     }
 }

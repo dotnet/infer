@@ -12,7 +12,7 @@ resources:
   
 trigger: none # disable CI build
   
-# Build and test on MacOS
+# Build on MacOS
 
 jobs:
 - job: macOS # Hosted MacOS agent
@@ -28,11 +28,7 @@ jobs:
       dotnet build --configuration $(BuildConfiguration)Core Infer.sln
     displayName: Build Solution
       
-  - template: netcoretest-fast.yml
-    parameters:
-      Configuration: '$(BuildConfiguration)Core'
-
-# Build and test on Linux
+# Build on Linux
 
 - job: Linux # Hosted Linux agent
   pool:
@@ -47,11 +43,7 @@ jobs:
       dotnet build --configuration $(BuildConfiguration)Core Infer.sln
     displayName: Build Solution
 
-  - template: netcoretest-fast.yml
-    parameters:
-      Configuration: '$(BuildConfiguration)Core'
-
-# Assign assembly versions, build, test and publish versioned assemblies
+# Assign assembly versions, build, and publish versioned assemblies
 
 - job: Windows # Hosted Windows agent, VS 2017
   pool:
@@ -81,10 +73,7 @@ jobs:
       solution: '**/*.sln'
       clean: true
       configuration: $(BuildConfiguration)
-
-  - template: vstest-fast.yml
-    parameters:
-      Platform: 'x64'
+      maximumCpuCount: true
 
   - task: Bash@3
     displayName: 'Gathering built assemblies'
@@ -157,16 +146,31 @@ jobs:
       solution: build/sign.proj
       msbuildArguments: /p:SignType=$(SignType) /verbosity:detailed
       msbuildVersion: 14.0
+      maximumCpuCount: true
     condition: in(variables.SignType, 'real', 'test')
 
-  - task: NuGetCommand@2
-    displayName: 'Creating NuGet packages'
+  - task: UseDotNet@2
+    displayName: Get dotnet 3.x
     inputs:
-      command: pack
-      packagesToPack: build/*.nuspec
-      includeSymbols: true
-      buildProperties: version=$(Build.BuildNumber);bin=$(Build.SourcesDirectory)/bin/obj/packages
-      packDestination: $(Build.SourcesDirectory)/bin/packages
+      packageType: 'sdk'
+      version: '3.x'
+
+  - task: DotNetCoreCLI@2
+    displayName: Restore Infer.sln to enable packaging.
+    inputs:
+      command: 'restore'
+      projects: 'Infer.sln'
+      feedsToUse: 'select'
+
+  - task: DotNetCoreCLI@2
+    displayName: Create NuGet packages from Infer.sln.
+    inputs:
+      command: 'pack'
+      packagesToPack: 'Infer.sln'
+      packDirectory: '$(Build.SourcesDirectory)/bin/packages'
+      nobuild: true # We must not rebuild, otherwise we overwrite the signed assemblies.
+      versioningScheme: 'byBuildNumber'
+      buildProperties: 'BaseOutputPath=$(Build.SourcesDirectory)/bin/obj/packages;BuildProjectReferences=false;version=$(Build.BuildNumber)' # BaseOutputPath is set to the location the signed assemblies have been copied to. version is used for NuSpec substitution in LearnersNuGet.csproj.
 
   - task: MSBuild@1
     displayName: Sign Packages
@@ -174,6 +178,7 @@ jobs:
       solution: build/sign.proj
       msbuildArguments: /p:SignType=$(SignType) /p:SignNugetPackages=true /verbosity:detailed
       msbuildVersion: 14.0
+      maximumCpuCount: true
     condition: in(variables.SignType, 'real', 'test')
 
   - task: PublishBuildArtifacts@1

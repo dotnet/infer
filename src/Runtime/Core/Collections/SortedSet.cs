@@ -25,7 +25,7 @@ namespace Microsoft.ML.Probabilistic.Collections
     /// The items are stored in the keys of a SortedList, which does the sorting
     /// via its own comparer function.
     /// </remarks>
-    public class SortedSet<T> : IList<T>, ICloneable
+    public class SortedSet<T> : IList<T>, IReadOnlyList<T>, ICloneable
     {
         protected struct EmptyStruct
         {
@@ -220,8 +220,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         {
             SortedSet<T> thatSet = that as SortedSet<T>;
             if (thatSet == null) return false;
-            //if(Count != thatSet.Count) return false;
-            return Util.ValueEquals((ICollection<T>) this, (ICollection<T>) that);
+            return this.ValueEquals(thatSet);
         }
 
         public override int GetHashCode()

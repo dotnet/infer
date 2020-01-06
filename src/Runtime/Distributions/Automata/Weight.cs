@@ -21,7 +21,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     /// </remarks>
     [Serializable]
     [DataContract]
-    public struct Weight
+    public struct Weight : IComparable<Weight>
     {
         /// <summary>
         /// The logarithm of the weight value.
@@ -43,50 +43,37 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <summary>
         /// Gets the zero weight.
         /// </summary>
-        public static Weight Zero
-        {
-            get { return new Weight(double.NegativeInfinity); }
-        }
+        public static Weight Zero => new Weight(double.NegativeInfinity);
 
         /// <summary>
         /// Gets the unit weight.
         /// </summary>
-        public static Weight One
-        {
-            get { return new Weight(0); }
-        }
+        public static Weight One => new Weight(0);
 
         /// <summary>
         /// Gets the infinite weight.
         /// </summary>
-        public static Weight Infinity
-        {
-            get { return new Weight(double.PositiveInfinity); }
-        }
+        public static Weight Infinity => new Weight(double.PositiveInfinity);
 
         /// <summary>
         /// Gets the logarithm of the weight value.
         /// </summary>
-        public double LogValue
-        {
-            get { return this.logValue; }
-        }
+        public double LogValue => this.logValue;
 
         /// <summary>
         /// Gets the weight value.
         /// </summary>
-        public double Value
-        {
-            get { return Math.Exp(this.LogValue); }
-        }
+        public double Value => Math.Exp(this.LogValue);
 
         /// <summary>
         /// Gets a value indicating whether the weight is zero.
         /// </summary>
-        public bool IsZero
-        {
-            get { return double.IsNegativeInfinity(this.LogValue); }
-        }
+        public bool IsZero => double.IsNegativeInfinity(this.LogValue);
+
+        /// <summary>
+        /// Gets value indicating whether weight is infinite.
+        /// </summary>
+        public bool IsInfinity => double.IsPositiveInfinity(this.LogValue);
 
         /// <summary>
         /// Creates a weight from the logarithm of its value.
@@ -203,6 +190,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
+        /// Returns a specified weight raised to the specified power.
+        /// </summary>
+        public static Weight Pow(Weight weight, double power) =>
+            power == 0
+                ? Weight.One
+                : new Weight(weight.LogValue * power);
+
+        /// <summary>
         /// Computes the sum of a geometric series <c>1 + w + w^2 + w^3 + ...</c>,
         /// where <c>w</c> is a given weight.
         /// </summary>
@@ -258,10 +253,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <see langword="true"/> if the given weights are equal,
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator ==(Weight weight1, Weight weight2)
-        {
-            return weight1.logValue == weight2.logValue;
-        }
+        public static bool operator ==(Weight weight1, Weight weight2) => weight1.logValue == weight2.logValue;
 
         /// <summary>
         /// The weight inequality operator.
@@ -272,10 +264,52 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <see langword="true"/> if the given weights are not equal,
         /// <see langword="false"/> otherwise.
         /// </returns>
-        public static bool operator !=(Weight weight1, Weight weight2)
-        {
-            return !(weight1 == weight2);
-        }
+        public static bool operator !=(Weight weight1, Weight weight2) => !(weight1 == weight2);
+
+        /// <summary>
+        /// Weight "greater than" operator.
+        /// </summary>
+        public static bool operator >(Weight weight1, Weight weight2) => weight1.logValue > weight2.LogValue;
+
+        /// <summary>
+        /// Weight "greater than or equal" operator.
+        /// </summary>
+        public static bool operator >=(Weight weight1, Weight weight2) => weight1.logValue >= weight2.LogValue;
+
+        /// <summary>
+        /// Weight "less than" operator.
+        /// </summary>
+        public static bool operator <(Weight weight1, Weight weight2) => weight1.logValue < weight2.LogValue;
+
+        /// <summary>
+        /// Weight "less than or equal" operator.
+        /// </summary>
+        public static bool operator <=(Weight weight1, Weight weight2) => weight1.logValue <= weight2.LogValue;
+
+
+        /// <summary>
+        /// Compute the product of given weights.
+        /// </summary>
+        /// <param name="weight1">The first weight.</param>
+        /// <param name="weight2">The second weight.</param>
+        /// <returns>The computed product.</returns>
+        public static Weight operator *(Weight weight1, Weight weight2) => Product(weight1, weight2);
+
+        /// <summary>
+        /// Compute the ratio of given weights.
+        /// </summary>
+        /// <param name="weight1">The first weight.</param>
+        /// <param name="weight2">The second weight.</param>
+        /// <returns>The computed product.</returns>
+        public static Weight operator /(Weight weight1, Weight weight2) => Product(weight1, Weight.Inverse(weight2));
+
+        /// <summary>
+        /// Compute the sum of given weights.
+        /// </summary>
+        /// <param name="weight1">The first weight.</param>
+        /// <param name="weight2">The second weight.</param>
+        /// <returns>The computed sum.</returns>
+        public static Weight operator +(Weight weight1, Weight weight2) => Sum(weight1, weight2);
 
         /// <summary>
         /// Checks if this instance is equal to a given object.
@@ -322,6 +356,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             return this.Value.ToString(provider);
         }
+
+        /// <summary>
+        /// Compares the current instance with another object of the same type and returns an integer that
+        /// indicates whether the current instance precedes, follows, or occurs in the same position
+        /// in the sort order as the other object.
+        /// </summary>
+        /// <param name="that">An object to compare with this instance. </param>
+        /// <returns>
+        /// A value that indicates the relative order of the objects being compared. The return value
+        /// has these meanings: Value Meaning Less than zero This instance precedes <paramref name="that" />
+        /// in the sort order.  Zero This instance occurs in the same position in the sort order as
+        /// <paramref name="that" />. Greater than zero This instance follows <paramref name="that" /> in the sort order.
+        /// </returns>
+        public int CompareTo(Weight that) => this.LogValue.CompareTo(that.LogValue);
 
 
         /// <summary>
