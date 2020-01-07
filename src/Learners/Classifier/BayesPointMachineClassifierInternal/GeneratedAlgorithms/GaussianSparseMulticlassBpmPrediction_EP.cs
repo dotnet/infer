@@ -538,6 +538,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Labels_uses_F[InstanceRange][1] = ArrayHelper.MakeUniform<Discrete>(Discrete.Uniform(this.classCount));
 			}
 			if (this.instanceCount>0) {
+				this.vbool76_reduced = new bool[this.classCount][];
 				this.Labels_InstanceRange__selector_cases_rep8_B_reduced = new DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]>(this.classCount);
 			}
 			for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
@@ -549,11 +550,6 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 						this.Labels_InstanceRange__selector_cases_rep8_B_reduced[ClassMaxNoisyScore][_a8] = Bernoulli.Uniform();
 					}
 				}
-			}
-			if (this.instanceCount>0) {
-				this.vbool76_reduced = new bool[this.classCount][];
-			}
-			for(int ClassMaxNoisyScore = 0; ClassMaxNoisyScore<this.classCount; ClassMaxNoisyScore++) {
 				if (this.instanceCount>0) {
 					this.vbool76_reduced[ClassMaxNoisyScore] = new bool[this.classCount];
 				}
@@ -786,8 +782,8 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 				this.Labels_uses_F[InstanceRange] = new Discrete[2];
 			}
 			this.Labels_InstanceRange__selector_cases_uses_B = new Bernoulli[this.instanceCount][][];
-			this.Labels_InstanceRange__selector_cases_rep8_B_reduced = default(DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]>);
 			this.vbool76_reduced = default(bool[][]);
+			this.Labels_InstanceRange__selector_cases_rep8_B_reduced = default(DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]>);
 			this.NoisyScoreDeltas_F = new DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]>(this.instanceCount);
 			this.NoisyScoreDeltas_B = new DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]>(this.instanceCount);
 			this.vdouble740_B = new DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]>(this.instanceCount);
