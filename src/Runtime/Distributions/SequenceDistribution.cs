@@ -1624,10 +1624,16 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// Converges an improper sequence distribution
         /// </summary>
         /// <param name="dist">The original distribution.</param>
+        /// <param name="decayWeight">The decay weight.</param>
         /// <returns>The converged distribution.</returns>
-        public static TThis Converge(TThis dist)
+        public static TThis Converge(TThis dist, double decayWeight = 0.99)
         {
-            var converger = Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.GetConverger(dist.sequenceToWeight);
+            var converger =
+                Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>
+                    .GetConverger(new TWeightFunction[]
+                    {
+                        dist.sequenceToWeight
+                    }, decayWeight);
             return dist.Product(FromWorkspace(converger));
         }
 
