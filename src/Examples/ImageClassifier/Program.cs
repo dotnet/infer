@@ -15,7 +15,7 @@ namespace ImageClassifier
         [STAThread]
         static void Main()
         {
-            // First compute features for all the images.
+	        // First compute features for all the images.
             // Comment the next 2 lines out if the images have not changed and you don't want to re-compute the features each run.
             var features = new ImageFeatures();
             features.ComputeImageFeatures();
