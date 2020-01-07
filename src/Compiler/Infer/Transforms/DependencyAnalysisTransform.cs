@@ -351,10 +351,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return Builder.StaticMethod(new Func<int>(GateAnalysisTransform.AnyIndex));
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning disable 162
-#endif
-
         /// <summary>
         /// Post-process dependencies replacing message expressions with the operator
         /// blocks that compute them.
@@ -388,7 +384,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 }
                 var bounds = new Dictionary<IVariableDeclaration, CodeRecognizer.Bounds>(new IdentityComparer<IVariableDeclaration>());
                 Recognizer.AddLoopBounds(bounds, ist);
-                if (false)
+                bool debug = false;
+                if (debug)
                 {
                     // for debugging
                     IStatement innerStmt = ist;
@@ -421,25 +418,38 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 Dictionary<IStatement, Set<IVariableDeclaration>> extraIndicesOfStmt = new Dictionary<IStatement, Set<IVariableDeclaration>>(new IdentityComparer<IStatement>());
                 foreach (IStatement exprStmt in di.DeclDependencies)
                 {
-                    var mutatingStmts = GetStatementsThatMutate2(ist, exprStmt, true, false, ist, bounds, di2.offsetIndexOf, extraIndicesOfStmt);
+                    var mutatingStmts = GetStatementsThatMutate(ist, exprStmt, true, false, ist, bounds, di2.offsetIndexOf, extraIndicesOfStmt);
                     foreach (IStatement mutatingStmt in mutatingStmts)
                     {
                         di2.Add(DependencyType.Declaration, mutatingStmt);
                     }
                 }
                 List<KeyValuePair<IStatement, OffsetInfo>> extraOffsetInfos = new List<KeyValuePair<IStatement, OffsetInfo>>();
+                bool allocationsOnly = isInitializer;
                 foreach (KeyValuePair<IStatement, DependencyType> entry in di.dependencyTypeOf)
                 {
                     IStatement exprStmt = entry.Key;
                     DependencyType type = entry.Value;
                     type &= ~DependencyType.Declaration; // declarations are handled above
+                    if ((type & DependencyType.SkipIfUniform) > 0)
+                    {
+                        // Process SkipIfUniform dependencies specially
+                        // Stmts with the same offsetInfo are put into Any
+                        var mutatingStmtsSkip = GetStatementsThatMutate(ist, exprStmt, allocationsOnly, true, ist, bounds, di2.offsetIndexOf, extraIndicesOfStmt)
+                            .GroupBy(mutatingStmt => di2.offsetIndexOf.TryGetValue(mutatingStmt, out IOffsetInfo offsetInfo) ? (OffsetInfo)offsetInfo : null, new OffsetInfoComparer())
+                            .SelectMany(group => (group.Key == null) ? group.ToArray() : new[] { new AnyStatement(group.ToArray()) });
+                        foreach (IStatement mutatingStmt in mutatingStmtsSkip)
+                        {
+                            di2.Add(DependencyType.SkipIfUniform, mutatingStmt);
+                        }
+                        type &= ~DependencyType.SkipIfUniform;
+                        // Fall through
+                    }
                     if (type == 0)
                         continue;
                     if ((type & DependencyType.Container) > 0)
                         type |= DependencyType.Dependency; // containers also become deps
-                    bool allocationsOnly = isInitializer;
-                    bool mustMutate = (type & DependencyType.SkipIfUniform) > 0;
-                    var mutatingStmts = GetStatementsThatMutate2(ist, exprStmt, allocationsOnly, mustMutate, ist, bounds, di2.offsetIndexOf, extraIndicesOfStmt);
+                    var mutatingStmts = GetStatementsThatMutate(ist, exprStmt, allocationsOnly, false, ist, bounds, di2.offsetIndexOf, extraIndicesOfStmt);
                     foreach (IStatement mutatingStmt in mutatingStmts)
                     {
                         DependencyType type2 = type;
@@ -544,9 +554,20 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             stmts.AddRange(dummyStatements);
         }
 
-#if SUPPRESS_UNREACHABLE_CODE_WARNINGS
-#pragma warning restore 162
-#endif
+        class OffsetInfoComparer : IEqualityComparer<OffsetInfo>
+        {
+            public bool Equals(OffsetInfo x, OffsetInfo y)
+            {
+                if (x == null) return (y == null);
+                else if (y == null) return false;
+                else return x.Any(offset => y.ContainsKey(offset.loopVar));
+            }
+
+            public int GetHashCode(OffsetInfo obj)
+            {
+                return 0;
+            }
+        }
 
         protected IExpression ConvertExpressionWithDependencyType(IExpression expr, DependencyType type)
         {
@@ -1206,8 +1227,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
-        // same as GetStatementsThatMutate but handles AnyStatements
-        internal IEnumerable<IStatement> GetStatementsThatMutate2(
+        // same as GetMutations but handles AnyStatements
+        internal IEnumerable<IStatement> GetStatementsThatMutate(
             IStatement exclude,
             IStatement exprStmt,
             bool allocationsOnly,

@@ -215,6 +215,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             return values[0];
         }
 
+        /// <summary>
+        /// Wraps an array-typed expression to indicate that at least one element of the array is non-uniform.
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
         public static object AnyItem(object list)
         {
             return list;
@@ -368,7 +373,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                              || parameter.IsDefined(typeof(IsReturnedInEveryElementAttribute), false)
                         )
                     {
-                        IExpression requirement = Builder.StaticMethod(new Func<object, object>(FactorManager.AnyItem), dependency);
+                        Type t = dependency.GetExpressionType();
+                        IExpression requirement = Util.IsIList(t)
+                                                  ? Builder.StaticMethod(new Func<object, object>(FactorManager.AnyItem), dependency)
+                                                  : dependency;
+                        //requirement = Builder.StaticMethod(new Func<object, object>(FactorManager.AnyItem), dependency);
                         info.Add(DependencyType.SkipIfUniform, Builder.ExprStatement(requirement));
                     }
                     else
@@ -486,9 +495,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         Type t = dependency.GetExpressionType();
                         if (!t.IsPrimitive)
                         {
-                            IExpression message = (t.IsArray || (t.IsGenericType && t.GetGenericTypeDefinition().Equals(typeof(IList<>))))
-                                                      ? Builder.StaticMethod(new Func<object, object>(FactorManager.AnyItem), dependency)
-                                                      : dependency;
+                            IExpression message = Util.IsIList(t)
+                                                  ? Builder.StaticMethod(new Func<object, object>(FactorManager.AnyItem), dependency)
+                                                  : dependency;
                             messages.Add(message);
                         }
                     }
@@ -506,12 +515,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         private static bool UniformIsProper(Type type)
         {
             // In some cases, we could construct a uniform instance of type and check if it is proper.
-            return type.Equals(typeof(Microsoft.ML.Probabilistic.Distributions.Bernoulli)) ||
-                type.Equals(typeof(Microsoft.ML.Probabilistic.Distributions.Beta)) ||
-                type.Equals(typeof(Microsoft.ML.Probabilistic.Distributions.Dirichlet)) ||
-                type.Equals(typeof(Microsoft.ML.Probabilistic.Distributions.Discrete)) ||
-                type.Equals(typeof(Microsoft.ML.Probabilistic.Distributions.DiscreteChar)) ||
-                (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Microsoft.ML.Probabilistic.Distributions.DiscreteEnum<>)));
+            return type.Equals(typeof(Distributions.Bernoulli)) ||
+                type.Equals(typeof(Distributions.Beta)) ||
+                type.Equals(typeof(Distributions.Dirichlet)) ||
+                type.Equals(typeof(Distributions.Discrete)) ||
+                type.Equals(typeof(Distributions.DiscreteChar)) ||
+                (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Distributions.DiscreteEnum<>)));
         }
 
         /// <summary>
@@ -1128,8 +1137,8 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         conversionOptions.AllowImplicitConversions = true;
                         conversionOptions.IsImplicitConversion = delegate (Type fromType, Type toType)
                             {
-                                bool isDomainType = Microsoft.ML.Probabilistic.Distributions.Distribution.IsDistributionType(toType) &&
-                                                    Microsoft.ML.Probabilistic.Distributions.Distribution.GetDomainType(toType).IsAssignableFrom(fromType);
+                                bool isDomainType = Distributions.Distribution.IsDistributionType(toType) &&
+                                                    Distributions.Distribution.GetDomainType(toType).IsAssignableFrom(fromType);
                                 if (isDomainType)
                                 {
                                     MethodInfo pointMassMethod = GetPointMassMethod(toType, fromType);
