@@ -131,13 +131,13 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
-        /// Test a model where inference fails due to incorrect initial messages.
+        /// Test a model where inference can fail due to incorrect initial messages.
+        /// Failure only happens when ProductOp throws on uniform inputs.
         /// Fails with "The distribution is improper" because Team1Perf_uses_F is uniform.
-        /// This happens because skill_uses_F[player][gameOfPlayer-1][0] is not updated in the loop where it is used.
-        /// This is the same bug that affects ChainInitializationTest.
+        /// This happens because skill_uses_F[player][gameOfPlayer][1] is uniform for gameOfPlayer>0,
+        /// due to never being initialized in the initialization schedule.
         /// </summary>
         [Fact]
-        [Trait("Category", "OpenBug")]
         public void TrueSkill2Test()
         {
             var performancePrecision = Variable.GammaFromMeanAndVariance(1, 1e-3);

@@ -81,14 +81,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            //new GateModelTests().CaseLoopIndexTest2(); // Fails because states_i_0__F is uniform due to cyclic dependence on itself
-            new InferTests().PartiallyUniformArrayTest2();
-            //new SerialTests().SimplestBackwardChainTest();
-            //new SerialTests().TrueSkill2Test();
-            // Fail because of MarginalIncrement cycle
-            //new InferTests().InitialiseGetItemsTest(); 
-            //new BayesPointMachineTests().FactorizedBayesPointEvidence();
-            //new GateModelTests().MixtureOfThreeGaussians();
 
             if (false)
             {

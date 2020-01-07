@@ -205,6 +205,12 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             }
         }
 
+        /// <summary>
+        /// Wraps an array-typed expression to indicate that all elements of the array are used except at the given index.
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public static ListType AllExcept<ListType, IndexType>(ListType list, IndexType index)
         {
             return list;
@@ -216,11 +222,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         }
 
         /// <summary>
-        /// Wraps an array-typed expression to indicate that at least one element of the array is non-uniform.
+        /// Wraps an array-typed expression to indicate that all elements of the array are non-uniform.
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static object AnyItem(object list)
+        public static object All(object list)
         {
             return list;
         }
@@ -365,7 +371,11 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     if (parameter.IsDefined(typeof(SkipIfAnyUniformAttribute), false)
                         )
                     {
-                        info.Add(DependencyType.SkipIfUniform, dependencySt);
+                        Type t = dependency.GetExpressionType();
+                        IExpression requirement = Util.IsIList(t)
+                                                  ? Builder.StaticMethod(new Func<object, object>(FactorManager.All), dependency)
+                                                  : dependency;
+                        info.Add(DependencyType.SkipIfUniform, Builder.ExprStatement(requirement));
                     }
                     else if (parameter.IsDefined(typeof(SkipIfAllUniformAttribute), false)
                              || parameter.IsDefined(typeof(SkipIfUniformAttribute), false)
@@ -373,12 +383,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                              || parameter.IsDefined(typeof(IsReturnedInEveryElementAttribute), false)
                         )
                     {
-                        Type t = dependency.GetExpressionType();
-                        IExpression requirement = Util.IsIList(t)
-                                                  ? Builder.StaticMethod(new Func<object, object>(FactorManager.AnyItem), dependency)
-                                                  : dependency;
-                        //requirement = Builder.StaticMethod(new Func<object, object>(FactorManager.AnyItem), dependency);
-                        info.Add(DependencyType.SkipIfUniform, Builder.ExprStatement(requirement));
+                        info.Add(DependencyType.SkipIfUniform, dependencySt);
                     }
                     else
                     {
@@ -399,6 +404,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                 new Func<PlaceHolder, PlaceHolder, PlaceHolder>(FactorManager.AllExcept<PlaceHolder, PlaceHolder>),
                                 new Type[] { parameter.ParameterType, indexParameter.ParameterType },
                                 paramRef, resultIndex);
+                            requirement = Builder.StaticMethod(new Func<object, object>(FactorManager.All), requirement);
                             info.Add(DependencyType.SkipIfUniform, Builder.ExprStatement(requirement));
                         }
                         else if (parameter.IsDefined(typeof(SkipIfAllExceptIndexAreUniformAttribute), false))
@@ -410,8 +416,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                                 new Func<PlaceHolder, PlaceHolder, PlaceHolder>(FactorManager.AllExcept<PlaceHolder, PlaceHolder>),
                                 new Type[] { parameter.ParameterType, indexParameter.ParameterType },
                                 paramRef, resultIndex);
-                            //requirement = Builder.ArrayIndex(requirement, new Any());
-                            requirement = Builder.StaticMethod(new Func<object, object>(FactorManager.AnyItem), requirement);
                             info.Add(DependencyType.SkipIfUniform, Builder.ExprStatement(requirement));
                         }
                     }
@@ -495,10 +499,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                         Type t = dependency.GetExpressionType();
                         if (!t.IsPrimitive)
                         {
-                            IExpression message = Util.IsIList(t)
-                                                  ? Builder.StaticMethod(new Func<object, object>(FactorManager.AnyItem), dependency)
-                                                  : dependency;
-                            messages.Add(message);
+                            messages.Add(dependency);
                         }
                     }
                     IExpression requirement = Builder.StaticMethod(new Func<object[], object>(FactorManager.Any), messages.ToArray());
