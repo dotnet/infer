@@ -885,6 +885,40 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         /// <summary>
+        /// Tests whether StringAutomaton.UnlimitedStatesComputation.CheckStateCount() works as expected
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void CheckStateCount()
+        {
+            using (var unlimited = new StringAutomaton.UnlimitedStatesComputation())
+            {
+                var builder = new StringAutomaton.Builder();
+                var state = builder.Start;
+
+                for (var i = 1; i < 200000; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                var automaton = builder.GetAutomaton();
+
+                // Fine, because 200k < default limit
+                unlimited.CheckStateCount(automaton);
+
+                for (var i = 1; i < 200000; ++i)
+                {
+                    state = state.AddTransition('a', Weight.One);
+                }
+
+                automaton = builder.GetAutomaton();
+
+                // Not fine anymore, automaton (with 400k states) is over the default limit
+                Assert.Throws<AutomatonTooLargeException>(() => unlimited.CheckStateCount(automaton));
+            }
+        }
+
+        /// <summary>
         /// Tests creating an automaton from state and transition lists.
         /// </summary>
         [Fact]
