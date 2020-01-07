@@ -2634,14 +2634,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public class UnlimitedStatesComputation : IDisposable
         {
-            private readonly int originalMaxStateCount;
+            private readonly int originalThreadMaxStateCount;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="UnlimitedStatesComputation"/> class.
             /// </summary>
             public UnlimitedStatesComputation()
             {
-                originalMaxStateCount = threadMaxStateCountOverride;
+                this.originalThreadMaxStateCount = threadMaxStateCountOverride;
                 threadMaxStateCountOverride = int.MaxValue;
             }
 
@@ -2650,15 +2650,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public void CheckStateCount(TThis automaton)
             {
-                if (automaton.States.Count > originalMaxStateCount)
+                var limit = this.originalThreadMaxStateCount != 0
+                    ? this.originalThreadMaxStateCount
+                    : maxStateCount;
+                if (automaton.States.Count > limit)
                 {
-                    throw new AutomatonTooLargeException(originalMaxStateCount);
+                    throw new AutomatonTooLargeException(limit);
                 }
             }
 
             public void Dispose()
             {
-                threadMaxStateCountOverride = originalMaxStateCount;
+                threadMaxStateCountOverride = this.originalThreadMaxStateCount;
             }
         }
         #endregion
