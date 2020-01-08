@@ -557,7 +557,6 @@ namespace Microsoft.ML.Probabilistic.Tests
             // We achieve this by putting non-normalized character distributions on the edges. The
             // StringDistribution is unaware that these are non-normalized.
             // The StringDistribution itself is non-normalizable.
-
             const double TargetProb1 = 0.05;
             const double Ratio1 = 0.4;
             const double TargetProb2 = TargetProb1 * Ratio1;
@@ -580,12 +579,19 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var charDistUpper = DiscreteChar.Upper();
             var charDistLower = DiscreteChar.Lower();
+            var charDistUpperNarrow = DiscreteChar.OneOf('A', 'B');
+            var charDistLowerNarrow = DiscreteChar.OneOf('a', 'b');
+            var charDistUpperScaled = DiscreteChar.Uniform();
+            var charDistLowerScaled1 = DiscreteChar.Uniform();
+            var charDistLowerScaled2 = DiscreteChar.Uniform();
+            var charDistLowerScaled3 = DiscreteChar.Uniform();
+            var charDistLowerScaledEnd = DiscreteChar.Uniform();
 
-            var charDistUpperScaled = DiscreteChar.CreateScaled(charDistUpper, TargetProb1);
-            var charDistLowerScaled1 = DiscreteChar.CreateScaled(charDistLower, Ratio1);
-            var charDistLowerScaled2 = DiscreteChar.CreateScaled(charDistLower, Ratio2);
-            var charDistLowerScaled3 = DiscreteChar.CreateScaled(charDistLower, Ratio3);
-            var charDistLowerScaledEnd = DiscreteChar.CreateScaled(charDistLower, Ratio4);
+            charDistUpperScaled.SetToPartialUniformOf(charDistUpper, Math.Log(TargetProb1));
+            charDistLowerScaled1.SetToPartialUniformOf(charDistLower, Math.Log(Ratio1));
+            charDistLowerScaled2.SetToPartialUniformOf(charDistLower, Math.Log(Ratio2));
+            charDistLowerScaled3.SetToPartialUniformOf(charDistLower, Math.Log(Ratio3));
+            charDistLowerScaledEnd.SetToPartialUniformOf(charDistLower, Math.Log(Ratio4));
 
             var wordModel = StringDistribution.Concatenate(
                 new List<DiscreteChar>
@@ -605,23 +611,61 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             const string Word = "Abcdefghij";
 
-            const double Eps = 1e-10;
+            const double Eps = 1e-5;
+            var broadDist = StringDistribution.Char(charDistUpper);
+            var narrowDist = StringDistribution.Char(charDistUpperNarrow);
+            var narrowWord = "A";
+            var expectedProbForNarrow = 0.5;
             for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
             {
                 var currentWord = Word.Substring(0, i + 1);
                 var probCurrentWord = Math.Exp(wordModel.GetLogProb(currentWord));
                 Assert.Equal(targetProbabilitiesPerLength[i], probCurrentWord, Eps);
+
+                var logAvg = Math.Exp(wordModel.GetLogAverageOf(broadDist));
+                Assert.Equal(targetProbabilitiesPerLength[i], logAvg, Eps);
+
+                var prod = StringDistribution.Zero();
+                prod.SetToProduct(broadDist, wordModel);
+                Xunit.Assert.True(prod.GetWorkspaceOrPoint().HasElementLogValueOverrides);
+                probCurrentWord = Math.Exp(prod.GetLogProb(currentWord));
+                Assert.Equal(targetProbabilitiesPerLength[i], probCurrentWord, Eps);
+
+                prod.SetToProduct(narrowDist, wordModel);
+                Xunit.Assert.False(prod.GetWorkspaceOrPoint().HasElementLogValueOverrides);
+                var probNarrowWord = Math.Exp(prod.GetLogProb(narrowWord));
+                Assert.Equal(expectedProbForNarrow, probNarrowWord, Eps);
+
+                broadDist = broadDist.Append(charDistLower);
+                narrowDist = narrowDist.Append(charDistLowerNarrow);
+                narrowWord += "a";
+                expectedProbForNarrow *= 0.5;
             }
 
-            var convergedWordModel = StringDistribution.Converge(wordModel);
-
-            // Check that properties of word model hold after applying converger.
+            // Copied model
+            var copiedModel = StringDistribution.FromWorkspace(StringTransducer.Copy().ProjectSource(wordModel.GetWorkspaceOrPoint()));
+            // Under transducer.
             for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
             {
                 var currentWord = Word.Substring(0, i + 1);
-                var probCurrentWord = Math.Exp(convergedWordModel.GetLogProb(currentWord));
-                Xunit.Assert.True(targetProbabilitiesPerLength[i] > probCurrentWord);
-                Xunit.Assert.True(probCurrentWord > 0.8 * targetProbabilitiesPerLength[i]);
+                var probCurrentWord = Math.Exp(copiedModel.GetLogProb(currentWord));
+                Assert.Equal(targetProbabilitiesPerLength[i], probCurrentWord, Eps);
+            }
+
+            // Rescaled model
+            var scale = 0.5;
+            var newTargetProb1 = TargetProb1 * scale;
+            var charDistUpperScaled1 = DiscreteChar.Uniform();
+            charDistUpperScaled1.SetToPartialUniformOf(charDistUpper, Math.Log(newTargetProb1));
+            var reWeightingTransducer =
+                StringTransducer.Replace(StringDistribution.Char(charDistUpper).GetWorkspaceOrPoint(), StringDistribution.Char(charDistUpperScaled1).GetWorkspaceOrPoint())
+                    .Append(StringTransducer.Copy());
+            var reWeightedWordModel = StringDistribution.FromWorkspace(reWeightingTransducer.ProjectSource(wordModel.GetWorkspaceOrPoint()));
+            for (var i = 0; i < targetProbabilitiesPerLength.Length; i++)
+            {
+                var currentWord = Word.Substring(0, i + 1);
+                var probCurrentWord = Math.Exp(reWeightedWordModel.GetLogProb(currentWord));
+                Assert.Equal(scale * targetProbabilitiesPerLength[i], probCurrentWord, Eps);
             }
         }
 

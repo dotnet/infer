@@ -4,6 +4,7 @@
 
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.ML.Probabilistic.Math;
+using Microsoft.ML.Probabilistic.Utilities;
 
 namespace Microsoft.ML.Probabilistic.Tests
 {
@@ -139,19 +140,20 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void ScaledDistribution()
+        public void PartialUniformWithLogProbabilityOverride()
         {
             var dist = DiscreteChar.LetterOrDigit();
             var probLetter = Math.Exp(dist.GetLogProb('j'));
             var probNumber = Math.Exp(dist.GetLogProb('5'));
 
-            var maximumProbability = 0.7;
-            var scaledDist = DiscreteChar.CreateScaled(dist, maximumProbability);
-            var scaledProbLetter = Math.Exp(scaledDist.GetLogProb('j'));
-            var scaledProbNumber = Math.Exp(scaledDist.GetLogProb('5'));
+            var logProbabilityOverride = Math.Log(0.7);
+            var scaledDist = DiscreteChar.Uniform();
+            scaledDist.SetToPartialUniformOf(dist, logProbabilityOverride);
+            var scaledLogProbLetter = scaledDist.GetLogProb('j');
+            var scaledLogProbNumber = scaledDist.GetLogProb('5');
 
-            Assert.Equal(scaledProbLetter, maximumProbability, Eps);
-            Assert.Equal(scaledProbNumber, maximumProbability, Eps);
+            Assert.Equal(scaledLogProbLetter, logProbabilityOverride, Eps);
+            Assert.Equal(scaledLogProbNumber, logProbabilityOverride, Eps);
 
             // Check that cache has not been compromised.
             Assert.Equal(probLetter, Math.Exp(dist.GetLogProb('j')), Eps);
@@ -160,15 +162,83 @@ namespace Microsoft.ML.Probabilistic.Tests
             // Check that an exception is thrown if a bad maximumProbability is passed down.
             Xunit.Assert.Throws<ArgumentException>(() =>
             {
-                var badProbability = 1.2;
-                DiscreteChar.CreateScaled(dist, badProbability);
+                var badDist = DiscreteChar.Uniform();
+                badDist.SetToPartialUniformOf(dist, Math.Log(1.2));
             });
+        }
 
-            Xunit.Assert.Throws<ArgumentException>(() =>
+        [Fact]
+        public void BroadAndNarrow()
+        {
+            var dist1 = DiscreteChar.Digit();
+            Xunit.Assert.True(dist1.IsBroad);
+
+            var dist2 = DiscreteChar.OneOf('1', '3', '5', '6');
+            Xunit.Assert.False(dist2.IsBroad);
+        }
+
+        [Fact]
+        public void HasLogOverride()
+        {
+            var dist1 = DiscreteChar.LetterOrDigit();
+            Xunit.Assert.False(dist1.HasLogProbabilityOverride);
+
+            dist1.SetToPartialUniformOf(dist1, Math.Log(0.9));
+            Xunit.Assert.True(dist1.HasLogProbabilityOverride);
+        }
+
+        [Fact]
+        public void ProductWithLogOverrideBroad()
+        {
+            for (var i = 0; i < 2; i++)
             {
-                var badProbability = -0.2;
-                DiscreteChar.CreateScaled(dist, badProbability);
-            });
+                var dist1 = DiscreteChar.LetterOrDigit();
+                var dist2 = DiscreteChar.Digit();
+
+                var logOverrideProbability = Math.Log(0.9);
+                dist1.SetToPartialUniformOf(dist1, logOverrideProbability);
+                Xunit.Assert.True(dist1.HasLogProbabilityOverride);
+                Xunit.Assert.True(dist2.IsBroad);
+
+                if (i == 1)
+                {
+                    Util.Swap(ref dist1, ref dist2);
+                }
+
+                var dist3 = DiscreteChar.Uniform();
+                dist3.SetToProduct(dist1, dist2);
+
+                Xunit.Assert.True(dist3.HasLogProbabilityOverride);
+                Assert.Equal(logOverrideProbability, dist3.GetLogProb('5'), Eps);
+                Xunit.Assert.True(double.IsNegativeInfinity(dist3.GetLogProb('a')));
+            }
+        }
+
+        [Fact]
+        public void ProductWithLogOverrideNarrow()
+        {
+            for (var i = 0; i < 2; i++)
+            {
+                var dist1 = DiscreteChar.LetterOrDigit();
+                var dist2 = DiscreteChar.OneOf('1', '3', '5', '6');
+
+                var logOverrideProbability = Math.Log(0.9);
+                dist1.SetToPartialUniformOf(dist1, logOverrideProbability);
+                Xunit.Assert.True(dist1.HasLogProbabilityOverride);
+                Xunit.Assert.False(dist2.IsBroad);
+
+                if (i == 1)
+                {
+                    Util.Swap(ref dist1, ref dist2);
+                }
+
+                var dist3 = DiscreteChar.Uniform();
+                dist3.SetToProduct(dist1, dist2);
+
+                Xunit.Assert.False(dist3.HasLogProbabilityOverride);
+                Assert.Equal(Math.Log(0.25), dist3.GetLogProb('5'), Eps);
+                Xunit.Assert.True(double.IsNegativeInfinity(dist3.GetLogProb('a')));
+            }
         }
 
         /// <summary>
@@ -178,7 +248,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         /// <param name="distribution">The distribution.</param>
         /// <param name="included">A list of characters that must be included in the support of the distribution.</param>
         /// <param name="excluded">A list of characters that must not be included in the support of the distribution.</param>
-            private static void TestSupport(
+        private static void TestSupport(
             string distributionName,
             DiscreteChar distribution,
             IEnumerable<char> included,
@@ -188,12 +258,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             
             foreach (var ch in included)
             {
-                Assert.True(!double.IsNegativeInfinity(distribution.GetLogProb(ch)), distribution + " should contain " + ch);
+                Xunit.Assert.True(!double.IsNegativeInfinity(distribution.GetLogProb(ch)), distribution + " should contain " + ch);
             }
             
             foreach (var ch in excluded)
             {
-                Assert.True(double.IsNegativeInfinity(distribution.GetLogProb(ch)), distribution + " should not contain " + ch);
+                Xunit.Assert.True(double.IsNegativeInfinity(distribution.GetLogProb(ch)), distribution + " should not contain " + ch);
             }
         }
     }
