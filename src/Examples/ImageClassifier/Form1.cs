@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
@@ -138,7 +139,7 @@ namespace ImageClassifier
                 Vector v = Vector.Zero(entries.Length - 1);
                 for (int i = 0; i < v.Count; i++)
                 {
-                    v[i] = double.Parse(entries[i + 1]);
+                    v[i] = double.Parse(entries[i + 1], CultureInfo.InvariantCulture);
                 }
 
                 result.Add(v);

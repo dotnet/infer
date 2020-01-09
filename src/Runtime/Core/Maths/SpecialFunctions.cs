@@ -1059,7 +1059,7 @@ namespace Microsoft.ML.Probabilistic.Math
         /// <returns></returns>
         public static double ChooseLn(double n, double k)
         {
-            if (k < 0 || k > n)
+            if (k <= -1 || k >= n+1)
                 return Double.NegativeInfinity;
             return GammaLn(n + 1) - GammaLn(k + 1) - GammaLn(n - k + 1);
         }
