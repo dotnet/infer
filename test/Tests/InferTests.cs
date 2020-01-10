@@ -4256,29 +4256,45 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void InferObservedDiscreteTest()
         {
-            Variable<int> b = Variable.Discrete(0.1, 0.2, 0.3, 0.4).Named("b");
-            b.ObservedValue = 2;
-
-            InferenceEngine engine = new InferenceEngine();
-            Discrete bActual = engine.Infer<Discrete>(b);
-            Discrete bExpected = Discrete.PointMass(b.ObservedValue, 4);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-            Assert.Equal(bActual, bExpected);
+            foreach (bool readOnly in new[] { true, false, true })
+            {
+                foreach (bool useCompiledAlgorithm in new[] { false, true })
+                {
+                    InferObservedDiscrete(readOnly, useCompiledAlgorithm);
+                }
+            }
         }
 
-        [Fact]
-        public void InferObservedDiscreteTest2()
+        private void InferObservedDiscrete(bool readOnly, bool useCompiledAlgorithm)
         {
             Variable<int> b = Variable.Discrete(0.1, 0.2, 0.3, 0.4).Named("b");
             b.ObservedValue = 2;
+            b.IsReadOnly = readOnly;
+            b.AddAttribute(QueryTypes.Marginal);
+            b.AddAttribute(QueryTypes.MarginalDividedByPrior);
 
             InferenceEngine engine = new InferenceEngine();
-            IGeneratedAlgorithm gen = engine.GetCompiledInferenceAlgorithm(b);
-            gen.Execute(10);
-            Discrete bActual = gen.Marginal<Discrete>(b.NameInGeneratedCode);
+            Discrete bActual;
+            Discrete marginalDividedByPrior;
+            if (useCompiledAlgorithm)
+            {
+                IGeneratedAlgorithm gen = engine.GetCompiledInferenceAlgorithm(b);
+                gen.Execute(10);
+                bActual = gen.Marginal<Discrete>(b.NameInGeneratedCode);
+                marginalDividedByPrior = gen.Marginal<Discrete>(b.NameInGeneratedCode, QueryTypes.MarginalDividedByPrior.Name);
+            }
+            else
+            {
+                bActual = engine.Infer<Discrete>(b);
+                marginalDividedByPrior = engine.Infer<Discrete>(b, QueryTypes.MarginalDividedByPrior);
+            }
             Discrete bExpected = Discrete.PointMass(b.ObservedValue, 4);
-            Console.WriteLine("b = {0} should be {1}", bActual, bExpected);
-            Assert.Equal(bActual, bExpected);
+            Discrete marginalDividedByPriorExpected = Discrete.Uniform(4);
+            Console.WriteLine($"b = {bActual} should be {bExpected}");
+            Console.WriteLine($"marginalDividedByPrior = {marginalDividedByPrior} should be {marginalDividedByPriorExpected}");
+            Assert.Equal(bExpected, bActual);
+            if(!readOnly)
+                Assert.Equal(marginalDividedByPriorExpected, marginalDividedByPrior);
         }
 
         [Fact]

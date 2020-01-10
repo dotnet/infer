@@ -126,6 +126,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             Discrete thatd = that as Discrete;
             if (thatd == null) return Double.PositiveInfinity;
+            if (IsPointMass) return (thatd.IsPointMass && thatd.Point == this.Point) ? 0.0 : double.PositiveInfinity;
             return prob.MaxDiff(thatd.prob); // assumes that PointMass representation is unique
         }
 

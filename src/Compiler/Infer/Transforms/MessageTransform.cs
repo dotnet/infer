@@ -139,9 +139,9 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
         /// <summary>
         /// Adds statements to declare and set the marginal of an inferred constant variable or method parameter.
         /// </summary>
-        /// <param name="decl"></param>
-        /// <param name="varRef"></param>
-        /// <param name="outputs"></param>
+        /// <param name="decl">The variable's declaration</param>
+        /// <param name="varRef">A reference to the variable, for use in expressions</param>
+        /// <param name="outputs">Receives the new statements</param>
         private void AddMarginalStatements(object decl, IExpression varRef, IList<IStatement> outputs)
         {
             if (!context.InputAttributes.Has<IsInferred>(decl)) return;
@@ -164,13 +164,17 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 Error(ex.Message, ex);
                 return;
             }
+            IVariableDeclaration uniformDecl = Builder.VarDecl(vi.Name + "_uniform", messageType);
+            VariableInformation uniformVarInfo = new VariableInformation(uniformDecl);
+            context.OutputAttributes.Set(uniformDecl, uniformVarInfo);
             IVariableDeclaration marginalDecl = Builder.VarDecl(vi.Name + "_marginal", messageType);
-            VariableInformation vi2 = new VariableInformation(marginalDecl);
-            context.OutputAttributes.Set(marginalDecl, vi2);
+            VariableInformation marginalVarInfo = new VariableInformation(marginalDecl);
+            context.OutputAttributes.Set(marginalDecl, marginalVarInfo);
             bool isPointMass = (messageType.Name == typeof(PointMass<>).Name);
             if (isPointMass)
             {
                 IObjectCreateExpression ioce = Builder.NewObject(messageType, varRef);
+                outputs.Add(Builder.AssignStmt(Builder.VarDeclExpr(uniformDecl), ioce));
                 outputs.Add(Builder.AssignStmt(Builder.VarDeclExpr(marginalDecl), ioce));
             }
             else
@@ -180,11 +184,14 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 {
                     vi.DefineSizesUpToDepth(context, arrayDepth);
                     vi.DefineIndexVarsUpToDepth(context, arrayDepth);
-                    vi2.sizes.AddRange(vi.sizes);
-                    vi2.indexVars.AddRange(vi.indexVars);
+                    marginalVarInfo.sizes.AddRange(vi.sizes);
+                    marginalVarInfo.indexVars.AddRange(vi.indexVars);
                 }
-                IExpression messageExpr = GetDistributionArrayCreateExpression(vi.varType, domainType, uniformExpr, vi2);
+                IExpression messageExpr = GetDistributionArrayCreateExpression(vi.varType, domainType, uniformExpr, marginalVarInfo);
                 // Distribution.SetPoint<mpe.ExprType,ipd.ParameterType>(ArrayHelper.MakeUniform(mpe), ipd)
+                IStatement uniformSt = Builder.AssignStmt(Builder.VarDeclExpr(uniformDecl), messageExpr);
+                //context.OutputAttributes.Set(initSt, new Initializer());
+                outputs.Add(uniformSt);
                 IStatement initSt = Builder.AssignStmt(Builder.VarDeclExpr(marginalDecl), messageExpr);
                 context.OutputAttributes.Set(initSt, new Initializer());
                 outputs.Add(initSt);
@@ -195,11 +202,20 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                 //context.OutputAttributes.Set(assignSt, new OperatorMethod());
                 outputs.Add(assignSt);
             }
-            MessageArrayInformation mai = new MessageArrayInformation();
-            mai.decl = marginalDecl;
-            mai.ci = ChannelInfo.UseChannel(vi);
-            context.InputAttributes.Set(decl, mai);
-            context.InputAttributes.Set(marginalDecl, mai);
+            // Attach an attribute to be used by ConvertInfer
+            var ci = ChannelInfo.UseChannel(vi);
+            MessageArrayInformation uniformMai = new MessageArrayInformation();
+            uniformMai.decl = uniformDecl;
+            uniformMai.ci = ci;
+            MessageArrayInformation marginalMai = new MessageArrayInformation();
+            marginalMai.decl = marginalDecl;
+            marginalMai.ci = ci;
+            ChannelToMessageInfo ctmi = new ChannelToMessageInfo();
+            ctmi.fwd = marginalMai;
+            ctmi.bck = uniformMai;
+            context.InputAttributes.Set(decl, ctmi);
+            context.InputAttributes.Set(uniformDecl, uniformMai);
+            context.InputAttributes.Set(marginalDecl, marginalMai);
         }
 
         protected override void DoConvertMethodBody(IList<IStatement> outputs, IList<IStatement> inputs)
@@ -1316,13 +1332,10 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     ExpressionEvaluator eval = new ExpressionEvaluator();
                     query = (QueryType)eval.Evaluate(mie.Arguments[2]);
                 }
-                MessageArrayInformation mai = context.InputAttributes.Get<MessageArrayInformation>(decl);
-                if (mai != null) mie.Arguments[0] = Builder.VarRefExpr(mai.decl);
-                else if (decl is IVariableDeclaration)
-                {
-                    MessageDirection direction = (query == QueryTypes.MarginalDividedByPrior) ? MessageDirection.Backwards : MessageDirection.Forwards;
-                    mie.Arguments[0] = GetMessageExpression(imie.Arguments[0], direction);
-                }
+                ChannelToMessageInfo ctmi = context.InputAttributes.Get<ChannelToMessageInfo>(decl);
+                MessageDirection direction = (query == QueryTypes.MarginalDividedByPrior) ? MessageDirection.Backwards : MessageDirection.Forwards;
+                MessageArrayInformation mai = (direction == MessageDirection.Backwards) ? ctmi.bck : ctmi.fwd;
+                mie.Arguments[0] = Builder.VarRefExpr(mai.decl);
                 ChannelInfo ci = context.InputAttributes.Get<ChannelInfo>(decl);
                 if (mie.Arguments.Count == 1)
                 {
@@ -1331,17 +1344,6 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     else varName = ((IVariableDeclaration)decl).Name;
                     if (ci != null) varName = ci.varInfo.Name;
                     mie.Arguments.Add(Builder.LiteralExpr(varName));
-                }
-                else if (ci == null && query != null)
-                {
-                    // if the variable is constant, remove all queries except Marginal
-                    if (query != QueryTypes.Marginal)
-                        return null;
-                    else
-                    {
-                        // must change to 2-argument version so that path is null in IterativeProcessTransform.ConvertInfer
-                        mie = Builder.StaticMethod(new Action<object, string>(InferNet.Infer), mie.Arguments[0], mie.Arguments[1]);
-                    }
                 }
             }
             IVariableDeclaration ivd = Recognizer.GetVariableDeclaration(mie.Arguments[0]);
