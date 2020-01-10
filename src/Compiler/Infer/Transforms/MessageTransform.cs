@@ -213,7 +213,7 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
             ChannelToMessageInfo ctmi = new ChannelToMessageInfo();
             ctmi.fwd = marginalMai;
             ctmi.bck = uniformMai;
-            context.InputAttributes.Set(decl, ctmi);
+            context.InputAttributes.Set(decl, new ObservedVariableMessages(ctmi));
             context.InputAttributes.Set(uniformDecl, uniformMai);
             context.InputAttributes.Set(marginalDecl, marginalMai);
         }
@@ -1333,15 +1333,22 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
                     query = (QueryType)eval.Evaluate(mie.Arguments[2]);
                 }
                 ChannelToMessageInfo ctmi = context.InputAttributes.Get<ChannelToMessageInfo>(decl);
-                MessageDirection direction = (query == QueryTypes.MarginalDividedByPrior) ? MessageDirection.Backwards : MessageDirection.Forwards;
-                MessageArrayInformation mai = (direction == MessageDirection.Backwards) ? ctmi.bck : ctmi.fwd;
-                mie.Arguments[0] = Builder.VarRefExpr(mai.decl);
-                ChannelInfo ci = context.InputAttributes.Get<ChannelInfo>(decl);
+                if (ctmi == null)
+                {
+                    ctmi = context.InputAttributes.Get<ObservedVariableMessages>(decl)?.ctmi;
+                }
+                if (ctmi != null)
+                {
+                    MessageDirection direction = (query == QueryTypes.MarginalDividedByPrior) ? MessageDirection.Backwards : MessageDirection.Forwards;
+                    MessageArrayInformation mai = (direction == MessageDirection.Backwards) ? ctmi.bck : ctmi.fwd;
+                    mie.Arguments[0] = Builder.VarRefExpr(mai.decl);
+                }
                 if (mie.Arguments.Count == 1)
                 {
                     string varName;
                     if (decl is IParameterDeclaration) varName = ((IParameterDeclaration)decl).Name;
                     else varName = ((IVariableDeclaration)decl).Name;
+                    ChannelInfo ci = context.InputAttributes.Get<ChannelInfo>(decl);
                     if (ci != null) varName = ci.varInfo.Name;
                     mie.Arguments.Add(Builder.LiteralExpr(varName));
                 }
@@ -2577,7 +2584,22 @@ namespace Microsoft.ML.Probabilistic.Compiler.Transforms
 
             public override string ToString()
             {
-                return String.Format("ChannelToMessageInfo fwd = {0}, bck = {1}", fwd, bck);
+                return $"ChannelToMessageInfo fwd = {fwd}, bck = {bck}";
+            }
+        }
+
+        private class ObservedVariableMessages : ICompilerAttribute
+        {
+            internal readonly ChannelToMessageInfo ctmi;
+
+            internal ObservedVariableMessages(ChannelToMessageInfo ctmi)
+            {
+                this.ctmi = ctmi;
+            }
+
+            public override string ToString()
+            {
+                return $"ObservedVariableMessages {ctmi}";
             }
         }
 
