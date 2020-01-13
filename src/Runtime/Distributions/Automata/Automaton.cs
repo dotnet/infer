@@ -144,20 +144,6 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// a need to override the actual automaton value. 
         /// </remarks>
         public double? LogValueOverride { get; set; }
-        
-        /// <summary>
-        /// Whether there are log value overrides at the element level.
-        /// </summary>
-        public bool HasElementLogValueOverrides
-        {
-            get
-            {
-                return this.States.transitions.Any(
-                    trans => trans.ElementDistribution.HasValue &&
-                             trans.ElementDistribution.Value is IDistribution<char> distOverChar &&
-                             distOverChar is DiscreteChar discreteChar && discreteChar.HasLogProbabilityOverride);
-            }
-        }
 
         /// <summary>
         /// Gets or sets a value for truncating small weights.

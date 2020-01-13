@@ -10,6 +10,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// Represents a weighted finite state automaton defined on <see cref="string"/>.
@@ -19,6 +20,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     {
         public StringAutomaton()
         {
+        }
+        
+        /// <summary>
+        /// Whether there are log value overrides at the element level.
+        /// </summary>
+        public bool HasElementLogValueOverrides
+        {
+            get
+            {
+                return this.States.transitions.Any(
+                    trans => trans.ElementDistribution.HasValue &&
+                             trans.ElementDistribution.Value.HasLogProbabilityOverride);
+            }
         }
 
         /// <summary>

@@ -195,6 +195,12 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// </summary>
         public bool HasLogProbabilityOverride => this.Data.HasLogProbabilityOverride;
 
+        /// <summary>
+        /// Gets a value for the log probability override if it exists.
+        /// </summary>
+        public double? LogProbabilityOverride =>
+            this.HasLogProbabilityOverride ? this.Ranges.First().Probability.LogValue : (double?)null;
+
         #endregion
 
         #region Distribution properties
@@ -550,13 +556,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
 
             double? logProbabilityOverride = null;
-            if (distribution1.Data.HasLogProbabilityOverride && distribution2.Data.IsBroad)
+            var distribution1LogProbabilityOverride = distribution1.LogProbabilityOverride;
+            var distribution2LogProbabilityOverride = distribution2.LogProbabilityOverride;
+            if (distribution1LogProbabilityOverride.HasValue)
             {
-                logProbabilityOverride = distribution1.Ranges.First().Probability.LogValue;
+                if (distribution2LogProbabilityOverride.HasValue)
+                {
+                    throw new ArgumentException("Only one distribution in a DiscreteChar product may have a log probability override");
+                }
+
+                if (distribution2.IsBroad)
+                {
+                    logProbabilityOverride = distribution1LogProbabilityOverride;
+                }
             }
-            else if (distribution2.Data.HasLogProbabilityOverride && distribution1.Data.IsBroad)
+            else if (distribution2LogProbabilityOverride.HasValue && distribution1.IsBroad)
             {
-                logProbabilityOverride = distribution2.Ranges.First().Probability.LogValue;
+                logProbabilityOverride = distribution2LogProbabilityOverride;
             }
 
             this.Data = builder.GetResult(logProbabilityOverride);
@@ -1443,12 +1459,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
             private string symbolRepresentation;
 
             /// <summary>
-            /// The number of characters with non-zero probability.
-            /// </summary>
-            /// <returns></returns>
-            public int SupportCount { get; private set; }
-
-            /// <summary>
             /// Flags derived from ranges.
             /// </summary>
             /// <returns></returns>
@@ -2119,8 +2129,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 if (logProbabilityOverride.HasValue)
                 {
                     var weight = Weight.FromLogValue(logProbabilityOverride.Value);
-                    var probability = weight.Value;
-                    if (probability > 1)
+                    if (weight.IsZero || weight.Value > 1)
                     {
                         throw new ArgumentException("Invalid log probability override.");
                     }

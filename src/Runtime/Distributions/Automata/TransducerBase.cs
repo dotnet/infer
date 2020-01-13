@@ -347,7 +347,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             // Populate the stack with start destination state
             result.StartStateIndex = CreateDestState(mappingAutomaton.Start, srcAutomaton.Start);
-            var sourceDistributionHasLogProbabilityOverrides = srcAutomaton.HasElementLogValueOverrides;
+            var sourceDistributionHasLogProbabilityOverrides = srcAutomaton is StringAutomaton stringAutomaton && stringAutomaton.HasElementLogValueOverrides;
 
             while (stack.Count > 0)
             {
