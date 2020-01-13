@@ -347,7 +347,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             // Populate the stack with start destination state
             result.StartStateIndex = CreateDestState(mappingAutomaton.Start, srcAutomaton.Start);
-            var sourceDistributionHasLogProbabilityOverrides = srcAutomaton is StringAutomaton stringAutomaton && stringAutomaton.HasElementLogValueOverrides;
+            var stringAutomaton = srcAutomaton as StringAutomaton;
+            var sourceDistributionHasLogProbabilityOverrides = stringAutomaton?.HasElementLogValueOverrides ?? false;
 
             while (stack.Count > 0)
             {
@@ -390,14 +391,16 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                         // In the special case of a log probability override in a DiscreteChar element distribution,
                         // we need to compensate for the fact that the distribution is not normalized.
-                        if (destElementDistribution.HasValue &&
-                            sourceDistributionHasLogProbabilityOverrides &&
-                            srcTransition.ElementDistribution.Value is IDistribution<char> distOverChar && distOverChar is DiscreteChar discreteChar &&
-                            discreteChar.HasLogProbabilityOverride)
+                        if (destElementDistribution.HasValue && sourceDistributionHasLogProbabilityOverrides)
                         {
-                            var totalMass = discreteChar.Ranges.EnumerableSum(rng =>
-                                rng.Probability.Value * (rng.EndExclusive - rng.StartInclusive));
-                            projectionLogScale -= System.Math.Log(totalMass);
+                            var discreteChar =
+                                (DiscreteChar)(IDistribution<char>)srcTransition.ElementDistribution.Value;
+                            if (discreteChar.HasLogProbabilityOverride)
+                            {
+                                var totalMass = discreteChar.Ranges.EnumerableSum(rng =>
+                                    rng.Probability.Value * (rng.EndExclusive - rng.StartInclusive));
+                                projectionLogScale -= System.Math.Log(totalMass);
+                            }
                         }
 
                         var destWeight =
