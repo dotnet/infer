@@ -244,19 +244,37 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Creates a distribution over sequences induced by a given list of distributions over sequence elements.
+        /// Creates a distribution over sequences induced by a given list of distributions over sequence elements
+        /// where the sequence can optionally end at any length, and the last element can optionally repeat without limit.
         /// </summary>
-        /// <param name="sequence">Enumerable of distributions over sequence elements.</param>
+        /// <param name="elementDistributions">Enumerable of distributions over sequence elements and the transition weights.</param>
+        /// <param name="allowEarlyEnd">Allow the sequence to end at any point.</param>
+        /// <param name="repeatLastElement">Repeat the last element.</param>
         /// <returns>The created distribution.</returns>
-        public static TThis Concatenate(IEnumerable<TElementDistribution> sequence)
+        public static TThis Concatenate(IEnumerable<TElementDistribution> elementDistributions, bool allowEarlyEnd = false, bool repeatLastElement = false)
         {
             var result = new Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>.Builder();
             var last = result.Start;
-            foreach (var elem in sequence)
+            var elementDistributionArray = elementDistributions.ToArray();
+            for (var i = 0; i < elementDistributionArray.Length - 1; i++)
             {
-                last = last.AddTransition(elem, Weight.One);
+                last = last.AddTransition(elementDistributionArray[i], Weight.One);
+                if (allowEarlyEnd)
+                {
+                    last.SetEndWeight(Weight.One);
+                }
             }
-            
+
+            var lastElement = elementDistributionArray[elementDistributionArray.Length - 1];
+            if (repeatLastElement)
+            {
+                last.AddSelfTransition(lastElement, Weight.One);
+            }
+            else
+            {
+                last = last.AddTransition(lastElement, Weight.One);
+            }
+
             last.SetEndWeight(Weight.One);
             return FromWorkspace(result.GetAutomaton());
         }
@@ -1600,6 +1618,23 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public bool IsZero()
         {
             return !this.IsPointMass && this.sequenceToWeight.IsZero();
+        }
+
+        /// <summary>
+        /// Converges an improper sequence distribution
+        /// </summary>
+        /// <param name="dist">The original distribution.</param>
+        /// <param name="decayWeight">The decay weight.</param>
+        /// <returns>The converged distribution.</returns>
+        public static TThis Converge(TThis dist, double decayWeight = 0.99)
+        {
+            var converger =
+                Automaton<TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction>
+                    .GetConverger(new TWeightFunction[]
+                    {
+                        dist.sequenceToWeight
+                    }, decayWeight);
+            return dist.Product(FromWorkspace(converger));
         }
 
         /// <summary>
