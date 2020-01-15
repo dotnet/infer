@@ -107,7 +107,12 @@ namespace Microsoft.ML.Probabilistic.Tests
             const int samples = 3;
             const int evaluations = 5000000;
             const double point = 0.5;
-            double targetPerformanceCoefficient = 0.9;
+            double targetPerformanceCoefficient =
+#if NETFULL
+                Environment.Is64BitProcess ? 0.9 : 0.98;
+#else
+                0.9;
+#endif
             Assert.Equal(expMinus1RatioMinus1RatioMinusHalfDelegateBased.Evaluate(point), expMinus1RatioMinus1RatioMinusHalfEnumerableBased.Evaluate(point));
             double delegateBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) expMinus1RatioMinus1RatioMinusHalfDelegateBased.Evaluate(point); }, samples);
             double enumerableBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) expMinus1RatioMinus1RatioMinusHalfEnumerableBased.Evaluate(point); }, samples);
