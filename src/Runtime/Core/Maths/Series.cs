@@ -125,27 +125,35 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
     }
 
     /// <summary>
-    /// Represents a result of a series coefficient generation attempt.
+    /// Represents the state of a series coefficient generation attempt.
+    /// Supposed to be passed by reference to coefficient generator.
     /// </summary>
-    /// <typeparam name="State">A type that represents the state passed between
-    /// the computations of consequitive coefficients</typeparam>
-    struct CoefficientGenerationResult<State>
+    struct CoefficientGenerationState<InnerState>
     {
+        /// <summary>
+        /// Index of the next coefficient to be computed.
+        /// Set by the caller (series evaluator).
+        /// </summary>
+        public int nextIndex;
         /// <summary>
         /// true, if the coefficient was successfully generated,
         /// false, if the series was finite and ended somewhere before the requested coefficient.
+        /// Set by the callee (coefficient generator).
         /// </summary>
         public bool success;
         /// <summary>
         /// value of the computed coefficient, if success == true,
         /// undefined otherwise
+        /// Set by the callee (coefficient generator).
         /// </summary>
         public double coefficient;
         /// <summary>
         /// state that can be used to generate the next coefficient, if success == true,
         /// undefined otherwise
+        /// Initialized to default(InnerState) by the caller (series evaluator),
+        /// afterwards set by the callee (coefficient generator).
         /// </summary>
-        public State newState;
+        public InnerState innerState;
     }
 
     /// <summary>
@@ -158,16 +166,14 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
     /// </summary>
     /// <typeparam name="State">A type that represents the state passed between
     /// the computations of consequitive coefficients</typeparam>
-    /// <param name="index">Index of the target coefficient</param>
-    /// <param name="prevState">A state obtained, while computing coefficient with <paramref name="index" />
-    /// one less than the current one, or default(State) when <paramref name="index" /> == 0. </param>
-    /// <returns>A result of a series coefficient generation attempt.</returns>
+    /// <param name="state">State passed between
+    /// the computations of consequitive coefficients</param>
     /// <remarks>
     /// For small coefficient generation functions, like Series.ExpMinus1Coefficient,
-    /// manually calling this delegate is about 2.5 times faster that using IEnumerable.
+    /// manually calling this delegate is about 15-30% faster that using IEnumerable.
     /// </remarks>
-    delegate CoefficientGenerationResult<State> CoefficientGenerator<State>(int index, State prevState);
-    
+    delegate void CoefficientGenerator<State>(ref CoefficientGenerationState<State> state);
+
     /// <summary>
     /// Represents a mathematical power series of the form c0 + c1*x + c2*x^2 + c3*x^3 + ...
     /// Allows stateful computation of the coefficients.
@@ -183,9 +189,6 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         /// Provides the coefficients in the series, where the constant term is index zero.
         /// A state is expected to be passed between the computations of consequitive coefficients
         /// by the caller.
-        /// When the constant term (index zero) is computed, default(State) is passed to the delegate,
-        /// for a coefficient at index = n, a state obtained when computing the coefficient
-        /// at index = n - 1 is passed.
         /// </param>
         public PowerSeries(CoefficientGenerator<State> coefGenerator)
         {
@@ -194,22 +197,26 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
 
         public double Evaluate(double x)
         {
+            CoefficientGenerationState<State> state;
+            state.nextIndex = 0;
+            state.success = true;
+            state.coefficient = 0.0;
+            state.innerState = default(State);
             double sum = 0.0;
             double term = 1.0;
             double oldSum = double.NaN;
-            int i = 0;
-            var genResult = coefGenerator(0, default(State));
-            while (genResult.success)
+            coefGenerator(ref state);
+            while (state.success)
             {
                 oldSum = sum;
-                if (genResult.coefficient != 0)
+                if (state.coefficient != 0)
                 {
-                    sum += term * genResult.coefficient;
+                    sum += term * state.coefficient;
                     if (sum == oldSum) break;
                 }
-                ++i;
                 term *= x;
-                genResult = coefGenerator(i, genResult.newState);
+                ++state.nextIndex;
+                coefGenerator(ref state);
             }
             return sum;
         }
@@ -282,23 +289,35 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
 
         private static double Log1PlusCoefficient(int n) => n == 0 ? 0.0 : (n % 2 == 0 ? -1.0 : 1.0) / n;
         private static double Log1MinusCoefficient(int n) => n == 0 ? 0.0 : -1.0 / n;
-        private static CoefficientGenerationResult<double> ExpMinus1Coefficient(int n, double prev)
+        public static void ExpMinus1Coefficient(ref CoefficientGenerationState<double> state)
         {
-            if (n == 0)
-                return new CoefficientGenerationResult<double>() { success = true, coefficient = 0.0, newState = 1.0 };
-            double next = prev / n;
-            if (next == 0.0)
-                return new CoefficientGenerationResult<double>() { success = false, coefficient = 0.0, newState = 0.0 };
-            return new CoefficientGenerationResult<double>() { success = true, coefficient = next, newState = next };
+            if (state.nextIndex == 0)
+            {
+                state.success = true;
+                state.coefficient = 0.0;
+                state.innerState = 1.0;
+            }
+            else
+            {
+                state.coefficient = state.innerState / state.nextIndex;
+                state.innerState = state.coefficient;
+                state.success = state.coefficient != 0.0;
+            }
         }
-        private static CoefficientGenerationResult<double> ExpMinus1RatioMinus1RatioMinusHalfCoefficient(int n, double prev)
+        public static void ExpMinus1RatioMinus1RatioMinusHalfCoefficient(ref CoefficientGenerationState<double> state)
         {
-            if (n == 0)
-                return new CoefficientGenerationResult<double>() { success = true, coefficient = 0.0, newState = 1.0 / 2 };
-            double next = prev / (n + 2);
-            if (next == 0.0)
-                return new CoefficientGenerationResult<double>() { success = false, coefficient = 0.0, newState = 0.0 };
-            return new CoefficientGenerationResult<double>() { success = true, coefficient = next, newState = next };
+            if (state.nextIndex == 0)
+            {
+                state.success = true;
+                state.coefficient = 0.0;
+                state.innerState = 0.5;
+            }
+            else
+            {
+                state.coefficient = state.innerState / (state.nextIndex + 2);
+                state.innerState = state.coefficient;
+                state.success = state.coefficient != 0.0;
+            }
         }
 
         #endregion
