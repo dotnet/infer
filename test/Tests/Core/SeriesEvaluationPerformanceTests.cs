@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Microsoft.ML.Probabilistic.Core.Maths;
+using Microsoft.ML.Probabilistic.Math;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -30,7 +31,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     if (coefficient != 0)
                     {
                         sum += term * coefficient;
-                        if (sum == oldSum) break;
+                        if (MMath.AreEqual(sum, oldSum)) break;
                     }
                     term *= x;
                 }

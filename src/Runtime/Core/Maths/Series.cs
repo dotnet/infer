@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.ML.Probabilistic.Math;
 
 namespace Microsoft.ML.Probabilistic.Core.Maths
 {
@@ -117,7 +118,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 if (coefficient != 0)
                 {
                     sum += term * coefficient;
-                    if (sum == oldSum) break;
+                    if (MMath.AreEqual(sum, oldSum)) break;
                 }
             }
             return sum;
@@ -212,7 +213,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
                 if (state.coefficient != 0)
                 {
                     sum += term * state.coefficient;
-                    if (sum == oldSum) break;
+                    if (MMath.AreEqual(sum, oldSum)) break;
                 }
                 term *= x;
                 ++state.nextIndex;
