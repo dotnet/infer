@@ -4,324 +4,259 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.ML.Probabilistic.Math;
+using System.Linq.Expressions;
 
 namespace Microsoft.ML.Probabilistic.Core.Maths
 {
-    /// <summary>
-    /// Represents a truncated power series (effectively, a polynomial) of the form
-    /// c0 + c1*x + c2*x^2 + c3*x^3 + ... + cN*x^N
-    /// </summary>
-    struct TruncatedPowerSeries
+    static class SeriesEvaluatorFactory
     {
         /// <summary>
-        /// Coefficients of the truncated power series.
-        /// Coefficients[k] is the coefficient near x^k, so Coefficients[0] is the constant term.
-        /// </summary>
-        public double[] Coefficients { get; }
-
-        /// <summary>
-        /// Constructs a truncated power series.
+        /// Builds a delegate that evaluates a polynomial of the form
+        /// c0 + c1*x + c2*x^2 + c3*x^3 + ... + cN*x^N
         /// </summary>
         /// <param name="coefficients">
         /// Coefficients of the truncated power series.
         /// <paramref name="coefficients"/>[k] is the coefficient near x^k, so <paramref name="coefficients"/>[0] is the constant term.
         /// </param>
-        public TruncatedPowerSeries(double[] coefficients)
+        /// <returns>Generated and compiled delegate</returns>
+        public static Func<double, double> GetCompiledExpressionPolynomialEvaluator(double[] coefficients)
         {
-            this.Coefficients = coefficients;
+            Expression expr;
+            var x = Expression.Parameter(typeof(double), "x");
+            expr = BuildPolynomialEvaluationExpression(coefficients, x);
+
+            return Expression.Lambda<Func<double, double>>(expr, x).Compile();
         }
 
-        /// <summary>
-        /// Factory function to generate a truncated power series.
-        /// All coefficients of the generated series are computed, when this function is called.
-        /// </summary>
-        /// <param name="length">
-        /// Number of coefficients including the constant term to generate.
-        /// The highest power of x in the resulting series will be (<paramref name="length"/> - 1)
-        /// </param>
-        /// <param name="coefGenerator">
-        /// Provides the coefficients in the series, where the constant term is index zero.
-        /// Coefficients[k] = <paramref name="coefGenerator"/>(k)
-        /// </param>
-        /// <returns>Generated truncated power series.</returns>
-        public static TruncatedPowerSeries Generate(int length, Func<int, double> coefGenerator)
+        private static Expression BuildPolynomialEvaluationExpression(double[] coefficients, ParameterExpression x)
         {
-            double[] coefficients = new double[length];
-            for (int i = 0; i < length; ++i)
-                coefficients[i] = coefGenerator(i);
-
-            return new TruncatedPowerSeries(coefficients);
-        }
-
-        /// <summary>
-        /// Factory function to generate a truncated power series.
-        /// All coefficients of the generated series are computed, when this function is called.
-        /// Coefficients with smaller indexes are used to compute coefficients with bigger indexes.
-        /// </summary>
-        /// <param name="length">
-        /// Number of coefficients including the constant term to generate.
-        /// The highest power of x in the resulting series will be (<paramref name="length"/> - 1)
-        /// </param>
-        /// <param name="coefGenerator">
-        /// Provides the coefficients in the series, where the constant term is index zero.
-        /// The second argument is the coefficients with indexes smaller than that of the coefficient being computed.
-        /// Coefficients[k] = <paramref name="coefGenerator"/>(k, Coefficients[0..k-1])
-        /// </param>
-        /// <returns>Generated truncated power series.</returns>
-        public static TruncatedPowerSeries Generate(int length, Func<int, IList<double>, double> coefGenerator)
-        {
-            List<double> coefficients = new List<double>(length);
-            for (int i = 0; i < length; ++i)
-                coefficients.Add(coefGenerator(i, coefficients));
-
-            return new TruncatedPowerSeries(coefficients.ToArray());
-        }
-
-        public double Evaluate(double x)
-        {
-            double sum = 0.0;
-            for (int k = Coefficients.Length - 1; k > 0; k--)
+            Expression expr;
+            int k = coefficients.Length - 1;
+            while (k >= 0 && coefficients[k] == 0)
+                --k;
+            if (k == -1)
+                expr = Expression.Constant(0.0);
+            else if (k == 0)
+                expr = Expression.Constant(coefficients[0]);
+            else
             {
-                sum = x * (Coefficients[k] + sum);
-            }
-            return sum + Coefficients[0];
-        }
-    }
-
-    /// <summary>
-    /// Represents a mathematical power series of the form c0 + c1*x + c2*x^2 + c3*x^3 + ...
-    /// </summary>
-    struct PowerSeries
-    {
-        readonly Func<int, double> coefGenerator;
-
-        /// <summary>
-        /// Constructs a power series.
-        /// </summary>
-        /// <param name="coefGenerator">Provides the coefficients in the series, where the constant term is index zero. 
-        /// Every zero coefficient must eventually be followed by a nonzero coefficient.</param>
-        public PowerSeries(Func<int, double> coefGenerator)
-        {
-            this.coefGenerator = coefGenerator;
-        }
-
-        public double Evaluate(double x)
-        {
-            double sum = coefGenerator(0);
-            double term = 1;
-            for (int i = 1; ; i++)
-            {
-                double oldSum = sum;
-                term *= x;
-                double coefficient = coefGenerator(i);
-                // To ensure termination, every zero coefficient must eventually be followed by a nonzero coefficient.
-                if (coefficient != 0)
+                expr = Expression.Multiply(x, Expression.Constant(coefficients[k]));
+                --k;
+                while (k > 0)
                 {
-                    sum += term * coefficient;
-                    if (MMath.AreEqual(sum, oldSum)) break;
+                    if (coefficients[k] != 0)
+                        expr = Expression.Add(Expression.Constant(coefficients[k]), expr);
+
+                    expr = Expression.Multiply(x, expr);
+                    --k;
                 }
+                if (coefficients[0] != 0)
+                    expr = Expression.Add(Expression.Constant(coefficients[0]), expr);
             }
-            return sum;
-        }
-    }
 
-    /// <summary>
-    /// Represents the state of a series coefficient generation attempt.
-    /// Supposed to be passed by reference to coefficient generator.
-    /// </summary>
-    struct CoefficientGenerationState<InnerState>
-    {
-        /// <summary>
-        /// Index of the next coefficient to be computed.
-        /// Set by the caller (series evaluator).
-        /// </summary>
-        public int nextIndex;
-        /// <summary>
-        /// true, if the coefficient was successfully generated,
-        /// false, if the series was finite and ended somewhere before the requested coefficient.
-        /// Set by the callee (coefficient generator).
-        /// </summary>
-        public bool success;
-        /// <summary>
-        /// value of the computed coefficient, if success == true,
-        /// undefined otherwise
-        /// Set by the callee (coefficient generator).
-        /// </summary>
-        public double coefficient;
-        /// <summary>
-        /// state that can be used to generate the next coefficient, if success == true,
-        /// undefined otherwise
-        /// Initialized to default(InnerState) by the caller (series evaluator),
-        /// afterwards set by the callee (coefficient generator).
-        /// </summary>
-        public InnerState innerState;
-    }
-
-    /// <summary>
-    /// Provides the coefficients in the series, where the constant term is index zero.
-    /// A state is expected to be passed between the computations of consequitive coefficients
-    /// by the caller.
-    /// When the constant term (index zero) is computed, default(State) is passed to the delegate,
-    /// for a coefficient at index = n, a state obtained when computing the coefficient
-    /// at index = n - 1 is passed.
-    /// </summary>
-    /// <typeparam name="State">A type that represents the state passed between
-    /// the computations of consequitive coefficients</typeparam>
-    /// <param name="state">State passed between
-    /// the computations of consequitive coefficients</param>
-    /// <remarks>
-    /// For small coefficient generation functions, like Series.ExpMinus1Coefficient,
-    /// manually calling this delegate is about 15-30% faster that using IEnumerable.
-    /// </remarks>
-    delegate void CoefficientGenerator<State>(ref CoefficientGenerationState<State> state);
-
-    /// <summary>
-    /// Represents a mathematical power series of the form c0 + c1*x + c2*x^2 + c3*x^3 + ...
-    /// Allows stateful computation of the coefficients.
-    /// </summary>
-    struct PowerSeries<State>
-    {
-        readonly CoefficientGenerator<State> coefGenerator;
-
-        /// <summary>
-        /// Constructs a power series.
-        /// </summary>
-        /// <param name="coefGenerator">
-        /// Provides the coefficients in the series, where the constant term is index zero.
-        /// A state is expected to be passed between the computations of consequitive coefficients
-        /// by the caller.
-        /// </param>
-        public PowerSeries(CoefficientGenerator<State> coefGenerator)
-        {
-            this.coefGenerator = coefGenerator;
+            return expr;
         }
 
-        public double Evaluate(double x)
+        /// <summary>
+        /// Builds a delegate that approximately evaluates a power series
+        /// of the form c0 + c1*x + c2*x^2 + c3*x^3 + ...
+        /// </summary>
+        /// <param name="coefGeneratingLambda">Provides the coefficients in the series, where the constant term is index zero.</param>
+        /// <param name="minIterations">Minimum number of evaluated terms. These terms will be efficiently evaluated as a single polynomial, 
+        /// without additional checks.</param>
+        /// <param name="unrolledIterations">Number of term evaluation/addition/comparison to previous result cycles to be unrolled, so that
+        /// if the series will converge during them, there would be no loop overhead involved.</param>
+        /// <param name="maxIterations">Maximum number of evaluated terms. 0 for infinity.</param>
+        /// <returns>Generated and compiled delegate</returns>
+        public static Func<double, double> GetCompiledExpressionSeriesEvaluator(
+            Expression<Func<int, double>> coefGeneratingLambda,
+            int minIterations = 0,
+            int unrolledIterations = 0,
+            int maxIterations = 0)
         {
-            CoefficientGenerationState<State> state;
-            state.nextIndex = 0;
-            state.success = true;
-            state.coefficient = 0.0;
-            state.innerState = default(State);
-            double sum = 0.0;
-            double term = 1.0;
-            double oldSum = double.NaN;
-            coefGenerator(ref state);
-            while (state.success)
+            if (minIterations < 0)
+                throw new ArgumentException($"{nameof(minIterations)} can't be negative", nameof(minIterations));
+            if (unrolledIterations < 0)
+                throw new ArgumentException($"{nameof(unrolledIterations)} can't be negative", nameof(unrolledIterations));
+            if (maxIterations != 0 && maxIterations < minIterations + unrolledIterations)
+                throw new ArgumentException($"{nameof(maxIterations)} must be either less than {nameof(minIterations)} + {nameof(unrolledIterations)} ({minIterations + unrolledIterations}), or zero (meaning infinity)", nameof(maxIterations));
+
+            var x = Expression.Parameter(typeof(double));
+            var coefGenerator = coefGeneratingLambda.Compile();
+            var initCoefs = new double[minIterations + 1];
+            for (int i = 0; i < initCoefs.Length; ++i)
+                initCoefs[i] = coefGenerator(i);
+
+            var initPolynomial = BuildPolynomialEvaluationExpression(initCoefs, x);
+            if (maxIterations != 0 && maxIterations == minIterations)
+                return Expression.Lambda<Func<double, double>>(initPolynomial, x).Compile();
+
+            var sum = Expression.Parameter(typeof(double));
+            var term = Expression.Parameter(typeof(double));
+            var oldSum = Expression.Parameter(typeof(double));
+            var coefficient = Expression.Parameter(typeof(double));
+            var idx = coefGeneratingLambda.Parameters.First();
+            LabelTarget label = Expression.Label(typeof(double));
+
+            var bodySequence = new List<Expression>();
+            var locals = new List<ParameterExpression>() { sum, term, oldSum };
+            bodySequence.Add(Expression.Assign(sum, initPolynomial));
+            int initPower = minIterations + 1;
+            if (initPower <= 64)
+                bodySequence.AddRange(ExponentiationBySquaringSequence(term, x, initPower));
+            else
             {
-                oldSum = sum;
-                if (state.coefficient != 0)
-                {
-                    sum += term * state.coefficient;
-                    if (MMath.AreEqual(sum, oldSum)) break;
-                }
-                term *= x;
-                ++state.nextIndex;
-                coefGenerator(ref state);
+                Expression<Func<double, double>> termInit = z => System.Math.Pow(z, initPower);
+                var y = termInit.Parameters.First();
+                locals.Add(y);
+                bodySequence.Add(Expression.Assign(y, x));
+                bodySequence.Add(Expression.Assign(term, termInit.Body));
             }
-            return sum;
+            for (int i = 0; i < unrolledIterations; ++i)
+            {
+                bodySequence.Add(Expression.Assign(oldSum, sum));
+                double coef = coefGenerator(i + minIterations + 1);
+                if (coef != 0)
+                {
+                    bodySequence.Add(Expression.AddAssign(sum, Expression.Multiply(Expression.Constant(coef), term)));
+                    bodySequence.Add(Expression.IfThen(AreEqualExpr(sum, oldSum), Expression.Return(label, sum)));
+                }
+                bodySequence.Add(Expression.MultiplyAssign(term, x));
+            }
+            if (maxIterations == 0 || maxIterations != minIterations + unrolledIterations)
+            {
+                locals.Add(idx);
+                locals.Add(coefficient);
+                bodySequence.Add(Expression.Assign(idx, Expression.Constant(minIterations + unrolledIterations + 1)));
+                var innerLoopSequence = new List<Expression>()
+                {
+                    Expression.Assign(oldSum, sum),
+                    Expression.Assign(coefficient, coefGeneratingLambda.Body),
+                    Expression.IfThen(
+                        Expression.NotEqual(coefficient, Expression.Constant(0.0)),
+                        Expression.Block(
+                            Expression.AddAssign(sum, Expression.Multiply(term, coefficient)),
+                            Expression.IfThen(AreEqualExpr(sum, oldSum), Expression.Return(label, sum))
+                            )),
+                    Expression.PreIncrementAssign(idx)
+                };
+                if (maxIterations != 0)
+                    innerLoopSequence.Add(Expression.IfThen(Expression.Equal(idx, Expression.Constant(maxIterations + 1)), Expression.Return(label, sum)));
+                innerLoopSequence.Add(Expression.MultiplyAssign(term, x));
+
+                bodySequence.Add(Expression.Loop(Expression.Block(innerLoopSequence)));
+            }
+            bodySequence.Add(Expression.Label(label, sum));
+            var resultExpr = Expression.Block(locals, bodySequence);
+
+            return Expression.Lambda<Func<double, double>>(resultExpr, x).Compile();
         }
+
+        private static IEnumerable<Expression> ExponentiationBySquaringSequence(Expression targetTerm, Expression x, int power)
+        {
+            if (power < 1)
+                throw new ArgumentException($"{nameof(power)} must be grater or equal than 1.", nameof(power));
+            yield return Expression.Assign(targetTerm, x);
+            Stack<Expression> stack = new Stack<Expression>(64);
+            for (; power > 1; power >>= 1)
+            {
+                if ((power & 1) != 0)
+                    stack.Push(Expression.MultiplyAssign(targetTerm, x));
+                stack.Push(Expression.MultiplyAssign(targetTerm, targetTerm));
+            }
+            while (stack.Count > 0)
+                yield return stack.Pop();
+        }
+
+        private static Expression AreEqualExpr(Expression x, Expression y) => Expression.Equal(Expression.Convert(x, typeof(double)), Expression.Convert(y, typeof(double)));
     }
 
     class Series
     {
-        public TruncatedPowerSeries GammaAt2 { get; }
-        public TruncatedPowerSeries DigammaAt2 { get; }
+        public Func<double, double> GammaAt2 { get; }
+        public Func<double, double> DigammaAt2 { get; }
         /// <summary>
-        /// Coefficients of de Moivre's expansion for the digamma function.
+        /// de Moivre's expansion for the digamma function.
         /// </summary>
-        public TruncatedPowerSeries DigammaAsymptotic { get; }
-        public TruncatedPowerSeries TrigammaAt1 { get; }
+        public Func<double, double> DigammaAsymptotic { get; }
+        public Func<double, double> TrigammaAt1 { get; }
         /// <summary>
-        /// Coefficients of de Moivre's expansion for the trigamma function.
+        /// de Moivre's expansion for the trigamma function.
         /// </summary>
-        public TruncatedPowerSeries TrigammaAsymptotic { get; }
-        public TruncatedPowerSeries TetragammaAt1 { get; }
+        public Func<double, double> TrigammaAsymptotic { get; }
+        public Func<double, double> TetragammaAt1 { get; }
         /// <summary>
-        /// Coefficients of de Moivre's expansion for the tetragamma function.
+        /// de Moivre's expansion for the tetragamma function.
         /// </summary>
-        public TruncatedPowerSeries TetragammaAsymptotic { get; }
-        public TruncatedPowerSeries GammalnAsymptotic { get; }
-        public PowerSeries Log1Plus { get; }
-        public PowerSeries Log1Minus { get; }
-        public PowerSeries<double> ExpMinus1 { get; }
-        public PowerSeries<double> ExpMinus1RatioMinus1RatioMinusHalf { get; }
-        public TruncatedPowerSeries LogExpMinus1RatioAt0 { get; }
+        public Func<double, double> TetragammaAsymptotic { get; }
+        public Func<double, double> GammalnAsymptotic { get; }
+        public Func<double, double> Log1Plus { get; }
+        public Func<double, double> Log1Minus { get; }
+        public Func<double, double> XMinusLog1Plus { get; }
+        public Func<double, double> ExpMinus1 { get; }
+        public Func<double, double> ExpMinus1RatioMinus1RatioMinusHalf { get; }
+        public Func<double, double> LogExpMinus1RatioAt0 { get; }
         /// <summary>
         /// Asymptotic expansion of NormalCdfLn
         /// </summary>
-        public TruncatedPowerSeries NormcdflnAsymptotic { get; }
+        public Func<double, double> NormcdflnAsymptotic { get; }
 
         public Series(uint precisionBits)
         {
             uint doublePrecisionCutOff = 53;
+
+            double[] digammaAt2Coefficients;
+            double[] expMinus1Coefficients, expMinus1RatioMinus1RatioMinusHalfCoefficients;
             if (precisionBits <= doublePrecisionCutOff)
             {
-                GammaAt2 = new TruncatedPowerSeries(gammaAt2Coefficients.Take(26).ToArray());
-                DigammaAsymptotic = new TruncatedPowerSeries(digammaAsymptoticCoefficients.Take(8).ToArray());
-                TrigammaAt1 = new TruncatedPowerSeries(trigammaAt1Coefficients.Take(2).ToArray());
-                TrigammaAsymptotic = new TruncatedPowerSeries(trigammaAsymptoticCoefficients.Take(9).ToArray());
-                TetragammaAt1 = new TruncatedPowerSeries(tetragammaAt1Coefficients.Take(2).ToArray());
-                TetragammaAsymptotic = new TruncatedPowerSeries(tetragammaAsymptoticCoefficients.Take(9).ToArray());
-                GammalnAsymptotic = new TruncatedPowerSeries(gammalnAsymptoticCoefficients.Take(7).ToArray());
-                LogExpMinus1RatioAt0 = new TruncatedPowerSeries(logExpMinus1RatioAt0Coefficients.Take(5).ToArray());
-                NormcdflnAsymptotic = new TruncatedPowerSeries(normcdflnAsymptoticCoefficients.Take(8).ToArray());
+                GammaAt2 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(gammaAt2Coefficients.Take(26).ToArray());
+                DigammaAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(digammaAsymptoticCoefficients.Take(8).ToArray());
+                TrigammaAt1 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(trigammaAt1Coefficients.Take(2).ToArray());
+                TrigammaAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(trigammaAsymptoticCoefficients.Take(9).ToArray());
+                TetragammaAt1 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(tetragammaAt1Coefficients.Take(2).ToArray());
+                TetragammaAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(tetragammaAsymptoticCoefficients.Take(9).ToArray());
+                GammalnAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(gammalnAsymptoticCoefficients.Take(7).ToArray());
+                LogExpMinus1RatioAt0 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(logExpMinus1RatioAt0Coefficients.Take(5).ToArray());
+                NormcdflnAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(normcdflnAsymptoticCoefficients.Take(8).ToArray());
+                digammaAt2Coefficients = new double[26];
+                expMinus1Coefficients = new double[5];
+                expMinus1RatioMinus1RatioMinusHalfCoefficients = new double[13];
             }
             else
             {
-                GammaAt2 = new TruncatedPowerSeries(gammaAt2Coefficients.ToArray());
-                DigammaAsymptotic = new TruncatedPowerSeries(digammaAsymptoticCoefficients.ToArray());
-                TrigammaAt1 = new TruncatedPowerSeries(trigammaAt1Coefficients.ToArray());
-                TrigammaAsymptotic = new TruncatedPowerSeries(trigammaAsymptoticCoefficients.ToArray());
-                TetragammaAt1 = new TruncatedPowerSeries(tetragammaAt1Coefficients.ToArray());
-                TetragammaAsymptotic = new TruncatedPowerSeries(tetragammaAsymptoticCoefficients.ToArray());
-                GammalnAsymptotic = new TruncatedPowerSeries(gammalnAsymptoticCoefficients.ToArray());
-                LogExpMinus1RatioAt0 = new TruncatedPowerSeries(logExpMinus1RatioAt0Coefficients.ToArray());
-                NormcdflnAsymptotic = new TruncatedPowerSeries(normcdflnAsymptoticCoefficients.ToArray());
+                GammaAt2 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(gammaAt2Coefficients.ToArray());
+                DigammaAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(digammaAsymptoticCoefficients.ToArray());
+                TrigammaAt1 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(trigammaAt1Coefficients.ToArray());
+                TrigammaAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(trigammaAsymptoticCoefficients.ToArray());
+                TetragammaAt1 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(tetragammaAt1Coefficients.ToArray());
+                TetragammaAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(tetragammaAsymptoticCoefficients.ToArray());
+                GammalnAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(gammalnAsymptoticCoefficients.ToArray());
+                LogExpMinus1RatioAt0 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(logExpMinus1RatioAt0Coefficients.ToArray());
+                NormcdflnAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(normcdflnAsymptoticCoefficients.ToArray());
+                digammaAt2Coefficients = new double[gammaAt2Coefficients.Length];
+                expMinus1Coefficients = new double[25];
+                expMinus1RatioMinus1RatioMinusHalfCoefficients = new double[40];
             }
-            DigammaAt2 = TruncatedPowerSeries.Generate(GammaAt2.Coefficients.Length, i => GammaAt2.Coefficients[i] * (i + 1));
-            Log1Plus = new PowerSeries(Log1PlusCoefficient);
-            Log1Minus = new PowerSeries(Log1MinusCoefficient);
-            ExpMinus1 = new PowerSeries<double>(ExpMinus1Coefficient);
-            ExpMinus1RatioMinus1RatioMinusHalf = new PowerSeries<double>(ExpMinus1RatioMinus1RatioMinusHalfCoefficient);
-        }
+            Log1Plus = SeriesEvaluatorFactory.GetCompiledExpressionSeriesEvaluator(n => n == 0 ? 0.0 : (n % 2 == 0 ? -1.0 : 1.0) / n, 4, 10);
+            Log1Minus = SeriesEvaluatorFactory.GetCompiledExpressionSeriesEvaluator(n => n == 0 ? 0.0 : -1.0 / n, 5, 8);
+            XMinusLog1Plus = SeriesEvaluatorFactory.GetCompiledExpressionSeriesEvaluator(n => (n <= 1) ? 0.0 : (n % 2 == 0 ? 1.0 : -1.0) / n, 5, 8);
 
-        #region Coefficient generators
+            for (int i = 0; i < digammaAt2Coefficients.Length; ++i)
+                digammaAt2Coefficients[i] = gammaAt2Coefficients[i] * (i + 1);
+            DigammaAt2 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(digammaAt2Coefficients);
 
-        private static double Log1PlusCoefficient(int n) => n == 0 ? 0.0 : (n % 2 == 0 ? -1.0 : 1.0) / n;
-        private static double Log1MinusCoefficient(int n) => n == 0 ? 0.0 : -1.0 / n;
-        public static void ExpMinus1Coefficient(ref CoefficientGenerationState<double> state)
-        {
-            if (state.nextIndex == 0)
-            {
-                state.success = true;
-                state.coefficient = 0.0;
-                state.innerState = 1.0;
-            }
-            else
-            {
-                state.coefficient = state.innerState / state.nextIndex;
-                state.innerState = state.coefficient;
-                state.success = state.coefficient != 0.0;
-            }
-        }
-        public static void ExpMinus1RatioMinus1RatioMinusHalfCoefficient(ref CoefficientGenerationState<double> state)
-        {
-            if (state.nextIndex == 0)
-            {
-                state.success = true;
-                state.coefficient = 0.0;
-                state.innerState = 0.5;
-            }
-            else
-            {
-                state.coefficient = state.innerState / (state.nextIndex + 2);
-                state.innerState = state.coefficient;
-                state.success = state.coefficient != 0.0;
-            }
-        }
+            expMinus1Coefficients[0] = 0.0;
+            expMinus1Coefficients[1] = 1.0;
+            for (int i = 2; i < expMinus1Coefficients.Length; ++i)
+                expMinus1Coefficients[i] = expMinus1Coefficients[i - 1] / i;
+            ExpMinus1 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(expMinus1Coefficients);
 
-        #endregion
+            expMinus1RatioMinus1RatioMinusHalfCoefficients[0] = 0.0;
+            expMinus1RatioMinus1RatioMinusHalfCoefficients[1] = 1.0 / 6;
+            for (int i = 2; i < expMinus1RatioMinus1RatioMinusHalfCoefficients.Length; ++i)
+                expMinus1RatioMinus1RatioMinusHalfCoefficients[i] = expMinus1RatioMinus1RatioMinusHalfCoefficients[i - 1] / (i + 2);
+            ExpMinus1RatioMinus1RatioMinusHalf = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(expMinus1RatioMinus1RatioMinusHalfCoefficients);
+        }
 
         #region Precomputed coefficients
 

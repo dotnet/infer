@@ -766,7 +766,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 // Use Taylor series at x=2
                 // Reference: https://dlmf.nist.gov/5.7#E3
                 double dx = x - 2;
-                double sum = Series.GammaAt2.Evaluate(dx);
+                double sum = Series.GammaAt2(dx);
                 sum = dx * (1 + Digamma1 + sum);
                 result += sum;
                 return result;
@@ -890,7 +890,7 @@ namespace Microsoft.ML.Probabilistic.Math
                     x++;
                 }
                 double dx = x - 2;
-                double sum2 = Series.DigammaAt2.Evaluate(dx);
+                double sum2 = Series.DigammaAt2(dx);
                 result2 += sum2;
                 return result2;
             }
@@ -910,7 +910,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double invX = 1 / x;
             result += Math.Log(x) - 0.5 * invX;
             double invX2 = invX * invX;
-            double sum = Series.DigammaAsymptotic.Evaluate(invX2);
+            double sum = Series.DigammaAsymptotic(invX2);
             result -= sum;
             return result;
         }
@@ -947,7 +947,7 @@ namespace Microsoft.ML.Probabilistic.Math
             /* Shift the argument and use Taylor series at 1 if argument <= small */
             if (x <= c_trigamma_small)
             {
-                return (1.0 / (x * x) + Series.TrigammaAt1.Evaluate(x));
+                return (1.0 / (x * x) + Series.TrigammaAt1(x));
             }
 
             result = 0.0;
@@ -963,7 +963,7 @@ namespace Microsoft.ML.Probabilistic.Math
             // This expansion can be computed in Maple via asympt(Psi(1,x),x)
             double invX2 = 1 / (x * x);
             result += 0.5 * invX2;
-            double sum = Series.TrigammaAsymptotic.Evaluate(invX2);
+            double sum = Series.TrigammaAsymptotic(invX2);
             result += (1 + sum) / x;
             return result;
         }
@@ -983,7 +983,7 @@ namespace Microsoft.ML.Probabilistic.Math
                          c_tetragamma_small = 1e-4;
             /* Use Taylor series if argument <= small */
             if (x < c_tetragamma_small)
-                return -2 / (x * x * x) + Series.TetragammaAt1.Evaluate(x);
+                return -2 / (x * x * x) + Series.TetragammaAt1(x);
             double result = 0;
             /* Reduce to Tetragamma(x+n) where ( X + N ) >= L */
             while (x < c_tetragamma_large)
@@ -996,7 +996,7 @@ namespace Microsoft.ML.Probabilistic.Math
             // Milton Abramowitz and Irene A. Stegun, Handbook of Mathematical Functions, Section 6.4
             double invX2 = 1 / (x * x);
             result += -invX2 / x;
-            double sum = Series.TetragammaAsymptotic.Evaluate(invX2);
+            double sum = Series.TetragammaAsymptotic(invX2);
             result += sum;
             return result;
         }
@@ -1185,8 +1185,7 @@ namespace Microsoft.ML.Probabilistic.Math
             double phi;
             if (Math.Abs(xOverAMinus1) < 1e-1)
             {
-                double XMinusLog1PlusCoefficient(int n) => (n <= 1) ? 0.0 : (n % 2 == 0 ? 1.0 : -1.0) / n;
-                phi = new PowerSeries(XMinusLog1PlusCoefficient).Evaluate(xOverAMinus1);
+                phi = Series.XMinusLog1Plus(xOverAMinus1);
             }
             else
             {
@@ -1446,7 +1445,7 @@ f = 1/gamma(x+1)-1
                 // the series is:  sum_{i=1}^inf B_{2i} / (2i*(2i-1)*x^(2i-1))
                 double invX = 1.0 / x;
                 double invX2 = invX * invX;
-                double sum = invX * Series.GammalnAsymptotic.Evaluate(invX2);
+                double sum = invX * Series.GammalnAsymptotic(invX2);
                 return sum;
             }
         }
@@ -1782,7 +1781,7 @@ f = 1/gamma(x+1)-1
                 // log(NormalCdf(x)) = log(1-NormalCdf(-x))
                 double y = NormalCdf(-x);
                 // log(1-y)
-                return Series.Log1Minus.Evaluate(y);
+                return Series.Log1Minus(y);
             }
             else if (x >= large)
             {
@@ -1794,7 +1793,7 @@ f = 1/gamma(x+1)-1
                 double z = 1 / (x * x);
                 // asymptotic series for log(normcdf)
                 // Maple command: subs(x=-x,asympt(log(normcdf(-x)),x));
-                double s = Series.NormcdflnAsymptotic.Evaluate(z);
+                double s = Series.NormcdflnAsymptotic(z);
                 return s - LnSqrt2PI - 0.5 * x * x - Math.Log(-x);
             }
         }
@@ -3245,7 +3244,7 @@ rr = mpf('-0.99999824265582826');
             {
                 // use the Taylor series for log(1+x) around x=0
                 // Maple command: series(log(1+x),x);
-                return Series.Log1Plus.Evaluate(x);
+                return Series.Log1Plus(x);
             }
             else
             {
@@ -3298,7 +3297,7 @@ rr = mpf('-0.99999824265582826');
             if (x < -3.5)
             {
                 double expx = Math.Exp(x);
-                return Series.Log1Minus.Evaluate(expx);
+                return Series.Log1Minus(expx);
             }
             else
             {
@@ -3319,7 +3318,7 @@ rr = mpf('-0.99999824265582826');
         {
             if (Math.Abs(x) < 2e-3)
             {
-                return Series.ExpMinus1.Evaluate(x);
+                return Series.ExpMinus1(x);
             }
             else
             {
@@ -3336,7 +3335,7 @@ rr = mpf('-0.99999824265582826');
         {
             if (Math.Abs(x) < 6e-1)
             {
-                return Series.ExpMinus1RatioMinus1RatioMinusHalf.Evaluate(x);
+                return Series.ExpMinus1RatioMinus1RatioMinusHalf(x);
             }
             else if (double.IsPositiveInfinity(x))
             {
@@ -3362,7 +3361,7 @@ rr = mpf('-0.99999824265582826');
         {
             if (x < 1e-3)
             {
-                return Math.Log(x) + Series.LogExpMinus1RatioAt0.Evaluate(x);
+                return Math.Log(x) + Series.LogExpMinus1RatioAt0(x);
             }
             else if (x > 50)
             {

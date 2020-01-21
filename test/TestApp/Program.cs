@@ -82,7 +82,7 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            new SeriesEvaluationPerformanceTests(new TraceOutputHelper()).CoefficientGenerationDelegateOutperformsEnumerationOnExpMinus1Test();
+            new SeriesEvaluationPerformanceTests(new TraceOutputHelper()).CompiledExpressionOnExpMinus1PerformanceTest();
 
             if (false)
             {

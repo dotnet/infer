@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.ML.Probabilistic.Core.Maths;
 using Microsoft.ML.Probabilistic.Math;
@@ -12,120 +13,155 @@ namespace Microsoft.ML.Probabilistic.Tests
 {
     public class SeriesEvaluationPerformanceTests
     {
-        struct EnumerableBasedPowerSeries
-        {
-            readonly IEnumerable<double> coefGenerator;
-
-            public EnumerableBasedPowerSeries(IEnumerable<double> coefGenerator)
-            {
-                this.coefGenerator = coefGenerator;
-            }
-
-            public double Evaluate(double x)
-            {
-                double sum = 0.0;
-                double term = 1.0;
-                double oldSum = double.NaN;
-                foreach (double coefficient in coefGenerator)
-                {
-                    oldSum = sum;
-                    if (coefficient != 0)
-                    {
-                        sum += term * coefficient;
-                        if (MMath.AreEqual(sum, oldSum)) break;
-                    }
-                    term *= x;
-                }
-                return sum;
-            }
-        }
+        static Series series = new Series(53);
 
         static double ExpMinus1Explicit(double x)
         {
-            return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24 + x * (1.0/(24*5) + x * (1.0/(24*5*6) + x * (1.0/(24*5*6*7))))))));
-        }
-
-        public class ExpMinus1CoefficientEnumerator : IEnumerator<double>
-        {
-            int n = 0;
-
-            public double Current { get; set; }
-
-            object IEnumerator.Current => Current;
-
-            public void Dispose()
-            {                
-            }
-
-            public bool MoveNext()
+            if (System.Math.Abs(x) < 2e-3)
             {
-                if(n == 0)
-                {
-                }
-                else if(n == 1)
-                {
-                    Current = 1.0;                   
-                }
-                else
-                {
-                    Current /= n;
-                }
-                n++;
-                return true;
+                return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
             }
-
-            public void Reset()
+            else
             {
-                n = 0;
-                Current = 0.0;
+                return System.Math.Exp(x) - 1.0;
             }
         }
 
-        public class ExpMinus1CoefficientEnumerable : IEnumerable<double>
+        public static double ExpMinus1RatioMinus1RatioMinusHalfExplicit(double x)
         {
-            public IEnumerator<double> GetEnumerator()
+            if (System.Math.Abs(x) < 6e-1)
             {
-                return new ExpMinus1CoefficientEnumerator();
+                return x * (1.0 / 6 + x * (1.0 / 24 + x * (1.0 / 120 + x * (1.0 / 720 +
+                    x * (1.0 / 5040 + x * (1.0 / 40320 + x * (1.0 / 362880 + x * (1.0 / 3628800 +
+                    x * (1.0 / 39916800 + x * (1.0 / 479001600 + x * (1.0 / 6227020800 + x * (1.0 / 87178291200))))))))))));
             }
-
-            IEnumerator IEnumerable.GetEnumerator()
+            else if (double.IsPositiveInfinity(x))
             {
-                return GetEnumerator();
+                return x;
+            }
+            else
+            {
+                return ((System.Math.Exp(x) - 1) / x - 1) / x - 0.5;
             }
         }
 
-        static IEnumerable<double> ExpMinus1Coefficient2()
+        private static readonly double[] gammaTaylorCoefficients =
         {
-            return new ExpMinus1CoefficientEnumerable();
+            0.32246703342411320303,
+            -0.06735230105319810201,
+            0.020580808427784546416,
+            -0.0073855510286739856768,
+            0.0028905103307415229257,
+            -0.0011927539117032610189,
+            0.00050966952474304234172,
+            -0.00022315475845357938579,
+            9.945751278180853098e-05,
+            -4.4926236738133142046e-05,
+            2.0507212775670691067e-05,
+            -9.4394882752683967152e-06,
+            4.3748667899074873274e-06,
+            -2.0392157538013666132e-06,
+            9.551412130407419353e-07,
+            -4.4924691987645661855e-07,
+            2.1207184805554664645e-07,
+            -1.0043224823968100408e-07,
+            4.7698101693639803983e-08,
+            -2.2711094608943166813e-08,
+            1.0838659214896952939e-08,
+            -5.1834750419700474714e-09,
+            2.4836745438024780616e-09,
+            -1.1921401405860913615e-09,
+            5.7313672416788612175e-10,
+        };
+
+        private static double GammaLnMidExplicit(double x)
+        {
+            // 1.5 <= x <= 2.5
+            // Use Taylor series at x=2
+            double result = 0;
+            double dx = x - 2;
+            double sum = 0;
+            for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
+            {
+                sum = dx * (gammaTaylorCoefficients[i] + sum);
+            }
+            sum = dx * (1 + MMath.Digamma1 + sum);
+            result += sum;
+            return result;
         }
 
-
-        static IEnumerable<double> ExpMinus1Coefficient()
+        private static double GammaLnMidCompiledExpressionBased(double x)
         {
-            yield return 0.0;
-            double coef = 1.0;
-            int n = 1;
-            do
-            {
-                coef /= n;
-                yield return coef;
-                ++n;
-            }
-            while (coef > 0);
+            // 1.5 <= x <= 2.5
+            // Use Taylor series at x=2
+            double result = 0;
+            double dx = x - 2;
+            double sum = series.GammaAt2(dx);
+            sum = dx * (1 + MMath.Digamma1 + sum);
+            result += sum;
+            return result;
         }
 
-        static IEnumerable<double> ExpMinus1RatioMinus1RatioMinusHalfCoefficient()
+        static double Log1PlusShortExplicit(double x)
         {
-            yield return 0.0;
-            double coef = 0.5;
-            int n = 1;
-            do
+            if (x > -1e-3 && x < 2e-3)
             {
-                coef /= n + 2;
-                yield return coef;
-                ++n;
+                return x * (1 - x * (0.5 - x * (1.0 / 3 - x * (0.25 - x * (1.0 / 5)))));
             }
-            while (coef > 0);
+            else
+            {
+                return System.Math.Log(1 + x);
+            }
+        }
+
+        private static Func<double, double> Log1PlusTruncated = SeriesEvaluatorFactory.GetCompiledExpressionSeriesEvaluator(n => n == 0 ? 0.0 : (n % 2 == 0 ? -1.0 : 1.0) / n, 5, 0, 5);
+
+        static double Log1PlusShortCompiledExpressionBased(double x)
+        {
+            if (x > -1e-3 && x < 2e-3)
+            {
+                return Log1PlusTruncated(x);
+            }
+            else
+            {
+                return System.Math.Log(1 + x);
+            }
+        }
+
+        static double Log1PlusInfiniteSeriesNaive(double x)
+        {
+            double sum = 0.0;
+            double term = 1;
+            double oldSum;
+            int i = 1;
+            while (true)
+            {
+                oldSum = sum;
+                term *= x;
+                sum += term / i;
+                if (MMath.AreEqual(sum, oldSum))
+                    break;
+                ++i;
+
+                oldSum = sum;
+                term *= x;
+                sum -= term / i;
+                if (MMath.AreEqual(sum, oldSum))
+                    break;
+                ++i;
+            }
+            return sum;
+        }
+        static double Log1PlusExplicit(double x)
+        {
+            if (x > -1e-3 && x < 6e-2)
+            {
+                return Log1PlusInfiniteSeriesNaive(x);
+            }
+            else
+            {
+                return System.Math.Log(1 + x);
+            }
         }
 
         private readonly ITestOutputHelper output;
@@ -137,50 +173,97 @@ namespace Microsoft.ML.Probabilistic.Tests
 
         [Fact]
         [Trait("Category", "Performance")]
-        public void CoefficientGenerationDelegateOutperformsEnumerationOnExpMinus1Test()
+        public void CompiledExpressionOnExpMinus1PerformanceTest()
         {
-            var expMinus1DelegateBased = new Series(53).ExpMinus1;
-            var expMinus1EnumerableBased = new EnumerableBasedPowerSeries(ExpMinus1Coefficient());
-            const int samples = 3;
-            const int evaluations = 5000000;
-            const double point = 0.5;
-            double targetPerformanceCoefficient =
-#if NETFULL
-                Environment.Is64BitProcess ? 0.9 : 0.98;
-#else
-                0.9;
-#endif
-            Assert.Equal(expMinus1DelegateBased.Evaluate(point), expMinus1EnumerableBased.Evaluate(point));
+            const int samples = 10;
+            const int evaluations = 50000000;
+            const double point = 1e-3;
+            double targetPerformanceCoefficient = 1.6;
+            Assert.True(MMath.AreEqual(ExpMinus1Explicit(point), MMath.ExpMinus1(point)));
             double explicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1Explicit(point); }, samples);
             output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
-            double delegateBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) expMinus1DelegateBased.Evaluate(point); }, samples);
-            output.WriteLine($"Delegate-based time:\t{delegateBasedTimeInms}ms.");
-            double enumerableBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) expMinus1EnumerableBased.Evaluate(point); }, samples);
-            output.WriteLine($"Enumerable-based time:\t{enumerableBasedTimeInms}ms.");
-            Assert.True(delegateBasedTimeInms <= targetPerformanceCoefficient * enumerableBasedTimeInms, "Delegate-based approach should be faster than enumerable-based one to justify its complexity.");
+            double exprBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1(point); }, samples);
+            output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
+            Assert.True(exprBasedTimeInms <= targetPerformanceCoefficient * explicitTimeInms, "Compiled expression-based approach shouldn't lose too much performance compared to inlined series.");
         }
 
         [Fact]
         [Trait("Category", "Performance")]
-        public void CoefficientGenerationDelegateOutperformsEnumerationOnExpMinus1RatioMinus1RatioMinusHalfTest()
+        public void CompiledExpressionOnExpMinus1RatioMinus1RatioMinusHalfPerformanceTest()
         {
-            var expMinus1RatioMinus1RatioMinusHalfDelegateBased = new Series(53).ExpMinus1RatioMinus1RatioMinusHalf;
-            var expMinus1RatioMinus1RatioMinusHalfEnumerableBased = new EnumerableBasedPowerSeries(ExpMinus1RatioMinus1RatioMinusHalfCoefficient());
-            const int samples = 3;
-            const int evaluations = 5000000;
-            const double point = 0.5;
+            const int samples = 10;
+            const int evaluations = 20000000;
+            const double point = 1e-3;
+            double targetPerformanceCoefficient = 1.6;
+            Assert.True(MMath.AreEqual(ExpMinus1RatioMinus1RatioMinusHalfExplicit(point), MMath.ExpMinus1RatioMinus1RatioMinusHalf(point)));
+            double explicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1RatioMinus1RatioMinusHalfExplicit(point); }, samples);
+            output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
+            double exprBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1RatioMinus1RatioMinusHalf(point); }, samples);
+            output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
+            Assert.True(exprBasedTimeInms <= targetPerformanceCoefficient * explicitTimeInms, "Compiled expression-based approach shouldn't lose too much performance compared to inlined series.");
+        }
+
+        [Fact]
+        [Trait("Category", "Performance")]
+        public void CompiledExpressionOnGammaLnPerformanceTest()
+        {
+            const int samples = 10;
+            const int evaluations = 8000000;
+            const double point = 2.2;
             double targetPerformanceCoefficient =
 #if NETFULL
-                Environment.Is64BitProcess ? 0.9 : 0.98;
-#else
                 0.9;
+#else
+                0.7;
 #endif
-            Assert.Equal(expMinus1RatioMinus1RatioMinusHalfDelegateBased.Evaluate(point), expMinus1RatioMinus1RatioMinusHalfEnumerableBased.Evaluate(point));
-            double delegateBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) expMinus1RatioMinus1RatioMinusHalfDelegateBased.Evaluate(point); }, samples);
-            double enumerableBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) expMinus1RatioMinus1RatioMinusHalfEnumerableBased.Evaluate(point); }, samples);
-            output.WriteLine($"Delegate-based time:\t{delegateBasedTimeInms}ms.");
-            output.WriteLine($"Enumerable-based time:\t{enumerableBasedTimeInms}ms.");
-            Assert.True(delegateBasedTimeInms <= targetPerformanceCoefficient * enumerableBasedTimeInms, "Delegate-based approach should be faster than enumerable-based one to justify its complexity.");
+            Assert.True(MMath.AreEqual(GammaLnMidExplicit(point), GammaLnMidCompiledExpressionBased(point)));
+            double explicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) GammaLnMidExplicit(point); }, samples);
+            output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
+            double exprBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) GammaLnMidCompiledExpressionBased(point); }, samples);
+            output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
+            Assert.True(exprBasedTimeInms <= targetPerformanceCoefficient * explicitTimeInms, "Compiled expression-based approach should perform better than evaluating polynomial using an array of coefficients.");
+        }
+
+        [Fact]
+        [Trait("Category", "Performance")]
+        public void CompiledExpressionOnLog1PlusPerformanceTest()
+        {
+            const int samples = 10;
+            int evaluations = 20000000;
+            double point = 1e-3;
+            double targetPerformanceCoefficientForShortLog = 1.6;
+            double targetPerformanceCoefficientForInfCompExprVSystemMathLog = 3.0;
+            double targetPerformanceCoefficient =
+#if NETFULL
+                0.9;
+#else
+                0.7;
+#endif
+            output.WriteLine($"x = {point}, {evaluations} evaluations.");
+            Assert.True(MMath.AbsDiff(Log1PlusShortExplicit(point), Log1PlusShortCompiledExpressionBased(point)) < 1e-15);
+            Assert.True(MMath.AbsDiff(Log1PlusShortExplicit(point), MMath.Log1Plus(point)) < 1e-15);
+            double shortExplicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) Log1PlusShortExplicit(point); }, samples);
+            output.WriteLine($"Explicit (truncated) time:\t{shortExplicitTimeInms}ms.");
+            double shortExprBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) Log1PlusShortCompiledExpressionBased(point); }, samples);
+            output.WriteLine($"Compiled expression-based (truncated) time:\t{shortExprBasedTimeInms}ms.");
+            double explicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) Log1PlusExplicit(point); }, samples);
+            output.WriteLine($"Explicit (infinite) time:\t{explicitTimeInms}ms.");
+            double exprBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.Log1Plus(point); }, samples);
+            output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
+            Assert.True(shortExplicitTimeInms <= targetPerformanceCoefficientForShortLog * shortExprBasedTimeInms, "Compiled expression-based approach shouldn't lose too much performance compared to inlined series.");
+            Assert.True(exprBasedTimeInms <= targetPerformanceCoefficient * explicitTimeInms, "Compiled expression-based approach should perform better than naive summation.");
+            evaluations = 8000000;
+            point = 5e-2;
+            Assert.True(MMath.AbsDiff(Log1PlusExplicit(point), MMath.Log1Plus(point)) < 1e-15);
+            output.WriteLine($"x = {point}, {evaluations} evaluations.");
+            shortExplicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) Log1PlusShortExplicit(point); }, samples);
+            output.WriteLine($"Explicit (System.Math) time:\t{shortExplicitTimeInms}ms.");
+            explicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) Log1PlusExplicit(point); }, samples);
+            output.WriteLine($"Explicit (infinite) time:\t{explicitTimeInms}ms.");
+            exprBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.Log1Plus(point); }, samples);
+            output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
+            Assert.True(exprBasedTimeInms <= targetPerformanceCoefficientForInfCompExprVSystemMathLog * shortExplicitTimeInms, "Compiled expression-based approach shouldn't lose too much performance compared to inlined series.");
+            Assert.True(exprBasedTimeInms <= targetPerformanceCoefficient * explicitTimeInms, "Compiled expression-based approach should perform better than naive summation.");
         }
 
         private double MeasureRunTime(Action action, int samplesCount)
