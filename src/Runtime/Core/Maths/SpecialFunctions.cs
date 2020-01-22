@@ -3237,6 +3237,7 @@ rr = mpf('-0.99999824265582826');
         /// <remarks>This function provides higher accuracy than a direct evaluation of <c>log(1+x)</c>,
         /// particularly when <paramref name="x"/> is small.
         /// </remarks>
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         public static double Log1Plus(double x)
         {
             Assert.IsTrue(Double.IsNaN(x) || x >= -1);
@@ -3330,14 +3331,7 @@ rr = mpf('-0.99999824265582826');
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         public static double ExpMinus1Explicit(double x)
         {
-            if (System.Math.Abs(x) < 2e-3)
-            {
-                return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
-            }
-            else
-            {
-                return System.Math.Exp(x) - 1.0;
-            }
+            return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
         }
 
         /// <summary>
