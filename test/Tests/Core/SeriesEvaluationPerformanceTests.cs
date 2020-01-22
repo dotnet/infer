@@ -15,6 +15,7 @@ namespace Microsoft.ML.Probabilistic.Tests
     {
         static Series series = new Series(53);
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         static double ExpMinus1Explicit(double x)
         {
             if (System.Math.Abs(x) < 2e-3)
@@ -184,6 +185,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
             double exprBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1(point); }, samples);
             output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
+            double explicitTimeInms2 = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1Explicit(point); }, samples);
+            output.WriteLine($"Explicit in MMath time:\t{explicitTimeInms2}ms.");
             Assert.True(exprBasedTimeInms <= targetPerformanceCoefficient * explicitTimeInms, "Compiled expression-based approach shouldn't lose too much performance compared to inlined series.");
         }
 

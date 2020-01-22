@@ -3314,6 +3314,7 @@ rr = mpf('-0.99999824265582826');
         /// This function is more accurate than a direct evaluation of <c>exp(x)-1</c> when x is small.
         /// It is the inverse function to Log1Plus: <c>ExpMinus1(Log1Plus(x)) == x</c>.
         /// </remarks>
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         public static double ExpMinus1(double x)
         {
             if (Math.Abs(x) < 2e-3)
@@ -3323,6 +3324,19 @@ rr = mpf('-0.99999824265582826');
             else
             {
                 return Math.Exp(x) - 1.0;
+            }
+        }
+
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        public static double ExpMinus1Explicit(double x)
+        {
+            if (System.Math.Abs(x) < 2e-3)
+            {
+                return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+            }
+            else
+            {
+                return System.Math.Exp(x) - 1.0;
             }
         }
 
