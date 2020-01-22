@@ -210,12 +210,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             const int samples = 10;
             const int evaluations = 8000000;
             const double point = 2.2;
-            double targetPerformanceCoefficient =
-#if NETFULL
-                0.9;
-#else
-                0.7;
-#endif
+            double targetPerformanceCoefficient = 0.9; // depending on platform, usually is better
             Assert.True(MMath.AreEqual(GammaLnMidExplicit(point), GammaLnMidCompiledExpressionBased(point)));
             double explicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) GammaLnMidExplicit(point); }, samples);
             output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
