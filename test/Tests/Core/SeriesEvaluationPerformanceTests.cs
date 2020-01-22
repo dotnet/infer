@@ -276,6 +276,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 action();
                 sw.Stop();
                 // Expecting only positive noise
+                output.WriteLine($"Sampled {sw.Elapsed.TotalMilliseconds}ms.");
                 timeInms = System.Math.Min(timeInms, sw.Elapsed.TotalMilliseconds);
             }
             return timeInms;
