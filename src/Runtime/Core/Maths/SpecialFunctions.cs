@@ -3328,10 +3328,14 @@ rr = mpf('-0.99999824265582826');
             }
         }
 
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         public static double ExpMinus1Explicit(double x)
         {
             return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+        }
+
+        public static double ExpMinus1SwitchExplicit(double x)
+        {
+            return SeriesCollection.ExpMinus1At0(x);
         }
 
         /// <summary>

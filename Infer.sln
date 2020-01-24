@@ -34,17 +34,17 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "TestFSharp", "test\TestFSha
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{DC5F5BC4-CDB0-41F7-8B03-CD4C38C8DEB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickThroughModel", "src\Examples\ClickThroughModel\ClickThroughModel.csproj", "{33D86EA2-2161-4EF0-8F17-59602296273C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickThroughModel", "src\Examples\ClickThroughModel\ClickThroughModel.csproj", "{33D86EA2-2161-4EF0-8F17-59602296273C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicalTrial", "src\Examples\ClinicalTrial\ClinicalTrial.csproj", "{B517BBF2-60E6-4C69-885A-AE5C014D877B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicalTrial", "src\Examples\ClinicalTrial\ClinicalTrial.csproj", "{B517BBF2-60E6-4C69-885A-AE5C014D877B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InferNET101", "src\Examples\InferNET101\InferNET101.csproj", "{52D174E7-2407-4FC1-9DDA-4D9D14F18618}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MontyHall", "src\Examples\MontyHall\MontyHall.csproj", "{6139CF19-0190-4ED5-AEE3-D3CE7458E517}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MontyHall", "src\Examples\MontyHall\MontyHall.csproj", "{6139CF19-0190-4ED5-AEE3-D3CE7458E517}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotifFinder", "src\Examples\MotifFinder\MotifFinder.csproj", "{D2A7B5F5-8D33-45AC-9776-07C23F5859BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image_Classifier", "src\Examples\ImageClassifier\Image_Classifier.csproj", "{87D09BD4-119E-49C1-B0B4-86DF962A00EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Image_Classifier", "src\Examples\ImageClassifier\Image_Classifier.csproj", "{87D09BD4-119E-49C1-B0B4-86DF962A00EE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LDA", "src\Examples\LDA\LDA.csproj", "{6FF3E672-378C-4D61-B4CA-A5A5E01C2563}"
 EndProject
@@ -89,6 +89,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RobustGaussianProcess", "src\Examples\RobustGaussianProcess\RobustGaussianProcess.csproj", "{62719C63-ECED-49CD-B73C-6DAF2A18033B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnersNuGet", "src\Learners\LearnersNuGet\LearnersNuGet.csproj", "{6BC792EE-0436-494E-9F0C-63A3822320D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.ML.Probabilistic.Benchmarks", "src\Benchmarks\Microsoft.ML.Probabilistic.Benchmarks.csproj", "{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -498,6 +500,18 @@ Global
 		{6BC792EE-0436-494E-9F0C-63A3822320D0}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
 		{6BC792EE-0436-494E-9F0C-63A3822320D0}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
 		{6BC792EE-0436-494E-9F0C-63A3822320D0}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.DebugCore|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.DebugCore|Any CPU.Build.0 = Debug|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.DebugFull|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.DebugFull|Any CPU.Build.0 = Debug|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.ReleaseCore|Any CPU.ActiveCfg = Release|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.ReleaseCore|Any CPU.Build.0 = Release|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.ReleaseFull|Any CPU.ActiveCfg = Release|Any CPU
+		{D9731B4C-5637-40AF-BBB7-6B4C82A4E6C2}.ReleaseFull|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

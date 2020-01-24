@@ -5,6 +5,7 @@ using System.Text;
 using System.Linq;
 using Microsoft.ML.Probabilistic.Math;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace Microsoft.ML.Probabilistic.Core.Maths
 {
@@ -171,8 +172,65 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
         private static Expression AreEqualExpr(Expression x, Expression y) => Expression.Equal(Expression.Convert(x, typeof(double)), Expression.Convert(y, typeof(double)));
     }
 
+    static class SeriesCollection
+    {
+        private static readonly bool useShortInlines = true;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double ExpMinus1At0(double x)
+        {
+            return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+            //if (useShortInlines)
+            //    return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+            //else
+            //    return ExpMinus1(x);
+        }
+        //private static readonly bool useShortInlines = true;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double ExpMinus1At0Switch(double x)
+        {
+            if (useShortInlines)
+                return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+            else
+                return ExpMinus1(x);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double ExpMinus1RatioMinus1RatioMinusHalfExplicitAt0(double x)
+        {
+            return x * (1.0 / 6 + x * (1.0 / 24 + x * (1.0 / 120 + x * (1.0 / 720 +
+                x * (1.0 / 5040 + x * (1.0 / 40320 + x * (1.0 / 362880 + x * (1.0 / 3628800 +
+                x * (1.0 / 39916800 + x * (1.0 / 479001600 + x * (1.0 / 6227020800 + x * (1.0 / 87178291200))))))))))));
+        }
+
+
+        public static Func<double, double> ExpMinus1 { get; }
+
+        static SeriesCollection()
+        {
+            var expMinus1Coefficients = new double[5];
+            expMinus1Coefficients[0] = 0.0;
+            expMinus1Coefficients[1] = 1.0;
+            for (int i = 2; i < expMinus1Coefficients.Length; ++i)
+                expMinus1Coefficients[i] = expMinus1Coefficients[i - 1] / i;
+            ExpMinus1 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(expMinus1Coefficients);
+        }
+    }
+
     class Series
     {
+        private readonly bool useShortInlines;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double ExpMinus1At0(double x)
+        {
+            //return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+            if (useShortInlines)
+                return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+            else
+                return ExpMinus1(x);
+        }
+
         public Func<double, double> GammaAt2 { get; }
         public Func<double, double> DigammaAt2 { get; }
         /// <summary>
@@ -209,6 +267,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             double[] expMinus1Coefficients, expMinus1RatioMinus1RatioMinusHalfCoefficients;
             if (precisionBits <= doublePrecisionCutOff)
             {
+                useShortInlines = true;
                 GammaAt2 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(gammaAt2Coefficients.Take(26).ToArray());
                 DigammaAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(digammaAsymptoticCoefficients.Take(8).ToArray());
                 TrigammaAt1 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(trigammaAt1Coefficients.Take(2).ToArray());
@@ -224,6 +283,7 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             }
             else
             {
+                useShortInlines = false;
                 GammaAt2 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(gammaAt2Coefficients.ToArray());
                 DigammaAsymptotic = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(digammaAsymptoticCoefficients.ToArray());
                 TrigammaAt1 = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(trigammaAt1Coefficients.ToArray());
@@ -256,6 +316,8 @@ namespace Microsoft.ML.Probabilistic.Core.Maths
             for (int i = 2; i < expMinus1RatioMinus1RatioMinusHalfCoefficients.Length; ++i)
                 expMinus1RatioMinus1RatioMinusHalfCoefficients[i] = expMinus1RatioMinus1RatioMinusHalfCoefficients[i - 1] / (i + 2);
             ExpMinus1RatioMinus1RatioMinusHalf = SeriesEvaluatorFactory.GetCompiledExpressionPolynomialEvaluator(expMinus1RatioMinus1RatioMinusHalfCoefficients);
+
+            if (useShortInlines) { }
         }
 
         #region Precomputed coefficients
