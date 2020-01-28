@@ -16,7 +16,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         static Series series = new Series(53);
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        static double ExpMinus1Explicit(double x)
+        public static double ExpMinus1Explicit(double x)
         {
             return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
         }
@@ -186,124 +186,21 @@ namespace Microsoft.ML.Probabilistic.Tests
         public void CompiledExpressionOnExpMinus1PerformanceTest()
         {
             const int samples = 10;
-            const int evaluations = 250000000;
+            const int evaluations = 25000000;
             const double point = 1e-3;
             //double targetPerformanceCoefficient = 1.6;
             Assert.True(MMath.AreEqual(ExpMinus1Explicit(point), ExpMinus1CompiledExpressionBased(point)));
 
-            void ExpMinus1ExplicitRun()
-            { for (int j = 0; j < evaluations; ++j) ExpMinus1Explicit(point); }
-            void MMathExpMinus1ExplicitRun()
-            { for (int j = 0; j < 0; ++j) MMath.ExpMinus1Explicit(point); }
-            void MMathExpMinus1ExplicitRun2()
-            { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1Explicit(point); }
-            void MMathExpMinus1ExplicitRun3()
-            { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1Explicit(point); }
-            void MMathExpMinus1ExplicitRun4()
-            { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1Explicit(point); }
-
-            void ExpMinus1ExprRun()
-            { for (int j = 0; j < evaluations; ++j) ExpMinus1CompiledExpressionBased(point); }
-            void ExpMinus1ExprRun2()
-            { for (int j = 0; j < evaluations; ++j) ExpMinus1CompiledExpressionBased(point); }
-            void ExpMinus1ExprRun3()
-            { for (int j = 0; j < evaluations; ++j) ExpMinus1CompiledExpressionBased(point); }
-
-            void ExpMinus1ExplicitCallRun()
-            { for (int j = 0; j < evaluations; ++j) ExpMinus1SwitchExplicit(point); }
-            void ExpMinus1ExplicitCallRun2()
-            { for (int j = 0; j < evaluations; ++j) ExpMinus1SwitchExplicit(point); }
-            void ExpMinus1ExplicitCallRun3()
-            { for (int j = 0; j < evaluations; ++j) ExpMinus1SwitchExplicit(point); }
-
-            void ExpMinus1MMathExplicitCallRun()
-            { for (int j = 0; j < 0; ++j) MMath.ExpMinus1SwitchExplicit(point); }
-            void ExpMinus1MMathExplicitCallRun2()
-            { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1SwitchExplicit(point); }
-            void ExpMinus1MMathExplicitCallRun3()
-            { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1SwitchExplicit(point); }
-
-
-
-            double explicitTimeInms2 = MeasureRunTime(MMathExpMinus1ExplicitRun, samples);
-            output.WriteLine($"Explicit in MMath time:\t{explicitTimeInms2}ms.");
-            explicitTimeInms2 = MeasureRunTime(MMathExpMinus1ExplicitRun2, samples);
-            output.WriteLine($"Explicit in MMath time:\t{explicitTimeInms2}ms.");
-            explicitTimeInms2 = MeasureRunTime(MMathExpMinus1ExplicitRun3, samples);
-            output.WriteLine($"Explicit in MMath time:\t{explicitTimeInms2}ms.");
-            explicitTimeInms2 = MeasureRunTime(MMathExpMinus1ExplicitRun4, samples);
-            output.WriteLine($"Explicit in MMath time:\t{explicitTimeInms2}ms.");
-            explicitTimeInms2 = MeasureRunTime(MMathExpMinus1ExplicitRun2, samples);
-            output.WriteLine($"Explicit in MMath time:\t{explicitTimeInms2}ms.");
-
-            double explicitTimeInms = MeasureRunTime(ExpMinus1ExplicitRun, samples);
-            output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
-            explicitTimeInms = MeasureRunTime(ExpMinus1ExplicitRun, samples);
-            output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
-            explicitTimeInms = MeasureRunTime(ExpMinus1ExplicitRun, samples);
-            output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
-
-            double exprBasedTimeInms = MeasureRunTime(ExpMinus1ExprRun, samples);
-            output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
-            exprBasedTimeInms = MeasureRunTime(ExpMinus1ExprRun2, samples);
-            output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
-            exprBasedTimeInms = MeasureRunTime(ExpMinus1ExprRun3, samples);
-            output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
-
-            double switchExplicitTimeInms = MeasureRunTime(ExpMinus1ExplicitCallRun, samples);
-            output.WriteLine($"Switch (explicit position) time:\t{switchExplicitTimeInms}ms.");
-            switchExplicitTimeInms = MeasureRunTime(ExpMinus1ExplicitCallRun3, samples);
-            output.WriteLine($"Switch (explicit position) time:\t{switchExplicitTimeInms}ms.");
-            switchExplicitTimeInms = MeasureRunTime(ExpMinus1ExplicitCallRun3, samples);
-            output.WriteLine($"Switch (explicit position) time:\t{switchExplicitTimeInms}ms.");
-
-            double switchExplicitMMathTimeInms = MeasureRunTime(ExpMinus1MMathExplicitCallRun, samples);
-            output.WriteLine($"Switch (explicit position) MMath time:\t{switchExplicitMMathTimeInms}ms.");
-            switchExplicitMMathTimeInms = MeasureRunTime(ExpMinus1MMathExplicitCallRun2, samples);
-            output.WriteLine($"Switch (explicit position) MMath time:\t{switchExplicitMMathTimeInms}ms.");
-            switchExplicitMMathTimeInms = MeasureRunTime(ExpMinus1MMathExplicitCallRun3, samples);
-            output.WriteLine($"Switch (explicit position) MMath time:\t{switchExplicitMMathTimeInms}ms.");
-
-            switchExplicitTimeInms = MeasureRunTime(ExpMinus1ExplicitCallRun, samples);
-            output.WriteLine($"Switch (explicit position) time:\t{switchExplicitTimeInms}ms.");
-            switchExplicitTimeInms = MeasureRunTime(ExpMinus1ExplicitCallRun2, samples);
-            output.WriteLine($"Switch (explicit position) time:\t{switchExplicitTimeInms}ms.");
-            switchExplicitTimeInms = MeasureRunTime(ExpMinus1ExplicitCallRun2, samples);
-            output.WriteLine($"Switch (explicit position) time:\t{switchExplicitTimeInms}ms.");
-            //double explicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1Explicit(point); }, samples);
-            //output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
-            //explicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1Explicit(point); }, samples);
-            //output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
-            //explicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1Explicit(point); }, samples);
-            //output.WriteLine($"Explicit time:\t{explicitTimeInms}ms.");
-
-            //double explicitTimeInms2 = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1Explicit(point); }, samples);
-            //output.WriteLine($"Explicit in MMath time:\t{explicitTimeInms2}ms.");
-            //explicitTimeInms2 = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1Explicit(point); }, samples);
-            //output.WriteLine($"Explicit in MMath time:\t{explicitTimeInms2}ms.");
-            //explicitTimeInms2 = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1Explicit(point); }, samples);
-            //output.WriteLine($"Explicit in MMath time:\t{explicitTimeInms2}ms.");
-
-            //double exprBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1CompiledExpressionBased(point); }, samples);
-            //output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
-            //exprBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1CompiledExpressionBased(point); }, samples);
-            //output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
-            //exprBasedTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1CompiledExpressionBased(point); }, samples);
-            //output.WriteLine($"Compiled expression-based time:\t{exprBasedTimeInms}ms.");
-
-            //double switchExplicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1SwitchExplicit(point); }, samples);
-            //output.WriteLine($"Switch (explicit position) time:\t{switchExplicitTimeInms}ms.");
-            //switchExplicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1SwitchExplicit(point); }, samples);
-            //output.WriteLine($"Switch (explicit position) time:\t{switchExplicitTimeInms}ms.");
-            //switchExplicitTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) ExpMinus1SwitchExplicit(point); }, samples);
-            //output.WriteLine($"Switch (explicit position) time:\t{switchExplicitTimeInms}ms.");
-
-            //double switchExplicitMMathTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1SwitchExplicit(point); }, samples);
-            //output.WriteLine($"Switch (explicit position) MMath time:\t{switchExplicitMMathTimeInms}ms.");
-            //switchExplicitMMathTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1SwitchExplicit(point); }, samples);
-            //output.WriteLine($"Switch (explicit position) MMath time:\t{switchExplicitMMathTimeInms}ms.");
-            //switchExplicitMMathTimeInms = MeasureRunTime(() => { for (int j = 0; j < evaluations; ++j) MMath.ExpMinus1SwitchExplicit(point); }, samples);
-            //output.WriteLine($"Switch (explicit position) MMath time:\t{switchExplicitMMathTimeInms}ms.");
+            double time1 = MeasureRunTime(() => MMath.ExpMinus1Explicit(point), samples, evaluations);
+            output.WriteLine($"MMath.ExpMinus1Explicit time:\t{time1}ms.");
+            double time2 = MeasureRunTime(() => ExpMinus1Explicit(point), samples, evaluations);
+            output.WriteLine($"ExpMinus1Explicit time:\t{time2}ms.");
+            double time3 = MeasureRunTime(() => ExpMinus1CompiledExpressionBased(point), samples, evaluations);
+            output.WriteLine($"ExpMinus1CompiledExpressionBased time:\t{time3}ms.");
+            double time4 = MeasureRunTime(() => ExpMinus1SwitchExplicit(point), samples, evaluations);
+            output.WriteLine($"ExpMinus1SwitchExplicit time:\t{time4}ms.");
+            double time5 = MeasureRunTime(() => MMath.ExpMinus1SwitchExplicit(point), samples, evaluations);
+            output.WriteLine($"MMath.ExpMinus1SwitchExplicit time:\t{time5}ms.");
             //Assert.True(exprBasedTimeInms <= targetPerformanceCoefficient * explicitTimeInms, "Compiled expression-based approach shouldn't lose too much performance compared to inlined series.");
         }
 
@@ -346,14 +243,14 @@ namespace Microsoft.ML.Probabilistic.Tests
             const int samples = 10;
             int evaluations = 20000000;
             double point = 1e-3;
-//            double targetPerformanceCoefficientForShortLog = 1.6;
-//            double targetPerformanceCoefficientForInfCompExprVSystemMathLog = 3.0;
-//            double targetPerformanceCoefficient =
-//#if NETFULL
-//                0.9;
-//#else
-//                0.7;
-//#endif
+            //            double targetPerformanceCoefficientForShortLog = 1.6;
+            //            double targetPerformanceCoefficientForInfCompExprVSystemMathLog = 3.0;
+            //            double targetPerformanceCoefficient =
+            //#if NETFULL
+            //                0.9;
+            //#else
+            //                0.7;
+            //#endif
             output.WriteLine($"x = {point}, {evaluations} evaluations.");
             Assert.True(MMath.AbsDiff(Log1PlusShortExplicit(point), Log1PlusShortCompiledExpressionBased(point)) < 1e-15);
             Assert.True(MMath.AbsDiff(Log1PlusShortExplicit(point), MMath.Log1Plus(point)) < 1e-15);
@@ -389,6 +286,25 @@ namespace Microsoft.ML.Probabilistic.Tests
             {
                 sw.Restart();
                 action();
+                sw.Stop();
+                // Expecting only positive noise
+                //output.WriteLine($"Sampled {sw.Elapsed.TotalMilliseconds}ms.");
+                timeInms = System.Math.Min(timeInms, sw.Elapsed.TotalMilliseconds);
+            }
+            return timeInms;
+        }
+
+        private double MeasureRunTime(Action action, int iterationCount, int invokeCount)
+        {
+            var sw = new Stopwatch();
+            double timeInms = double.PositiveInfinity;
+            for (int i = 0; i < iterationCount; ++i)
+            {
+                sw.Restart();
+                for (int j = 0; j < invokeCount; j++)
+                {
+                    action();
+                }
                 sw.Stop();
                 // Expecting only positive noise
                 //output.WriteLine($"Sampled {sw.Elapsed.TotalMilliseconds}ms.");
