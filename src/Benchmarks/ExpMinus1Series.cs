@@ -11,6 +11,7 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
     public static class ExpMinus1SeriesFunctions
     {
         private static readonly Series series = new Series(53);
+        private static ExpMinus1SeriesInstantiable instance = new ExpMinus1SeriesInstantiable();
 
         public static double ExpMinus1Explicit(double x)
         {
@@ -32,9 +33,22 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
             return ExpMinus1Explicit(x);
         }
 
+        public static double ExpMinus1DirectInstanceCallSameAssembly(double x)
+        {
+            return instance.ExpMinus1(x);
+        }
+
         public static double ExpMinus1CompiledExpression(double x)
         {
             return series.ExpMinus1(x);
+        }
+    }
+
+    public class ExpMinus1SeriesInstantiable
+    {
+        public double ExpMinus1(double x)
+        {
+            return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
         }
     }
 
@@ -58,6 +72,9 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
 
         [Benchmark]
         public double ExpMinus1DirectCallSameAssembly() => ExpMinus1SeriesFunctions.ExpMinus1DirectCallSameAssembly(x);
+
+        [Benchmark]
+        public double ExpMinus1DirectInstanceCallSameAssembly() => ExpMinus1SeriesFunctions.ExpMinus1DirectInstanceCallSameAssembly(x);
 
         [Benchmark]
         public double ExpMinus1MMathExplicit() => MMath.ExpMinus1Explicit(x);

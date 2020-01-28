@@ -11,8 +11,9 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
     public static class Log1PlusInfiniteSeriesFunctions
     {
         private static readonly Series series = new Series(53);
+        private static Log1PlusInfiniteSeriesInstantiable instance = new Log1PlusInfiniteSeriesInstantiable();
 
-        static double Log1PlusInfiniteSeriesNaive(double x)
+        public static double Log1PlusInfiniteSeriesNaive(double x)
         {
             double sum = 0.0;
             double term = 1;
@@ -42,6 +43,11 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
             return Log1PlusInfiniteSeriesNaive(x);
         }
 
+        public static double Log1PlusNaiveInfiniteSeriesDirectInstanceCall(double x)
+        {
+            return instance.Log1PlusNaiveInfiniteSeries(x);
+        }
+
         public static double Log1PlusSystemMath(double x)
         {
             return System.Math.Log(1.0 + x);
@@ -53,6 +59,14 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
         }
     }
 
+    public class Log1PlusInfiniteSeriesInstantiable
+    {
+        public double Log1PlusNaiveInfiniteSeries(double x)
+        {
+            return Log1PlusInfiniteSeriesFunctions.Log1PlusInfiniteSeriesNaive(x);
+        }
+    }
+
     public class Log1PlusInfiniteSeriesBenchmarks
     {
         [Params(5e-2, -1e-4)]
@@ -60,6 +74,9 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
 
         [Benchmark]
         public double Log1PlusNaiveInfiniteSeriesExplicit() => Log1PlusInfiniteSeriesFunctions.Log1PlusNaiveInfiniteSeriesExplicit(x);
+
+        [Benchmark]
+        public double Log1PlusNaiveInfiniteSeriesDirectInstanceCall() => Log1PlusInfiniteSeriesFunctions.Log1PlusNaiveInfiniteSeriesDirectInstanceCall(x);
 
         [Benchmark]
         public double Log1PlusSystemMath() => Log1PlusInfiniteSeriesFunctions.Log1PlusSystemMath(x);

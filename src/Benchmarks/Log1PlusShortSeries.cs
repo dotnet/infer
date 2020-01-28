@@ -10,6 +10,8 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
 {
     public static class Log1PlusShortSeriesFunctions
     {
+        private static Log1PlusShortSeriesInstantiable instance = new Log1PlusShortSeriesInstantiable();
+
         public static double Log1PlusShortExplicit(double x)
         {
             return x * (1 - x * (0.5 - x * (1.0 / 3 - x * (0.25 - x * (1.0 / 5)))));
@@ -26,6 +28,19 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
         {
             return Log1PlusShortExplicit(x);
         }
+
+        public static double Log1PlusShortDirectInstanceCallSameAssembly(double x)
+        {
+            return instance.Log1PlusShort(x);
+        }
+    }
+
+    public class Log1PlusShortSeriesInstantiable
+    {
+        public double Log1PlusShort(double x)
+        {
+            return x * (1 - x * (0.5 - x * (1.0 / 3 - x * (0.25 - x * (1.0 / 5)))));
+        }
     }
 
     public class Log1PlusShortSeriesBenchmarks
@@ -41,5 +56,8 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
 
         [Benchmark]
         public double Log1PlusShortDirectCallSameAssembly() => Log1PlusShortSeriesFunctions.Log1PlusShortDirectCallSameAssembly(x);
+
+        [Benchmark]
+        public double Log1PlusShortDirectInstanceCallSameAssembly() => Log1PlusShortSeriesFunctions.Log1PlusShortDirectInstanceCallSameAssembly(x);
     }
 }

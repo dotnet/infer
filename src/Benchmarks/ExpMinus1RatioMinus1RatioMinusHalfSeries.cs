@@ -14,6 +14,7 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
     public static class ExpMinus1RatioMinus1RatioMinusHalfSeriesFunctions
     {
         private static readonly Series series = new Series(53);
+        private static ExpMinus1RatioMinus1RatioMinusHalfSeriesInstantiable instance = new ExpMinus1RatioMinus1RatioMinusHalfSeriesInstantiable();
 
         public static double ExpMinus1RatioMinus1RatioMinusHalfExplicit(double x)
         {
@@ -32,9 +33,24 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
             return ExpMinus1RatioMinus1RatioMinusHalfExplicit(x);
         }
 
+        public static double ExpMinus1RatioMinus1RatioMinusHalfDirectInstanceCallSameAssembly(double x)
+        {
+            return instance.ExpMinus1RatioMinus1RatioMinusHalf(x);
+        }
+
         public static double ExpMinus1RatioMinus1RatioMinusHalfCompiledExpression(double x)
         {
             return series.ExpMinus1RatioMinus1RatioMinusHalf(x);
+        }
+    }
+
+    public class ExpMinus1RatioMinus1RatioMinusHalfSeriesInstantiable
+    {
+        public double ExpMinus1RatioMinus1RatioMinusHalf(double x)
+        {
+            return x * (1.0 / 6 + x * (1.0 / 24 + x * (1.0 / 120 + x * (1.0 / 720 +
+                x * (1.0 / 5040 + x * (1.0 / 40320 + x * (1.0 / 362880 + x * (1.0 / 3628800 +
+                x * (1.0 / 39916800 + x * (1.0 / 479001600 + x * (1.0 / 6227020800 + x * (1.0 / 87178291200))))))))))));
         }
     }
 
@@ -54,5 +70,8 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
 
         [Benchmark]
         public double ExpMinus1RatioMinus1RatioMinusHalfDirectCallSameAssembly() => ExpMinus1RatioMinus1RatioMinusHalfSeriesFunctions.ExpMinus1RatioMinus1RatioMinusHalfDirectCallSameAssembly(x);
+
+        [Benchmark]
+        public double ExpMinus1RatioMinus1RatioMinusHalfDirectInstanceCallSameAssembly() => ExpMinus1RatioMinus1RatioMinusHalfSeriesFunctions.ExpMinus1RatioMinus1RatioMinusHalfDirectInstanceCallSameAssembly(x);
     }
 }

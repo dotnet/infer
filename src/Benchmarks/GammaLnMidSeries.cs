@@ -11,8 +11,9 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
     public static class GammaLnMidSeriesFunctions
     {
         private static readonly Series series = new Series(53);
+        private static GammaLnMidSeriesInstantiable instance = new GammaLnMidSeriesInstantiable();
 
-        private static readonly double[] gammaTaylorCoefficients =
+        public static readonly double[] gammaTaylorCoefficients =
         {
             0.32246703342411320303,
             -0.06735230105319810201,
@@ -73,6 +74,30 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
         {
             return GammaLnMidExplicit(x);
         }
+
+        public static double GammaLnMidDirectInstanceCallSameAssembly(double x)
+        {
+            return instance.GammaLnMid(x);
+        }
+    }
+
+    public class GammaLnMidSeriesInstantiable
+    {
+        public double GammaLnMid(double x)
+        {
+            // 1.5 <= x <= 2.5
+            // Use Taylor series at x=2
+            double result = 0;
+            double dx = x - 2;
+            double sum = 0;
+            for (int i = GammaLnMidSeriesFunctions.gammaTaylorCoefficients.Length - 1; i >= 0; i--)
+            {
+                sum = dx * (GammaLnMidSeriesFunctions.gammaTaylorCoefficients[i] + sum);
+            }
+            sum = dx * (1 + MMath.Digamma1 + sum);
+            result += sum;
+            return result;
+        }
     }
 
     public class GammaLnMidSeriesBenchmarks
@@ -88,5 +113,8 @@ namespace Microsoft.ML.Probabilistic.Benchmarks
 
         [Benchmark]
         public double GammaLnMidDirectCallSameAssembly() => GammaLnMidSeriesFunctions.GammaLnMidDirectCallSameAssembly(x);
+
+        [Benchmark]
+        public double GammaLnMidDirectInstanceCallSameAssembly() => GammaLnMidSeriesFunctions.GammaLnMidDirectInstanceCallSameAssembly(x);
     }
 }
