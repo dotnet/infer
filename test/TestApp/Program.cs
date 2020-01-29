@@ -82,16 +82,6 @@ namespace TestApp
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            Console.WriteLine("exp(x) - 1");
-            new SeriesEvaluationPerformanceTests(new TraceOutputHelper()).CompiledExpressionOnExpMinus1PerformanceTest();
-            new SeriesEvaluationPerformanceTests(new TraceOutputHelper()).CompiledExpressionOnExpMinus1PerformanceTest();
-            //Console.WriteLine("\n((exp(x) - 1) / x - 1) / x - 0.5");
-            //new SeriesEvaluationPerformanceTests(new TraceOutputHelper()).CompiledExpressionOnExpMinus1RatioMinus1RatioMinusHalfPerformanceTest();
-            //Console.WriteLine("\nGammaLn");
-            //new SeriesEvaluationPerformanceTests(new TraceOutputHelper()).CompiledExpressionOnGammaLnPerformanceTest();
-            //Console.WriteLine("\nlog(1 + x)");
-            //new SeriesEvaluationPerformanceTests(new TraceOutputHelper()).CompiledExpressionOnLog1PlusPerformanceTest();
-
             if (false)
             {
                 // Run all tests (need to run in 64-bit else OutOfMemory due to loading many DLLs)
