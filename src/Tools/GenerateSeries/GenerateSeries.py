@@ -1,3 +1,6 @@
+# Licensed to the .NET Foundation under one or more agreements.
+# The .NET Foundation licenses this file to you under the MIT license.
+# See the LICENSE file in the project root for more information.
 from __future__ import division
 from sympy import zeta, evalf, bernoulli, symbols, Poly, series, factorial, factorial2, S, log, exp
 
