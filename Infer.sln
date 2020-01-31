@@ -34,17 +34,17 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "TestFSharp", "test\TestFSha
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{DC5F5BC4-CDB0-41F7-8B03-CD4C38C8DEB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickThroughModel", "src\Examples\ClickThroughModel\ClickThroughModel.csproj", "{33D86EA2-2161-4EF0-8F17-59602296273C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClickThroughModel", "src\Examples\ClickThroughModel\ClickThroughModel.csproj", "{33D86EA2-2161-4EF0-8F17-59602296273C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicalTrial", "src\Examples\ClinicalTrial\ClinicalTrial.csproj", "{B517BBF2-60E6-4C69-885A-AE5C014D877B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicalTrial", "src\Examples\ClinicalTrial\ClinicalTrial.csproj", "{B517BBF2-60E6-4C69-885A-AE5C014D877B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InferNET101", "src\Examples\InferNET101\InferNET101.csproj", "{52D174E7-2407-4FC1-9DDA-4D9D14F18618}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MontyHall", "src\Examples\MontyHall\MontyHall.csproj", "{6139CF19-0190-4ED5-AEE3-D3CE7458E517}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MontyHall", "src\Examples\MontyHall\MontyHall.csproj", "{6139CF19-0190-4ED5-AEE3-D3CE7458E517}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotifFinder", "src\Examples\MotifFinder\MotifFinder.csproj", "{D2A7B5F5-8D33-45AC-9776-07C23F5859BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image_Classifier", "src\Examples\ImageClassifier\Image_Classifier.csproj", "{87D09BD4-119E-49C1-B0B4-86DF962A00EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Image_Classifier", "src\Examples\ImageClassifier\Image_Classifier.csproj", "{87D09BD4-119E-49C1-B0B4-86DF962A00EE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LDA", "src\Examples\LDA\LDA.csproj", "{6FF3E672-378C-4D61-B4CA-A5A5E01C2563}"
 EndProject
@@ -90,7 +90,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RobustGaussianProcess", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearnersNuGet", "src\Learners\LearnersNuGet\LearnersNuGet.csproj", "{6BC792EE-0436-494E-9F0C-63A3822320D0}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "GenerateSeries", "src\Tools\GenerateSeries\GenerateSeries.pyproj", "{D7562CC3-D48A-481D-B40C-07EE51EBBF50}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tools.GenerateSeries", "src\Tools\GenerateSeries\Tools.GenerateSeries.pyproj", "{D7562CC3-D48A-481D-B40C-07EE51EBBF50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
