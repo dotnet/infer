@@ -279,10 +279,10 @@ namespace Microsoft.ML.Probabilistic.Utilities
             if (method.IsGenericMethod)
             {
                 StringBuilder s = new StringBuilder(method.Name);
-                s.Append("<");
+                s.Append("&lt;");
                 Type[] typeArguments = method.GetGenericArguments();
                 AppendTypes(s, typeArguments);
-                s.Append(">");
+                s.Append("&gt;");
                 return s.ToString();
             }
             else
