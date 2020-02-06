@@ -81,8 +81,6 @@ if (!(Test-Path $apiguideTmp)) {
         }
         Rename-Item -path ./apiguide-tmp -newName $apiguidePath 
         
-        & "$docFXPath" "$docFxJsonPath"
-
         git add --all
         git commit -m "Update API Documentation"
         # git push origin gh-pages
