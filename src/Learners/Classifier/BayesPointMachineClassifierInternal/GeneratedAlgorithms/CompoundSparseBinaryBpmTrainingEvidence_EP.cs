@@ -50,10 +50,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public bool Changed_numberOfIterationsDecreased_Init_FeatureCount_FeatureIndexes_FeatureValues_InstanceCount_Ins12_isInitialised;
 		public Gamma CommonWeightPrecision_F;
 		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_B;
-		/// <summary>Buffer for <see cref="ReplicateOp_Divide.Marginal{Gamma}"/>.</summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gamma></summary>
 		public Gamma CommonWeightPrecision_rep_B_toDef;
 		public DistributionStructArray<Gamma,double> CommonWeightPrecision_rep_F;
-		/// <summary>Buffer for <see cref="ReplicateOp_Divide.UsesAverageConditional{Gamma}"/>.</summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gamma></summary>
 		public Gamma CommonWeightPrecision_rep_F_marginal;
 		/// <summary>True if Constant has executed. Set this to false to force re-execution of Constant</summary>
 		public bool Constant_isDone;
@@ -100,7 +100,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		private int numberOfIterationsDone;
 		public DistributionStructArray<Gaussian,double> Score_B;
 		public DistributionStructArray<Gaussian,double> Score_F;
-		/// <summary>Buffer for <see cref="GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio"/>.</summary>
+		/// <summary>Buffer for GammaFromShapeAndRateOp_Laplace.LogEvidenceRatio</summary>
 		public DistributionStructArray<Gamma,double> SharedWeightPrecisionRates_B_FeatureRange__Q;
 		public DistributionStructArray<Gamma,double> SharedWeightPrecisionRates_F;
 		/// <summary>Message from use of 'SharedWeightPrecisionRates'</summary>
@@ -134,7 +134,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Messages to use of 'WeightPrecisionRates'</summary>
 		public Gamma[][] WeightPrecisionRates_uses_F;
 		public DistributionStructArray<Gamma,double> WeightPrecisions_B;
-		/// <summary>Buffer for <see cref="GammaRatioOp_Laplace.LogEvidenceRatio"/>.</summary>
+		/// <summary>Buffer for GammaRatioOp_Laplace.LogEvidenceRatio</summary>
 		public DistributionStructArray<Gamma,double> WeightPrecisions_B_FeatureRange__Q;
 		public DistributionStructArray<Gamma,double> WeightPrecisions_F;
 		public DistributionStructArray<Gaussian,double> Weights_B;

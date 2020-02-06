@@ -79,7 +79,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionStructArray<Gaussian,double> ItemBias_itemItemIds_observation__F;
 		/// <summary>Message from use of 'ItemBias'</summary>
 		public DistributionStructArray<Gaussian,double> ItemBias_use_B;
-		/// <summary>Buffer for <see cref="GetItemsOp<double>.ItemsAverageConditional{DistributionStructArray<Gaussian, double>, Gaussian}"/>.</summary>
+		/// <summary>Buffer for GetItemsOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian></summary>
 		public DistributionStructArray<Gaussian,double> ItemBias_use_F_marginal;
 		public DistributionStructArray<Gaussian,double> itemBiasObs_B;
 		/// <summary>Field backing the ItemBiasPrior property</summary>
@@ -92,7 +92,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_itemItemIds_observation__F;
 		/// <summary>Message from use of 'ItemTraits'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_use_B;
-		/// <summary>Buffer for <see cref="GetItemsOp<double[]>.ItemsAverageConditional{DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>}"/>.</summary>
+		/// <summary>Buffer for GetItemsOp<double[]>.ItemsAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>></summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_use_F_marginal;
 		/// <summary>Field backing the ItemTraitsPrior property</summary>
 		private DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> itemTraitsPrior;
@@ -107,16 +107,16 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Bernoulli,bool>,bool[]> Ratings_observation__selector_cases_B;
 		public Bernoulli[][][] Ratings_observation__selector_cases_uses_B;
 		public Discrete[][] Ratings_observation__selector_uses_B;
-		/// <summary>Buffer for <see cref="ReplicateOp_Divide.Marginal{Discrete}"/>.</summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Discrete></summary>
 		public DistributionRefArray<Discrete,int> Ratings_observation__selector_uses_B_toDef;
 		/// <summary>Field backing the TraitCount property</summary>
 		private int traitCount;
-		/// <summary>Buffer for <see cref="DoubleIsBetweenOp.LogEvidenceRatio"/>.</summary>
+		/// <summary>Buffer for DoubleIsBetweenOp.LogEvidenceRatio</summary>
 		public double[][] true_logZ;
 		public DistributionStructArray<Gaussian,double> UserBias_itemUserIds_observation__F;
 		/// <summary>Message from use of 'UserBias'</summary>
 		public DistributionStructArray<Gaussian,double> UserBias_use_B;
-		/// <summary>Buffer for <see cref="GetItemsOp<double>.ItemsAverageConditional{DistributionStructArray<Gaussian, double>, Gaussian}"/>.</summary>
+		/// <summary>Buffer for GetItemsOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian></summary>
 		public DistributionStructArray<Gaussian,double> UserBias_use_F_marginal;
 		public DistributionStructArray<Gaussian,double> userBiasObs_B;
 		/// <summary>Field backing the UserBiasPrior property</summary>
@@ -130,15 +130,15 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		/// <summary>Field backing the UserThresholdNoiseVariance property</summary>
 		private double userThresholdNoiseVariance;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_0__gi_0__F;
-		/// <summary>Buffer for <see cref="ReplicateOp_Divide.Marginal{Gaussian}"/>.</summary>
+		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gaussian></summary>
 		public DistributionStructArray<Gaussian,double> UserThresholds_depth2_rep_B_toDef;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_depth2_rep_F;
-		/// <summary>Buffer for <see cref="ReplicateOp_Divide.UsesAverageConditional{Gaussian}"/>.</summary>
+		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gaussian></summary>
 		public DistributionStructArray<Gaussian,double> UserThresholds_depth2_rep_F_marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_itemUserIds_observation__F;
 		/// <summary>Message from use of 'UserThresholds'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_use_B;
-		/// <summary>Buffer for <see cref="GetItemsOp<double[]>.ItemsAverageConditional{DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>}"/>.</summary>
+		/// <summary>Buffer for GetItemsOp<double[]>.ItemsAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>></summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_use_F_marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholdsObs_B;
 		public Gaussian UserThresholdsObs_B_reduced;
@@ -149,7 +149,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraits_itemUserIds_observation__F;
 		/// <summary>Message from use of 'UserTraits'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraits_use_B;
-		/// <summary>Buffer for <see cref="GetItemsOp<double[]>.ItemsAverageConditional{DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>}"/>.</summary>
+		/// <summary>Buffer for GetItemsOp<double[]>.ItemsAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>></summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraits_use_F_marginal;
 		/// <summary>Field backing the UserTraitsPrior property</summary>
 		private DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> userTraitsPrior;
