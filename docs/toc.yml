@@ -3,4 +3,4 @@
 - name: User Guide
   href: ../userguide/index.md
 - name: API Documentation
-  href: api/index.md
+  href: apiguide/api/index.html
