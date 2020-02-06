@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DirichletSymmetricOp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,11 +91,38 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">DirichletSymmetricOp</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class DirichletSymmetricOp : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;DirichletSymmetric&quot;, new Type[]{})]
+[Quality(QualityBand.Preview)]
+[Buffers(new string[]{&quot;probMeanLog&quot;})]
+public static class DirichletSymmetricOp</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -106,7 +133,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma AlphaAverageConditional(Gamma alpha, Dirichlet prob, Gamma result)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not currently support Dirichlet distributions with stochastic arguments&quot;)]
+public static Gamma AlphaAverageConditional(Gamma alpha, Dirichlet prob, Gamma result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -185,7 +213,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ConjugateDirichlet AlphaAverageLogarithm(Dirichlet prob, ConjugateDirichlet alpha, Vector probMeanLog)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static ConjugateDirichlet AlphaAverageLogarithm(Dirichlet prob, ConjugateDirichlet alpha, Vector probMeanLog)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -264,7 +293,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma AlphaAverageLogarithm(Dirichlet prob, Gamma alpha, Vector probMeanLog, Gamma to_Alpha)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static Gamma AlphaAverageLogarithm(Dirichlet prob, Gamma alpha, Vector probMeanLog, Gamma to_Alpha)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -349,7 +379,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ConjugateDirichlet AlphaAverageLogarithm(Vector prob, ConjugateDirichlet alpha, Vector probMeanLog)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static ConjugateDirichlet AlphaAverageLogarithm(Vector prob, ConjugateDirichlet alpha, Vector probMeanLog)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -407,7 +438,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma AlphaAverageLogarithm(Vector prob, Gamma alpha, Gamma to_Alpha)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static Gamma AlphaAverageLogarithm(Vector prob, Gamma alpha, Gamma to_Alpha)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -475,65 +507,14 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.AverageLogFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_AverageLogFactor_IList_System_Double__System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.AverageLogFactor(IList{System.Double},System.Double)">AverageLogFactor(IList&lt;Double&gt;, Double)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(IList&lt;double&gt; prob, double alpha)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">prob</span></td>
-        <td><p>Incoming message from <code>prob</code>.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">alpha</span></td>
-        <td><p>Constant value for <code>alpha</code>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Average of the factor's log-value across the given argument distributions.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_AverageLogFactor_IList_System_Double__System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(prob) p(prob) log(factor(prob,K,alpha))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
-</div>
-  <a id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet)">AverageLogFactor(Dirichlet, ConjugateDirichlet)</h4>
   <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Dirichlet prob, ConjugateDirichlet alpha)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static double AverageLogFactor(Dirichlet prob, ConjugateDirichlet alpha)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -601,7 +582,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Dirichlet prob, Gamma alpha, Vector probMeanLog)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static double AverageLogFactor(Dirichlet prob, Gamma alpha, Vector probMeanLog)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -680,7 +662,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Dirichlet prob, double alpha, Vector probMeanLog)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Stable)]
+public static double AverageLogFactor(Dirichlet prob, double alpha, Vector probMeanLog)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -754,7 +737,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Vector prob, ConjugateDirichlet alpha)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static double AverageLogFactor(Vector prob, ConjugateDirichlet alpha)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -822,7 +806,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Vector prob, Gamma alpha)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static double AverageLogFactor(Vector prob, Gamma alpha)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -883,14 +868,14 @@
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogAverageFactor_IList_System_Double__System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogAverageFactor(IList{System.Double},System.Double)">LogAverageFactor(IList&lt;Double&gt;, Double)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+  <a id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_AverageLogFactor_System_Collections_Generic_IList_System_Double__System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.AverageLogFactor(System.Collections.Generic.IList{System.Double},System.Double)">AverageLogFactor(IList&lt;Double&gt;, Double)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(IList&lt;double&gt; prob, double alpha)</code></pre>
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(IList&lt;double&gt; prob, double alpha)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -903,7 +888,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">prob</span></td>
         <td><p>Incoming message from <code>prob</code>.</p>
 </td>
@@ -927,13 +912,13 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogAverageFactor_IList_System_Double__System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(prob) p(prob) factor(prob,K,alpha))</code>.</p>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_AverageLogFactor_System_Collections_Generic_IList_System_Double__System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(prob) p(prob) log(factor(prob,K,alpha))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogAverageFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogAverageFactor(Dirichlet, Gamma)</h4>
@@ -942,7 +927,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Dirichlet prob, Gamma alpha)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not currently support Dirichlet distributions with stochastic arguments&quot;)]
+public static double LogAverageFactor(Dirichlet prob, Gamma alpha)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1060,14 +1046,14 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Dirichlet_System_Double__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(prob) p(prob) factor(prob,K,alpha))</code>.</p>
 </div>
-  <a id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogEvidenceRatio_IList_System_Double__System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogEvidenceRatio(IList{System.Double},System.Double)">LogEvidenceRatio(IList&lt;Double&gt;, Double)</h4>
+  <a id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogAverageFactor_System_Collections_Generic_IList_System_Double__System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogAverageFactor(System.Collections.Generic.IList{System.Double},System.Double)">LogAverageFactor(IList&lt;Double&gt;, Double)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(IList&lt;double&gt; prob, double alpha)</code></pre>
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(IList&lt;double&gt; prob, double alpha)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1080,7 +1066,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">prob</span></td>
         <td><p>Incoming message from <code>prob</code>.</p>
 </td>
@@ -1104,13 +1090,13 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogEvidenceRatio_IList_System_Double__System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(prob) p(prob) factor(prob,K,alpha) / sum_prob p(prob) messageTo(prob))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogAverageFactor_System_Collections_Generic_IList_System_Double__System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(prob) p(prob) factor(prob,K,alpha))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Dirichlet_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Dirichlet,System.Double)">LogEvidenceRatio(Dirichlet, Double)</h4>
@@ -1164,6 +1150,58 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Dirichlet_System_Double__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(prob) p(prob) factor(prob,K,alpha) / sum_prob p(prob) messageTo(prob))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogEvidenceRatio_System_Collections_Generic_IList_System_Double__System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.LogEvidenceRatio(System.Collections.Generic.IList{System.Double},System.Double)">LogEvidenceRatio(IList&lt;Double&gt;, Double)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(IList&lt;double&gt; prob, double alpha)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">prob</span></td>
+        <td><p>Incoming message from <code>prob</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">alpha</span></td>
+        <td><p>Constant value for <code>alpha</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_LogEvidenceRatio_System_Collections_Generic_IList_System_Double__System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(prob) p(prob) factor(prob,K,alpha) / sum_prob p(prob) messageTo(prob))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_ProbAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.ProbAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DirichletSymmetricOp_ProbAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DirichletSymmetricOp.ProbAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">ProbAverageConditional(Gamma, Dirichlet)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>prob</code>.</p>
@@ -1171,7 +1209,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dirichlet ProbAverageConditional(Gamma alpha, Dirichlet result)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not currently support Dirichlet distributions with stochastic arguments&quot;)]
+public static Dirichlet ProbAverageConditional(Gamma alpha, Dirichlet result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1335,7 +1374,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dirichlet ProbAverageLogarithm(ConjugateDirichlet alpha, Dirichlet result)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static Dirichlet ProbAverageLogarithm(ConjugateDirichlet alpha, Dirichlet result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1403,7 +1443,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dirichlet ProbAverageLogarithm(Gamma alpha, Dirichlet result)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static Dirichlet ProbAverageLogarithm(Gamma alpha, Dirichlet result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1471,7 +1512,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dirichlet ProbAverageLogarithm(double alpha, Dirichlet result)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Stable)]
+public static Dirichlet ProbAverageLogarithm(double alpha, Dirichlet result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

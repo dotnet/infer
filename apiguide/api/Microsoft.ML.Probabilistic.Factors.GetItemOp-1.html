@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GetItemOp&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1" class="text-break">Class GetItemOp&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItem__1_IList___0__System_Int32_">GetItem&lt;T&gt;(IList&lt;T&gt;, Int32)</a>, given random arguments to the function.</p>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItem__1_System_Collections_Generic_IList___0__System_Int32_">GetItem&lt;T&gt;(IList&lt;T&gt;, Int32)</a>, given random arguments to the function.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -91,11 +91,37 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">GetItemOp&lt;T&gt;</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class GetItemOp&lt;T&gt; : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;GetItem&lt;&gt;&quot;, new Type[]{})]
+[Quality(QualityBand.Mature)]
+public static class GetItemOp&lt;T&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -496,7 +522,7 @@
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(item,array,index))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.AverageLogFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor__0_IList__0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.AverageLogFactor(`0,IList{`0},System.Int32)">AverageLogFactor(T, IList&lt;T&gt;, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor__0_System_Collections_Generic_IList__0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.AverageLogFactor(`0,System.Collections.Generic.IList{`0},System.Int32)">AverageLogFactor(T, IList&lt;T&gt;, Int32)</h4>
   <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -521,7 +547,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
@@ -550,17 +576,17 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor__0_IList__0__System_Int32__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor__0_System_Collections_Generic_IList__0__System_Int32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditional__1_IList___0__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageConditional``1(IList{``0},System.Int32,``0)">ItemAverageConditional&lt;Distribution&gt;(IList&lt;Distribution&gt;, Int32, Distribution)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditional__1_System_Collections_Generic_IList___0__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageConditional``1(System.Collections.Generic.IList{``0},System.Int32,``0)">ItemAverageConditional&lt;Distribution&gt;(IList&lt;Distribution&gt;, Int32, Distribution)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>item</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Distribution ItemAverageConditional&lt;Distribution&gt;(IList&lt;Distribution&gt; array, int index, Distribution result)
+    <pre><code class="lang-csharp hljs">public static Distribution ItemAverageConditional&lt;Distribution&gt;([SkipIfAllUniform] IList&lt;Distribution&gt; array, int index, Distribution result)
     where Distribution : SettableTo&lt;Distribution&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -574,7 +600,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;Distribution&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
@@ -625,7 +651,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditional__1_IList___0__System_Int32___0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditional__1_System_Collections_Generic_IList___0__System_Int32___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>item</code> as the random arguments are varied. The formula is <code>proj[p(item) sum_(array) p(array) factor(item,array,index)]/p(item)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -645,7 +671,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageConditionalInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditionalInit__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageConditionalInit``1(IList{``0})">ItemAverageConditionalInit&lt;Distribution&gt;(IList&lt;Distribution&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditionalInit__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageConditionalInit``1(System.Collections.Generic.IList{``0})">ItemAverageConditionalInit&lt;Distribution&gt;(IList&lt;Distribution&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -664,7 +690,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;Distribution&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
@@ -702,17 +728,17 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditionalInit__1_IList___0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditionalInit__1_System_Collections_Generic_IList___0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithm__1_IList___0__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageLogarithm``1(IList{``0},System.Int32,``0)">ItemAverageLogarithm&lt;Distribution&gt;(IList&lt;Distribution&gt;, Int32, Distribution)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithm__1_System_Collections_Generic_IList___0__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageLogarithm``1(System.Collections.Generic.IList{``0},System.Int32,``0)">ItemAverageLogarithm&lt;Distribution&gt;(IList&lt;Distribution&gt;, Int32, Distribution)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>item</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Distribution ItemAverageLogarithm&lt;Distribution&gt;(IList&lt;Distribution&gt; array, int index, Distribution result)
+    <pre><code class="lang-csharp hljs">public static Distribution ItemAverageLogarithm&lt;Distribution&gt;([SkipIfAllUniform] IList&lt;Distribution&gt; array, int index, Distribution result)
     where Distribution : SettableTo&lt;Distribution&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -726,7 +752,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;Distribution&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
@@ -777,7 +803,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithm__1_IList___0__System_Int32___0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithm__1_System_Collections_Generic_IList___0__System_Int32___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>item</code> as the random arguments are varied. The formula is <code>proj[sum_(array) p(array) factor(item,array,index)]</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -797,7 +823,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageLogarithmInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithmInit__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageLogarithmInit``1(IList{``0})">ItemAverageLogarithmInit&lt;Distribution&gt;(IList&lt;Distribution&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithmInit__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageLogarithmInit``1(System.Collections.Generic.IList{``0})">ItemAverageLogarithmInit&lt;Distribution&gt;(IList&lt;Distribution&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -816,7 +842,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;Distribution&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
@@ -854,11 +880,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithmInit__1_IList___0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithmInit__1_System_Collections_Generic_IList___0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__0_IList__0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor(`0,IList{`0},System.Int32)">LogAverageFactor(T, IList&lt;T&gt;, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__0_System_Collections_Generic_IList__0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor(`0,System.Collections.Generic.IList{`0},System.Int32)">LogAverageFactor(T, IList&lt;T&gt;, Int32)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -883,7 +909,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
@@ -912,7 +938,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__0_IList__0__System_Int32__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__0_System_Collections_Generic_IList__0__System_Int32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item,array) p(item,array) factor(item,array,index))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor*"></a>
@@ -985,7 +1011,7 @@
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item) p(item) factor(item,array,index))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__1__0_IList___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor``1(`0,IList{``0},System.Int32)">LogAverageFactor&lt;Distribution&gt;(T, IList&lt;Distribution&gt;, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__1__0_System_Collections_Generic_IList___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor``1(`0,System.Collections.Generic.IList{``0},System.Int32)">LogAverageFactor&lt;Distribution&gt;(T, IList&lt;Distribution&gt;, Int32)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1011,7 +1037,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;Distribution&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
@@ -1056,11 +1082,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__1__0_IList___0__System_Int32__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__1__0_System_Collections_Generic_IList___0__System_Int32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item,array) p(item,array) factor(item,array,index))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__0_IList__0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio(`0,IList{`0},System.Int32)">LogEvidenceRatio(T, IList&lt;T&gt;, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__0_System_Collections_Generic_IList__0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio(`0,System.Collections.Generic.IList{`0},System.Int32)">LogEvidenceRatio(T, IList&lt;T&gt;, Int32)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1085,7 +1111,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
@@ -1114,7 +1140,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__0_IList__0__System_Int32__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__0_System_Collections_Generic_IList__0__System_Int32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item,array) p(item,array) factor(item,array,index) / sum_item p(item) messageTo(item))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio*"></a>
@@ -1181,7 +1207,7 @@
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item) p(item) factor(item,array,index) / sum_item p(item) messageTo(item))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__1__0_IList___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio``1(`0,IList{``0},System.Int32)">LogEvidenceRatio&lt;Distribution&gt;(T, IList&lt;Distribution&gt;, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__1__0_System_Collections_Generic_IList___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio``1(`0,System.Collections.Generic.IList{``0},System.Int32)">LogEvidenceRatio&lt;Distribution&gt;(T, IList&lt;Distribution&gt;, Int32)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1207,7 +1233,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;Distribution&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
@@ -1252,7 +1278,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__1__0_IList___0__System_Int32__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__1__0_System_Collections_Generic_IList___0__System_Int32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item,array) p(item,array) factor(item,array,index) / sum_item p(item) messageTo(item))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
 </article>

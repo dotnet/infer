@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Set&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -94,14 +94,32 @@
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><span class="xref">ICloneable</span></div>
-    <div><span class="xref">IReadOnlyCollection</span>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Collections.html">Microsoft.ML.Probabilistic.Collections</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Collections_Set_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Set&lt;T&gt; : ICollection&lt;T&gt;, ICloneable, IReadOnlyCollection&lt;T&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class Set&lt;T&gt; : ICollection&lt;T&gt;, ICloneable, IReadOnlyCollection&lt;T&gt;, IEnumerable&lt;T&gt;, IEnumerable</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -137,7 +155,7 @@ via its own comparer function.</p>
     <pre><code class="lang-csharp hljs">public Set()</code></pre>
   </div>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1__ctor_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1__ctor_IEqualityComparer__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.#ctor(IEqualityComparer{`0})">Set(IEqualityComparer&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1__ctor_System_Collections_Generic_IEqualityComparer__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.#ctor(System.Collections.Generic.IEqualityComparer{`0})">Set(IEqualityComparer&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -155,14 +173,14 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEqualityComparer</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.iequalitycomparer-1">IEqualityComparer</a>&lt;T&gt;</td>
         <td><span class="parametername">comparer</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1__ctor_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1__ctor_System_Int32_IEqualityComparer__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.#ctor(System.Int32,IEqualityComparer{`0})">Set(Int32, IEqualityComparer&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1__ctor_System_Int32_System_Collections_Generic_IEqualityComparer__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.#ctor(System.Int32,System.Collections.Generic.IEqualityComparer{`0})">Set(Int32, IEqualityComparer&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -185,7 +203,7 @@ via its own comparer function.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IEqualityComparer</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.iequalitycomparer-1">IEqualityComparer</a>&lt;T&gt;</td>
         <td><span class="parametername">comparer</span></td>
         <td></td>
       </tr>
@@ -234,7 +252,7 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEqualityComparer</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.iequalitycomparer-1">IEqualityComparer</a>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -313,7 +331,7 @@ via its own comparer function.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_AddRange_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.AddRange*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_AddRange_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.AddRange(IEnumerable{`0})">AddRange(IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_AddRange_System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.AddRange(System.Collections.Generic.IEnumerable{`0})">AddRange(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Add all items in a collection.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -332,7 +350,7 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
         <td></td>
       </tr>
@@ -410,7 +428,7 @@ via its own comparer function.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_Contains_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Contains*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_Contains_IList__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Contains(IList{`0})">Contains(IList&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_Contains_System_Collections_Generic_IList__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Contains(System.Collections.Generic.IList{`0})">Contains(IList&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Test membership of all items in a collection.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -429,7 +447,7 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
         <td></td>
       </tr>
@@ -445,14 +463,14 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><p>result[i] is true iff the set contains list[i].</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_ContainsAll_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.ContainsAll*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_ContainsAll_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.ContainsAll(IEnumerable{`0})">ContainsAll(IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_ContainsAll_System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.ContainsAll(System.Collections.Generic.IEnumerable{`0})">ContainsAll(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Test membership of all items in a collection.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -471,7 +489,7 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
         <td></td>
       </tr>
@@ -494,7 +512,7 @@ via its own comparer function.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_ContainsAny_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.ContainsAny*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_ContainsAny_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.ContainsAny(IEnumerable{`0})">ContainsAny(IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_ContainsAny_System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.ContainsAny(System.Collections.Generic.IEnumerable{`0})">ContainsAny(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Test membership of all items in a collection.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -513,7 +531,7 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
         <td></td>
       </tr>
@@ -536,7 +554,7 @@ via its own comparer function.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_ConvertAll_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.ConvertAll*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_ConvertAll_Converter__0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.ConvertAll(Converter{`0,`0})">ConvertAll(Converter&lt;T, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_ConvertAll_System_Converter__0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.ConvertAll(System.Converter{`0,`0})">ConvertAll(Converter&lt;T, T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -554,7 +572,7 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;T, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;T, T&gt;</td>
         <td><span class="parametername">converter</span></td>
         <td></td>
       </tr>
@@ -606,7 +624,7 @@ via its own comparer function.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_Difference_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Difference*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_Difference_Microsoft_ML_Probabilistic_Collections_Set__0__IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Difference(Microsoft.ML.Probabilistic.Collections.Set{`0},IEnumerable{`0})">Difference(Set&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_Difference_Microsoft_ML_Probabilistic_Collections_Set__0__System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Difference(Microsoft.ML.Probabilistic.Collections.Set{`0},System.Collections.Generic.IEnumerable{`0})">Difference(Set&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -629,7 +647,7 @@ via its own comparer function.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">b</span></td>
         <td></td>
       </tr>
@@ -690,8 +708,10 @@ via its own comparer function.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_FromEnumerable_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.FromEnumerable*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_FromEnumerable_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.FromEnumerable(IEnumerable{`0})">FromEnumerable(IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_FromEnumerable_System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.FromEnumerable(System.Collections.Generic.IEnumerable{`0})">FromEnumerable(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -709,7 +729,7 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">collection</span></td>
         <td></td>
       </tr>
@@ -731,7 +751,7 @@ via its own comparer function.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_FromEnumerable_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.FromEnumerable*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_FromEnumerable_IEqualityComparer__0__IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.FromEnumerable(IEqualityComparer{`0},IEnumerable{`0})">FromEnumerable(IEqualityComparer&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_FromEnumerable_System_Collections_Generic_IEqualityComparer__0__System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.FromEnumerable(System.Collections.Generic.IEqualityComparer{`0},System.Collections.Generic.IEnumerable{`0})">FromEnumerable(IEqualityComparer&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -749,12 +769,12 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEqualityComparer</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.iequalitycomparer-1">IEqualityComparer</a>&lt;T&gt;</td>
         <td><span class="parametername">comparer</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">collection</span></td>
         <td></td>
       </tr>
@@ -793,7 +813,7 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerator</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1">IEnumerator</a>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -821,8 +841,10 @@ via its own comparer function.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_Intersection_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Intersection*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_Intersection_Microsoft_ML_Probabilistic_Collections_Set__0__IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Intersection(Microsoft.ML.Probabilistic.Collections.Set{`0},IEnumerable{`0})">Intersection(Set&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_Intersection_Microsoft_ML_Probabilistic_Collections_Set__0__System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Intersection(Microsoft.ML.Probabilistic.Collections.Set{`0},System.Collections.Generic.IEnumerable{`0})">Intersection(Set&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -845,7 +867,7 @@ via its own comparer function.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">b</span></td>
         <td></td>
       </tr>
@@ -867,7 +889,7 @@ via its own comparer function.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_IntersectWith_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.IntersectWith*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_IntersectWith_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.IntersectWith(IEnumerable{`0})">IntersectWith(IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_IntersectWith_System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.IntersectWith(System.Collections.Generic.IEnumerable{`0})">IntersectWith(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -885,7 +907,7 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">items</span></td>
         <td></td>
       </tr>
@@ -932,7 +954,7 @@ via its own comparer function.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_Remove_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Remove*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_Remove_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Remove(IEnumerable{`0})">Remove(IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_Remove_System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Remove(System.Collections.Generic.IEnumerable{`0})">Remove(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Remove all items in a collection.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -951,7 +973,7 @@ via its own comparer function.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
         <td></td>
       </tr>
@@ -980,6 +1002,8 @@ via its own comparer function.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_Union_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Union*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_Union_Microsoft_ML_Probabilistic_Collections_Set__0__Microsoft_ML_Probabilistic_Collections_Set__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.Union(Microsoft.ML.Probabilistic.Collections.Set{`0},Microsoft.ML.Probabilistic.Collections.Set{`0})">Union(Set&lt;T&gt;, Set&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
@@ -1073,7 +1097,7 @@ via its own comparer function.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_op_BitwiseAnd_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.op_BitwiseAnd*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_op_BitwiseAnd_Microsoft_ML_Probabilistic_Collections_Set__0__IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.op_BitwiseAnd(Microsoft.ML.Probabilistic.Collections.Set{`0},IEnumerable{`0})">BitwiseAnd(Set&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_op_BitwiseAnd_Microsoft_ML_Probabilistic_Collections_Set__0__System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.op_BitwiseAnd(Microsoft.ML.Probabilistic.Collections.Set{`0},System.Collections.Generic.IEnumerable{`0})">BitwiseAnd(Set&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1096,7 +1120,7 @@ via its own comparer function.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">b</span></td>
         <td></td>
       </tr>
@@ -1443,7 +1467,7 @@ via its own comparer function.</p>
   <div class="markdown level1 remarks"><p>null is treated as an empty set.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Collections_Set_1_op_Subtraction_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.op_Subtraction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_op_Subtraction_Microsoft_ML_Probabilistic_Collections_Set__0__IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.op_Subtraction(Microsoft.ML.Probabilistic.Collections.Set{`0},IEnumerable{`0})">Subtraction(Set&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_op_Subtraction_Microsoft_ML_Probabilistic_Collections_Set__0__System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.op_Subtraction(Microsoft.ML.Probabilistic.Collections.Set{`0},System.Collections.Generic.IEnumerable{`0})">Subtraction(Set&lt;T&gt;, IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1466,7 +1490,7 @@ via its own comparer function.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">b</span></td>
         <td></td>
       </tr>
@@ -1487,12 +1511,110 @@ via its own comparer function.</p>
       </tr>
     </tbody>
   </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Collections_Set_1_System_Collections_IEnumerable_GetEnumerator_" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.System#Collections#IEnumerable#GetEnumerator*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_Set_1_System_Collections_IEnumerable_GetEnumerator" data-uid="Microsoft.ML.Probabilistic.Collections.Set`1.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerator IEnumerable.GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">IEnumerator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">System.Collections.Generic.ICollection&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">IReadOnlyCollection&lt;&gt;</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">System.Collections.Generic.IReadOnlyCollection&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">System.Collections.Generic.IEnumerable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">System.Collections.IEnumerable</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_IEnumerable_System_Action___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action_System_Int32___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;Int32, T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_IEnumerable_System_Action_System_Int32___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable, Action&lt;Int32, T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Sum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_UInt32__">EnumerableExtensions.Sum&lt;TSource&gt;(IEnumerable&lt;TSource&gt;, Func&lt;TSource, UInt32&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Sum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_UInt64__">EnumerableExtensions.Sum&lt;TSource&gt;(IEnumerable&lt;TSource&gt;, Func&lt;TSource, UInt64&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ValueEquals__1_System_Collections_Generic_IEnumerable___0__System_Collections_Generic_IEnumerable___0__">EnumerableExtensions.ValueEquals&lt;T&gt;(IEnumerable&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOf__1_System_Collections_Generic_IEnumerable___0____0_">EnumerableExtensions.IndexOf&lt;T&gt;(IEnumerable&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOf__1_System_Collections_IEnumerable___0_">EnumerableExtensions.IndexOf&lt;T&gt;(IEnumerable, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindIndex__1_System_Collections_Generic_IEnumerable___0__System_Predicate___0__">EnumerableExtensions.FindIndex&lt;T&gt;(IEnumerable&lt;T&gt;, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindIndex__1_System_Collections_IEnumerable_System_Predicate___0__">EnumerableExtensions.FindIndex&lt;T&gt;(IEnumerable, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindAllIndex__1_System_Collections_Generic_IEnumerable___0__System_Predicate___0__">EnumerableExtensions.FindAllIndex&lt;T&gt;(IEnumerable&lt;T&gt;, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOfAll__1_System_Collections_Generic_IEnumerable___0____0_">EnumerableExtensions.IndexOfAll&lt;T&gt;(IEnumerable&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Skip__1_System_Collections_Generic_IEnumerable___0__System_Int32_System_Collections_Generic_List___0___">EnumerableExtensions.Skip&lt;T&gt;(IEnumerable&lt;T&gt;, Int32, out List&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_CopyTo__1_System_Collections_Generic_IEnumerable___0____0___System_Int32_">EnumerableExtensions.CopyTo&lt;T&gt;(IEnumerable&lt;T&gt;, T[], Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ToReadOnlyList__1_System_Collections_Generic_IEnumerable___0__">EnumerableExtensions.ToReadOnlyList&lt;T&gt;(IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_AddRange__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.AddRange&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_ContainsAll__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.ContainsAll&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_ContainsAny__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.ContainsAny&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableReduce__2_System_Collections_Generic_IEnumerable___0____1_System_Func___1___0___1__System_Func___1___0_System_Int32___1__">IEnumerableExensions.EnumerableReduce&lt;T, TRes&gt;(IEnumerable&lt;T&gt;, TRes, Func&lt;TRes, T, TRes&gt;, Func&lt;TRes, T, Int32, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableSum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_Double__">IEnumerableExensions.EnumerableSum&lt;T&gt;(IEnumerable&lt;T&gt;, Func&lt;T, Double&gt;)</a>
   </div>
 </article>
           </div>

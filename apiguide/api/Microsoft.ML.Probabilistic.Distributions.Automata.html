@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace Microsoft.ML.Probabilistic.Distributions.Automata
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,6 +91,9 @@
       <section><p>Abstract base class for a weighted finite state automaton.
 It can be viewed as a function that maps arbitrary sequences of elements to real values.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Builder.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Builder</a></h4>
+      <section><p>Helper class which is used to construct new automaton interactively using the builder pattern.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Condensation.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Condensation</a></h4>
       <section><p>Represents the <a href="http://en.wikipedia.org/wiki/Condensation_(graph_theory)">condensation</a>
 of an automaton graph.</p>
@@ -98,16 +101,10 @@ of an automaton graph.</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Determinization.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization</a></h4>
       <section><p>Groups together helper classes used for automata determinization.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Determinization.WeightedStateSet.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedStateSet</a></h4>
-      <section><p>Represents a state of the resulting automaton in the power set construction.
-It is essentially a set of (stateId, weight) pairs of the source automaton, where each state id is unique.
-Supports a quick lookup of the weight by state id.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.EpsilonClosure.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.EpsilonClosure</a></h4>
-      <section><p>Represents the epsilon closure of a state.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.State.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.State</a></h4>
-      <section><p>Represents a state of an automaton.</p>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Determinization.WeightedStateSetOnlyStateComparer.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedStateSetOnlyStateComparer</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Simplification.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Simplification</a></h4>
+      <section><p>Helper class which which implements automaton simplification.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.StronglyConnectedComponent.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.StronglyConnectedComponent</a></h4>
       <section><p>Represents a strongly connected component of an automaton graph.</p>
@@ -138,13 +135,13 @@ Supports a quick lookup of the weight by state id.</p>
       <section><p>An automaton defined on generic lists.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton-3.html">ListAutomaton&lt;TList, TElement, TElementDistribution&gt;</a></h4>
-      <section><p>An automaton defined on types implementing <see cref="!:IList&lt;T>"></see>.</p>
+      <section><p>An automaton defined on types implementing <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList&lt;T&gt;</a>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListAutomaton-4.html">ListAutomaton&lt;TList, TElement, TElementDistribution, TThis&gt;</a></h4>
-      <section><p>A base class for automata defined on types implementing <see cref="!:IList&lt;T>"></see>.</p>
+      <section><p>A base class for automata defined on types implementing <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList&lt;T&gt;</a>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListManipulator-2.html">ListManipulator&lt;TList, TElement&gt;</a></h4>
-      <section><p>Provides the ability to manipulate lists (classes that implement <see cref="!:IList&lt;T>"></see>).</p>
+      <section><p>Provides the ability to manipulate lists (classes that implement <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList&lt;T&gt;</a>).</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.ListTransducer-2.html">ListTransducer&lt;TElement, TElementDist&gt;</a></h4>
       <section><p>Represents a transducer defined on pairs of lists.</p>
@@ -189,11 +186,11 @@ If the distribution is a point mass, applies the underlying automaton format to 
 <ul><li>
 If the distribution is not a point mass, applies the underlying automaton format to the probability function.
 </li><li>
-If the distribution is a point mass, simply calls <see cref="!:object.ToString"></see> on the point.
+If the distribution is a point mass, simply calls <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">ToString()</a> on the point.
 </li></ul>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.html">StringAutomaton</a></h4>
-      <section><p>Represents a weighted finite state automaton defined on <see cref="!:System.String"></see>.</p>
+      <section><p>Represents a weighted finite state automaton defined on <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator.html">StringManipulator</a></h4>
       <section><p>Provides the ability to manipulate strings.</p>
@@ -213,8 +210,49 @@ If the distribution is a point mass, simply calls <see cref="!:object.ToString">
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase-12.PairListAutomaton.html">TransducerBase&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton, TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton, TPairDistribution, TThis&gt;.PairListAutomaton</a></h4>
       <section><p>Represents an automaton that maps lists of element pairs to real values. Such automata are used to represent transducers internally.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase-12.UnlimitedStatesComputation.html">TransducerBase&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton, TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton, TPairDistribution, TThis&gt;.UnlimitedStatesComputation</a></h4>
+      <section></section>
     <h3 id="structs">Structs
   </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Builder.StateBuilder.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Builder.StateBuilder</a></h4>
+      <section><p>Builder struct for a state</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Builder.TransitionIterator.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Builder.TransitionIterator</a></h4>
+      <section><p>Helper struct for iterating over currently constructed list of transitions for state.
+Unlike standard enumerator pattern through this iterator elements can be changed and removed.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.DataContainer.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.DataContainer</a></h4>
+      <section><p>Immutable container for automaton data - states and transitions.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Determinization.OutgoingTransition.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.OutgoingTransition</a></h4>
+      <section></section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Determinization.WeightedState.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedState</a></h4>
+      <section><p>Represents</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Determinization.WeightedStateSet.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedStateSet</a></h4>
+      <section><p>Represents a state of the resulting automaton in the power set construction.
+It is essentially a set of (stateId, weight) pairs of the source automaton, where each state id is unique.
+Supports a quick lookup of the weight by state id.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Determinization.WeightedStateSetBuilder.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Determinization.WeightedStateSetBuilder</a></h4>
+      <section><p>Builder for weighted sets.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.EpsilonClosure.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.EpsilonClosure</a></h4>
+      <section><p>Represents the epsilon closure of a state.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.State.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.State</a></h4>
+      <section><p>Represents a reference to a state of automaton for exposure in public API.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.StateCollection.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.StateCollection</a></h4>
+      <section><p>Represents a collection of automaton states for use in public APIs</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.StateCollection.StateEnumerator.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.StateCollection.StateEnumerator</a></h4>
+      <section><p>Enumerator over states in <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.StateCollection.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.StateCollection</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.StateData.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.StateData</a></h4>
+      <section><p>Represents a state of an automaton that is stored in the Automaton.states. This is an internal representation
+of the state. <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.State.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.State</a> struct should be used in public APIs.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.Transition.html">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Transition</a></h4>
       <section><p>Represents a transition in an automaton.</p>
 </section>

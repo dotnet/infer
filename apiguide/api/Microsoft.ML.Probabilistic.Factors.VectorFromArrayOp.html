@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class VectorFromArrayOp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,16 +91,42 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">VectorFromArrayOp</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class VectorFromArrayOp : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(new string[]{&quot;vector&quot;, &quot;array&quot;}, typeof(Vector), &quot;FromArray&quot;, new Type[]{typeof(double[])})]
+[Quality(QualityBand.Preview)]
+public static class VectorFromArrayOp</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.ArrayAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.ArrayAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageConditional&lt;GaussianList&gt;(VectorGaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.ArrayAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageConditional&lt;GaussianList&gt;(VectorGaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>data</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -126,7 +152,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>data</code>.</p>
 </td>
@@ -171,7 +197,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>data</code> as the random arguments are varied. The formula is <code>proj[p(data) sum_(fromArray) p(fromArray) factor(fromArray,data)]/p(data)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -260,7 +286,7 @@
   <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>data</code> conditioned on the given values.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.ArrayAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.ArrayAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageLogarithm&lt;GaussianList&gt;(VectorGaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.ArrayAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">ArrayAverageLogarithm&lt;GaussianList&gt;(VectorGaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>data</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -286,7 +312,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>data</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
 </td>
@@ -331,7 +357,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_ArrayAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>data</code> with <code>fromArray</code> integrated out. The formula is <code>sum_fromArray p(fromArray) factor(fromArray,data)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -505,7 +531,7 @@
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(fromArray) p(fromArray) factor(fromArray,data))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.LogAverageFactor(Microsoft.ML.Probabilistic.Math.Vector,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogAverageFactor(Vector, IList&lt;Gaussian&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.LogAverageFactor(Microsoft.ML.Probabilistic.Math.Vector,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogAverageFactor(Vector, IList&lt;Gaussian&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -530,7 +556,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>data</code>.</p>
 </td>
@@ -553,7 +579,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(data) p(data) factor(fromArray,data))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.LogAverageFactor*"></a>
@@ -655,7 +681,7 @@
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(fromArray) p(fromArray) factor(fromArray,data) / sum_fromArray p(fromArray) messageTo(fromArray))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.Vector,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogEvidenceRatio(Vector, IList&lt;Gaussian&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.Vector,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogEvidenceRatio(Vector, IList&lt;Gaussian&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -680,7 +706,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>data</code>.</p>
 </td>
@@ -703,7 +729,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(data) p(data) factor(fromArray,data))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.LogEvidenceRatio*"></a>
@@ -759,7 +785,7 @@
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(fromArray,data))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageConditional_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageConditional(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">VectorAverageConditional(IList&lt;Gaussian&gt;, VectorGaussian)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageConditional_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageConditional(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">VectorAverageConditional(IList&lt;Gaussian&gt;, VectorGaussian)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>fromArray</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -778,7 +804,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>data</code>.</p>
 </td>
@@ -807,11 +833,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageConditional_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageConditional_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>fromArray</code> as the random arguments are varied. The formula is <code>proj[p(fromArray) sum_(data) p(data) factor(fromArray,data)]/p(fromArray)</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageConditionalInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageConditionalInit_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageConditionalInit(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">VectorAverageConditionalInit(IList&lt;Gaussian&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageConditionalInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageConditionalInit(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">VectorAverageConditionalInit(IList&lt;Gaussian&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -829,7 +855,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>data</code>.</p>
 </td>
@@ -851,11 +877,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageConditionalInit_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageConditionalInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageLogarithm_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageLogarithm(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">VectorAverageLogarithm(IList&lt;Gaussian&gt;, VectorGaussian)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageLogarithm_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageLogarithm(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">VectorAverageLogarithm(IList&lt;Gaussian&gt;, VectorGaussian)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>fromArray</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -874,7 +900,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>data</code>.</p>
 </td>
@@ -903,11 +929,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageLogarithm_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageLogarithm_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>fromArray</code> as the random arguments are varied. The formula is <code>proj[sum_(data) p(data) factor(fromArray,data)]</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageLogarithmInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageLogarithmInit_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageLogarithmInit(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">VectorAverageLogarithmInit(IList&lt;Gaussian&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageLogarithmInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.VectorAverageLogarithmInit(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">VectorAverageLogarithmInit(IList&lt;Gaussian&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -925,7 +951,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>data</code>.</p>
 </td>
@@ -947,7 +973,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageLogarithmInit_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorFromArrayOp_VectorAverageLogarithmInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </div>
 </article>

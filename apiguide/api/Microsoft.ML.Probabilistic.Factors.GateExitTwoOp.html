@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GateExitTwoOp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,16 +91,42 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">GateExitTwoOp</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class GateExitTwoOp : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Gate), &quot;ExitTwo&lt;&gt;&quot;, new Type[]{})]
+[Quality(QualityBand.Mature)]
+public static class GateExitTwoOp</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.AverageLogFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_AverageLogFactor__1___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_IList___0____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.AverageLogFactor``1(``0,Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli,IList{``0},``0)">AverageLogFactor&lt;TExit&gt;(TExit, Bernoulli, Bernoulli, IList&lt;TExit&gt;, TExit)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_AverageLogFactor__1___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Collections_Generic_IList___0____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.AverageLogFactor``1(``0,Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli,System.Collections.Generic.IList{``0},``0)">AverageLogFactor&lt;TExit&gt;(TExit, Bernoulli, Bernoulli, IList&lt;TExit&gt;, TExit)</h4>
   <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -138,7 +164,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;TExit&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExit&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>Incoming message from <code>values</code>.</p>
 </td>
@@ -183,17 +209,17 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_AverageLogFactor__1___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_IList___0____0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_AverageLogFactor__1___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Collections_Generic_IList___0____0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case0AverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageConditional__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case0AverageConditional``1(IList{``0})">Case0AverageConditional&lt;TExit&gt;(IList&lt;TExit&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageConditional__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case0AverageConditional``1(System.Collections.Generic.IList{``0})">Case0AverageConditional&lt;TExit&gt;(IList&lt;TExit&gt;)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>case0</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Bernoulli Case0AverageConditional&lt;TExit&gt;(IList&lt;TExit&gt; values)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Bernoulli Case0AverageConditional&lt;TExit&gt;([SkipIfAllUniform] IList&lt;TExit&gt; values)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -206,7 +232,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;TExit&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExit&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>Incoming message from <code>values</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
@@ -245,7 +271,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageConditional__1_IList___0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageConditional__1_System_Collections_Generic_IList___0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>case0</code> as the random arguments are varied. The formula is <code>proj[p(case0) sum_(values) p(values) factor(exitTwo,case0,case1,values)]/p(case0)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -265,7 +291,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case0AverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageConditional__2___0_IList___1__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case0AverageConditional``2(``0,IList{``1})">Case0AverageConditional&lt;TExit, TExitDomain&gt;(TExit, IList&lt;TExitDomain&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageConditional__2___0_System_Collections_Generic_IList___1__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case0AverageConditional``2(``0,System.Collections.Generic.IList{``1})">Case0AverageConditional&lt;TExit, TExitDomain&gt;(TExit, IList&lt;TExitDomain&gt;)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>case0</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -291,7 +317,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;TExitDomain&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExitDomain&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>Incoming message from <code>values</code>.</p>
 </td>
@@ -335,17 +361,17 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageConditional__2___0_IList___1___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageConditional__2___0_System_Collections_Generic_IList___1___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>case0</code> as the random arguments are varied. The formula is <code>proj[p(case0) sum_(exitTwo,values) p(exitTwo,values) factor(exitTwo,case0,case1,values)]/p(case0)</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case0AverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageLogarithm__1___0_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case0AverageLogarithm``1(``0,IList{``0})">Case0AverageLogarithm&lt;TExit&gt;(TExit, IList&lt;TExit&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageLogarithm__1___0_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case0AverageLogarithm``1(``0,System.Collections.Generic.IList{``0})">Case0AverageLogarithm&lt;TExit&gt;(TExit, IList&lt;TExit&gt;)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>case0</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Bernoulli Case0AverageLogarithm&lt;TExit&gt;(TExit exitTwo, IList&lt;TExit&gt; values)
+    <pre><code class="lang-csharp hljs">public static Bernoulli Case0AverageLogarithm&lt;TExit&gt;(TExit exitTwo, [SkipIfAllUniform] IList&lt;TExit&gt; values)
     where TExit : CanGetAverageLog&lt;TExit&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -365,7 +391,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;TExit&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExit&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>Incoming message from <code>values</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
 </td>
@@ -404,7 +430,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageLogarithm__1___0_IList___0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case0AverageLogarithm__1___0_System_Collections_Generic_IList___0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>case0</code>. Because the factor is deterministic, <code>exitTwo</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(values) p(values) log(sum_exitTwo p(exitTwo) factor(exitTwo,case0,case1,values)))</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -424,13 +450,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case1AverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageConditional__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case1AverageConditional``1(IList{``0})">Case1AverageConditional&lt;TExit&gt;(IList&lt;TExit&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageConditional__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case1AverageConditional``1(System.Collections.Generic.IList{``0})">Case1AverageConditional&lt;TExit&gt;(IList&lt;TExit&gt;)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>case1</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Bernoulli Case1AverageConditional&lt;TExit&gt;(IList&lt;TExit&gt; values)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Bernoulli Case1AverageConditional&lt;TExit&gt;([SkipIfAllUniform] IList&lt;TExit&gt; values)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -443,7 +469,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;TExit&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExit&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>Incoming message from <code>values</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
@@ -482,7 +508,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageConditional__1_IList___0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageConditional__1_System_Collections_Generic_IList___0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>case1</code> as the random arguments are varied. The formula is <code>proj[p(case1) sum_(values) p(values) factor(exitTwo,case0,case1,values)]/p(case1)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -502,7 +528,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case1AverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageConditional__2___0_IList___1__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case1AverageConditional``2(``0,IList{``1})">Case1AverageConditional&lt;TExit, TExitDomain&gt;(TExit, IList&lt;TExitDomain&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageConditional__2___0_System_Collections_Generic_IList___1__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case1AverageConditional``2(``0,System.Collections.Generic.IList{``1})">Case1AverageConditional&lt;TExit, TExitDomain&gt;(TExit, IList&lt;TExitDomain&gt;)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>case1</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -528,7 +554,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;TExitDomain&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExitDomain&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>Incoming message from <code>values</code>.</p>
 </td>
@@ -572,17 +598,17 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageConditional__2___0_IList___1___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageConditional__2___0_System_Collections_Generic_IList___1___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>case1</code> as the random arguments are varied. The formula is <code>proj[p(case1) sum_(exitTwo,values) p(exitTwo,values) factor(exitTwo,case0,case1,values)]/p(case1)</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case1AverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageLogarithm__1___0_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case1AverageLogarithm``1(``0,IList{``0})">Case1AverageLogarithm&lt;TExit&gt;(TExit, IList&lt;TExit&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageLogarithm__1___0_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.Case1AverageLogarithm``1(``0,System.Collections.Generic.IList{``0})">Case1AverageLogarithm&lt;TExit&gt;(TExit, IList&lt;TExit&gt;)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>case1</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Bernoulli Case1AverageLogarithm&lt;TExit&gt;(TExit exitTwo, IList&lt;TExit&gt; values)
+    <pre><code class="lang-csharp hljs">public static Bernoulli Case1AverageLogarithm&lt;TExit&gt;(TExit exitTwo, [SkipIfAllUniform] IList&lt;TExit&gt; values)
     where TExit : CanGetAverageLog&lt;TExit&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -602,7 +628,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;TExit&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExit&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>Incoming message from <code>values</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
 </td>
@@ -641,7 +667,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageLogarithm__1___0_IList___0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_Case1AverageLogarithm__1___0_System_Collections_Generic_IList___0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>case1</code>. Because the factor is deterministic, <code>exitTwo</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(values) p(values) log(sum_exitTwo p(exitTwo) factor(exitTwo,case0,case1,values)))</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -661,13 +687,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.ExitTwoAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageConditional__1___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_IList___0____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.ExitTwoAverageConditional``1(``0,Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli,IList{``0},``0)">ExitTwoAverageConditional&lt;TExit&gt;(TExit, Bernoulli, Bernoulli, IList&lt;TExit&gt;, TExit)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageConditional__1___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Collections_Generic_IList___0____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.ExitTwoAverageConditional``1(``0,Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli,System.Collections.Generic.IList{``0},``0)">ExitTwoAverageConditional&lt;TExit&gt;(TExit, Bernoulli, Bernoulli, IList&lt;TExit&gt;, TExit)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>exitTwo</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TExit ExitTwoAverageConditional&lt;TExit&gt;(TExit exitTwo, Bernoulli case0, Bernoulli case1, IList&lt;TExit&gt; values, TExit result)
+    <pre><code class="lang-csharp hljs">public static TExit ExitTwoAverageConditional&lt;TExit&gt;(TExit exitTwo, Bernoulli case0, Bernoulli case1, [SkipIfAllUniform] IList&lt;TExit&gt; values, TExit result)
     where TExit : SettableTo&lt;TExit&gt;, ICloneable, SettableToProduct&lt;TExit&gt;, SettableToRatio&lt;TExit&gt;, SettableToWeightedSum&lt;TExit&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -699,7 +725,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;TExit&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExit&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>Incoming message from <code>values</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
@@ -744,7 +770,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageConditional__1___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_IList___0____0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageConditional__1___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Collections_Generic_IList___0____0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>exitTwo</code> as the random arguments are varied. The formula is <code>proj[p(exitTwo) sum_(case0,case1,values) p(case0,case1,values) factor(exitTwo,case0,case1,values)]/p(exitTwo)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -764,7 +790,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.ExitTwoAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageConditional__2___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_IList___1____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.ExitTwoAverageConditional``2(``0,Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli,IList{``1},``0)">ExitTwoAverageConditional&lt;TExit, TExitDomain&gt;(TExit, Bernoulli, Bernoulli, IList&lt;TExitDomain&gt;, TExit)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageConditional__2___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Collections_Generic_IList___1____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.ExitTwoAverageConditional``2(``0,Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli,System.Collections.Generic.IList{``1},``0)">ExitTwoAverageConditional&lt;TExit, TExitDomain&gt;(TExit, Bernoulli, Bernoulli, IList&lt;TExitDomain&gt;, TExit)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>exitTwo</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -802,7 +828,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;TExitDomain&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExitDomain&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>Incoming message from <code>values</code>.</p>
 </td>
@@ -852,17 +878,17 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageConditional__2___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_IList___1____0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageConditional__2___0_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Collections_Generic_IList___1____0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>exitTwo</code> as the random arguments are varied. The formula is <code>proj[p(exitTwo) sum_(case0,case1,values) p(case0,case1,values) factor(exitTwo,case0,case1,values)]/p(exitTwo)</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.ExitTwoAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_IList___0____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.ExitTwoAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli,IList{``0},``0)">ExitTwoAverageLogarithm&lt;TExit&gt;(Bernoulli, Bernoulli, IList&lt;TExit&gt;, TExit)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Collections_Generic_IList___0____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitTwoOp.ExitTwoAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli,System.Collections.Generic.IList{``0},``0)">ExitTwoAverageLogarithm&lt;TExit&gt;(Bernoulli, Bernoulli, IList&lt;TExit&gt;, TExit)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>exitTwo</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TExit ExitTwoAverageLogarithm&lt;TExit&gt;(Bernoulli case0, Bernoulli case1, IList&lt;TExit&gt; values, TExit result)
+    <pre><code class="lang-csharp hljs">public static TExit ExitTwoAverageLogarithm&lt;TExit&gt;(Bernoulli case0, Bernoulli case1, [SkipIfAllUniform] IList&lt;TExit&gt; values, TExit result)
     where TExit : ICloneable, SettableToProduct&lt;TExit&gt;, SettableToPower&lt;TExit&gt;, CanGetAverageLog&lt;TExit&gt;, SettableToUniform, SettableTo&lt;TExit&gt;, SettableToRatio&lt;TExit&gt;, SettableToWeightedSum&lt;TExit&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -888,7 +914,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;TExit&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExit&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>Incoming message from <code>values</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
 </td>
@@ -933,7 +959,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_IList___0____0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitTwoOp_ExitTwoAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Collections_Generic_IList___0____0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>exitTwo</code> as the random arguments are varied. The formula is <code>proj[sum_(case0,case1,values) p(case0,case1,values) factor(exitTwo,case0,case1,values)]</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>

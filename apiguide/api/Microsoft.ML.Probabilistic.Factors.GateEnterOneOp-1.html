@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GateEnterOneOp&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,11 +91,37 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">GateEnterOneOp&lt;T&gt;</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOneOp_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class GateEnterOneOp&lt;T&gt; : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Gate), &quot;EnterOne&lt;&gt;&quot;, new Type[]{null, typeof(int), null, typeof(int)})]
+[Quality(QualityBand.Mature)]
+public static class GateEnterOneOp&lt;T&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -297,7 +323,8 @@
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOneOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOneOp`1.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOneOp_1_LogEvidenceRatio__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOneOp`1.LogEvidenceRatio``1(``0)">LogEvidenceRatio&lt;TDist&gt;(TDist)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -317,7 +344,8 @@
       <tr>
         <td><span class="xref">TDist</span></td>
         <td><span class="parametername">enterOne</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>enterOne</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -332,7 +360,8 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -351,6 +380,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOneOp_1_LogEvidenceRatio__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(enterOne) p(enterOne) factor(enterOne,selector,value,index) / sum_enterOne p(enterOne) messageTo(enterOne))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOneOp_1_SelectorAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOneOp`1.SelectorAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOneOp_1_SelectorAverageConditional_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOneOp`1.SelectorAverageConditional(Microsoft.ML.Probabilistic.Distributions.Discrete)">SelectorAverageConditional(Discrete)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>selector</code>.</p>
@@ -450,7 +482,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TDist ValueAverageConditional&lt;TDist&gt;(TDist enterOne, Discrete selector, TDist value, int index, TDist result)
+    <pre><code class="lang-csharp hljs">public static TDist ValueAverageConditional&lt;TDist&gt;([SkipIfAllUniform] TDist enterOne, Discrete selector, TDist value, int index, TDist result)
     where TDist : IDistribution&lt;T&gt;, SettableToProduct&lt;TDist&gt;, SettableToRatio&lt;TDist&gt;, SettableToWeightedSum&lt;TDist&gt;, SettableTo&lt;TDist&gt;, SettableToPower&lt;TDist&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -558,7 +590,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TDist ValueAverageConditional&lt;TDist&gt;(TDist enterOne, int selector, int index, TDist result)
+    <pre><code class="lang-csharp hljs">public static TDist ValueAverageConditional&lt;TDist&gt;([SkipIfAllUniform] TDist enterOne, int selector, int index, TDist result)
     where TDist : IDistribution&lt;T&gt;, SettableTo&lt;TDist&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>

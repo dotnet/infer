@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Wishart
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -94,7 +94,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html">Wishart</a>&gt;</div>
@@ -117,25 +117,42 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a>&gt;</div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Wishart_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Wishart : object, IDistribution&lt;PositiveDefiniteMatrix&gt;, ICloneable, HasPoint&lt;PositiveDefiniteMatrix&gt;, CanGetLogProb&lt;PositiveDefiniteMatrix&gt;, SettableTo&lt;Wishart&gt;, SettableToProduct&lt;Wishart&gt;, SettableToProduct&lt;Wishart, Wishart&gt;, Diffable, SettableToUniform, Sampleable&lt;PositiveDefiniteMatrix&gt;, SettableToRatio&lt;Wishart&gt;, SettableToRatio&lt;Wishart, Wishart&gt;, SettableToPower&lt;Wishart&gt;, CanGetMean&lt;PositiveDefiniteMatrix&gt;, CanGetVariance&lt;PositiveDefiniteMatrix&gt;, CanGetMeanAndVariance&lt;PositiveDefiniteMatrix, PositiveDefiniteMatrix&gt;, CanSetMeanAndVariance&lt;PositiveDefiniteMatrix, PositiveDefiniteMatrix&gt;, CanGetLogAverageOf&lt;Wishart&gt;, CanGetLogAverageOfPower&lt;Wishart&gt;, SettableToWeightedSum&lt;Wishart&gt;, CanGetAverageLog&lt;Wishart&gt;, CanGetLogNormalizer, CanGetMode&lt;PositiveDefiniteMatrix&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Mature)]
+public class Wishart : IDistribution&lt;PositiveDefiniteMatrix&gt;, ICloneable, HasPoint&lt;PositiveDefiniteMatrix&gt;, CanGetLogProb&lt;PositiveDefiniteMatrix&gt;, SettableTo&lt;Wishart&gt;, SettableToProduct&lt;Wishart&gt;, SettableToProduct&lt;Wishart, Wishart&gt;, Diffable, SettableToUniform, Sampleable&lt;PositiveDefiniteMatrix&gt;, SettableToRatio&lt;Wishart&gt;, SettableToRatio&lt;Wishart, Wishart&gt;, SettableToPower&lt;Wishart&gt;, CanGetMean&lt;PositiveDefiniteMatrix&gt;, CanGetVariance&lt;PositiveDefiniteMatrix&gt;, CanGetMeanAndVariance&lt;PositiveDefiniteMatrix, PositiveDefiniteMatrix&gt;, CanSetMeanAndVariance&lt;PositiveDefiniteMatrix, PositiveDefiniteMatrix&gt;, CanGetLogAverageOf&lt;Wishart&gt;, CanGetLogAverageOfPower&lt;Wishart&gt;, SettableToWeightedSum&lt;Wishart&gt;, CanGetAverageLog&lt;Wishart&gt;, CanGetLogNormalizer, CanGetMode&lt;PositiveDefiniteMatrix&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Wishart_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
      In the matrix case, the distribution is
 <code>p(X) = |X|^(a-(d+1)/2)*exp(-tr(X*B))*|B|^a/Gamma_d(a)</code>.
 In this code, the <code>a</code> parameter is called the &quot;Shape&quot; and the <code>B</code> parameter
-is called the &quot;Rate&quot;.  The
-mean of the distribution is <code>a/B</code> and the diagonal variance is 
+is called the &quot;Rate&quot;.  The distribution is uniform when B=0 and a=(d+1)/2.
+The mean of the distribution is <code>a/B</code> and the diagonal variance is 
 <code>var(X_ii) = a*C_ii^2</code> where <code>C=inv(B)</code>.  The non-diagonal variances are
 <code>var(X_ij) = a*0.5*(C_ij^2 + C_ii*C_jj)</code> where <code>C=inv(B)</code>.
 </p><p>
-The distribution is represented by a one-dimensional Vector for <code>a</code> and 
-a PositiveDefiniteMatrix for <code>B</code>.  Because both are Cursors, any Wishart instance
-can be used as a cursor.
+The distribution is represented by a double for <code>a</code> and 
+a PositiveDefiniteMatrix for <code>B</code>.  
 </p>
 </div>
   <h3 id="constructors">Constructors
@@ -291,7 +308,8 @@ a scale matrix which is set to a scaled identity matrix</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Dimension { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public int Dimension { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -315,7 +333,8 @@ a scale matrix which is set to a scaled identity matrix</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -339,7 +358,8 @@ a scale matrix which is set to a scaled identity matrix</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PositiveDefiniteMatrix Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public PositiveDefiniteMatrix Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -400,31 +420,6 @@ a scale matrix which is set to a scaled identity matrix</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Wishart_SourceArray_" data-uid="Microsoft.ML.Probabilistic.Distributions.Wishart.SourceArray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Wishart_SourceArray" data-uid="Microsoft.ML.Probabilistic.Distributions.Wishart.SourceArray">SourceArray</h4>
-  <div class="markdown level1 summary"><p>Gets/sets the source array for the Wishart parameters. These are stored
-contiguously in the SourceArray as Rate matrix followed by shape</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double[] SourceArray { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td></td>
       </tr>
     </tbody>
@@ -500,6 +495,8 @@ if you want to assign the result to a Wishart type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Wishart_FromMeanAndMeanLogDeterminant_" data-uid="Microsoft.ML.Probabilistic.Distributions.Wishart.FromMeanAndMeanLogDeterminant*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Wishart_FromMeanAndMeanLogDeterminant_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Double_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Distributions.Wishart.FromMeanAndMeanLogDeterminant(Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,System.Double,Microsoft.ML.Probabilistic.Distributions.Wishart)">FromMeanAndMeanLogDeterminant(PositiveDefiniteMatrix, Double, Wishart)</h4>
   <div class="markdown level1 summary"><p>Constructs a Wishart distribution with the given mean and mean log determinant.</p>
@@ -568,7 +565,8 @@ described in &quot;Estimating a Gamma distribution&quot; by T. Minka, 2002.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Wishart FromShapeAndRate(double shape, PositiveDefiniteMatrix rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Shape&quot;, &quot;Rate&quot;})]
+public static Wishart FromShapeAndRate(double shape, PositiveDefiniteMatrix rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -842,6 +840,8 @@ a scale matrix which is set to a scaled identity matrix</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Wishart_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Wishart.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Wishart_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Wishart_" data-uid="Microsoft.ML.Probabilistic.Distributions.Wishart.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.Wishart)">GetLogAverageOf(Wishart)</h4>
   <div class="markdown level1 summary"><p>Gets the log-integral of the product of this Wishart with another Wishart</p>
@@ -1538,7 +1538,8 @@ and that Wishart</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Wishart PointMass(PositiveDefiniteMatrix mean)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static Wishart PointMass(PositiveDefiniteMatrix mean)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1811,7 +1812,8 @@ Workspaces are allocated behind the scenes</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static PositiveDefiniteMatrix SampleFromShapeAndRate(double shape, PositiveDefiniteMatrix rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;shape&quot;, &quot;rate&quot;})]
+public static PositiveDefiniteMatrix SampleFromShapeAndRate(double shape, PositiveDefiniteMatrix rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1917,7 +1919,8 @@ Workspaces are allocated behind the scenes</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static PositiveDefiniteMatrix SampleFromShapeAndScale(double shape, PositiveDefiniteMatrix scale)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;shape&quot;, &quot;scale&quot;})]
+public static PositiveDefiniteMatrix SampleFromShapeAndScale(double shape, PositiveDefiniteMatrix scale)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1966,7 +1969,7 @@ Workspaces are allocated behind the scenes</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetDerivatives(LowerTriangularMatrix xChol, PositiveDefiniteMatrix invX, PositiveDefiniteMatrix dlogp, double xxddlogp, bool forceProper, double shapeOffset = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public void SetDerivatives(LowerTriangularMatrix xChol, PositiveDefiniteMatrix invX, PositiveDefiniteMatrix dlogp, double xxddlogp, bool forceProper, double shapeOffset = 0)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2342,6 +2345,8 @@ point mass is the existing rate matrix</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Wishart_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Wishart.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Wishart_Uniform_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Wishart.Uniform(System.Int32)">Uniform(Int32)</h4>
   <div class="markdown level1 summary"><p>Constructs a uniform Wishart distribution of the given dimension</p>
@@ -2349,7 +2354,8 @@ point mass is the existing rate matrix</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Wishart Uniform(int dimension)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Dimension&quot;}, UseWhen = &quot;IsUniform&quot;)]
+public static Wishart Uniform(int dimension)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2629,7 +2635,7 @@ of type PositiveDefiniteMatrix. The distribution type must implement <a class="x
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GaussianOp_PointPrecision
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -83,7 +83,9 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PointPrecision" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianOp_PointPrecision" class="text-break">Class GaussianOp_PointPrecision
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>This class defines specializations for the case where precision is a point mass.
+These methods have fewer inputs, allowing more efficient schedules.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -141,12 +143,36 @@
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianOpBase_LogEvidenceRatio_System_Double_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_">GaussianOpBase.LogEvidenceRatio(Double, Double, Gamma)</a>
     </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianOp_PointPrecision_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class GaussianOp_PointPrecision : GaussianOpBase</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Gaussian), &quot;Sample&quot;, new Type[]{typeof(double), typeof(double)}, Default = false)]
+[FactorMethod(new string[]{&quot;sample&quot;, &quot;mean&quot;, &quot;precision&quot;}, typeof(Factor), &quot;Gaussian&quot;, new Type[]{}, Default = false)]
+[Quality(QualityBand.Preview)]
+public class GaussianOp_PointPrecision : GaussianOpBase</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>

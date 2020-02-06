@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Discrete
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -94,7 +94,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a>&gt;</div>
@@ -117,11 +117,29 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Discrete_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Discrete : object, IDistribution&lt;int&gt;, ICloneable, HasPoint&lt;int&gt;, CanGetLogProb&lt;int&gt;, SettableTo&lt;Discrete&gt;, SettableToProduct&lt;Discrete&gt;, SettableToProduct&lt;Discrete, Discrete&gt;, Diffable, SettableToUniform, SettableToPartialUniform&lt;Discrete&gt;, SettableToRatio&lt;Discrete&gt;, SettableToRatio&lt;Discrete, Discrete&gt;, SettableToPower&lt;Discrete&gt;, SettableToWeightedSumExact&lt;Discrete&gt;, SettableToWeightedSum&lt;Discrete&gt;, CanGetLogAverageOf&lt;Discrete&gt;, CanGetLogAverageOfPower&lt;Discrete&gt;, CanGetAverageLog&lt;Discrete&gt;, CanGetLogNormalizer, Sampleable&lt;int&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMode&lt;int&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[Quality(QualityBand.Mature)]
+[DataContract]
+public class Discrete : IDistribution&lt;int&gt;, ICloneable, HasPoint&lt;int&gt;, CanGetLogProb&lt;int&gt;, SettableTo&lt;Discrete&gt;, SettableToProduct&lt;Discrete&gt;, SettableToProduct&lt;Discrete, Discrete&gt;, Diffable, SettableToUniform, SettableToPartialUniform&lt;Discrete&gt;, SettableToRatio&lt;Discrete&gt;, SettableToRatio&lt;Discrete, Discrete&gt;, SettableToPower&lt;Discrete&gt;, SettableToWeightedSumExact&lt;Discrete&gt;, SettableToWeightedSum&lt;Discrete&gt;, CanGetLogAverageOf&lt;Discrete&gt;, CanGetLogAverageOfPower&lt;Discrete&gt;, CanGetAverageLog&lt;Discrete&gt;, CanGetLogNormalizer, Sampleable&lt;int&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMode&lt;int&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Discrete_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The distribution is represented by a normalized Vector of length D.
@@ -164,7 +182,8 @@ The probability of value x is available as this[x] or GetLogProb(x).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Discrete(Vector probs)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;GetWorkspace&quot;})]
+public Discrete(Vector probs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -276,7 +295,8 @@ The probability of value x is available as this[x] or GetLogProb(x).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected Vector prob</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+protected Vector prob</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -330,7 +350,8 @@ prob[i] &gt;= 0.  sum_i prob[i] = 1.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -395,7 +416,8 @@ prob[i] &gt;= 0.  sum_i prob[i] = 1.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public int Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -507,6 +529,8 @@ if you want to assign the result to a Discrete type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Discrete_Evaluate_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.Evaluate*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Discrete_Evaluate_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.Evaluate(System.Int32)">Evaluate(Int32)</h4>
   <div class="markdown level1 summary"><p>Evaluates the density at the specified domain value</p>
@@ -621,6 +645,8 @@ if you want to assign the result to a Discrete type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Discrete_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Discrete_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.Discrete)">GetLogAverageOf(Discrete)</h4>
   <div class="markdown level1 summary"><p>The log of the integral of the product of this discrete and that discrete</p>
@@ -1123,7 +1149,8 @@ This is called internally after product operations, sum operations etc.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Discrete PointMass(int value, int numValues)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;, &quot;Dimension&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static Discrete PointMass(int value, int numValues)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1619,6 +1646,8 @@ fill in the resulting Vector, and then pass it to SetProbs.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Discrete_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Discrete_ToString_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.ToString(System.String)">ToString(String)</h4>
   <div class="markdown level1 summary"></div>
@@ -1752,7 +1781,8 @@ fill in the resulting Vector, and then pass it to SetProbs.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Discrete Uniform(int numValues, Sparsity sparsity)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Dimension&quot;, &quot;Sparsity&quot;}, UseWhen = &quot;IsUniform&quot;)]
+public static Discrete Uniform(int numValues, Sparsity sparsity)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1850,7 +1880,7 @@ start to end inclusive.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Discrete_UniformInRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.UniformInRanges*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Discrete_UniformInRanges_System_Int32_IEnumerable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.UniformInRanges(System.Int32,IEnumerable{System.Int32})">UniformInRanges(Int32, IEnumerable&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Discrete_UniformInRanges_System_Int32_System_Collections_Generic_IEnumerable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.Discrete.UniformInRanges(System.Int32,System.Collections.Generic.IEnumerable{System.Int32})">UniformInRanges(Int32, IEnumerable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a Discrete distribution which is uniform over values in
 multiple ranges specified by pairs of start and end values. These pairs
 are specified as adjacent values in an enumerable whose length must therefore be
@@ -1878,7 +1908,7 @@ even.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">startEndPairs</span></td>
         <td><p>Sequence of start and end pairs</p>
 </td>
@@ -2107,7 +2137,7 @@ even.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Struct TruncatedGaussian
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -89,7 +89,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a>&gt;</div>
@@ -110,11 +110,26 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.html">TruncatedGaussian</a>&gt;</div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct TruncatedGaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;TruncatedGaussian&gt;, Diffable, SettableToProduct&lt;TruncatedGaussian&gt;, SettableToProduct&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToUniform, SettableToRatio&lt;TruncatedGaussian&gt;, SettableToRatio&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToPower&lt;TruncatedGaussian&gt;, Sampleable&lt;double&gt;, SettableToWeightedSum&lt;TruncatedGaussian&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanGetLogNormalizer, CanGetLogAverageOf&lt;TruncatedGaussian&gt;, CanGetLogAverageOfPower&lt;TruncatedGaussian&gt;, CanGetAverageLog&lt;TruncatedGaussian&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Preview)]
+public struct TruncatedGaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;TruncatedGaussian&gt;, Diffable, SettableToProduct&lt;TruncatedGaussian&gt;, SettableToProduct&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToUniform, SettableToRatio&lt;TruncatedGaussian&gt;, SettableToRatio&lt;TruncatedGaussian, TruncatedGaussian&gt;, SettableToPower&lt;TruncatedGaussian&gt;, Sampleable&lt;double&gt;, SettableToWeightedSum&lt;TruncatedGaussian&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanGetLogNormalizer, CanGetLogAverageOf&lt;TruncatedGaussian&gt;, CanGetLogAverageOfPower&lt;TruncatedGaussian&gt;, CanGetAverageLog&lt;TruncatedGaussian&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The distribution is parameterized by a Gaussian and two real numbers (LowerBound, UpperBound).
@@ -155,7 +170,8 @@ Between the bounds, the density is proportional to the Gaussian.  Outside of the
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TruncatedGaussian(Gaussian gaussian, double lowerBound, double upperBound)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Gaussian&quot;, &quot;LowerBound&quot;, &quot;UpperBound&quot;})]
+public TruncatedGaussian(Gaussian gaussian, double lowerBound, double upperBound)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -259,7 +275,8 @@ Between the bounds, the density is proportional to the Gaussian.  Outside of the
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Gaussian Gaussian</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public Gaussian Gaussian</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -282,7 +299,8 @@ Between the bounds, the density is proportional to the Gaussian.  Outside of the
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double LowerBound</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double LowerBound</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -305,7 +323,8 @@ Between the bounds, the density is proportional to the Gaussian.  Outside of the
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double UpperBound</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double UpperBound</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -331,7 +350,8 @@ Between the bounds, the density is proportional to the Gaussian.  Outside of the
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -355,7 +375,8 @@ Between the bounds, the density is proportional to the Gaussian.  Outside of the
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public double Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -440,6 +461,8 @@ Between the bounds, the density is proportional to the Gaussian.  Outside of the
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_FromGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.FromGaussian*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_FromGaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.FromGaussian(Microsoft.ML.Probabilistic.Distributions.Gaussian)">FromGaussian(Gaussian)</h4>
   <div class="markdown level1 summary"><p>Create a truncated Gaussian equivalent to a Gaussian, i.e. with no truncation.</p>
@@ -546,6 +569,8 @@ Between the bounds, the density is proportional to the Gaussian.  Outside of the
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian)">GetLogAverageOf(TruncatedGaussian)</h4>
   <div class="markdown level1 summary"><p>Get the logarithm of the average value of that distribution under this distribution, i.e. log(int this(x) that(x) dx)</p>
@@ -875,7 +900,8 @@ is not uniform.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TruncatedGaussian PointMass(double point)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static TruncatedGaussian PointMass(double point)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1263,6 +1289,8 @@ is not uniform.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_TruncatedGaussian_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.TruncatedGaussian.Uniform">Uniform()</h4>
   <div class="markdown level1 summary"><p>Construct a uniform truncated Gaussian. This is mathematically equivalent to
@@ -1271,7 +1299,8 @@ a uniform Gaussian.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TruncatedGaussian Uniform()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsUniform&quot;)]
+public static TruncatedGaussian Uniform()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1525,7 +1554,7 @@ a uniform Gaussian.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>

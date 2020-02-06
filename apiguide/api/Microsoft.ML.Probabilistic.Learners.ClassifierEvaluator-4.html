@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ClassifierEvaluator&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,11 +91,35 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">ClassifierEvaluator&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Classifier.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ClassifierEvaluator&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt; : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class ClassifierEvaluator&lt;TInstanceSource, TInstance, TLabelSource, TLabel&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -164,7 +188,7 @@ the predictions matches the order of the ground truth instances.</p>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__0__2_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`0,`2,IEnumerable{IDictionary{`3,System.Double}})">AreaUnderRocCurve(TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">AreaUnderRocCurve(TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the area under the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance or label source.</p>
 <p>
@@ -200,7 +224,7 @@ Curve for Multiple Class Classification Problems&quot;. Machine Learning, 45, pa
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -218,14 +242,14 @@ Curve for Multiple Class Classification Problems&quot;. Machine Learning, 45, pa
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>The area under the receiver operating characteristic curve. Returns <see cref="!:double.NaN"></see>
+        <td><p>The area under the receiver operating characteristic curve. Returns <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double.nan">NaN</a>
 if there are no positive or no negative instances.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__0__2_IEnumerable_IDictionary__3_System_Double___IDictionary__3_IDictionary__3_System_Double____" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`0,`2,IEnumerable{IDictionary{`3,System.Double}},IDictionary{`3,IDictionary{`3,System.Double}}@)">AreaUnderRocCurve(TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, out IDictionary&lt;TLabel, IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___System_Collections_Generic_IDictionary__3_System_Collections_Generic_IDictionary__3_System_Double____" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}},System.Collections.Generic.IDictionary{`3,System.Collections.Generic.IDictionary{`3,System.Double}}@)">AreaUnderRocCurve(TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, out IDictionary&lt;TLabel, IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the area under the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance or label source.</p>
 <p>
@@ -261,16 +285,16 @@ Curve for Multiple Class Classification Problems&quot;. Machine Learning, 45, pa
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TLabel, <span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">aucMatrix</span></td>
         <td><p>A matrix of pairwise AUC metrics. If the area under the curve is not defined for a given pair
-of classes, the corresponding element in the matrix is <see cref="!:double.NaN"></see>.</p>
+of classes, the corresponding element in the matrix is <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double.nan">NaN</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -286,14 +310,14 @@ of classes, the corresponding element in the matrix is <see cref="!:double.NaN">
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>The area under the receiver operating characteristic curve. Returns <see cref="!:double.NaN"></see>
+        <td><p>The area under the receiver operating characteristic curve. Returns <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double.nan">NaN</a>
 if there are no positive or no negative instances.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__0_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`0,IEnumerable{IDictionary{`3,System.Double}})">AreaUnderRocCurve(TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">AreaUnderRocCurve(TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the area under the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance source.</p>
 <p>
@@ -323,7 +347,7 @@ Curve for Multiple Class Classification Problems&quot;. Machine Learning, 45, pa
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -341,14 +365,14 @@ Curve for Multiple Class Classification Problems&quot;. Machine Learning, 45, pa
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>The area under the receiver operating characteristic curve. Returns <see cref="!:double.NaN"></see>
+        <td><p>The area under the receiver operating characteristic curve. Returns <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double.nan">NaN</a>
 if there are no positive or no negative instances.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__0_IEnumerable_IDictionary__3_System_Double___IDictionary__3_IDictionary__3_System_Double____" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`0,IEnumerable{IDictionary{`3,System.Double}},IDictionary{`3,IDictionary{`3,System.Double}}@)">AreaUnderRocCurve(TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, out IDictionary&lt;TLabel, IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___System_Collections_Generic_IDictionary__3_System_Collections_Generic_IDictionary__3_System_Double____" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}},System.Collections.Generic.IDictionary{`3,System.Collections.Generic.IDictionary{`3,System.Double}}@)">AreaUnderRocCurve(TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, out IDictionary&lt;TLabel, IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the area under the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance source.</p>
 <p>
@@ -378,16 +402,16 @@ Curve for Multiple Class Classification Problems&quot;. Machine Learning, 45, pa
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TLabel, <span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">aucMatrix</span></td>
         <td><p>A matrix of pairwise AUC metrics. If the area under the curve is not defined for a given pair
-of classes, the corresponding element in the matrix is <see cref="!:double.NaN"></see>.</p>
+of classes, the corresponding element in the matrix is <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double.nan">NaN</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -403,14 +427,14 @@ of classes, the corresponding element in the matrix is <see cref="!:double.NaN">
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>The area under the receiver operating characteristic curve. Returns <see cref="!:double.NaN"></see>
+        <td><p>The area under the receiver operating characteristic curve. Returns <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double.nan">NaN</a>
 if there are no positive or no negative instances.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__3__0__2_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`3,`0,`2,IEnumerable{IDictionary{`3,System.Double}})">AreaUnderRocCurve(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__3__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`3,`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">AreaUnderRocCurve(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the area under the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance or label source.</p>
 </div>
@@ -448,7 +472,7 @@ given the ground truth provided by an instance or label source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -472,7 +496,7 @@ given the ground truth provided by an instance or label source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__3__0_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`3,`0,IEnumerable{IDictionary{`3,System.Double}})">AreaUnderRocCurve(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__3__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`3,`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">AreaUnderRocCurve(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the area under the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance source.</p>
 </div>
@@ -504,7 +528,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -528,7 +552,7 @@ given the ground truth provided by an instance source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__3__3__0__2_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`3,`3,`0,`2,IEnumerable{IDictionary{`3,System.Double}})">AreaUnderRocCurve(TLabel, TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__3__3__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`3,`3,`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">AreaUnderRocCurve(TLabel, TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the area under the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance or label source.</p>
 </div>
@@ -572,7 +596,7 @@ given the ground truth provided by an instance or label source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -596,7 +620,7 @@ given the ground truth provided by an instance or label source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__3__3__0_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`3,`3,`0,IEnumerable{IDictionary{`3,System.Double}})">AreaUnderRocCurve(TLabel, TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_AreaUnderRocCurve__3__3__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.AreaUnderRocCurve(`3,`3,`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">AreaUnderRocCurve(TLabel, TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the area under the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance source.</p>
 </div>
@@ -634,7 +658,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -658,13 +682,13 @@ given the ground truth provided by an instance source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve__3__0__2_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve(`3,`0,`2,IEnumerable{IDictionary{`3,System.Double}})">CalibrationCurve(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve__3__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve(`3,`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">CalibrationCurve(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the empirical probability calibration curve for the class of the specified label.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; CalibrationCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;CalibrationPair&gt; CalibrationCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -695,7 +719,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -712,20 +736,20 @@ given the ground truth provided by an instance source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.CalibrationPair.html">CalibrationPair</a>&gt;</td>
         <td><p>The computed empirical probability calibration curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve__3__0__2_IEnumerable_IDictionary__3_System_Double___System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve(`3,`0,`2,IEnumerable{IDictionary{`3,System.Double}},System.Int32,System.Int32)">CalibrationCurve(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Int32, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve__3__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve(`3,`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}},System.Int32,System.Int32)">CalibrationCurve(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Int32, Int32)</h4>
   <div class="markdown level1 summary"><p>Computes the empirical probability calibration curve for the class of the specified label.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; CalibrationCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions, int binCount, int minBinInstanceCount = 1)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;CalibrationPair&gt; CalibrationCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions, int binCount, int minBinInstanceCount = 1)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -756,7 +780,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -785,20 +809,20 @@ given the ground truth provided by an instance source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.CalibrationPair.html">CalibrationPair</a>&gt;</td>
         <td><p>The computed empirical probability calibration curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve__3__0_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve(`3,`0,IEnumerable{IDictionary{`3,System.Double}})">CalibrationCurve(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve__3__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve(`3,`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">CalibrationCurve(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the empirical probability calibration curve for the class of the specified label.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; CalibrationCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;CalibrationPair&gt; CalibrationCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -823,7 +847,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -840,20 +864,20 @@ given the ground truth provided by an instance source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.CalibrationPair.html">CalibrationPair</a>&gt;</td>
         <td><p>The computed empirical probability calibration curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve__3__0_IEnumerable_IDictionary__3_System_Double___System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve(`3,`0,IEnumerable{IDictionary{`3,System.Double}},System.Int32,System.Int32)">CalibrationCurve(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Int32, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_CalibrationCurve__3__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.CalibrationCurve(`3,`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}},System.Int32,System.Int32)">CalibrationCurve(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Int32, Int32)</h4>
   <div class="markdown level1 summary"><p>Computes the empirical probability calibration curve for the class of the specified label.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; CalibrationCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions, int binCount, int minBinInstanceCount = 1)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;CalibrationPair&gt; CalibrationCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions, int binCount, int minBinInstanceCount = 1)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -878,7 +902,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -907,14 +931,14 @@ given the ground truth provided by an instance source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.CalibrationPair.html">CalibrationPair</a>&gt;</td>
         <td><p>The computed empirical probability calibration curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ConfusionMatrix_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ConfusionMatrix*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ConfusionMatrix__0__2_IEnumerable__3__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ConfusionMatrix(`0,`2,IEnumerable{`3})">ConfusionMatrix(TInstanceSource, TLabelSource, IEnumerable&lt;TLabel&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ConfusionMatrix__0__2_System_Collections_Generic_IEnumerable__3__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ConfusionMatrix(`0,`2,System.Collections.Generic.IEnumerable{`3})">ConfusionMatrix(TInstanceSource, TLabelSource, IEnumerable&lt;TLabel&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes a confusion matrix for specified predictions given the ground truth provided by an instance or label source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -945,7 +969,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TLabel&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TLabel&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -969,7 +993,7 @@ given the ground truth provided by an instance source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ConfusionMatrix_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ConfusionMatrix*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ConfusionMatrix__0_IEnumerable__3__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ConfusionMatrix(`0,IEnumerable{`3})">ConfusionMatrix(TInstanceSource, IEnumerable&lt;TLabel&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ConfusionMatrix__0_System_Collections_Generic_IEnumerable__3__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ConfusionMatrix(`0,System.Collections.Generic.IEnumerable{`3})">ConfusionMatrix(TInstanceSource, IEnumerable&lt;TLabel&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes a confusion matrix for specified predictions given the ground truth provided by an instance source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -994,7 +1018,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TLabel&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TLabel&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -1018,7 +1042,7 @@ given the ground truth provided by an instance source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_Evaluate_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.Evaluate*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_Evaluate__1__0__2_IEnumerable___0__Func__3___0_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.Evaluate``1(`0,`2,IEnumerable{``0},Func{`3,``0,System.Double})">Evaluate&lt;TPrediction&gt;(TInstanceSource, TLabelSource, IEnumerable&lt;TPrediction&gt;, Func&lt;TLabel, TPrediction, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_Evaluate__1__0__2_System_Collections_Generic_IEnumerable___0__System_Func__3___0_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.Evaluate``1(`0,`2,System.Collections.Generic.IEnumerable{``0},System.Func{`3,``0,System.Double})">Evaluate&lt;TPrediction&gt;(TInstanceSource, TLabelSource, IEnumerable&lt;TPrediction&gt;, Func&lt;TLabel, TPrediction, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes a performance metric for specified predictions and ground truth as provided by a given instance or label source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1049,13 +1073,13 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TPrediction&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TPrediction&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TLabel, TPrediction, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TLabel, TPrediction, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">performanceMetric</span></td>
         <td><p>The performance metric.</p>
 </td>
@@ -1095,7 +1119,7 @@ given the ground truth provided by an instance source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_Evaluate_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.Evaluate*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_Evaluate__1__0_IEnumerable___0__Func__3___0_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.Evaluate``1(`0,IEnumerable{``0},Func{`3,``0,System.Double})">Evaluate&lt;TPrediction&gt;(TInstanceSource, IEnumerable&lt;TPrediction&gt;, Func&lt;TLabel, TPrediction, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_Evaluate__1__0_System_Collections_Generic_IEnumerable___0__System_Func__3___0_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.Evaluate``1(`0,System.Collections.Generic.IEnumerable{``0},System.Func{`3,``0,System.Double})">Evaluate&lt;TPrediction&gt;(TInstanceSource, IEnumerable&lt;TPrediction&gt;, Func&lt;TLabel, TPrediction, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes a performance metric for specified predictions and ground truth as provided by a given instance source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1120,13 +1144,13 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TPrediction&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TPrediction&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TLabel, TPrediction, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TLabel, TPrediction, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">performanceMetric</span></td>
         <td><p>The performance metric.</p>
 </td>
@@ -1166,7 +1190,7 @@ given the ground truth provided by an instance source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusAnother_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusAnother*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusAnother__1__3__3__0__2_IEnumerable_IDictionary__3_System_Double___Func_IEnumerable_System_Int32__IDictionary_System_Int32_System_Double____0__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusAnother``1(`3,`3,`0,`2,IEnumerable{IDictionary{`3,System.Double}},Func{IEnumerable{System.Int32},IDictionary{System.Int32,System.Double},``0})">EvaluateOneVersusAnother&lt;TResult&gt;(TLabel, TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Func&lt;IEnumerable&lt;Int32&gt;, IDictionary&lt;Int32, Double&gt;, TResult&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusAnother__1__3__3__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___System_Func_System_Collections_Generic_IEnumerable_System_Int32__System_Collections_Generic_IDictionary_System_Int32_System_Double____0__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusAnother``1(`3,`3,`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}},System.Func{System.Collections.Generic.IEnumerable{System.Int32},System.Collections.Generic.IDictionary{System.Int32,System.Double},``0})">EvaluateOneVersusAnother&lt;TResult&gt;(TLabel, TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Func&lt;IEnumerable&lt;Int32&gt;, IDictionary&lt;Int32, Double&gt;, TResult&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes a performance metric for specified positive and negative classes.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1209,13 +1233,13 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, <span class="xref">IDictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TResult&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TResult&gt;</td>
         <td><span class="parametername">performanceMetric</span></td>
         <td><p>The performance metric.</p>
 </td>
@@ -1255,7 +1279,7 @@ given the ground truth provided by an instance source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusAnother_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusAnother*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusAnother__1__3__3__0_IEnumerable_IDictionary__3_System_Double___Func_IEnumerable_System_Int32__IDictionary_System_Int32_System_Double____0__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusAnother``1(`3,`3,`0,IEnumerable{IDictionary{`3,System.Double}},Func{IEnumerable{System.Int32},IDictionary{System.Int32,System.Double},``0})">EvaluateOneVersusAnother&lt;TResult&gt;(TLabel, TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Func&lt;IEnumerable&lt;Int32&gt;, IDictionary&lt;Int32, Double&gt;, TResult&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusAnother__1__3__3__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___System_Func_System_Collections_Generic_IEnumerable_System_Int32__System_Collections_Generic_IDictionary_System_Int32_System_Double____0__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusAnother``1(`3,`3,`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}},System.Func{System.Collections.Generic.IEnumerable{System.Int32},System.Collections.Generic.IDictionary{System.Int32,System.Double},``0})">EvaluateOneVersusAnother&lt;TResult&gt;(TLabel, TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Func&lt;IEnumerable&lt;Int32&gt;, IDictionary&lt;Int32, Double&gt;, TResult&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes a performance metric for specified positive and negative classes.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1292,13 +1316,13 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, <span class="xref">IDictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TResult&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TResult&gt;</td>
         <td><span class="parametername">performanceMetric</span></td>
         <td><p>The performance metric.</p>
 </td>
@@ -1338,7 +1362,7 @@ given the ground truth provided by an instance source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusRest_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusRest*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusRest__1__3__0__2_IEnumerable_IDictionary__3_System_Double___Func_IEnumerable_System_Int32__IDictionary_System_Int32_System_Double____0__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusRest``1(`3,`0,`2,IEnumerable{IDictionary{`3,System.Double}},Func{IEnumerable{System.Int32},IDictionary{System.Int32,System.Double},``0})">EvaluateOneVersusRest&lt;TResult&gt;(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Func&lt;IEnumerable&lt;Int32&gt;, IDictionary&lt;Int32, Double&gt;, TResult&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusRest__1__3__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___System_Func_System_Collections_Generic_IEnumerable_System_Int32__System_Collections_Generic_IDictionary_System_Int32_System_Double____0__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusRest``1(`3,`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}},System.Func{System.Collections.Generic.IEnumerable{System.Int32},System.Collections.Generic.IDictionary{System.Int32,System.Double},``0})">EvaluateOneVersusRest&lt;TResult&gt;(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Func&lt;IEnumerable&lt;Int32&gt;, IDictionary&lt;Int32, Double&gt;, TResult&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes a performance metric for a specified positive class, assuming all other classes are negative.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1375,13 +1399,13 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, <span class="xref">IDictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TResult&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TResult&gt;</td>
         <td><span class="parametername">performanceMetric</span></td>
         <td><p>The performance metric.</p>
 </td>
@@ -1421,7 +1445,7 @@ given the ground truth provided by an instance source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusRest_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusRest*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusRest__1__3__0_IEnumerable_IDictionary__3_System_Double___Func_IEnumerable_System_Int32__IDictionary_System_Int32_System_Double____0__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusRest``1(`3,`0,IEnumerable{IDictionary{`3,System.Double}},Func{IEnumerable{System.Int32},IDictionary{System.Int32,System.Double},``0})">EvaluateOneVersusRest&lt;TResult&gt;(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Func&lt;IEnumerable&lt;Int32&gt;, IDictionary&lt;Int32, Double&gt;, TResult&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_EvaluateOneVersusRest__1__3__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___System_Func_System_Collections_Generic_IEnumerable_System_Int32__System_Collections_Generic_IDictionary_System_Int32_System_Double____0__" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.EvaluateOneVersusRest``1(`3,`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}},System.Func{System.Collections.Generic.IEnumerable{System.Int32},System.Collections.Generic.IDictionary{System.Int32,System.Double},``0})">EvaluateOneVersusRest&lt;TResult&gt;(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;, Func&lt;IEnumerable&lt;Int32&gt;, IDictionary&lt;Int32, Double&gt;, TResult&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes a performance metric for a specified positive class, assuming all other classes are negative.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1452,13 +1476,13 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, <span class="xref">IDictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TResult&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, TResult&gt;</td>
         <td><span class="parametername">performanceMetric</span></td>
         <td><p>The performance metric.</p>
 </td>
@@ -1498,14 +1522,14 @@ given the ground truth provided by an instance source.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve__3__0__2_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve(`3,`0,`2,IEnumerable{IDictionary{`3,System.Double}})">PrecisionRecallCurve(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve__3__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve(`3,`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">PrecisionRecallCurve(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the precision-recall curve for specified predictions
 given the ground truth provided by an instance or label source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; PrecisionRecallCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;PrecisionRecall&gt; PrecisionRecallCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1536,7 +1560,7 @@ given the ground truth provided by an instance or label source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -1553,21 +1577,21 @@ given the ground truth provided by an instance or label source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.PrecisionRecall.html">PrecisionRecall</a>&gt;</td>
         <td><p>The computed precision-recall curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve__3__0_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve(`3,`0,IEnumerable{IDictionary{`3,System.Double}})">PrecisionRecallCurve(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve__3__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve(`3,`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">PrecisionRecallCurve(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the precision-recall curve for specified predictions
 given the ground truth provided by an instance source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; PrecisionRecallCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;PrecisionRecall&gt; PrecisionRecallCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1592,7 +1616,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -1609,21 +1633,21 @@ given the ground truth provided by an instance source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.PrecisionRecall.html">PrecisionRecall</a>&gt;</td>
         <td><p>The computed precision-recall curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve__3__3__0__2_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve(`3,`3,`0,`2,IEnumerable{IDictionary{`3,System.Double}})">PrecisionRecallCurve(TLabel, TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve__3__3__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve(`3,`3,`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">PrecisionRecallCurve(TLabel, TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the precision-recall curve for specified predictions
 given the ground truth provided by an instance or label source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; PrecisionRecallCurve(TLabel positiveClassLabel, TLabel negativeClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;PrecisionRecall&gt; PrecisionRecallCurve(TLabel positiveClassLabel, TLabel negativeClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1660,7 +1684,7 @@ given the ground truth provided by an instance or label source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -1677,21 +1701,21 @@ given the ground truth provided by an instance or label source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.PrecisionRecall.html">PrecisionRecall</a>&gt;</td>
         <td><p>The computed precision-recall curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve__3__3__0_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve(`3,`3,`0,IEnumerable{IDictionary{`3,System.Double}})">PrecisionRecallCurve(TLabel, TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_PrecisionRecallCurve__3__3__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.PrecisionRecallCurve(`3,`3,`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">PrecisionRecallCurve(TLabel, TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the precision-recall curve for specified predictions
 given the ground truth provided by an instance source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; PrecisionRecallCurve(TLabel positiveClassLabel, TLabel negativeClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;PrecisionRecall&gt; PrecisionRecallCurve(TLabel positiveClassLabel, TLabel negativeClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1722,7 +1746,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -1739,21 +1763,21 @@ given the ground truth provided by an instance source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.PrecisionRecall.html">PrecisionRecall</a>&gt;</td>
         <td><p>The computed precision-recall curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve__3__0__2_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve(`3,`0,`2,IEnumerable{IDictionary{`3,System.Double}})">ReceiverOperatingCharacteristicCurve(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve__3__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve(`3,`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">ReceiverOperatingCharacteristicCurve(TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance or label source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; ReceiverOperatingCharacteristicCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FalseAndTruePositiveRate&gt; ReceiverOperatingCharacteristicCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1784,7 +1808,7 @@ given the ground truth provided by an instance or label source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -1801,21 +1825,21 @@ given the ground truth provided by an instance or label source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.FalseAndTruePositiveRate.html">FalseAndTruePositiveRate</a>&gt;</td>
         <td><p>The computed receiver operating characteristic curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve__3__0_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve(`3,`0,IEnumerable{IDictionary{`3,System.Double}})">ReceiverOperatingCharacteristicCurve(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve__3__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve(`3,`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">ReceiverOperatingCharacteristicCurve(TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; ReceiverOperatingCharacteristicCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FalseAndTruePositiveRate&gt; ReceiverOperatingCharacteristicCurve(TLabel positiveClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1840,7 +1864,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -1857,21 +1881,21 @@ given the ground truth provided by an instance source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.FalseAndTruePositiveRate.html">FalseAndTruePositiveRate</a>&gt;</td>
         <td><p>The computed receiver operating characteristic curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve__3__3__0__2_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve(`3,`3,`0,`2,IEnumerable{IDictionary{`3,System.Double}})">ReceiverOperatingCharacteristicCurve(TLabel, TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve__3__3__0__2_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve(`3,`3,`0,`2,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">ReceiverOperatingCharacteristicCurve(TLabel, TLabel, TInstanceSource, TLabelSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance or label source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; ReceiverOperatingCharacteristicCurve(TLabel positiveClassLabel, TLabel negativeClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FalseAndTruePositiveRate&gt; ReceiverOperatingCharacteristicCurve(TLabel positiveClassLabel, TLabel negativeClassLabel, TInstanceSource instanceSource, TLabelSource labelSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1908,7 +1932,7 @@ given the ground truth provided by an instance or label source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -1925,21 +1949,21 @@ given the ground truth provided by an instance or label source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.FalseAndTruePositiveRate.html">FalseAndTruePositiveRate</a>&gt;</td>
         <td><p>The computed receiver operating characteristic curve.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve_" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve__3__3__0_IEnumerable_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve(`3,`3,`0,IEnumerable{IDictionary{`3,System.Double}})">ReceiverOperatingCharacteristicCurve(TLabel, TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_ClassifierEvaluator_4_ReceiverOperatingCharacteristicCurve__3__3__0_System_Collections_Generic_IEnumerable_System_Collections_Generic_IDictionary__3_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.ClassifierEvaluator`4.ReceiverOperatingCharacteristicCurve(`3,`3,`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.IDictionary{`3,System.Double}})">ReceiverOperatingCharacteristicCurve(TLabel, TLabel, TInstanceSource, IEnumerable&lt;IDictionary&lt;TLabel, Double&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the receiver operating characteristic curve for specified predictions
 given the ground truth provided by an instance source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Pair&lt;double, double&gt;&gt; ReceiverOperatingCharacteristicCurve(TLabel positiveClassLabel, TLabel negativeClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;FalseAndTruePositiveRate&gt; ReceiverOperatingCharacteristicCurve(TLabel positiveClassLabel, TLabel negativeClassLabel, TInstanceSource instanceSource, IEnumerable&lt;IDictionary&lt;TLabel, double&gt;&gt; predictions)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1970,7 +1994,7 @@ given the ground truth provided by an instance source.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IDictionary</span>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>The predictions.</p>
 </td>
@@ -1987,7 +2011,7 @@ given the ground truth provided by an instance source.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.FalseAndTruePositiveRate.html">FalseAndTruePositiveRate</a>&gt;</td>
         <td><p>The computed receiver operating characteristic curve.</p>
 </td>
       </tr>

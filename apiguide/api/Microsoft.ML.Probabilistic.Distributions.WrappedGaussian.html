@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Struct WrappedGaussian
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -89,7 +89,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
@@ -106,11 +106,26 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.html">WrappedGaussian</a>&gt;</div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct WrappedGaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;double&gt;, SettableTo&lt;WrappedGaussian&gt;, SettableToProduct&lt;WrappedGaussian&gt;, SettableToProduct&lt;WrappedGaussian, WrappedGaussian&gt;, SettableToRatio&lt;WrappedGaussian&gt;, SettableToRatio&lt;WrappedGaussian, WrappedGaussian&gt;, SettableToWeightedSum&lt;WrappedGaussian&gt;, SettableToPower&lt;WrappedGaussian&gt;, Sampleable&lt;double&gt;, CanGetLogAverageOf&lt;WrappedGaussian&gt;, CanGetLogAverageOfPower&lt;WrappedGaussian&gt;, CanGetAverageLog&lt;WrappedGaussian&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Experimental)]
+public struct WrappedGaussian : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;double&gt;, SettableTo&lt;WrappedGaussian&gt;, SettableToProduct&lt;WrappedGaussian&gt;, SettableToProduct&lt;WrappedGaussian, WrappedGaussian&gt;, SettableToRatio&lt;WrappedGaussian&gt;, SettableToRatio&lt;WrappedGaussian, WrappedGaussian&gt;, SettableToWeightedSum&lt;WrappedGaussian&gt;, SettableToPower&lt;WrappedGaussian&gt;, Sampleable&lt;double&gt;, CanGetLogAverageOf&lt;WrappedGaussian&gt;, CanGetLogAverageOfPower&lt;WrappedGaussian&gt;, CanGetAverageLog&lt;WrappedGaussian&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The distribution is represented by a unwrapped Gaussian and a period length L.
@@ -129,7 +144,8 @@ to all lie in the interval [0,L).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WrappedGaussian(Gaussian unwrapped, double period)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Gaussian&quot;, &quot;Period&quot;})]
+public WrappedGaussian(Gaussian unwrapped, double period)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -160,7 +176,7 @@ to all lie in the interval [0,L).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WrappedGaussian(double unwrappedMean, double unwrappedVariance, double period = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public WrappedGaussian(double unwrappedMean, double unwrappedVariance, double period = 6.2831853071795862)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -197,7 +213,8 @@ to all lie in the interval [0,L).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Gaussian Gaussian</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public Gaussian Gaussian</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -220,7 +237,8 @@ to all lie in the interval [0,L).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Period</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double Period</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -246,7 +264,8 @@ to all lie in the interval [0,L).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -270,7 +289,8 @@ to all lie in the interval [0,L).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public double Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -354,6 +374,8 @@ to all lie in the interval [0,L).</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetAverageLog*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">GetAverageLog(WrappedGaussian)</h4>
   <div class="markdown level1 summary"><p>Get the average logarithm of that distribution under this distribution, i.e. int this(x) log( that(x) ) dx</p>
@@ -422,6 +444,8 @@ to all lie in the interval [0,L).</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.WrappedGaussian)">GetLogAverageOf(WrappedGaussian)</h4>
   <div class="markdown level1 summary"><p>Get the logarithm of the average value of that distribution under this distribution, i.e. log(int this(x) that(x) dx)</p>
@@ -717,7 +741,8 @@ to all lie in the interval [0,L).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static WrappedGaussian PointMass(double point, double period = null)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;, &quot;Period&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static WrappedGaussian PointMass(double point, double period = 6.2831853071795862)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1029,6 +1054,8 @@ to all lie in the interval [0,L).</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_WrappedGaussian_Uniform_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.WrappedGaussian.Uniform(System.Double)">Uniform(Double)</h4>
   <div class="markdown level1 summary"><p>Create a uniform WrappedGaussian distribution</p>
@@ -1036,7 +1063,8 @@ to all lie in the interval [0,L).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static WrappedGaussian Uniform(double period = null)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Period&quot;}, UseWhen = &quot;IsUniform&quot;)]
+public static WrappedGaussian Uniform(double period = 6.2831853071795862)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1218,7 +1246,7 @@ to all lie in the interval [0,L).</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Hash
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,11 +91,35 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">Hash</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Utilities.html">Microsoft.ML.Probabilistic.Utilities</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Utilities_Hash_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class Hash : object</code></pre>
+    <pre><code class="lang-csharp hljs">public static class Hash</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Utilities_Hash_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -125,7 +149,7 @@ will hash to the same value (bad).
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const Int32 Start = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const int Start = -2128831035</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -137,62 +161,13 @@ will hash to the same value (bad).
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Int32</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
-  <a id="Microsoft_ML_Probabilistic_Utilities_Hash_Combine_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.Combine*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_Combine_Int32_Int32_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.Combine(Int32,Int32)">Combine(Int32, Int32)</h4>
-  <div class="markdown level1 summary"><p>Combines two int32 hash keys</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Int32 Combine(Int32 hash, Int32 key)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Int32</span></td>
-        <td><span class="parametername">hash</span></td>
-        <td><p>First hash key</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Int32</span></td>
-        <td><span class="parametername">key</span></td>
-        <td><p>Second hash key</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Int32</span></td>
-        <td><p>Incorporates the second hash key into the first hash key and returns the new, combined hash key</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Microsoft_ML_Probabilistic_Utilities_Hash_Combine_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.Combine*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_Combine_System_Int32_System_Double_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.Combine(System.Int32,System.Double)">Combine(Int32, Double)</h4>
   <div class="markdown level1 summary"><p>Incorporates the hash key of a double into an existing hash key</p>
@@ -242,8 +217,57 @@ will hash to the same value (bad).
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Utilities_Hash_Combine_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.Combine*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_Combine_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.Combine(System.Int32,System.Int32)">Combine(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Combines two int32 hash keys</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Combine(int hash, int key)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">hash</span></td>
+        <td><p>First hash key</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">key</span></td>
+        <td><p>Second hash key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>Incorporates the second hash key into the first hash key and returns the new, combined hash key</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSequence_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSequence*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSequence_IEnumerable_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSequence(IEnumerable)">GetHashCodeAsSequence(IEnumerable)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSequence_System_Collections_IEnumerable_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSequence(System.Collections.IEnumerable)">GetHashCodeAsSequence(IEnumerable)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -261,7 +285,7 @@ will hash to the same value (bad).
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></td>
         <td><span class="parametername">seq</span></td>
         <td></td>
       </tr>
@@ -283,7 +307,7 @@ will hash to the same value (bad).
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSequence_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSequence*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSequence__1_IEnumerable___0__" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSequence``1(IEnumerable{``0})">GetHashCodeAsSequence&lt;T&gt;(IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSequence__1_System_Collections_Generic_IEnumerable___0__" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSequence``1(System.Collections.Generic.IEnumerable{``0})">GetHashCodeAsSequence&lt;T&gt;(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -301,7 +325,7 @@ will hash to the same value (bad).
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">seq</span></td>
         <td></td>
       </tr>
@@ -338,7 +362,7 @@ will hash to the same value (bad).
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSet_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSet*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSet__1_IEnumerable___0__" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSet``1(IEnumerable{``0})">GetHashCodeAsSet&lt;T&gt;(IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSet__1_System_Collections_Generic_IEnumerable___0__" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSet``1(System.Collections.Generic.IEnumerable{``0})">GetHashCodeAsSet&lt;T&gt;(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -356,7 +380,7 @@ will hash to the same value (bad).
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">set</span></td>
         <td></td>
       </tr>
@@ -393,7 +417,7 @@ will hash to the same value (bad).
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSet_" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSet*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSet__1_IEnumerable___0__IEqualityComparer___0__" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSet``1(IEnumerable{``0},IEqualityComparer{``0})">GetHashCodeAsSet&lt;T&gt;(IEnumerable&lt;T&gt;, IEqualityComparer&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Utilities_Hash_GetHashCodeAsSet__1_System_Collections_Generic_IEnumerable___0__System_Collections_Generic_IEqualityComparer___0__" data-uid="Microsoft.ML.Probabilistic.Utilities.Hash.GetHashCodeAsSet``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">GetHashCodeAsSet&lt;T&gt;(IEnumerable&lt;T&gt;, IEqualityComparer&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -411,12 +435,12 @@ will hash to the same value (bad).
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">set</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IEqualityComparer</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.iequalitycomparer-1">IEqualityComparer</a>&lt;T&gt;</td>
         <td><span class="parametername">comparer</span></td>
         <td></td>
       </tr>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class LogisticOp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,11 +91,38 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">LogisticOp</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_LogisticOp_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class LogisticOp : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(MMath), &quot;Logistic&quot;, new Type[]{typeof(double)})]
+[Quality(QualityBand.Stable)]
+[Buffers(new string[]{&quot;falseMsg&quot;})]
+public class LogisticOp</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -716,7 +743,8 @@
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_LogisticOp_LogisticAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.LogisticOp.LogisticAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_LogisticOp_LogisticAverageConditional_Microsoft_ML_Probabilistic_Distributions_Beta_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.LogisticOp.LogisticAverageConditional(Microsoft.ML.Probabilistic.Distributions.Beta,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">LogisticAverageConditional(Beta, Gaussian, Gaussian, Gaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>logistic</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -735,22 +763,26 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
         <td><span class="parametername">logistic</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>logistic</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">x</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>x</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">falseMsg</span></td>
-        <td></td>
+        <td><p>Buffer <code>falseMsg</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">to_x</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>x</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -765,7 +797,27 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>logistic</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_LogisticOp_LogisticAverageConditional_Microsoft_ML_Probabilistic_Distributions_Beta_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>logistic</code> as the random arguments are varied. The formula is <code>proj[p(logistic) sum_(x) p(x) factor(logistic,x)]/p(logistic)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">x</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ArrayBase&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -96,15 +96,36 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.IArray-1.html">IArray</a>&lt;T&gt;</div>
-    <div><span class="xref">IList</span>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;T&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.CanSetAllElementsTo-1.html">CanSetAllElementsTo</a>&lt;T&gt;</div>
-    <div><span class="xref">IReadOnlyList</span>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Collections.html">Microsoft.ML.Probabilistic.Collections</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class ArrayBase&lt;T&gt; : object, IArray&lt;T&gt;, IList&lt;T&gt;, CanSetAllElementsTo&lt;T&gt;, IReadOnlyList&lt;T&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+public abstract class ArrayBase&lt;T&gt; : IArray&lt;T&gt;, IList&lt;T&gt;, ICollection&lt;T&gt;, CanSetAllElementsTo&lt;T&gt;, IReadOnlyList&lt;T&gt;, IReadOnlyCollection&lt;T&gt;, IEnumerable&lt;T&gt;, IEnumerable</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -128,7 +149,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected T[] array</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+protected T[] array</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -426,8 +448,10 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_FindIndex_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.FindIndex*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_FindIndex_Microsoft_ML_Probabilistic_Collections_Predicate__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.FindIndex(Microsoft.ML.Probabilistic.Collections.Predicate{`0})">FindIndex(Predicate&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_FindIndex_System_Predicate__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.FindIndex(System.Predicate{`0})">FindIndex(Predicate&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -445,7 +469,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Microsoft.ML.Probabilistic.Collections.Predicate</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.predicate-1">Predicate</a>&lt;T&gt;</td>
         <td><span class="parametername">predicate</span></td>
         <td></td>
       </tr>
@@ -467,7 +491,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_ForEach_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.ForEach*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_ForEach_Action__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.ForEach(Action{`0})">ForEach(Action&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_ForEach_System_Action__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.ForEach(System.Action{`0})">ForEach(Action&lt;T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -485,14 +509,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Action</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;T&gt;</td>
         <td><span class="parametername">action</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_ForEach_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.ForEach*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_ForEach__1___0___Action__0___0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.ForEach``1(``0[],Action{`0,``0})">ForEach&lt;U&gt;(U[], Action&lt;T, U&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_ForEach__1___0___System_Action__0___0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.ForEach``1(``0[],System.Action{`0,``0})">ForEach&lt;U&gt;(U[], Action&lt;T, U&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -515,7 +539,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Action</span>&lt;T, U&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;T, U&gt;</td>
         <td><span class="parametername">action</span></td>
         <td></td>
       </tr>
@@ -537,7 +561,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_ForEach_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.ForEach*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_ForEach__2___0_____1___Action__0___0___1__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.ForEach``2(``0[],``1[],Action{`0,``0,``1})">ForEach&lt;U, V&gt;(U[], V[], Action&lt;T, U, V&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_ForEach__2___0_____1___System_Action__0___0___1__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.ForEach``2(``0[],``1[],System.Action{`0,``0,``1})">ForEach&lt;U, V&gt;(U[], V[], Action&lt;T, U, V&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -565,7 +589,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Action</span>&lt;T, U, V&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-3">Action</a>&lt;T, U, V&gt;</td>
         <td><span class="parametername">action</span></td>
         <td></td>
       </tr>
@@ -608,7 +632,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerator</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1">IEnumerator</a>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -636,6 +660,8 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_GetLength_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.GetLength*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_GetLength_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.GetLength(System.Int32)">GetLength(Int32)</h4>
   <div class="markdown level1 summary"></div>
@@ -837,7 +863,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction__1___0___Func___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction``1(``0[],Func{``0,`0})">SetToFunction&lt;U&gt;(U[], Func&lt;U, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction__1___0___System_Func___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction``1(``0[],System.Func{``0,`0})">SetToFunction&lt;U&gt;(U[], Func&lt;U, T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -860,7 +886,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;U, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;U, T&gt;</td>
         <td><span class="parametername">converter</span></td>
         <td></td>
       </tr>
@@ -882,7 +908,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_ArrayBase___0__Func___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction``1(Microsoft.ML.Probabilistic.Collections.ArrayBase{``0},Func{``0,`0})">SetToFunction&lt;U&gt;(ArrayBase&lt;U&gt;, Func&lt;U, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_ArrayBase___0__System_Func___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction``1(Microsoft.ML.Probabilistic.Collections.ArrayBase{``0},System.Func{``0,`0})">SetToFunction&lt;U&gt;(ArrayBase&lt;U&gt;, Func&lt;U, T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -905,7 +931,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;U, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;U, T&gt;</td>
         <td><span class="parametername">converter</span></td>
         <td></td>
       </tr>
@@ -927,7 +953,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction__2_Microsoft_ML_Probabilistic_Collections_ArrayBase___0____1___Func___0___1__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction``2(Microsoft.ML.Probabilistic.Collections.ArrayBase{``0},``1[],Func{``0,``1,`0})">SetToFunction&lt;U, V&gt;(ArrayBase&lt;U&gt;, V[], Func&lt;U, V, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction__2_Microsoft_ML_Probabilistic_Collections_ArrayBase___0____1___System_Func___0___1__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction``2(Microsoft.ML.Probabilistic.Collections.ArrayBase{``0},``1[],System.Func{``0,``1,`0})">SetToFunction&lt;U, V&gt;(ArrayBase&lt;U&gt;, V[], Func&lt;U, V, T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -955,7 +981,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;U, V, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;U, V, T&gt;</td>
         <td><span class="parametername">converter</span></td>
         <td></td>
       </tr>
@@ -981,7 +1007,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction__3_Microsoft_ML_Probabilistic_Collections_ArrayBase___0____1_____2___Func___0___1___2__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction``3(Microsoft.ML.Probabilistic.Collections.ArrayBase{``0},``1[],``2[],Func{``0,``1,``2,`0})">SetToFunction&lt;U, V, W&gt;(ArrayBase&lt;U&gt;, V[], W[], Func&lt;U, V, W, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_SetToFunction__3_Microsoft_ML_Probabilistic_Collections_ArrayBase___0____1_____2___System_Func___0___1___2__0__" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.SetToFunction``3(Microsoft.ML.Probabilistic.Collections.ArrayBase{``0},``1[],``2[],System.Func{``0,``1,``2,`0})">SetToFunction&lt;U, V, W&gt;(ArrayBase&lt;U&gt;, V[], W[], Func&lt;U, V, W, T&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1014,7 +1040,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;U, V, W, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;U, V, W, T&gt;</td>
         <td><span class="parametername">converter</span></td>
         <td></td>
       </tr>
@@ -1066,18 +1092,148 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_System_Collections_IEnumerable_GetEnumerator_" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.System#Collections#IEnumerable#GetEnumerator*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_ArrayBase_1_System_Collections_IEnumerable_GetEnumerator" data-uid="Microsoft.ML.Probabilistic.Collections.ArrayBase`1.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerator IEnumerable.GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">IEnumerator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IArray-1.html">IArray&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">IList&lt;&gt;</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">System.Collections.Generic.IList&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">System.Collections.Generic.ICollection&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.CanSetAllElementsTo-1.html">CanSetAllElementsTo&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">IReadOnlyList&lt;&gt;</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">System.Collections.Generic.IReadOnlyList&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">System.Collections.Generic.IReadOnlyCollection&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">System.Collections.Generic.IEnumerable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">System.Collections.IEnumerable</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_IEnumerable_System_Action___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action_System_Int32___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;Int32, T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_IEnumerable_System_Action_System_Int32___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable, Action&lt;Int32, T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Sum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_UInt32__">EnumerableExtensions.Sum&lt;TSource&gt;(IEnumerable&lt;TSource&gt;, Func&lt;TSource, UInt32&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Sum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_UInt64__">EnumerableExtensions.Sum&lt;TSource&gt;(IEnumerable&lt;TSource&gt;, Func&lt;TSource, UInt64&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ValueEquals__1_System_Collections_Generic_IEnumerable___0__System_Collections_Generic_IEnumerable___0__">EnumerableExtensions.ValueEquals&lt;T&gt;(IEnumerable&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOf__1_System_Collections_Generic_IEnumerable___0____0_">EnumerableExtensions.IndexOf&lt;T&gt;(IEnumerable&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOf__1_System_Collections_IEnumerable___0_">EnumerableExtensions.IndexOf&lt;T&gt;(IEnumerable, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindIndex__1_System_Collections_Generic_IEnumerable___0__System_Predicate___0__">EnumerableExtensions.FindIndex&lt;T&gt;(IEnumerable&lt;T&gt;, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindIndex__1_System_Collections_IEnumerable_System_Predicate___0__">EnumerableExtensions.FindIndex&lt;T&gt;(IEnumerable, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindAllIndex__1_System_Collections_Generic_IEnumerable___0__System_Predicate___0__">EnumerableExtensions.FindAllIndex&lt;T&gt;(IEnumerable&lt;T&gt;, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOfAll__1_System_Collections_Generic_IEnumerable___0____0_">EnumerableExtensions.IndexOfAll&lt;T&gt;(IEnumerable&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Skip__1_System_Collections_Generic_IEnumerable___0__System_Int32_System_Collections_Generic_List___0___">EnumerableExtensions.Skip&lt;T&gt;(IEnumerable&lt;T&gt;, Int32, out List&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_CopyTo__1_System_Collections_Generic_IEnumerable___0____0___System_Int32_">EnumerableExtensions.CopyTo&lt;T&gt;(IEnumerable&lt;T&gt;, T[], Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ToReadOnlyList__1_System_Collections_Generic_IEnumerable___0__">EnumerableExtensions.ToReadOnlyList&lt;T&gt;(IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_AddRange__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.AddRange&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_ContainsAll__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.ContainsAll&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_ContainsAny__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.ContainsAny&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableReduce__2_System_Collections_Generic_IEnumerable___0____1_System_Func___1___0___1__System_Func___1___0_System_Int32___1__">IEnumerableExensions.EnumerableReduce&lt;T, TRes&gt;(IEnumerable&lt;T&gt;, TRes, Func&lt;TRes, T, TRes&gt;, Func&lt;TRes, T, Int32, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableSum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_Double__">IEnumerableExensions.EnumerableSum&lt;T&gt;(IEnumerable&lt;T&gt;, Func&lt;T, Double&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__3_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___1__System_Func___0___1___2__">IEnumerableExensions.ListZip&lt;TFirst, TSecond, TResult&gt;(IList&lt;TFirst&gt;, IEnumerable&lt;TSecond&gt;, Func&lt;TFirst, TSecond, TResult&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__4_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___1__System_Collections_Generic_IEnumerable___2__System_Func___0___1___2___3__">IEnumerableExensions.ListZip&lt;TFirst, TSecond, TThird, TResult&gt;(IList&lt;TFirst&gt;, IEnumerable&lt;TSecond&gt;, IEnumerable&lt;TThird&gt;, Func&lt;TFirst, TSecond, TThird, TResult&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__5_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList___2__System_Collections_Generic_IList___3__System_Func___0___1___2___3___4__">IEnumerableExensions.ListZip&lt;TFirst, TSecond, TThird, TFourth, TResult&gt;(IList&lt;TFirst&gt;, IList&lt;TSecond&gt;, IList&lt;TThird&gt;, IList&lt;TFourth&gt;, Func&lt;TFirst, TSecond, TThird, TFourth, TResult&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_IsSparse__1_System_Collections_Generic_IList___0__">IListExtensions.IsSparse&lt;T&gt;(IList&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_ListSelect__2_System_Collections_Generic_IList___0__System_Func___0___1__">IListExtensions.ListSelect&lt;T, T2&gt;(IList&lt;T&gt;, Func&lt;T, T2&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_ListReduce__2_System_Collections_Generic_IList___0____1_System_Func___1___0___1__">IListExtensions.ListReduce&lt;T, TRes&gt;(IList&lt;T&gt;, TRes, Func&lt;TRes, T, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_ListReduce__3_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___1____2_System_Func___2___0___1___2__">IListExtensions.ListReduce&lt;T, T2, TRes&gt;(IList&lt;T&gt;, IEnumerable&lt;T2&gt;, TRes, Func&lt;TRes, T, T2, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_SetTo__1_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___0__">IListExtensions.SetTo&lt;T&gt;(IList&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_AsReadOnly__1_System_Collections_Generic_IList___0__">IListExtensions.AsReadOnly&lt;T&gt;(IList&lt;T&gt;)</a>
   </div>
 </article>
           </div>

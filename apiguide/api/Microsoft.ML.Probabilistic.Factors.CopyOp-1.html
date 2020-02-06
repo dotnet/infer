@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class CopyOp&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,11 +91,37 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">CopyOp&lt;T&gt;</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_CopyOp_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class CopyOp&lt;T&gt; : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;Copy&lt;&gt;&quot;, new Type[]{})]
+[Quality(QualityBand.Mature)]
+public static class CopyOp&lt;T&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -174,7 +200,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(TruncatedGaussian copy, Gaussian value, Gaussian to_value)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static double AverageLogFactor(TruncatedGaussian copy, Gaussian value, Gaussian to_value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -485,7 +512,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma CopyAverageConditional(TruncatedGamma value)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static Gamma CopyAverageConditional(TruncatedGamma value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -531,7 +559,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian CopyAverageConditional(TruncatedGaussian value)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static Gaussian CopyAverageConditional(TruncatedGaussian value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -640,7 +669,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TruncatedGaussian CopyAverageLogarithm(Gaussian value, Gaussian to_value)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static TruncatedGaussian CopyAverageLogarithm(Gaussian value, Gaussian to_value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -766,7 +796,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian CopyAverageLogarithm(TruncatedGaussian value)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static Gaussian CopyAverageLogarithm(TruncatedGaussian value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1419,7 +1450,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TruncatedGamma ValueAverageConditional(Gamma copy)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static TruncatedGamma ValueAverageConditional(Gamma copy)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1459,7 +1491,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TruncatedGaussian ValueAverageConditional(Gaussian copy)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static TruncatedGaussian ValueAverageConditional(Gaussian copy)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1632,7 +1665,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TruncatedGaussian ValueAverageLogarithm(Gaussian copy)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static TruncatedGaussian ValueAverageLogarithm(Gaussian copy)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1736,7 +1770,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian ValueAverageLogarithm(TruncatedGaussian copy, Gaussian value, Gaussian to_value)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static Gaussian ValueAverageLogarithm(TruncatedGaussian copy, Gaussian value, Gaussian to_value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

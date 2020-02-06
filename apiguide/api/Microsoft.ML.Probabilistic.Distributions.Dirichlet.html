@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Dirichlet
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -94,7 +94,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a>&gt;</div>
@@ -117,11 +117,29 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMeanAndVariance-2.html">CanSetMeanAndVariance</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Dirichlet_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Dirichlet : object, IDistribution&lt;Vector&gt;, ICloneable, HasPoint&lt;Vector&gt;, CanGetLogProb&lt;Vector&gt;, SettableTo&lt;Dirichlet&gt;, SettableToProduct&lt;Dirichlet&gt;, SettableToProduct&lt;Dirichlet, Dirichlet&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Dirichlet&gt;, SettableToRatio&lt;Dirichlet, Dirichlet&gt;, SettableToPower&lt;Dirichlet&gt;, SettableToWeightedSum&lt;Dirichlet&gt;, CanGetLogAverageOf&lt;Dirichlet&gt;, CanGetLogAverageOfPower&lt;Dirichlet&gt;, CanGetAverageLog&lt;Dirichlet&gt;, CanGetLogNormalizer, Sampleable&lt;Vector&gt;, CanGetMean&lt;Vector&gt;, CanGetVariance&lt;Vector&gt;, CanGetMeanAndVariance&lt;Vector, Vector&gt;, CanSetMeanAndVariance&lt;Vector, Vector&gt;, CanGetMode&lt;Vector&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Mature)]
+public class Dirichlet : IDistribution&lt;Vector&gt;, ICloneable, HasPoint&lt;Vector&gt;, CanGetLogProb&lt;Vector&gt;, SettableTo&lt;Dirichlet&gt;, SettableToProduct&lt;Dirichlet&gt;, SettableToProduct&lt;Dirichlet, Dirichlet&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Dirichlet&gt;, SettableToRatio&lt;Dirichlet, Dirichlet&gt;, SettableToPower&lt;Dirichlet&gt;, SettableToWeightedSum&lt;Dirichlet&gt;, CanGetLogAverageOf&lt;Dirichlet&gt;, CanGetLogAverageOfPower&lt;Dirichlet&gt;, CanGetAverageLog&lt;Dirichlet&gt;, CanGetLogNormalizer, Sampleable&lt;Vector&gt;, CanGetMean&lt;Vector&gt;, CanGetVariance&lt;Vector&gt;, CanGetMeanAndVariance&lt;Vector, Vector&gt;, CanSetMeanAndVariance&lt;Vector, Vector&gt;, CanGetMode&lt;Vector&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Dirichlet_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -181,7 +199,8 @@ in inference will maintain that sparsity specification.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Dirichlet(Vector pseudoCount)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;PseudoCount&quot;})]
+public Dirichlet(Vector pseudoCount)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -395,7 +414,8 @@ is recommended for sparse problems.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Vector PseudoCount</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public Vector PseudoCount</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -419,7 +439,8 @@ Otherwise, this is the sum of pseudo-counts</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double TotalCount</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double TotalCount</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -469,7 +490,8 @@ Otherwise, this is the sum of pseudo-counts</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -493,7 +515,8 @@ Otherwise, this is the sum of pseudo-counts</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Vector Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public Vector Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -651,6 +674,8 @@ if you want to assign the result to a Dirichlet type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Dirichlet_EstimateNewton_" data-uid="Microsoft.ML.Probabilistic.Distributions.Dirichlet.EstimateNewton*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Dirichlet_EstimateNewton_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.Dirichlet.EstimateNewton(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector)">EstimateNewton(Vector, Vector)</h4>
   <div class="markdown level1 summary"><p>Modifies PseudoCount to produce the given expected logarithms.</p>
@@ -805,6 +830,8 @@ Uses the Newton algorithm described in &quot;Estimating a Dirichlet distribution
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Dirichlet_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Dirichlet.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Dirichlet_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Distributions.Dirichlet.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.Dirichlet)">GetLogAverageOf(Dirichlet)</h4>
   <div class="markdown level1 summary"><p>The log of the integral of the product of this Dirichlet and that Dirichlet</p>
@@ -1416,7 +1443,8 @@ and that Dirichlet</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dirichlet PointMass(Vector mean)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static Dirichlet PointMass(Vector mean)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2137,6 +2165,8 @@ No error is thrown in this case.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Dirichlet_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Dirichlet.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Dirichlet_ToString_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.Dirichlet.ToString(System.String)">ToString(String)</h4>
   <div class="markdown level1 summary"></div>
@@ -2272,7 +2302,8 @@ No error is thrown in this case.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dirichlet Uniform(int dimension, Sparsity sparsity)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Dimension&quot;, &quot;Sparsity&quot;}, UseWhen = &quot;IsUniform&quot;)]
+public static Dirichlet Uniform(int dimension, Sparsity sparsity)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2565,7 +2596,7 @@ can be got/set as Vectors</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>

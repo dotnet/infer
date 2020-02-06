@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class InnerProductOp_PointB
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -83,7 +83,8 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_InnerProductOp_PointB" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductOp_PointB" class="text-break">Class InnerProductOp_PointB
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_InnerProduct_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">InnerProduct(Vector, Vector)</a>, given random arguments to the function.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -201,18 +202,43 @@
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Factors.InnerProductOpBase.html#Microsoft_ML_Probabilistic_Factors_InnerProductOpBase_LogAverageFactor_System_Double_Microsoft_ML_Probabilistic_Math_DenseVector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_Vector_">InnerProductOpBase.LogAverageFactor(Double, DenseVector, PositiveDefiniteMatrix, Vector)</a>
     </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductOp_PointB_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class InnerProductOp_PointB : InnerProductOpBase</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Vector), &quot;InnerProduct&quot;, new Type[]{}, Default = false)]
+[Buffers(new string[]{&quot;AVariance&quot;, &quot;AMean&quot;})]
+[Quality(QualityBand.Experimental)]
+public class InnerProductOp_PointB : InnerProductOpBase</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductOp_PointB_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductOp_PointB.AAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductOp_PointB_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductOp_PointB.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">AAverageConditional(Gaussian, VectorGaussian, VectorGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -231,17 +257,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -256,7 +285,32 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductOp_PointB_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(innerProduct,b) p(innerProduct,b) factor(innerProduct,a,b)]/p(a)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">innerProduct</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -322,7 +376,8 @@
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductOp_PointB_InnerProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductOp_PointB.InnerProductAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductOp_PointB_InnerProductAverageConditional_Microsoft_ML_Probabilistic_Math_DenseVector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductOp_PointB.InnerProductAverageConditional(Microsoft.ML.Probabilistic.Math.DenseVector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">InnerProductAverageConditional(DenseVector, PositiveDefiniteMatrix, VectorGaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>innerProduct</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -341,17 +396,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
         <td><span class="parametername">AMean</span></td>
-        <td></td>
+        <td><p>Buffer <code>AMean</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
         <td><span class="parametername">AVariance</span></td>
-        <td></td>
+        <td><p>Buffer <code>AVariance</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -366,7 +424,27 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>innerProduct</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductOp_PointB_InnerProductAverageConditional_Microsoft_ML_Probabilistic_Math_DenseVector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>innerProduct</code> as the random arguments are varied. The formula is <code>proj[p(innerProduct) sum_(b) p(b) factor(innerProduct,a,b)]/p(innerProduct)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>

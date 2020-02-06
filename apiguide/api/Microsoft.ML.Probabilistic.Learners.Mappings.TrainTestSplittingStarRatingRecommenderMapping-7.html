@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class TrainTestSplittingStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -121,6 +121,27 @@ for star-rating based recommenders.</p>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping-6.html#Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetItemFeatures__4__3_">TrainTestSplittingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;.GetItemFeatures(TFeatureSource, TItem)</a>
     </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.html">Microsoft.ML.Probabilistic.Learners.Mappings</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
@@ -184,7 +205,7 @@ for star-rating based recommenders.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TrainTestSplittingStarRatingRecommenderMapping(IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt; mapping, double trainingOnlyUserFraction, double testUserRatingTrainingFraction, double coldUserFraction = null, double coldItemFraction = null, double ignoredUserFraction = null, double ignoredItemFraction = null, bool removeOccasionalColdItems = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public TrainTestSplittingStarRatingRecommenderMapping(IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt; mapping, double trainingOnlyUserFraction, double testUserRatingTrainingFraction, double coldUserFraction = 0, double coldItemFraction = 0, double ignoredUserFraction = 0, double ignoredItemFraction = 0, bool removeOccasionalColdItems = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -300,6 +321,25 @@ for star-rating based recommenders.</p>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderMapping-6.html">IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.html#Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_SplitToTrainTest__6_Microsoft_ML_Probabilistic_Learners_Mappings_IRecommenderMapping___0___1___2___3___4___5__System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean_">RecommenderMappingExtensions.SplitToTrainTest&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;(IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;, Double, Double, Double, Double, Double, Double, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.html#Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_SplitToTrainTest__7_Microsoft_ML_Probabilistic_Learners_Mappings_IRatingRecommenderMapping___0___1___2___3___4___5___6__System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean_">RecommenderMappingExtensions.SplitToTrainTest&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(IRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;, Double, Double, Double, Double, Double, Double, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.html#Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_SplitToTrainTest__7_Microsoft_ML_Probabilistic_Learners_Mappings_IStarRatingRecommenderMapping___0___1___2___3___4___5___6__System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean_">RecommenderMappingExtensions.SplitToTrainTest&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;, Double, Double, Double, Double, Double, Double, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.html#Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_WithGeneratedNegativeData__6_Microsoft_ML_Probabilistic_Learners_Mappings_IRecommenderMapping___0___1___2___3___4___5__System_Double_">RecommenderMappingExtensions.WithGeneratedNegativeData&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;(IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;, Double)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.html#Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_ForEvaluation__7_Microsoft_ML_Probabilistic_Learners_Mappings_IRatingRecommenderMapping___0___1___2___3___4___5___6__">RecommenderMappingExtensions.ForEvaluation&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(IRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.html#Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_ForEvaluation__7_Microsoft_ML_Probabilistic_Learners_Mappings_IStarRatingRecommenderMapping___0___1___2___3___4___5___6__">RecommenderMappingExtensions.ForEvaluation&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;)</a>
   </div>
 </article>
           </div>

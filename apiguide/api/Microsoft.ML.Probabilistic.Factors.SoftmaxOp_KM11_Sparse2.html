@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class SoftmaxOp_KM11_Sparse2
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2" class="text-break">Class SoftmaxOp_KM11_Sparse2
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -91,11 +91,38 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">SoftmaxOp_KM11_Sparse2</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class SoftmaxOp_KM11_Sparse2 : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(MMath), &quot;Softmax&quot;, new Type[]{typeof(IList&lt;double&gt;)})]
+[Quality(QualityBand.Preview)]
+[Buffers(new string[]{&quot;Asj&quot;, &quot;Abouchard&quot;})]
+public static class SoftmaxOp_KM11_Sparse2</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>This implementation uses a generalization of the tilted bound used in Saul Jordan 1999, followed by
@@ -201,7 +228,7 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
   <div class="markdown level1 remarks"><p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_Asj_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.Asj*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_Asj_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.Asj(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{System.Double})">Asj(IList&lt;Gaussian&gt;, IList&lt;Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_Asj_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.Asj(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Collections.Generic.IList{System.Double})">Asj(IList&lt;Gaussian&gt;, IList&lt;Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Update the buffer <code>Asj</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -220,13 +247,13 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">x</span></td>
         <td><p>Incoming message from <code>x</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">asj</span></td>
         <td><p>Buffer <code>asj</code>.</p>
 </td>
@@ -243,13 +270,13 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><p>New value of buffer <code>Asj</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_Asj_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_System_Double___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_Asj_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_System_Double___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -269,7 +296,7 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_AsjInit_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.AsjInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_AsjInit_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.AsjInit(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">AsjInit(IList&lt;Gaussian&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_AsjInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.AsjInit(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">AsjInit(IList&lt;Gaussian&gt;)</h4>
   <div class="markdown level1 summary"><p>Initialize the buffer <code>Asj</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -288,7 +315,7 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">x</span></td>
         <td><p>Incoming message from <code>x</code>.</p>
 </td>
@@ -305,23 +332,23 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><p>Initial value of buffer <code>Asj</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_AsjInit_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_AsjInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_LogAverageFactor__1___0_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.LogAverageFactor``1(``0,IList{System.Double},System.Double,Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">LogAverageFactor&lt;GaussianList&gt;(GaussianList, IList&lt;Double&gt;, Double, Dirichlet, Dirichlet)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_LogAverageFactor__1___0_System_Collections_Generic_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.LogAverageFactor``1(``0,System.Collections.Generic.IList{System.Double},System.Double,Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">LogAverageFactor&lt;GaussianList&gt;(GaussianList, IList&lt;Double&gt;, Double, Dirichlet, Dirichlet)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogAverageFactor&lt;GaussianList&gt;(GaussianList x, IList&lt;double&gt; asj, double abouchard, Dirichlet softmax, Dirichlet to_softmax)
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor&lt;GaussianList&gt;([SkipIfAllUniform] GaussianList x, IList&lt;double&gt; asj, double abouchard, Dirichlet softmax, Dirichlet to_softmax)
     where GaussianList : IList&lt;Gaussian&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -341,7 +368,7 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">asj</span></td>
         <td><p>Buffer <code>asj</code>.</p>
 </td>
@@ -398,7 +425,7 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_LogAverageFactor__1___0_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_LogAverageFactor__1___0_System_Collections_Generic_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(x,softmax) p(x,softmax) factor(softmax,x))</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -418,13 +445,13 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_SoftmaxAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.SoftmaxAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_SoftmaxAverageLogarithm__1___0_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.SoftmaxAverageLogarithm``1(``0,IList{System.Double},System.Double,Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">SoftmaxAverageLogarithm&lt;GaussianList&gt;(GaussianList, IList&lt;Double&gt;, Double, Dirichlet, Dirichlet)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_SoftmaxAverageLogarithm__1___0_System_Collections_Generic_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.SoftmaxAverageLogarithm``1(``0,System.Collections.Generic.IList{System.Double},System.Double,Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">SoftmaxAverageLogarithm&lt;GaussianList&gt;(GaussianList, IList&lt;Double&gt;, Double, Dirichlet, Dirichlet)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>softmax</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dirichlet SoftmaxAverageLogarithm&lt;GaussianList&gt;(GaussianList x, IList&lt;double&gt; asj, double abouchard, Dirichlet softmax, Dirichlet to_softmax)
+    <pre><code class="lang-csharp hljs">public static Dirichlet SoftmaxAverageLogarithm&lt;GaussianList&gt;([SkipIfAllUniform] GaussianList x, IList&lt;double&gt; asj, double abouchard, Dirichlet softmax, Dirichlet to_softmax)
     where GaussianList : IList&lt;Gaussian&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -444,7 +471,7 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">asj</span></td>
         <td><p>Buffer <code>asj</code>.</p>
 </td>
@@ -501,7 +528,7 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_SoftmaxAverageLogarithm__1___0_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_SoftmaxAverageLogarithm__1___0_System_Collections_Generic_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>softmax</code> as the random arguments are varied. The formula is <code>proj[sum_(x) p(x) factor(softmax,x)]</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -521,13 +548,13 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_XAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.XAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_XAverageLogarithm__1___0_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet___0_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.XAverageLogarithm``1(``0,IList{System.Double},System.Double,Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Dirichlet,``0)">XAverageLogarithm&lt;GaussianList&gt;(GaussianList, IList&lt;Double&gt;, Double, Dirichlet, Dirichlet, GaussianList)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_XAverageLogarithm__1___0_System_Collections_Generic_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet___0_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.XAverageLogarithm``1(``0,System.Collections.Generic.IList{System.Double},System.Double,Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Dirichlet,``0)">XAverageLogarithm&lt;GaussianList&gt;(GaussianList, IList&lt;Double&gt;, Double, Dirichlet, Dirichlet, GaussianList)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>x</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GaussianList XAverageLogarithm&lt;GaussianList&gt;(GaussianList x, IList&lt;double&gt; asj, double abouchard, Dirichlet softmax, Dirichlet to_softmax, GaussianList to_x)
+    <pre><code class="lang-csharp hljs">public static GaussianList XAverageLogarithm&lt;GaussianList&gt;([SkipIfAllUniform] GaussianList x, IList&lt;double&gt; asj, double abouchard, Dirichlet softmax, Dirichlet to_softmax, GaussianList to_x)
     where GaussianList : IList&lt;Gaussian&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -547,7 +574,7 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">asj</span></td>
         <td><p>Buffer <code>asj</code>.</p>
 </td>
@@ -610,7 +637,7 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_XAverageLogarithm__1___0_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet___0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_Sparse2_XAverageLogarithm__1___0_System_Collections_Generic_IList_System_Double__System_Double_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>x</code> with <code>softmax</code> integrated out. The formula is <code>sum_softmax p(softmax) factor(softmax,x)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>

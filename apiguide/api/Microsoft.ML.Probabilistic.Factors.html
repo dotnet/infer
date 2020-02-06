@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace Microsoft.ML.Probabilistic.Factors
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -88,7 +88,7 @@
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.AllTrueOp.html">AllTrueOp</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_AllTrue_IList_System_Boolean__">AllTrue(IList&lt;Boolean&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_AllTrue_System_Collections_Generic_IList_System_Boolean__">AllTrue(IList&lt;Boolean&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ArrayFromVectorOp.html">ArrayFromVectorOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_ArrayFromVector_Microsoft_ML_Probabilistic_Math_Vector_">ArrayFromVector(Vector)</a>, given random arguments to the function.</p>
@@ -166,7 +166,7 @@
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Char_Microsoft_ML_Probabilistic_Math_Vector_">Char(Vector)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.CharStringConcatOp.html">CharStringConcatOp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:Factor.Concat(Char, String)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Concat_System_Char_System_String_">Concat(Char, String)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ConcatOp.html">ConcatOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Concat_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">Concat(Vector, Vector)</a>, given random arguments to the function.</p>
@@ -175,7 +175,7 @@
       <section><p>A repository of commonly used constraint methods.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ConstrainContainOp.html">ConstrainContainOp</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Constrain.html#Microsoft_ML_Probabilistic_Factors_Constrain_Contain_IList_System_Int32__System_Int32_">Contain(IList&lt;Int32&gt;, Int32)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Constrain.html#Microsoft_ML_Probabilistic_Factors_Constrain_Contain_System_Collections_Generic_IList_System_Int32__System_Int32_">Contain(IList&lt;Int32&gt;, Int32)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp-1.html">ConstrainEqualOp&lt;T&gt;</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Constrain.html#Microsoft_ML_Probabilistic_Factors_Constrain_Equal__1___0___0_">Equal&lt;T&gt;(T, T)</a>, given random arguments to the function.</p>
@@ -203,7 +203,8 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Damp.html#Microsoft_ML_Probabilistic_Factors_Damp_Backward__1___0_System_Double_">Backward&lt;T&gt;(T, Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.DampForwardOp-1.html">DampForwardOp&lt;T&gt;</a></h4>
-      <section></section>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Damp.html#Microsoft_ML_Probabilistic_Factors_Damp_Forward__1___0_System_Double_">Forward&lt;T&gt;(T, Double)</a>, given random arguments to the function.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.DerivedVariableGibbsOp.html">DerivedVariableGibbsOp</a></h4>
       <section><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_DerivedVariableGibbs__1___0___0__">DerivedVariableGibbs&lt;T&gt;(T, out T)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_DerivedVariableInitGibbs__1___0___0___0__">DerivedVariableInitGibbs&lt;T&gt;(T, T, out T)</a></li></ul>, given random arguments to the function.</p>
 </section>
@@ -277,24 +278,25 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Gate.html#Microsoft_ML_Probabilistic_Factors_Gate_ExitingVariable__1___0___0__">ExitingVariable&lt;T&gt;(T, out T)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ExpOp.html">ExpOp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:System.Math.Exp(double)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.math.exp#System_Math_Exp_System_Double_">Exp(Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ExpOp_BFGS.html">ExpOp_BFGS</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:System.Math.Exp(double)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.math.exp#System_Math_Exp_System_Double_">Exp(Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ExpOp_Laplace.html">ExpOp_Laplace</a></h4>
-      <section></section>
+      <section><p>Provides outgoing messages for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.math.exp#System_Math_Exp_System_Double_">Exp(Double)</a>, given random arguments to the function.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ExpOp_LaplaceProp.html">ExpOp_LaplaceProp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:System.Math.Exp(double)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.math.exp#System_Math_Exp_System_Double_">Exp(Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ExpOp_Slow.html">ExpOp_Slow</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:System.Math.Exp(double)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.math.exp#System_Math_Exp_System_Double_">Exp(Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html">Factor</a></h4>
       <section><p>A repository of commonly used factor methods.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.FastSumOp.html">FastSumOp</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_IList_System_Double__">Sum(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_System_Collections_Generic_IList_System_Double__">Sum(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromMeanAndVarianceOp.html">GammaFromMeanAndVarianceOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html#Microsoft_ML_Probabilistic_Distributions_Gamma_SampleFromMeanAndVariance_System_Double_System_Double_">SampleFromMeanAndVariance(Double, Double)</a>, given random arguments to the function.</p>
@@ -312,6 +314,9 @@ occurs when an observation does not hold true or a weight is 0.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndScaleOp.html">GammaFromShapeAndScaleOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html#Microsoft_ML_Probabilistic_Distributions_Gamma_Sample_System_Double_System_Double_">Sample(Double, Double)</a>, given random arguments to the function.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaPowerProductOp_Laplace.html">GammaPowerProductOp_Laplace</a></h4>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Product_System_Double_System_Double_">Product(Double, Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaProductOp.html">GammaProductOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Product_System_Double_System_Double_">Product(Double, Double)</a>, given random arguments to the function.</p>
@@ -332,7 +337,7 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Ratio_System_Double_System_Double_">Ratio(Double, Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaSoftmaxOp.html">GammaSoftmaxOp</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Gate.html">Gate</a></h4>
       <section><p>Factors for handling gates.</p>
@@ -364,6 +369,10 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianFromMeanAndVarianceOp.html">GaussianFromMeanAndVarianceOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GaussianFromMeanAndVariance_System_Double_System_Double_">GaussianFromMeanAndVariance(Double, Double)</a>, given random arguments to the function.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianFromMeanAndVarianceOp_PointVariance.html">GaussianFromMeanAndVarianceOp_PointVariance</a></h4>
+      <section><p>This class defines specializations for the case where variance is a point mass.
+These methods have fewer inputs, allowing more efficient schedules.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOp.html">GaussianOp</a></h4>
       <section><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html#Microsoft_ML_Probabilistic_Distributions_Gaussian_Sample_System_Double_System_Double_">Sample(Double, Double)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Gaussian_System_Double_System_Double_">Gaussian(Double, Double)</a></li></ul>, given random arguments to the function.</p>
 </section>
@@ -373,7 +382,9 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <section><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html#Microsoft_ML_Probabilistic_Distributions_Gaussian_Sample_System_Double_System_Double_">Sample(Double, Double)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Gaussian_System_Double_System_Double_">Gaussian(Double, Double)</a></li></ul>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOp_PointPrecision.html">GaussianOp_PointPrecision</a></h4>
-      <section></section>
+      <section><p>This class defines specializations for the case where precision is a point mass.
+These methods have fewer inputs, allowing more efficient schedules.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianOp_Slow.html">GaussianOp_Slow</a></h4>
       <section><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html#Microsoft_ML_Probabilistic_Distributions_Gaussian_Sample_System_Double_System_Double_">Sample(Double, Double)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Gaussian_System_Double_System_Double_">Gaussian(Double, Double)</a></li></ul>, given random arguments to the function.</p>
 </section>
@@ -417,49 +428,52 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Ratio_System_Double_System_Double_">Ratio(Double, Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsOp-1.html">GetDeepJaggedItemsOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItems__1_IList___0__IList_IList_System_Int32___">GetJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetDeepJaggedItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____">GetDeepJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetDeepJaggedItemsPointOp-1.html">GetDeepJaggedItemsPointOp&lt;T&gt;</a></h4>
-      <section></section>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetDeepJaggedItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____">GetDeepJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;)</a>, given random arguments to the function.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetItem2DOp-1.html">GetItem2DOp&lt;T&gt;</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItem2D__1___0_0__0___System_Int32_System_Int32_">GetItem2D&lt;T&gt;(T[,], Int32, Int32)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetItemOp-1.html">GetItemOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItem__1_IList___0__System_Int32_">GetItem&lt;T&gt;(IList&lt;T&gt;, Int32)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItem__1_System_Collections_Generic_IList___0__System_Int32_">GetItem&lt;T&gt;(IList&lt;T&gt;, Int32)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetItemsBufferOp2-1.html">GetItemsBufferOp2&lt;T&gt;</a></h4>
       <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetItemsFromDeepJaggedOp-1.html">GetItemsFromDeepJaggedOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromJagged__1_IList_IList___0___IList_System_Int32__IList_System_Int32__">GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromJagged__1_System_Collections_Generic_IList_System_Collections_Generic_IList___0___System_Collections_Generic_IList_System_Int32__System_Collections_Generic_IList_System_Int32__">GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetItemsFromDeepJaggedPointOp-1.html">GetItemsFromDeepJaggedPointOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromDeepJagged__1_IList_IList_IList___0____IList_System_Int32__IList_System_Int32__IList_System_Int32__">GetItemsFromDeepJagged&lt;T&gt;(IList&lt;IList&lt;IList&lt;T&gt;&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromDeepJagged__1_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList___0____System_Collections_Generic_IList_System_Int32__System_Collections_Generic_IList_System_Int32__System_Collections_Generic_IList_System_Int32__">GetItemsFromDeepJagged&lt;T&gt;(IList&lt;IList&lt;IList&lt;T&gt;&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetItemsFromJaggedOp-1.html">GetItemsFromJaggedOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromJagged__1_IList_IList___0___IList_System_Int32__IList_System_Int32__">GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromJagged__1_System_Collections_Generic_IList_System_Collections_Generic_IList___0___System_Collections_Generic_IList_System_Int32__System_Collections_Generic_IList_System_Int32__">GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetItemsFromJaggedPointOp-1.html">GetItemsFromJaggedPointOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromJagged__1_IList_IList___0___IList_System_Int32__IList_System_Int32__">GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromJagged__1_System_Collections_Generic_IList_System_Collections_Generic_IList___0___System_Collections_Generic_IList_System_Int32__System_Collections_Generic_IList_System_Int32__">GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetItemsOp-1.html">GetItemsOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItems__1_IList___0__IList_System_Int32__">GetItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__">GetItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetItemsOp2-1.html">GetItemsOp2&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItems__1_IList___0__IList_System_Int32__">GetItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__">GetItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetItemsPointOp-1.html">GetItemsPointOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItems__1_IList___0__IList_System_Int32__">GetItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__">GetItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetJaggedItemsFromJaggedOp-1.html">GetJaggedItemsFromJaggedOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItems__1_IList___0__IList_IList_System_Int32___">GetJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItemsFromJagged__1_System_Collections_Generic_IList_System_Collections_Generic_IList___0___System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___">GetJaggedItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;IList&lt;Int32&gt;&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetJaggedItemsFromJaggedPointOp-1.html">GetJaggedItemsFromJaggedPointOp&lt;T&gt;</a></h4>
-      <section></section>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItemsFromJagged__1_System_Collections_Generic_IList_System_Collections_Generic_IList___0___System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___">GetJaggedItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;IList&lt;Int32&gt;&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</a>, given random arguments to the function.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetJaggedItemsOp-1.html">GetJaggedItemsOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItems__1_IList___0__IList_IList_System_Int32___">GetJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___">GetJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GetJaggedItemsPointOp-1.html">GetJaggedItemsPointOp&lt;T&gt;</a></h4>
-      <section></section>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___">GetJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</a>, given random arguments to the function.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></h4>
       <section><p>Improper message exception</p>
 </section>
@@ -467,27 +481,29 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <section><p>Holds messages for IndexOfMaximumOp</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.IndexOfMaximumOp.html">IndexOfMaximumOp</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_IndexOfMaximumDouble_IList_System_Double__">IndexOfMaximumDouble(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_IndexOfMaximumDouble_System_Collections_Generic_IList_System_Double__">IndexOfMaximumDouble(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.IndexOfMaximumOp_Fast.html">IndexOfMaximumOp_Fast</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_IndexOfMaximumDouble_IList_System_Double__">IndexOfMaximumDouble(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_IndexOfMaximumDouble_System_Collections_Generic_IList_System_Double__">IndexOfMaximumDouble(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.IndexOfMaximumStochasticOp.html">IndexOfMaximumStochasticOp</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_IndexOfMaximumDouble_IList_System_Double__">IndexOfMaximumDouble(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_IndexOfMaximumDouble_System_Collections_Generic_IList_System_Double__">IndexOfMaximumDouble(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.InferNet.html">InferNet</a></h4>
       <section><p>Class used in MSL only.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.html">InnerProductArrayOp</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_InnerProduct_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">InnerProduct(Vector, Vector)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_InnerProduct_System_Double___System_Double___">InnerProduct(Double[], Double[])</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.InnerProductOp.html">InnerProductOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_InnerProduct_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">InnerProduct(Vector, Vector)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.InnerProductOp_PointB.html">InnerProductOp_PointB</a></h4>
-      <section></section>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_InnerProduct_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">InnerProduct(Vector, Vector)</a>, given random arguments to the function.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.InnerProductOpBase.html">InnerProductOpBase</a></h4>
-      <section></section>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_InnerProduct_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">InnerProduct(Vector, Vector)</a>, given random arguments to the function.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.InnerProductPartialCovarianceOp.html">InnerProductPartialCovarianceOp</a></h4>
       <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.IntCasesOp.html">IntCasesOp</a></h4>
@@ -510,11 +526,10 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayOp_NoDivide-1.html">JaggedSubarrayOp_NoDivide&lt;T&gt;</a></h4>
       <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayOp-1.html">JaggedSubarrayOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarray__1_IList___0__System_Int32_____">JaggedSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarray__1_System_Collections_Generic_IList___0__System_Int32_____">JaggedSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp-1.html">JaggedSubarrayWithMarginalOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarray__1_IList___0__System_Int32_____">JaggedSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</a>, given random arguments to the function.</p>
-</section>
+      <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.LinearOp.html">LinearOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Undirected.html#Microsoft_ML_Probabilistic_Factors_Undirected_Linear_System_Int32_System_Int32_System_Double_">Linear(Int32, Int32, Double)</a>, given random arguments to the function.</p>
 </section>
@@ -531,10 +546,10 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Logistic_System_Double_">Logistic(Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.LogOp_EP.html">LogOp_EP</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:System.Math.Log(double)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.math.log#System_Math_Log_System_Double_">Log(Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.LogOp_VMP.html">LogOp_VMP</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:System.Math.Log(double)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.math.log#System_Math_Log_System_Double_">Log(Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.LowPriority.html">LowPriority</a></h4>
       <section></section>
@@ -551,7 +566,7 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.MaxGammaOp.html">MaxGammaOp</a></h4>
       <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.MaxGaussianOp.html">MaxGaussianOp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:System.Math.Max(double, double)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.math.max#System_Math_Max_System_Double_System_Double_">Max(Double, Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.MaxOfOthersOp.html">MaxOfOthersOp</a></h4>
       <section></section>
@@ -573,6 +588,9 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.NoSkip.html">NoSkip</a></h4>
       <section><p>Special factors used to modify the inference schedule.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.PlusGammaOp.html">PlusGammaOp</a></h4>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Plus_System_Double_System_Double_">Plus(Double, Double)</a>, given random arguments to the function.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.PlusGammaVmpOp.html">PlusGammaVmpOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Plus_System_Double_System_Double_">Plus(Double, Double)</a>, given random arguments to the function.</p>
 </section>
@@ -588,7 +606,7 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Undirected.html#Microsoft_ML_Probabilistic_Factors_Undirected_Potts_System_Int32_System_Int32_System_Double_">Potts(Int32, Int32, Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.PowerOp.html">PowerOp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:System.Math.Pow(double, double)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.math.pow#System_Math_Pow_System_Double_System_Double_">Pow(Double, Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.PowerPlate.html">PowerPlate</a></h4>
       <section><p>Power plate factor method</p>
@@ -660,42 +678,42 @@ occurs when an observation does not hold true or a weight is 0.</p>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.ShiftAlpha.html#Microsoft_ML_Probabilistic_Factors_ShiftAlpha_ToFactor__1___0_System_Double_System_Double_">ToFactor&lt;T&gt;(T, Double, Double)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SingleOp.html">SingleOp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:Factor.Single(String)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Single_System_String_">Single(String)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_BL06.html">SoftmaxOp_BL06</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_BL06_LBFGS.html">SoftmaxOp_BL06_LBFGS</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_Bohning.html">SoftmaxOp_Bohning</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_Bouchard.html">SoftmaxOp_Bouchard</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_Bouchard_Sparse.html">SoftmaxOp_Bouchard_Sparse</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11.html">SoftmaxOp_KM11</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS.html">SoftmaxOp_KM11_LBFGS</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.html">SoftmaxOp_KM11_LBFGS_Sparse</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.
 This implementation uses the bound in Knowles and Minka (2011), followed by
 optimization using LBFGS. This approach is linear in the dimension K.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse.html">SoftmaxOp_KM11_Sparse</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_Sparse2.html">SoftmaxOp_KM11_Sparse2</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_Taylor.html">SoftmaxOp_Taylor</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SparseBernoulliFromBetaOp.html">SparseBernoulliFromBetaOp</a></h4>
       <section><summary>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBernoulliList.html#Microsoft_ML_Probabilistic_Distributions_SparseBernoulliList_Sample_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__">Sample(ISparseList&lt;Double&gt;)</a>, given random arguments to the function.</summary>
@@ -709,7 +727,7 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SplitOp-1.html">SplitOp&lt;T&gt;</a></h4>
       <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SplitSubarrayOp-1.html">SplitSubarrayOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarray__1_IList___0__System_Int32_____">JaggedSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarray__1_System_Collections_Generic_IList___0__System_Int32_____">JaggedSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.StringCapitalizedOfMinLengthOp.html">StringCapitalizedOfMinLengthOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_StringCapitalized_System_Int32_">StringCapitalized(Int32)</a>, given random arguments to the function.</p>
@@ -718,10 +736,10 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_StringCapitalized_System_Int32_System_Int32_">StringCapitalized(Int32, Int32)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.StringCharConcatOp.html">StringCharConcatOp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:Factor.Concat(String, Char)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Concat_System_String_System_Char_">Concat(String, Char)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.StringConcatOp.html">StringConcatOp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:Factor.Concat(String, String)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Concat_System_String_System_String_">Concat(String, String)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.StringFormatOp_AllowMissingPlaceholders.html">StringFormatOp_AllowMissingPlaceholders</a></h4>
       <section><p>An implementation of message passing operations for the string formatting factor that supports argument names and
@@ -746,7 +764,7 @@ requires every argument placeholder to be present in a format string.</p>
       <section><p>A base class for implementations of message passing operations for various forms of the string formatting factor.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.StringFromArrayOp.html">StringFromArrayOp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:Factor.StringFromArray(Char[])"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_StringFromArray_System_Char___">StringFromArray(Char[])</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.StringOfLengthOp.html">StringOfLengthOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_StringOfLength_System_Int32_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_">StringOfLength(Int32, DiscreteChar)</a>, given random arguments to the function.</p>
@@ -758,16 +776,16 @@ requires every argument placeholder to be present in a format string.</p>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_String_System_Int32_System_Int32_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_">String(Int32, Int32, DiscreteChar)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.StringsAreEqualOp.html">StringsAreEqualOp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:Factor.AreEqual(String, String)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_AreEqual_System_String_System_String_">AreEqual(String, String)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SubarrayOp-1.html">SubarrayOp&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Subarray__1_IList___0__IList_System_Int32__">Subarray&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Subarray__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__">Subarray&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SubarrayOp2-1.html">SubarrayOp2&lt;T&gt;</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Subarray__1_IList___0__IList_System_Int32__">Subarray&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Subarray__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__">Subarray&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SubstringOp.html">SubstringOp</a></h4>
-      <section><p>Provides outgoing messages for <see cref="!:Factor.Substring(String, int, int)"></see>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Substring_System_String_System_Int32_System_Int32_">Substring(String, Int32, Int32)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SubvectorOp.html">SubvectorOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Subvector_Microsoft_ML_Probabilistic_Math_Vector_System_Int32_System_Int32_">Subvector(Vector, Int32, Int32)</a>, given random arguments to the function.</p>
@@ -775,16 +793,16 @@ requires every argument placeholder to be present in a format string.</p>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SumExceptOp.html">SumExceptOp</a></h4>
       <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SumOp_SHG09.html">SumOp_SHG09</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_IList_System_Double__">Sum(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_System_Collections_Generic_IList_System_Double__">Sum(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SumOp2.html">SumOp2</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_IList_System_Double__">Sum(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_System_Collections_Generic_IList_System_Double__">Sum(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SumOp3.html">SumOp3</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_IList_System_Double__">Sum(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_System_Collections_Generic_IList_System_Double__">Sum(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.SumVectorGaussianOp.html">SumVectorGaussianOp</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_IList_Microsoft_ML_Probabilistic_Math_Vector__">Sum(IList&lt;Vector&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Sum_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Math_Vector__">Sum(IList&lt;Vector&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Tracing.html">Tracing</a></h4>
       <section></section>
@@ -830,7 +848,8 @@ requires every argument placeholder to be present in a format string.</p>
       <section><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Variable__1___0___0__">Variable&lt;T&gt;(T, out T)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_VariableInit__1___0___0___0__">VariableInit&lt;T&gt;(T, T, out T)</a></li></ul>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.VariablePointOp_Mean-1.html">VariablePointOp_Mean&lt;T&gt;</a></h4>
-      <section></section>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_VariablePoint__1___0___0__">VariablePoint&lt;T&gt;(T, out T)</a>, given random arguments to the function.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.VariablePointOp_Rprop.html">VariablePointOp_Rprop</a></h4>
       <section></section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.VariablePointOp_RpropBeta.html">VariablePointOp_RpropBeta</a></h4>
@@ -845,12 +864,13 @@ requires every argument placeholder to be present in a format string.</p>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_VariablePoint__1___0___0__">VariablePoint&lt;T&gt;(T, out T)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.VariablePointOpBase.html">VariablePointOpBase</a></h4>
-      <section></section>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_VariablePoint__1___0___0__">VariablePoint&lt;T&gt;(T, out T)</a>, given random arguments to the function.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.VariableVmpOp.html">VariableVmpOp</a></h4>
       <section><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Variable__1___0___0__">Variable&lt;T&gt;(T, out T)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_VariableInit__1___0___0___0__">VariableInit&lt;T&gt;(T, T, out T)</a></li></ul>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.VectorElementOp.html">VectorElementOp</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItem__1_IList___0__System_Int32_">GetItem&lt;T&gt;(IList&lt;T&gt;, Int32)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItem__1_System_Collections_Generic_IList___0__System_Int32_">GetItem&lt;T&gt;(IList&lt;T&gt;, Int32)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.VectorFromArrayOp.html">VectorFromArrayOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FromArray_System_Double___">FromArray(Double[])</a>, given random arguments to the function.</p>
@@ -865,7 +885,7 @@ requires every argument placeholder to be present in a format string.</p>
       <section><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html#Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Sample_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_">Sample(Vector, PositiveDefiniteMatrix)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_">VectorGaussian(Vector, PositiveDefiniteMatrix)</a></li></ul>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.VectorSoftmaxOp_KM11.html">VectorSoftmaxOp_KM11</a></h4>
-      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+      <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.WishartFromShapeAndRateOp.html">WishartFromShapeAndRateOp</a></h4>
       <section><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Wishart.html#Microsoft_ML_Probabilistic_Distributions_Wishart_SampleFromShapeAndRate_System_Double_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_">SampleFromShapeAndRate(Double, PositiveDefiniteMatrix)</a>, given random arguments to the function.</p>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class CodeCompiler
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -90,11 +90,35 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">CodeCompiler</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.html">Microsoft.ML.Probabilistic.Compiler</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Compiler_CodeCompiler_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class CodeCompiler : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class CodeCompiler</code></pre>
   </div>
   <h3 id="fields">Fields
   </h3>
@@ -352,7 +376,7 @@
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeCompiler.Compile*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeCompiler_Compile_List_System_String__List_System_String__ICollection_Assembly__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeCompiler.Compile(List{System.String},List{System.String},ICollection{Assembly})">Compile(List&lt;String&gt;, List&lt;String&gt;, ICollection&lt;Assembly&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeCompiler_Compile_System_Collections_Generic_List_System_String__System_Collections_Generic_List_System_String__System_Collections_Generic_ICollection_System_Reflection_Assembly__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeCompiler.Compile(System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Collections.Generic.ICollection{System.Reflection.Assembly})">Compile(List&lt;String&gt;, List&lt;String&gt;, ICollection&lt;Assembly&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -370,17 +394,17 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td><span class="parametername">filenames</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td><span class="parametername">sources</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">ICollection</span>&lt;<span class="xref">Assembly</span>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.assembly">Assembly</a>&gt;</td>
         <td><span class="parametername">referencedAssemblies</span></td>
         <td></td>
       </tr>
@@ -481,7 +505,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -537,7 +561,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeCompiler_WriteAndCompile_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeCompiler.WriteAndCompile*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeCompiler_WriteAndCompile_List_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeCompiler.WriteAndCompile(List{Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration})">WriteAndCompile(List&lt;ITypeDeclaration&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeCompiler_WriteAndCompile_System_Collections_Generic_List_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeCompiler.WriteAndCompile(System.Collections.Generic.List{Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration})">WriteAndCompile(List&lt;ITypeDeclaration&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -555,7 +579,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration.html">ITypeDeclaration</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration.html">ITypeDeclaration</a>&gt;</td>
         <td><span class="parametername">typeDeclarations</span></td>
         <td></td>
       </tr>
@@ -577,7 +601,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeCompiler_WriteSource_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeCompiler.WriteSource*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeCompiler_WriteSource_List_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration__IList_System_String__ICollection_Assembly___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeCompiler.WriteSource(List{Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration},IList{System.String},ICollection{Assembly}@)">WriteSource(List&lt;ITypeDeclaration&gt;, IList&lt;String&gt;, out ICollection&lt;Assembly&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeCompiler_WriteSource_System_Collections_Generic_List_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeDeclaration__System_Collections_Generic_IList_System_String__System_Collections_Generic_ICollection_System_Reflection_Assembly___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeCompiler.WriteSource(System.Collections.Generic.List{Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration},System.Collections.Generic.IList{System.String},System.Collections.Generic.ICollection{System.Reflection.Assembly}@)">WriteSource(List&lt;ITypeDeclaration&gt;, IList&lt;String&gt;, out ICollection&lt;Assembly&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -595,17 +619,17 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration.html">ITypeDeclaration</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeDeclaration.html">ITypeDeclaration</a>&gt;</td>
         <td><span class="parametername">typeDeclarations</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td><span class="parametername">filenames</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">ICollection</span>&lt;<span class="xref">Assembly</span>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.assembly">Assembly</a>&gt;</td>
         <td><span class="parametername">referencedAssemblies</span></td>
         <td></td>
       </tr>
@@ -621,7 +645,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>

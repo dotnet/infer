@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class SquaredExponential
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -136,20 +136,34 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_ThetaCount">KernelFunction.ThetaCount</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Write_StreamWriter_">KernelFunction.Write(StreamWriter)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Write_System_IO_StreamWriter_">KernelFunction.Write(StreamWriter)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Read_StreamReader_">KernelFunction.Read(StreamReader)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Read_System_IO_StreamReader_">KernelFunction.Read(StreamReader)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Cholesky_Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunction_Dictionary_System_Int32_Microsoft_ML_Probabilistic_Math_Vector__">KernelFunction.Cholesky(IKernelFunction, Dictionary&lt;Int32, Vector&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Cholesky_Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunction_System_Collections_Generic_Dictionary_System_Int32_Microsoft_ML_Probabilistic_Math_Vector__">KernelFunction.Cholesky(IKernelFunction, Dictionary&lt;Int32, Vector&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.html">Microsoft.ML.Probabilistic.Distributions.Kernels</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Kernels_SquaredExponential_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SquaredExponential : KernelFunction, IKernelFunctionWithParams, IKernelFunction</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+public class SquaredExponential : KernelFunction, IKernelFunctionWithParams, IKernelFunction</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -195,7 +209,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SquaredExponential(double logLengthScale, double logSignalSD)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;LogLengthScale&quot;, &quot;LogSignalSD&quot;})]
+public SquaredExponential(double logLengthScale, double logSignalSD)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -382,6 +397,8 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_SquaredExponential_EvaluateX_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.SquaredExponential.EvaluateX*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_SquaredExponential_EvaluateX_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.SquaredExponential.EvaluateX(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector@,Microsoft.ML.Probabilistic.Math.Vector@)">EvaluateX(Vector, ref Vector, ref Vector)</h4>
   <div class="markdown level1 summary"><p>Evaluates the kernel for a single vector (which is used for both slots)</p>
@@ -523,6 +540,8 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_SquaredExponential_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.SquaredExponential.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_SquaredExponential_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.SquaredExponential.ToString">ToString()</h4>
   <div class="markdown level1 summary"></div>
@@ -546,6 +565,8 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <h3 id="operators">Operators
   </h3>
   <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_SquaredExponential_op_Equality_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.SquaredExponential.op_Equality*"></a>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Factor
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,16 +91,41 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">Factor</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_Factor_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class Factor : object</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Stable)]
+public static class Factor</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_AllTrue_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.AllTrue*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_AllTrue_IList_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.AllTrue(IList{System.Boolean})">AllTrue(IList&lt;Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_AllTrue_System_Collections_Generic_IList_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.AllTrue(System.Collections.Generic.IList{System.Boolean})">AllTrue(IList&lt;Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>True if all array elements are true.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -119,7 +144,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td></td>
       </tr>
@@ -393,7 +418,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double[] ArrayFromVector(Vector vector)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;array&quot;, &quot;vector&quot;})]
+public static double[] ArrayFromVector(Vector vector)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -435,7 +461,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool Bernoulli(double probTrue)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;probTrue&quot;})]
+public static bool Bernoulli(double probTrue)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -479,7 +506,9 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool BernoulliFromBoolean(bool choice, double probTrueElseChoice, double probTrueIfChoice)</code></pre>
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;Use Gates instead&quot;)]
+[ParameterNames(new string[]{&quot;sample&quot;, &quot;choice&quot;, &quot;probTrue0&quot;, &quot;probTrue1&quot;})]
+public static bool BernoulliFromBoolean(bool choice, double probTrueElseChoice, double probTrueIfChoice)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -535,7 +564,9 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool BernoulliFromBoolean(bool choice, params double[] probTrue)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;choice&quot;, &quot;probTrue&quot;})]
+[Obsolete(&quot;Use Gates instead&quot;)]
+public static bool BernoulliFromBoolean(bool choice, params double[] probTrue)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -585,7 +616,9 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool BernoulliFromDiscrete(int index, params double[] probTrue)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;index&quot;, &quot;probTrue&quot;})]
+[Obsolete(&quot;Use Gates instead&quot;)]
+public static bool BernoulliFromDiscrete(int index, params double[] probTrue)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -634,7 +667,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool BernoulliFromLogOdds(double logOdds)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;logOdds&quot;})]
+public static bool BernoulliFromLogOdds(double logOdds)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -675,7 +709,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double BetaFromMeanAndTotalCount(double mean, double totalCount)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;prob&quot;, &quot;mean&quot;, &quot;totalCount&quot;})]
+public static double BetaFromMeanAndTotalCount(double mean, double totalCount)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -724,7 +759,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static char Char(Vector probabilities)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;character&quot;, &quot;probabilities&quot;})]
+public static char Char(Vector probabilities)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -761,53 +797,14 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_Concat_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Concat*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Concat_IList_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Concat(IList{Microsoft.ML.Probabilistic.Math.Vector})">Concat(IList&lt;Vector&gt;)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Vector Concat(IList&lt;Vector&gt; array)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
-        <td><span class="parametername">array</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Factors_Factor_Concat_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Concat*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Concat_System_Char_System_String_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Concat(System.Char,System.String)">Concat(Char, String)</h4>
   <div class="markdown level1 summary"><p>Concatenates a character and a string.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string Concat(char ch, string str)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;concat&quot;, &quot;ch&quot;, &quot;str&quot;})]
+public static string Concat(char ch, string str)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -850,13 +847,54 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_Concat_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Concat*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Concat_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Concat(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Math.Vector})">Concat(IList&lt;Vector&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector Concat(IList&lt;Vector&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_Factor_Concat_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Concat*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Concat_System_String_System_Char_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Concat(System.String,System.Char)">Concat(String, Char)</h4>
   <div class="markdown level1 summary"><p>Concatenates a string and a character.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string Concat(string str, char ch)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;concat&quot;, &quot;str&quot;, &quot;ch&quot;})]
+public static string Concat(string str, char ch)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -905,7 +943,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string Concat(string str1, string str2)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;concat&quot;, &quot;str1&quot;, &quot;str2&quot;})]
+public static string Concat(string str1, string str2)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1013,7 +1052,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int CountTrue(bool[] array)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;count&quot;, &quot;array&quot;})]
+public static int CountTrue(bool[] array)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1115,7 +1155,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T DerivedVariable&lt;T&gt;(T def, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;marginal&quot;})]
+public static T DerivedVariable&lt;T&gt;(T def, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1175,7 +1216,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T DerivedVariableGibbs&lt;T&gt;(T def, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;marginal&quot;})]
+public static T DerivedVariableGibbs&lt;T&gt;(T def, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1235,7 +1277,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T DerivedVariableInit&lt;T&gt;(T def, T init, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;init&quot;, &quot;marginal&quot;})]
+public static T DerivedVariableInit&lt;T&gt;(T def, T init, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1300,7 +1343,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T DerivedVariableInitGibbs&lt;T&gt;(T def, T init, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;init&quot;, &quot;marginal&quot;})]
+public static T DerivedVariableInitGibbs&lt;T&gt;(T def, T init, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1365,7 +1409,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T DerivedVariableInitVmp&lt;T&gt;(T def, T init, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;init&quot;, &quot;marginal&quot;})]
+public static T DerivedVariableInitVmp&lt;T&gt;(T def, T init, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1430,7 +1475,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T DerivedVariableVmp&lt;T&gt;(T def, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;marginal&quot;})]
+public static T DerivedVariableVmp&lt;T&gt;(T def, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1585,7 +1631,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Vector DirichletFromMeanAndTotalCount(Vector mean, double totalCount)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;prob&quot;, &quot;mean&quot;, &quot;totalCount&quot;})]
+public static Vector DirichletFromMeanAndTotalCount(Vector mean, double totalCount)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1634,7 +1681,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Vector DirichletSymmetric(int K, double alpha)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;prob&quot;, &quot;K&quot;, &quot;alpha&quot;})]
+public static Vector DirichletSymmetric(int K, double alpha)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1683,7 +1731,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int Discrete(Vector probs)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;probs&quot;})]
+public static int Discrete(Vector probs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1726,7 +1775,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int Discrete(int selector, Matrix probs)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;selector&quot;, &quot;probs&quot;})]
+public static int Discrete(int selector, Matrix probs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1774,7 +1824,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int DiscreteFromStickBreaking(double[] v)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;c&quot;, &quot;v&quot;})]
+public static int DiscreteFromStickBreaking(double[] v)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1817,7 +1868,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int DiscreteUniform(int size)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;size&quot;})]
+public static int DiscreteUniform(int size)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1901,7 +1953,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double FunctionEvaluate(IFunction func, Vector x)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;y&quot;, &quot;func&quot;, &quot;x&quot;})]
+public static double FunctionEvaluate(IFunction func, Vector x)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1950,7 +2003,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double GammaFromShapeAndRate(double shape, double rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;shape&quot;, &quot;rate&quot;})]
+public static double GammaFromShapeAndRate(double shape, double rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1996,7 +2050,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double Gaussian(double mean, double precision)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;mean&quot;, &quot;precision&quot;})]
+public static double Gaussian(double mean, double precision)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2045,7 +2100,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double[][] GaussianArrayArray(int sampleCount, double[] precisions, out int[][] indices)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;samples&quot;, &quot;sampleCount&quot;, &quot;precisions&quot;, &quot;indices&quot;})]
+public static double[][] GaussianArrayArray(int sampleCount, double[] precisions, out int[][] indices)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2096,7 +2152,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double GaussianFromMeanAndVariance(double mean, double variance)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;mean&quot;, &quot;variance&quot;})]
+public static double GaussianFromMeanAndVariance(double mean, double variance)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2139,13 +2196,14 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_GetDeepJaggedItems_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetDeepJaggedItems*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetDeepJaggedItems__1_IList___0__IList_IList_IList_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetDeepJaggedItems``1(IList{``0},IList{IList{IList{System.Int32}}})">GetDeepJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetDeepJaggedItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetDeepJaggedItems``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}}})">GetDeepJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;IList&lt;Int32&gt;&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Get multiple elements of an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[][][] GetDeepJaggedItems&lt;T&gt;(IList&lt;T&gt; array, IList&lt;IList&lt;IList&lt;int&gt;&gt;&gt; indices)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;})]
+public static T[][][] GetDeepJaggedItems&lt;T&gt;(IList&lt;T&gt; array, IList&lt;IList&lt;IList&lt;int&gt;&gt;&gt; indices)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2158,13 +2216,13 @@ Use Gates instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Array of indices for items we want to get</p>
 </td>
@@ -2204,13 +2262,14 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_GetItem_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItem*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetItem__1_IList___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItem``1(IList{``0},System.Int32)">GetItem&lt;T&gt;(IList&lt;T&gt;, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetItem__1_System_Collections_Generic_IList___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItem``1(System.Collections.Generic.IList{``0},System.Int32)">GetItem&lt;T&gt;(IList&lt;T&gt;, Int32)</h4>
   <div class="markdown level1 summary"><p>Get an element of an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T GetItem&lt;T&gt;(IList&lt;T&gt; array, int index)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;item&quot;, &quot;array&quot;, &quot;index&quot;})]
+public static T GetItem&lt;T&gt;(IList&lt;T&gt; array, int index)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2223,7 +2282,7 @@ Use Gates instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
@@ -2275,7 +2334,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T GetItem2D&lt;T&gt;(T[, ] array, int index1, int index2)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;item&quot;, &quot;array&quot;, &quot;index1&quot;, &quot;index2&quot;})]
+public static T GetItem2D&lt;T&gt;(T[, ] array, int index1, int index2)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2340,13 +2400,14 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_GetItems_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItems*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetItems__1_IList___0__IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItems``1(IList{``0},IList{System.Int32})">GetItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItems``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Int32})">GetItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Get multiple elements of an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] GetItems&lt;T&gt;(IList&lt;T&gt; array, IList&lt;int&gt; indices)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;})]
+public static T[] GetItems&lt;T&gt;(IList&lt;T&gt; array, IList&lt;int&gt; indices)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2359,13 +2420,13 @@ Use Gates instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Array of indices for items we want to get</p>
 </td>
@@ -2405,13 +2466,14 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromDeepJagged_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItemsFromDeepJagged*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromDeepJagged__1_IList_IList_IList___0____IList_System_Int32__IList_System_Int32__IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItemsFromDeepJagged``1(IList{IList{IList{``0}}},IList{System.Int32},IList{System.Int32},IList{System.Int32})">GetItemsFromDeepJagged&lt;T&gt;(IList&lt;IList&lt;IList&lt;T&gt;&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromDeepJagged__1_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Collections_Generic_IList___0____System_Collections_Generic_IList_System_Int32__System_Collections_Generic_IList_System_Int32__System_Collections_Generic_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItemsFromDeepJagged``1(System.Collections.Generic.IList{System.Collections.Generic.IList{System.Collections.Generic.IList{``0}}},System.Collections.Generic.IList{System.Int32},System.Collections.Generic.IList{System.Int32},System.Collections.Generic.IList{System.Int32})">GetItemsFromDeepJagged&lt;T&gt;(IList&lt;IList&lt;IList&lt;T&gt;&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Get multiple elements of a jagged array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] GetItemsFromDeepJagged&lt;T&gt;(IList&lt;IList&lt;IList&lt;T&gt;&gt;&gt; array, IList&lt;int&gt; indices, IList&lt;int&gt; indices2, IList&lt;int&gt; indices3)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;, &quot;indices2&quot;, &quot;indices3&quot;})]
+public static T[] GetItemsFromDeepJagged&lt;T&gt;(IList&lt;IList&lt;IList&lt;T&gt;&gt;&gt; array, IList&lt;int&gt; indices, IList&lt;int&gt; indices2, IList&lt;int&gt; indices3)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2424,25 +2486,25 @@ Use Gates instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;T&gt;&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Array of depth 1 indices for items we want to get</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices2</span></td>
         <td><p>Array of depth 2 indices for items we want to get</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices3</span></td>
         <td><p>Array of depth 3 indices for items we want to get</p>
 </td>
@@ -2482,13 +2544,14 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromJagged_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItemsFromJagged*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromJagged__1_IList_IList___0___IList_System_Int32__IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItemsFromJagged``1(IList{IList{``0}},IList{System.Int32},IList{System.Int32})">GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetItemsFromJagged__1_System_Collections_Generic_IList_System_Collections_Generic_IList___0___System_Collections_Generic_IList_System_Int32__System_Collections_Generic_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetItemsFromJagged``1(System.Collections.Generic.IList{System.Collections.Generic.IList{``0}},System.Collections.Generic.IList{System.Int32},System.Collections.Generic.IList{System.Int32})">GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Get multiple elements of a jagged array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt; array, IList&lt;int&gt; indices, IList&lt;int&gt; indices2)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;, &quot;indices2&quot;})]
+public static T[] GetItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt; array, IList&lt;int&gt; indices, IList&lt;int&gt; indices2)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2501,19 +2564,19 @@ Use Gates instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;T&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Array of depth 1 indices for items we want to get</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices2</span></td>
         <td><p>Array of depth 2 indices for items we want to get</p>
 </td>
@@ -2553,13 +2616,14 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItems_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetJaggedItems*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItems__1_IList___0__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetJaggedItems``1(IList{``0},IList{IList{System.Int32}})">GetJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItems__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetJaggedItems``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">GetJaggedItems&lt;T&gt;(IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Get multiple elements of an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[][] GetJaggedItems&lt;T&gt;(IList&lt;T&gt; array, IList&lt;IList&lt;int&gt;&gt; indices)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;})]
+public static T[][] GetJaggedItems&lt;T&gt;(IList&lt;T&gt; array, IList&lt;IList&lt;int&gt;&gt; indices)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2572,13 +2636,13 @@ Use Gates instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Array of indices for items we want to get</p>
 </td>
@@ -2618,13 +2682,14 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItemsFromJagged_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetJaggedItemsFromJagged*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItemsFromJagged__1_IList_IList___0___IList_IList_System_Int32___IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetJaggedItemsFromJagged``1(IList{IList{``0}},IList{IList{System.Int32}},IList{IList{System.Int32}})">GetJaggedItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;IList&lt;Int32&gt;&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_GetJaggedItemsFromJagged__1_System_Collections_Generic_IList_System_Collections_Generic_IList___0___System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.GetJaggedItemsFromJagged``1(System.Collections.Generic.IList{System.Collections.Generic.IList{``0}},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">GetJaggedItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt;, IList&lt;IList&lt;Int32&gt;&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Get multiple elements of an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[][] GetJaggedItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt; array, IList&lt;IList&lt;int&gt;&gt; indices, IList&lt;IList&lt;int&gt;&gt; indices2)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;, &quot;indices2&quot;})]
+public static T[][] GetJaggedItemsFromJagged&lt;T&gt;(IList&lt;IList&lt;T&gt;&gt; array, IList&lt;IList&lt;int&gt;&gt; indices, IList&lt;IList&lt;int&gt;&gt; indices2)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2637,19 +2702,19 @@ Use Gates instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;T&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Array of depth 1 indices for items we want to get</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices2</span></td>
         <td><p>Array of depth 2 indices for items we want to get</p>
 </td>
@@ -2695,7 +2760,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double InnerProduct(double[] a, Vector b)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;X&quot;, &quot;A&quot;, &quot;B&quot;})]
+public static double InnerProduct(double[] a, Vector b)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3028,13 +3094,14 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarray_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.JaggedSubarray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarray__1_IList___0__System_Int32_____" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.JaggedSubarray``1(IList{``0},System.Int32[][])">JaggedSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarray__1_System_Collections_Generic_IList___0__System_Int32_____" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.JaggedSubarray``1(System.Collections.Generic.IList{``0},System.Int32[][])">JaggedSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</h4>
   <div class="markdown level1 summary"><p>Get multiple different elements of an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[][] JaggedSubarray&lt;T&gt;(IList&lt;T&gt; array, int[][] indices)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;})]
+public static T[][] JaggedSubarray&lt;T&gt;(IList&lt;T&gt; array, int[][] indices)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3047,7 +3114,7 @@ Use Gates instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
@@ -3093,13 +3160,14 @@ Use Gates instead.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarrayWithMarginal_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.JaggedSubarrayWithMarginal*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarrayWithMarginal__1_IList___0__System_Int32_____IList___0___" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.JaggedSubarrayWithMarginal``1(IList{``0},System.Int32[][],IList{``0}@)">JaggedSubarrayWithMarginal&lt;T&gt;(IList&lt;T&gt;, Int32[][], out IList&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarrayWithMarginal__1_System_Collections_Generic_IList___0__System_Int32_____System_Collections_Generic_IList___0___" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.JaggedSubarrayWithMarginal``1(System.Collections.Generic.IList{``0},System.Int32[][],System.Collections.Generic.IList{``0}@)">JaggedSubarrayWithMarginal&lt;T&gt;(IList&lt;T&gt;, Int32[][], out IList&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Get multiple different elements of an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[][] JaggedSubarrayWithMarginal&lt;T&gt;(IList&lt;T&gt; array, int[][] indices, out IList&lt;T&gt; marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;, &quot;marginal&quot;})]
+public static T[][] JaggedSubarrayWithMarginal&lt;T&gt;(IList&lt;T&gt; array, int[][] indices, out IList&lt;T&gt; marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3112,7 +3180,7 @@ Use Gates instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
@@ -3124,7 +3192,7 @@ Use Gates instead.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">marginal</span></td>
         <td></td>
       </tr>
@@ -3259,7 +3327,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IList&lt;int&gt; MultinomialList(int trialCount, Vector probs)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;trialCount&quot;, &quot;p&quot;})]
+public static IList&lt;int&gt; MultinomialList(int trialCount, Vector probs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3295,7 +3364,7 @@ Use Gates instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><p>A list of length <code>probs.Count</code> of integers between 0 and trialCount, whose sum is trialCount.</p>
 </td>
       </tr>
@@ -3441,7 +3510,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Vector Plus(Vector a, Vector b)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;Sum&quot;, &quot;A&quot;, &quot;B&quot;})]
+public static Vector Plus(Vector a, Vector b)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3488,7 +3558,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double Plus(double a, double b)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;Sum&quot;, &quot;A&quot;, &quot;B&quot;})]
+public static double Plus(double a, double b)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3535,7 +3606,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int Plus(int a, int b)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;Sum&quot;, &quot;A&quot;, &quot;B&quot;})]
+public static int Plus(int a, int b)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3582,7 +3654,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int Poisson(double mean)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;mean&quot;})]
+public static int Poisson(double mean)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -3954,7 +4027,8 @@ Use Gates instead.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double Product_SHG09(double a, double b)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;Product&quot;, &quot;A&quot;, &quot;B&quot;})]
+public static double Product_SHG09(double a, double b)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4154,7 +4228,8 @@ the replicates all reference the same instance</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] Replicate&lt;T&gt;(T value, int count)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;Uses&quot;, &quot;Def&quot;, &quot;Count&quot;})]
+public static T[] Replicate&lt;T&gt;(T value, int count)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4219,7 +4294,8 @@ the replicates all reference the same instance</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Array ReplicateNd&lt;T&gt;(T value)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;Uses&quot;, &quot;Def&quot;})]
+public static Array ReplicateNd&lt;T&gt;(T value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4249,7 +4325,7 @@ the replicates all reference the same instance</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Array</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array">Array</a></td>
         <td><p>A new array with all entries set to value.</p>
 </td>
       </tr>
@@ -4278,7 +4354,8 @@ the replicates all reference the same instance</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] ReplicateWithMarginal&lt;T&gt;(T Def, int count, out T Marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;Uses&quot;, &quot;Def&quot;, &quot;count&quot;, &quot;Marginal&quot;})]
+public static T[] ReplicateWithMarginal&lt;T&gt;(T Def, int count, out T Marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4347,7 +4424,8 @@ the replicates all reference the same instance</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] ReplicateWithMarginalGibbs&lt;T&gt;(T Def, int count, int burnIn, int thin, out T marginal, out T samples, out T conditionals)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;Uses&quot;, &quot;Def&quot;, &quot;count&quot;, &quot;burnIn&quot;, &quot;thin&quot;, &quot;marginal&quot;, &quot;samples&quot;, &quot;conditionals&quot;})]
+public static T[] ReplicateWithMarginalGibbs&lt;T&gt;(T Def, int count, int burnIn, int thin, out T marginal, out T samples, out T conditionals)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4488,7 +4566,8 @@ the replicates all reference the same instance</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static char Single(string str)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;character&quot;, &quot;str&quot;})]
+public static char Single(string str)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4525,12 +4604,13 @@ the replicates all reference the same instance</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_Split_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Split*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Split__1_IList___0__System_Int32___0____" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Split``1(IList{``0},System.Int32,``0[]@)">Split&lt;T&gt;(IList&lt;T&gt;, Int32, out T[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Split__1_System_Collections_Generic_IList___0__System_Int32___0____" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Split``1(System.Collections.Generic.IList{``0},System.Int32,``0[]@)">Split&lt;T&gt;(IList&lt;T&gt;, Int32, out T[])</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] Split&lt;T&gt;(IList&lt;T&gt; array, int count, out T[] tail)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;head&quot;, &quot;array&quot;, &quot;count&quot;, &quot;tail&quot;})]
+public static T[] Split&lt;T&gt;(IList&lt;T&gt; array, int count, out T[] tail)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4543,7 +4623,7 @@ the replicates all reference the same instance</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td></td>
       </tr>
@@ -4590,13 +4670,14 @@ the replicates all reference the same instance</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_SplitSubarray_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.SplitSubarray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_SplitSubarray__1_IList___0__System_Int32_____" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.SplitSubarray``1(IList{``0},System.Int32[][])">SplitSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_SplitSubarray__1_System_Collections_Generic_IList___0__System_Int32_____" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.SplitSubarray``1(System.Collections.Generic.IList{``0},System.Int32[][])">SplitSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</h4>
   <div class="markdown level1 summary"><p>Get multiple different elements of an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[][] SplitSubarray&lt;T&gt;(IList&lt;T&gt; array, int[][] indices)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;})]
+public static T[][] SplitSubarray&lt;T&gt;(IList&lt;T&gt; array, int[][] indices)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4609,7 +4690,7 @@ the replicates all reference the same instance</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
@@ -4662,7 +4743,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string String(int minLength, DiscreteChar allowedChars)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;str&quot;, &quot;minLength&quot;, &quot;allowedChars&quot;})]
+public static string String(int minLength, DiscreteChar allowedChars)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4705,7 +4787,7 @@ with characters restricted to the support of a given distribution.</p>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_Factor_String_System_Int32_Microsoft_ML_Probabilistic_Distributions_DiscreteChar__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The method always throws <see cref="!:InvalidOperationException"></see> since the distribution is improper.</p>
+  <div class="markdown level1 remarks"><p>The method always throws <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a> since the distribution is improper.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_String_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.String*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_String_System_Int32_System_Int32_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.String(System.Int32,System.Int32,Microsoft.ML.Probabilistic.Distributions.DiscreteChar)">String(Int32, Int32, DiscreteChar)</h4>
@@ -4715,7 +4797,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string String(int minLength, int maxLength, DiscreteChar allowedChars)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;str&quot;, &quot;minLength&quot;, &quot;maxLength&quot;, &quot;allowedChars&quot;})]
+public static string String(int minLength, int maxLength, DiscreteChar allowedChars)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4770,7 +4853,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string StringCapitalized(int minLength)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;str&quot;, &quot;minLength&quot;})]
+public static string StringCapitalized(int minLength)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4807,7 +4891,7 @@ with characters restricted to the support of a given distribution.</p>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_Factor_StringCapitalized_System_Int32__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The method always throws <see cref="!:InvalidOperationException"></see> since the distribution is improper.</p>
+  <div class="markdown level1 remarks"><p>The method always throws <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.invalidoperationexception">InvalidOperationException</a> since the distribution is improper.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_StringCapitalized_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.StringCapitalized*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_StringCapitalized_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.StringCapitalized(System.Int32,System.Int32)">StringCapitalized(Int32, Int32)</h4>
@@ -4816,7 +4900,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string StringCapitalized(int minLength, int maxLength)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;str&quot;, &quot;minLength&quot;, &quot;maxLength&quot;})]
+public static string StringCapitalized(int minLength, int maxLength)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4861,12 +4946,13 @@ with characters restricted to the support of a given distribution.</p>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_StringFormat_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.StringFormat*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_StringFormat_System_String_System_String___" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.StringFormat(System.String,System.String[])">StringFormat(String, String[])</h4>
   <div class="markdown level1 summary"><p>Replaces argument placeholders such as {0}, {1} etc with arguments having the corresponding index,
-similar to what <see cref="!:string.Format(string, object[])"></see> does.</p>
+similar to what <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.format#System_String_Format_System_String_System_Object___">Format(String, Object[])</a> does.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string StringFormat(string format, string[] args)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;str&quot;, &quot;format&quot;, &quot;args&quot;})]
+public static string StringFormat(string format, string[] args)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4909,7 +4995,7 @@ similar to what <see cref="!:string.Format(string, object[])"></see> does.</p>
     </tbody>
   </table>
   <h5 id="Microsoft_ML_Probabilistic_Factors_Factor_StringFormat_System_String_System_String____remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This method has the following notable differences from <see cref="!:string.Format(string, object[])"></see>:</p>
+  <div class="markdown level1 remarks"><p>This method has the following notable differences from <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string.format#System_String_Format_System_String_System_Object___">Format(String, Object[])</a>:</p>
 <ul></ul>
 <item>Placeholder for each of the arguments must be present in the format string exactly once.</item>
 <item>No braces are allowed except for those used to specify placeholders.</item>
@@ -4921,7 +5007,8 @@ similar to what <see cref="!:string.Format(string, object[])"></see> does.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string StringFromArray(char[] characters)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;str&quot;, &quot;characters&quot;})]
+public static string StringFromArray(char[] characters)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4965,7 +5052,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string StringOfLength(int length, DiscreteChar allowedChars)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;str&quot;, &quot;length&quot;, &quot;allowedChars&quot;})]
+public static string StringOfLength(int length, DiscreteChar allowedChars)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5008,13 +5096,14 @@ with characters restricted to the support of a given distribution.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_Subarray_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Subarray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Subarray__1_IList___0__IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Subarray``1(IList{``0},IList{System.Int32})">Subarray&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Subarray__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Subarray``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Int32})">Subarray&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Get multiple different elements of an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] Subarray&lt;T&gt;(IList&lt;T&gt; array, IList&lt;int&gt; indices)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;})]
+public static T[] Subarray&lt;T&gt;(IList&lt;T&gt; array, IList&lt;int&gt; indices)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5027,13 +5116,13 @@ with characters restricted to the support of a given distribution.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Array of indices for items we want to get.  Must all be different.</p>
 </td>
@@ -5073,13 +5162,14 @@ with characters restricted to the support of a given distribution.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_Subarray2_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Subarray2*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Subarray2__1_IList___0__IList_System_Int32__IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Subarray2``1(IList{``0},IList{System.Int32},IList{``0})">Subarray2&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;, IList&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Subarray2__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32__System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Subarray2``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Int32},System.Collections.Generic.IList{``0})">Subarray2&lt;T&gt;(IList&lt;T&gt;, IList&lt;Int32&gt;, IList&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Get multiple different elements of an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] Subarray2&lt;T&gt;(IList&lt;T&gt; array, IList&lt;int&gt; indices, IList&lt;T&gt; array2)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;items&quot;, &quot;array&quot;, &quot;indices&quot;, &quot;array2&quot;})]
+public static T[] Subarray2&lt;T&gt;(IList&lt;T&gt; array, IList&lt;int&gt; indices, IList&lt;T&gt; array2)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5092,19 +5182,19 @@ with characters restricted to the support of a given distribution.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Array of indices for items to get.  Indices must all be different.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array2</span></td>
         <td></td>
       </tr>
@@ -5149,7 +5239,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string Substring(string str, int start, int length)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sub&quot;, &quot;str&quot;, &quot;start&quot;, &quot;length&quot;})]
+public static string Substring(string str, int start, int length)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5198,7 +5289,7 @@ with characters restricted to the support of a given distribution.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_Sum_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Sum*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Sum_IList_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Sum(IList{Microsoft.ML.Probabilistic.Math.Vector})">Sum(IList&lt;Vector&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Sum_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Sum(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Math.Vector})">Sum(IList&lt;Vector&gt;)</h4>
   <div class="markdown level1 summary"><p>Sums the specified list of vectors.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -5217,7 +5308,7 @@ with characters restricted to the support of a given distribution.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>The list of vectors.</p>
 </td>
@@ -5241,7 +5332,7 @@ with characters restricted to the support of a given distribution.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_Sum_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Sum*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Sum_IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Sum(IList{System.Double})">Sum(IList&lt;Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Sum_System_Collections_Generic_IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Sum(System.Collections.Generic.IList{System.Double})">Sum(IList&lt;Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Sum the numbers in an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -5260,7 +5351,7 @@ with characters restricted to the support of a given distribution.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td></td>
       </tr>
@@ -5283,7 +5374,7 @@ with characters restricted to the support of a given distribution.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_Factor_Sum_" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Sum*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Sum_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Sum(IList{System.Int32})">Sum(IList&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_Factor_Sum_System_Collections_Generic_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Factors.Factor.Sum(System.Collections.Generic.IList{System.Int32})">Sum(IList&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Sum the numbers in an array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -5302,7 +5393,7 @@ with characters restricted to the support of a given distribution.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">array</span></td>
         <td></td>
       </tr>
@@ -5377,7 +5468,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double TruncatedGammaFromShapeAndRate(double shape, double rate, double lowerBound, double upperBound)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;shape&quot;, &quot;rate&quot;, &quot;lowerBound&quot;, &quot;upperBound&quot;})]
+public static double TruncatedGammaFromShapeAndRate(double shape, double rate, double lowerBound, double upperBound)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5433,7 +5525,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double UniformPlusMinus(double upperBound)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;upperBound&quot;})]
+public static double UniformPlusMinus(double upperBound)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5474,7 +5567,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] UsesEqualDef&lt;T&gt;(T Def, int count, out T Marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;Uses&quot;, &quot;Def&quot;, &quot;count&quot;, &quot;Marginal&quot;})]
+public static T[] UsesEqualDef&lt;T&gt;(T Def, int count, out T Marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5543,7 +5637,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T[] UsesEqualDefGibbs&lt;T&gt;(T Def, int count, int burnIn, int thin, out T marginal, out T samples, out T conditionals)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;Uses&quot;, &quot;Def&quot;, &quot;count&quot;, &quot;burnIn&quot;, &quot;thin&quot;, &quot;marginal&quot;, &quot;samples&quot;, &quot;conditionals&quot;})]
+public static T[] UsesEqualDefGibbs&lt;T&gt;(T Def, int count, int burnIn, int thin, out T marginal, out T samples, out T conditionals)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5629,7 +5724,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T Variable&lt;T&gt;(T def, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;marginal&quot;})]
+public static T Variable&lt;T&gt;(T def, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5689,7 +5785,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T VariableGibbs&lt;T&gt;(T def, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;marginal&quot;})]
+public static T VariableGibbs&lt;T&gt;(T def, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5749,7 +5846,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T VariableInit&lt;T&gt;(T def, T init, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;init&quot;, &quot;marginal&quot;})]
+public static T VariableInit&lt;T&gt;(T def, T init, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5814,7 +5912,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T VariableMax&lt;T&gt;(T def, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;marginal&quot;})]
+public static T VariableMax&lt;T&gt;(T def, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5874,7 +5973,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T VariablePoint&lt;T&gt;(T def, out T marginal)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;use&quot;, &quot;def&quot;, &quot;marginal&quot;})]
+public static T VariablePoint&lt;T&gt;(T def, out T marginal)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5935,7 +6035,8 @@ with characters restricted to the support of a given distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Vector VectorGaussian(Vector mean, PositiveDefiniteMatrix precision)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;mean&quot;, &quot;precision&quot;})]
+public static Vector VectorGaussian(Vector mean, PositiveDefiniteMatrix precision)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

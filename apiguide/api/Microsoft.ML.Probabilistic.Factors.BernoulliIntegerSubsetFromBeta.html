@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class BernoulliIntegerSubsetFromBeta
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,134 +91,40 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">BernoulliIntegerSubsetFromBeta</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class BernoulliIntegerSubsetFromBeta : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(BernoulliIntegerSubset), &quot;Sample&quot;, new Type[]{typeof(ISparseList&lt;double&gt;)})]
+[Quality(QualityBand.Preview)]
+public class BernoulliIntegerSubsetFromBeta</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
-  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.AverageLogFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.AverageLogFactor(IList{System.Int32},Microsoft.ML.Probabilistic.Collections.ISparseList{System.Double})">AverageLogFactor(IList&lt;Int32&gt;, ISparseList&lt;Double&gt;)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(IList&lt;int&gt; sample, ISparseList&lt;double&gt; probTrue)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
-        <td><span class="parametername">sample</span></td>
-        <td><p>Constant value for <code>sample</code>.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">probTrue</span></td>
-        <td><p>Constant value for <code>probTrue</code>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Average of the factor's log-value across the given argument distributions.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sample,probTrue))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
-</div>
-  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.AverageLogFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.AverageLogFactor(IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">AverageLogFactor(IList&lt;Int32&gt;, SparseBetaList)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(IList&lt;int&gt; sample, SparseBetaList probTrue)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
-        <td><span class="parametername">sample</span></td>
-        <td><p>Constant value for <code>sample</code>.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBetaList.html">SparseBetaList</a></td>
-        <td><span class="parametername">probTrue</span></td>
-        <td><p>Incoming message from <code>probTrue</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Average of the factor's log-value across the given argument distributions.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(probTrue) p(probTrue) log(factor(sample,probTrue))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
-</div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">probTrue</code> is not a proper distribution.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_BernoulliIntegerSubset_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.BernoulliIntegerSubset,Microsoft.ML.Probabilistic.Collections.ISparseList{System.Double})">AverageLogFactor(BernoulliIntegerSubset, ISparseList&lt;Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
@@ -339,14 +245,14 @@
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogAverageFactor(IList{System.Int32},Microsoft.ML.Probabilistic.Collections.ISparseList{System.Double})">LogAverageFactor(IList&lt;Int32&gt;, ISparseList&lt;Double&gt;)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.AverageLogFactor(System.Collections.Generic.IList{System.Int32},Microsoft.ML.Probabilistic.Collections.ISparseList{System.Double})">AverageLogFactor(IList&lt;Int32&gt;, ISparseList&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(IList&lt;int&gt; sample, ISparseList&lt;double&gt; probTrue)</code></pre>
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(IList&lt;int&gt; sample, ISparseList&lt;double&gt; probTrue)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -359,7 +265,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">sample</span></td>
         <td><p>Constant value for <code>sample</code>.</p>
 </td>
@@ -383,22 +289,22 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sample,probTrue))</code>.</p>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sample,probTrue))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
-  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogAverageFactor(IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">LogAverageFactor(IList&lt;Int32&gt;, SparseBetaList)</h4>
-  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.AverageLogFactor(System.Collections.Generic.IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">AverageLogFactor(IList&lt;Int32&gt;, SparseBetaList)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(IList&lt;int&gt; sample, SparseBetaList probTrue)</code></pre>
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(IList&lt;int&gt; sample, SparseBetaList probTrue)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -411,7 +317,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">sample</span></td>
         <td><p>Constant value for <code>sample</code>.</p>
 </td>
@@ -419,7 +325,7 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBetaList.html">SparseBetaList</a></td>
         <td><span class="parametername">probTrue</span></td>
-        <td><p>Incoming message from <code>probTrue</code>.</p>
+        <td><p>Incoming message from <code>probTrue</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
 </td>
       </tr>
     </tbody>
@@ -435,14 +341,30 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(probTrue) p(probTrue) factor(sample,probTrue))</code>.</p>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_AverageLogFactor_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(probTrue) p(probTrue) log(factor(sample,probTrue))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">probTrue</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogAverageFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_BernoulliIntegerSubset_Microsoft_ML_Probabilistic_Distributions_BernoulliIntegerSubset_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.BernoulliIntegerSubset,Microsoft.ML.Probabilistic.Distributions.BernoulliIntegerSubset)">LogAverageFactor(BernoulliIntegerSubset, BernoulliIntegerSubset)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
@@ -495,14 +417,14 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_BernoulliIntegerSubset_Microsoft_ML_Probabilistic_Distributions_BernoulliIntegerSubset__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample) p(sample) factor(sample,probTrue))</code>.</p>
 </div>
-  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogEvidenceRatio(IList{System.Int32},Microsoft.ML.Probabilistic.Collections.ISparseList{System.Double})">LogEvidenceRatio(IList&lt;Int32&gt;, ISparseList&lt;Double&gt;)</h4>
+  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogAverageFactor(System.Collections.Generic.IList{System.Int32},Microsoft.ML.Probabilistic.Collections.ISparseList{System.Double})">LogAverageFactor(IList&lt;Int32&gt;, ISparseList&lt;Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(IList&lt;int&gt; sample, ISparseList&lt;double&gt; probTrue)</code></pre>
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(IList&lt;int&gt; sample, ISparseList&lt;double&gt; probTrue)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -515,7 +437,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">sample</span></td>
         <td><p>Constant value for <code>sample</code>.</p>
 </td>
@@ -539,22 +461,22 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sample,probTrue))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sample,probTrue))</code>.</p>
 </div>
-  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogEvidenceRatio(IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">LogEvidenceRatio(IList&lt;Int32&gt;, SparseBetaList)</h4>
+  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogAverageFactor(System.Collections.Generic.IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">LogAverageFactor(IList&lt;Int32&gt;, SparseBetaList)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(IList&lt;int&gt; sample, SparseBetaList probTrue)</code></pre>
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(IList&lt;int&gt; sample, SparseBetaList probTrue)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -567,7 +489,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">sample</span></td>
         <td><p>Constant value for <code>sample</code>.</p>
 </td>
@@ -591,13 +513,13 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(probTrue) p(probTrue) factor(sample,probTrue))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogAverageFactor_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(probTrue) p(probTrue) factor(sample,probTrue))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_BernoulliIntegerSubset_Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.BernoulliIntegerSubset,Microsoft.ML.Probabilistic.Collections.ISparseList{System.Double})">LogEvidenceRatio(BernoulliIntegerSubset, ISparseList&lt;Double&gt;)</h4>
@@ -703,14 +625,14 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_BernoulliIntegerSubset_Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample,probTrue) p(sample,probTrue) factor(sample,probTrue) / sum_sample p(sample) messageTo(sample))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
-  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageConditional_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageConditional(IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">ProbTrueAverageConditional(IList&lt;Int32&gt;, SparseBetaList)</h4>
-  <div class="markdown level1 summary"><p>EP message to <code>probTrue</code>.</p>
+  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogEvidenceRatio(System.Collections.Generic.IList{System.Int32},Microsoft.ML.Probabilistic.Collections.ISparseList{System.Double})">LogEvidenceRatio(IList&lt;Int32&gt;, ISparseList&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static SparseBetaList ProbTrueAverageConditional(IList&lt;int&gt; sample, SparseBetaList result)</code></pre>
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(IList&lt;int&gt; sample, ISparseList&lt;double&gt; probTrue)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -723,15 +645,15 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">sample</span></td>
         <td><p>Constant value for <code>sample</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBetaList.html">SparseBetaList</a></td>
-        <td><span class="parametername">result</span></td>
-        <td><p>Modified to contain the outgoing message.</p>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">probTrue</span></td>
+        <td><p>Constant value for <code>probTrue</code>.</p>
 </td>
       </tr>
     </tbody>
@@ -746,14 +668,66 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBetaList.html">SparseBetaList</a></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageConditional_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>probTrue</code> conditioned on the given values.</p>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Collections_ISparseList_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sample,probTrue))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.LogEvidenceRatio(System.Collections.Generic.IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">LogEvidenceRatio(IList&lt;Int32&gt;, SparseBetaList)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(IList&lt;int&gt; sample, SparseBetaList probTrue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBetaList.html">SparseBetaList</a></td>
+        <td><span class="parametername">probTrue</span></td>
+        <td><p>Incoming message from <code>probTrue</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_LogEvidenceRatio_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(probTrue) p(probTrue) factor(sample,probTrue))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageConditional_Microsoft_ML_Probabilistic_Distributions_BernoulliIntegerSubset_Microsoft_ML_Probabilistic_Distributions_SparseBetaList_Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageConditional(Microsoft.ML.Probabilistic.Distributions.BernoulliIntegerSubset,Microsoft.ML.Probabilistic.Distributions.SparseBetaList,Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">ProbTrueAverageConditional(BernoulliIntegerSubset, SparseBetaList, SparseBetaList)</h4>
@@ -829,14 +803,14 @@
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageLogarithm_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageLogarithm(IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">ProbTrueAverageLogarithm(IList&lt;Int32&gt;, SparseBetaList)</h4>
-  <div class="markdown level1 summary"><p>VMP message to <code>probTrue</code>.</p>
+  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageConditional_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageConditional(System.Collections.Generic.IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">ProbTrueAverageConditional(IList&lt;Int32&gt;, SparseBetaList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>probTrue</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static SparseBetaList ProbTrueAverageLogarithm(IList&lt;int&gt; sample, SparseBetaList result)</code></pre>
+    <pre><code class="lang-csharp hljs">public static SparseBetaList ProbTrueAverageConditional(IList&lt;int&gt; sample, SparseBetaList result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -849,7 +823,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">sample</span></td>
         <td><p>Constant value for <code>sample</code>.</p>
 </td>
@@ -878,7 +852,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageLogarithm_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageConditional_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>probTrue</code> conditioned on the given values.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageLogarithm*"></a>
@@ -933,14 +907,14 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_BernoulliIntegerSubset_Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>probTrue</code>. The formula is <code>exp(sum_(sample) p(sample) log(factor(sample,probTrue)))</code>.</p>
 </div>
-  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueConditional_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueConditional(IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">ProbTrueConditional(IList&lt;Int32&gt;, SparseBetaList)</h4>
-  <div class="markdown level1 summary"><p>Gibbs message to <code>probTrue</code>.</p>
+  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageLogarithm_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueAverageLogarithm(System.Collections.Generic.IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">ProbTrueAverageLogarithm(IList&lt;Int32&gt;, SparseBetaList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>probTrue</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static SparseBetaList ProbTrueConditional(IList&lt;int&gt; sample, SparseBetaList result)</code></pre>
+    <pre><code class="lang-csharp hljs">public static SparseBetaList ProbTrueAverageLogarithm(IList&lt;int&gt; sample, SparseBetaList result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -953,7 +927,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">sample</span></td>
         <td><p>Constant value for <code>sample</code>.</p>
 </td>
@@ -982,7 +956,59 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueConditional_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueAverageLogarithm_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>probTrue</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueConditional_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.ProbTrueConditional(System.Collections.Generic.IList{System.Int32},Microsoft.ML.Probabilistic.Distributions.SparseBetaList)">ProbTrueConditional(IList&lt;Int32&gt;, SparseBetaList)</h4>
+  <div class="markdown level1 summary"><p>Gibbs message to <code>probTrue</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SparseBetaList ProbTrueConditional(IList&lt;int&gt; sample, SparseBetaList result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBetaList.html">SparseBetaList</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SparseBetaList.html">SparseBetaList</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_ProbTrueConditional_System_Collections_Generic_IList_System_Int32__Microsoft_ML_Probabilistic_Distributions_SparseBetaList__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>probTrue</code> conditioned on the given values.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_BernoulliIntegerSubsetFromBeta_SampleAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.BernoulliIntegerSubsetFromBeta.SampleAverageConditional*"></a>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface IBayesPointMachineClassifierPredictionSettings&lt;TLabel&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -89,7 +89,7 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICustomSerializable.html#Microsoft_ML_Probabilistic_Learners_ICustomSerializable_SaveForwardCompatible_BinaryWriter_">ICustomSerializable.SaveForwardCompatible(BinaryWriter)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICustomSerializable.html#Microsoft_ML_Probabilistic_Learners_ICustomSerializable_SaveForwardCompatible_System_IO_BinaryWriter_">ICustomSerializable.SaveForwardCompatible(BinaryWriter)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
@@ -120,7 +120,7 @@
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Learners_IBayesPointMachineClassifierPredictionSettings_1_GetPredictionLossFunction_" data-uid="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifierPredictionSettings`1.GetPredictionLossFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_IBayesPointMachineClassifierPredictionSettings_1_GetPredictionLossFunction_Func__0__0_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifierPredictionSettings`1.GetPredictionLossFunction(Func{`0,`0,System.Double}@)">GetPredictionLossFunction(out Func&lt;TLabel, TLabel, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IBayesPointMachineClassifierPredictionSettings_1_GetPredictionLossFunction_System_Func__0__0_System_Double___" data-uid="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifierPredictionSettings`1.GetPredictionLossFunction(System.Func{`0,`0,System.Double}@)">GetPredictionLossFunction(out Func&lt;TLabel, TLabel, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Gets the loss function which determines how a prediction in the form of a distribution is converted into a point prediction.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -139,7 +139,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Func</span>&lt;TLabel, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TLabel, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">customLossFunction</span></td>
         <td><p>The custom loss function. This is <code>null</code> unless the returned <a class="xref" href="Microsoft.ML.Probabilistic.Learners.LossFunction.html">LossFunction</a> is 'Custom'.</p>
 </td>
@@ -162,12 +162,12 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Learners_IBayesPointMachineClassifierPredictionSettings_1_GetPredictionLossFunction_Func__0__0_System_Double____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_IBayesPointMachineClassifierPredictionSettings_1_GetPredictionLossFunction_System_Func__0__0_System_Double____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>A loss function returns the loss incurred when choosing an estimate instead of the true value,
 where the first argument is the true value and the second argument is the estimate of the true value.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Learners_IBayesPointMachineClassifierPredictionSettings_1_SetPredictionLossFunction_" data-uid="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifierPredictionSettings`1.SetPredictionLossFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_IBayesPointMachineClassifierPredictionSettings_1_SetPredictionLossFunction_Microsoft_ML_Probabilistic_Learners_LossFunction_Func__0__0_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifierPredictionSettings`1.SetPredictionLossFunction(Microsoft.ML.Probabilistic.Learners.LossFunction,Func{`0,`0,System.Double})">SetPredictionLossFunction(LossFunction, Func&lt;TLabel, TLabel, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IBayesPointMachineClassifierPredictionSettings_1_SetPredictionLossFunction_Microsoft_ML_Probabilistic_Learners_LossFunction_System_Func__0__0_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.IBayesPointMachineClassifierPredictionSettings`1.SetPredictionLossFunction(Microsoft.ML.Probabilistic.Learners.LossFunction,System.Func{`0,`0,System.Double})">SetPredictionLossFunction(LossFunction, Func&lt;TLabel, TLabel, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Sets the loss function which determines how a prediction in the form of a distribution is converted into a point prediction.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -192,7 +192,7 @@ where the first argument is the true value and the second argument is the estima
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TLabel, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TLabel, TLabel, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">customLossFunction</span></td>
         <td><p>An optional custom loss function. This can only be set when <code data-dev-comment-type="paramref" class="paramref">lossFunction</code> is set to 'Custom'.
 The custom loss function returns the loss incurred when choosing an estimate instead of the true value,

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GammaProductOp_Laplace
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,12 +91,63 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">GammaProductOp_Laplace</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GammaProductOp_Laplace_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class GammaProductOp_Laplace : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;Product&quot;, new Type[]{typeof(double), typeof(double)})]
+[Buffers(new string[]{&quot;Q&quot;})]
+[Quality(QualityBand.Experimental)]
+public static class GammaProductOp_Laplace</code></pre>
   </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GammaProductOp_Laplace_ForceProper" data-uid="Microsoft.ML.Probabilistic.Factors.GammaProductOp_Laplace.ForceProper">ForceProper</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool ForceProper</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_GammaProductOp_Laplace_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaProductOp_Laplace.AAverageConditional*"></a>
@@ -121,7 +172,7 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
         <td><span class="parametername">product</span></td>
-        <td><p>Incoming message from <code>product</code>.</p>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
@@ -172,6 +223,11 @@
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">product</code> is not a proper distribution.</p>
+</td>
+      </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
         <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
@@ -355,7 +411,7 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
         <td><span class="parametername">product</span></td>
-        <td><p>Incoming message from <code>product</code>.</p>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
@@ -403,6 +459,22 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_GammaProductOp_Laplace_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(product,a,b) p(product,a,b) factor(product,a,b) / sum_product p(product) messageTo(product))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GammaProductOp_Laplace_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaProductOp_Laplace.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GammaProductOp_Laplace_LogEvidenceRatio_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaProductOp_Laplace.LogEvidenceRatio(System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma)">LogEvidenceRatio(Double, Gamma, Gamma, Gamma)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
@@ -659,6 +731,46 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_GammaProductOp_Laplace_QInit_remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GammaProductOp_Laplace_ToGamma_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaProductOp_Laplace.ToGamma*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GammaProductOp_Laplace_ToGamma_Microsoft_ML_Probabilistic_Distributions_GammaPower_" data-uid="Microsoft.ML.Probabilistic.Factors.GammaProductOp_Laplace.ToGamma(Microsoft.ML.Probabilistic.Distributions.GammaPower)">ToGamma(GammaPower)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma ToGamma(GammaPower gammaPower)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">gammaPower</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           
