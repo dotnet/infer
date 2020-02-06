@@ -2,10 +2,11 @@
 # The .NET Foundation licenses this file to you under the MIT license.
 # See the LICENSE file in the project root for more information.
 from __future__ import division
-from sympy import zeta, evalf, bernoulli, symbols, Poly, series, factorial, factorial2, S, log, exp
+from sympy import zeta, evalf, bernoulli, symbols, Poly, series, factorial, factorial2, S, log, exp, gamma
 
 # configuration
-decimal_precision = 24
+decimal_precision = 30
+evalf_inner_precision = 500
 
 gamma_at_2_series_length = 26
 gamma_at_2_variable_name = "dx"
@@ -67,8 +68,12 @@ normcdfln_asymptotic_series_length = 8
 normcdfln_asymptotic_variable_name = "z"
 normcdfln_asymptotic_indent = "                    "
 
+reciprocal_factorial_minus_1_series_length = 17
+reciprocal_factorial_minus_1_variable_name = "x"
+reciprocal_factorial_minus_1_indent = "                "
+
 def format_real_coefficient(coefficient):
-    return f"%0.{decimal_precision}g" % coefficient
+    return str(coefficient)
 
 def print_polynomial_with_real_coefficients(varname, coefficients, indent):
     if len(coefficients) <= 1:
@@ -124,12 +129,12 @@ def print_polynomial_with_rational_coefficients(varname, coefficients, indent):
 def gamma_at_2_coefficient(k):
     if k == 0:
         return 0.0
-    return ((-1)**(k + 1)*(zeta(k + 1) - 1)/(k + 1)).evalf(decimal_precision)
+    return ((-1)**(k + 1)*(zeta(k + 1) - 1)/(k + 1)).evalf(decimal_precision, maxn=evalf_inner_precision)
 
 def digamma_at_2_coefficient(k):
     if k == 0:
         return 0.0
-    return ((-1)**(k + 1)*(zeta(k + 1) - 1)).evalf(decimal_precision)
+    return ((-1)**(k + 1)*(zeta(k + 1) - 1)).evalf(decimal_precision, maxn=evalf_inner_precision)
 
 def digamma_asymptotic_coefficient(k):
     if k == 0:
@@ -137,7 +142,7 @@ def digamma_asymptotic_coefficient(k):
     return bernoulli(2 * k) / (2 * k)
 
 def trigamma_at_1_coefficient(k):
-    return ((-1)**k * (k + 1) * zeta(k + 2)).evalf(decimal_precision)
+    return ((-1)**k * (k + 1) * zeta(k + 2)).evalf(decimal_precision, maxn=evalf_inner_precision)
 
 def trigamma_asymptotic_coefficient(k):
     if k == 0:
@@ -145,7 +150,7 @@ def trigamma_asymptotic_coefficient(k):
     return bernoulli(2 * k)
 
 def tetragamma_at_1_coefficient(k):
-    return ((-1)**(k + 1) * (k + 1) * (k + 2) * zeta(k + 3)).evalf(decimal_precision)
+    return ((-1)**(k + 1) * (k + 1) * (k + 2) * zeta(k + 3)).evalf(decimal_precision, maxn=evalf_inner_precision)
 
 def tetragamma_asymptotic_coefficient(k):
     if k == 0:
@@ -222,6 +227,10 @@ def normcdfln_asymptotic_coefficient(m):
         result = result + coef * accSum
     return result
 
+def get_reciprocal_factorial_minus_1_coefficients(count):
+    x = symbols('x')
+    return list(reversed(Poly((1 / gamma(x + 1) - 1).series(x, 0, count).removeO().evalf(decimal_precision, maxn=evalf_inner_precision), x).all_coeffs()))
+
 def main():
     print("(1) - Gamma at 2:")
     gamma_at_2_coefficients = [gamma_at_2_coefficient(k) for k in range(0, gamma_at_2_series_length)]
@@ -282,5 +291,9 @@ def main():
     print("(15) - normcdfln asymptotic:")
     normcdfln_asymptotic_coefficients = [normcdfln_asymptotic_coefficient(k) for k in range(0, normcdfln_asymptotic_series_length)]
     print_polynomial_with_rational_coefficients(normcdfln_asymptotic_variable_name, normcdfln_asymptotic_coefficients, normcdfln_asymptotic_indent)
+    
+    print("(16) - Reciprocal factorial minus 1:")
+    reciprocal_factorial_minus_1_coefficients = get_reciprocal_factorial_minus_1_coefficients(reciprocal_factorial_minus_1_series_length)
+    print_polynomial_with_real_coefficients(reciprocal_factorial_minus_1_variable_name, reciprocal_factorial_minus_1_coefficients, reciprocal_factorial_minus_1_indent)
 
 if __name__ == '__main__': main()
