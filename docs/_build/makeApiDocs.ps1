@@ -58,6 +58,8 @@ if($LASTEXITCODE)
     }
 }
 
+Write-Warning "Three warnings about invalid file links in toc.yml are expected and benign, because those files don't exist yet. However, the links are still set up correctly."
+
 if ((Test-Path $destinationDirectory)) {
     Write-Host "Remove temp repository"
     Remove-Item -Path $destinationDirectory -Recurse -Force
@@ -80,7 +82,6 @@ if (!(Test-Path $apiguideTmp)) {
             Write-Host "apiguide folder is not found."
         }
         Rename-Item -path ./apiguide-tmp -newName $apiguidePath 
-        
         git add --all
         git commit -m "Update API Documentation"
         # git push origin gh-pages
