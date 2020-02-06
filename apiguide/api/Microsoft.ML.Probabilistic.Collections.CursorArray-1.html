@@ -1,0 +1,1251 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class CursorArray&lt;CursorType&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class CursorArray&lt;CursorType&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1" class="text-break">Class CursorArray&lt;CursorType&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>A multidimensional array of objects which share a single storage block.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">CursorArray&lt;CursorType&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursor.html">ICursor</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursorArray-1.html">ICursorArray</a>&lt;CursorType&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;CursorType&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursorArray.html">ICursorArray</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Collections.html">Microsoft.ML.Probabilistic.Collections</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class CursorArray&lt;CursorType&gt; : ICursor, ICloneable, ICursorArray&lt;CursorType&gt;, IEnumerable&lt;CursorType&gt;, ICursorArray, IEnumerable where CursorType : ICursor</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">CursorType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+    A CursorArray is meant to behave like an ordinary Array, while being
+    more memory-efficient.  Instead of storing multiple instances of the
+    same object type, it uses a single instance as a cursor over a block
+    of data.  The cursor acts like a pointer which is targeted at
+    the desired part of the array (via its Start property).
+</p><p>
+The CursorArray object does not hold a pointer to the actual source data.
+It is agnostic about the actual type and layout of the 
+data that the cursor is walking over, providing a large degree of 
+flexibility in the implementation of the cursor.
+</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1__ctor_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1__ctor__0_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.#ctor(`0)">CursorArray(CursorType)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CursorArray(CursorType cursor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CursorType</span></td>
+        <td><span class="parametername">cursor</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1__ctor_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1__ctor__0_System_Collections_Generic_IList_System_Int32__System_Collections_Generic_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.#ctor(`0,System.Collections.Generic.IList{System.Int32},System.Collections.Generic.IList{System.Int32})">CursorArray(CursorType, IList&lt;Int32&gt;, IList&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CursorArray(CursorType cursor, IList&lt;int&gt; lengths, IList&lt;int&gt; stride)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CursorType</span></td>
+        <td><span class="parametername">cursor</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">lengths</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">stride</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1__ctor_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1__ctor__0_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.#ctor(`0,System.Int32[])">CursorArray(CursorType, Int32[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CursorArray(CursorType cursor, params int[] lengths)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CursorType</span></td>
+        <td><span class="parametername">cursor</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><span class="parametername">lengths</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_count" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.count">count</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected int[] count</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_cursor" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.cursor">cursor</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected CursorType cursor</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CursorType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_dim" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.dim">dim</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected int[] dim</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_start" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.start">start</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected int start</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_stride" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.stride">stride</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected int[] stride</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Count_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Count*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Count" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Count">Count</h4>
+  <div class="markdown level1 summary"><p>The total number of structures across all dimensions</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Count { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Item_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Item_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Item(System.Int32)">Item[Int32]</h4>
+  <div class="markdown level1 summary"><p>Retrieve an object by linear index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CursorType this[int index] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CursorType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Item_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+    If the array is multidimensional, this will index the elements 
+    sequentially in row-major order, i.e. the rightmost dimension varies
+    fastest.
+</p><p>
+The result is a volatile cursor object, which becomes invalid
+on the next indexer call.  This can be a source of bugs, e.g.
+<code>f(a[i],a[j])</code> will not work.  If you want to save a result 
+across calls, you must make a ReferenceClone, as in:
+<code>f(a[i].ReferenceClone(), a[j])</code>.
+</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Item_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Item_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Item(System.Int32[])">Item[Int32[]]</h4>
+  <div class="markdown level1 summary"><p>Retrieve an object by multidimensional index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CursorType this[params int[] index] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CursorType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Item_System_Int32____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result is a volatile cursor object, which becomes invalid
+on the next indexer call.  This can be a source of bugs, e.g.
+<code>f(a[i],a[j])</code> will not work.  If you want to save a result
+across calls, you must make a ReferenceClone, as in:
+<code>f(a[i].ReferenceClone(), a[j])</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Lengths_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Lengths*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Lengths" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Lengths">Lengths</h4>
+  <div class="markdown level1 summary"><p>The size of each dimension of the array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IList&lt;int&gt; Lengths { get; protected set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Rank_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Rank*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Rank" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Rank">Rank</h4>
+  <div class="markdown level1 summary"><p>The number of dimensions of the array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Rank { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Start_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Start*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Start" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Start">Start</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Start { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Stride_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Stride*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Stride" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Stride">Stride</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int[] Stride { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_CheckCompatible_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.CheckCompatible*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_CheckCompatible_Microsoft_ML_Probabilistic_Collections_ICursorArray_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.CheckCompatible(Microsoft.ML.Probabilistic.Collections.ICursorArray)">CheckCompatible(ICursorArray)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CheckCompatible(ICursorArray that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursorArray.html">ICursorArray</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Clone_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Clone" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Clone">Clone()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_CreateSourceArray_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.CreateSourceArray*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_CreateSourceArray_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.CreateSourceArray(System.Int32)">CreateSourceArray(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CreateSourceArray(int nRecords)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">nRecords</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_ForEach_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.ForEach*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_ForEach_Microsoft_ML_Probabilistic_Collections_ICursorArray_Microsoft_ML_Probabilistic_Collections_ICursorArray_System_Action_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.ForEach(Microsoft.ML.Probabilistic.Collections.ICursorArray,Microsoft.ML.Probabilistic.Collections.ICursorArray,System.Action)">ForEach(ICursorArray, ICursorArray, Action)</h4>
+  <div class="markdown level1 summary"><p>Invoke an element-wise action across three arrays.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ForEach(ICursorArray a, ICursorArray b, Action action)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursorArray.html">ICursorArray</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>An array of the same size as <code>this</code>.  Can be the same object as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursorArray.html">ICursorArray</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>An array of the same size as <code>this</code>.  Can be the same object as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action">Action</a></td>
+        <td><span class="parametername">action</span></td>
+        <td><p>A delegate which accesses the array cursors.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_ForEach_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.ForEach*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_ForEach_Microsoft_ML_Probabilistic_Collections_ICursorArray_System_Action_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.ForEach(Microsoft.ML.Probabilistic.Collections.ICursorArray,System.Action)">ForEach(ICursorArray, Action)</h4>
+  <div class="markdown level1 summary"><p>Invoke an element-wise action across two arrays.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ForEach(ICursorArray that, Action action)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursorArray.html">ICursorArray</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>An array of the same size as <code>this</code>.  Can be the same object as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action">Action</a></td>
+        <td><span class="parametername">action</span></td>
+        <td><p>A delegate which accesses the array cursors.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_ForEach_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.ForEach*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_ForEach_System_Action_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.ForEach(System.Action)">ForEach(Action)</h4>
+  <div class="markdown level1 summary"><p>Invoke an action for each element of an array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ForEach(Action action)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action">Action</a></td>
+        <td><span class="parametername">action</span></td>
+        <td><p>A delegate which accesses the array cursor.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_GetEnumerator_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.GetEnumerator*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_GetEnumerator" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.GetEnumerator">GetEnumerator()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;CursorType&gt; GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1">IEnumerator</a>&lt;CursorType&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_GetLength_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.GetLength*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_GetLength_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.GetLength(System.Int32)">GetLength(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int GetLength(int dimension)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">dimension</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_IsCompatibleWith_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.IsCompatibleWith*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_IsCompatibleWith_Microsoft_ML_Probabilistic_Collections_ICursorArray_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.IsCompatibleWith(Microsoft.ML.Probabilistic.Collections.ICursorArray)">IsCompatibleWith(ICursorArray)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsCompatibleWith(ICursorArray that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursorArray.html">ICursorArray</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_IsCompatibleWith_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.IsCompatibleWith*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_IsCompatibleWith_System_Array_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.IsCompatibleWith(System.Array)">IsCompatibleWith(Array)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsCompatibleWith(Array that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array">Array</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_LinearIndexToMultidimensionalIndex_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.LinearIndexToMultidimensionalIndex*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_LinearIndexToMultidimensionalIndex_System_Int32_System_Collections_Generic_IList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.LinearIndexToMultidimensionalIndex(System.Int32,System.Collections.Generic.IList{System.Int32})">LinearIndexToMultidimensionalIndex(Int32, IList&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void LinearIndexToMultidimensionalIndex(int index, IList&lt;int&gt; indexList)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">indexList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_MoveTo_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.MoveTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_MoveTo_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.MoveTo(System.Int32)">MoveTo(Int32)</h4>
+  <div class="markdown level1 summary"><p>Position the cursor at a linear index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void MoveTo(int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_MoveTo_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.MoveTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_MoveTo_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.MoveTo(System.Int32[])">MoveTo(Int32[])</h4>
+  <div class="markdown level1 summary"><p>Position the cursor at a multidimensional index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void MoveTo(params int[] index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_ReferenceClone_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.ReferenceClone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_ReferenceClone" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.ReferenceClone">ReferenceClone()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual ICursor ReferenceClone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursor.html">ICursor</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_UpdateCounts_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.UpdateCounts*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_UpdateCounts" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.UpdateCounts">UpdateCounts()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void UpdateCounts()</code></pre>
+  </div>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Microsoft_ML_Probabilistic_Collections_ICursor_Count_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Microsoft#ML#Probabilistic#Collections#ICursor#Count*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Microsoft_ML_Probabilistic_Collections_ICursor_Count" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Microsoft#ML#Probabilistic#Collections#ICursor#Count">ICursor.Count</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int ICursor.Count { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Microsoft_ML_Probabilistic_Collections_ICursorArray_Item_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Microsoft#ML#Probabilistic#Collections#ICursorArray#Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Microsoft_ML_Probabilistic_Collections_ICursorArray_Item_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Microsoft#ML#Probabilistic#Collections#ICursorArray#Item(System.Int32)">ICursorArray.Item[Int32]</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object ICursorArray.this[int index] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Microsoft_ML_Probabilistic_Collections_ICursorArray_Item_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Microsoft#ML#Probabilistic#Collections#ICursorArray#Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_Microsoft_ML_Probabilistic_Collections_ICursorArray_Item_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.Microsoft#ML#Probabilistic#Collections#ICursorArray#Item(System.Int32[])">ICursorArray.Item[Int32[]]</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object ICursorArray.this[params int[] index] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_System_Collections_IEnumerable_GetEnumerator_" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.System#Collections#IEnumerable#GetEnumerator*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_CursorArray_1_System_Collections_IEnumerable_GetEnumerator" data-uid="Microsoft.ML.Probabilistic.Collections.CursorArray`1.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerator IEnumerable.GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">IEnumerator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursor.html">ICursor</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursorArray-1.html">ICursorArray&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">System.Collections.Generic.IEnumerable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursorArray.html">ICursorArray</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">System.Collections.IEnumerable</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_IEnumerable_System_Action___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action_System_Int32___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;Int32, T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_IEnumerable_System_Action_System_Int32___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable, Action&lt;Int32, T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Sum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_UInt32__">EnumerableExtensions.Sum&lt;TSource&gt;(IEnumerable&lt;TSource&gt;, Func&lt;TSource, UInt32&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Sum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_UInt64__">EnumerableExtensions.Sum&lt;TSource&gt;(IEnumerable&lt;TSource&gt;, Func&lt;TSource, UInt64&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ValueEquals__1_System_Collections_Generic_IEnumerable___0__System_Collections_Generic_IEnumerable___0__">EnumerableExtensions.ValueEquals&lt;T&gt;(IEnumerable&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOf__1_System_Collections_Generic_IEnumerable___0____0_">EnumerableExtensions.IndexOf&lt;T&gt;(IEnumerable&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOf__1_System_Collections_IEnumerable___0_">EnumerableExtensions.IndexOf&lt;T&gt;(IEnumerable, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindIndex__1_System_Collections_Generic_IEnumerable___0__System_Predicate___0__">EnumerableExtensions.FindIndex&lt;T&gt;(IEnumerable&lt;T&gt;, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindIndex__1_System_Collections_IEnumerable_System_Predicate___0__">EnumerableExtensions.FindIndex&lt;T&gt;(IEnumerable, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindAllIndex__1_System_Collections_Generic_IEnumerable___0__System_Predicate___0__">EnumerableExtensions.FindAllIndex&lt;T&gt;(IEnumerable&lt;T&gt;, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOfAll__1_System_Collections_Generic_IEnumerable___0____0_">EnumerableExtensions.IndexOfAll&lt;T&gt;(IEnumerable&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Skip__1_System_Collections_Generic_IEnumerable___0__System_Int32_System_Collections_Generic_List___0___">EnumerableExtensions.Skip&lt;T&gt;(IEnumerable&lt;T&gt;, Int32, out List&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_CopyTo__1_System_Collections_Generic_IEnumerable___0____0___System_Int32_">EnumerableExtensions.CopyTo&lt;T&gt;(IEnumerable&lt;T&gt;, T[], Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ToReadOnlyList__1_System_Collections_Generic_IEnumerable___0__">EnumerableExtensions.ToReadOnlyList&lt;T&gt;(IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableReduce__2_System_Collections_Generic_IEnumerable___0____1_System_Func___1___0___1__System_Func___1___0_System_Int32___1__">IEnumerableExensions.EnumerableReduce&lt;T, TRes&gt;(IEnumerable&lt;T&gt;, TRes, Func&lt;TRes, T, TRes&gt;, Func&lt;TRes, T, Int32, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableSum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_Double__">IEnumerableExensions.EnumerableSum&lt;T&gt;(IEnumerable&lt;T&gt;, Func&lt;T, Double&gt;)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

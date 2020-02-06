@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution`4">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistribution_4" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution`4" class="text-break">Class PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a factorized distribution over pairs of elements
+<code>P(x, y) = P(x)P(y)</code>. Pair elements <code>x</code> and <code>y</code> can be of different types.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html">PairDistributionBase</a>&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-4.html">PairDistribution</a>&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;</div>
+    <div class="level2"><span class="xref">PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement1&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement2&gt;&gt;&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement1&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement2&gt;&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement1&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement2&gt;&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-4.html">PairDistribution</a>&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-4.html">PairDistribution</a>&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-4.html">PairDistribution</a>&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-4.html">PairDistribution</a>&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSumExact-1.html">SettableToWeightedSumExact</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-4.html">PairDistribution</a>&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-4.html">PairDistribution</a>&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-4.html">PairDistribution</a>&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_First">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.First</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_Second">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.Second</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_IsPointMass">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.IsPointMass</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_Point">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.Point</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromFirst_Microsoft_ML_Probabilistic_Collections_Option__1__">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.FromFirst(Option&lt;TElementDistribution1&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromSecond_Microsoft_ML_Probabilistic_Collections_Option__3__">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.FromSecond(Option&lt;TElementDistribution2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromFirstSecond_Microsoft_ML_Probabilistic_Collections_Option__1__Microsoft_ML_Probabilistic_Collections_Option__3__">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.FromFirstSecond(Option&lt;TElementDistribution1&gt;, Option&lt;TElementDistribution2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_ProjectFirst__0_Microsoft_ML_Probabilistic_Collections_Option__3___">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.ProjectFirst(TElement1, Option&lt;TElementDistribution2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_ProjectFirst__1_Microsoft_ML_Probabilistic_Collections_Option__3___">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.ProjectFirst(TElementDistribution1, Option&lt;TElementDistribution2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_IsUniform">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.IsUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_SetToUniform">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.SetToUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_ToString">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_Clone">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.Clone()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_MaxDiff_System_Object_">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.MaxDiff(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_GetLogProb_Microsoft_ML_Probabilistic_Collections_Pair_Microsoft_ML_Probabilistic_Collections_Option__0__Microsoft_ML_Probabilistic_Collections_Option__2___">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.GetLogProb(Pair&lt;Option&lt;TElement1&gt;, Option&lt;TElement2&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_GetLogAverageOf__4_">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.GetLogAverageOf(PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_SetToProduct__4__4_">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.SetToProduct(PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_SetToSum_System_Double__4_System_Double__4_">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.SetToSum(Double, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;, Double, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_SetToPartialUniform">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.SetToPartialUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_SetToPartialUniformOf__4_">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.SetToPartialUniformOf(PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase-5.html#Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_IsPartialUniform">PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;.IsPartialUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistribution_4_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public class PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt; : PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;, IDistribution&lt;Pair&lt;Option&lt;TElement1&gt;, Option&lt;TElement2&gt;&gt;&gt;, ICloneable, HasPoint&lt;Pair&lt;Option&lt;TElement1&gt;, Option&lt;TElement2&gt;&gt;&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;Pair&lt;Option&lt;TElement1&gt;, Option&lt;TElement2&gt;&gt;&gt;, CanGetLogAverageOf&lt;PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;, SettableToProduct&lt;PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;, SettableToProduct&lt;PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;, PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;, SettableToWeightedSumExact&lt;PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;, SettableToWeightedSum&lt;PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt;, SettableToPartialUniform&lt;PairDistribution&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2&gt;&gt; where TElementDistribution1 : IDistribution&lt;TElement1&gt;, CanGetLogAverageOf&lt;TElementDistribution1&gt;, SettableToProduct&lt;TElementDistribution1&gt;, SettableToPartialUniform&lt;TElementDistribution1&gt;, new()
+    where TElementDistribution2 : IDistribution&lt;TElement2&gt;, CanGetLogAverageOf&lt;TElementDistribution2&gt;, SettableToProduct&lt;TElementDistribution2&gt;, SettableToPartialUniform&lt;TElementDistribution2&gt;, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TElement1</span></td>
+        <td><p>The type of a first element of a pair.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TElementDistribution1</span></td>
+        <td><p>The type of a distribution over <code data-dev-comment-type="typeparamref" class="typeparamref">TElement1</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TElement2</span></td>
+        <td><p>The type of a second element of a pair.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TElementDistribution2</span></td>
+        <td><p>The type of a distribution over <code data-dev-comment-type="typeparamref" class="typeparamref">TElement2</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistribution_4_Transpose_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution`4.Transpose*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistribution_4_Transpose" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution`4.Transpose">Transpose()</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution <code>Q(y, x) = P(x, y)</code>, where <code>P(x, y)</code> is the current distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PairDistribution&lt;TElement2, TElementDistribution2, TElement1, TElementDistribution1&gt; Transpose()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistribution-4.html">PairDistribution</a>&lt;TElement2, TElementDistribution2, TElement1, TElementDistribution1&gt;</td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSumExact-1.html">SettableToWeightedSumExact&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform&lt;TDist&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

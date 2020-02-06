@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Microsoft.ML.Probabilistic.Factors.Attributes
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Microsoft.ML.Probabilistic.Factors.Attributes
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.Attributes">
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_Attributes" data-uid="Microsoft.ML.Probabilistic.Factors.Attributes" class="text-break">Namespace Microsoft.ML.Probabilistic.Factors.Attributes
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.AllExceptIndexAttribute.html">AllExceptIndexAttribute</a></h4>
+      <section><p>When applied to a message function parameter, indicates that the function depends on all items
+in the message collection except the resultIndex.  The default is all items.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.BuffersAttribute.html">BuffersAttribute</a></h4>
+      <section><p>When applied to a message operator class, indicates that the message operators may use the named parameters as storage for holding algorithm state.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.CancelsAttribute.html">CancelsAttribute</a></h4>
+      <section><p>When applied to a message function parameter, indicates that the argument's value is cancelled by another argument, thus there is no real dependency.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.ConstantAttribute.html">ConstantAttribute</a></h4>
+      <section><p>When attached to a factor parameter, indicates that the parameter
+is constant - i.e. cannot be changed by observation or by inference</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.DiodeAttribute.html">DiodeAttribute</a></h4>
+      <section><p>When applied to a method argument, indicates that the argument should not participate in backward sequential loops.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.FactorMethodAttribute.html">FactorMethodAttribute</a></h4>
+      <section><p>When applied to a class, indicates that the class provides message functions for a given factor.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.FreshAttribute.html">FreshAttribute</a></h4>
+      <section><p>When applied to a method argument, indicates that the argument must be up-to-date
+before invoking the method.
+When applied to a method, indicates that the method must be recomputed whenever any of its arguments change.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.HasMessageFunctionsAttribute.html">HasMessageFunctionsAttribute</a></h4>
+      <section><p>When applied to an assembly, indicates that the assembly should be searched for message functions.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.HasUnitDerivative.html">HasUnitDerivative</a></h4>
+      <section><p>Marks a factor as having derivative wrt all inputs equal to 1 always (only applies to deterministic factors)</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.HiddenAttribute.html">HiddenAttribute</a></h4>
+      <section><p>Marks a factor as hidden</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.IgnoreDeclarationAttribute.html">IgnoreDeclarationAttribute</a></h4>
+      <section><p>When attached to a method parameter, indicates that the dependency and the declaration dependency should be ignored by the FactorManager.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.IgnoreDependencyAttribute.html">IgnoreDependencyAttribute</a></h4>
+      <section><p>When attached to a method parameter, indicates that the dependency should be ignored by the FactorManager.  Only a declaration dependency will be retained.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.IndexedAttribute.html">IndexedAttribute</a></h4>
+      <section><p>When applied to a message function parameter, indicates that the argument should be indexed by resultIndex.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.InducedSourceAttribute.html">InducedSourceAttribute</a></h4>
+      <section><p>When applied to a message function parameter, causes the InducedTarget to depend on the parameter</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.InducedTargetAttribute.html">InducedTargetAttribute</a></h4>
+      <section><p>When applied to a message function parameter, causes the parameter to depend on the InducedSource</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.IsReturnedAttribute.html">IsReturnedAttribute</a></h4>
+      <section><p>When applied to a method argument, indicates that the argument will be returned unmodified
+as the result of the method.  This automatically implies SkipIfUniform and Trigger.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.IsReturnedInEveryElementAttribute.html">IsReturnedInEveryElementAttribute</a></h4>
+      <section><p>When applied to a method argument for methods that return lists, indicates that all elements
+of the returned list will be identical and equal to that argument.  This automatically implies SkipIfUniform.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.MatchingIndexAttribute.html">MatchingIndexAttribute</a></h4>
+      <section><p>When applied to a message function parameter, indicates that the function depends on the one
+item in the message collection at resultIndex.  The default is all items.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.MatchingIndexTriggerAttribute.html">MatchingIndexTriggerAttribute</a></h4>
+      <section><p>When applied to a method argument, indicates that the method's result is invalidated when
+the array element at resultIndex changes.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.MultiplyAllAttribute.html">MultiplyAllAttribute</a></h4>
+      <section><p>When applied to a message function, indicates that the function returns the product of its arguments.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.NoInitAttribute.html">NoInitAttribute</a></h4>
+      <section><p>When applied to a method argument, indicates that the argument does not benefit from initialization (by default, initialization is assumed to be beneficial).
+This attribute is incompatible with SkipIfUniform or Required.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.NoTriggersAttribute.html">NoTriggersAttribute</a></h4>
+      <section><p>When applied to a method, indicates that no default triggers should be assigned to its parameters.
+The method will explicitly mark its triggers using TriggerAttribute.
+A general rule is that a VMP operator that depends on the opposite message must not trigger on that message (i.e. non-conjugate operators).</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.NotSupportedAttribute.html">NotSupportedAttribute</a></h4>
+      <section><p>When applied to a method, indicates that the method will always throw a NotSupportedException.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.ParameterNamesAttribute.html">ParameterNamesAttribute</a></h4>
+      <section><p>When applied to a method, overrides the default choice of parameter names.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.ProperAttribute.html">ProperAttribute</a></h4>
+      <section><p>The distribution must be proper.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.Quality.html">Quality</a></h4>
+      <section><p>Attribute used to label Infer.NET components. They may be attached to algorithm classes,
+distribution classes, and operator classes. They may also be attached to any methods on
+these classes</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.RequiredArgumentAttribute.html">RequiredArgumentAttribute</a></h4>
+      <section><p>When applied to a method argument, indicates that argument is required to have
+been set before calling the method</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.ReturnsCompositeArrayAttribute.html">ReturnsCompositeArrayAttribute</a></h4>
+      <section><p>When applied to a factor, indicates that the factor returns a composite array.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.SkipAttribute.html">SkipAttribute</a></h4>
+      <section><p>The result is always uniform.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.SkipIfAllExceptIndexAreUniformAttribute.html">SkipIfAllExceptIndexAreUniformAttribute</a></h4>
+      <section><p>The result is uniform (or an exception would be thrown) if all elements except
+at the result index are uniform, hence the function call can be skipped.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.SkipIfAllUniformAttribute.html">SkipIfAllUniformAttribute</a></h4>
+      <section><p>The result is uniform (or an exception would be thrown) if all elements are uniform, hence the function call can be skipped.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.SkipIfAnyExceptIndexIsUniformAttribute.html">SkipIfAnyExceptIndexIsUniformAttribute</a></h4>
+      <section><p>The result is uniform (or an exception would be thrown) if any element except
+at the result index is uniform, hence the function call can be skipped.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.SkipIfAnyUniformAttribute.html">SkipIfAnyUniformAttribute</a></h4>
+      <section><p>The result is uniform (or an exception would be thrown) if any element is uniform, hence the function call can be skipped.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.SkipIfMatchingIndexIsUniformAttribute.html">SkipIfMatchingIndexIsUniformAttribute</a></h4>
+      <section><p>The result is uniform (or an exception would be thrown) if the element at
+the result index is uniform, hence the function call can be skipped.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.SkipIfUniformAttribute.html">SkipIfUniformAttribute</a></h4>
+      <section><p>The result is uniform (or an exception would be thrown) whenever this parameter is uniform, hence the function call can be skipped.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.Stochastic.html">Stochastic</a></h4>
+      <section><p>When applied to a method, indicates that the method is non-deterministic.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.TriggerAttribute.html">TriggerAttribute</a></h4>
+      <section><p>When applied to a method argument, indicates that the method's result is invalidated when
+a dependent item in that argument changes.</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.QualityBand.html">QualityBand</a></h4>
+      <section><p>Quality bands for Infer.NET components - distributions, operators, factors</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

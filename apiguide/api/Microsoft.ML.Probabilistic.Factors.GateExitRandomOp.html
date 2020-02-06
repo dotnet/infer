@@ -1,0 +1,793 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GateExitRandomOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GateExitRandomOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp" class="text-break">Class GateExitRandomOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Gate.html#Microsoft_ML_Probabilistic_Factors_Gate_ExitRandom__1_System_Boolean_____0___">ExitRandom&lt;T&gt;(Boolean[], T[])</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">GateExitRandomOp</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Gate), &quot;ExitRandom&lt;&gt;&quot;, new Type[]{})]
+[Quality(QualityBand.Mature)]
+public static class GateExitRandomOp</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.AverageLogFactor">AverageLogFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(Exit,cases,values))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_CasesAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.CasesAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_CasesAverageConditional__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.CasesAverageConditional``1(``0)">CasesAverageConditional&lt;TResultList&gt;(TResultList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>cases</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TResultList CasesAverageConditional&lt;TResultList&gt;(TResultList result)
+    where TResultList : SettableToUniform</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TResultList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_CasesAverageConditional__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>cases</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_CasesAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.CasesAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_CasesAverageLogarithm__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.CasesAverageLogarithm``1(``0)">CasesAverageLogarithm&lt;TResultList&gt;(TResultList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>cases</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TResultList CasesAverageLogarithm&lt;TResultList&gt;(TResultList result)
+    where TResultList : SettableToUniform</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TResultList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_CasesAverageLogarithm__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>cases</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ExitAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ExitAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ExitAverageConditional__1_System_Boolean___System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ExitAverageConditional``1(System.Boolean[],System.Collections.Generic.IList{``0})">ExitAverageConditional&lt;TExit&gt;(Boolean[], IList&lt;TExit&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>Exit</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TExit ExitAverageConditional&lt;TExit&gt;(bool[] cases, [SkipIfAllUniform] IList&lt;TExit&gt; values)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>[]</td>
+        <td><span class="parametername">cases</span></td>
+        <td><p>Constant value for <code>cases</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExit&gt;</td>
+        <td><span class="parametername">values</span></td>
+        <td><p>Incoming message from <code>values</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TExit</span></td>
+        <td><p>The outgoing EP message to the <code>Exit</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TExit</span></td>
+        <td><p>The type of the distribution over the variable exiting the gate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ExitAverageConditional__1_System_Boolean___System_Collections_Generic_IList___0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>Exit</code> as the random arguments are varied. The formula is <code>proj[p(Exit) sum_(values) p(values) factor(Exit,cases,values)]/p(Exit)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">values</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ExitAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ExitAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ExitAverageLogarithm__1_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli__System_Collections_Generic_IList___0____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ExitAverageLogarithm``1(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Bernoulli},System.Collections.Generic.IList{``0},``0)">ExitAverageLogarithm&lt;TExit&gt;(IList&lt;Bernoulli&gt;, IList&lt;TExit&gt;, TExit)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>Exit</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TExit ExitAverageLogarithm&lt;TExit&gt;(IList&lt;Bernoulli&gt; cases, [SkipIfAllUniform] IList&lt;TExit&gt; values, TExit result)
+    where TExit : ICloneable, SettableToProduct&lt;TExit&gt;, SettableToPower&lt;TExit&gt;, CanGetAverageLog&lt;TExit&gt;, SettableToUniform, SettableTo&lt;TExit&gt;, SettableToRatio&lt;TExit&gt;, SettableToWeightedSum&lt;TExit&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>&gt;</td>
+        <td><span class="parametername">cases</span></td>
+        <td><p>Incoming message from <code>cases</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExit&gt;</td>
+        <td><span class="parametername">values</span></td>
+        <td><p>Incoming message from <code>values</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TExit</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TExit</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TExit</span></td>
+        <td><p>The type of the distribution over the variable exiting the gate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ExitAverageLogarithm__1_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Bernoulli__System_Collections_Generic_IList___0____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>Exit</code>. The formula is <code>exp(sum_(cases,values) p(cases,values) log(factor(Exit,cases,values)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">values</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ExitAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ExitAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ExitAverageLogarithmInit__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ExitAverageLogarithmInit``1(System.Collections.Generic.IList{``0})">ExitAverageLogarithmInit&lt;TExit&gt;(IList&lt;TExit&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TExit ExitAverageLogarithmInit&lt;TExit&gt;(IList&lt;TExit&gt; values)
+    where TExit : ICloneable</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TExit&gt;</td>
+        <td><span class="parametername">values</span></td>
+        <td><p>Incoming message from <code>values</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TExit</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TExit</span></td>
+        <td><p>The type of the distribution over the variable exiting the gate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ExitAverageLogarithmInit__1_System_Collections_Generic_IList___0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_LogAverageFactor" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.LogAverageFactor">LogAverageFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_LogAverageFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(Exit,cases,values))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ValuesAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ValuesAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ValuesAverageConditional__1___0___0___" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ValuesAverageConditional``1(``0,``0[])">ValuesAverageConditional&lt;TExit&gt;(TExit, TExit[])</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>values</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TExit[] ValuesAverageConditional&lt;TExit&gt;(TExit exit, TExit[] result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TExit</span></td>
+        <td><span class="parametername">exit</span></td>
+        <td><p>Incoming message from <code>Exit</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td>TExit[]</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>TExit[]</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TExit</span></td>
+        <td><p>The type of the distribution over the variable exiting the gate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ValuesAverageConditional__1___0___0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>values</code> as the random arguments are varied. The formula is <code>proj[p(values) sum_(Exit) p(Exit) factor(Exit,cases,values)]/p(values)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ValuesAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ValuesAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ValuesAverageConditional__2___0___1_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ValuesAverageConditional``2(``0,``1)">ValuesAverageConditional&lt;TExit, TResultList&gt;(TExit, TResultList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>values</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TResultList ValuesAverageConditional&lt;TExit, TResultList&gt;(TExit exit, TResultList result)
+    where TResultList : CanSetAllElementsTo&lt;TExit&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TExit</span></td>
+        <td><span class="parametername">exit</span></td>
+        <td><p>Incoming message from <code>Exit</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TExit</span></td>
+        <td><p>The type of the distribution over the variable exiting the gate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResultList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ValuesAverageConditional__2___0___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>values</code> as the random arguments are varied. The formula is <code>proj[p(values) sum_(Exit) p(Exit) factor(Exit,cases,values)]/p(values)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ValuesAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ValuesAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ValuesAverageLogarithm__2___0___1_" data-uid="Microsoft.ML.Probabilistic.Factors.GateExitRandomOp.ValuesAverageLogarithm``2(``0,``1)">ValuesAverageLogarithm&lt;TExit, TResultList&gt;(TExit, TResultList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>values</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TResultList ValuesAverageLogarithm&lt;TExit, TResultList&gt;(TExit exit, TResultList result)
+    where TResultList : CanSetAllElementsTo&lt;TExit&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TExit</span></td>
+        <td><span class="parametername">exit</span></td>
+        <td><p>Incoming message from <code>Exit</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TExit</span></td>
+        <td><p>The type of the distribution over the variable exiting the gate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResultList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateExitRandomOp_ValuesAverageLogarithm__2___0___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>values</code>. The formula is <code>exp(sum_(Exit) p(Exit) log(factor(Exit,cases,values)))</code>.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,994 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GateEnterPartialTwoOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GateEnterPartialTwoOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp" class="text-break">Class GateEnterPartialTwoOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Gate.html#Microsoft_ML_Probabilistic_Factors_Gate_EnterPartialTwo__1_System_Boolean_System_Boolean___0_System_Int32___">EnterPartialTwo&lt;T&gt;(Boolean, Boolean, T, Int32[])</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">GateEnterPartialTwoOp</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Gate), &quot;EnterPartialTwo&lt;&gt;&quot;, new Type[]{})]
+[Quality(QualityBand.Mature)]
+public static class GateEnterPartialTwoOp</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.AverageLogFactor">AverageLogFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(enterPartialTwo,case0,case1,value,indices))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case0AverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.Case0AverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case0AverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.Case0AverageConditional(Microsoft.ML.Probabilistic.Distributions.Bernoulli)">Case0AverageConditional(Bernoulli)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>case0</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli Case0AverageConditional(Bernoulli result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case0AverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>case0</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case0AverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.Case0AverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case0AverageLogarithm__1_System_Collections_Generic_IList___0____0_System_Int32___Microsoft_ML_Probabilistic_Distributions_Bernoulli_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.Case0AverageLogarithm``1(System.Collections.Generic.IList{``0},``0,System.Int32[],Microsoft.ML.Probabilistic.Distributions.Bernoulli)">Case0AverageLogarithm&lt;TValue&gt;(IList&lt;TValue&gt;, TValue, Int32[], Bernoulli)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>case0</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli Case0AverageLogarithm&lt;TValue&gt;(IList&lt;TValue&gt; enterPartialTwo, TValue value, int[] indices, Bernoulli result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TValue&gt;</td>
+        <td><span class="parametername">enterPartialTwo</span></td>
+        <td><p>Incoming message from <code>enterPartialTwo</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>Incoming message from <code>value</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><span class="parametername">indices</span></td>
+        <td><p>Constant value for <code>indices</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TValue</span></td>
+        <td><p>The type of the message from <code>value</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case0AverageLogarithm__1_System_Collections_Generic_IList___0____0_System_Int32___Microsoft_ML_Probabilistic_Distributions_Bernoulli__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>case0</code>. Because the factor is deterministic, <code>enterPartialTwo</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(value) p(value) log(sum_enterPartialTwo p(enterPartialTwo) factor(enterPartialTwo,case0,case1,value,indices)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case1AverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.Case1AverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case1AverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.Case1AverageConditional(Microsoft.ML.Probabilistic.Distributions.Bernoulli)">Case1AverageConditional(Bernoulli)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>case1</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli Case1AverageConditional(Bernoulli result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case1AverageConditional_Microsoft_ML_Probabilistic_Distributions_Bernoulli__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>case1</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case1AverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.Case1AverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case1AverageLogarithm__1_System_Collections_Generic_IList___0____0_System_Int32___Microsoft_ML_Probabilistic_Distributions_Bernoulli_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.Case1AverageLogarithm``1(System.Collections.Generic.IList{``0},``0,System.Int32[],Microsoft.ML.Probabilistic.Distributions.Bernoulli)">Case1AverageLogarithm&lt;TValue&gt;(IList&lt;TValue&gt;, TValue, Int32[], Bernoulli)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>case1</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Bernoulli Case1AverageLogarithm&lt;TValue&gt;(IList&lt;TValue&gt; enterPartialTwo, TValue value, int[] indices, Bernoulli result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TValue&gt;</td>
+        <td><span class="parametername">enterPartialTwo</span></td>
+        <td><p>Incoming message from <code>enterPartialTwo</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>Incoming message from <code>value</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><span class="parametername">indices</span></td>
+        <td><p>Constant value for <code>indices</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TValue</span></td>
+        <td><p>The type of the message from <code>value</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_Case1AverageLogarithm__1_System_Collections_Generic_IList___0____0_System_Int32___Microsoft_ML_Probabilistic_Distributions_Bernoulli__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>case1</code>. Because the factor is deterministic, <code>enterPartialTwo</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(value) p(value) log(sum_enterPartialTwo p(enterPartialTwo) factor(enterPartialTwo,case0,case1,value,indices)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_EnterPartialTwoAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.EnterPartialTwoAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_EnterPartialTwoAverageConditional__2___0___1_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.EnterPartialTwoAverageConditional``2(``0,``1)">EnterPartialTwoAverageConditional&lt;TValue, TResultList&gt;(TValue, TResultList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>enterPartialTwo</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TResultList EnterPartialTwoAverageConditional&lt;TValue, TResultList&gt;(TValue value, TResultList result)
+    where TResultList : CanSetAllElementsTo&lt;TValue&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>Incoming message from <code>value</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TValue</span></td>
+        <td><p>The type of the message from <code>value</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResultList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_EnterPartialTwoAverageConditional__2___0___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>enterPartialTwo</code> as the random arguments are varied. The formula is <code>proj[p(enterPartialTwo) sum_(value) p(value) factor(enterPartialTwo,case0,case1,value,indices)]/p(enterPartialTwo)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">value</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_EnterPartialTwoAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.EnterPartialTwoAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_EnterPartialTwoAverageLogarithm__2___0___1_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.EnterPartialTwoAverageLogarithm``2(``0,``1)">EnterPartialTwoAverageLogarithm&lt;TValue, TResultList&gt;(TValue, TResultList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>enterPartialTwo</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TResultList EnterPartialTwoAverageLogarithm&lt;TValue, TResultList&gt;(TValue value, TResultList result)
+    where TResultList : CanSetAllElementsTo&lt;TValue&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>Incoming message from <code>value</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TResultList</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TValue</span></td>
+        <td><p>The type of the message from <code>value</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResultList</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_EnterPartialTwoAverageLogarithm__2___0___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>enterPartialTwo</code> as the random arguments are varied. The formula is <code>proj[sum_(value) p(value) factor(enterPartialTwo,case0,case1,value,indices)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">value</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_LogAverageFactor" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.LogAverageFactor">LogAverageFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_LogAverageFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(enterPartialTwo,case0,case1,value,indices))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_LogEvidenceRatio" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.LogEvidenceRatio">LogEvidenceRatio()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_LogEvidenceRatio_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(enterPartialTwo,case0,case1,value,indices))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_ValueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.ValueAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_ValueAverageConditional__1_System_Collections_Generic_IList___0__Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli___0_System_Int32_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.ValueAverageConditional``1(System.Collections.Generic.IList{``0},Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli,``0,System.Int32[],``0)">ValueAverageConditional&lt;TValue&gt;(IList&lt;TValue&gt;, Bernoulli, Bernoulli, TValue, Int32[], TValue)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>value</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TValue ValueAverageConditional&lt;TValue&gt;([SkipIfAllUniform] IList&lt;TValue&gt; enterPartialTwo, Bernoulli case0, Bernoulli case1, TValue value, int[] indices, TValue result)
+    where TValue : ICloneable, SettableToUniform, SettableToProduct&lt;TValue&gt;, SettableToRatio&lt;TValue&gt;, SettableToWeightedSum&lt;TValue&gt;, CanGetLogAverageOf&lt;TValue&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TValue&gt;</td>
+        <td><span class="parametername">enterPartialTwo</span></td>
+        <td><p>Incoming message from <code>enterPartialTwo</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">case0</span></td>
+        <td><p>Incoming message from <code>case0</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">case1</span></td>
+        <td><p>Incoming message from <code>case1</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>Incoming message from <code>value</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><span class="parametername">indices</span></td>
+        <td><p>Constant value for <code>indices</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TValue</span></td>
+        <td><p>The type of the message from <code>value</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_ValueAverageConditional__1_System_Collections_Generic_IList___0__Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli___0_System_Int32_____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>value</code> as the random arguments are varied. The formula is <code>proj[p(value) sum_(enterPartialTwo,case0,case1) p(enterPartialTwo,case0,case1) factor(enterPartialTwo,case0,case1,value,indices)]/p(value)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">enterPartialTwo</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_ValueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.ValueAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_ValueAverageConditional__2_System_Collections_Generic_IList___0__System_Boolean_System_Boolean_System_Int32_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.ValueAverageConditional``2(System.Collections.Generic.IList{``0},System.Boolean,System.Boolean,System.Int32[],``0)">ValueAverageConditional&lt;TValue, TDomain&gt;(IList&lt;TValue&gt;, Boolean, Boolean, Int32[], TValue)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>value</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TValue ValueAverageConditional&lt;TValue, TDomain&gt;([SkipIfAllUniform] IList&lt;TValue&gt; enterPartialTwo, bool case1, bool case2, int[] indices, TValue result)
+    where TValue : IDistribution&lt;TDomain&gt;, SettableTo&lt;TValue&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TValue&gt;</td>
+        <td><span class="parametername">enterPartialTwo</span></td>
+        <td><p>Incoming message from <code>enterPartialTwo</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">case1</span></td>
+        <td><p>Constant value for <code>case1</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">case2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><span class="parametername">indices</span></td>
+        <td><p>Constant value for <code>indices</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TValue</span></td>
+        <td><p>The type of the message from <code>value</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDomain</span></td>
+        <td><p>The type of the variable entering the gate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_ValueAverageConditional__2_System_Collections_Generic_IList___0__System_Boolean_System_Boolean_System_Int32_____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>value</code> as the random arguments are varied. The formula is <code>proj[p(value) sum_(enterPartialTwo) p(enterPartialTwo) factor(enterPartialTwo,case0,case1,value,indices)]/p(value)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">enterPartialTwo</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_ValueAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.ValueAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_ValueAverageLogarithm__1_System_Collections_Generic_IList___0__Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterPartialTwoOp.ValueAverageLogarithm``1(System.Collections.Generic.IList{``0},Microsoft.ML.Probabilistic.Distributions.Bernoulli,Microsoft.ML.Probabilistic.Distributions.Bernoulli,System.Int32[],``0)">ValueAverageLogarithm&lt;TValue&gt;(IList&lt;TValue&gt;, Bernoulli, Bernoulli, Int32[], TValue)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>value</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TValue ValueAverageLogarithm&lt;TValue&gt;([SkipIfAllUniform] IList&lt;TValue&gt; enterPartialTwo, Bernoulli case0, Bernoulli case1, int[] indices, TValue result)
+    where TValue : ICloneable, SettableToProduct&lt;TValue&gt;, SettableToPower&lt;TValue&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TValue&gt;</td>
+        <td><span class="parametername">enterPartialTwo</span></td>
+        <td><p>Incoming message from <code>enterPartialTwo</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">case0</span></td>
+        <td><p>Incoming message from <code>case0</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><span class="parametername">case1</span></td>
+        <td><p>Incoming message from <code>case1</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><span class="parametername">indices</span></td>
+        <td><p>Constant value for <code>indices</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TValue</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TValue</span></td>
+        <td><p>The type of the message from <code>value</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterPartialTwoOp_ValueAverageLogarithm__1_System_Collections_Generic_IList___0__Microsoft_ML_Probabilistic_Distributions_Bernoulli_Microsoft_ML_Probabilistic_Distributions_Bernoulli_System_Int32_____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>value</code>. Because the factor is deterministic, <code>enterPartialTwo</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(case0,case1) p(case0,case1) log(sum_enterPartialTwo p(enterPartialTwo) factor(enterPartialTwo,case0,case1,value,indices)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">enterPartialTwo</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

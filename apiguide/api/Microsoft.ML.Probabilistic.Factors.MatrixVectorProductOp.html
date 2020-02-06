@@ -1,0 +1,2447 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MatrixVectorProductOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MatrixVectorProductOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp" class="text-break">Class MatrixVectorProductOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Product_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_">Product(Matrix, Vector)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Product_System_Double_0__0___Microsoft_ML_Probabilistic_Math_Vector_">Product(Double[,], Vector)</a></li></ul>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">MatrixVectorProductOp</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;Product&quot;, new Type[]{typeof(Matrix), typeof(Vector)})]
+[FactorMethod(typeof(Factor), &quot;Product&quot;, new Type[]{typeof(double[, ]), typeof(Vector)})]
+[Buffers(new string[]{&quot;BMean&quot;, &quot;BVariance&quot;})]
+[Quality(QualityBand.Stable)]
+public static class MatrixVectorProductOp</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_UseAccurateMethod" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.UseAccurateMethod">UseAccurateMethod</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool UseAccurateMethod</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">AAverageConditional(VectorGaussian, DistributionArray2D&lt;Gaussian, Double&gt;, Vector, PositiveDefiniteMatrix, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; AAverageConditional(VectorGaussian product, DistributionArray2D&lt;Gaussian, double&gt; A, Vector BMean, PositiveDefiniteMatrix BVariance, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-2.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(product) p(product) factor(product,a,b)]/p(a)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">AverageLogFactor(VectorGaussian, Matrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(VectorGaussian product, Matrix A, VectorGaussian B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AverageLogFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.AverageLogFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">AverageLogFactor(Vector, Matrix, VectorGaussian, Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Vector product, Matrix A, VectorGaussian B, Vector BMean, PositiveDefiniteMatrix BVariance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AverageLogFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AverageLogFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.AverageLogFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Vector)">AverageLogFactor(Vector, Matrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Vector product, Matrix A, Vector B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_AverageLogFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(product,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BAverageConditional(VectorGaussian, DistributionArray2D&lt;Gaussian, Double&gt;, VectorGaussian)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian BAverageConditional(VectorGaussian product, DistributionArray2D&lt;Gaussian, double&gt; A, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">product</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-2.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BAverageConditional(VectorGaussian, Matrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian BAverageConditional(VectorGaussian product, Matrix A, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(product) p(product) factor(product,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BAverageConditional(VectorGaussian, Double[,], VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian BAverageConditional(VectorGaussian product, double[, ] A, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(product,a) p(product,a) factor(product,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments,Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BAverageConditional(VectorGaussianMoments, DistributionArray2D&lt;Gaussian, Double&gt;, VectorGaussian)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian BAverageConditional(VectorGaussianMoments product, DistributionArray2D&lt;Gaussian, double&gt; A, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><span class="parametername">product</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-2.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BAverageConditional(VectorGaussianMoments, Matrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian BAverageConditional(VectorGaussianMoments product, Matrix A, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(product) p(product) factor(product,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments,System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BAverageConditional(VectorGaussianMoments, Double[,], VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian BAverageConditional(VectorGaussianMoments product, double[, ] A, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(product,a) p(product,a) factor(product,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageConditional(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BAverageConditional(Vector, Matrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A matrix-vector product with fixed output is not yet implemented.&quot;)]
+public static VectorGaussian BAverageConditional(Vector product, Matrix A, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BAverageLogarithm(VectorGaussian, Matrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian BAverageLogarithm(VectorGaussian product, Matrix A, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> with <code>product</code> integrated out. The formula is <code>sum_product p(product) factor(product,a,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BAverageLogarithm(VectorGaussianMoments, Matrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian BAverageLogarithm(VectorGaussianMoments product, Matrix A, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> with <code>product</code> integrated out. The formula is <code>sum_product p(product) factor(product,a,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BAverageLogarithm(Vector, Matrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A matrix-vector product with fixed output is not yet implemented.&quot;)]
+public static VectorGaussian BAverageLogarithm(Vector product, Matrix A, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BMean_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BMean_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BMean(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Math.Vector)">BMean(VectorGaussian, PositiveDefiniteMatrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>BMean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector BMean(VectorGaussian B, PositiveDefiniteMatrix BVariance, Vector result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BMean_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BMeanInit_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BMeanInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BMeanInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BMeanInit(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BMeanInit(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Initialize the buffer <code>BMean</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector BMeanInit(VectorGaussian B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>Initial value of buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BMeanInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BVariance_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BVariance_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BVariance(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">BVariance(VectorGaussian, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Update the buffer <code>BVariance</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PositiveDefiniteMatrix BVariance(VectorGaussian B, PositiveDefiniteMatrix result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BVariance_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BVarianceInit_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BVarianceInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BVarianceInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.BVarianceInit(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">BVarianceInit(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Initialize the buffer <code>BVariance</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PositiveDefiniteMatrix BVarianceInit(VectorGaussian B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><p>Initial value of buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_BVarianceInit_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">LogAverageFactor(VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(VectorGaussian product, VectorGaussian to_product)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">to_product</span></td>
+        <td><p>Outgoing message to <code>product</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(product) p(product) factor(product,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogAverageFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">LogAverageFactor(Vector, Matrix, VectorGaussian, Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Vector product, Matrix A, VectorGaussian B, Vector BMean, PositiveDefiniteMatrix BVariance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(b) p(b) factor(product,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogAverageFactor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Vector)">LogAverageFactor(Vector, Matrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Vector product, Matrix A, Vector B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogAverageFactor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(product,a,b))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">LogEvidenceRatio(VectorGaussian, Matrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(VectorGaussian product, Matrix A, VectorGaussian B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Incoming message from <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(product,b) p(product,b) factor(product,a,b) / sum_product p(product) messageTo(product))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">LogEvidenceRatio(Vector, Matrix, VectorGaussian, Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Vector product, Matrix A, VectorGaussian B, Vector BMean, PositiveDefiniteMatrix BVariance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(b) p(b) factor(product,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Vector)">LogEvidenceRatio(Vector, Matrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Vector product, Matrix A, Vector B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">product</span></td>
+        <td><p>Constant value for <code>product</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(product,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional(Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ProductAverageConditional(DistributionArray2D&lt;Gaussian, Double&gt;, Vector, PositiveDefiniteMatrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ProductAverageConditional(DistributionArray2D&lt;Gaussian, double&gt; A, Vector BMean, PositiveDefiniteMatrix BVariance, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-2.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[p(product) sum_(a) p(a) factor(product,a,b)]/p(product)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional(Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments)">ProductAverageConditional(DistributionArray2D&lt;Gaussian, Double&gt;, Vector, PositiveDefiniteMatrix, VectorGaussianMoments)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussianMoments ProductAverageConditional(DistributionArray2D&lt;Gaussian, double&gt; A, Vector BMean, PositiveDefiniteMatrix BVariance, VectorGaussianMoments result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-2.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[p(product) sum_(a) p(a) factor(product,a,b)]/p(product)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ProductAverageConditional(Matrix, Vector, PositiveDefiniteMatrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ProductAverageConditional(Matrix A, Vector BMean, PositiveDefiniteMatrix BVariance, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>product</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments)">ProductAverageConditional(Matrix, Vector, PositiveDefiniteMatrix, VectorGaussianMoments)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussianMoments ProductAverageConditional(Matrix A, Vector BMean, PositiveDefiniteMatrix BVariance, VectorGaussianMoments result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>product</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_System_Double_0__0___Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional(System.Double[0:,0:],Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ProductAverageConditional(Double[,], Vector, PositiveDefiniteMatrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ProductAverageConditional(double[, ] A, Vector BMean, PositiveDefiniteMatrix BVariance, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_System_Double_0__0___Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[p(product) sum_(a) p(a) factor(product,a,b)]/p(product)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_System_Double_0__0___Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditional(System.Double[0:,0:],Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments)">ProductAverageConditional(Double[,], Vector, PositiveDefiniteMatrix, VectorGaussianMoments)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussianMoments ProductAverageConditional(double[, ] A, Vector BMean, PositiveDefiniteMatrix BVariance, VectorGaussianMoments result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditional_System_Double_0__0___Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[p(product) sum_(a) p(a) factor(product,a,b)]/p(product)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditionalInit_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageConditionalInit(Microsoft.ML.Probabilistic.Math.Matrix)">ProductAverageConditionalInit(Matrix)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ProductAverageConditionalInit(Matrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageConditionalInit_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageLogarithm(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ProductAverageLogarithm(Matrix, Vector, PositiveDefiniteMatrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ProductAverageLogarithm(Matrix A, Vector BMean, PositiveDefiniteMatrix BVariance, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>product</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageLogarithm(Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments)">ProductAverageLogarithm(Matrix, Vector, PositiveDefiniteMatrix, VectorGaussianMoments)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussianMoments ProductAverageLogarithm(Matrix A, Vector BMean, PositiveDefiniteMatrix BVariance, VectorGaussianMoments result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>product</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_System_Double_0__0___Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageLogarithm(System.Double[0:,0:],Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">ProductAverageLogarithm(Double[,], Vector, PositiveDefiniteMatrix, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ProductAverageLogarithm(double[, ] A, Vector BMean, PositiveDefiniteMatrix BVariance, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_System_Double_0__0___Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[sum_(a) p(a) factor(product,a,b)]</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_System_Double_0__0___Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageLogarithm(System.Double[0:,0:],Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments)">ProductAverageLogarithm(Double[,], Vector, PositiveDefiniteMatrix, VectorGaussianMoments)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>product</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussianMoments ProductAverageLogarithm(double[, ] A, Vector BMean, PositiveDefiniteMatrix BVariance, VectorGaussianMoments result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">BMean</span></td>
+        <td><p>Buffer <code>BMean</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">BVariance</span></td>
+        <td><p>Buffer <code>BVariance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithm_System_Double_0__0___Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[sum_(a) p(a) factor(product,a,b)]</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithmInit_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixVectorProductOp.ProductAverageLogarithmInit(Microsoft.ML.Probabilistic.Math.Matrix)">ProductAverageLogarithmInit(Matrix)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian ProductAverageLogarithmInit(Matrix A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixVectorProductOp_ProductAverageLogarithmInit_Microsoft_ML_Probabilistic_Math_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

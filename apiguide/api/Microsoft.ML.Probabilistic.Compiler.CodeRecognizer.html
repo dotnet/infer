@@ -1,0 +1,2532 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class CodeRecognizer
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class CodeRecognizer
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer" class="text-break">Class CodeRecognizer
+  </h1>
+  <div class="markdown level0 summary"><p>Helper class for recognizing patterns in code which is to be transformed.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">CodeRecognizer</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.html">Microsoft.ML.Probabilistic.Compiler</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class CodeRecognizer</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_Instance" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.Instance">Instance</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly CodeRecognizer Instance</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.html">CodeRecognizer</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_AddIndexers_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.AddIndexers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_AddIndexers_Microsoft_ML_Probabilistic_Compiler_BasicTransformContext_System_Collections_Generic_List_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration____Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.AddIndexers(Microsoft.ML.Probabilistic.Compiler.BasicTransformContext,System.Collections.Generic.List{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration[]},Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">AddIndexers(BasicTransformContext, List&lt;IVariableDeclaration[]&gt;, IExpression)</h4>
+  <div class="markdown level1 summary"><p>Add the declarations of all loop variables in expr to indVars.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddIndexers(BasicTransformContext context, List&lt;IVariableDeclaration[]&gt; indVars, IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.BasicTransformContext.html">BasicTransformContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>[]&gt;</td>
+        <td><span class="parametername">indVars</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_AddLoopBounds_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.AddLoopBounds*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_AddLoopBounds_System_Collections_Generic_Dictionary_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_Bounds__Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.AddLoopBounds(System.Collections.Generic.Dictionary{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration,Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.Bounds},Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement)">AddLoopBounds(Dictionary&lt;IVariableDeclaration, CodeRecognizer.Bounds&gt;, IStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddLoopBounds(Dictionary&lt;IVariableDeclaration, CodeRecognizer.Bounds&gt; bounds, IStatement ist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.Bounds.html">CodeRecognizer.Bounds</a>&gt;</td>
+        <td><span class="parametername">bounds</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td><span class="parametername">ist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_FirstExpressionStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.FirstExpressionStatement*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_FirstExpressionStatement_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.FirstExpressionStatement(Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement)">FirstExpressionStatement(IStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IExpressionStatement FirstExpressionStatement(IStatement ist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td><span class="parametername">ist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpressionStatement.html">IExpressionStatement</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_ForLoopDepth_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.ForLoopDepth*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_ForLoopDepth_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.ForLoopDepth(Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement)">ForLoopDepth(IStatement)</h4>
+  <div class="markdown level1 summary"><p>Returns the number of nested for loops in the deepest part of the statement.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ForLoopDepth(IStatement ist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td><span class="parametername">ist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetAllPrefixes_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetAllPrefixes*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetAllPrefixes_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetAllPrefixes(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetAllPrefixes(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Get a list of prefixes of the given expression, starting from the innermost target, up to and including the given expression.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;IExpression&gt; GetAllPrefixes(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetAncestorIndexOfLoopBeingInitialized_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetAncestorIndexOfLoopBeingInitialized*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetAncestorIndexOfLoopBeingInitialized_Microsoft_ML_Probabilistic_Compiler_BasicTransformContext_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetAncestorIndexOfLoopBeingInitialized(Microsoft.ML.Probabilistic.Compiler.BasicTransformContext)">GetAncestorIndexOfLoopBeingInitialized(BasicTransformContext)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int GetAncestorIndexOfLoopBeingInitialized(BasicTransformContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.BasicTransformContext.html">BasicTransformContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetArgumentReferenceExpressions_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetArgumentReferenceExpressions*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetArgumentReferenceExpressions_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetArgumentReferenceExpressions(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetArgumentReferenceExpressions(IExpression)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IArgumentReferenceExpression&gt; GetArgumentReferenceExpressions(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IArgumentReferenceExpression.html">IArgumentReferenceExpression</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetArrayDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetArrayDeclaration*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetArrayDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetArrayDeclaration(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetArrayDeclaration(IExpression)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object GetArrayDeclaration(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetBounds_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetBounds*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetBounds_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Collections_Generic_IReadOnlyDictionary_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_Bounds__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetBounds(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Collections.Generic.IReadOnlyDictionary{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration,Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.Bounds})">GetBounds(IExpression, IReadOnlyDictionary&lt;IVariableDeclaration, CodeRecognizer.Bounds&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CodeRecognizer.Bounds GetBounds(IExpression expr, IReadOnlyDictionary&lt;IVariableDeclaration, CodeRecognizer.Bounds&gt; bounds)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.Bounds.html">CodeRecognizer.Bounds</a>&gt;</td>
+        <td><span class="parametername">bounds</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.Bounds.html">CodeRecognizer.Bounds</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetConditionAndTargetIndexExpressions_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetConditionAndTargetIndexExpressions*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetConditionAndTargetIndexExpressions_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetConditionAndTargetIndexExpressions(Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement)">GetConditionAndTargetIndexExpressions(IStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IExpression&gt; GetConditionAndTargetIndexExpressions(IStatement stmt)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td><span class="parametername">stmt</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetDeclaration*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetDeclaration(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetDeclaration(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Extracts the variable or parameter declaration from a, possibly indexed, reference or declaration expression.
+Returns null if the expression is not either of these.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object GetDeclaration(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetFieldReference_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetFieldReference*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetFieldReference_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetFieldReference(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetFieldReference(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Extracts the field reference from a, possibly indexed, field reference expression.
+Returns null if the expression is not either of these.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IFieldReference GetFieldReference(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IFieldReference.html">IFieldReference</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetIndexingDepth_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetIndexingDepth*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetIndexingDepth_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetIndexingDepth(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetIndexingDepth(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Returns the number of indexing brackets at the end of expr (zero if none)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int GetIndexingDepth(IExpression iexpr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">iexpr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetIndices_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetIndices*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetIndices_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetIndices(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetIndices(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Get a list of all index expressions at the end of expr, innermost first.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;IList&lt;IExpression&gt;&gt; GetIndices(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;&gt;</td>
+        <td><p>A list of indexing brackets, where each bracket is a collection of index expressions</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetIndices_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetIndices*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetIndices_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetIndices(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression@)">GetIndices(IExpression, out IExpression)</h4>
+  <div class="markdown level1 summary"><p>Get a list of all index expressions at the end of expr, innermost first.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;IList&lt;IExpression&gt;&gt; GetIndices(IExpression expr, out IExpression target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>On exit, the innermost expression being indexed, i.e. the array variable</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;&gt;</td>
+        <td><p>A list of indexing brackets, where each bracket is a collection of index expressions</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetLiteral_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetLiteral*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetLiteral__1_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetLiteral``1(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetLiteral&lt;T&gt;(IExpression)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetLiteral&lt;T&gt;(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetMethodReference_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetMethodReference*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetMethodReference_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetMethodReference(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetMethodReference(IExpression)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IMethodReference GetMethodReference(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodReference.html">IMethodReference</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetParameterDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetParameterDeclaration*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetParameterDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetParameterDeclaration(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetParameterDeclaration(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Extracts the declaration of the parameter reference from a, possibly indexed, argument reference expression.
+Returns null if the expression is not either of these.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IParameterDeclaration GetParameterDeclaration(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IParameterDeclaration.html">IParameterDeclaration</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetStaticMethodOfType_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetStaticMethodOfType*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetStaticMethodOfType_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetStaticMethodOfType(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Type)">GetStaticMethodOfType(IExpression, Type)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string GetStaticMethodOfType(IExpression expr, Type type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetStaticMethodType_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetStaticMethodType*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetStaticMethodType_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetStaticMethodType(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetStaticMethodType(IExpression)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ITypeReference GetStaticMethodType(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeReference.html">ITypeReference</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetTarget_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetTarget*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetTarget_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetTarget(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetTarget(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Get the innermost target of an expression, e.g. x[0].field[1].method(y) returns 'x'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IExpression GetTarget(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetTargets_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetTargets*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetTargets_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetTargets(Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement)">GetTargets(IStatement)</h4>
+  <div class="markdown level1 summary"><p>Get every expression on the lhs of an assignment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IExpression&gt; GetTargets(IStatement ist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td><span class="parametername">ist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetTargetVariables_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetTargetVariables*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetTargetVariables_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetTargetVariables(Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement)">GetTargetVariables(IStatement)</h4>
+  <div class="markdown level1 summary"><p>Apply action to every variable on the lhs of an assignment.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IVariableDeclaration&gt; GetTargetVariables(IStatement ist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td><span class="parametername">ist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetVariableDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetVariableDeclaration*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetVariableDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetVariableDeclaration(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetVariableDeclaration(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Extracts the variable declaration from a, possibly indexed, reference or declaration expression.
+Returns null if the expression is not either of these.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IVariableDeclaration GetVariableDeclaration(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetVariableDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetVariableDeclaration*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetVariableDeclaration_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetVariableDeclaration(Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement)">GetVariableDeclaration(IStatement)</h4>
+  <div class="markdown level1 summary"><p>Extracts the variable declaration from a declaration statement.
+Returns null if the statement is not a declaration statement.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IVariableDeclaration GetVariableDeclaration(IStatement ist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td><span class="parametername">ist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetVariables_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetVariables*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetVariables_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetVariables(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetVariables(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Get all variable references in an expression.  The same variable may appear more than once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IVariableDeclaration&gt; GetVariables(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td><p>Any expression</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetVariablesAndParameters_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetVariablesAndParameters*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_GetVariablesAndParameters_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.GetVariablesAndParameters(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">GetVariablesAndParameters(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Get all variable and parameter references in an expression.  The same variable may appear more than once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;object&gt; GetVariablesAndParameters(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td><p>Any expression</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsBeingAllocated_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsBeingAllocated*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsBeingAllocated_Microsoft_ML_Probabilistic_Compiler_BasicTransformContext_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsBeingAllocated(Microsoft.ML.Probabilistic.Compiler.BasicTransformContext,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">IsBeingAllocated(BasicTransformContext, IExpression)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsBeingAllocated(BasicTransformContext context, IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.BasicTransformContext.html">BasicTransformContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsBeingDeclared_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsBeingDeclared*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsBeingDeclared_Microsoft_ML_Probabilistic_Compiler_BasicTransformContext_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsBeingDeclared(Microsoft.ML.Probabilistic.Compiler.BasicTransformContext)">IsBeingDeclared(BasicTransformContext)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsBeingDeclared(BasicTransformContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.BasicTransformContext.html">BasicTransformContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsBeingIndexed_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsBeingIndexed*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsBeingIndexed_Microsoft_ML_Probabilistic_Compiler_BasicTransformContext_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsBeingIndexed(Microsoft.ML.Probabilistic.Compiler.BasicTransformContext)">IsBeingIndexed(BasicTransformContext)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsBeingIndexed(BasicTransformContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.BasicTransformContext.html">BasicTransformContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsBeingMutated_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsBeingMutated*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsBeingMutated_Microsoft_ML_Probabilistic_Compiler_BasicTransformContext_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsBeingMutated(Microsoft.ML.Probabilistic.Compiler.BasicTransformContext,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">IsBeingMutated(BasicTransformContext, IExpression)</h4>
+  <div class="markdown level1 summary"><p>Returns true if the expression is being mutated in the given context.  For example, this will
+be true if the expression is the LHS of an assignment, or the argument to an 'out' parameter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsBeingMutated(BasicTransformContext context, IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.BasicTransformContext.html">BasicTransformContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsForwardLoop_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsForwardLoop*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsForwardLoop_Microsoft_ML_Probabilistic_Compiler_CodeModel_IForStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsForwardLoop(Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement)">IsForwardLoop(IForStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsForwardLoop(IForStatement ifs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement.html">IForStatement</a></td>
+        <td><span class="parametername">ifs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsIndexedBy_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsIndexedBy*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsIndexedBy_System_Collections_Generic_List_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableReferenceExpression__Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsIndexedBy(System.Collections.Generic.List{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableReferenceExpression},Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration)">IsIndexedBy(List&lt;IVariableReferenceExpression&gt;, IVariableDeclaration)</h4>
+  <div class="markdown level1 summary"><p>Returns true if any of the reference expressions refer to the specified index variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsIndexedBy(List&lt;IVariableReferenceExpression&gt; refs, IVariableDeclaration indexVar)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableReferenceExpression.html">IVariableReferenceExpression</a>&gt;</td>
+        <td><span class="parametername">refs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a></td>
+        <td><span class="parametername">indexVar</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsLiteral_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsLiteral*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsLiteral_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Object_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsLiteral(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Object)">IsLiteral(IExpression, Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsLiteral(IExpression expr, object val)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">val</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsNewObject_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsNewObject*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsNewObject_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsNewObject(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Type)">IsNewObject(IExpression, Type)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsNewObject(IExpression expr, Type type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsOnLHSOfAssignment_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsOnLHSOfAssignment*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsOnLHSOfAssignment_Microsoft_ML_Probabilistic_Compiler_BasicTransformContext_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsOnLHSOfAssignment(Microsoft.ML.Probabilistic.Compiler.BasicTransformContext,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">IsOnLHSOfAssignment(BasicTransformContext, IExpression)</h4>
+  <div class="markdown level1 summary"><p>Returns true if expr is on the left hand side of the innermost assignment statement in the context stack.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsOnLHSOfAssignment(BasicTransformContext context, IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.BasicTransformContext.html">BasicTransformContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsPartOf_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsPartOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsPartOf_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsPartOf(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">IsPartOf(IExpression, IExpression)</h4>
+  <div class="markdown level1 summary"><p>Returns true if the first expression is equal to, or a subarray or element of the second expression.
+For example, x, x[0], x[0][0] are all subarrays of x, but x[1] is not part of x[0].</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPartOf(IExpression expr, IExpression arrayExpr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">arrayExpr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticGenericMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticGenericMethod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticGenericMethod_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Delegate_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticGenericMethod(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Delegate)">IsStaticGenericMethod(IExpression, Delegate)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsStaticGenericMethod(IExpression expr, Delegate method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.delegate">Delegate</a></td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticGenericMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticGenericMethod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticGenericMethod_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Type_System_String_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticGenericMethod(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Type,System.String)">IsStaticGenericMethod(IExpression, Type, String)</h4>
+  <div class="markdown level1 summary"><p>True if imie is a MethodInvokeExpression on any overload of the named static generic method of type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsStaticGenericMethod(IExpression expr, Type type, string methodName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">methodName</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticMethod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticMethod_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Delegate_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticMethod(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Delegate)">IsStaticMethod(IExpression, Delegate)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsStaticMethod(IExpression expr, Delegate method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.delegate">Delegate</a></td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticMethod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticMethod_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Reflection_MethodInfo_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticMethod(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Reflection.MethodInfo)">IsStaticMethod(IExpression, MethodInfo)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsStaticMethod(IExpression expr, MethodInfo method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticMethod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticMethod_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticMethod(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Type)">IsStaticMethod(IExpression, Type)</h4>
+  <div class="markdown level1 summary"><p>True if expr is a MethodInvokeExpression on any static method of type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsStaticMethod(IExpression expr, Type type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticMethod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsStaticMethod_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Type_System_String_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsStaticMethod(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Type,System.String)">IsStaticMethod(IExpression, Type, String)</h4>
+  <div class="markdown level1 summary"><p>True if expr is a MethodInvokeExpression on any overload of the named static method of type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsStaticMethod(IExpression expr, Type type, string methodName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">methodName</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsTypeReferenceTo_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsTypeReferenceTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_IsTypeReferenceTo_Microsoft_ML_Probabilistic_Compiler_CodeModel_ITypeReferenceExpression_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.IsTypeReferenceTo(Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeReferenceExpression,System.Type)">IsTypeReferenceTo(ITypeReferenceExpression, Type)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsTypeReferenceTo(ITypeReferenceExpression itre, Type type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.ITypeReferenceExpression.html">ITypeReferenceExpression</a></td>
+        <td><span class="parametername">itre</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_LoopBreakStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.LoopBreakStatement*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_LoopBreakStatement_Microsoft_ML_Probabilistic_Compiler_CodeModel_IForStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.LoopBreakStatement(Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement)">LoopBreakStatement(IForStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IStatement LoopBreakStatement(IForStatement loop)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement.html">IForStatement</a></td>
+        <td><span class="parametername">loop</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_LoopSizeExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.LoopSizeExpression*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_LoopSizeExpression_Microsoft_ML_Probabilistic_Compiler_CodeModel_IForStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.LoopSizeExpression(Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement)">LoopSizeExpression(IForStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IExpression LoopSizeExpression(IForStatement loop)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement.html">IForStatement</a></td>
+        <td><span class="parametername">loop</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_LoopStartExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.LoopStartExpression*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_LoopStartExpression_Microsoft_ML_Probabilistic_Compiler_CodeModel_IForStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.LoopStartExpression(Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement)">LoopStartExpression(IForStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IExpression LoopStartExpression(IForStatement loop)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement.html">IForStatement</a></td>
+        <td><span class="parametername">loop</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_LoopVariable_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.LoopVariable*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_LoopVariable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IForStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.LoopVariable(Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement)">LoopVariable(IForStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IVariableDeclaration LoopVariable(IForStatement ifs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement.html">IForStatement</a></td>
+        <td><span class="parametername">ifs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_RemoveLastIndex_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.RemoveLastIndex*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_RemoveLastIndex_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.RemoveLastIndex(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">RemoveLastIndex(IExpression)</h4>
+  <div class="markdown level1 summary"><p>Remove the last index from an expression</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IExpression RemoveLastIndex(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_ReverseLoopDirection_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.ReverseLoopDirection*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_ReverseLoopDirection_Microsoft_ML_Probabilistic_Compiler_CodeModel_IForStatement_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.ReverseLoopDirection(Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement)">ReverseLoopDirection(IForStatement)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ReverseLoopDirection(IForStatement loop)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement.html">IForStatement</a></td>
+        <td><span class="parametername">loop</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_StripFieldsAndProperties_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.StripFieldsAndProperties*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_StripFieldsAndProperties_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.StripFieldsAndProperties(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">StripFieldsAndProperties(IExpression)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IExpression StripFieldsAndProperties(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_StripIndexers_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.StripIndexers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_StripIndexers_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.StripIndexers(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression)">StripIndexers(IExpression)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IExpression StripIndexers(IExpression expr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_StripIndexers_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.StripIndexers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_StripIndexers_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.StripIndexers(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Boolean)">StripIndexers(IExpression, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IExpression StripIndexers(IExpression expr, bool varsOnly)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">varsOnly</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_TryEvaluate_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.TryEvaluate*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_TryEvaluate__1_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Collections_Generic_IDictionary_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration___0____0__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.TryEvaluate``1(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Collections.Generic.IDictionary{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration,``0},``0@)">TryEvaluate&lt;T&gt;(IExpression, IDictionary&lt;IVariableDeclaration, T&gt;, out T)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryEvaluate&lt;T&gt;(IExpression expr, IDictionary&lt;IVariableDeclaration, T&gt; bindings, out T value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">expr</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>, T&gt;</td>
+        <td><span class="parametername">bindings</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_TryNegateOperator_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.TryNegateOperator*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeRecognizer_TryNegateOperator_Microsoft_ML_Probabilistic_Compiler_CodeModel_BinaryOperator_Microsoft_ML_Probabilistic_Compiler_CodeModel_BinaryOperator__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeRecognizer.TryNegateOperator(Microsoft.ML.Probabilistic.Compiler.CodeModel.BinaryOperator,Microsoft.ML.Probabilistic.Compiler.CodeModel.BinaryOperator@)">TryNegateOperator(BinaryOperator, out BinaryOperator)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryNegateOperator(BinaryOperator op, out BinaryOperator negatedOp)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.BinaryOperator.html">BinaryOperator</a></td>
+        <td><span class="parametername">op</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.BinaryOperator.html">BinaryOperator</a></td>
+        <td><span class="parametername">negatedOp</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

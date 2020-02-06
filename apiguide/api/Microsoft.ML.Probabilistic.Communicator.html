@@ -1,0 +1,759 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Communicator
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Communicator
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Communicator">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Communicator" data-uid="Microsoft.ML.Probabilistic.Communicator" class="text-break">Class Communicator
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Communicator</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.html">Microsoft.ML.Probabilistic</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Communicator_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class Communicator</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_AlltoallSubarraysTimingInfos" data-uid="Microsoft.ML.Probabilistic.Communicator.AlltoallSubarraysTimingInfos">AlltoallSubarraysTimingInfos</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;string, Communicator.TimingInfo&gt; AlltoallSubarraysTimingInfos</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Communicator.TimingInfo.html">Communicator.TimingInfo</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_MultiplyAllTimingInfos" data-uid="Microsoft.ML.Probabilistic.Communicator.MultiplyAllTimingInfos">MultiplyAllTimingInfos</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;string, Communicator.TimingInfo&gt; MultiplyAllTimingInfos</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Communicator.TimingInfo.html">Communicator.TimingInfo</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Communicator_AlltoallSubarrays_" data-uid="Microsoft.ML.Probabilistic.Communicator.AlltoallSubarrays*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_AlltoallSubarrays__1_Microsoft_ML_Probabilistic_ICommunicator_System_Collections_Generic_IList___0__System_Collections_Generic_ICollection_System_Int32____System_Collections_Generic_IList___0__System_Collections_Generic_ICollection_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Communicator.AlltoallSubarrays``1(Microsoft.ML.Probabilistic.ICommunicator,System.Collections.Generic.IList{``0},System.Collections.Generic.ICollection{System.Int32}[],System.Collections.Generic.IList{``0},System.Collections.Generic.ICollection{System.Int32}[])">AlltoallSubarrays&lt;T&gt;(ICommunicator, IList&lt;T&gt;, ICollection&lt;Int32&gt;[], IList&lt;T&gt;, ICollection&lt;Int32&gt;[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void AlltoallSubarrays&lt;T&gt;(ICommunicator comm, IList&lt;T&gt; inputArray, ICollection&lt;int&gt;[] indicesToSend, IList&lt;T&gt; outputArray, ICollection&lt;int&gt;[] indicesToReceive)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.ICommunicator.html">ICommunicator</a></td>
+        <td><span class="parametername">comm</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">inputArray</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[]</td>
+        <td><span class="parametername">indicesToSend</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">outputArray</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[]</td>
+        <td><span class="parametername">indicesToReceive</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Communicator_AlltoallSubarrays_" data-uid="Microsoft.ML.Probabilistic.Communicator.AlltoallSubarrays*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_AlltoallSubarrays__1_Microsoft_ML_Probabilistic_ICommunicator_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Int32____System_Collections_Generic_IList_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Communicator.AlltoallSubarrays``1(Microsoft.ML.Probabilistic.ICommunicator,System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Int32}[],System.Collections.Generic.IList{System.Int32}[])">AlltoallSubarrays&lt;T&gt;(ICommunicator, IList&lt;T&gt;, IList&lt;Int32&gt;[], IList&lt;Int32&gt;[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void AlltoallSubarrays&lt;T&gt;(ICommunicator comm, IList&lt;T&gt; array, IList&lt;int&gt;[] indicesToSend, IList&lt;int&gt;[] indicesToReceive)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.ICommunicator.html">ICommunicator</a></td>
+        <td><span class="parametername">comm</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[]</td>
+        <td><span class="parametername">indicesToSend</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[]</td>
+        <td><span class="parametername">indicesToReceive</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Communicator_AlltoallSubarrays_" data-uid="Microsoft.ML.Probabilistic.Communicator.AlltoallSubarrays*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_AlltoallSubarrays__1_Microsoft_ML_Probabilistic_ICommunicator_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_ICollection_System_Int32____System_Collections_Generic_IList___0__System_Collections_Generic_ICollection_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Communicator.AlltoallSubarrays``1(Microsoft.ML.Probabilistic.ICommunicator,System.Collections.Generic.IReadOnlyList{``0},System.Collections.Generic.ICollection{System.Int32}[],System.Collections.Generic.IList{``0},System.Collections.Generic.ICollection{System.Int32}[])">AlltoallSubarrays&lt;T&gt;(ICommunicator, IReadOnlyList&lt;T&gt;, ICollection&lt;Int32&gt;[], IList&lt;T&gt;, ICollection&lt;Int32&gt;[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void AlltoallSubarrays&lt;T&gt;(ICommunicator comm, IReadOnlyList&lt;T&gt; inputArray, ICollection&lt;int&gt;[] indicesToSend, IList&lt;T&gt; outputArray, ICollection&lt;int&gt;[] indicesToReceive)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.ICommunicator.html">ICommunicator</a></td>
+        <td><span class="parametername">comm</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
+        <td><span class="parametername">inputArray</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[]</td>
+        <td><span class="parametername">indicesToSend</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">outputArray</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[]</td>
+        <td><span class="parametername">indicesToReceive</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Communicator_AlltoallSubarrays2_" data-uid="Microsoft.ML.Probabilistic.Communicator.AlltoallSubarrays2*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_AlltoallSubarrays2__1_Microsoft_ML_Probabilistic_ICommunicator_System_Collections_Generic_IReadOnlyList___0__System_Collections_Generic_ICollection_System_Int32____System_Collections_Generic_IList___0__System_Collections_Generic_ICollection_System_Int32____" data-uid="Microsoft.ML.Probabilistic.Communicator.AlltoallSubarrays2``1(Microsoft.ML.Probabilistic.ICommunicator,System.Collections.Generic.IReadOnlyList{``0},System.Collections.Generic.ICollection{System.Int32}[],System.Collections.Generic.IList{``0},System.Collections.Generic.ICollection{System.Int32}[])">AlltoallSubarrays2&lt;T&gt;(ICommunicator, IReadOnlyList&lt;T&gt;, ICollection&lt;Int32&gt;[], IList&lt;T&gt;, ICollection&lt;Int32&gt;[])</h4>
+  <div class="markdown level1 summary"><p>Does not work with BinaryFormatter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void AlltoallSubarrays2&lt;T&gt;(ICommunicator comm, IReadOnlyList&lt;T&gt; inputArray, ICollection&lt;int&gt;[] indicesToSend, IList&lt;T&gt; outputArray, ICollection&lt;int&gt;[] indicesToReceive)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.ICommunicator.html">ICommunicator</a></td>
+        <td><span class="parametername">comm</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
+        <td><span class="parametername">inputArray</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[]</td>
+        <td><span class="parametername">indicesToSend</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">outputArray</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;[]</td>
+        <td><span class="parametername">indicesToReceive</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Communicator_GetTimingString_" data-uid="Microsoft.ML.Probabilistic.Communicator.GetTimingString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_GetTimingString" data-uid="Microsoft.ML.Probabilistic.Communicator.GetTimingString">GetTimingString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string GetTimingString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Communicator_MultiplyAll_" data-uid="Microsoft.ML.Probabilistic.Communicator.MultiplyAll*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_MultiplyAll__1_Microsoft_ML_Probabilistic_ICommunicator___0_" data-uid="Microsoft.ML.Probabilistic.Communicator.MultiplyAll``1(Microsoft.ML.Probabilistic.ICommunicator,``0)">MultiplyAll&lt;T&gt;(ICommunicator, T)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T MultiplyAll&lt;T&gt;(ICommunicator comm, T value)
+    where T : ICloneable, SettableToProduct&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.ICommunicator.html">ICommunicator</a></td>
+        <td><span class="parametername">comm</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Communicator_ReceiveSubarrays_" data-uid="Microsoft.ML.Probabilistic.Communicator.ReceiveSubarrays*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_ReceiveSubarrays__1_Microsoft_ML_Probabilistic_ICommunicator_System_Int32_System_Collections_Generic_IList___0__System_Int32_____" data-uid="Microsoft.ML.Probabilistic.Communicator.ReceiveSubarrays``1(Microsoft.ML.Probabilistic.ICommunicator,System.Int32,System.Collections.Generic.IList{``0},System.Int32[][])">ReceiveSubarrays&lt;T&gt;(ICommunicator, Int32, IList&lt;T&gt;, Int32[][])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void ReceiveSubarrays&lt;T&gt;(ICommunicator comm, int tag, IList&lt;T&gt; array, int[][] indices)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.ICommunicator.html">ICommunicator</a></td>
+        <td><span class="parametername">comm</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">tag</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][]</td>
+        <td><span class="parametername">indices</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Communicator_SendSubarrays_" data-uid="Microsoft.ML.Probabilistic.Communicator.SendSubarrays*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_SendSubarrays__1_Microsoft_ML_Probabilistic_ICommunicator_System_Int32_System_Collections_Generic_IList___0__System_Int32_____" data-uid="Microsoft.ML.Probabilistic.Communicator.SendSubarrays``1(Microsoft.ML.Probabilistic.ICommunicator,System.Int32,System.Collections.Generic.IList{``0},System.Int32[][])">SendSubarrays&lt;T&gt;(ICommunicator, Int32, IList&lt;T&gt;, Int32[][])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IReadOnlyList&lt;ICommunicatorRequest&gt; SendSubarrays&lt;T&gt;(ICommunicator comm, int tag, IList&lt;T&gt; array, int[][] indices)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.ICommunicator.html">ICommunicator</a></td>
+        <td><span class="parametername">comm</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">tag</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[][]</td>
+        <td><span class="parametername">indices</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.ICommunicatorRequest.html">ICommunicatorRequest</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Communicator_TestAny_" data-uid="Microsoft.ML.Probabilistic.Communicator.TestAny*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_TestAny_System_Collections_Generic_List_Microsoft_ML_Probabilistic_ICommunicatorRequest__" data-uid="Microsoft.ML.Probabilistic.Communicator.TestAny(System.Collections.Generic.List{Microsoft.ML.Probabilistic.ICommunicatorRequest})">TestAny(List&lt;ICommunicatorRequest&gt;)</h4>
+  <div class="markdown level1 summary"><p>Determines whether any request has completed. If so, that request will be removed
+from the request list and returned.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ICommunicatorRequest TestAny(List&lt;ICommunicatorRequest&gt; requests)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.ICommunicatorRequest.html">ICommunicatorRequest</a>&gt;</td>
+        <td><span class="parametername">requests</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.ICommunicatorRequest.html">ICommunicatorRequest</a></td>
+        <td><p>The first request that has completed, if any. Otherwise, returns <code>null</code> to
+indicate that no request has completed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Communicator_Wait_" data-uid="Microsoft.ML.Probabilistic.Communicator.Wait*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_Wait_System_Collections_Generic_IEnumerable_Microsoft_ML_Probabilistic_ICommunicatorRequest__" data-uid="Microsoft.ML.Probabilistic.Communicator.Wait(System.Collections.Generic.IEnumerable{Microsoft.ML.Probabilistic.ICommunicatorRequest})">Wait(IEnumerable&lt;ICommunicatorRequest&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Wait(IEnumerable&lt;ICommunicatorRequest&gt; requests)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.ICommunicatorRequest.html">ICommunicatorRequest</a>&gt;</td>
+        <td><span class="parametername">requests</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Communicator_WaitAny_" data-uid="Microsoft.ML.Probabilistic.Communicator.WaitAny*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Communicator_WaitAny_System_Collections_Generic_List_Microsoft_ML_Probabilistic_ICommunicatorRequest__" data-uid="Microsoft.ML.Probabilistic.Communicator.WaitAny(System.Collections.Generic.List{Microsoft.ML.Probabilistic.ICommunicatorRequest})">WaitAny(List&lt;ICommunicatorRequest&gt;)</h4>
+  <div class="markdown level1 summary"><p>Waits until any request has completed. That request will then be removed
+from the request list and returned.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ICommunicatorRequest WaitAny(List&lt;ICommunicatorRequest&gt; requests)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.ICommunicatorRequest.html">ICommunicatorRequest</a>&gt;</td>
+        <td><span class="parametername">requests</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.ICommunicatorRequest.html">ICommunicatorRequest</a></td>
+        <td><p>The completed request, which has been removed from the request list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

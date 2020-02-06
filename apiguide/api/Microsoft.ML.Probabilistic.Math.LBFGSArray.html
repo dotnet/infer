@@ -1,0 +1,507 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class LBFGSArray
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class LBFGSArray
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Math_LBFGSArray" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray" class="text-break">Class LBFGSArray
+  </h1>
+  <div class="markdown level0 summary"><p>Implements the LBFGS compact Quasi-Newton solver on an array of Vectors (which may be sparse)</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html">BFGS</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Math.LBFGS.html">LBFGS</a></div>
+    <div class="level3"><span class="xref">LBFGSArray</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.LBFGS.html#Microsoft_ML_Probabilistic_Math_LBFGS_rho">LBFGS.rho</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.LBFGS.html#Microsoft_ML_Probabilistic_Math_LBFGS_approxDim">LBFGS.approxDim</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.LBFGS.html#Microsoft_ML_Probabilistic_Math_LBFGS_ApproximationDimension">LBFGS.ApproximationDimension</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.LBFGS.html#Microsoft_ML_Probabilistic_Math_LBFGS_Run_Microsoft_ML_Probabilistic_Math_Vector_System_Double_Microsoft_ML_Probabilistic_Math_FunctionEval_">LBFGS.Run(Vector, Double, FunctionEval)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_lineSearch">BFGS.lineSearch</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_epsilon">BFGS.epsilon</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_iter">BFGS.iter</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_stepMax">BFGS.stepMax</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_maxIterations">BFGS.maxIterations</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_initialStep">BFGS.initialStep</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_cancel">BFGS.cancel</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_dimension">BFGS.dimension</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_currentObj">BFGS.currentObj</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_debug">BFGS.debug</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_linesearchDebug">BFGS.linesearchDebug</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_convergenceCriteria">BFGS.convergenceCriteria</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_IterationsPerformed">BFGS.IterationsPerformed</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_Epsilon">BFGS.Epsilon</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_MaximumStep">BFGS.MaximumStep</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_InitialStep">BFGS.InitialStep</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_MaximumIterations">BFGS.MaximumIterations</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_Cancel">BFGS.Cancel</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_SetWolfeConstants_System_Double_System_Double_">BFGS.SetWolfeConstants(Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_TryLineSearch_System_Double_System_Double_System_Double_">BFGS.TryLineSearch(Double, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_RaiseIterationEvent_System_Int32_System_Double_System_Double_">BFGS.RaiseIterationEvent(Int32, Double, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_OnIteration">BFGS.OnIteration</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Math.html">Microsoft.ML.Probabilistic.Math</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Math_LBFGSArray_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class LBFGSArray : LBFGS</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_LBFGSArray__ctor_" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_LBFGSArray__ctor_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.#ctor(System.Int32)">LBFGSArray(Int32)</h4>
+  <div class="markdown level1 summary"><p>Constructor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LBFGSArray(int approxDim)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">approxDim</span></td>
+        <td><p>Rank of the hessian approximation</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Math_LBFGSArray_currentDeriv" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.currentDeriv">currentDeriv</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Vector[] currentDeriv</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_LBFGSArray_currentX" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.currentX">currentX</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Vector[] currentX</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_LBFGSArray_ess" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.ess">ess</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected List&lt;Vector[]&gt; ess</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_LBFGSArray_feval" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.feval">feval</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected LBFGSArray.FunctionEvalArray feval</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.LBFGSArray.FunctionEvalArray.html">LBFGSArray.FunctionEvalArray</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_LBFGSArray_searchDir" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.searchDir">searchDir</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Vector[] searchDir</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Math_LBFGSArray_wye" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.wye">wye</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected List&lt;Vector[]&gt; wye</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_LBFGSArray_LSEval_" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.LSEval*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_LBFGSArray_LSEval_System_Double_System_Boolean_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.LSEval(System.Double,System.Boolean,System.Double@)">LSEval(Double, Boolean, out Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override double LSEval(double step, bool calcDeriv, out double deriv)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">step</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">calcDeriv</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">deriv</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.BFGS.html#Microsoft_ML_Probabilistic_Math_BFGS_LSEval_System_Double_System_Boolean_System_Double__">BFGS.LSEval(Double, Boolean, out Double)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Math_LBFGSArray_Run_" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.Run*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_LBFGSArray_Run_Microsoft_ML_Probabilistic_Math_Vector___System_Double_Microsoft_ML_Probabilistic_Math_LBFGSArray_FunctionEvalArray_" data-uid="Microsoft.ML.Probabilistic.Math.LBFGSArray.Run(Microsoft.ML.Probabilistic.Math.Vector[],System.Double,Microsoft.ML.Probabilistic.Math.LBFGSArray.FunctionEvalArray)">Run(Vector[], Double, LBFGSArray.FunctionEvalArray)</h4>
+  <div class="markdown level1 summary"><p>Run an unconstrained minimization using LBFGS</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector[] Run(Vector[] x0, double normOfFirstStep, LBFGSArray.FunctionEvalArray func)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>[]</td>
+        <td><span class="parametername">x0</span></td>
+        <td><p>Starting value</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">normOfFirstStep</span></td>
+        <td><p>Norm of first step</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.LBFGSArray.FunctionEvalArray.html">LBFGSArray.FunctionEvalArray</a></td>
+        <td><span class="parametername">func</span></td>
+        <td><p>Multivariate function and derivative evaluator</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>[]</td>
+        <td><p>The local minimum point</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

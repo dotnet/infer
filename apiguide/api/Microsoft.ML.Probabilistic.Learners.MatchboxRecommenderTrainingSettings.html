@@ -1,0 +1,504 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MatchboxRecommenderTrainingSettings
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MatchboxRecommenderTrainingSettings
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings" class="text-break">Class MatchboxRecommenderTrainingSettings
+  </h1>
+  <div class="markdown level0 summary"><p>Settings of the Matchbox recommender which affect training.
+Cannot be set after training.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">MatchboxRecommenderTrainingSettings</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICustomSerializable.html">ICustomSerializable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Serializable]
+public class MatchboxRecommenderTrainingSettings : ICustomSerializable</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_BatchCountDefault" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.BatchCountDefault">BatchCountDefault</h4>
+  <div class="markdown level1 summary"><p>The default number of data batches.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int BatchCountDefault = 1</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_IterationCountDefault" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.IterationCountDefault">IterationCountDefault</h4>
+  <div class="markdown level1 summary"><p>The default number of inference iterations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int IterationCountDefault = 20</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_TraitCountDefault" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.TraitCountDefault">TraitCountDefault</h4>
+  <div class="markdown level1 summary"><p>The default number of traits.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int TraitCountDefault = 4</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_UseItemFeaturesDefault" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.UseItemFeaturesDefault">UseItemFeaturesDefault</h4>
+  <div class="markdown level1 summary"><p>The default value indicating whether item features will be used.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const bool UseItemFeaturesDefault = false</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_UseSharedUserThresholdsDefault" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.UseSharedUserThresholdsDefault">UseSharedUserThresholdsDefault</h4>
+  <div class="markdown level1 summary"><p>The default value indicating whether shared user thresholds will be used.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const bool UseSharedUserThresholdsDefault = false</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_UseUserFeaturesDefault" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.UseUserFeaturesDefault">UseUserFeaturesDefault</h4>
+  <div class="markdown level1 summary"><p>The default value indicating whether user features will be used.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const bool UseUserFeaturesDefault = false</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_Advanced_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.Advanced*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_Advanced" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.Advanced">Advanced</h4>
+  <div class="markdown level1 summary"><p>Gets the advanced settings of the Matchbox recommender.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MatchboxRecommenderAdvancedTrainingSettings Advanced { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderAdvancedTrainingSettings.html">MatchboxRecommenderAdvancedTrainingSettings</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_BatchCount_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.BatchCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_BatchCount" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.BatchCount">BatchCount</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the number of batches the training data is split into.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int BatchCount { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_IterationCount_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.IterationCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_IterationCount" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.IterationCount">IterationCount</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the number of inference iterations to run.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int IterationCount { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_TraitCount_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.TraitCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_TraitCount" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.TraitCount">TraitCount</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the number of implicit user or item features (traits) to learn.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int TraitCount { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_UseItemFeatures_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.UseItemFeatures*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_UseItemFeatures" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.UseItemFeatures">UseItemFeatures</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to use explicit item features.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UseItemFeatures { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_UseSharedUserThresholds_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.UseSharedUserThresholds*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_UseSharedUserThresholds" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.UseSharedUserThresholds">UseSharedUserThresholds</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to use shared user thresholds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UseSharedUserThresholds { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_UseUserFeatures_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.UseUserFeatures*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_UseUserFeatures" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.UseUserFeatures">UseUserFeatures</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to use explicit user features.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UseUserFeatures { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_SaveForwardCompatible_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.SaveForwardCompatible*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_SaveForwardCompatible_System_IO_BinaryWriter_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.SaveForwardCompatible(System.IO.BinaryWriter)">SaveForwardCompatible(BinaryWriter)</h4>
+  <div class="markdown level1 summary"><p>Saves the training settings of the Matchbox recommender using the specified writer to a binary stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SaveForwardCompatible(BinaryWriter writer)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binarywriter">BinaryWriter</a></td>
+        <td><span class="parametername">writer</span></td>
+        <td><p>The writer to save the training settings to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICustomSerializable.html">ICustomSerializable</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

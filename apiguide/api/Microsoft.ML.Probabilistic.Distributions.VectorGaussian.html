@@ -1,0 +1,2840 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class VectorGaussian
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class VectorGaussian
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian" class="text-break">Class VectorGaussian
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a multivariate Gaussian distribution.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">VectorGaussian</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSamplePrep-2.html">CanSamplePrep</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProbPrep-2.html">CanGetLogProbPrep</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVariance-2.html">CanGetMeanAndVariance</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMeanAndVariance-2.html">CanSetMeanAndVariance</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Mature)]
+public class VectorGaussian : IDistribution&lt;Vector&gt;, ICloneable, HasPoint&lt;Vector&gt;, CanGetLogProb&lt;Vector&gt;, SettableTo&lt;VectorGaussian&gt;, SettableToProduct&lt;VectorGaussian&gt;, SettableToProduct&lt;VectorGaussian, VectorGaussian&gt;, Diffable, SettableToUniform, SettableToRatio&lt;VectorGaussian&gt;, SettableToRatio&lt;VectorGaussian, VectorGaussian&gt;, SettableToPower&lt;VectorGaussian&gt;, SettableToWeightedSum&lt;VectorGaussian&gt;, Sampleable&lt;Vector&gt;, CanSamplePrep&lt;VectorGaussian, Vector&gt;, CanGetLogProbPrep&lt;VectorGaussian, Vector&gt;, CanGetMean&lt;DenseVector&gt;, CanGetVariance&lt;PositiveDefiniteMatrix&gt;, CanGetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanSetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanGetLogAverageOf&lt;VectorGaussian&gt;, CanGetLogAverageOfPower&lt;VectorGaussian&gt;, CanGetAverageLog&lt;VectorGaussian&gt;, CanGetLogNormalizer, CanGetMode&lt;DenseVector&gt;</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+    The distribution is parameterized by MeanTimesPrecision and Precision.
+    Precision is the inverse of the variance, so a Gaussian with mean m and variance v is
+    represented as Precision = inv(v), MeanTimesPrecision = inv(v)*m.
+</p><p>
+Some special cases:
+If the precision is zero, then the distribution is uniform.
+If the precision is infinite along the diagonal, then the distribution is a point mass.  The Point property
+gives the location of the point mass.
+If precision[i,i] is infinite, then the distribution is a point mass along dimension i.  Point[i] gives the mean.
+The rest of the row and column of precision must be zero.
+</p><p>
+The formula for the distribution is:
+<code>N(x;m,v) = |2*pi*v|^(-d/2) * exp(-0.5 (x-m)&apos; inv(v) (x-m))</code>.
+When v=0, this reduces to delta(x-m).
+When v=infinity, the density is redefined to be 1.
+When inv(v) is singular, the density is redefined to be <code>exp(-0.5 x&apos; inv(v) x + x&apos; inv(v) m)</code>, 
+i.e. we drop the terms <code>|2*pi*v|^(-d/2) * exp(-0.5 m&apos; inv(v) m)</code>.
+</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.#ctor">VectorGaussian()</h4>
+  <div class="markdown level1 summary"><p>Constructs a new VectorGaussian</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected VectorGaussian()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.#ctor(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">VectorGaussian(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Sets this VectorGaussian to the value of another</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VectorGaussian(VectorGaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.#ctor(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">VectorGaussian(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Creates a Gaussian with given mean and variance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VectorGaussian(Vector mean, PositiveDefiniteMatrix variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The mean and variance objects are copied into the Gaussian and not referenced afterwards.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.#ctor(System.Double,System.Double)">VectorGaussian(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a 1D VectorGaussian with given mean and variance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VectorGaussian(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian__ctor_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.#ctor(System.Int32)">VectorGaussian(Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform VectorGaussian of a given dimension</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VectorGaussian(int dimension)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">dimension</span></td>
+        <td><p>The dimension</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Dimension_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Dimension*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Dimension" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Dimension">Dimension</h4>
+  <div class="markdown level1 summary"><p>The dimension of the VectorGaussian domain</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public int Dimension { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Asks whether the instance is a point mass</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_MeanTimesPrecision_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.MeanTimesPrecision*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_MeanTimesPrecision" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.MeanTimesPrecision">MeanTimesPrecision</h4>
+  <div class="markdown level1 summary"><p>Gets/Sets Mean times precision</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector MeanTimesPrecision { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Sets/gets the instance as a point mass</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public Vector Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Precision_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Precision*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Precision" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Precision">Precision</h4>
+  <div class="markdown level1 summary"><p>Gets/sets precision value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PositiveDefiniteMatrix Precision { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Clones this VectorGaussian.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>An object which is a clone of the current instance. This must be cast
+if you want to assign the result to a VectorGaussian type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Copy_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Copy*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Copy_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Copy(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">Copy(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Creates a copy of a given VectorGaussian</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian Copy(VectorGaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Override of the Equals method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object thatd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">thatd</span></td>
+        <td><p>The instance to compare to</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the two distributions are the same in value, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromCursors_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromCursors*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromCursors_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromCursors(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">FromCursors(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Creates a Gaussian from Cursor objects.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FromCursors(Vector meanTimesPrecision, PositiveDefiniteMatrix precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">meanTimesPrecision</span></td>
+        <td><p>Mean times precision</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Precision</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromCursors_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The cursors will use their existing source array.
+The Gaussian will reference the given cursors.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromDerivatives_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromDerivatives*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromDerivatives_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromDerivatives(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,System.Boolean)">FromDerivatives(Vector, Vector, PositiveDefiniteMatrix, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Construct a Gaussian distribution whose pdf has the given derivatives at a point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FromDerivatives(Vector x, Vector dlogp, PositiveDefiniteMatrix negativeHessian, bool forceProper)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">dlogp</span></td>
+        <td><p>The gradient</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">negativeHessian</span></td>
+        <td><p>The negative Hessian matrix</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>If true and both derivatives cannot be matched, match only the first.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromMeanAndPrecision_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromMeanAndPrecision*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromMeanAndPrecision_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromMeanAndPrecision(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">FromMeanAndPrecision(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Create a VectorGaussian with given mean and precision matrix.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FromMeanAndPrecision(Vector mean, PositiveDefiniteMatrix precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Precision</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>A new VectorGaussian object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromMeanAndPrecision_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromMeanAndPrecision*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromMeanAndPrecision_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromMeanAndPrecision(System.Double,System.Double)">FromMeanAndPrecision(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a 1D VectorGaussian with given mean and precision.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FromMeanAndPrecision(double mean, double precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Precision</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>A new VectorGaussian object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromMeanAndVariance_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromMeanAndVariance(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">FromMeanAndVariance(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Create a Gaussian with given mean and variance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FromMeanAndVariance(Vector mean, PositiveDefiniteMatrix variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>A new Gaussian instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromMeanAndVariance_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The mean and variance objects are copied into the Gaussian and not referenced afterwards.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromMeanAndVariance_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromMeanAndVariance(System.Double,System.Double)">FromMeanAndVariance(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a 1D VectorGaussian with given mean and variance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian FromMeanAndVariance(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>A new VectorGaussian object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromNatural_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromNatural*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_FromNatural_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.FromNatural(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">FromNatural(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Create a new VectorGaussian from its natural parameters (Mean times precision, and precision)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;MeanTimesPrecision&quot;, &quot;Precision&quot;})]
+public static VectorGaussian FromNatural(Vector meanTimesPrecision, PositiveDefiniteMatrix precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">meanTimesPrecision</span></td>
+        <td><p>Mean times precision</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Precision matrix</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>A new VectorGaussian object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">GetAverageLog(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>The expected logarithm of that distribution under this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(VectorGaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The distribution to take the logarithm of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>sum_x this.Evaluate(x)*Math.Log(that.Evaluate(x))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is also known as the cross entropy.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Override of GetHashCode method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The hash code for this instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">GetLogAverageOf(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Log-integral of the product of this VectorGaussian with that VectorGaussian</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(VectorGaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>That VectorGaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log inner product</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogAverageOfPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogAverageOfPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogAverageOfPower_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogAverageOfPower(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,System.Double)">GetLogAverageOfPower(VectorGaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Get the integral of this distribution times another distribution raised to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOfPower(VectorGaussian that, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogNormalizer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogNormalizer" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogNormalizer">GetLogNormalizer()</h4>
+  <div class="markdown level1 summary"><p>Gets the normalizer for the VectorGaussian density function</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogNormalizer()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogProb_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogProb(Microsoft.ML.Probabilistic.Math.Vector)">GetLogProb(Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the log of the multivariate Gaussian density.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(Vector x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Point to evaluate the density at.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log p(x)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogProb_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogProb(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix,Microsoft.ML.Probabilistic.Math.Vector)">GetLogProb(Vector, LowerTriangularMatrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the log of the multivariate Gaussian density.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(Vector x, LowerTriangularMatrix L, Vector iLb)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Point to evaluate the density at.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix.html">LowerTriangularMatrix</a></td>
+        <td><span class="parametername">L</span></td>
+        <td><p>Work matrix - same size as Precision</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">iLb</span></td>
+        <td><p>Work vector - same size as x</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log p(x)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogProb_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogProb(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">GetLogProb(Vector, Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Evaluate the log of multivariate Gaussian density with specified mean vector
+and covariance matrix</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GetLogProb(Vector x, Vector mean, PositiveDefiniteMatrix variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Where to evaluate the density function</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The mean vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>A non-singular covariance matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogProb_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogProb(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix,Microsoft.ML.Probabilistic.Math.Vector)">GetLogProb(Vector, Vector, PositiveDefiniteMatrix, LowerTriangularMatrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the log of the multivariate Gaussian density.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GetLogProb(Vector x, Vector meanTimesPrecision, PositiveDefiniteMatrix precision, LowerTriangularMatrix L, Vector iLb)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Point to evaluate the density at.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">meanTimesPrecision</span></td>
+        <td><p>Precision matrix times the mean vector.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>A non-singular precision matrix (inverse of covariance matrix).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix.html">LowerTriangularMatrix</a></td>
+        <td><span class="parametername">L</span></td>
+        <td><p>Same size as precision.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">iLb</span></td>
+        <td><p>Same size as x.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>log p(x)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogProbPrep_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogProbPrep*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetLogProbPrep" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetLogProbPrep">GetLogProbPrep()</h4>
+  <div class="markdown level1 summary"><p>Returns an Evaluator delegate which has a pre-allocated workspace
+for efficient evaluation calculation. If you are generating many
+evaluations, call this method to get an Evaluator, then use the Evaluator
+delegate to calculate the evaluations</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Evaluator&lt;VectorGaussian, Vector&gt; GetLogProbPrep()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Evaluator-2.html">Evaluator</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><p>Evaluator delegate</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMarginal_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMarginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMarginal_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMarginal(System.Int32)">GetMarginal(Int32)</h4>
+  <div class="markdown level1 summary"><p>The marginal distribution of one dimension.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Gaussian GetMarginal(int dim)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">dim</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMarginal_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMarginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMarginal_System_Int32_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMarginal(System.Int32,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">GetMarginal(Int32, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>The marginal distribution of a subvector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VectorGaussian GetMarginal(int firstDim, VectorGaussian result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">firstDim</span></td>
+        <td><p>The first dimension of the subvector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>A VectorGaussian receiving the result, whose Dimension specifies the length of the subvector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMean_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMean" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMean">GetMean()</h4>
+  <div class="markdown level1 summary"><p>Gets the mean of the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DenseVector GetMean()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
+        <td><p>A new Vector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMean_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMean_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMean(Microsoft.ML.Probabilistic.Math.Vector)">GetMean(Vector)</h4>
+  <div class="markdown level1 summary"><p>Gets the mean of the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector GetMean(Vector result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Where to place the mean value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>mean</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMean_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMean_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMean(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">GetMean(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Get the mean of the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector GetMean(Vector result, PositiveDefiniteMatrix variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Where to place the mean vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>The pre-computed inverse of this.Precision</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMeanAndPrecision_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMeanAndPrecision*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMeanAndPrecision_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMeanAndPrecision(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">GetMeanAndPrecision(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Gets the mean vector and precision matrix of the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetMeanAndPrecision(Vector mean, PositiveDefiniteMatrix precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Modified to contain the mean.  Must already be the correct size.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>Modified to contain the precision matrix.  Must already be the correct size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMeanAndVariance_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMeanAndVariance(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">GetMeanAndVariance(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Gets the mean and variance of the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetMeanAndVariance(Vector mean, PositiveDefiniteMatrix variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Modified to contain the mean.  Must already be the correct size.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Modified to contain the covariance matrix.  Must already be the correct size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMeanAndVariance_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Because the Gaussian stored its parameters in exponential form, it is more efficient
+to compute the mean and variance at the same time rather than separately.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMode_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetMode" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetMode">GetMode()</h4>
+  <div class="markdown level1 summary"><p>The most likely value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DenseVector GetMode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
+        <td><p>A new Vector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetVariance" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetVariance">GetVariance()</h4>
+  <div class="markdown level1 summary"><p>Gets the variance-covariance matrix of the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PositiveDefiniteMatrix GetVariance()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><p>A new PositiveDefiniteMatrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_GetVariance_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.GetVariance(Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">GetVariance(PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Gets the variance-covariance matrix of the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PositiveDefiniteMatrix GetVariance(PositiveDefiniteMatrix variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Where to place the variance-covariance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><p>variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IsProper_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.IsProper*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IsProper" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.IsProper">IsProper()</h4>
+  <div class="markdown level1 summary"><p>Asks whether this VectorGaussian instance is proper or not. A VectorGaussian distribution
+is proper only if its precision matrix is positive definite.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsProper()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if proper, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Asks whether this instance is uniform</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if uniform, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>The maximum difference between the parameters of this VectorGaussian
+and that VectorGaussian</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object thatd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">thatd</span></td>
+        <td><p>That VectorGaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The maximum difference</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_PointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.PointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_PointMass_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.PointMass(Microsoft.ML.Probabilistic.Math.Vector)">PointMass(Vector)</h4>
+  <div class="markdown level1 summary"><p>Creates a VectorGaussian point mass at the specified location</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static VectorGaussian PointMass(Vector mean)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Where to position the point mass</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>A new point mass VectorGaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_PointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.PointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_PointMass_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.PointMass(System.Double)">PointMass(Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a VectorGaussian point mass where the location is a
+vector of identical values</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian PointMass(double mean)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The value for the mean vector</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>A new point mass VectorGaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>Sample from this VectorGaussian distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Sample_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Sample(Microsoft.ML.Probabilistic.Math.Vector)">Sample(Vector)</h4>
+  <div class="markdown level1 summary"><p>Samples from this VectorGaussian distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector Sample(Vector result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Where to put the result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Sample_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Sample(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix)">Sample(Vector, LowerTriangularMatrix)</h4>
+  <div class="markdown level1 summary"><p>Samples from this VectorGaussian distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector Sample(Vector result, LowerTriangularMatrix precL)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Where to put the result</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix.html">LowerTriangularMatrix</a></td>
+        <td><span class="parametername">precL</span></td>
+        <td><p>A DxD workspace</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Sample_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Sample(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">Sample(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Samples from a VectorGaussian distribution with the specified mean and precision</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector Sample(Vector mean, PositiveDefiniteMatrix precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SampleFromMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SampleFromMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SampleFromMeanAndVariance_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SampleFromMeanAndVariance(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">SampleFromMeanAndVariance(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Samples from a VectorGaussian distribution with the specified mean and variance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;mean&quot;, &quot;variance&quot;})]
+public static Vector SampleFromMeanAndVariance(Vector mean, PositiveDefiniteMatrix variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SamplePrep_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SamplePrep*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SamplePrep" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SamplePrep">SamplePrep()</h4>
+  <div class="markdown level1 summary"><p>Returns a sampler delegate which has a pre-allocated workspace
+for efficient sample calculation. If you are generating many
+samples, call this method to get a sampler, then use the sampler
+delegate to generate samples.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Sampler&lt;VectorGaussian, Vector&gt; SamplePrep()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampler-2.html">Sampler</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><p>Sampler delegate</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetMeanAndPrecision_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetMeanAndPrecision*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetMeanAndPrecision_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetMeanAndPrecision(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">SetMeanAndPrecision(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Sets the mean and precision of the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetMeanAndPrecision(Vector mean, PositiveDefiniteMatrix precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The mean vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>The precision matrix</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetMeanAndVariance_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetMeanAndVariance(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">SetMeanAndVariance(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Sets the mean and variance of the distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetMeanAndVariance(Vector mean, PositiveDefiniteMatrix variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The mean vector.  Cannot be the same object as <code>this.MeanTimesPrecision</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>The covariance matrix.  Can be the same object as <code>this.Precision</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetNatural_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetNatural*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetNatural_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetNatural(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">SetNatural(Vector, PositiveDefiniteMatrix)</h4>
+  <div class="markdown level1 summary"><p>Sets the natural parameters of the distribution (mean times precision, and precision)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetNatural(Vector meanTimesPrecision, PositiveDefiniteMatrix precision)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">meanTimesPrecision</span></td>
+        <td><p>Mean times precision</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>The precision matrix</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetTo_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetTo(Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SetTo(VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Sets this VectorGaussian instance to have the parameter values of that VectorGaussian instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(VectorGaussian that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>That VectorGaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToPointMass">SetToPointMass()</h4>
+  <div class="markdown level1 summary"><p>Sets this instance to a point mass. The location of the
+point mass is the existing mean vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void SetToPointMass()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToPower_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToPower(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,System.Double)">SetToPower(VectorGaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the power of a source VectorGaussian to some exponent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPower(VectorGaussian dist, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The source VectorGaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td><p>The exponent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToProduct_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToProduct(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SetToProduct(VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the product of two VectorGaussians.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(VectorGaussian g1, VectorGaussian g2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">g1</span></td>
+        <td><p>The first VectorGaussian.  May refer to <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">g2</span></td>
+        <td><p>The second VectorGaussian.  May refer to <code>this</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToProduct_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result may not be proper. No error is thrown in this case.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToRatio_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToRatio(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,System.Boolean)">SetToRatio(VectorGaussian, VectorGaussian, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the product of two VectorGaussians.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRatio(VectorGaussian numerator, VectorGaussian denominator, bool forceProper = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>The numerator VectorGaussian.  Can be the same object as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>The denominator VectorGaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>If true, the precision of the result is made non-negative definite, under the constraint that result*denominator has the same mean as numerator</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToSum_System_Double_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Double_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToSum(System.Double,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,System.Double,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">SetToSum(Double, VectorGaussian, Double, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Sets the mean and covariance to match a VectorGaussian mixture.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, VectorGaussian dist1, double weight2, VectorGaussian dist2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>First weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">dist1</span></td>
+        <td><p>First VectorGaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>Second weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">dist2</span></td>
+        <td><p>Second VectorGaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets this VectorGaussian instance to be a uniform distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>ToString override</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>String representation of the instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Uniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Uniform_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.Uniform(System.Int32)">Uniform(Int32)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform VectorGaussian of a given dimension</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Dimension&quot;}, UseWhen = &quot;IsUniform&quot;)]
+public static VectorGaussian Uniform(int dimension)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">dimension</span></td>
+        <td><p>The dimension</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_WeightedSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.WeightedSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_WeightedSum__1___0_System_Int32_System_Double___0_System_Double___0_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.WeightedSum``1(``0,System.Int32,System.Double,``0,System.Double,``0)">WeightedSum&lt;T&gt;(T, Int32, Double, T, Double, T)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution of the specified type which matchs the mean and variance/covariance
+of a VectorGaussian mixture. The distribution type must implement <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVariance-2.html">CanGetMeanAndVariance&lt;MeanType, VarType&gt;</a> and
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMeanAndVariance-2.html">CanSetMeanAndVariance&lt;MeanType, VarType&gt;</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static T WeightedSum&lt;T&gt;(T result, int dimension, double weight1, T dist1, double weight2, T dist2)
+    where T : CanGetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanSetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, SettableTo&lt;T&gt;, SettableToUniform</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Resulting distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">dimension</span></td>
+        <td><p>The dimension of the domain</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>The first weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">dist1</span></td>
+        <td><p>The first distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>The second weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">dist2</span></td>
+        <td><p>The second distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Distribution type for the mixture</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_op_Division_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.op_Division*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_op_Division_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.op_Division(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">Division(VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Creates a new VectorGaussian which the ratio of two other VectorGaussians</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian operator /(VectorGaussian numerator, VectorGaussian denominator)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>numerator VectorGaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>denominator VectorGaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>Result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_op_ExclusiveOr_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.op_ExclusiveOr*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_op_ExclusiveOr_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.op_ExclusiveOr(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,System.Double)">ExclusiveOr(VectorGaussian, Double)</h4>
+  <div class="markdown level1 summary"><p>Raises a distribution to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian operator ^(VectorGaussian dist, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td><p>The power to raise to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">dist</code> raised to power <code data-dev-comment-type="paramref" class="paramref">exponent</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_op_Multiply_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.op_Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussian_op_Multiply_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.op_Multiply(Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">Multiply(VectorGaussian, VectorGaussian)</h4>
+  <div class="markdown level1 summary"><p>Creates a new VectorGaussian which the product of two other VectorGaussians</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static VectorGaussian operator *(VectorGaussian a, VectorGaussian b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>First VectorGaussian</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Second VectorGaussian</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><p>Result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSamplePrep-2.html">CanSamplePrep&lt;DistributionType, T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProbPrep-2.html">CanGetLogProbPrep&lt;DistributionType, T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean&lt;MeanType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance&lt;VarType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVariance-2.html">CanGetMeanAndVariance&lt;MeanType, VarType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMeanAndVariance-2.html">CanSetMeanAndVariance&lt;MeanType, VarType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

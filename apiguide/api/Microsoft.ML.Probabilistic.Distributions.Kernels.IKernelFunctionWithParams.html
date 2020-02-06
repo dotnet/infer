@@ -1,0 +1,633 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IKernelFunctionWithParams
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IKernelFunctionWithParams
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams" class="text-break">Interface IKernelFunctionWithParams
+  </h1>
+  <div class="markdown level0 summary"><p>Interface for Kernel functions with parameters</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunction_EvaluateX1X2_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">IKernelFunction.EvaluateX1X2(Vector, Vector)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunction.html#Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunction_EvaluateX_Microsoft_ML_Probabilistic_Math_Vector_">IKernelFunction.EvaluateX(Vector)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.html">Microsoft.ML.Probabilistic.Distributions.Kernels</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IKernelFunctionWithParams : IKernelFunction</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_Item_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_Item_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.Item(System.Int32)">Item[Int32]</h4>
+  <div class="markdown level1 summary"><p>Sets or gets a log hyper-parameter by index</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double this[int index] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Index of the log hyper-parameter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log hyper-parameter value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_Item_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_Item_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.Item(System.String)">Item[String]</h4>
+  <div class="markdown level1 summary"><p>Sets or gets a log hyper-parameter by name</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double this[string name] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name of the hyper-parameter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log hyper-parameter value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_ThetaCount_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.ThetaCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_ThetaCount" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.ThetaCount">ThetaCount</h4>
+  <div class="markdown level1 summary"><p>Hyper-parameter count</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int ThetaCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_TypeVersion_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.TypeVersion*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_TypeVersion" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.TypeVersion">TypeVersion</h4>
+  <div class="markdown level1 summary"><p>The version for the derived class</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int TypeVersion { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_EvaluateX_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.EvaluateX*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_EvaluateX_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.EvaluateX(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector@)">EvaluateX(Vector, ref Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the kernel for a single vector, and optionally, returns the derivatives
+with respect to the parameters</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double EvaluateX(Vector x, ref Vector logThetaDeriv)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">logThetaDeriv</span></td>
+        <td><p>Derivative of the kernel value with respect to the log hyper-parameters</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_EvaluateX_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.EvaluateX*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_EvaluateX_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.EvaluateX(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector@,Microsoft.ML.Probabilistic.Math.Vector@)">EvaluateX(Vector, ref Vector, ref Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the kernel for a single vector, and optionally, returns the derivatives
+with respect to the vector and with respect to the parameters</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double EvaluateX(Vector x, ref Vector xDeriv, ref Vector logThetaDeriv)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">xDeriv</span></td>
+        <td><p>Derivative of the kernel value with respect to x</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">logThetaDeriv</span></td>
+        <td><p>Derivative of the kernel value with respect to the log hyper-parameters</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_EvaluateX1X2_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.EvaluateX1X2*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_EvaluateX1X2_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.EvaluateX1X2(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector@)">EvaluateX1X2(Vector, Vector, ref Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the kernel for a pair of vectors and, optionally, returns derivatives
+with respect to the parameters</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double EvaluateX1X2(Vector x1, Vector x2, ref Vector logThetaDeriv)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x1</span></td>
+        <td><p>First vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x2</span></td>
+        <td><p>Second vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">logThetaDeriv</span></td>
+        <td><p>Derivative of the kernel value with respect to the log hyper-parameters</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_EvaluateX1X2_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.EvaluateX1X2*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_EvaluateX1X2_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.EvaluateX1X2(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector@,Microsoft.ML.Probabilistic.Math.Vector@)">EvaluateX1X2(Vector, Vector, ref Vector, ref Vector)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the kernel for a pair of vectors and, optionally, returns derivatives
+with respect to each vector, and with respect to the parameters</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double EvaluateX1X2(Vector x1, Vector x2, ref Vector x1Deriv, ref Vector logThetaDeriv)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x1</span></td>
+        <td><p>First vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x2</span></td>
+        <td><p>Second vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">x1Deriv</span></td>
+        <td><p>Derivative of the kernel value with respect to x1 input vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">logThetaDeriv</span></td>
+        <td><p>Derivative of the kernel value with respect to the log hyper-parameters</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_IndexToName_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.IndexToName*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_IndexToName_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.IndexToName(System.Int32)">IndexToName(Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the name of a specified hyperparameter index</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string IndexToName(int thetaIndex)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">thetaIndex</span></td>
+        <td><p>The hyper-parameter index</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_NameToIndex_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.NameToIndex*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_NameToIndex_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.NameToIndex(System.String)">NameToIndex(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the index of a specified hyperparameter name</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int NameToIndex(string thetaName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">thetaName</span></td>
+        <td><p>The hyper-parameter name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The index</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_Read_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.Read*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_Read_System_IO_StreamReader_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.Read(System.IO.StreamReader)">Read(StreamReader)</h4>
+  <div class="markdown level1 summary"><p>Reads the function parameters in from a stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Read(StreamReader sr)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.streamreader">StreamReader</a></td>
+        <td><span class="parametername">sr</span></td>
+        <td><p>String Reader</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_Write_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunctionWithParams_Write_System_IO_StreamWriter_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.Write(System.IO.StreamWriter)">Write(StreamWriter)</h4>
+  <div class="markdown level1 summary"><p>Writes the function parameters out to a stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Write(StreamWriter sw)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.streamwriter">StreamWriter</a></td>
+        <td><span class="parametername">sw</span></td>
+        <td><p>String Writer</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

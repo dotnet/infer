@@ -1,0 +1,2148 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct Beta
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct Beta
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Beta" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta" class="text-break">Struct Beta
+  </h1>
+  <div class="markdown level0 summary"><p>A Beta distribution over the interval [0,1].</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVarianceOut-2.html">CanGetMeanAndVarianceOut</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMeanAndVariance-2.html">CanSetMeanAndVariance</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Mature)]
+public struct Beta : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Beta&gt;, SettableToProduct&lt;Beta&gt;, SettableToProduct&lt;Beta, Beta&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Beta&gt;, SettableToRatio&lt;Beta, Beta&gt;, SettableToPower&lt;Beta&gt;, SettableToWeightedSum&lt;Beta&gt;, CanGetLogAverageOf&lt;Beta&gt;, CanGetLogAverageOfPower&lt;Beta&gt;, CanGetAverageLog&lt;Beta&gt;, CanGetLogNormalizer, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetMode&lt;double&gt;, CanGetProbLessThan</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+    The Beta is often used as a distribution on probability values.
+    The formula for the distribution is <code>p(x) = (Gamma(trueCount+falseCount)/Gamma(trueCount)/Gamma(falseCount)) x^{trueCount-1} (1-x)^(falseCount-1)</code>
+    subject to the constraint 0 &lt;= x &lt;= 1.
+</p><p>
+If trueCount = falseCount = 1, the distribution is uniform.
+If falseCount = infinity, the distribution is redefined to be a point mass on trueCount.
+When trueCount &lt;= 0 or falseCount &lt;= 0, the distribution is improper.
+In this case, the density is redefined to not include the Gamma terms, i.e.
+there is no normalizer.
+</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta__ctor_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.#ctor(Microsoft.ML.Probabilistic.Distributions.Beta)">Beta(Beta)</h4>
+  <div class="markdown level1 summary"><p>Copy constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Beta(Beta that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta__ctor_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.#ctor(System.Double,System.Double)">Beta(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a Beta distribution with the given parameters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;TrueCount&quot;, &quot;FalseCount&quot;})]
+public Beta(double trueCount, double falseCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">trueCount</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">falseCount</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta__ctor_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the distribution is <code>p(x) = (Gamma(trueCount+falseCount)/Gamma(trueCount)/Gamma(falseCount)) x^{trueCount-1} (1-x)^(falseCount-1)</code>.</p>
+</div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_AllowImproperSum" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.AllowImproperSum">AllowImproperSum</h4>
+  <div class="markdown level1 summary"><p>Property to allow an improper sum</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool AllowImproperSum</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_FalseCount" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.FalseCount">FalseCount</h4>
+  <div class="markdown level1 summary"><p>False count</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double FalseCount</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_TrueCount" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.TrueCount">TrueCount</h4>
+  <div class="markdown level1 summary"><p>True count</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double TrueCount</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_IsPointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.IsPointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_IsPointMass" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.IsPointMass">IsPointMass</h4>
+  <div class="markdown level1 summary"><p>Whether the instance is a point mass beta distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_Point_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Point*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_Point" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Point">Point</h4>
+  <div class="markdown level1 summary"><p>Gets/sets the instance as a point mass</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public double Point { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_TotalCount_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.TotalCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_TotalCount" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.TotalCount">TotalCount</h4>
+  <div class="markdown level1 summary"><p>The sum of TrueCount and FalseCount.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public double TotalCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_BetaLn_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.BetaLn*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_BetaLn_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.BetaLn(System.Double,System.Double)">BetaLn(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the log Beta function: <code>GammaLn(trueCount)+GammaLn(falseCount)-GammaLn(trueCount+falseCount)</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double BetaLn(double trueCount, double falseCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">trueCount</span></td>
+        <td><p>Any real number.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">falseCount</span></td>
+        <td><p>Any real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>GammaLn(trueCount)+GammaLn(falseCount)-GammaLn(trueCount+falseCount)</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_BetaLn_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If trueCount &lt;= 0 or falseCount &lt;= 0, the result is defined to be 0.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Clone">Clone()</h4>
+  <div class="markdown level1 summary"><p>Clones this Beta.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>An object which is a clone of the current instance. This must be cast
+if you want to assign the result to a Beta type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_Equals_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Override of the Equals method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The instance to compare to</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the two distributions are the same in value, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_FromDerivatives_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.FromDerivatives*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_FromDerivatives_System_Double_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.FromDerivatives(System.Double,System.Double,System.Double,System.Boolean)">FromDerivatives(Double, Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Construct a Beta distribution whose pdf has the given derivatives at a point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Beta FromDerivatives(double x, double dLogP, double ddLogP, bool forceProper)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>A real number in [0,1]</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">dLogP</span></td>
+        <td><p>Desired derivative of log-density at x</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ddLogP</span></td>
+        <td><p>Desired second derivative of log-density at x</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>If true and both derivatives cannot be matched by a distribution with counts at least 1, match only the first.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_FromMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.FromMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_FromMeanAndVariance_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.FromMeanAndVariance(System.Double,System.Double)">FromMeanAndVariance(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a new Beta distribution from a specified mean and variance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Beta FromMeanAndVariance(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><p>The new Beta distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_FromMeanLogs_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.FromMeanLogs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_FromMeanLogs_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.FromMeanLogs(System.Double,System.Double)">FromMeanLogs(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Constructs a Beta distribution with the given E[log(p)] and E[log(1-p)].</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Beta FromMeanLogs(double eLogP, double eLogOneMinusP)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">eLogP</span></td>
+        <td><p>Desired expectation E[log(p)].</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">eLogOneMinusP</span></td>
+        <td><p>Desired expectation E[log(1-p)].</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><p>A new Beta distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_FromMeanLogs_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function is equivalent to maximum-likelihood estimation of a Beta distribution
+from data given by sufficient statistics. So we want to maximize
+(a-1)eLogP + (b-1)eLogOneMinusP + Gamma(a+b) - Gamma(a) - Gamma(b)
+with respect to a, b where a=trueCount, b=falseCount.
+This function is significantly slower than the other constructors since it
+involves nonlinear optimization.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetAverageLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetAverageLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetAverageLog(Microsoft.ML.Probabilistic.Distributions.Beta)">GetAverageLog(Beta)</h4>
+  <div class="markdown level1 summary"><p>The expected logarithm of that distribution under this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetAverageLog(Beta that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The distribution to take the logarithm of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>sum_x this.Evaluate(x)*Math.Log(that.Evaluate(x))</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetAverageLog_Microsoft_ML_Probabilistic_Distributions_Beta__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is also known as the cross entropy.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetDerivatives_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetDerivatives*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetDerivatives_Microsoft_ML_Probabilistic_Distributions_Beta_System_Double_System_Double__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetDerivatives(Microsoft.ML.Probabilistic.Distributions.Beta,System.Double,System.Double@,System.Double@)">GetDerivatives(Beta, Double, out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>Get the derivatives of the log-pdf at a point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void GetDerivatives(Beta dist, double x, out double dlogp, out double ddlogp)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">dlogp</span></td>
+        <td><p>On exit, the first derivative.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ddlogp</span></td>
+        <td><p>On exit, the second derivative.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetDerivatives_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetDerivatives*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetDerivatives_System_Double_System_Double__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetDerivatives(System.Double,System.Double@,System.Double@)">GetDerivatives(Double, out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>Get the derivatives of the log-pdf at a point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetDerivatives(double x, out double dlogp, out double ddlogp)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">dlogp</span></td>
+        <td><p>On exit, the first derivative.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ddlogp</span></td>
+        <td><p>On exit, the second derivative.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetHashCode_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetHashCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetHashCode" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Override of GetHashCode method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The hash code for this instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetLogAverageOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.Beta)">GetLogAverageOf(Beta)</h4>
+  <div class="markdown level1 summary"><p>The log of the integral of the product of this Beta and that Beta</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOf(Beta that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>That beta</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The log inner product</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetLogAverageOfPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetLogAverageOfPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetLogAverageOfPower_Microsoft_ML_Probabilistic_Distributions_Beta_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetLogAverageOfPower(Microsoft.ML.Probabilistic.Distributions.Beta,System.Double)">GetLogAverageOfPower(Beta, Double)</h4>
+  <div class="markdown level1 summary"><p>Get the integral of this distribution times another distribution raised to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogAverageOfPower(Beta that, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetLogNormalizer_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetLogNormalizer*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetLogNormalizer" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetLogNormalizer">GetLogNormalizer()</h4>
+  <div class="markdown level1 summary"><p>Gets the log normalizer for the distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogNormalizer()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetLogProb*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetLogProb_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetLogProb(System.Double)">GetLogProb(Double)</h4>
+  <div class="markdown level1 summary"><p>Evaluates the logarithm of the density function</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogProb(double value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>Domain value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Log of the probability density for the given domain value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMean*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMean" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMean">GetMean()</h4>
+  <div class="markdown level1 summary"><p>The expected value E[p].</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetMean()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p><code>TrueCount/TotalCount</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMean_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result must be between 0 and 1.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMeanAndVariance_System_Double__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMeanAndVariance(System.Double@,System.Double@)">GetMeanAndVariance(out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>Gets the mean and variance for this instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetMeanAndVariance(out double mean, out double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean value - output</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance - output</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMeanCube_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMeanCube*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMeanCube" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMeanCube">GetMeanCube()</h4>
+  <div class="markdown level1 summary"><p>The expected cube E[p^3].</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetMeanCube()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMeanLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMeanLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMeanLog" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMeanLog">GetMeanLog()</h4>
+  <div class="markdown level1 summary"><p>The expected logarithm E[log(p)].</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetMeanLog()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMeanLogs_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMeanLogs*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMeanLogs_System_Double__System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMeanLogs(System.Double@,System.Double@)">GetMeanLogs(out Double, out Double)</h4>
+  <div class="markdown level1 summary"><p>The expected logarithms E[log(p)] and E[log(1-p)].</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetMeanLogs(out double eLogP, out double eLogOneMinusP)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">eLogP</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">eLogOneMinusP</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMeanSquare_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMeanSquare*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMeanSquare" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMeanSquare">GetMeanSquare()</h4>
+  <div class="markdown level1 summary"><p>The expected square E[p^2].</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetMeanSquare()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMode_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetMode" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetMode">GetMode()</h4>
+  <div class="markdown level1 summary"><p>The most probable value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetMode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetProbLessThan_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetProbLessThan*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetProbLessThan_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetProbLessThan(System.Double)">GetProbLessThan(Double)</h4>
+  <div class="markdown level1 summary"><p>Compute the probability that a sample from this distribution is less than x.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetProbLessThan(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The cumulative beta distribution at <code data-dev-comment-type="paramref" class="paramref">x</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetVariance" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetVariance">GetVariance()</h4>
+  <div class="markdown level1 summary"><p>The variance var(p).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetVariance()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_IsProper_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.IsProper*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_IsProper" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.IsProper">IsProper()</h4>
+  <div class="markdown level1 summary"><p>Whether the distribution is proper or not. It is improper
+when trueCount &lt;= 0 or falseCount &lt;= 0 in which case it
+cannot be normalised</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsProper()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>true if proper, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_IsUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.IsUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_IsUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.IsUniform">IsUniform()</h4>
+  <div class="markdown level1 summary"><p>Whether the distribution is uniform</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if uniform</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.MaxDiff*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_MaxDiff_System_Object_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.MaxDiff(System.Object)">MaxDiff(Object)</h4>
+  <div class="markdown level1 summary"><p>The maximum 'difference' between the parameters of this instance and of that instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxDiff(object thatd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">thatd</span></td>
+        <td><p>That distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The resulting maximum difference</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_MaxDiff_System_Object__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><code>a.MaxDiff(b) == b.MaxDiff(a)</code></p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_PointMass_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.PointMass*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_PointMass_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.PointMass(System.Double)">PointMass(Double)</h4>
+  <div class="markdown level1 summary"><p>Instantiates a point-mass Beta distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static Beta PointMass(double mean)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The domain value where the point mass occurs</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><p>A new point-mass Beta distribution at the specified location</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_Sample" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Sample">Sample()</h4>
+  <div class="markdown level1 summary"><p>Sample from this Beta distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Sample()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_Sample_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Sample(System.Double)">Sample(Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Sample(double result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_Sample_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_Sample_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Sample(System.Double,System.Double)">Sample(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Static method to sample from a Beta distribution with the specified true and false counts</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Sample(double trueCount, double falseCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">trueCount</span></td>
+        <td><p>True count</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">falseCount</span></td>
+        <td><p>False count</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_SampleFromMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SampleFromMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_SampleFromMeanAndVariance_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SampleFromMeanAndVariance(System.Double,System.Double)">SampleFromMeanAndVariance(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Static method to sample from a Beta distribution with the specified mean and variance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;mean&quot;, &quot;variance&quot;})]
+public static double SampleFromMeanAndVariance(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The mean of the Beta distribution to sample from</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>The variance of the Beta distribution to sample from</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The sample value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_SetMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetMeanAndVariance*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_SetMeanAndVariance_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetMeanAndVariance(System.Double,System.Double)">SetMeanAndVariance(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets the mean and variance for this instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetMeanAndVariance(double mean, double variance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Mean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>Variance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_SetTo_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_SetTo_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetTo(Microsoft.ML.Probabilistic.Distributions.Beta)">SetTo(Beta)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters of this instance to the parameters of that instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(Beta value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>that instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetToPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToPower_Microsoft_ML_Probabilistic_Distributions_Beta_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetToPower(Microsoft.ML.Probabilistic.Distributions.Beta,System.Double)">SetToPower(Beta, Double)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the a Beta raised to some power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToPower(Beta dist, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td><p>The exponent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToProduct_Microsoft_ML_Probabilistic_Distributions_Beta_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetToProduct(Microsoft.ML.Probabilistic.Distributions.Beta,Microsoft.ML.Probabilistic.Distributions.Beta)">SetToProduct(Beta, Beta)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the product of two Betas.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(Beta a, Beta b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToProduct_Microsoft_ML_Probabilistic_Distributions_Beta_Microsoft_ML_Probabilistic_Distributions_Beta__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The result may not be proper, i.e. its parameters may be negative.
+For example, if you multiply Beta(0.1,0.1) by itself you get Beta(-0.8, -0.8).
+No error is thrown in this case.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetToRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToRatio_Microsoft_ML_Probabilistic_Distributions_Beta_Microsoft_ML_Probabilistic_Distributions_Beta_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetToRatio(Microsoft.ML.Probabilistic.Distributions.Beta,Microsoft.ML.Probabilistic.Distributions.Beta,System.Boolean)">SetToRatio(Beta, Beta, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Sets the parameters to represent the ratio of two Betas.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToRatio(Beta numerator, Beta denominator, bool forceProper = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>The numerator distribution.  Can be the same object as this.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>The denominator distribution.  Can be the same object as this.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">forceProper</span></td>
+        <td><p>If true, the counts of the result are made &gt;= 1, under the constraint that denominator*result has the same mean as numerator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToSum_System_Double_Microsoft_ML_Probabilistic_Distributions_Beta_System_Double_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetToSum(System.Double,Microsoft.ML.Probabilistic.Distributions.Beta,System.Double,Microsoft.ML.Probabilistic.Distributions.Beta)">SetToSum(Double, Beta, Double, Beta)</h4>
+  <div class="markdown level1 summary"><p>Set the parameters to match the moments of a mixture distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(double weight1, Beta dist1, double weight2, Beta dist2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>The first weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">dist1</span></td>
+        <td><p>The first distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>The second weight</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">dist2</span></td>
+        <td><p>The second distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetToUniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_SetToUniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.SetToUniform">SetToUniform()</h4>
+  <div class="markdown level1 summary"><p>Sets this instance to be uniform</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToUniform()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Override of the ToString method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Uniform*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Uniform">Uniform()</h4>
+  <div class="markdown level1 summary"><p>Instantiates a uniform Beta distribution</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsUniform&quot;)]
+public static Beta Uniform()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><p>A new uniform Beta distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_op_Division_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.op_Division*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_op_Division_Microsoft_ML_Probabilistic_Distributions_Beta_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.op_Division(Microsoft.ML.Probabilistic.Distributions.Beta,Microsoft.ML.Probabilistic.Distributions.Beta)">Division(Beta, Beta)</h4>
+  <div class="markdown level1 summary"><p>Static ratio operator. Create a Beta distribution which is the ratio of
+two Beta distributions</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Beta operator /(Beta numerator, Beta denominator)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>The numerator distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>The denominator distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><p>The resulting Beta distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_op_Equality_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.op_Equality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_op_Equality_Microsoft_ML_Probabilistic_Distributions_Beta_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.op_Equality(Microsoft.ML.Probabilistic.Distributions.Beta,Microsoft.ML.Probabilistic.Distributions.Beta)">Equality(Beta, Beta)</h4>
+  <div class="markdown level1 summary"><p>Equals operator</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Beta a, Beta b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_op_ExclusiveOr_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.op_ExclusiveOr*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_op_ExclusiveOr_Microsoft_ML_Probabilistic_Distributions_Beta_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.op_ExclusiveOr(Microsoft.ML.Probabilistic.Distributions.Beta,System.Double)">ExclusiveOr(Beta, Double)</h4>
+  <div class="markdown level1 summary"><p>Raises a distribution to a power.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Beta operator ^(Beta dist, double exponent)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">dist</span></td>
+        <td><p>The distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">exponent</span></td>
+        <td><p>The power to raise to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">dist</code> raised to power <code data-dev-comment-type="paramref" class="paramref">exponent</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_op_Inequality_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.op_Inequality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_op_Inequality_Microsoft_ML_Probabilistic_Distributions_Beta_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.op_Inequality(Microsoft.ML.Probabilistic.Distributions.Beta,Microsoft.ML.Probabilistic.Distributions.Beta)">Inequality(Beta, Beta)</h4>
+  <div class="markdown level1 summary"><p>Not Equals operator</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Beta a, Beta b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">a</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">b</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Beta_op_Multiply_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.op_Multiply*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_op_Multiply_Microsoft_ML_Probabilistic_Distributions_Beta_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.op_Multiply(Microsoft.ML.Probabilistic.Distributions.Beta,Microsoft.ML.Probabilistic.Distributions.Beta)">Multiply(Beta, Beta)</h4>
+  <div class="markdown level1 summary"><p>Static product operator. Create a Beta distribution which is the product of
+two Beta distributions</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Beta operator *(Beta a, Beta b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a></td>
+        <td><p>The resulting Beta distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMean-1.html">CanGetMean&lt;MeanType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance&lt;VarType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVarianceOut-2.html">CanGetMeanAndVarianceOut&lt;MeanType, VarType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMeanAndVariance-2.html">CanSetMeanAndVariance&lt;MeanType, VarType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

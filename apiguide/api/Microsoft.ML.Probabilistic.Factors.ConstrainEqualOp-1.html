@@ -1,0 +1,1409 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ConstrainEqualOp&lt;T&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ConstrainEqualOp&lt;T&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1" class="text-break">Class ConstrainEqualOp&lt;T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Constrain.html#Microsoft_ML_Probabilistic_Factors_Constrain_Equal__1___0___0_">Equal&lt;T&gt;(T, T)</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">ConstrainEqualOp&lt;T&gt;</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Constrain), &quot;Equal&lt;&gt;&quot;, new Type[]{})]
+[Quality(QualityBand.Mature)]
+public static class ConstrainEqualOp&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageConditional__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AAverageConditional``1(``0,``0)">AAverageConditional&lt;TDistribution&gt;(TDistribution, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>A</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDistribution AAverageConditional&lt;TDistribution&gt;(TDistribution B, TDistribution result)
+    where TDistribution : SettableTo&lt;TDistribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageConditional__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>A</code> as the random arguments are varied. The formula is <code>proj[p(A) sum_(B) p(B) factor(A,B)]/p(A)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageConditional__1__0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AAverageConditional``1(`0,``0)">AAverageConditional&lt;TDistribution&gt;(T, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>A</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDistribution AAverageConditional&lt;TDistribution&gt;(T B, TDistribution result)
+    where TDistribution : HasPoint&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageConditional__1__0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>A</code> as the random arguments are varied. The formula is <code>proj[p(A) sum_(B) p(B) factor(A,B)]/p(A)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageLogarithm__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AAverageLogarithm``1(``0,``0)">AAverageLogarithm&lt;TDistribution&gt;(TDistribution, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>A</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;VMP does not support Constrain.Equal between random variables&quot;)]
+public static TDistribution AAverageLogarithm&lt;TDistribution&gt;(TDistribution B, TDistribution result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageLogarithm__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>A</code>. The formula is <code>exp(sum_(B) p(B) log(factor(A,B)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageLogarithm__1__0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AAverageLogarithm``1(`0,``0)">AAverageLogarithm&lt;TDistribution&gt;(T, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>A</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDistribution AAverageLogarithm&lt;TDistribution&gt;(T B, TDistribution result)
+    where TDistribution : HasPoint&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AAverageLogarithm__1__0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>A</code>. The formula is <code>exp(sum_(B) p(B) log(factor(A,B)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AMaxConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AMaxConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AMaxConditional__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AMaxConditional``1(``0,``0)">AMaxConditional&lt;TDistribution&gt;(TDistribution, TDistribution)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDistribution AMaxConditional&lt;TDistribution&gt;(TDistribution B, TDistribution result)
+    where TDistribution : SettableTo&lt;TDistribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AMaxConditional__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.AverageLogFactor">AverageLogFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(A,B))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageConditional__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.BAverageConditional``1(``0,``0)">BAverageConditional&lt;TDistribution&gt;(TDistribution, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>B</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDistribution BAverageConditional&lt;TDistribution&gt;(TDistribution A, TDistribution result)
+    where TDistribution : SettableTo&lt;TDistribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageConditional__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>B</code> as the random arguments are varied. The formula is <code>proj[p(B) sum_(A) p(A) factor(A,B)]/p(B)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageConditional__1__0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.BAverageConditional``1(`0,``0)">BAverageConditional&lt;TDistribution&gt;(T, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>B</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDistribution BAverageConditional&lt;TDistribution&gt;(T A, TDistribution result)
+    where TDistribution : HasPoint&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageConditional__1__0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>B</code> as the random arguments are varied. The formula is <code>proj[p(B) sum_(A) p(A) factor(A,B)]/p(B)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageLogarithm__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.BAverageLogarithm``1(``0,``0)">BAverageLogarithm&lt;TDistribution&gt;(TDistribution, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>B</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;VMP does not support Constrain.Equal between random variables&quot;)]
+public static TDistribution BAverageLogarithm&lt;TDistribution&gt;(TDistribution A, TDistribution result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageLogarithm__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>B</code>. The formula is <code>exp(sum_(A) p(A) log(factor(A,B)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageLogarithm__1__0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.BAverageLogarithm``1(`0,``0)">BAverageLogarithm&lt;TDistribution&gt;(T, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>B</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDistribution BAverageLogarithm&lt;TDistribution&gt;(T A, TDistribution result)
+    where TDistribution : HasPoint&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BAverageLogarithm__1__0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>B</code>. The formula is <code>exp(sum_(A) p(A) log(factor(A,B)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BMaxConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.BMaxConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BMaxConditional__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.BMaxConditional``1(``0,``0)">BMaxConditional&lt;TDistribution&gt;(TDistribution, TDistribution)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TDistribution BMaxConditional&lt;TDistribution&gt;(TDistribution A, TDistribution result)
+    where TDistribution : SettableTo&lt;TDistribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_BMaxConditional__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor__0__0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogAverageFactor(`0,`0)">LogAverageFactor(T, T)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(T a, T b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor__0__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A,B) p(A,B) factor(A,B))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogAverageFactor``1(``0,``0)">LogAverageFactor&lt;TDistribution&gt;(TDistribution, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor&lt;TDistribution&gt;(TDistribution a, TDistribution b)
+    where TDistribution : CanGetLogAverageOf&lt;TDistribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A,B) p(A,B) factor(A,B))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor__1___0__0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogAverageFactor``1(``0,`0)">LogAverageFactor&lt;TDistribution&gt;(TDistribution, T)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor&lt;TDistribution&gt;(TDistribution a, T b)
+    where TDistribution : CanGetLogProb&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor__1___0__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A,B) p(A,B) factor(A,B))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor__1__0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogAverageFactor``1(`0,``0)">LogAverageFactor&lt;TDistribution&gt;(T, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor&lt;TDistribution&gt;(T a, TDistribution b)
+    where TDistribution : CanGetLogProb&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogAverageFactor__1__0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A,B) p(A,B) factor(A,B))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio__0__0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogEvidenceRatio(`0,`0)">LogEvidenceRatio(T, T)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(T a, T b)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio__0__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A,B) p(A,B) factor(A,B))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogEvidenceRatio``1(``0,``0)">LogEvidenceRatio&lt;TDistribution&gt;(TDistribution, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio&lt;TDistribution&gt;(TDistribution a, TDistribution b)
+    where TDistribution : CanGetLogAverageOf&lt;TDistribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A,B) p(A,B) factor(A,B))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio__1___0__0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogEvidenceRatio``1(``0,`0)">LogEvidenceRatio&lt;TDistribution&gt;(TDistribution, T)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio&lt;TDistribution&gt;(TDistribution a, T b)
+    where TDistribution : CanGetLogProb&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio__1___0__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A,B) p(A,B) factor(A,B))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio__1__0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.ConstrainEqualOp`1.LogEvidenceRatio``1(`0,``0)">LogEvidenceRatio&lt;TDistribution&gt;(T, TDistribution)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio&lt;TDistribution&gt;(T a, TDistribution b)
+    where TDistribution : CanGetLogProb&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TDistribution</span></td>
+        <td><span class="parametername">b</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDistribution</span></td>
+        <td><p>The distribution over the constrained variables.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_ConstrainEqualOp_1_LogEvidenceRatio__1__0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A,B) p(A,B) factor(A,B))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

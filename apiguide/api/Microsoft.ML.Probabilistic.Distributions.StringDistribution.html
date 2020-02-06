@@ -1,0 +1,1219 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class StringDistribution
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class StringDistribution
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution" class="text-break">Class StringDistribution
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a distribution over strings that uses a weighted finite state automaton as the underlying weight function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html">SequenceDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator.html">StringManipulator</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton.html">StringAutomaton</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div class="level2"><span class="xref">StringDistribution</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSumExact-1.html">SettableToWeightedSumExact</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Point">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Point</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsPointMass">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsPointMass</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsEmpty">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsEmpty</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_PointMass__0_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.PointMass(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Uniform">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Uniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Zero">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Zero()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_FromWeightFunction__4_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.FromWeightFunction(StringAutomaton)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_FromWorkspace__4_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.FromWorkspace(StringAutomaton)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Empty">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Empty()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__2_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SingleElement(DiscreteChar)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__1_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SingleElement(Char)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Concatenate_System_Collections_Generic_IEnumerable__2__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Concatenate(IEnumerable&lt;DiscreteChar&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Collections_Generic_IEnumerable__5__System_Boolean_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(IEnumerable&lt;StringDistribution&gt;, Boolean, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf__5___">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(StringDistribution[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Double__5_System_Double__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(Double, StringDistribution, Double, StringDistribution)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair__0_System_Double___">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(IEnumerable&lt;KeyValuePair&lt;String, Double&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf_System_Collections_Generic_IEnumerable__0__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(IEnumerable&lt;String&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOf__0___">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOf(String[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Any_System_Int32_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Any(Int32, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__1_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Repeat(Char, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__0_System_Int32_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Repeat(String, Int32, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__2_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Repeat(DiscreteChar, Int32, Nullable&lt;Int32&gt;, DistributionKind)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__5_System_Int32_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Repeat(StringDistribution, Int32, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__5_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ZeroOrMore(StringDistribution, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__0_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ZeroOrMore(String, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__1_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ZeroOrMore(Char, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ZeroOrMore__2_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ZeroOrMore(DiscreteChar, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__5_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOrMore(StringDistribution, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__0_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOrMore(String, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__1_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOrMore(Char, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_OneOrMore__2_System_Nullable_System_Int32__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.OneOrMore(DiscreteChar, Nullable&lt;Int32&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Optional__5_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Optional(StringDistribution, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Optional__0_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Optional(String, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__1_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Append(Char, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__2_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Append(DiscreteChar, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__0_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Append(String, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__5_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Append(StringDistribution, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__1_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.AppendInPlace(Char, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__2_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.AppendInPlace(DiscreteChar, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__0_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.AppendInPlace(String, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_AppendInPlace__5_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.AppendInPlace(StringDistribution, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetWeightFunction__4_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetWeightFunction(StringAutomaton)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetWorkspace__4_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetWorkspace(StringAutomaton, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetWorkspaceOrPoint">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetWorkspaceOrPoint()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetNormalizedWorkspaceOrPoint">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetNormalizedWorkspaceOrPoint()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_EnumerateSupport_System_Int32_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.EnumerateSupport(Int32, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_TryEnumerateSupport_System_Int32_System_Collections_Generic_IEnumerable__0___System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.TryEnumerateSupport(Int32, IEnumerable&lt;String&gt;, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_EnumerateComponents">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.EnumerateComponents()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString_System_Action__2_System_Text_StringBuilder__">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ToString(Action&lt;DiscreteChar, StringBuilder&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ToString_Microsoft_ML_Probabilistic_Distributions_Automata_ISequenceDistributionFormat_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ToString(ISequenceDistributionFormat)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_HasGroup_System_Int32_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.HasGroup(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetGroups">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetGroups()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetTo__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetTo(StringDistribution)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToZero">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToZero()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Product__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Product(StringDistribution)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToProduct__5__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToProduct(StringDistribution, StringDistribution)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToProductAndReturnLogNormalizer__5__5_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToProductAndReturnLogNormalizer(StringDistribution, StringDistribution, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOf__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetLogAverageOf(StringDistribution)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogAverageOfPower__5_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetLogAverageOfPower(StringDistribution, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetAverageLog__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetAverageLog(StringDistribution)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogNormalizer">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetLogNormalizer()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToSum_System_Double__5_System_Double__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToSum(Double, StringDistribution, Double, StringDistribution)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToSumLog_System_Double__5_System_Double__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToSumLog(Double, StringDistribution, Double, StringDistribution)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPower__5_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToPower(StringDistribution, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToRatio__5__5_System_Boolean_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToRatio(StringDistribution, StringDistribution, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_System_ICloneable_Clone">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ICloneable.Clone()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Clone">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Clone()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_MaxDiff_System_Object_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.MaxDiff(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetLogProb__0_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetLogProb(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Contains__0_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Contains(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetProb__0_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetProb(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Sample__0_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Sample(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Sample">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Sample()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniformOf__2_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToUniformOf(DiscreteChar)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniform">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPartialUniform">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToPartialUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToPartialUniformOf__5_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToPartialUniformOf(StringDistribution)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsPartialUniform">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsPartialUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsProper">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsProper()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsUniform">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsUniform()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_IsZero">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.IsZero()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Equals_System_Object_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_GetHashCode">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_UniformOf__2_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.UniformOf(DiscreteChar, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SetToUniformOf__2_System_Double_">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.SetToUniformOf(DiscreteChar, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_ShouldSerializesequenceToWeight">SequenceDistribution&lt;String, Char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;.ShouldSerializesequenceToWeight()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Preview)]
+public class StringDistribution : SequenceDistribution&lt;string, char, DiscreteChar, StringManipulator, StringAutomaton, StringDistribution&gt;, IDistribution&lt;string&gt;, ICloneable, HasPoint&lt;string&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;string&gt;, SettableTo&lt;StringDistribution&gt;, SettableToProduct&lt;StringDistribution&gt;, SettableToProduct&lt;StringDistribution, StringDistribution&gt;, SettableToRatio&lt;StringDistribution&gt;, SettableToRatio&lt;StringDistribution, StringDistribution&gt;, SettableToPower&lt;StringDistribution&gt;, CanGetLogAverageOf&lt;StringDistribution&gt;, CanGetLogAverageOfPower&lt;StringDistribution&gt;, CanGetAverageLog&lt;StringDistribution&gt;, SettableToWeightedSumExact&lt;StringDistribution&gt;, SettableToWeightedSum&lt;StringDistribution&gt;, SettableToPartialUniform&lt;StringDistribution&gt;, CanGetLogNormalizer, Sampleable&lt;string&gt;</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Capitalized_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Capitalized*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Capitalized_System_Int32_System_Nullable_System_Int32__System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Capitalized(System.Int32,System.Nullable{System.Int32},System.Boolean)">Capitalized(Int32, Nullable&lt;Int32&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over strings that start with an upper case letter followed by
+one or more letters, with length within the given bounds.
+If <code data-dev-comment-type="paramref" class="paramref">maxLength</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution Capitalized(int minLength = 2, int? maxLength = default(int? ), bool allowUpperAfterFirst = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minLength</span></td>
+        <td><p>The minimum possible string length. Defaults to 2.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxLength</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">allowUpperAfterFirst</span></td>
+        <td><p>Whether to allow upper case letters after the initial upper case letter.  If false, only lower case letters will be allowed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_CaseInvariant_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.CaseInvariant*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_CaseInvariant_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.CaseInvariant(System.String)">CaseInvariant(String)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over all strings that are case-invariant matches of the specified string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution CaseInvariant(string template)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">template</span></td>
+        <td><p>The string to match.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Char*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Char(Microsoft.ML.Probabilistic.Distributions.DiscreteChar)">Char(DiscreteChar)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution over strings of length 1 induced by a given distribution over characters.
+This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__2_">SingleElement(TElementDistribution)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution Char(DiscreteChar characterDist)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
+        <td><span class="parametername">characterDist</span></td>
+        <td><p>The distribution over characters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_Microsoft_ML_Probabilistic_Distributions_DiscreteChar__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The distribution created by this method can differ from the result of
+<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Repeat__5_System_Int32_System_Nullable_System_Int32__">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</a>
+with both min and max length set to 1 since the latter always creates a partial uniform distribution.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Char*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Char_System_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Char(System.Char)">Char(Char)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which puts all mass on a string containing only a given character.
+This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_SingleElement__1_">SingleElement(TElement)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution Char(char ch)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><span class="parametername">ch</span></td>
+        <td><p>The character.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Digits_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Digits*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Digits_System_Int32_System_Nullable_System_Int32__Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Digits(System.Int32,System.Nullable{System.Int32},Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind)">Digits(Int32, Nullable&lt;Int32&gt;, DistributionKind)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over strings of digits, with length within the given bounds.
+If <code data-dev-comment-type="paramref" class="paramref">maxLength</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution Digits(int minLength = 1, int? maxLength = default(int? ), DistributionKind uniformity = DistributionKind.UniformOverValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minLength</span></td>
+        <td><p>The minimum possible string length. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxLength</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind.html">DistributionKind</a></td>
+        <td><span class="parametername">uniformity</span></td>
+        <td><p>The type of uniformity. Defaults to <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.DistributionKind.html#Microsoft_ML_Probabilistic_Distributions_Automata_DistributionKind_UniformOverValue">UniformOverValue</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Letters_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Letters*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Letters_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Letters(System.Int32,System.Nullable{System.Int32})">Letters(Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over strings of lowercase and uppercase letters, with length in given bounds.
+If <code data-dev-comment-type="paramref" class="paramref">maxLength</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution Letters(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minLength</span></td>
+        <td><p>The minimum possible string length. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxLength</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_LettersOrDigits_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.LettersOrDigits*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_LettersOrDigits_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.LettersOrDigits(System.Int32,System.Nullable{System.Int32})">LettersOrDigits(Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over strings of digits, lowercase and uppercase letters, with length within the given bounds.
+If <code data-dev-comment-type="paramref" class="paramref">maxLength</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution LettersOrDigits(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minLength</span></td>
+        <td><p>The minimum possible string length. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxLength</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Lower_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Lower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Lower_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Lower(System.Int32,System.Nullable{System.Int32})">Lower(Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over strings of lowercase letters, with length within the given bounds.
+If <code data-dev-comment-type="paramref" class="paramref">maxLength</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution Lower(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minLength</span></td>
+        <td><p>The minimum possible string length. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxLength</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.String*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_String_System_String_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.String(System.String)">String(String)</h4>
+  <div class="markdown level1 summary"><p>Creates a point mass distribution.
+This method is an alias for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_PointMass__0_">PointMass(TSequence)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution String(string str)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">str</span></td>
+        <td><p>The point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created point mass distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_ToRegex_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.ToRegex*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_ToRegex" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.ToRegex">ToRegex()</h4>
+  <div class="markdown level1 summary"><p>Creates a regex pattern for the current string distribution. This can then in turn be used with the normal Regex .net
+class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToRegex()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A regex pattern.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Creates a string representation of the current instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string representation of the current instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.ML.Probabilistic.Distributions.SequenceDistribution&lt;System.String, System.Char, Microsoft.ML.Probabilistic.Distributions.DiscreteChar, Microsoft.ML.Probabilistic.Distributions.Automata.StringManipulator, Microsoft.ML.Probabilistic.Distributions.Automata.StringAutomaton, Microsoft.ML.Probabilistic.Distributions.StringDistribution&gt;.ToString()</span></div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Upper_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Upper*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Upper_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Upper(System.Int32,System.Nullable{System.Int32})">Upper(Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over strings of uppercase letters, with length within the given bounds.
+If <code data-dev-comment-type="paramref" class="paramref">maxLength</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution Upper(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minLength</span></td>
+        <td><p>The minimum possible string length. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxLength</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Whitespace_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Whitespace*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_Whitespace_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.Whitespace(System.Int32,System.Nullable{System.Int32})">Whitespace(Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over strings of whitespace characters (see <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Whitespace">Whitespace()</a>),
+with length within the given bounds.
+If <code data-dev-comment-type="paramref" class="paramref">maxLength</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution Whitespace(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minLength</span></td>
+        <td><p>The minimum possible string length. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxLength</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_WordChars_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.WordChars*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_WordChars_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.WordChars(System.Int32,System.Nullable{System.Int32})">WordChars(Int32, Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a uniform distribution over strings of word characters (see <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_DiscreteChar_WordChar">WordChar()</a>),
+with length within the given bounds.
+If <code data-dev-comment-type="paramref" class="paramref">maxLength</code> is set to <span class="xref">null</span>,
+there will be no upper bound on the length, and the resulting distribution will thus be improper.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution WordChars(int minLength = 1, int? maxLength = default(int? ))</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">minLength</span></td>
+        <td><p>The minimum possible string length. Defaults to 1.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">maxLength</span></td>
+        <td><p>The maximum possible sequence length, or <span class="xref">null</span> for no upper bound on length.
+Defaults to <span class="xref">null</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_op_Addition_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.op_Addition*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_StringDistribution_op_Addition_Microsoft_ML_Probabilistic_Distributions_StringDistribution_Microsoft_ML_Probabilistic_Distributions_StringDistribution_" data-uid="Microsoft.ML.Probabilistic.Distributions.StringDistribution.op_Addition(Microsoft.ML.Probabilistic.Distributions.StringDistribution,Microsoft.ML.Probabilistic.Distributions.StringDistribution)">Addition(StringDistribution, StringDistribution)</h4>
+  <div class="markdown level1 summary"><p>Concatenates the weighted regular languages defined by given distributions
+(see <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SequenceDistribution-6.html#Microsoft_ML_Probabilistic_Distributions_SequenceDistribution_6_Append__5_System_Int32_">Append(TThis, Int32)</a>).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StringDistribution operator +(StringDistribution first, StringDistribution second)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>The first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><span class="parametername">second</span></td>
+        <td><p>The second distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.StringDistribution.html">StringDistribution</a></td>
+        <td><p>The concatenation result.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-1.html">SettableToRatio&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToRatio-2.html">SettableToRatio&lt;T, U&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSumExact-1.html">SettableToWeightedSumExact&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform&lt;TDist&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Microsoft.ML.Probabilistic.Models.Attributes
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Microsoft.ML.Probabilistic.Models.Attributes
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Models.Attributes">
+  
+  <h1 id="Microsoft_ML_Probabilistic_Models_Attributes" data-uid="Microsoft.ML.Probabilistic.Models.Attributes" class="text-break">Namespace Microsoft.ML.Probabilistic.Models.Attributes
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.Algorithm.html">Algorithm</a></h4>
+      <section><p>Attribute which associates a specified algorithm to a targetted variable or statement.
+This is used for hybrid inference where different algorithms are used for different parts
+of the model</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.DerivedVariable.html">DerivedVariable</a></h4>
+      <section><p>For expert use only!  When sharing a variable between multiple models (e.g. using SharedVariable)
+you can add this attribute to have the variable be treated as a derived variable, even if it
+is not derived in the submodel where it appears.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.DistributedCommunication.html">DistributedCommunication</a></h4>
+      <section><p>Attached to an index array.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.DistributedCommunicationExpression.html">DistributedCommunicationExpression</a></h4>
+      <section><p>Attached to an index array.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.DistributedSchedule.html">DistributedSchedule</a></h4>
+      <section><p>When attached to a Sequential Range, specifies which indices should be processed by each thread</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.DivideMessages.html">DivideMessages</a></h4>
+      <section><p>Attached to Variable objects to specify if outgoing messages should be computed by division</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.DoNotInfer.html">DoNotInfer</a></h4>
+      <section><p>When attached to a variable, indicates that the variable will not be inferred, producing more efficient generated code.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.FactorAlgorithm.html">FactorAlgorithm</a></h4>
+      <section><p>Attribute which associates a specified algorithm to all factors that define a variable.
+This is used for hybrid inference where different algorithms are used for different parts
+of the model</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.GivePriorityTo.html">GivePriorityTo</a></h4>
+      <section><p>Attached to Variable or MethodInvoke to give priority in the operator search path</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.GroupMember.html">GroupMember</a></h4>
+      <section><p>Group member attribute - attached to MSL variables based on
+inference engine groups</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.InitialiseBackward.html">InitialiseBackward</a></h4>
+      <section><p>When attached to a Variable, indicates that the backward messages to factors with NoInit attributes should be treated as initialised by the scheduler, even though they will be initialised to uniform</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.ListenToMessages.html">ListenToMessages</a></h4>
+      <section><p>Attribute to cause message update events to be generated for the messages associated with the target variable</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.MarginalPrototype.html">MarginalPrototype</a></h4>
+      <section><p>Specifies a prototype marginal distribution for a variable. This attribute
+can be used to explicitly specify the marginal distribution type for a variable
+in cases where it cannot be deduced by the model compiler.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.Output.html">Output</a></h4>
+      <section><p>Attribute which indicates that the output message will be recovered from
+the targetted variable. The output message of a variable is its marginal divided by
+its inbox message, and is used in situations where variables are shared
+between different models</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.ParallelSchedule.html">ParallelSchedule</a></h4>
+      <section><p>When attached to a Sequential Range, specifies which indices should be processed by each thread</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.Partitioned.html">Partitioned</a></h4>
+      <section><p>Attached to Ranges to specify that only one element should be in memory at a time (per thread)</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.PointEstimate.html">PointEstimate</a></h4>
+      <section><p>Attached to Variable objects to indicate that their uncertainty should be ignored during inference.<br>
+The inferred marginal will always be a point mass.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.Sequential.html">Sequential</a></h4>
+      <section><p>When attached to a Range, indicates that the elements of the range should be updated sequentially rather than in parallel.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.TraceMessages.html">TraceMessages</a></h4>
+      <section><p>Attribute to generate trace outputs for the messages associated with the target variable</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.ValueRange.html">ValueRange</a></h4>
+      <section><p>Specifies the range of values taken by an integer variable, or the dimension of a Dirichlet variable.
+This attribute can be used to explicitly specify the value range for a variable
+in cases where it cannot be deduced by the model compiler.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.VariableGroup.html">VariableGroup</a></h4>
+      <section><p>A group of variables processed together by an inference algorithm</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.IAlgorithm.html">IAlgorithm</a></h4>
+      <section><p>Interface for inference algorithms</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

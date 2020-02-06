@@ -1,0 +1,1245 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MatlabWriter
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MatlabWriter
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter" class="text-break">Class MatlabWriter
+  </h1>
+  <div class="markdown level0 summary"><p>Write data objects to a MAT file</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">MatlabWriter</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Serialization.html">Microsoft.ML.Probabilistic.Serialization</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class MatlabWriter : IDisposable</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The MAT file format is defined in <a href="http://www.mathworks.com/access/helpdesk/help/pdf_doc/matlab/matfile_format.pdf">The MAT file format</a>.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter__ctor_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter__ctor_System_String_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.#ctor(System.String)">MatlabWriter(String)</h4>
+  <div class="markdown level1 summary"><p>Create a MatlabWriter to write to a given file name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MatlabWriter(string fileName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>The file name to write to (will be created if missing, or truncated if already exists)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Dispose_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Dispose*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Dispose" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"><p>Release the stream used by a MatlabWriter</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Matlab5Header_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Matlab5Header*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Matlab5Header_System_String_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Matlab5Header(System.String)">Matlab5Header(String)</h4>
+  <div class="markdown level1 summary"><p>Generate a Matlab V5 compatible header byte array</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected static byte[] Matlab5Header(string comments)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">comments</span></td>
+        <td><p>The comments that will go into the header of the Matlab file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><p>The header as a byte array.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_TryWriteDictionary_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.TryWriteDictionary*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_TryWriteDictionary_System_String_System_Object_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.TryWriteDictionary(System.String,System.Object)">TryWriteDictionary(String, Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool TryWriteDictionary(string name, object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(Microsoft.ML.Probabilistic.Math.Matrix)">Write(Matrix)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(Matrix matrix)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">matrix</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_Microsoft_ML_Probabilistic_Serialization_MatType_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(Microsoft.ML.Probabilistic.Serialization.MatType)">Write(MatType)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(MatType type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.MatType.html">MatType</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.Byte)">Write(Byte)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(byte value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_Byte___" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.Byte[])">Write(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Write an array of bytes to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(byte[] bytes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">bytes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_Double_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.Double)">Write(Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(double value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_Int16_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.Int16)">Write(Int16)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(short value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int16">Int16</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.Int32)">Write(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(int value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_Int64_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.Int64)">Write(Int64)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(long value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_Single_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.Single)">Write(Single)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(float value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_Microsoft_ML_Probabilistic_Math_Matrix_Microsoft_ML_Probabilistic_Math_Matrix_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,Microsoft.ML.Probabilistic.Math.Matrix,Microsoft.ML.Probabilistic.Math.Matrix)">Write(String, Matrix, Matrix)</h4>
+  <div class="markdown level1 summary"><p>Write a named Matrix to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, Matrix matrix, Matrix imaginary = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name of the matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">matrix</span></td>
+        <td><p>A matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Matrix.html">Matrix</a></td>
+        <td><span class="parametername">imaginary</span></td>
+        <td><p>If writing a complex matrix, the imaginary part of the matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_Microsoft_ML_Probabilistic_Serialization_MatlabReader_ComplexMatrix_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,Microsoft.ML.Probabilistic.Serialization.MatlabReader.ComplexMatrix)">Write(String, MatlabReader.ComplexMatrix)</h4>
+  <div class="markdown level1 summary"><p>Write a named ComplexMatrix to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, MatlabReader.ComplexMatrix matrix)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.MatlabReader.ComplexMatrix.html">MatlabReader.ComplexMatrix</a></td>
+        <td><span class="parametername">matrix</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_Collections_Generic_IReadOnlyList_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.Collections.Generic.IReadOnlyList{System.Boolean})">Write(String, IReadOnlyList&lt;Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Write a named bool array to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, IReadOnlyList&lt;bool&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_Collections_Generic_IReadOnlyList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.Collections.Generic.IReadOnlyList{System.Double})">Write(String, IReadOnlyList&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Write a named vector to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, IReadOnlyList&lt;double&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_Collections_Generic_IReadOnlyList_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.Collections.Generic.IReadOnlyList{System.Int32})">Write(String, IReadOnlyList&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Write a named int array to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, IReadOnlyList&lt;int&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_Collections_Generic_IReadOnlyList_System_Int64__" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.Collections.Generic.IReadOnlyList{System.Int64})">Write(String, IReadOnlyList&lt;Int64&gt;)</h4>
+  <div class="markdown level1 summary"><p>Write a named long array to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, IReadOnlyList&lt;long&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_Collections_Generic_IReadOnlyList_System_UInt32__" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.Collections.Generic.IReadOnlyList{System.UInt32})">Write(String, IReadOnlyList&lt;UInt32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Write a named int array to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, IReadOnlyList&lt;uint&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_Collections_Generic_IReadOnlyList_System_UInt64__" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.Collections.Generic.IReadOnlyList{System.UInt64})">Write(String, IReadOnlyList&lt;UInt64&gt;)</h4>
+  <div class="markdown level1 summary"><p>Write a named ulong array to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, IReadOnlyList&lt;ulong&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint64">UInt64</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_Double_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.Double)">Write(String, Double)</h4>
+  <div class="markdown level1 summary"><p>Write a named scalar to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, double value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.Int32)">Write(String, Int32)</h4>
+  <div class="markdown level1 summary"><p>Write a string value with zero padding to write numBytes in total.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(string value, int numBytes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">numBytes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_Object_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.Object)">Write(String, Object)</h4>
+  <div class="markdown level1 summary"><p>Write a named object to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_Object_0__0___" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.Object[0:,0:])">Write(String, Object[,])</h4>
+  <div class="markdown level1 summary"><p>Write a named cell array to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, object[, ] array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[,]</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_String_System_String_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.String,System.String)">Write(String, String)</h4>
+  <div class="markdown level1 summary"><p>Write a named string to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write(string name, string value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_UInt16_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.UInt16)">Write(UInt16)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(ushort value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_UInt32_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.UInt32)">Write(UInt32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(uint value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_System_UInt64_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write(System.UInt64)">Write(UInt64)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Write(ulong value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint64">UInt64</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write__1_System_String_System_Collections_Generic_IReadOnlyDictionary_System_String___0__" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write``1(System.String,System.Collections.Generic.IReadOnlyDictionary{System.String,``0})">Write&lt;T&gt;(String, IReadOnlyDictionary&lt;String, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Write a named struct to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write&lt;T&gt;(string name, IReadOnlyDictionary&lt;string, T&gt; dict)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, T&gt;</td>
+        <td><span class="parametername">dict</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_Write__1_System_String_System_Collections_Generic_IReadOnlyList___0__" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.Write``1(System.String,System.Collections.Generic.IReadOnlyList{``0})">Write&lt;T&gt;(String, IReadOnlyList&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Write a named cell vector to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Write&lt;T&gt;(string name, IReadOnlyList&lt;T&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_WriteArray_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.WriteArray*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_WriteArray_System_String_System_Array_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.WriteArray(System.String,System.Array)">WriteArray(String, Array)</h4>
+  <div class="markdown level1 summary"><p>Write a named array to the stream</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void WriteArray(string name, Array array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array">Array</a></td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_WriteFromCsv_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.WriteFromCsv*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_WriteFromCsv_System_String_System_String_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.WriteFromCsv(System.String,System.String)">WriteFromCsv(String, String)</h4>
+  <div class="markdown level1 summary"><p>Write a named struct whose fields are the columns of a csv file</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void WriteFromCsv(string name, string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_WriteFromCsvFolder_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.WriteFromCsvFolder*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_WriteFromCsvFolder_System_String_System_String_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.WriteFromCsvFolder(System.String,System.String)">WriteFromCsvFolder(String, String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void WriteFromCsvFolder(string outputFilename, string inputFolder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">outputFilename</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">inputFolder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_WriteMatrixHeader_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.WriteMatrixHeader*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Serialization_MatlabWriter_WriteMatrixHeader_System_String_System_Int32_System_Int32_Microsoft_ML_Probabilistic_Serialization_mxClass_System_Int32_System_Boolean_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Serialization.MatlabWriter.WriteMatrixHeader(System.String,System.Int32,System.Int32,Microsoft.ML.Probabilistic.Serialization.mxClass,System.Int32,System.Boolean,System.Boolean)">WriteMatrixHeader(String, Int32, Int32, mxClass, Int32, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void WriteMatrixHeader(string name, int rows, int cols, mxClass dataClass, int elementSize, bool isComplex = false, bool isLogical = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">rows</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">cols</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Serialization.mxClass.html">mxClass</a></td>
+        <td><span class="parametername">dataClass</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">elementSize</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isComplex</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isLogical</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

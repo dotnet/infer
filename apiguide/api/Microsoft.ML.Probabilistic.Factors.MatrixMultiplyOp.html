@@ -1,0 +1,2307 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MatrixMultiplyOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MatrixMultiplyOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp" class="text-break">Class MatrixMultiplyOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_MatrixMultiply_System_Double_0__0___System_Double_0__0___">MatrixMultiply(Double[,], Double[,])</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">MatrixMultiplyOp</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;MatrixMultiply&quot;, new Type[]{})]
+[Quality(QualityBand.Stable)]
+public static class MatrixMultiplyOp</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">AAverageConditional(DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>A</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A MatrixMultiply factor between two Gaussian arrays is not yet implemented for Expectation Propagation.  Try using Variational Message Passing.&quot;)]
+public static DistributionStructArray2D&lt;Gaussian, double&gt; AAverageConditional(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, DistributionStructArray2D&lt;Gaussian, double&gt; B, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>A</code> as the random arguments are varied. The formula is <code>proj[p(A) sum_(matrixMultiply,B) p(matrixMultiply,B) factor(matrixMultiply,A,B)]/p(A)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageConditional(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">AAverageConditional(DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>A</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; AAverageConditional(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, DistributionStructArray2D&lt;Gaussian, double&gt; A, double[, ] B, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>A</code> as the random arguments are varied. The formula is <code>proj[p(A) sum_(matrixMultiply) p(matrixMultiply) factor(matrixMultiply,A,B)]/p(A)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">matrixMultiply</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageConditional_System_Double_0__0___System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageConditional(System.Double[0:,0:],System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">AAverageConditional(Double[,], Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>A</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A MatrixMultiply factor with fixed output is not yet implemented for Expectation Propagation.&quot;)]
+public static DistributionStructArray2D&lt;Gaussian, double&gt; AAverageConditional(double[, ] matrixMultiply, double[, ] B, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageConditional_System_Double_0__0___System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>A</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">AAverageLogarithm(DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>A</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; AAverageLogarithm(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, DistributionStructArray2D&lt;Gaussian, double&gt; A, DistributionStructArray2D&lt;Gaussian, double&gt; B, DistributionStructArray2D&lt;Gaussian, double&gt; to_A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">to_A</span></td>
+        <td><p>Previous outgoing message to <code>A</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The outgoing VMP message to the <code>A</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>A</code>. Because the factor is deterministic, <code>matrixMultiply</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(B) p(B) log(sum_matrixMultiply p(matrixMultiply) factor(matrixMultiply,A,B)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">matrixMultiply</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">AAverageLogarithm(DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>A</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; AAverageLogarithm(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, DistributionStructArray2D&lt;Gaussian, double&gt; A, double[, ] B, DistributionStructArray2D&lt;Gaussian, double&gt; to_A)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">to_A</span></td>
+        <td><p>Previous outgoing message to <code>A</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The outgoing VMP message to the <code>A</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>A</code> with <code>matrixMultiply</code> integrated out. The formula is <code>sum_matrixMultiply p(matrixMultiply) factor(matrixMultiply,A,B)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">matrixMultiply</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageLogarithm_System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AAverageLogarithm(System.Double[0:,0:])">AAverageLogarithm(Double[,])</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>A</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Variational Message Passing does not support a MatrixMultiply factor with fixed output.&quot;)]
+public static DistributionStructArray2D&lt;Gaussian, double&gt; AAverageLogarithm(double[, ] matrixMultiply)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The outgoing VMP message to the <code>A</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AAverageLogarithm_System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>A</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AverageLogFactor">AverageLogFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(matrixMultiply,A,B))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AverageLogFactor_System_Double_0__0___System_Double_0__0___System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.AverageLogFactor(System.Double[0:,0:],System.Double[0:,0:],System.Double[0:,0:])">AverageLogFactor(Double[,], Double[,], Double[,])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(double[, ] matrixMultiply, double[, ] A, double[, ] B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_AverageLogFactor_System_Double_0__0___System_Double_0__0___System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(matrixMultiply,A,B))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">BAverageConditional(DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>B</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A MatrixMultiply factor between two Gaussian arrays is not yet implemented for Expectation Propagation.  Try using Variational Message Passing.&quot;)]
+public static DistributionStructArray2D&lt;Gaussian, double&gt; BAverageConditional(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, DistributionStructArray2D&lt;Gaussian, double&gt; A, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>B</code> as the random arguments are varied. The formula is <code>proj[p(B) sum_(matrixMultiply,A) p(matrixMultiply,A) factor(matrixMultiply,A,B)]/p(B)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">BAverageConditional(DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>B</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; BAverageConditional(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, double[, ] A, DistributionStructArray2D&lt;Gaussian, double&gt; B, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>B</code> as the random arguments are varied. The formula is <code>proj[p(B) sum_(matrixMultiply) p(matrixMultiply) factor(matrixMultiply,A,B)]/p(B)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">matrixMultiply</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageConditional_System_Double_0__0___System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageConditional(System.Double[0:,0:],System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">BAverageConditional(Double[,], Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>B</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A MatrixMultiply factor with fixed output is not yet implemented for Expectation Propagation.&quot;)]
+public static DistributionStructArray2D&lt;Gaussian, double&gt; BAverageConditional(double[, ] matrixMultiply, double[, ] A, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageConditional_System_Double_0__0___System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>B</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">BAverageLogarithm(DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>B</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; BAverageLogarithm(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, DistributionStructArray2D&lt;Gaussian, double&gt; A, DistributionStructArray2D&lt;Gaussian, double&gt; B, DistributionStructArray2D&lt;Gaussian, double&gt; to_B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">to_B</span></td>
+        <td><p>Previous outgoing message to <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The outgoing VMP message to the <code>B</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>B</code>. Because the factor is deterministic, <code>matrixMultiply</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(A) p(A) log(sum_matrixMultiply p(matrixMultiply) factor(matrixMultiply,A,B)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">matrixMultiply</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">BAverageLogarithm(DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>B</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; BAverageLogarithm(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, double[, ] A, DistributionStructArray2D&lt;Gaussian, double&gt; B, DistributionStructArray2D&lt;Gaussian, double&gt; to_B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">to_B</span></td>
+        <td><p>Previous outgoing message to <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The outgoing VMP message to the <code>B</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>B</code> with <code>matrixMultiply</code> integrated out. The formula is <code>sum_matrixMultiply p(matrixMultiply) factor(matrixMultiply,A,B)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">matrixMultiply</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageLogarithm_System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.BAverageLogarithm(System.Double[0:,0:])">BAverageLogarithm(Double[,])</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>B</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Variational Message Passing does not support a MatrixMultiply factor with fixed output.&quot;)]
+public static DistributionStructArray2D&lt;Gaussian, double&gt; BAverageLogarithm(double[, ] matrixMultiply)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The outgoing VMP message to the <code>B</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_BAverageLogarithm_System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>B</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:])">LogAverageFactor(DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, DistributionStructArray2D&lt;Gaussian, double&gt; A, double[, ] B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(matrixMultiply,A) p(matrixMultiply,A) factor(matrixMultiply,A,B))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">LogAverageFactor(DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, double[, ] A, DistributionStructArray2D&lt;Gaussian, double&gt; B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(matrixMultiply,B) p(matrixMultiply,B) factor(matrixMultiply,A,B))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogAverageFactor(System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:])">LogAverageFactor(Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(double[, ] matrixMultiply, DistributionStructArray2D&lt;Gaussian, double&gt; A, double[, ] B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A) p(A) factor(matrixMultiply,A,B))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_System_Double_0__0___System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogAverageFactor(System.Double[0:,0:],System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">LogAverageFactor(Double[,], Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(double[, ] matrixMultiply, double[, ] A, DistributionStructArray2D&lt;Gaussian, double&gt; B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_System_Double_0__0___System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(B) p(B) factor(matrixMultiply,A,B))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_System_Double_0__0___System_Double_0__0___System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogAverageFactor(System.Double[0:,0:],System.Double[0:,0:],System.Double[0:,0:])">LogAverageFactor(Double[,], Double[,], Double[,])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(double[, ] matrixMultiply, double[, ] A, double[, ] B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogAverageFactor_System_Double_0__0___System_Double_0__0___System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(matrixMultiply,A,B))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:])">LogEvidenceRatio(DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, DistributionStructArray2D&lt;Gaussian, double&gt; A, double[, ] B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(matrixMultiply,A) p(matrixMultiply,A) factor(matrixMultiply,A,B) / sum_matrixMultiply p(matrixMultiply) messageTo(matrixMultiply))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">LogEvidenceRatio(DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(DistributionStructArray2D&lt;Gaussian, double&gt; matrixMultiply, double[, ] A, DistributionStructArray2D&lt;Gaussian, double&gt; B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Incoming message from <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(matrixMultiply,B) p(matrixMultiply,B) factor(matrixMultiply,A,B) / sum_matrixMultiply p(matrixMultiply) messageTo(matrixMultiply))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogEvidenceRatio(System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:])">LogEvidenceRatio(Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(double[, ] matrixMultiply, DistributionStructArray2D&lt;Gaussian, double&gt; A, double[, ] B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(A) p(A) factor(matrixMultiply,A,B))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_System_Double_0__0___System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogEvidenceRatio(System.Double[0:,0:],System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">LogEvidenceRatio(Double[,], Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(double[, ] matrixMultiply, double[, ] A, DistributionStructArray2D&lt;Gaussian, double&gt; B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_System_Double_0__0___System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(B) p(B) factor(matrixMultiply,A,B))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_System_Double_0__0___System_Double_0__0___System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.LogEvidenceRatio(System.Double[0:,0:],System.Double[0:,0:],System.Double[0:,0:])">LogEvidenceRatio(Double[,], Double[,], Double[,])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(double[, ] matrixMultiply, double[, ] A, double[, ] B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">matrixMultiply</span></td>
+        <td><p>Constant value for <code>matrixMultiply</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_LogEvidenceRatio_System_Double_0__0___System_Double_0__0___System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(matrixMultiply,A,B))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageConditional(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">MatrixMultiplyAverageConditional(DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>matrixMultiply</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A MatrixMultiply factor between two Gaussian arrays is not yet implemented for Expectation Propagation.  Try using Variational Message Passing.&quot;)]
+public static DistributionStructArray2D&lt;Gaussian, double&gt; MatrixMultiplyAverageConditional(DistributionStructArray2D&lt;Gaussian, double&gt; A, DistributionStructArray2D&lt;Gaussian, double&gt; B, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>matrixMultiply</code> as the random arguments are varied. The formula is <code>proj[p(matrixMultiply) sum_(A,B) p(A,B) factor(matrixMultiply,A,B)]/p(matrixMultiply)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageConditional(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">MatrixMultiplyAverageConditional(DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>matrixMultiply</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; MatrixMultiplyAverageConditional(DistributionStructArray2D&lt;Gaussian, double&gt; A, double[, ] B, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageConditional_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>matrixMultiply</code> as the random arguments are varied. The formula is <code>proj[p(matrixMultiply) sum_(A) p(A) factor(matrixMultiply,A,B)]/p(matrixMultiply)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageConditional_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageConditional(System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">MatrixMultiplyAverageConditional(Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>matrixMultiply</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; MatrixMultiplyAverageConditional(double[, ] A, DistributionStructArray2D&lt;Gaussian, double&gt; B, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageConditional_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>matrixMultiply</code> as the random arguments are varied. The formula is <code>proj[p(matrixMultiply) sum_(B) p(B) factor(matrixMultiply,A,B)]/p(matrixMultiply)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">MatrixMultiplyAverageLogarithm(DistributionArray2D&lt;Gaussian&gt;, DistributionArray2D&lt;Gaussian&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>matrixMultiply</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; MatrixMultiplyAverageLogarithm(DistributionArray2D&lt;Gaussian&gt; A, DistributionArray2D&lt;Gaussian&gt; B, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-1.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-1.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>matrixMultiply</code> as the random arguments are varied. The formula is <code>proj[sum_(A,B) p(A,B) factor(matrixMultiply,A,B)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">MatrixMultiplyAverageLogarithm(DistributionStructArray2D&lt;Gaussian, Double&gt;, Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>matrixMultiply</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; MatrixMultiplyAverageLogarithm(DistributionStructArray2D&lt;Gaussian, double&gt; A, double[, ] B, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>matrixMultiply</code> as the random arguments are varied. The formula is <code>proj[sum_(A) p(A) factor(matrixMultiply,A,B)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithm_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithm(System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double},Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double})">MatrixMultiplyAverageLogarithm(Double[,], DistributionStructArray2D&lt;Gaussian, Double&gt;, DistributionStructArray2D&lt;Gaussian, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>matrixMultiply</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; MatrixMultiplyAverageLogarithm(double[, ] A, DistributionStructArray2D&lt;Gaussian, double&gt; B, DistributionStructArray2D&lt;Gaussian, double&gt; result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithm_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double__Microsoft_ML_Probabilistic_Distributions_DistributionStructArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>matrixMultiply</code> as the random arguments are varied. The formula is <code>proj[sum_(B) p(B) factor(matrixMultiply,A,B)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithmInit_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithmInit(Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian})">MatrixMultiplyAverageLogarithmInit(DistributionArray2D&lt;Gaussian&gt;, DistributionArray2D&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; MatrixMultiplyAverageLogarithmInit(DistributionArray2D&lt;Gaussian&gt; A, DistributionArray2D&lt;Gaussian&gt; B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-1.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-1.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithmInit_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithmInit_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double_0__0___" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithmInit(Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[0:,0:])">MatrixMultiplyAverageLogarithmInit(DistributionArray2D&lt;Gaussian&gt;, Double[,])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; MatrixMultiplyAverageLogarithmInit(DistributionArray2D&lt;Gaussian&gt; A, double[, ] B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-1.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Incoming message from <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Constant value for <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithmInit_Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double_0__0____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithmInit_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.MatrixMultiplyOp.MatrixMultiplyAverageLogarithmInit(System.Double[0:,0:],Microsoft.ML.Probabilistic.Distributions.DistributionArray2D{Microsoft.ML.Probabilistic.Distributions.Gaussian})">MatrixMultiplyAverageLogarithmInit(Double[,], DistributionArray2D&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionStructArray2D&lt;Gaussian, double&gt; MatrixMultiplyAverageLogarithmInit(double[, ] A, DistributionArray2D&lt;Gaussian&gt; B)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[,]</td>
+        <td><span class="parametername">A</span></td>
+        <td><p>Constant value for <code>A</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionArray2D-1.html">DistributionArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">B</span></td>
+        <td><p>Incoming message from <code>B</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray2D-2.html">DistributionStructArray2D</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_MatrixMultiplyOp_MatrixMultiplyAverageLogarithmInit_System_Double_0__0___Microsoft_ML_Probabilistic_Distributions_DistributionArray2D_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

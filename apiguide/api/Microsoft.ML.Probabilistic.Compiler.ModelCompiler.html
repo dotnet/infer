@@ -1,0 +1,3131 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ModelCompiler
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ModelCompiler
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler" class="text-break">Class ModelCompiler
+  </h1>
+  <div class="markdown level0 summary"><p>A model compiler takes a model specified in MSL and compiles it into the code
+required to perform inference in that model, as specified by the inference engine settings
+and model attributes.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">ModelCompiler</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.html">Microsoft.ML.Probabilistic.Compiler</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ModelCompiler</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_algorithm" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.algorithm">algorithm</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected IAlgorithm algorithm</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.IAlgorithm.html">IAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_dp" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.dp">dp</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected IDeclarationProvider dp</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.IDeclarationProvider.html">IDeclarationProvider</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_AddComments_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.AddComments*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_AddComments" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.AddComments">AddComments</h4>
+  <div class="markdown level1 summary"><p>If true, comments will be added to the generated code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AddComments { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Algorithm_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Algorithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Algorithm" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Algorithm">Algorithm</h4>
+  <div class="markdown level1 summary"><p>The inference algorithm to use.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IAlgorithm Algorithm { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Models.Attributes.IAlgorithm.html">IAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_AllowDerivedParents_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.AllowDerivedParents*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_AllowDerivedParents" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.AllowDerivedParents">AllowDerivedParents</h4>
+  <div class="markdown level1 summary"><p>If true, allow factor arguments marked 'stochastic' to be derived.  This can cause inference to diverge on some models.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AllowDerivedParents { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_AllowSerialInitialisers_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.AllowSerialInitialisers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_AllowSerialInitialisers" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.AllowSerialInitialisers">AllowSerialInitialisers</h4>
+  <div class="markdown level1 summary"><p>Experimental feature: Allow Sequential loops in the initialisation schedule.  Set this to false to work around scheduling problems.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AllowSerialInitialisers { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_BrowserMode_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.BrowserMode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_BrowserMode" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.BrowserMode">BrowserMode</h4>
+  <div class="markdown level1 summary"><p>Controls when the model compiler browser is shown</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BrowserMode BrowserMode { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.BrowserMode.html">BrowserMode</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_CatchExceptions_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.CatchExceptions*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_CatchExceptions" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.CatchExceptions">CatchExceptions</h4>
+  <div class="markdown level1 summary"><p>If true, compiler exceptions are caught and displayed in the transform browser, rather than propagating to the caller.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CatchExceptions { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_CompilerChoice_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.CompilerChoice*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_CompilerChoice" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.CompilerChoice">CompilerChoice</h4>
+  <div class="markdown level1 summary"><p>Selects the used compiler: Roslyn or CodeDom.Compiler.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CompilerChoice CompilerChoice { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CompilerChoice.html">CompilerChoice</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_CompilerChoice_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is set to Auto by default, which means CodeDom.Compiler on .NET full / Windows, and Roslyn on .NET Core and Mono.
+When overriding, consider the following:</p>
+<ul><li>CodeDom.Compiler throws PlatformNotSupportedException on .NET Core.</li><li>Roslyn takes a few seconds to initialize, which is not the case for CodeDom.Compiler.</li><li>CodeDom.Compiler works very slowly on Mono.</li></ul>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_DeclarationProvider_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.DeclarationProvider*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_DeclarationProvider" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.DeclarationProvider">DeclarationProvider</h4>
+  <div class="markdown level1 summary"><p>Declaration provider for model defined in MSL</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDeclarationProvider DeclarationProvider { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.IDeclarationProvider.html">IDeclarationProvider</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_EnforceTriggers_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.EnforceTriggers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_EnforceTriggers" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.EnforceTriggers">EnforceTriggers</h4>
+  <div class="markdown level1 summary"><p>If false, trigger and fresh annotations will not be enforced during scheduling.  Useful for debugging infinite RepairSchedule loops.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool EnforceTriggers { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ExtraTransforms_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ExtraTransforms*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ExtraTransforms" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ExtraTransforms">ExtraTransforms</h4>
+  <div class="markdown level1 summary"><p>List of extra transforms to run before IterativeProcessTransform</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IList&lt;Func&lt;ICodeTransform&gt;&gt; ExtraTransforms { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ICodeTransform.html">ICodeTransform</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_FreeMemory_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.FreeMemory*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_FreeMemory" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.FreeMemory">FreeMemory</h4>
+  <div class="markdown level1 summary"><p>Trade memory for time.
+If true, memory usage is reduced for increase in time.  Temporary storage will be freed when inference completes, requiring re-allocation every time inference is run.
+If false, memory usage is increased for reduction in time.  Temporary storage will be kept and re-used for later inference runs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool FreeMemory { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_GeneratedSourceFolder_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.GeneratedSourceFolder*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_GeneratedSourceFolder" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.GeneratedSourceFolder">GeneratedSourceFolder</h4>
+  <div class="markdown level1 summary"><p>The path (absolute or relative) where source code files will be generated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string GeneratedSourceFolder { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_GenerateInMemory_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.GenerateInMemory*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_GenerateInMemory" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.GenerateInMemory">GenerateInMemory</h4>
+  <div class="markdown level1 summary"><p>Controls if inference assembly is generated in memory or on disk.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool GenerateInMemory { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_GenerateInMemory_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is set to true by default. Set to false if you want to debug into the generated code</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_IgnoreEqualObservedValuesForReferenceTypes_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.IgnoreEqualObservedValuesForReferenceTypes*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_IgnoreEqualObservedValuesForReferenceTypes" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.IgnoreEqualObservedValuesForReferenceTypes">IgnoreEqualObservedValuesForReferenceTypes</h4>
+  <div class="markdown level1 summary"><p>Let's you control what happens when you set an observed value which is equal
+to the old observed value (for reference types). If this property is true, setting an equal
+value will be ignored.  If false, setting an equal value may cause inference to be re-run.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IgnoreEqualObservedValuesForReferenceTypes { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_IgnoreEqualObservedValuesForReferenceTypes_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The default value of 'false' is safe, but may be inefficient if you often set observed values
+to be the same value.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_IgnoreEqualObservedValuesForValueTypes_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.IgnoreEqualObservedValuesForValueTypes*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_IgnoreEqualObservedValuesForValueTypes" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.IgnoreEqualObservedValuesForValueTypes">IgnoreEqualObservedValuesForValueTypes</h4>
+  <div class="markdown level1 summary"><p>Let's you control what happens when you set an observed value which is equal
+to the old observed value (for value types). If this property is true, setting an equal
+value will be ignored.  If false, setting an equal value may cause inference to be re-run.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IgnoreEqualObservedValuesForValueTypes { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_IncludeDebugInformation_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.IncludeDebugInformation*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_IncludeDebugInformation" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.IncludeDebugInformation">IncludeDebugInformation</h4>
+  <div class="markdown level1 summary"><p>Controls if debug information is included in generated DLLs.  If true, debug information will
+be included which allows stepping through the generated code in a debugger.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IncludeDebugInformation { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_InitialisationAffectsSchedule_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.InitialisationAffectsSchedule*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_InitialisationAffectsSchedule" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.InitialisationAffectsSchedule">InitialisationAffectsSchedule</h4>
+  <div class="markdown level1 summary"><p>If true, user-provided initializations will affect the iteration schedule.  This can sometimes improve the convergence rate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool InitialisationAffectsSchedule { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Logging_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Logging*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Logging" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Logging">Logging</h4>
+  <div class="markdown level1 summary"><p>If true, a variable named &quot;loggingAction&quot; will be used to log method entry/exit.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Logging { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_OptimiseInferenceCode_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.OptimiseInferenceCode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_OptimiseInferenceCode" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.OptimiseInferenceCode">OptimiseInferenceCode</h4>
+  <div class="markdown level1 summary"><p>Optimises generated code by removing redundant messages or operations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool OptimiseInferenceCode { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_PriorityList_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.PriorityList*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_PriorityList" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.PriorityList">PriorityList</h4>
+  <div class="markdown level1 summary"><p>A list of message operator containers, highest priority first.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IList&lt;object&gt; PriorityList { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_RecommendedQuality_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.RecommendedQuality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_RecommendedQuality" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.RecommendedQuality">RecommendedQuality</h4>
+  <div class="markdown level1 summary"><p>Sets the quality band at which is recommended for running inference. By default
+this is QualityBand.Preview.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public QualityBand RecommendedQuality { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.QualityBand.html">QualityBand</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_RecommendedQuality_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If the quality of any component is below this quality band, then an
+Infer.NET model compiler warning is generated. This can be switched off
+by setting it to QualityBand.Unknown</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_RequiredQuality_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.RequiredQuality*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_RequiredQuality" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.RequiredQuality">RequiredQuality</h4>
+  <div class="markdown level1 summary"><p>Sets the component quality band which is required for running inference. By default
+this is QualityBand.Experimental.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public QualityBand RequiredQuality { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Attributes.QualityBand.html">QualityBand</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_RequiredQuality_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If the quality of any component is below this quality band, then an
+Infer.NET model compiler error is generated. This can be switched off
+by setting it to QualityBand.Unknown</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ReturnCopies_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ReturnCopies*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ReturnCopies" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ReturnCopies">ReturnCopies</h4>
+  <div class="markdown level1 summary"><p>If true, code will be generated to return copies of the internal marginal distributions.<br>
+If this is not done, the returned marginals are volatile and may be modified in place when inference runs again.<br>
+Set to false to save memory/time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ReturnCopies { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ShowProgress_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ShowProgress*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ShowProgress" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ShowProgress">ShowProgress</h4>
+  <div class="markdown level1 summary"><p>If true, prints compilation progress information to the console during model compilation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShowProgress { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ShowSchedule_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ShowSchedule*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ShowSchedule" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ShowSchedule">ShowSchedule</h4>
+  <div class="markdown level1 summary"><p>If true, displays the schedule for the model, after the scheduler has run.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShowSchedule { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ShowWarnings_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ShowWarnings*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ShowWarnings" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ShowWarnings">ShowWarnings</h4>
+  <div class="markdown level1 summary"><p>If true, compiler warnings are printed to the console.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShowWarnings { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_TraceAllMessages_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.TraceAllMessages*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_TraceAllMessages" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.TraceAllMessages">TraceAllMessages</h4>
+  <div class="markdown level1 summary"><p>If true, all variables will implicitly have a TraceMessages attribute.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TraceAllMessages { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_TreatWarningsAsErrors_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.TreatWarningsAsErrors*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_TreatWarningsAsErrors" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.TreatWarningsAsErrors">TreatWarningsAsErrors</h4>
+  <div class="markdown level1 summary"><p>If true, compiler warnings are treated as errors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TreatWarningsAsErrors { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UnrollLoops_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UnrollLoops*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UnrollLoops" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UnrollLoops">UnrollLoops</h4>
+  <div class="markdown level1 summary"><p>If true, all loops with constant bounds will be unrolled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UnrollLoops { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseExistingSourceFiles_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseExistingSourceFiles*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseExistingSourceFiles" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseExistingSourceFiles">UseExistingSourceFiles</h4>
+  <div class="markdown level1 summary"><p>If true and WriteSourceFiles=true, existing source code files will be used instead of re-generated.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UseExistingSourceFiles { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseExperimentalSerialSchedules_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseExperimentalSerialSchedules*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseExperimentalSerialSchedules" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseExperimentalSerialSchedules">UseExperimentalSerialSchedules</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UseExperimentalSerialSchedules { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseLocals_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseLocals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseLocals" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseLocals">UseLocals</h4>
+  <div class="markdown level1 summary"><p>If true and OptimiseInferenceCode=true, then the generated code is optimized by converting array elements to loop locals where possible.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UseLocals { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseParallelForLoops_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseParallelForLoops*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseParallelForLoops" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseParallelForLoops">UseParallelForLoops</h4>
+  <div class="markdown level1 summary"><p>If true, use Parallel.For() instead of top-level for loops in the generated code.<br>
+Requires the Microsoft Parallel Extensions to be installed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UseParallelForLoops { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseSerialSchedules_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseSerialSchedules*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseSerialSchedules" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseSerialSchedules">UseSerialSchedules</h4>
+  <div class="markdown level1 summary"><p>Find serial schedules for graphs with offset indexing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UseSerialSchedules { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseSpecialFirstIteration_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseSpecialFirstIteration*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_UseSpecialFirstIteration" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.UseSpecialFirstIteration">UseSpecialFirstIteration</h4>
+  <div class="markdown level1 summary"><p>Experimental feature: generate a schedule using InitializeTo for the first iteration and another schedule ignoring InitializeTo for the remaining iterations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UseSpecialFirstIteration { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_WriteSourceFiles_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.WriteSourceFiles*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_WriteSourceFiles" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.WriteSourceFiles">WriteSourceFiles</h4>
+  <div class="markdown level1 summary"><p>Controls if source code files are written to disk.  If true, source code files will be
+written out to the GeneratedSourceFolder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool WriteSourceFiles { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod)">Compile(ModelCompiler.ModelDefinitionMethod)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile(ModelCompiler.ModelDefinitionMethod method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod.html">ModelCompiler.ModelDefinitionMethod</a></td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__1_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0__" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``1(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0})">Compile&lt;T1&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1&gt; method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-1.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__1_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0____0_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``1(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0},``0)">Compile&lt;T1&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1&gt;, T1)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1&gt; method, T1 arg1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-1.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">arg1</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__10_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4___5___6___7___8___9__" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``10(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9})">Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt; method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-10.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T7</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T8</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T9</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T10</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__10_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4___5___6___7___8___9____0___1___2___3___4___5___6___7___8___9_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``10(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9},``0,``1,``2,``3,``4,``5,``6,``7,``8,``9)">Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt;, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt; method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-10.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">arg1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">arg2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">arg3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">arg4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T5</span></td>
+        <td><span class="parametername">arg5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T6</span></td>
+        <td><span class="parametername">arg6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T7</span></td>
+        <td><span class="parametername">arg7</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T8</span></td>
+        <td><span class="parametername">arg8</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T9</span></td>
+        <td><span class="parametername">arg9</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T10</span></td>
+        <td><span class="parametername">arg10</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T7</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T8</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T9</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T10</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__2_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1__" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``2(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1})">Compile&lt;T1, T2&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2&gt; method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-2.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__2_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1____0___1_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``2(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1},``0,``1)">Compile&lt;T1, T2&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2&gt;, T1, T2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2&gt; method, T1 arg1, T2 arg2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-2.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">arg1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">arg2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__3_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2__" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``3(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2})">Compile&lt;T1, T2, T3&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3&gt; method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-3.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__3_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2____0___1___2_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``3(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2},``0,``1,``2)">Compile&lt;T1, T2, T3&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3&gt;, T1, T2, T3)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3&gt; method, T1 arg1, T2 arg2, T3 arg3)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-3.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">arg1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">arg2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">arg3</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__4_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3__" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``4(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3})">Compile&lt;T1, T2, T3, T4&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4&gt; method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-4.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__4_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3____0___1___2___3_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``4(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3},``0,``1,``2,``3)">Compile&lt;T1, T2, T3, T4&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4&gt;, T1, T2, T3, T4)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4&gt; method, T1 arg1, T2 arg2, T3 arg3, T4 arg4)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-4.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">arg1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">arg2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">arg3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">arg4</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__5_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4__" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``5(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4})">Compile&lt;T1, T2, T3, T4, T5&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5&gt; method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-5.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__5_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4____0___1___2___3___4_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``5(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4},``0,``1,``2,``3,``4)">Compile&lt;T1, T2, T3, T4, T5&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5&gt;, T1, T2, T3, T4, T5)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5&gt; method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-5.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">arg1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">arg2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">arg3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">arg4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T5</span></td>
+        <td><span class="parametername">arg5</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__6_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4___5__" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``6(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4,``5})">Compile&lt;T1, T2, T3, T4, T5, T6&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5, T6&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6&gt; method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-6.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5, T6&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__6_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4___5____0___1___2___3___4___5_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``6(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4,``5},``0,``1,``2,``3,``4,``5)">Compile&lt;T1, T2, T3, T4, T5, T6&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6&gt;, T1, T2, T3, T4, T5, T6)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5, T6&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6&gt; method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-6.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5, T6&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">arg1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">arg2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">arg3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">arg4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T5</span></td>
+        <td><span class="parametername">arg5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T6</span></td>
+        <td><span class="parametername">arg6</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__7_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4___5___6__" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``7(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4,``5,``6})">Compile&lt;T1, T2, T3, T4, T5, T6, T7&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5, T6, T7&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7&gt; method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-7.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5, T6, T7&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T7</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__7_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4___5___6____0___1___2___3___4___5___6_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``7(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4,``5,``6},``0,``1,``2,``3,``4,``5,``6)">Compile&lt;T1, T2, T3, T4, T5, T6, T7&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7&gt;, T1, T2, T3, T4, T5, T6, T7)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5, T6, T7&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7&gt; method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-7.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5, T6, T7&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">arg1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">arg2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">arg3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">arg4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T5</span></td>
+        <td><span class="parametername">arg5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T6</span></td>
+        <td><span class="parametername">arg6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T7</span></td>
+        <td><span class="parametername">arg7</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T7</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__8_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4___5___6___7__" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``8(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4,``5,``6,``7})">Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt; method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-8.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T7</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T8</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__8_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4___5___6___7____0___1___2___3___4___5___6___7_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``8(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4,``5,``6,``7},``0,``1,``2,``3,``4,``5,``6,``7)">Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt;, T1, T2, T3, T4, T5, T6, T7, T8)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt; method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-8.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">arg1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">arg2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">arg3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">arg4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T5</span></td>
+        <td><span class="parametername">arg5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T6</span></td>
+        <td><span class="parametername">arg6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T7</span></td>
+        <td><span class="parametername">arg7</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T8</span></td>
+        <td><span class="parametername">arg8</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T7</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T8</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__9_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4___5___6___7___8__" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``9(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4,``5,``6,``7,``8})">Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt; method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-9.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T7</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T8</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T9</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compile__9_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ModelDefinitionMethod___0___1___2___3___4___5___6___7___8____0___1___2___3___4___5___6___7___8_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compile``9(Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod{``0,``1,``2,``3,``4,``5,``6,``7,``8},``0,``1,``2,``3,``4,``5,``6,``7,``8)">Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt;, T1, T2, T3, T4, T5, T6, T7, T8, T9)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm Compile&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt;(ModelCompiler.ModelDefinitionMethod&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt; method, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ModelDefinitionMethod-9.html">ModelCompiler.ModelDefinitionMethod</a>&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt;</td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">arg1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">arg2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">arg3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">arg4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T5</span></td>
+        <td><span class="parametername">arg5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T6</span></td>
+        <td><span class="parametername">arg6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T7</span></td>
+        <td><span class="parametername">arg7</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T8</span></td>
+        <td><span class="parametername">arg8</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T9</span></td>
+        <td><span class="parametername">arg9</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T7</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T8</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T9</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_CompileWithoutParams_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.CompileWithoutParams*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_CompileWithoutParams_System_Reflection_MethodBase_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.CompileWithoutParams(System.Reflection.MethodBase)">CompileWithoutParams(MethodBase)</h4>
+  <div class="markdown level1 summary"><p>Compiles the model defined in MSL by the specified method.  The model parameters are not
+set - they must be set before the model is executed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm CompileWithoutParams(MethodBase method)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a></td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td><p>An instance of the compiled model, without any parameters set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_CompileWithParamArray_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.CompileWithParamArray*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_CompileWithParamArray_System_Reflection_MethodBase_System_Object___" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.CompileWithParamArray(System.Reflection.MethodBase,System.Object[])">CompileWithParamArray(MethodBase, Object[])</h4>
+  <div class="markdown level1 summary"><p>Compiles the model defined in MSL by the specified method.  The model parameters are set
+to the specified values.  This method should only be used when the method has more than 10 parameters,
+otherwise one of the strongly typed <pre><code>Compile</code></pre> methods should be used.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGeneratedAlgorithm CompileWithParamArray(MethodBase method, params object[] varValues)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a></td>
+        <td><span class="parametername">method</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">varValues</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></td>
+        <td><p>An instance of the compiled model, with all parameters set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_GivePriorityTo_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.GivePriorityTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_GivePriorityTo_System_Object_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.GivePriorityTo(System.Object)">GivePriorityTo(Object)</h4>
+  <div class="markdown level1 summary"><p>Resolve ambiguous matches for message operators in favor of the given container.  Accumulates with all previous calls.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GivePriorityTo(object container)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">container</span></td>
+        <td><p>A Type, namespace string, Module, or Assembly.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_OnParametersChanged_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.OnParametersChanged*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_OnParametersChanged" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.OnParametersChanged">OnParametersChanged()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void OnParametersChanged()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_RemovePriority_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.RemovePriority*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_RemovePriority_System_Object_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.RemovePriority(System.Object)">RemovePriority(Object)</h4>
+  <div class="markdown level1 summary"><p>Remove any priority of container given by previous calls to GivePriorityTo.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemovePriority(object container)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">container</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_SetTo_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_SetTo_Microsoft_ML_Probabilistic_Compiler_ModelCompiler_" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.SetTo(Microsoft.ML.Probabilistic.Compiler.ModelCompiler)">SetTo(ModelCompiler)</h4>
+  <div class="markdown level1 summary"><p>Configures this model compiler by copying settings from the supplied model compiler.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(ModelCompiler compiler)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.html">ModelCompiler</a></td>
+        <td><span class="parametername">compiler</span></td>
+        <td><p>The compiler to copy settings from</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compiled" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compiled">Compiled</h4>
+  <div class="markdown level1 summary"><p>Event raised after a model is compiled or fails to compile.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event ModelCompiler.CompileEventHandler Compiled</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.CompileEventHandler.html">ModelCompiler.CompileEventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_Compiling" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.Compiling">Compiling</h4>
+  <div class="markdown level1 summary"><p>Event raised before a model is compiled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event ModelCompiler.CompileEventHandler Compiling</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.CompileEventHandler.html">ModelCompiler.CompileEventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_ModelCompiler_ParametersChanged" data-uid="Microsoft.ML.Probabilistic.Compiler.ModelCompiler.ParametersChanged">ParametersChanged</h4>
+  <div class="markdown level1 summary"><p>Event raised when a compilation parameter is changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler ParametersChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

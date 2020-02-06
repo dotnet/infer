@@ -1,0 +1,641 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IRecommenderCapabilities
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IRecommenderCapabilities
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities" class="text-break">Interface IRecommenderCapabilities
+  </h1>
+  <div class="markdown level0 summary"><p>Interface to a recommender capabilities.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICapabilities.html#Microsoft_ML_Probabilistic_Learners_ICapabilities_IsPrecompiled">ICapabilities.IsPrecompiled</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICapabilities.html#Microsoft_ML_Probabilistic_Learners_ICapabilities_SupportsMissingData">ICapabilities.SupportsMissingData</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICapabilities.html#Microsoft_ML_Probabilistic_Learners_ICapabilities_SupportsSparseData">ICapabilities.SupportsSparseData</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICapabilities.html#Microsoft_ML_Probabilistic_Learners_ICapabilities_SupportsStreamedData">ICapabilities.SupportsStreamedData</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICapabilities.html#Microsoft_ML_Probabilistic_Learners_ICapabilities_SupportsBatchedTraining">ICapabilities.SupportsBatchedTraining</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICapabilities.html#Microsoft_ML_Probabilistic_Learners_ICapabilities_SupportsDistributedTraining">ICapabilities.SupportsDistributedTraining</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICapabilities.html#Microsoft_ML_Probabilistic_Learners_ICapabilities_SupportsIncrementalTraining">ICapabilities.SupportsIncrementalTraining</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICapabilities.html#Microsoft_ML_Probabilistic_Learners_ICapabilities_SupportsModelEvidenceComputation">ICapabilities.SupportsModelEvidenceComputation</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IRecommenderCapabilities : ICapabilities</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_IsResistantToShilling_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.IsResistantToShilling*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_IsResistantToShilling" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.IsResistantToShilling">IsResistantToShilling</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender is resistant to shilling.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsResistantToShilling { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsColdStartItems_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsColdStartItems*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsColdStartItems" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsColdStartItems">SupportsColdStartItems</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender can make
+predictions for items which were not included in training.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsColdStartItems { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsColdStartUsers_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsColdStartUsers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsColdStartUsers" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsColdStartUsers">SupportsColdStartUsers</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender can make
+predictions for users who were not included in training.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsColdStartUsers { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsCustomPredictionLossFunction_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsCustomPredictionLossFunction*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsCustomPredictionLossFunction" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsCustomPredictionLossFunction">SupportsCustomPredictionLossFunction</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender can compute predictive point estimates from a user-defined loss function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsCustomPredictionLossFunction { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsImplicitFeedback_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsImplicitFeedback*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsImplicitFeedback" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsImplicitFeedback">SupportsImplicitFeedback</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports implicit feedback
+(e.g. counts of interactions, duration of interactions).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsImplicitFeedback { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsItemFeatures_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsItemFeatures*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsItemFeatures" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsItemFeatures">SupportsItemFeatures</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports item-specific metadata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsItemFeatures { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsMultipleFormsOfFeedback_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsMultipleFormsOfFeedback*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsMultipleFormsOfFeedback" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsMultipleFormsOfFeedback">SupportsMultipleFormsOfFeedback</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports multiple forms of feedback.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsMultipleFormsOfFeedback { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsNonStationarity_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsNonStationarity*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsNonStationarity" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsNonStationarity">SupportsNonStationarity</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports changes in state over time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsNonStationarity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsNotMissingAtRandomData_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsNotMissingAtRandomData*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsNotMissingAtRandomData" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsNotMissingAtRandomData">SupportsNotMissingAtRandomData</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender can model not missing-at-random data
+(e.g. content restrictions due to provider).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsNotMissingAtRandomData { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsPositiveOnlyData_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsPositiveOnlyData*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsPositiveOnlyData" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsPositiveOnlyData">SupportsPositiveOnlyData</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports positive-only data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsPositiveOnlyData { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsPredictionDistribution_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsPredictionDistribution*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsPredictionDistribution" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsPredictionDistribution">SupportsPredictionDistribution</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender can predict
+the rating distribution of a given user-item pair.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsPredictionDistribution { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsPreferenceRatings_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsPreferenceRatings*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsPreferenceRatings" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsPreferenceRatings">SupportsPreferenceRatings</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports preference ratings
+(e.g. item A is better than item B).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsPreferenceRatings { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRatingFeatures_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRatingFeatures*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRatingFeatures" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRatingFeatures">SupportsRatingFeatures</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports rating-specific metadata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsRatingFeatures { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRatingsOfFriends_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRatingsOfFriends*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRatingsOfFriends" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRatingsOfFriends">SupportsRatingsOfFriends</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports ratings of friends.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsRatingsOfFriends { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRealValuedRatings_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRealValuedRatings*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRealValuedRatings" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRealValuedRatings">SupportsRealValuedRatings</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports real-valued ratings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsRealValuedRatings { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRecommendationDiversity_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRecommendationDiversity*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRecommendationDiversity" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRecommendationDiversity">SupportsRecommendationDiversity</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports item diversity in predictions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsRecommendationDiversity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRelatedItems_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRelatedItems*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRelatedItems" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRelatedItems">SupportsRelatedItems</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender can find related items.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsRelatedItems { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRelatedUsers_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRelatedUsers*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsRelatedUsers" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsRelatedUsers">SupportsRelatedUsers</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender can find related users.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsRelatedUsers { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsStarRatings_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsStarRatings*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsStarRatings" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsStarRatings">SupportsStarRatings</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports non-binary ratings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsStarRatings { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsUserFeatures_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsUserFeatures*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommenderCapabilities_SupportsUserFeatures" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommenderCapabilities.SupportsUserFeatures">SupportsUserFeatures</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the recommender supports user-specific metadata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool SupportsUserFeatures { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

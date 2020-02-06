@@ -1,0 +1,554 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class TrainTestSplittingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class TrainTestSplittingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6" class="text-break">Class TrainTestSplittingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents the data splitting mapping that can be wrapped around any other recommender mapping to split the underlying data
+into the training and test parts.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">TrainTestSplittingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</span></div>
+      <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRatingRecommenderMapping-7.html">TrainTestSplittingRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderMapping-6.html">IRecommenderMapping</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.SplitInstanceSource-1.html">SplitInstanceSource</a>&lt;TInstanceSource&gt;, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.html">Microsoft.ML.Probabilistic.Learners.Mappings</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class TrainTestSplittingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt; : IRecommenderMapping&lt;SplitInstanceSource&lt;TInstanceSource&gt;, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureValues</span></td>
+        <td><p>The type of the feature values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p><strong></strong></p><ol><li>
+The requested fraction of items is removed from the consideration (thus, ignored) 
+with all the associated observations.
+</li><li>
+The requested fraction of items is put into the test set (so called cold items) 
+with all the associated observations.
+</li><li>
+The requested fraction of the users remaining after (1-2) is removed from consideration 
+(thus, ignored) with all the associated observations.
+</li><li>
+The requested fraction of the users remaining after (1-2) is put into the test set 
+(so called cold users) with all the associated observations.
+</li><li>
+The requested fraction of the users remaining after (1-2) is put into 
+the training set with all the associated observations.
+</li><li>
+For each user remaining after (1-5) the requested fraction of observations is put into the training set, while the 
+rest is put into the test set. At least one observation is always put into the training set for each user.
+</li><li>
+If requested, instances associated with the occasionally produced cold items are removed from the test set.
+An item is said to be &quot;occasionally cold&quot; if it is covered only by the test set but wasn&apos;t explicitly chosen as cold.
+Such items can be produced by the steps (4) and (6). This option is supposed to be used when the requested number of 
+cold users and items is set to zero, in order to ensure that all the entities in the test set are covered by the training set.
+</li></ol>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6__ctor_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6__ctor_Microsoft_ML_Probabilistic_Learners_Mappings_IRecommenderMapping__0__1__2__3__4__5__System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.#ctor(Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderMapping{`0,`1,`2,`3,`4,`5},System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Boolean)">TrainTestSplittingRecommenderMapping(IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;, Double, Double, Double, Double, Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the
+<a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping-6.html">TrainTestSplittingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TrainTestSplittingRecommenderMapping(IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt; mapping, double trainingOnlyUserFraction, double testUserRatingTrainingFraction, double coldUserFraction = 0, double coldItemFraction = 0, double ignoredUserFraction = 0, double ignoredItemFraction = 0, bool removeOccasionalColdItems = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderMapping-6.html">IRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The wrapped recommender mapping.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">trainingOnlyUserFraction</span></td>
+        <td><p>The fraction of users included in the training set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">testUserRatingTrainingFraction</span></td>
+        <td><p>The fraction of ratings in the training set for each user who is presented in both sets.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">coldUserFraction</span></td>
+        <td><p>The fraction of users included in the test set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">coldItemFraction</span></td>
+        <td><p>The fraction of items included in the test set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ignoredUserFraction</span></td>
+        <td><p>The fraction of users not included in either the training or the test set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ignoredItemFraction</span></td>
+        <td><p>The fraction of items not included in either the training or the test set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">removeOccasionalColdItems</span></td>
+        <td><p>Whether the occasionally produced cold items should be removed from the test set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetInstances_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.GetInstances*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetInstances_Microsoft_ML_Probabilistic_Learners_Mappings_SplitInstanceSource__0__" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.GetInstances(Microsoft.ML.Probabilistic.Learners.Mappings.SplitInstanceSource{`0})">GetInstances(SplitInstanceSource&lt;TInstanceSource&gt;)</h4>
+  <div class="markdown level1 summary"><p>Retrieves a list of instances from a given instance source.
+Dependent on <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.SplitInstanceSource-1.html#Microsoft_ML_Probabilistic_Learners_Mappings_SplitInstanceSource_1_IsTrainingSet">IsTrainingSet</a>, the instances of
+the training or test set are returned.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TInstance&gt; GetInstances(SplitInstanceSource&lt;TInstanceSource&gt; instanceSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.SplitInstanceSource-1.html">SplitInstanceSource</a>&lt;TInstanceSource&gt;</td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source to retrieve instances from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TInstance&gt;</td>
+        <td><p>The list of retrieved instances.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetItem_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.GetItem*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetItem_Microsoft_ML_Probabilistic_Learners_Mappings_SplitInstanceSource__0___1_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.GetItem(Microsoft.ML.Probabilistic.Learners.Mappings.SplitInstanceSource{`0},`1)">GetItem(SplitInstanceSource&lt;TInstanceSource&gt;, TInstance)</h4>
+  <div class="markdown level1 summary"><p>Extracts an item from a given instance by delegating the call to the wrapped mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TItem GetItem(SplitInstanceSource&lt;TInstanceSource&gt; instanceSource, TInstance instance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.SplitInstanceSource-1.html">SplitInstanceSource</a>&lt;TInstanceSource&gt;</td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of instances providing the <code data-dev-comment-type="paramref" class="paramref">instance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TInstance</span></td>
+        <td><span class="parametername">instance</span></td>
+        <td><p>The instance to extract the item from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TItem</span></td>
+        <td><p>The extracted item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetItemFeatures_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.GetItemFeatures*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetItemFeatures__4__3_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.GetItemFeatures(`4,`3)">GetItemFeatures(TFeatureSource, TItem)</h4>
+  <div class="markdown level1 summary"><p>Provides the features for a given item by delegating the call to the wrapped mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TFeatureValues GetItemFeatures(TFeatureSource featureSource, TItem item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of the features.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TItem</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>The item to provide the features for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureValues</span></td>
+        <td><p>The features for <code data-dev-comment-type="paramref" class="paramref">item</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetUser_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.GetUser*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetUser_Microsoft_ML_Probabilistic_Learners_Mappings_SplitInstanceSource__0___1_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.GetUser(Microsoft.ML.Probabilistic.Learners.Mappings.SplitInstanceSource{`0},`1)">GetUser(SplitInstanceSource&lt;TInstanceSource&gt;, TInstance)</h4>
+  <div class="markdown level1 summary"><p>Extracts a user from a given instance by delegating the call to the wrapped mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TUser GetUser(SplitInstanceSource&lt;TInstanceSource&gt; instanceSource, TInstance instance)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.SplitInstanceSource-1.html">SplitInstanceSource</a>&lt;TInstanceSource&gt;</td>
+        <td><span class="parametername">instanceSource</span></td>
+        <td><p>The source of instances providing the <code data-dev-comment-type="paramref" class="paramref">instance</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TInstance</span></td>
+        <td><span class="parametername">instance</span></td>
+        <td><p>The instance to extract the user from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TUser</span></td>
+        <td><p>The extracted user.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetUserFeatures_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.GetUserFeatures*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_TrainTestSplittingRecommenderMapping_6_GetUserFeatures__4__2_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping`6.GetUserFeatures(`4,`2)">GetUserFeatures(TFeatureSource, TUser)</h4>
+  <div class="markdown level1 summary"><p>Provides the features for a given user by delegating the call to the wrapped mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TFeatureValues GetUserFeatures(TFeatureSource featureSource, TUser user)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureSource</span></td>
+        <td><span class="parametername">featureSource</span></td>
+        <td><p>The source of the features.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TUser</span></td>
+        <td><span class="parametername">user</span></td>
+        <td><p>The user to provide the features for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TFeatureValues</span></td>
+        <td><p>The features for <code data-dev-comment-type="paramref" class="paramref">user</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderMapping-6.html">IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.html#Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_SplitToTrainTest__6_Microsoft_ML_Probabilistic_Learners_Mappings_IRecommenderMapping___0___1___2___3___4___5__System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean_">RecommenderMappingExtensions.SplitToTrainTest&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;(IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;, Double, Double, Double, Double, Double, Double, Boolean)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.html#Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_WithGeneratedNegativeData__6_Microsoft_ML_Probabilistic_Learners_Mappings_IRecommenderMapping___0___1___2___3___4___5__System_Double_">RecommenderMappingExtensions.WithGeneratedNegativeData&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;(IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;, Double)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

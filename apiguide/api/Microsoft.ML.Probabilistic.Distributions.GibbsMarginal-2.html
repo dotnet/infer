@@ -1,0 +1,505 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GibbsMarginal&lt;TDist, T&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GibbsMarginal&lt;TDist, T&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2" class="text-break">Class GibbsMarginal&lt;TDist, T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Gibbs marginal - wraps underlying estimator, provides burn-in and thinning,
+and maintains thinned samples and conditionals</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">GibbsMarginal&lt;TDist, T&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IsDistributionWrapper.html">IsDistributionWrapper</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Estimator-1.html">Estimator</a>&lt;TDist&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public class GibbsMarginal&lt;TDist, T&gt; : IsDistributionWrapper, Estimator&lt;TDist&gt; where TDist : IDistribution&lt;T&gt;, Sampleable&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TDist</span></td>
+        <td><p>The distribution type</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The domain type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2__ctor__0_System_Int32_System_Int32_System_Boolean_System_Boolean_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.#ctor(`0,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean)">GibbsMarginal(TDist, Int32, Int32, Boolean, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Constructor from a distribution prototype, and burn in and thin parameters</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GibbsMarginal(TDist distPrototype, int burnIn, int thin, bool estimateMarginal, bool collectSamples, bool collectDistributions)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">distPrototype</span></td>
+        <td><p>Prototype distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">burnIn</span></td>
+        <td><p>Burn in - number of sample discarded initially</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">thin</span></td>
+        <td><p>Thinning parameter - only every 'thin' samples returned</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">estimateMarginal</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">collectSamples</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">collectDistributions</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2__ctor_Microsoft_ML_Probabilistic_Distributions_GibbsMarginal__0__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.#ctor(Microsoft.ML.Probabilistic.Distributions.GibbsMarginal{`0,`1})">GibbsMarginal(GibbsMarginal&lt;TDist, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Copy constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GibbsMarginal(GibbsMarginal&lt;TDist, T&gt; that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal-2.html">GibbsMarginal</a>&lt;TDist, T&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2__ctor_Microsoft_ML_Probabilistic_Distributions_GibbsMarginal__0__1___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This does a soft copy of the estimator and sample and conditional lists</p>
+</div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_LastConditional" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.LastConditional">LastConditional</h4>
+  <div class="markdown level1 summary"><p>Last conditional distribution added. If no conditionals, returns uniform</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TDist LastConditional</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_LastSample" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.LastSample">LastSample</h4>
+  <div class="markdown level1 summary"><p>Last sample added. If no samples, returns default(T)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T LastSample</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_Conditionals_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.Conditionals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_Conditionals" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.Conditionals">Conditionals</h4>
+  <div class="markdown level1 summary"><p>Thinned conditionals</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IList&lt;TDist&gt; Conditionals { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TDist&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_Distribution_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.Distribution*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_Distribution" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.Distribution">Distribution</h4>
+  <div class="markdown level1 summary"><p>The marginal</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TDist Distribution { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_Estimator_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.Estimator*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_Estimator" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.Estimator">Estimator</h4>
+  <div class="markdown level1 summary"><p>The embedded estimator</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Estimator&lt;TDist&gt; Estimator { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Estimator-1.html">Estimator</a>&lt;TDist&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_Samples_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.Samples*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_Samples" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.Samples">Samples</h4>
+  <div class="markdown level1 summary"><p>Thinned samples</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IList&lt;T&gt; Samples { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_Clear_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.Clear*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_Clear" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.Clear">Clear()</h4>
+  <div class="markdown level1 summary"><p>Clears out all the samples and clears the accumulators</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Clear()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_GetDistribution_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.GetDistribution*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_GetDistribution__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.GetDistribution(`0)">GetDistribution(TDist)</h4>
+  <div class="markdown level1 summary"><p>Get the estimated distribution from the samples</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TDist GetDistribution(TDist result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td><span class="parametername">result</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDist</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_PostUpdate_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.PostUpdate*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_PostUpdate" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.PostUpdate">PostUpdate()</h4>
+  <div class="markdown level1 summary"><p>Perform an update by adding a sample from the last conditional</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void PostUpdate()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.ToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GibbsMarginal_2_ToString" data-uid="Microsoft.ML.Probabilistic.Distributions.GibbsMarginal`2.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Shows the GibbsMarginal in string form</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IsDistributionWrapper.html">IsDistributionWrapper</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Estimator-1.html">Estimator&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

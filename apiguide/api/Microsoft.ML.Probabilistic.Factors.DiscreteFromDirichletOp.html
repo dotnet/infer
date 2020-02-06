@@ -1,0 +1,1589 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DiscreteFromDirichletOp
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DiscreteFromDirichletOp
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp" class="text-break">Class DiscreteFromDirichletOp
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for the following factors:<ul><li><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html#Microsoft_ML_Probabilistic_Distributions_Discrete_Sample_Microsoft_ML_Probabilistic_Math_Vector_">Sample(Vector)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_Discrete_Microsoft_ML_Probabilistic_Math_Vector_">Discrete(Vector)</a></li><li><a class="xref" href="Microsoft.ML.Probabilistic.Factors.EnumSupport.html#Microsoft_ML_Probabilistic_Factors_EnumSupport_DiscreteEnum__1_Microsoft_ML_Probabilistic_Math_Vector_">DiscreteEnum&lt;TEnum&gt;(Vector)</a></li></ul>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">DiscreteFromDirichletOp</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Discrete), &quot;Sample&quot;, new Type[]{typeof(Vector)})]
+[FactorMethod(new string[]{&quot;sample&quot;, &quot;probs&quot;}, typeof(Factor), &quot;Discrete&quot;, new Type[]{typeof(Vector)})]
+[FactorMethod(typeof(EnumSupport), &quot;DiscreteEnum&lt;&gt;&quot;, new Type[]{})]
+[Quality(QualityBand.Mature)]
+public static class DiscreteFromDirichletOp</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">AverageLogFactor(Discrete, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Discrete sample, Dirichlet probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Incoming message from <code>probs</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(sample,probs) p(sample,probs) log(factor(sample,probs))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">probs</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.AverageLogFactor(Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Math.Vector)">AverageLogFactor(Discrete, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Discrete sample, Vector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(sample) p(sample) log(factor(sample,probs))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.AverageLogFactor(System.Int32,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">AverageLogFactor(Int32, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(int sample, Dirichlet probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Incoming message from <code>probs</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>sum_(probs) p(probs) log(factor(sample,probs))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">probs</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_System_Int32_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.AverageLogFactor(System.Int32,Microsoft.ML.Probabilistic.Math.Vector)">AverageLogFactor(Int32, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(int sample, Vector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Average of the factor's log-value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_AverageLogFactor_System_Int32_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sample,probs))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Discrete)">LogAverageFactor(Discrete, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Discrete sample, Discrete to_sample)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">to_sample</span></td>
+        <td><p>Outgoing message to <code>sample</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample) p(sample) factor(sample,probs))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogAverageFactor_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogAverageFactor(System.Int32,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">LogAverageFactor(Int32, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(int sample, Dirichlet probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Incoming message from <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogAverageFactor_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(probs) p(probs) factor(sample,probs))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogAverageFactor_System_Int32_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogAverageFactor(System.Int32,Microsoft.ML.Probabilistic.Math.Vector)">LogAverageFactor(Int32, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(int sample, Vector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogAverageFactor_System_Int32_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sample,probs))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">LogEvidenceRatio(Discrete, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Discrete sample, Dirichlet probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Incoming message from <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample,probs) p(sample,probs) factor(sample,probs) / sum_sample p(sample) messageTo(sample))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Math.Vector)">LogEvidenceRatio(Discrete, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Discrete sample, Vector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(sample) p(sample) factor(sample,probs) / sum_sample p(sample) messageTo(sample))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogEvidenceRatio(System.Int32,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">LogEvidenceRatio(Int32, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(int sample, Dirichlet probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Incoming message from <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(probs) p(probs) factor(sample,probs))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_System_Int32_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.LogEvidenceRatio(System.Int32,Microsoft.ML.Probabilistic.Math.Vector)">LogEvidenceRatio(Int32, Vector)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(int sample, Vector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_LogEvidenceRatio_System_Int32_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(sample,probs))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageConditional_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsAverageConditional(Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">ProbsAverageConditional(Discrete, Dirichlet, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>probs</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dirichlet ProbsAverageConditional(Discrete sample, Dirichlet probs, Dirichlet result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Incoming message from <code>probs</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageConditional_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>probs</code> as the random arguments are varied. The formula is <code>proj[p(probs) sum_(sample) p(sample) factor(sample,probs)]/p(probs)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageConditional_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsAverageConditional(Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">ProbsAverageConditional(Discrete, Vector, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>probs</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dirichlet ProbsAverageConditional(Discrete sample, Vector probs, Dirichlet result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageConditional_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>probs</code> as the random arguments are varied. The formula is <code>proj[p(probs) sum_(sample) p(sample) factor(sample,probs)]/p(probs)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">sample</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageConditional_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsAverageConditional(System.Int32,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">ProbsAverageConditional(Int32, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>probs</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dirichlet ProbsAverageConditional(int sample, Dirichlet result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageConditional_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>probs</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Discrete,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">ProbsAverageLogarithm(Discrete, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>probs</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dirichlet ProbsAverageLogarithm(Discrete sample, Dirichlet result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Incoming message from <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Discrete_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>probs</code>. The formula is <code>exp(sum_(sample) p(sample) log(factor(sample,probs)))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageLogarithm_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsAverageLogarithm(System.Int32,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">ProbsAverageLogarithm(Int32, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>probs</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dirichlet ProbsAverageLogarithm(int sample, Dirichlet result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsAverageLogarithm_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>probs</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsConditional_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.ProbsConditional(System.Int32,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">ProbsConditional(Int32, Dirichlet)</h4>
+  <div class="markdown level1 summary"><p>Gibbs message to <code>probs</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dirichlet ProbsConditional(int sample, Dirichlet result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sample</span></td>
+        <td><p>Constant value for <code>sample</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_ProbsConditional_System_Int32_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>probs</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageConditional(Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Discrete)">SampleAverageConditional(Dirichlet, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete SampleAverageConditional(Dirichlet probs, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Incoming message from <code>probs</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditional_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>sample</code> as the random arguments are varied. The formula is <code>proj[p(sample) sum_(probs) p(probs) factor(sample,probs)]/p(sample)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">probs</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageConditional(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.Discrete)">SampleAverageConditional(Vector, Discrete)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete SampleAverageConditional(Vector probs, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>sample</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditionalInit_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageConditionalInit(Microsoft.ML.Probabilistic.Distributions.Dirichlet)">SampleAverageConditionalInit(Dirichlet)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete SampleAverageConditionalInit(Dirichlet probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Incoming message from <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditionalInit_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditionalInit_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageConditionalInit(Microsoft.ML.Probabilistic.Math.Vector)">SampleAverageConditionalInit(Vector)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete SampleAverageConditionalInit(Vector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageConditionalInit_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Discrete)">SampleAverageLogarithm(Dirichlet, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete SampleAverageLogarithm(Dirichlet probs, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Incoming message from <code>probs</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>sample</code>. The formula is <code>exp(sum_(probs) p(probs) log(factor(sample,probs)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">probs</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageLogarithm(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.Discrete)">SampleAverageLogarithm(Vector, Discrete)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete SampleAverageLogarithm(Vector probs, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithm_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>sample</code> conditioned on the given values.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithmInit_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageLogarithmInit(Microsoft.ML.Probabilistic.Distributions.Dirichlet)">SampleAverageLogarithmInit(Dirichlet)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete SampleAverageLogarithmInit(Dirichlet probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Dirichlet.html">Dirichlet</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Incoming message from <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithmInit_Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithmInit_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleAverageLogarithmInit(Microsoft.ML.Probabilistic.Math.Vector)">SampleAverageLogarithmInit(Vector)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete SampleAverageLogarithmInit(Vector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleAverageLogarithmInit_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.DiscreteFromDirichletOp.SampleConditional(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.Discrete)">SampleConditional(Vector, Discrete)</h4>
+  <div class="markdown level1 summary"><p>Gibbs message to <code>sample</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Discrete SampleConditional(Vector probs, Discrete result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Constant value for <code>probs</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Discrete.html">Discrete</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DiscreteFromDirichletOp_SampleConditional_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_Discrete__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>sample</code> conditioned on the given values.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

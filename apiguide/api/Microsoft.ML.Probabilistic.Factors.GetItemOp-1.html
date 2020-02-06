@@ -1,0 +1,1315 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GetItemOp&lt;T&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GetItemOp&lt;T&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1" class="text-break">Class GetItemOp&lt;T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_GetItem__1_System_Collections_Generic_IList___0__System_Int32_">GetItem&lt;T&gt;(IList&lt;T&gt;, Int32)</a>, given random arguments to the function.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">GetItemOp&lt;T&gt;</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;GetItem&lt;&gt;&quot;, new Type[]{})]
+[Quality(QualityBand.Mature)]
+public static class GetItemOp&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ArrayAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageConditional__2___0_System_Int32___1_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ArrayAverageConditional``2(``0,System.Int32,``1)">ArrayAverageConditional&lt;Distribution, DistributionArray&gt;(Distribution, Int32, DistributionArray)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>array</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionArray ArrayAverageConditional&lt;Distribution, DistributionArray&gt;(Distribution item, int index, DistributionArray result)
+    where Distribution : SettableTo&lt;Distribution&gt; where DistributionArray : IList&lt;Distribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DistributionArray</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DistributionArray</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">DistributionArray</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageConditional__2___0_System_Int32___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>array</code> as the random arguments are varied. The formula is <code>proj[p(array) sum_(item) p(item) factor(item,array,index)]/p(array)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">item</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ArrayAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageConditional__2__0_System_Int32___1_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ArrayAverageConditional``2(`0,System.Int32,``1)">ArrayAverageConditional&lt;Distribution, DistributionArray&gt;(T, Int32, DistributionArray)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>array</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionArray ArrayAverageConditional&lt;Distribution, DistributionArray&gt;(T item, int index, DistributionArray result)
+    where Distribution : HasPoint&lt;T&gt; where DistributionArray : IList&lt;Distribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DistributionArray</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DistributionArray</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">DistributionArray</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageConditional__2__0_System_Int32___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>array</code> as the random arguments are varied. The formula is <code>proj[p(array) sum_(item) p(item) factor(item,array,index)]/p(array)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ArrayAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageLogarithm__2___0_System_Int32___1_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ArrayAverageLogarithm``2(``0,System.Int32,``1)">ArrayAverageLogarithm&lt;Distribution, DistributionArray&gt;(Distribution, Int32, DistributionArray)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>array</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionArray ArrayAverageLogarithm&lt;Distribution, DistributionArray&gt;(Distribution item, int index, DistributionArray result)
+    where Distribution : SettableTo&lt;Distribution&gt; where DistributionArray : IList&lt;Distribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DistributionArray</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DistributionArray</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">DistributionArray</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageLogarithm__2___0_System_Int32___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>array</code> with <code>item</code> integrated out. The formula is <code>sum_item p(item) factor(item,array,index)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">item</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ArrayAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageLogarithm__2__0_System_Int32___1_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ArrayAverageLogarithm``2(`0,System.Int32,``1)">ArrayAverageLogarithm&lt;Distribution, DistributionArray&gt;(T, Int32, DistributionArray)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>array</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DistributionArray ArrayAverageLogarithm&lt;Distribution, DistributionArray&gt;(T item, int index, DistributionArray result)
+    where Distribution : HasPoint&lt;T&gt; where DistributionArray : IList&lt;Distribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DistributionArray</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DistributionArray</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">DistributionArray</span></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ArrayAverageLogarithm__2__0_System_Int32___1__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>array</code> with <code>item</code> integrated out. The formula is <code>sum_item p(item) factor(item,array,index)</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.AverageLogFactor">AverageLogFactor()</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(item,array,index))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.AverageLogFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor__0_System_Collections_Generic_IList__0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.AverageLogFactor(`0,System.Collections.Generic.IList{`0},System.Int32)">AverageLogFactor(T, IList&lt;T&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(T item, IList&lt;T&gt; array, int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_AverageLogFactor__0_System_Collections_Generic_IList__0__System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditional__1_System_Collections_Generic_IList___0__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageConditional``1(System.Collections.Generic.IList{``0},System.Int32,``0)">ItemAverageConditional&lt;Distribution&gt;(IList&lt;Distribution&gt;, Int32, Distribution)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>item</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Distribution ItemAverageConditional&lt;Distribution&gt;([SkipIfAllUniform] IList&lt;Distribution&gt; array, int index, Distribution result)
+    where Distribution : SettableTo&lt;Distribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditional__1_System_Collections_Generic_IList___0__System_Int32___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>item</code> as the random arguments are varied. The formula is <code>proj[p(item) sum_(array) p(array) factor(item,array,index)]/p(item)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">array</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditionalInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageConditionalInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditionalInit__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageConditionalInit``1(System.Collections.Generic.IList{``0})">ItemAverageConditionalInit&lt;Distribution&gt;(IList&lt;Distribution&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Distribution ItemAverageConditionalInit&lt;Distribution&gt;(IList&lt;Distribution&gt; array)
+    where Distribution : ICloneable</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageConditionalInit__1_System_Collections_Generic_IList___0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithm__1_System_Collections_Generic_IList___0__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageLogarithm``1(System.Collections.Generic.IList{``0},System.Int32,``0)">ItemAverageLogarithm&lt;Distribution&gt;(IList&lt;Distribution&gt;, Int32, Distribution)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>item</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Distribution ItemAverageLogarithm&lt;Distribution&gt;([SkipIfAllUniform] IList&lt;Distribution&gt; array, int index, Distribution result)
+    where Distribution : SettableTo&lt;Distribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithm__1_System_Collections_Generic_IList___0__System_Int32___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>item</code> as the random arguments are varied. The formula is <code>proj[sum_(array) p(array) factor(item,array,index)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">array</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageLogarithmInit*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithmInit__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.ItemAverageLogarithmInit``1(System.Collections.Generic.IList{``0})">ItemAverageLogarithmInit&lt;Distribution&gt;(IList&lt;Distribution&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Distribution ItemAverageLogarithmInit&lt;Distribution&gt;(IList&lt;Distribution&gt; array)
+    where Distribution : ICloneable</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_ItemAverageLogarithmInit__1_System_Collections_Generic_IList___0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__0_System_Collections_Generic_IList__0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor(`0,System.Collections.Generic.IList{`0},System.Int32)">LogAverageFactor(T, IList&lt;T&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(T item, IList&lt;T&gt; array, int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__0_System_Collections_Generic_IList__0__System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item,array) p(item,array) factor(item,array,index))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor``1(``0,``0)">LogAverageFactor&lt;Distribution&gt;(Distribution, Distribution)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor&lt;Distribution&gt;(Distribution item, Distribution to_item)
+    where Distribution : CanGetLogAverageOf&lt;Distribution&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td><span class="parametername">to_item</span></td>
+        <td><p>Outgoing message to <code>item</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item) p(item) factor(item,array,index))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__1__0_System_Collections_Generic_IList___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogAverageFactor``1(`0,System.Collections.Generic.IList{``0},System.Int32)">LogAverageFactor&lt;Distribution&gt;(T, IList&lt;Distribution&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor&lt;Distribution&gt;(T item, IList&lt;Distribution&gt; array, int index)
+    where Distribution : CanGetLogProb&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogAverageFactor__1__0_System_Collections_Generic_IList___0__System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item,array) p(item,array) factor(item,array,index))</code>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__0_System_Collections_Generic_IList__0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio(`0,System.Collections.Generic.IList{`0},System.Int32)">LogEvidenceRatio(T, IList&lt;T&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(T item, IList&lt;T&gt; array, int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__0_System_Collections_Generic_IList__0__System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item,array) p(item,array) factor(item,array,index) / sum_item p(item) messageTo(item))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio``1(``0)">LogEvidenceRatio&lt;Distribution&gt;(Distribution)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio&lt;Distribution&gt;(Distribution item)
+    where Distribution : IDistribution&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Distribution</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item) p(item) factor(item,array,index) / sum_item p(item) messageTo(item))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__1__0_System_Collections_Generic_IList___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Factors.GetItemOp`1.LogEvidenceRatio``1(`0,System.Collections.Generic.IList{``0},System.Int32)">LogEvidenceRatio&lt;Distribution&gt;(T, IList&lt;Distribution&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio&lt;Distribution&gt;(T item, IList&lt;Distribution&gt; array, int index)
+    where Distribution : CanGetLogProb&lt;T&gt;</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>Incoming message from <code>item</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;Distribution&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td><p>Constant value for <code>index</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">Distribution</span></td>
+        <td><p>The type of the distribution over an item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GetItemOp_1_LogEvidenceRatio__1__0_System_Collections_Generic_IList___0__System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(item,array) p(item,array) factor(item,array,index) / sum_item p(item) messageTo(item))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

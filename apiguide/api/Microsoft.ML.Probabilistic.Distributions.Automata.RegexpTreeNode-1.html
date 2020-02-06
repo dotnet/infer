@@ -1,0 +1,594 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class RegexpTreeNode&lt;TElement&gt;
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class RegexpTreeNode&lt;TElement&gt;
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1" class="text-break">Class RegexpTreeNode&lt;TElement&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a node in the tree describing a regular expression.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">RegexpTreeNode&lt;TElement&gt;</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class RegexpTreeNode&lt;TElement&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TElement</span></td>
+        <td><p>The type of a character in a language word.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Although this class might look immutable, <span class="xref">Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Simplify(System.Boolean)</span>
+can change the tree rooted at the node by removing existing children and/or adding new.</p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Children_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Children*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Children" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Children">Children</h4>
+  <div class="markdown level1 summary"><p>Gets the children of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ReadOnlyCollection&lt;RegexpTreeNode&lt;TElement&gt;&gt; Children { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.objectmodel.readonlycollection-1">ReadOnlyCollection</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_ElementSet_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.ElementSet*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_ElementSet" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.ElementSet">ElementSet</h4>
+  <div class="markdown level1 summary"><p>Gets the character set associated with the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDistribution&lt;TElement&gt; ElementSet { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;TElement&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Type_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Type*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Type" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Type">Type</h4>
+  <div class="markdown level1 summary"><p>Gets the type of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RegexpTreeNodeType Type { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNodeType.html">RegexpTreeNodeType</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_AppendToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.AppendToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_AppendToString_System_Text_StringBuilder_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.AppendToString(System.Text.StringBuilder)">AppendToString(StringBuilder)</h4>
+  <div class="markdown level1 summary"><p>Returns a string representation of the language described by the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AppendToString(StringBuilder builder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.stringbuilder">StringBuilder</a></td>
+        <td><span class="parametername">builder</span></td>
+        <td><p>A string builder.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>False if the string was truncated at the maximum length.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_AppendToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.AppendToString*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_AppendToString_System_Text_StringBuilder_Microsoft_ML_Probabilistic_Distributions_Automata_RegexpFormattingSettings_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.AppendToString(System.Text.StringBuilder,Microsoft.ML.Probabilistic.Distributions.Automata.RegexpFormattingSettings)">AppendToString(StringBuilder, RegexpFormattingSettings)</h4>
+  <div class="markdown level1 summary"><p>Returns a string representation of the language described by the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AppendToString(StringBuilder builder, RegexpFormattingSettings formattingSettings)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.stringbuilder">StringBuilder</a></td>
+        <td><span class="parametername">builder</span></td>
+        <td><p>The string builder to append to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpFormattingSettings.html">RegexpFormattingSettings</a></td>
+        <td><span class="parametername">formattingSettings</span></td>
+        <td><p>The formatting settings used for conversion from an automaton to a string.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>False if the string was truncated.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Concat_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Concat*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Concat_Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode__0__Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Concat(Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode{`0},Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode{`0})">Concat(RegexpTreeNode&lt;TElement&gt;, RegexpTreeNode&lt;TElement&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a node representing the concatenation of the languages described by a given pair of nodes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RegexpTreeNode&lt;TElement&gt; Concat(RegexpTreeNode&lt;TElement&gt; node1, RegexpTreeNode&lt;TElement&gt; node2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><span class="parametername">node1</span></td>
+        <td><p>The first node.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><span class="parametername">node2</span></td>
+        <td><p>The second node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><p>The created node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Empty_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Empty*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Empty" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Empty">Empty()</h4>
+  <div class="markdown level1 summary"><p>Creates a node representing language consisting of an empty string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RegexpTreeNode&lt;TElement&gt; Empty()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><p>The created node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_FromElementSet_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.FromElementSet*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_FromElementSet__1_Microsoft_ML_Probabilistic_Collections_Option___0__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.FromElementSet``1(Microsoft.ML.Probabilistic.Collections.Option{``0})">FromElementSet&lt;TElementSet&gt;(Option&lt;TElementSet&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a terminal node representing a given set of sequence elements.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RegexpTreeNode&lt;TElement&gt; FromElementSet&lt;TElementSet&gt;(Option&lt;TElementSet&gt; elementSet)
+    where TElementSet : SettableToPartialUniform&lt;TElementSet&gt;, IDistribution&lt;TElement&gt;, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementSet&gt;</td>
+        <td><span class="parametername">elementSet</span></td>
+        <td><p>The distribution over sequence elements.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><p>The created node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TElementSet</span></td>
+        <td><p>The type of a sequence element set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Nothing_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Nothing*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Nothing" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Nothing">Nothing()</h4>
+  <div class="markdown level1 summary"><p>Returns a node representing the empty language.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RegexpTreeNode&lt;TElement&gt; Nothing()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><p>A node representing the empty language.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Or_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Or*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Or_Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode__0__Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Or(Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode{`0},Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode{`0})">Or(RegexpTreeNode&lt;TElement&gt;, RegexpTreeNode&lt;TElement&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a node representing the union of the languages described by a given pair of nodes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RegexpTreeNode&lt;TElement&gt; Or(RegexpTreeNode&lt;TElement&gt; node1, RegexpTreeNode&lt;TElement&gt; node2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><span class="parametername">node1</span></td>
+        <td><p>The first node.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><span class="parametername">node2</span></td>
+        <td><p>The second node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><p>The created node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Star_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Star*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode_1_Star_Microsoft_ML_Probabilistic_Distributions_Automata_RegexpTreeNode__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode`1.Star(Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode{`0})">Star(RegexpTreeNode&lt;TElement&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a node representing the Kleene star of the language described by a given node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RegexpTreeNode&lt;TElement&gt; Star(RegexpTreeNode&lt;TElement&gt; node)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><span class="parametername">node</span></td>
+        <td><p>The node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.RegexpTreeNode-1.html">RegexpTreeNode</a>&lt;TElement&gt;</td>
+        <td><p>The created node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

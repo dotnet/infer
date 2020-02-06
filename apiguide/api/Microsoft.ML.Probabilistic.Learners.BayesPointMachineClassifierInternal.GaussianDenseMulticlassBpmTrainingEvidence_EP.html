@@ -1,0 +1,2667 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GaussianDenseMulticlassBpmTrainingEvidence_EP
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GaussianDenseMulticlassBpmTrainingEvidence_EP
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP" class="text-break">Class GaussianDenseMulticlassBpmTrainingEvidence_EP
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">GaussianDenseMulticlassBpmTrainingEvidence_EP</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.html">Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Classifier.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class GaussianDenseMulticlassBpmTrainingEvidence_EP : IGeneratedAlgorithm</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstrai18_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstrai18_isDone">Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstrai18_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstrai18 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstrai18</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterations_WeightConstrai18_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterationsDecreased_Weigh17_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterationsDecreased_Weigh17_isDone">Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterationsDecreased_Weigh17_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterationsDecreased_Weigh17 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterationsDecreased_Weigh17</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_Labels_numberOfIterationsDecreased_Weigh17_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16_isDone">Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16_isInitialised" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16_isInitialised">Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16_isInitialised</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_FeatureValues_InstanceCount_numberOfIterationsDecreased_WeightConstr16_isInitialised</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_InstanceCount_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_InstanceCount_isDone">Changed_ClassCount_FeatureCount_InstanceCount_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_InstanceCount has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_InstanceCount</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_InstanceCount_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9_isDone">Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9_isInitialised" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9_isInitialised">Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9_isInitialised</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureValues_Labels_9_isInitialised</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15_isDone">Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15_isInitialised" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15_isInitialised">Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15_isInitialised</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_InstanceCount_numberOfIterationsDecreased_WeightConstraints_WeightPr15_isInitialised</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_isDone">Changed_ClassCount_FeatureCount_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3_isDone">Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3_isInitialised" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3_isInitialised">Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3_isInitialised</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_Init_FeatureValues_InstanceCount_Labels_3_isInitialised</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7_isDone">Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7_isInitialised" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7_isInitialised">Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7_isInitialised</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightConstraints_WeightPriors_Init_Feat7_isInitialised</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5_isDone">Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5 has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5_isInitialised" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5_isInitialised">Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5_isInitialised</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_numberOfIterationsDecreased_WeightPriors_Init_FeatureValues_Instance5_isInitialised</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_FeatureCount_WeightConstraints_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_FeatureCount_WeightConstraints_isDone">Changed_ClassCount_FeatureCount_WeightConstraints_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_FeatureCount_WeightConstraints has executed. Set this to false to force re-execution of Changed_ClassCount_FeatureCount_WeightConstraints</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_FeatureCount_WeightConstraints_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_InstanceCount_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_InstanceCount_isDone">Changed_ClassCount_InstanceCount_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_InstanceCount has executed. Set this to false to force re-execution of Changed_ClassCount_InstanceCount</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_InstanceCount_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_InstanceCount_Labels_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_InstanceCount_Labels_isDone">Changed_ClassCount_InstanceCount_Labels_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_InstanceCount_Labels has executed. Set this to false to force re-execution of Changed_ClassCount_InstanceCount_Labels</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_InstanceCount_Labels_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14_isDone">Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14 has executed. Set this to false to force re-execution of Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14_isInitialised" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14_isInitialised">Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14_isInitialised</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_InstanceCount_Labels_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_14_isInitialised</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12_isDone">Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12 has executed. Set this to false to force re-execution of Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12_isInitialised" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12_isInitialised">Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12_isInitialised</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12 has performed initialisation. Set this to false to force re-execution of Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_InstanceCount_numberOfIterationsDecreased_Init_FeatureCount_FeatureValues_Labels_12_isInitialised</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_ClassCount_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_ClassCount_isDone">Changed_ClassCount_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_ClassCount has executed. Set this to false to force re-execution of Changed_ClassCount</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_ClassCount_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_FeatureCount_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_FeatureCount_isDone">Changed_FeatureCount_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_FeatureCount has executed. Set this to false to force re-execution of Changed_FeatureCount</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_FeatureCount_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_InstanceCount_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_InstanceCount_isDone">Changed_InstanceCount_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_InstanceCount has executed. Set this to false to force re-execution of Changed_InstanceCount</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_InstanceCount_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Changed_InstanceCount_Labels_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Changed_InstanceCount_Labels_isDone">Changed_InstanceCount_Labels_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Changed_InstanceCount_Labels has executed. Set this to false to force re-execution of Changed_InstanceCount_Labels</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Changed_InstanceCount_Labels_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Constant_isDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Constant_isDone">Constant_isDone</h4>
+  <div class="markdown level1 summary"><p>True if Constant has executed. Set this to false to force re-execution of Constant</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Constant_isDone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_FeatureScores_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.FeatureScores_B">FeatureScores_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; FeatureScores_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_FeatureScores_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.FeatureScores_F">FeatureScores_F</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; FeatureScores_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_MaxNoisyScore_0__B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.MaxNoisyScore_0__B">MaxNoisyScore_0__B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; MaxNoisyScore_0__B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_MaxNoisyScore_rep_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.MaxNoisyScore_rep_B">MaxNoisyScore_rep_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; MaxNoisyScore_rep_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_MaxNoisyScore_rep_B_toDef" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.MaxNoisyScore_rep_B_toDef">MaxNoisyScore_rep_B_toDef</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; MaxNoisyScore_rep_B_toDef</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_MaxNoisyScore_rep_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.MaxNoisyScore_rep_F">MaxNoisyScore_rep_F</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; MaxNoisyScore_rep_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_MaxNoisyScore_rep_F_marginal" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.MaxNoisyScore_rep_F_marginal">MaxNoisyScore_rep_F_marginal</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; MaxNoisyScore_rep_F_marginal</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_marginal_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_marginal_F">ModelSelector_marginal_F</h4>
+  <div class="markdown level1 summary"><p>Message to marginal of 'ModelSelector'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli ModelSelector_marginal_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_B">ModelSelector_selector_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli ModelSelector_selector_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_B">ModelSelector_selector_cases_0_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli ModelSelector_selector_cases_0_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep10_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep10_B">ModelSelector_selector_cases_0_rep10_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionStructArray&lt;Bernoulli, bool&gt; ModelSelector_selector_cases_0_rep10_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep10_rep_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep10_rep_B">ModelSelector_selector_cases_0_rep10_rep_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Bernoulli, bool&gt;, bool[]&gt; ModelSelector_selector_cases_0_rep10_rep_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep10_rep_uses_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep10_rep_uses_B">ModelSelector_selector_cases_0_rep10_rep_uses_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli[][][] ModelSelector_selector_cases_0_rep10_rep_uses_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>[][][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep13_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep13_B">ModelSelector_selector_cases_0_rep13_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionStructArray&lt;Bernoulli, bool&gt; ModelSelector_selector_cases_0_rep13_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep20_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep20_B">ModelSelector_selector_cases_0_rep20_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionStructArray&lt;Bernoulli, bool&gt; ModelSelector_selector_cases_0_rep20_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep20_uses_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep20_uses_B">ModelSelector_selector_cases_0_rep20_uses_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli[][] ModelSelector_selector_cases_0_rep20_uses_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>[][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep24_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep24_B">ModelSelector_selector_cases_0_rep24_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionStructArray&lt;Bernoulli, bool&gt; ModelSelector_selector_cases_0_rep24_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep24_rep_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep24_rep_B">ModelSelector_selector_cases_0_rep24_rep_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Bernoulli, bool&gt;, bool[]&gt; ModelSelector_selector_cases_0_rep24_rep_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep24_rep_uses_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep24_rep_uses_B">ModelSelector_selector_cases_0_rep24_rep_uses_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli[][][] ModelSelector_selector_cases_0_rep24_rep_uses_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>[][][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep25_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep25_B">ModelSelector_selector_cases_0_rep25_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionStructArray&lt;Bernoulli, bool&gt; ModelSelector_selector_cases_0_rep25_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep25_rep_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep25_rep_B">ModelSelector_selector_cases_0_rep25_rep_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Bernoulli, bool&gt;, bool[]&gt; ModelSelector_selector_cases_0_rep25_rep_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep28_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep28_B">ModelSelector_selector_cases_0_rep28_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionStructArray&lt;Bernoulli, bool&gt; ModelSelector_selector_cases_0_rep28_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep29_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep29_B">ModelSelector_selector_cases_0_rep29_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionStructArray&lt;Bernoulli, bool&gt; ModelSelector_selector_cases_0_rep29_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep29_B_reduced" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep29_B_reduced">ModelSelector_selector_cases_0_rep29_B_reduced</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli ModelSelector_selector_cases_0_rep29_B_reduced</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep4_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep4_B">ModelSelector_selector_cases_0_rep4_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionStructArray&lt;Bernoulli, bool&gt; ModelSelector_selector_cases_0_rep4_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep4_rep_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep4_rep_B">ModelSelector_selector_cases_0_rep4_rep_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Bernoulli, bool&gt;, bool[]&gt; ModelSelector_selector_cases_0_rep4_rep_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_rep4_rep_uses_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_rep4_rep_uses_B">ModelSelector_selector_cases_0_rep4_rep_uses_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli[][][] ModelSelector_selector_cases_0_rep4_rep_uses_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>[][][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_0_uses_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_0_uses_B">ModelSelector_selector_cases_0_uses_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli[] ModelSelector_selector_cases_0_uses_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelector_selector_cases_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelector_selector_cases_B">ModelSelector_selector_cases_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionStructArray&lt;Bernoulli, bool&gt; ModelSelector_selector_cases_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_NoisyScoreDeltas_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.NoisyScoreDeltas_B">NoisyScoreDeltas_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; NoisyScoreDeltas_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_NoisyScoreDeltas_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.NoisyScoreDeltas_F">NoisyScoreDeltas_F</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; NoisyScoreDeltas_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_NoisyScores_ClassRange_ClassMaxNoisyScore_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.NoisyScores_ClassRange_ClassMaxNoisyScore_B">NoisyScores_ClassRange_ClassMaxNoisyScore_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; NoisyScores_ClassRange_ClassMaxNoisyScore_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B">NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; NoisyScores_ClassRange_ClassMaxNoisyScore_ClassRange_0__B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_NoisyScores_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.NoisyScores_F">NoisyScores_F</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; NoisyScores_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_NoisyScores_use_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.NoisyScores_use_B">NoisyScores_use_B</h4>
+  <div class="markdown level1 summary"><p>Message from use of 'NoisyScores'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; NoisyScores_use_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Scores_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Scores_B">Scores_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; Scores_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Scores_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Scores_F">Scores_F</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; Scores_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_SharedWeightsFirst_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.SharedWeightsFirst_F">SharedWeightsFirst_F</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; SharedWeightsFirst_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_TransposedWeights_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.TransposedWeights_B">TransposedWeights_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; TransposedWeights_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_TransposedWeights_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.TransposedWeights_F">TransposedWeights_F</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; TransposedWeights_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_TransposedWeightSums_reduced" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.TransposedWeightSums_reduced">TransposedWeightSums_reduced</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double TransposedWeightSums_reduced</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_vBernoulli2" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.vBernoulli2">vBernoulli2</h4>
+  <div class="markdown level1 summary"><p>The constant 'vBernoulli2'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli vBernoulli2</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_vbool39" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.vbool39">vbool39</h4>
+  <div class="markdown level1 summary"><p>The constant 'vbool39'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool[][][] vbool39</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>[][][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_vdouble379_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.vdouble379_B">vdouble379_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; vdouble379_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Weights_depth0_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Weights_depth0_F">Weights_depth0_F</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; Weights_depth0_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Weights_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Weights_F">Weights_F</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; Weights_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Weights_marginal_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Weights_marginal_F">Weights_marginal_F</h4>
+  <div class="markdown level1 summary"><p>Message to marginal of 'Weights'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; Weights_marginal_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Weights_rep_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Weights_rep_B">Weights_rep_B</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; Weights_rep_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Weights_rep_B_toDef" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Weights_rep_B_toDef">Weights_rep_B_toDef</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; Weights_rep_B_toDef</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Weights_rep_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Weights_rep_F">Weights_rep_F</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, double[][]&gt; Weights_rep_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Weights_rep_F_marginal" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Weights_rep_F_marginal">Weights_rep_F_marginal</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; Weights_rep_F_marginal</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Weights_use_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Weights_use_B">Weights_use_B</h4>
+  <div class="markdown level1 summary"><p>Message from use of 'Weights'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; Weights_use_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Weights_uses_B" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Weights_uses_B">Weights_uses_B</h4>
+  <div class="markdown level1 summary"><p>Messages from use of 'Weights'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Gaussian[][][] Weights_uses_B</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>[][][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Weights_uses_F" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Weights_uses_F">Weights_uses_F</h4>
+  <div class="markdown level1 summary"><p>Messages to use of 'Weights'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Gaussian[][][] Weights_uses_F</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>[][][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ClassCount_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ClassCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ClassCount" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ClassCount">ClassCount</h4>
+  <div class="markdown level1 summary"><p>The externally-specified value of 'ClassCount'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ClassCount { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_FeatureCount_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.FeatureCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_FeatureCount" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.FeatureCount">FeatureCount</h4>
+  <div class="markdown level1 summary"><p>The externally-specified value of 'FeatureCount'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int FeatureCount { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_FeatureValues_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.FeatureValues*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_FeatureValues" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.FeatureValues">FeatureValues</h4>
+  <div class="markdown level1 summary"><p>The externally-specified value of 'FeatureValues'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double[][] FeatureValues { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[][]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_InstanceCount_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.InstanceCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_InstanceCount" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.InstanceCount">InstanceCount</h4>
+  <div class="markdown level1 summary"><p>The externally-specified value of 'InstanceCount'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int InstanceCount { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Labels_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Labels*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Labels" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Labels">Labels</h4>
+  <div class="markdown level1 summary"><p>The externally-specified value of 'Labels'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int[] Labels { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_NumberOfIterationsDone_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.NumberOfIterationsDone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_NumberOfIterationsDone" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.NumberOfIterationsDone">NumberOfIterationsDone</h4>
+  <div class="markdown level1 summary"><p>The number of iterations done from the initial state</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int NumberOfIterationsDone { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_WeightConstraints_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.WeightConstraints*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_WeightConstraints" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.WeightConstraints">WeightConstraints</h4>
+  <div class="markdown level1 summary"><p>The externally-specified value of 'WeightConstraints'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; WeightConstraints { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_WeightPriors_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.WeightPriors*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_WeightPriors" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.WeightPriors">WeightPriors</h4>
+  <div class="markdown level1 summary"><p>The externally-specified value of 'WeightPriors'</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; WeightPriors { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Execute_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Execute*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Execute_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Execute(System.Int32)">Execute(Int32)</h4>
+  <div class="markdown level1 summary"><p>Update all marginals, by iterating message-passing the given number of times</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Execute(int numberOfIterations)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">numberOfIterations</span></td>
+        <td><p>The total number of iterations that should be executed for the current set of observed values.  If this is more than the number already done, only the extra iterations are done.  If this is less than the number already done, message-passing is restarted from the beginning.  Changing the observed values resets the iteration count to 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_GetObservedValue_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.GetObservedValue*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_GetObservedValue_System_String_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.GetObservedValue(System.String)">GetObservedValue(String)</h4>
+  <div class="markdown level1 summary"><p>Get the observed value of the specified variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object GetObservedValue(string variableName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Variable name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal_System_String_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Marginal(System.String)">Marginal(String)</h4>
+  <div class="markdown level1 summary"><p>Get the marginal distribution (computed up to this point) of a variable</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Marginal(string variableName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Name of the variable in the generated code</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>The marginal distribution computed up to this point</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Execute, Update, or Reset must be called first to set the value of the marginal.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal_System_String_System_String_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Marginal(System.String,System.String)">Marginal(String, String)</h4>
+  <div class="markdown level1 summary"><p>Get the query-specific marginal distribution of a variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object Marginal(string variableName, string query)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Name of the variable in the generated code</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">query</span></td>
+        <td><p>QueryType name. For example, GibbsSampling answers 'Marginal', 'Samples', and 'Conditionals' queries</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal_System_String_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Execute, Update, or Reset must be called first to set the value of the marginal.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal__1_System_String_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Marginal``1(System.String)">Marginal&lt;T&gt;(String)</h4>
+  <div class="markdown level1 summary"><p>Get the marginal distribution (computed up to this point) of a variable, converted to type T</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T Marginal&lt;T&gt;(string variableName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Name of the variable in the generated code</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The marginal distribution computed up to this point</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The distribution type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal__1_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Execute, Update, or Reset must be called first to set the value of the marginal.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Marginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal__1_System_String_System_String_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Marginal``1(System.String,System.String)">Marginal&lt;T&gt;(String, String)</h4>
+  <div class="markdown level1 summary"><p>Get the query-specific marginal distribution of a variable, converted to type T</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T Marginal&lt;T&gt;(string variableName, string query)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Name of the variable in the generated code</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">query</span></td>
+        <td><p>QueryType name. For example, GibbsSampling answers 'Marginal', 'Samples', and 'Conditionals' queries</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The distribution type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Marginal__1_System_String_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Execute, Update, or Reset must be called first to set the value of the marginal.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelectorMarginal_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelectorMarginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ModelSelectorMarginal" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ModelSelectorMarginal">ModelSelectorMarginal()</h4>
+  <div class="markdown level1 summary"><p>Returns the marginal distribution for 'ModelSelector' given by the current state of the
+message passing algorithm.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bernoulli ModelSelectorMarginal()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Bernoulli.html">Bernoulli</a></td>
+        <td><p>The marginal distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Reset_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Reset*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Reset" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Reset">Reset()</h4>
+  <div class="markdown level1 summary"><p>Reset all messages to their initial values.  Sets NumberOfIterationsDone to 0.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Reset()</code></pre>
+  </div>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_SetObservedValue_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.SetObservedValue*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_SetObservedValue_System_String_System_Object_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.SetObservedValue(System.String,System.Object)">SetObservedValue(String, Object)</h4>
+  <div class="markdown level1 summary"><p>Set the observed value of the specified variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetObservedValue(string variableName, object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">variableName</span></td>
+        <td><p>Variable name</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>Observed value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Update_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Update*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_Update_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.Update(System.Int32)">Update(Int32)</h4>
+  <div class="markdown level1 summary"><p>Update all marginals, by iterating message-passing an additional number of times</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Update(int additionalIterations)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">additionalIterations</span></td>
+        <td><p>The number of iterations that should be executed, starting from the current message state.  Messages are not reset, even if observed values have changed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_WeightsMarginal_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.WeightsMarginal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_WeightsMarginal" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.WeightsMarginal">WeightsMarginal()</h4>
+  <div class="markdown level1 summary"><p>Returns the marginal distribution for 'Weights' given by the current state of the
+message passing algorithm.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; WeightsMarginal()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td><p>The marginal distribution</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_WeightsMarginalDividedByPrior_" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.WeightsMarginalDividedByPrior*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_WeightsMarginalDividedByPrior" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.WeightsMarginalDividedByPrior">WeightsMarginalDividedByPrior()</h4>
+  <div class="markdown level1 summary"><p>Returns the output message (the posterior divided by the prior) for 'Weights' given by the current state of the
+message passing algorithm.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt; WeightsMarginalDividedByPrior()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionRefArray-2.html">DistributionRefArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DistributionStructArray-2.html">DistributionStructArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]&gt;</td>
+        <td><p>The output message (the posterior divided by the prior)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_BayesPointMachineClassifierInternal_GaussianDenseMulticlassBpmTrainingEvidence_EP_ProgressChanged" data-uid="Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInternal.GaussianDenseMulticlassBpmTrainingEvidence_EP.ProgressChanged">ProgressChanged</h4>
+  <div class="markdown level1 summary"><p>Event that is fired when the progress of inference changes, typically at the end of one iteration of the inference algorithm.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ProgressChangedEventArgs&gt; ProgressChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.ProgressChangedEventArgs.html">ProgressChangedEventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.IGeneratedAlgorithm.html">IGeneratedAlgorithm</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1511 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Rand
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Rand
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Math.Rand">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Math_Rand" data-uid="Microsoft.ML.Probabilistic.Math.Rand" class="text-break">Class Rand
+  </h1>
+  <div class="markdown level0 summary"><p>This class provides a source of non-uniform random numbers.
+It cannot be instantiated and consists of only static functions.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Rand</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Math.html">Microsoft.ML.Probabilistic.Math</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class Rand</code></pre>
+  </div>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>A thread-static <code>System.Random</code> object provides the underlying random numbers.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Beta_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Beta*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Beta_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Beta(System.Double,System.Double)">Beta(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from the Beta distribution with given parameters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Beta(double trueCount, double falseCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">trueCount</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">falseCount</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Binomial_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Binomial*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Binomial_System_Int32_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Binomial(System.Int32,System.Double)">Binomial(Int32, Double)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from the Binomial distribution with parameters p and n.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Binomial(int n, double p)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">n</span></td>
+        <td><p>Number of trials</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">p</span></td>
+        <td><p>Probability of success per trial</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_Binomial_System_Int32_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Reference:
+[1]  L. Devroye, &quot;Non-Uniform Random Variate Generation&quot;,
+Springer-Verlag, 1986.
+[2] Kachitvichyanukul, V., and Schmeiser, B. W. &quot;Binomial Random Variate Generation.&quot;
+Comm. ACM, 31, 2 (Feb. 1988), 216.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Dirichlet*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Dirichlet_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Dirichlet(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector)">Dirichlet(Vector, Vector)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from the Dirichlet distribution with the given
+pseudo-count</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector Dirichlet(Vector pseudoCount, Vector result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">pseudoCount</span></td>
+        <td><p>Pseudo-count</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Where to put the result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><p>The sample</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_Dirichlet_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If pseudoCount is a sparse vector and the common
+value for the sparse vector is not 0, then the result will be dense; in such
+a case it is recommended that 'result' be a dense vector type.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Double*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Double" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Double">Double()</h4>
+  <div class="markdown level1 summary"><p>Generates a random double-precision value in [0,1).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Double()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A random double.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_Double_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Same as <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.random.nextdouble#System_Random_NextDouble">NextDouble()</a>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Gamma_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Gamma*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Gamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Gamma(System.Double)">Gamma(Double)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a Gamma distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Gamma(double a)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The shape parameter.  Must be finite and &gt; 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A nonnegative finite real number.  May be zero.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_Gamma_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The distribution is defined as p(x) = x^(a-1)*exp(-x)/Gamma(a).
+To incorporate a scale parameter b, multiply the result by b.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Int_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Int*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Int" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Int">Int()</h4>
+  <div class="markdown level1 summary"><p>Generates a non-negative random integer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Int()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>A random integer &gt;= 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_Int_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Same as <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.random.next#System_Random_Next">Next()</a>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Int_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Int*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Int_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Int(System.Int32)">Int(Int32)</h4>
+  <div class="markdown level1 summary"><p>Generates a random integer x, 0 &lt;= x &lt; <code data-dev-comment-type="paramref" class="paramref">maxPlus1</code></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Int(int maxPlus1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxPlus1</span></td>
+        <td><p>Upper bound.  Must be &gt;= 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>A random integer x, 0 &lt;= x &lt; <code data-dev-comment-type="paramref" class="paramref">maxPlus1</code>.  If <code data-dev-comment-type="paramref" class="paramref">maxPlus1</code> is zero, zero is returned.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_Int_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Same as <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.random.next#System_Random_Next_System_Int32_">Next(Int32)</a>.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Int_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Int*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Int_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Int(System.Int32,System.Int32)">Int(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Generates a random integer x, <code data-dev-comment-type="paramref" class="paramref">min</code> &lt;= x &lt; <code data-dev-comment-type="paramref" class="paramref">maxPlus1</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Int(int min, int maxPlus1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">min</span></td>
+        <td><p>Minimum value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">maxPlus1</span></td>
+        <td><p>Maximum value plus 1.  Must be &gt; <code data-dev-comment-type="paramref" class="paramref">min</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>A random integer x, <code data-dev-comment-type="paramref" class="paramref">min</code> &lt;= x &lt; <code data-dev-comment-type="paramref" class="paramref">maxPlus1</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_Int_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Same as <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.random.next#System_Random_Next_System_Int32_System_Int32_">Next(Int32, Int32)</a> except the equal-argument case is disallowed.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Multinomial_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Multinomial*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Multinomial_System_Int32_Microsoft_ML_Probabilistic_Math_DenseVector_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Multinomial(System.Int32,Microsoft.ML.Probabilistic.Math.DenseVector)">Multinomial(Int32, DenseVector)</h4>
+  <div class="markdown level1 summary"><p>Sample from a Multinomial distribution with specified dense vector of probabilities and number of trials.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int[] Multinomial(int trialCount, DenseVector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">trialCount</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Multinomial_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Multinomial*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Multinomial_System_Int32_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Multinomial(System.Int32,Microsoft.ML.Probabilistic.Math.Vector)">Multinomial(Int32, Vector)</h4>
+  <div class="markdown level1 summary"><p>Sample from a Multinomial distribution with specified probabilities and number of trials.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int[] Multinomial(int trialCount, Vector probs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">trialCount</span></td>
+        <td><p>Number of trials, &gt;= 0</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">probs</span></td>
+        <td><p>Must sum to 1</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><p>An array of length <code>probs.Count</code> of integers between 0 and trialCount, whose sum is trialCount.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Normal_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Normal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Normal" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Normal">Normal()</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a normal distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Normal()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A finite real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Normal_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Normal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Normal_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Normal(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Math.Vector)">Normal(Vector, PositiveDefiniteMatrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a multivariate normal distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Normal(Vector mean, PositiveDefiniteMatrix variance, Vector result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The mean of the distribution.  Must be finite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">variance</span></td>
+        <td><p>The covariance matrix.  Must be positive-definite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Receives the result.  Must be non-null and the correct size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Normal_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Normal*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Normal_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Normal(System.Double,System.Double)">Normal(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a normal distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double Normal(double mean, double stdDev)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The mean of the distribution.  Must be finite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">stdDev</span></td>
+        <td><p>The standard deviation (sqrt of the variance).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A finite real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_NormalBetween_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.NormalBetween*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_NormalBetween_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.NormalBetween(System.Double,System.Double)">NormalBetween(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Sample from a Gaussian(0,1) truncated at the given upper and lower bounds</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalBetween(double lowerBound, double upperBound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lowerBound</span></td>
+        <td><p>Can be -Infinity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">upperBound</span></td>
+        <td><p>Must be &gt;= <code data-dev-comment-type="paramref" class="paramref">lowerBound</code>.  Can be Infinity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A real number &gt;= <code data-dev-comment-type="paramref" class="paramref">lowerBound</code> and &lt; <code data-dev-comment-type="paramref" class="paramref">upperBound</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_NormalChol_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.NormalChol*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_NormalChol_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.NormalChol(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix,Microsoft.ML.Probabilistic.Math.Vector)">NormalChol(Vector, LowerTriangularMatrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a multivariate normal distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void NormalChol(Vector mean, LowerTriangularMatrix varChol, Vector result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The mean of the distribution.  Must be finite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix.html">LowerTriangularMatrix</a></td>
+        <td><span class="parametername">varChol</span></td>
+        <td><p>The lower triangular Cholesky factor of the covariance matrix.  Must be positive-definite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Receives the result.  Must be non-null and the correct size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_NormalGreaterThan_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.NormalGreaterThan*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_NormalGreaterThan_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.NormalGreaterThan(System.Double)">NormalGreaterThan(Double)</h4>
+  <div class="markdown level1 summary"><p>Sample from a Gaussian(0,1) truncated at the given lower bound</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double NormalGreaterThan(double lowerBound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lowerBound</span></td>
+        <td><p>The truncation point.  Can be -Infinity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A real number &gt;= <code data-dev-comment-type="paramref" class="paramref">lowerBound</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_NormalP_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.NormalP*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_NormalP_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.NormalP(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix,Microsoft.ML.Probabilistic.Math.Vector)">NormalP(Vector, PositiveDefiniteMatrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a multivariate normal distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void NormalP(Vector mean, PositiveDefiniteMatrix precision, Vector result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The mean of the distribution.  Must be finite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix.html">PositiveDefiniteMatrix</a></td>
+        <td><span class="parametername">precision</span></td>
+        <td><p>The inverse of the covariance matrix.  Must be positive-definite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Receives the result.  Must be non-null and the correct size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_NormalPChol_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.NormalPChol*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_NormalPChol_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_UpperTriangularMatrix_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.NormalPChol(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.UpperTriangularMatrix,Microsoft.ML.Probabilistic.Math.Vector)">NormalPChol(Vector, UpperTriangularMatrix, Vector)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a multivariate normal distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void NormalPChol(Vector mean, UpperTriangularMatrix precCholT, Vector result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>The mean of the distribution.  Must be finite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.UpperTriangularMatrix.html">UpperTriangularMatrix</a></td>
+        <td><span class="parametername">precCholT</span></td>
+        <td><p>The upper triangular transpose of the Cholesky factor of the precision matrix.  Must be positive-definite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Receives the result.  Must be non-null and the correct size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Perm_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Perm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Perm_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Perm(System.Int32)">Perm(Int32)</h4>
+  <div class="markdown level1 summary"><p>Generates a random permutation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int[] Perm(int n)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">n</span></td>
+        <td><p>The length of permutation to make. Must be &gt; 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>[]</td>
+        <td><p>An array of <code data-dev-comment-type="paramref" class="paramref">n</code> unique integers, each in the range [0,<code data-dev-comment-type="paramref" class="paramref">n</code>-1].</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Poisson_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Poisson*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Poisson_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Poisson(System.Double)">Poisson(Double)</h4>
+  <div class="markdown level1 summary"><p>Sample from a Poisson distribution with specified mean.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Poisson(double mean)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Must be &gt;= 0</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>An integer in [0,infinity)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Restart_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Restart*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Restart_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Restart(System.Int32)">Restart(Int32)</h4>
+  <div class="markdown level1 summary"><p>Restarts the random number sequence for this thread (and influence future threads)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Restart(int seed)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">seed</span></td>
+        <td><p>A number used to calculate a starting value for the pseudo-random number sequence.
+If a negative number is specified, the absolute value of the number is used.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Sample_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Sample_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Sample(Microsoft.ML.Probabilistic.Math.Vector)">Sample(Vector)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a finite discrete distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Sample(Vector prob)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">prob</span></td>
+        <td><p>prob[i] &gt;= 0 is the probability of outcome i, times an arbitrary constant.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>An integer from 0 to <code>prob.Count</code>-1.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.AllZeroException.html">AllZeroException</a></td>
+        <td><p>Thrown when prob is all zeros.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Sample_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Sample_Microsoft_ML_Probabilistic_Math_Vector_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Sample(Microsoft.ML.Probabilistic.Math.Vector,System.Double)">Sample(Vector, Double)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a finite discrete distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Sample(Vector prob, double sum)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">prob</span></td>
+        <td><p>prob[i] is the probability of outcome i, times <code data-dev-comment-type="paramref" class="paramref">sum</code>.  Must be &gt;= 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>The sum of the prob array.  Must be &gt; 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>An integer from 0 to <code>prob.Count</code>-1.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Sample_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Sample*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Sample_System_Collections_Generic_IList_System_Double__System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Sample(System.Collections.Generic.IList{System.Double},System.Double)">Sample(IList&lt;Double&gt;, Double)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a finite discrete distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static int Sample(IList&lt;double&gt; prob, double sum)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">prob</span></td>
+        <td><p>prob[i] is the probability of outcome i, times <code data-dev-comment-type="paramref" class="paramref">sum</code>.  Must be &gt;= 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">sum</span></td>
+        <td><p>The sum of the prob array.  Must be &gt; 0.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>An integer from 0 to <code>prob.Count</code>-1.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_SampleWithoutReplacement_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.SampleWithoutReplacement*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_SampleWithoutReplacement_System_Int32_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.SampleWithoutReplacement(System.Int32,System.Int32)">SampleWithoutReplacement(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Draw a random subset of the integers between 0 and itemCount-1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static HashSet&lt;int&gt; SampleWithoutReplacement(int itemCount, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">itemCount</span></td>
+        <td><p>The number of elements to draw from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The number of elements to draw</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.hashset-1">HashSet</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_SampleWithoutReplacement_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.SampleWithoutReplacement*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_SampleWithoutReplacement__1_System_Collections_Generic_IReadOnlyList___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.SampleWithoutReplacement``1(System.Collections.Generic.IReadOnlyList{``0},System.Int32)">SampleWithoutReplacement&lt;T&gt;(IReadOnlyList&lt;T&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Draw a random subset of a list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static HashSet&lt;T&gt; SampleWithoutReplacement&lt;T&gt;(IReadOnlyList&lt;T&gt; list, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;T&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td><p>The source list.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The number of elements to draw</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.hashset-1">HashSet</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The element type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Shuffle_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Shuffle*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Shuffle__1___0___" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Shuffle``1(``0[])">Shuffle&lt;T&gt;(T[])</h4>
+  <div class="markdown level1 summary"><p>Permute the elements of an array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Shuffle&lt;T&gt;(T[] array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">array</span></td>
+        <td><p>The array to shuffle.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The element type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Shuffle_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Shuffle*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Shuffle__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Shuffle``1(System.Collections.Generic.IList{``0})">Shuffle&lt;T&gt;(IList&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Permute the elements of a list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Shuffle&lt;T&gt;(IList&lt;T&gt; list)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">list</span></td>
+        <td><p>The list to shuffle.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The element type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_UniformBetween_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.UniformBetween*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_UniformBetween_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.UniformBetween(System.Double,System.Double)">UniformBetween(Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Sample from a uniform distribution truncated at the given upper and lower bounds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double UniformBetween(double lowerBound, double upperBound)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lowerBound</span></td>
+        <td><p>Must be finite.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">upperBound</span></td>
+        <td><p>Must be &gt;= <code data-dev-comment-type="paramref" class="paramref">lowerBound</code>.  Must be finite.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>A real number &gt;= <code data-dev-comment-type="paramref" class="paramref">lowerBound</code> and &lt; <code data-dev-comment-type="paramref" class="paramref">upperBound</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_Rand_Wishart_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Wishart*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_Rand_Wishart_System_Double_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix_" data-uid="Microsoft.ML.Probabilistic.Math.Rand.Wishart(System.Double,Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix)">Wishart(Double, LowerTriangularMatrix)</h4>
+  <div class="markdown level1 summary"><p>Generates a random sample from a Wishart distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Wishart(double a, LowerTriangularMatrix result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The shape parameter.  Must be finite and &gt; 0.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.LowerTriangularMatrix.html">LowerTriangularMatrix</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Receives the lower triangular Cholesky factor of the sampled matrix.  Must be non-null, square, and already allocated to the desired size.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_Wishart_System_Double_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+    The <a href="http://en.wikipedia.org/wiki/Wishart_distribution">Wishart distribution</a> 
+    is defined as
+</p><p>
+p(X) = |X|^((n-d-1)/2)*exp(-tr(X))/Gamma_d(n/2) (using parameter n)
+</p><p>
+or 
+</p><p>
+p(X) = |X|^(a-(d+1)/2)*exp(-tr(X))/Gamma_d(a) (using parameter a)
+</p><p>
+This routine returns chol(X).  To incorporate a scale parameter C, 
+set Y = chol(C)*X*chol(C)&apos;, which implies chol(Y) = chol(C)*chol(X). 
+If you invert and transpose chol(X), then you have chol(inv(X)), 
+where inv(X) is a sample from the inverse Wishart distribution: 
+</p><p>
+p(X) = |X|^(-a-(d+1)/2)*exp(-tr(inv(X)))/Gamma_d(a)
+</p>
+</div>
+  <h5 id="Microsoft_ML_Probabilistic_Math_Rand_Wishart_System_Double_Microsoft_ML_Probabilistic_Math_LowerTriangularMatrix__examples">Examples</h5>
+  <pre><code>Matrix L = new Matrix(d,d);
+Rand.Wishart(a,L);
+Matrix X = new Matrix(d,d);
+X.SetToProduct(L, L.Transpose());</code></pre>
+
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

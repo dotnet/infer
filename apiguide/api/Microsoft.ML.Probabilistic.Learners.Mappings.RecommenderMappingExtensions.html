@@ -1,0 +1,818 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class RecommenderMappingExtensions
+   | Infer.NET API Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class RecommenderMappingExtensions
+   | Infer.NET API Guide ">
+    <meta name="generator" content="docfx 2.48.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/infernet.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions">
+  
+  
+  <h1 id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions" class="text-break">Class RecommenderMappingExtensions
+  </h1>
+  <div class="markdown level0 summary"><p>Extension methods to simplify mapping chaining syntax.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">RecommenderMappingExtensions</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.html">Microsoft.ML.Probabilistic.Learners.Mappings</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class RecommenderMappingExtensions</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_ForEvaluation_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.ForEvaluation*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_ForEvaluation__7_Microsoft_ML_Probabilistic_Learners_Mappings_IRatingRecommenderMapping___0___1___2___3___4___5___6__" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.ForEvaluation``7(Microsoft.ML.Probabilistic.Learners.Mappings.IRatingRecommenderMapping{``0,``1,``2,``3,``4,``5,``6})">ForEvaluation&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(IRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;)</h4>
+  <div class="markdown level1 summary"><p>Chains a given recommender mapping with an evaluator mapping,
+making it possible to evaluate a recommender on the mapped data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RecommenderEvaluatorMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt; ForEvaluation&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(this IRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IRatingRecommenderMapping-7.html">IRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The recommender mapping to chain with the evaluator mapping.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderEvaluatorMapping-7.html">RecommenderEvaluatorMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;</td>
+        <td><p>The evaluator mapping.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRating</span></td>
+        <td><p>The type of a rating.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureValues</span></td>
+        <td><p>The type of the feature values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_ForEvaluation_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.ForEvaluation*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_ForEvaluation__7_Microsoft_ML_Probabilistic_Learners_Mappings_IStarRatingRecommenderMapping___0___1___2___3___4___5___6__" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.ForEvaluation``7(Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping{``0,``1,``2,``3,``4,``5,``6})">ForEvaluation&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;)</h4>
+  <div class="markdown level1 summary"><p>Chains a given recommender mapping with an evaluator mapping,
+making it possible to evaluate a recommender on the mapped data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StarRatingRecommenderEvaluatorMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt; ForEvaluation&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(this IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt; mapping)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping-7.html">IStarRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The recommender mapping to chain with the evaluator mapping.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.StarRatingRecommenderEvaluatorMapping-7.html">StarRatingRecommenderEvaluatorMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;</td>
+        <td><p>The evaluator mapping.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRating</span></td>
+        <td><p>The type of a rating.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureValues</span></td>
+        <td><p>The type of the feature values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_SplitToTrainTest_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.SplitToTrainTest*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_SplitToTrainTest__6_Microsoft_ML_Probabilistic_Learners_Mappings_IRecommenderMapping___0___1___2___3___4___5__System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.SplitToTrainTest``6(Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderMapping{``0,``1,``2,``3,``4,``5},System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Boolean)">SplitToTrainTest&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;(IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;, Double, Double, Double, Double, Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Chains a given recommender mapping with a splitting mapping, which splits the mapped data into training and test parts.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TrainTestSplittingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt; SplitToTrainTest&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;(this IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt; mapping, double trainingOnlyUserFraction, double testUserRatingTrainingFraction, double coldUserFraction = 0, double coldItemFraction = 0, double ignoredUserFraction = 0, double ignoredItemFraction = 0, bool removeOccasionalColdItems = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderMapping-6.html">IRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The recommender mapping to chain with the splitting mapping.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">trainingOnlyUserFraction</span></td>
+        <td><p>The fraction of users included in the training set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">testUserRatingTrainingFraction</span></td>
+        <td><p>The fraction of ratings in the training set for each user who is presented in both sets.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">coldUserFraction</span></td>
+        <td><p>The fraction of users included in the test set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">coldItemFraction</span></td>
+        <td><p>The fraction of items included in the test set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ignoredUserFraction</span></td>
+        <td><p>The fraction of users not included in either the training or the test set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ignoredItemFraction</span></td>
+        <td><p>The fraction of items not included in either the training or the test set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">removeOccasionalColdItems</span></td>
+        <td><p>Whether the occasionally produced cold items should be removed from the test set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRecommenderMapping-6.html">TrainTestSplittingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</td>
+        <td><p>The train/test splitting mapping.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureValues</span></td>
+        <td><p>The type of the feature values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_SplitToTrainTest_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.SplitToTrainTest*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_SplitToTrainTest__7_Microsoft_ML_Probabilistic_Learners_Mappings_IRatingRecommenderMapping___0___1___2___3___4___5___6__System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.SplitToTrainTest``7(Microsoft.ML.Probabilistic.Learners.Mappings.IRatingRecommenderMapping{``0,``1,``2,``3,``4,``5,``6},System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Boolean)">SplitToTrainTest&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(IRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;, Double, Double, Double, Double, Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Chains a given recommender mapping with a splitting mapping, which splits the mapped data into training and test parts.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TrainTestSplittingRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt; SplitToTrainTest&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(this IRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt; mapping, double trainingOnlyUserFraction, double testUserRatingTrainingFraction, double coldUserFraction = 0, double coldItemFraction = 0, double ignoredUserFraction = 0, double ignoredItemFraction = 0, bool removeOccasionalColdItems = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IRatingRecommenderMapping-7.html">IRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The recommender mapping to chain with the splitting mapping.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">trainingOnlyUserFraction</span></td>
+        <td><p>The fraction of users included in the training set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">testUserRatingTrainingFraction</span></td>
+        <td><p>The fraction of ratings in the training set for each user who is presented in both sets.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">coldUserFraction</span></td>
+        <td><p>The fraction of users included in the test set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">coldItemFraction</span></td>
+        <td><p>The fraction of items included in the test set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ignoredUserFraction</span></td>
+        <td><p>The fraction of users not included in either the training or the test set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ignoredItemFraction</span></td>
+        <td><p>The fraction of items not included in either the training or the test set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">removeOccasionalColdItems</span></td>
+        <td><p>Whether the occasionally produced cold items should be removed from the test set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingRatingRecommenderMapping-7.html">TrainTestSplittingRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;</td>
+        <td><p>The train/test splitting mapping.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRating</span></td>
+        <td><p>The type of a rating.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureValues</span></td>
+        <td><p>The type of the feature values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_SplitToTrainTest_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.SplitToTrainTest*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_SplitToTrainTest__7_Microsoft_ML_Probabilistic_Learners_Mappings_IStarRatingRecommenderMapping___0___1___2___3___4___5___6__System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.SplitToTrainTest``7(Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping{``0,``1,``2,``3,``4,``5,``6},System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Boolean)">SplitToTrainTest&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;, Double, Double, Double, Double, Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Chains a given recommender mapping with a splitting mapping, which splits the mapped data into training and test parts.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TrainTestSplittingStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt; SplitToTrainTest&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;(this IStarRatingRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt; mapping, double trainingOnlyUserFraction, double testUserRatingTrainingFraction, double coldUserFraction = 0, double coldItemFraction = 0, double ignoredUserFraction = 0, double ignoredItemFraction = 0, bool removeOccasionalColdItems = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IStarRatingRecommenderMapping-7.html">IStarRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The recommender mapping to chain with the splitting mapping.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">trainingOnlyUserFraction</span></td>
+        <td><p>The fraction of users included in the training set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">testUserRatingTrainingFraction</span></td>
+        <td><p>The fraction of ratings in the training set for each user who is presented in both sets.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">coldUserFraction</span></td>
+        <td><p>The fraction of users included in the test set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">coldItemFraction</span></td>
+        <td><p>The fraction of items included in the test set only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ignoredUserFraction</span></td>
+        <td><p>The fraction of users not included in either the training or the test set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">ignoredItemFraction</span></td>
+        <td><p>The fraction of items not included in either the training or the test set.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">removeOccasionalColdItems</span></td>
+        <td><p>Whether the occasionally produced cold items should be removed from the test set.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.TrainTestSplittingStarRatingRecommenderMapping-7.html">TrainTestSplittingStarRatingRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TRating, TFeatureSource, TFeatureValues&gt;</td>
+        <td><p>The train/test splitting mapping.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TRating</span></td>
+        <td><p>The type of a rating.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureValues</span></td>
+        <td><p>The type of the feature values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_WithGeneratedNegativeData_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.WithGeneratedNegativeData*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_Mappings_RecommenderMappingExtensions_WithGeneratedNegativeData__6_Microsoft_ML_Probabilistic_Learners_Mappings_IRecommenderMapping___0___1___2___3___4___5__System_Double_" data-uid="Microsoft.ML.Probabilistic.Learners.Mappings.RecommenderMappingExtensions.WithGeneratedNegativeData``6(Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderMapping{``0,``1,``2,``3,``4,``5},System.Double)">WithGeneratedNegativeData&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;(IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;, Double)</h4>
+  <div class="markdown level1 summary"><p>Chains a given recommender mapping with a mapping that augments the mapped data with negative examples,
+while treating all instances provided by the original mapping as positive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static NegativeDataGeneratorMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt; WithGeneratedNegativeData&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;(this IRecommenderMapping&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt; mapping, double itemHistogramAdjustment = 1.2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderMapping-6.html">IRecommenderMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</td>
+        <td><span class="parametername">mapping</span></td>
+        <td><p>The mapping to chain with the negative data generator mapping.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">itemHistogramAdjustment</span></td>
+        <td><p>The degree to which each element of the item histogram is raised before sampling.
+Should be different from 1.0 if it is believed that there is some quality
+bar which drives popular items to be more generally liked.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.NegativeDataGeneratorMapping-6.html">NegativeDataGeneratorMapping</a>&lt;TInstanceSource, TInstance, TUser, TItem, TFeatureSource, TFeatureValues&gt;</td>
+        <td><p>The negative data generator mapping.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TInstanceSource</span></td>
+        <td><p>The type of a source of instances.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInstance</span></td>
+        <td><p>The type of an instance.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUser</span></td>
+        <td><p>The type of a user.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of an item.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureSource</span></td>
+        <td><p>The type of a feature source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TFeatureValues</span></td>
+        <td><p>The type of the feature values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © .NET Foundation. All rights reserved.</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
