@@ -2,7 +2,7 @@
 # The .NET Foundation licenses this file to you under the MIT license.
 # See the LICENSE file in the project root for more information.
 from __future__ import division
-from sympy import zeta, evalf, bernoulli, symbols, Poly, series, factorial, factorial2, S, log, exp, gamma
+from sympy import zeta, evalf, bernoulli, symbols, Poly, series, factorial, factorial2, S, log, exp, gamma, digamma, sqrt
 
 # configuration
 decimal_precision = 30
@@ -11,6 +11,10 @@ evalf_inner_precision = 500
 gamma_at_2_series_length = 26
 gamma_at_2_variable_name = "dx"
 gamma_at_2_indent = "                    "
+
+digamma_at_1_series_length = 2
+digamma_at_1_variable_name = "x"
+digamma_at_1_indent = "                    "
 
 digamma_at_2_series_length = 26
 digamma_at_2_variable_name = "dx"
@@ -68,9 +72,17 @@ normcdfln_asymptotic_series_length = 8
 normcdfln_asymptotic_variable_name = "z"
 normcdfln_asymptotic_indent = "                    "
 
+one_minus_sqrt_one_minus_series_length = 5
+one_minus_sqrt_one_minus_variable_name = "x"
+one_minus_sqrt_one_minus_indent = "                    "
+
 reciprocal_factorial_minus_1_series_length = 17
 reciprocal_factorial_minus_1_variable_name = "x"
 reciprocal_factorial_minus_1_indent = "                "
+
+def print_heading_comment(indent, header):
+    print(f"{indent}// Truncated series {header}")
+    print(f"{indent}// Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py")
 
 def format_real_coefficient(coefficient):
     return str(coefficient)
@@ -130,6 +142,11 @@ def gamma_at_2_coefficient(k):
     if k == 0:
         return 0.0
     return ((-1)**(k + 1)*(zeta(k + 1) - 1)/(k + 1)).evalf(decimal_precision, maxn=evalf_inner_precision)
+
+def digamma_at_1_coefficient(k):
+    if k == 0:
+        return digamma(1).evalf(decimal_precision, maxn=evalf_inner_precision)
+    return ((-1)**(k + 1) * zeta(k + 1)).evalf(decimal_precision, maxn=evalf_inner_precision)
 
 def digamma_at_2_coefficient(k):
     if k == 0:
@@ -227,72 +244,84 @@ def normcdfln_asymptotic_coefficient(m):
         result = result + coef * accSum
     return result
 
+def get_one_minus_sqrt_one_minus_coefficients(count):
+    x = symbols('x')
+    return list(reversed(Poly((1 - sqrt(1 - x)).series(x, 0, count).removeO()).all_coeffs()))
+
 def get_reciprocal_factorial_minus_1_coefficients(count):
     x = symbols('x')
     return list(reversed(Poly((1 / gamma(x + 1) - 1).series(x, 0, count).removeO().evalf(decimal_precision, maxn=evalf_inner_precision), x).all_coeffs()))
 
 def main():
-    print("(1) - Gamma at 2:")
+    print_heading_comment(gamma_at_2_indent, "1: Gamma at 2")
     gamma_at_2_coefficients = [gamma_at_2_coefficient(k) for k in range(0, gamma_at_2_series_length)]
     print_polynomial_with_real_coefficients(gamma_at_2_variable_name, gamma_at_2_coefficients, gamma_at_2_indent)
 
-    print("(2) - DiGamma at 2:")
+    print_heading_comment(digamma_at_1_indent, "2: Digamma at 1")
+    digamma_at_1_coefficients = [digamma_at_1_coefficient(k) for k in range(0, digamma_at_1_series_length)]
+    print_polynomial_with_real_coefficients(digamma_at_1_variable_name, digamma_at_1_coefficients, digamma_at_1_indent)
+
+    print_heading_comment(digamma_at_2_indent, "3: Digamma at 2")
     digamma_at_2_coefficients = [digamma_at_2_coefficient(k) for k in range(0, digamma_at_2_series_length)]
     print_polynomial_with_real_coefficients(digamma_at_2_variable_name, digamma_at_2_coefficients, digamma_at_2_indent)
 
-    print("(3) - DiGamma asymptotic:")
+    print_heading_comment(digamma_asymptotic_indent, "4: Digamma asymptotic")
     digamma_asymptotic_coefficients = [digamma_asymptotic_coefficient(k) for k in range(0, digamma_asymptotic_series_length)]
     print_polynomial_with_rational_coefficients(digamma_asymptotic_variable_name, digamma_asymptotic_coefficients, digamma_asymptotic_indent)
 
-    print("(4) - TriGamma at 1:")
+    print_heading_comment(trigamma_at_1_indent, "5: Trigamma at 1")
     trigamma_at_1_coefficients = [trigamma_at_1_coefficient(k) for k in range(0, trigamma_at_1_series_length)]
     print_polynomial_with_real_coefficients(trigamma_at_1_variable_name, trigamma_at_1_coefficients, trigamma_at_1_indent)
 
-    print("(5) - TriGamma asymptotic:")
+    print_heading_comment(trigamma_asymptotic_indent, "6: Trigamma asymptotic")
     trigamma_asymptotic_coefficients = [trigamma_asymptotic_coefficient(k) for k in range(0, trigamma_asymptotic_series_length)]
     print_polynomial_with_rational_coefficients(trigamma_asymptotic_variable_name, trigamma_asymptotic_coefficients, trigamma_asymptotic_indent)
 
-    print("(6) - TetraGamma at 1:")
+    print_heading_comment(tetragamma_at_1_indent, "7: Tetragamma at 1")
     tetragamma_at_1_coefficients = [tetragamma_at_1_coefficient(k) for k in range(0, tetragamma_at_1_series_length)]
     print_polynomial_with_real_coefficients(tetragamma_at_1_variable_name, tetragamma_at_1_coefficients, tetragamma_at_1_indent)
 
-    print("(7) - TetraGamma asymptotic:")
+    print_heading_comment(tetragamma_asymptotic_indent, "8: Tetragamma asymptotic")
     tetragamma_asymptotic_coefficients = [tetragamma_asymptotic_coefficient(k) for k in range(0, tetragamma_asymptotic_series_length)]
     print_polynomial_with_rational_coefficients(tetragamma_asymptotic_variable_name, tetragamma_asymptotic_coefficients, tetragamma_asymptotic_indent)
 
-    print("(8) - GammaLn asymptotic:")
+    print_heading_comment(gammaln_asymptotic_indent, "9: GammaLn asymptotic")
     gammaln_asymptotic_coefficients = [gammaln_asymptotic_coefficient(k) for k in range(0, gammaln_asymptotic_series_length)]
     print_polynomial_with_rational_coefficients(gammaln_asymptotic_variable_name, gammaln_asymptotic_coefficients, gammaln_asymptotic_indent)
 
-    print("(9) - log(1 + x):")
+    print_heading_comment(log_1_plus_indent, "10: log(1 + x)")
     log_1_plus_coefficients = [log_1_plus_coefficient(k) for k in range(0, log_1_plus_series_length)]
     print_polynomial_with_rational_coefficients(log_1_plus_variable_name, log_1_plus_coefficients, log_1_plus_indent)
 
-    print("(10) - log(1 - x):")
+    print_heading_comment(log_1_minus_indent, "11: log(1 - x)")
     log_1_minus_coefficients = [log_1_minus_coefficient(k) for k in range(0, log_1_minus_series_length)]
     print_polynomial_with_rational_coefficients(log_1_minus_variable_name, log_1_minus_coefficients, log_1_minus_indent)
 
-    print("(11) - x - log(1 + x):")
+    print_heading_comment(x_minus_log_1_plus_indent, "12: x - log(1 + x)")
     x_minus_log_1_plus_coefficients = [x_minus_log_1_plus_coefficient(k) for k in range(0, x_minus_log_1_plus_series_length)]
     print_polynomial_with_rational_coefficients(x_minus_log_1_plus_variable_name, x_minus_log_1_plus_coefficients, x_minus_log_1_plus_indent)
 
-    print("(12) - exp(x) - 1:")
+    print_heading_comment(exp_minus_1_indent, "13: exp(x) - 1")
     exp_minus_1_coefficients = [exp_minus_1_coefficient(k) for k in range(0, exp_minus_1_series_length)]
     print_polynomial_with_rational_coefficients(exp_minus_1_variable_name, exp_minus_1_coefficients, exp_minus_1_indent)
 
-    print("(13) - ((exp(x) - 1) / x - 1) / x - 0.5:")
+    print_heading_comment(exp_minus_1_ratio_minus_1_ratio_minus_half_indent, "14: ((exp(x) - 1) / x - 1) / x - 0.5")
     exp_minus_1_ratio_minus_1_ratio_minus_half_coefficients = [exp_minus_1_ratio_minus_1_ratio_minus_half_coefficient(k) for k in range(0, exp_minus_1_ratio_minus_1_ratio_minus_half_series_length)]
     print_polynomial_with_rational_coefficients(exp_minus_1_ratio_minus_1_ratio_minus_half_variable_name, exp_minus_1_ratio_minus_1_ratio_minus_half_coefficients, exp_minus_1_ratio_minus_1_ratio_minus_half_indent)
 
-    print("(14) - log(exp(x) - 1) / x:")
+    print_heading_comment(log_exp_minus_1_ratio_indent, "15: log(exp(x) - 1) / x")
     log_exp_minus_1_ratio_coefficients = get_log_exp_minus_1_ratio_coefficients(log_exp_minus_1_ratio_series_length)
     print_polynomial_with_rational_coefficients(log_exp_minus_1_ratio_variable_name, log_exp_minus_1_ratio_coefficients, log_exp_minus_1_ratio_indent)
 
-    print("(15) - normcdfln asymptotic:")
+    print_heading_comment(normcdfln_asymptotic_indent, "16: normcdfln asymptotic")
     normcdfln_asymptotic_coefficients = [normcdfln_asymptotic_coefficient(k) for k in range(0, normcdfln_asymptotic_series_length)]
     print_polynomial_with_rational_coefficients(normcdfln_asymptotic_variable_name, normcdfln_asymptotic_coefficients, normcdfln_asymptotic_indent)
     
-    print("(16) - Reciprocal factorial minus 1:")
+    print_heading_comment(one_minus_sqrt_one_minus_indent, "17: 1 - sqrt(1 - x)")
+    one_minus_sqrt_one_minus_coefficients = get_one_minus_sqrt_one_minus_coefficients(one_minus_sqrt_one_minus_series_length)
+    print_polynomial_with_rational_coefficients(one_minus_sqrt_one_minus_variable_name, one_minus_sqrt_one_minus_coefficients, one_minus_sqrt_one_minus_indent)
+    
+    print_heading_comment(reciprocal_factorial_minus_1_indent, "18: Reciprocal factorial minus 1")
     reciprocal_factorial_minus_1_coefficients = get_reciprocal_factorial_minus_1_coefficients(reciprocal_factorial_minus_1_series_length)
     print_polynomial_with_real_coefficients(reciprocal_factorial_minus_1_variable_name, reciprocal_factorial_minus_1_coefficients, reciprocal_factorial_minus_1_indent)
 
