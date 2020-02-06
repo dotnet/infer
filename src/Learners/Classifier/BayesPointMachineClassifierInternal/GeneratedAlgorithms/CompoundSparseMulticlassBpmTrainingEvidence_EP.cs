@@ -199,7 +199,7 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth0_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_F;
-		/// <summary>Buffer for JaggedSubarrayOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for JaggedSubarrayOp&lt;double&gt;.ItemsAverageConditional<DistributionStructArray&lt;Gaussian, double&gt;, Gaussian, DistributionStructArray&lt;Gaussian, double&gt;></summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_F_ClassRange__marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_F;
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> Weights_FeatureIndexes_B;

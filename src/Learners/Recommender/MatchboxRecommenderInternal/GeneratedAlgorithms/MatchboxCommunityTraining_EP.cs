@@ -209,7 +209,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionStructArray<Gaussian,double>[] ItemBias_uses_B;
 		/// <summary>Messages to use of 'ItemBias'</summary>
 		public DistributionStructArray<Gaussian,double>[] ItemBias_uses_F;
-		/// <summary>Buffer for GetItemsOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian></summary>
+		/// <summary>Buffer for GetItemsOp&lt;double&gt;.ItemsAverageConditional<DistributionStructArray&lt;Gaussian, double&gt;, Gaussian></summary>
 		public DistributionStructArray<Gaussian,double> ItemBias_uses_F_1__marginal;
 		/// <summary>Field backing the ItemBiasFeatureWeightPriorVariance property</summary>
 		private double itemBiasFeatureWeightPriorVariance;
@@ -244,7 +244,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> ItemTraitFeatureWeights_NonZeroItemFeatureIndices_F;
 		/// <summary>Message from use of 'ItemTraitFeatureWeights'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraitFeatureWeights_use_B;
-		/// <summary>Buffer for JaggedSubarrayOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for JaggedSubarrayOp&lt;double&gt;.ItemsAverageConditional<DistributionStructArray&lt;Gaussian, double&gt;, Gaussian, DistributionStructArray&lt;Gaussian, double&gt;></summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraitFeatureWeights_use_F_trait__marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> itemTraitMean_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> itemTraitMean_F;
@@ -252,7 +252,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_depth0_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] ItemTraits_depth0_uses_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] ItemTraits_depth0_uses_F;
-		/// <summary>Buffer for GetItemsOp<double[]>.ItemsAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for GetItemsOp&lt;double[]&gt;.ItemsAverageConditional<DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, DistributionStructArray&lt;Gaussian, double&gt;></summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_depth0_uses_F_1__marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> ItemTraits_index10_index10_0__index10__B;
@@ -323,7 +323,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionStructArray<Gaussian,double>[] UserBias_uses_B;
 		/// <summary>Messages to use of 'UserBias'</summary>
 		public DistributionStructArray<Gaussian,double>[] UserBias_uses_F;
-		/// <summary>Buffer for GetItemsOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian></summary>
+		/// <summary>Buffer for GetItemsOp&lt;double&gt;.ItemsAverageConditional<DistributionStructArray&lt;Gaussian, double&gt;, Gaussian></summary>
 		public DistributionStructArray<Gaussian,double> UserBias_uses_F_1__marginal;
 		/// <summary>Field backing the UserBiasFeatureWeightPriorVariance property</summary>
 		private double userBiasFeatureWeightPriorVariance;
@@ -361,7 +361,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_depth0_F;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] UserThresholds_depth0_uses_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] UserThresholds_depth0_uses_F;
-		/// <summary>Buffer for GetItemsOp<double[]>.ItemsAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for GetItemsOp&lt;double[]&gt;.ItemsAverageConditional<DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, DistributionStructArray&lt;Gaussian, double&gt;></summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_depth0_uses_F_1__marginal;
 		public DistributionStructArray<Gaussian,double> UserThresholds_F_reduced;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserThresholds_itemUserIds_observation__F;
@@ -399,7 +399,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>,double[][]> UserTraitFeatureWeights_NonZeroUserFeatureIndices_F;
 		/// <summary>Message from use of 'UserTraitFeatureWeights'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraitFeatureWeights_use_B;
-		/// <summary>Buffer for JaggedSubarrayOp<double>.ItemsAverageConditional<DistributionStructArray<Gaussian, double>, Gaussian, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for JaggedSubarrayOp&lt;double&gt;.ItemsAverageConditional<DistributionStructArray&lt;Gaussian, double&gt;, Gaussian, DistributionStructArray&lt;Gaussian, double&gt;></summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraitFeatureWeights_use_F_trait__marginal;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> userTraitMean_B;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> userTraitMean_F;
@@ -415,7 +415,7 @@ namespace Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderInternal
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] UserTraits_uses_B;
 		/// <summary>Messages to use of 'UserTraits'</summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]>[] UserTraits_uses_F;
-		/// <summary>Buffer for GetItemsOp<double[]>.ItemsAverageConditional<DistributionRefArray<DistributionStructArray<Gaussian, double>, double[]>, DistributionStructArray<Gaussian, double>></summary>
+		/// <summary>Buffer for GetItemsOp&lt;double[]&gt;.ItemsAverageConditional<DistributionRefArray&lt;DistributionStructArray&lt;Gaussian, double&gt;, double[]&gt;, DistributionStructArray&lt;Gaussian, double&gt;></summary>
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> UserTraits_uses_F_1__marginal;
 		/// <summary>Field backing the UserTraitsInitializer property</summary>
 		private DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> userTraitsInitializer;

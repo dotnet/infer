@@ -200,12 +200,12 @@ namespace Microsoft.ML.Probabilistic.Utilities
                     Array.Copy(typeArguments, parentTypeParameterCount, nestedTypeArguments, 0, nestedTypeArguments.Length);
                     typeArguments = nestedTypeArguments;
                 }
-                s.Append("<");
+                s.Append("&lt;");
                 Set<Type> constrained2 = constrained;
                 if (constrained2 == null) constrained2 = new Set<Type>();
                 constrained2.Add(type);
                 AppendTypes(s, typeArguments, showConstraints, constrained2);
-                s.Append(">");
+                s.Append("&gt;");
                 return s.ToString();
             }
             else if (type.IsArray)
