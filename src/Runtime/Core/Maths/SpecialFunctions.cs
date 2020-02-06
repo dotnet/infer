@@ -3352,7 +3352,7 @@ rr = mpf('-0.99999824265582826');
         public static double Log1Plus(double x)
         {
             Assert.IsTrue(Double.IsNaN(x) || x >= -1);
-            if (x > -1e-3 && x < 2e-3)
+            if (x > -1e-3 && x < 6e-2)
             {
                 // use the Taylor series for log(1+x) around x=0
                 // Maple command: series(log(1+x),x);
@@ -3363,7 +3363,14 @@ rr = mpf('-0.99999824265582826');
                     x * (-1.0 / 2.0 +
                     x * (1.0 / 3.0 +
                     x * (-1.0 / 4.0 +
-                    x * 1.0 / 5.0))))
+                    x * (1.0 / 5.0 +
+                    x * (-1.0 / 6.0 +
+                    x * (1.0 / 7.0 +
+                    x * (-1.0 / 8.0 +
+                    x * (1.0 / 9.0 +
+                    x * (-1.0 / 10.0 +
+                    x * (1.0 / 11.0 +
+                    x * -1.0 / 12.0)))))))))))
                     ;
             }
             else
@@ -3414,7 +3421,7 @@ rr = mpf('-0.99999824265582826');
         {
             if (x > 0)
                 throw new ArgumentException("x (" + x + ") > 0");
-            if (x < -7.5)
+            if (x < -3.5)
             {
                 double expx = Math.Exp(x);
                 return
@@ -3423,7 +3430,13 @@ rr = mpf('-0.99999824265582826');
                     expx * (-1.0 +
                     expx * (-1.0 / 2.0 +
                     expx * (-1.0 / 3.0 +
-                    expx * -1.0 / 4.0)))
+                    expx * (-1.0 / 4.0 +
+                    expx * (-1.0 / 5.0 +
+                    expx * (-1.0 / 6.0 +
+                    expx * (-1.0 / 7.0 +
+                    expx * (-1.0 / 8.0 +
+                    expx * (-1.0 / 9.0 +
+                    expx * -1.0 / 10.0)))))))))
                     ;
             }
             else

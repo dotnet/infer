@@ -44,12 +44,12 @@ gammaln_asymptotic_series_length = 7
 gammaln_asymptotic_variable_name = "invX2"
 gammaln_asymptotic_indent = "                    "
 
-log_1_plus_series_length = 6
+log_1_plus_series_length = 13
 log_1_plus_variable_name = "x"
 log_1_plus_indent = "                    "
 
-log_1_minus_series_length = 5
-log_1_minus_variable_name = "y"
+log_1_minus_series_length = 11
+log_1_minus_variable_name = "expx"
 log_1_minus_indent = "                    "
 
 x_minus_log_1_plus_series_length = 7
