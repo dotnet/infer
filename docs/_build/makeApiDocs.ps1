@@ -50,7 +50,6 @@ Write-Host "Run docfx"
 $docFXPath = [IO.Path]::GetFullPath((join-path $scriptDir '../../packages/docfx.console.2.48.1/tools/docfx.exe'))
 $docFxJsonPath = "$scriptDir/../docfx.json"
 & "$docFXPath" "$docFxJsonPath"
-& "$docFXPath" "$docFxJsonPath"
 if($LASTEXITCODE)
 {
     if(!(Invoke-Expression "& mono ""$docFXPath"" ""$docFxJsonPath"""))
@@ -81,6 +80,9 @@ if (!(Test-Path $apiguideTmp)) {
             Write-Host "apiguide folder is not found."
         }
         Rename-Item -path ./apiguide-tmp -newName $apiguidePath 
+        
+        & "$docFXPath" "$docFxJsonPath"
+
         git add --all
         git commit -m "Update API Documentation"
         # git push origin gh-pages
