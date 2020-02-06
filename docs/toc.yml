@@ -1,6 +1,6 @@
 - name: Home Page
-  href: index.md
+  href: ../index.md
 - name: User Guide
-  href: userguide/index.md
+  href: ../userguide/index.md
 - name: API Documentation
-  href: apiguide/api/index.html
+  href: api/index.html
