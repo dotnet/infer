@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GammaEstimator
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -97,13 +97,37 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Accumulator-1.html">Accumulator</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaEstimator.html">GammaEstimator</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_GammaEstimator_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class GammaEstimator : object, Estimator&lt;Gamma&gt;, Accumulator&lt;Gamma&gt;, Accumulator&lt;double&gt;, SettableTo&lt;GammaEstimator&gt;, ICloneable</code></pre>
+    <pre><code class="lang-csharp hljs">public class GammaEstimator : Estimator&lt;Gamma&gt;, Accumulator&lt;Gamma&gt;, Accumulator&lt;double&gt;, SettableTo&lt;GammaEstimator&gt;, ICloneable</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_GammaEstimator_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><pre><code>    The distribution is estimated via moment matching (not maximum-likelihood).
@@ -113,17 +137,6 @@
     b = E[x]/var(x)
     a = E[x]^2/var(x) - 1</code></pre>
 </div>
-  <h3 id="constructors">Constructors
-  </h3>
-  <a id="Microsoft_ML_Probabilistic_Distributions_GammaEstimator__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaEstimator.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaEstimator__ctor" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaEstimator.#ctor">GammaEstimator()</h4>
-  <div class="markdown level1 summary"><p>Creates a new Gamma estimator</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GammaEstimator()</code></pre>
-  </div>
   <h3 id="fields">Fields
   </h3>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaEstimator_mva" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaEstimator.mva">mva</h4>
@@ -180,7 +193,8 @@
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_GammaEstimator_Add_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaEstimator.Add*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaEstimator_Add_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaEstimator.Add(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double)">Add(Gamma, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Adds a Gamma distribution item to the estimator</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -199,12 +213,14 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
         <td><span class="parametername">distribution</span></td>
-        <td></td>
+        <td><p>The distribution instance to add</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">weight</span></td>
-        <td></td>
+        <td><p>The weight of the sample</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -303,7 +319,7 @@
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_GammaEstimator_GetDistribution_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaEstimator.GetDistribution*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaEstimator_GetDistribution_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaEstimator.GetDistribution(Microsoft.ML.Probabilistic.Distributions.Gamma)">GetDistribution(Gamma)</h4>
-  <div class="markdown level1 summary"><p>Retrieves the Gamma estimator</p>
+  <div class="markdown level1 summary"><p>Retrieves the estimated Gamma</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -384,7 +400,7 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
 </article>
           </div>

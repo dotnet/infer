@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class SequenceDistributionFormatPointMassAsString
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -87,7 +87,7 @@
 <ul><li>
 If the distribution is not a point mass, applies the underlying automaton format to the probability function.
 </li><li>
-If the distribution is a point mass, simply calls <see cref="!:object.ToString"></see> on the point.
+If the distribution is a point mass, simply calls <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">ToString()</a> on the point.
 </li></ul>
 </div>
   <div class="markdown level0 conceptual"></div>
@@ -108,6 +108,27 @@ If the distribution is a point mass, simply calls <see cref="!:object.ToString">
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.AutomatonBasedSequenceDistributionFormatBase.html#Microsoft_ML_Probabilistic_Distributions_Automata_AutomatonBasedSequenceDistributionFormatBase_ConvertToString__6___5_">AutomatonBasedSequenceDistributionFormatBase.ConvertToString&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TSequenceDistribution&gt;(TSequenceDistribution)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
@@ -149,13 +170,13 @@ If the distribution is a point mass, simply calls <see cref="!:object.ToString">
   </h3>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_SequenceDistributionFormatPointMassAsString_ConvertPointMassToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.SequenceDistributionFormatPointMassAsString.ConvertPointMassToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_SequenceDistributionFormatPointMassAsString_ConvertPointMassToString__6___5_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.SequenceDistributionFormatPointMassAsString.ConvertPointMassToString``6(``5)">ConvertPointMassToString&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TSequenceDistribution&gt;(TSequenceDistribution)</h4>
-  <div class="markdown level1 summary"><p>Converts a point mass distribution to a string by calling <see cref="!:object.ToString"></see> on the point.</p>
+  <div class="markdown level1 summary"><p>Converts a point mass distribution to a string by calling <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">ToString()</a> on the point.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected override string ConvertPointMassToString&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TSequenceDistribution&gt;(TSequenceDistribution sequenceDistribution)
-    where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : class, IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, Sampleable&lt;TElement&gt;, new()
+    where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, Sampleable&lt;TElement&gt;, new()
     where TSequenceManipulator : ISequenceManipulator&lt;TSequence, TElement&gt;, new()
     where TWeightFunction : Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction&gt;, new()
     where TSequenceDistribution : SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TSequenceDistribution&gt;, new()</code></pre>

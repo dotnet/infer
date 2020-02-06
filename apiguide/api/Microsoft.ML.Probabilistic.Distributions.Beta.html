@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Struct Beta
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -89,7 +89,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Beta.html">Beta</a>&gt;</div>
@@ -111,12 +111,28 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVarianceOut-2.html">CanGetMeanAndVarianceOut</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanSetMeanAndVariance-2.html">CanSetMeanAndVariance</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct Beta : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Beta&gt;, SettableToProduct&lt;Beta&gt;, SettableToProduct&lt;Beta, Beta&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Beta&gt;, SettableToRatio&lt;Beta, Beta&gt;, SettableToPower&lt;Beta&gt;, SettableToWeightedSum&lt;Beta&gt;, CanGetLogAverageOf&lt;Beta&gt;, CanGetLogAverageOfPower&lt;Beta&gt;, CanGetAverageLog&lt;Beta&gt;, CanGetLogNormalizer, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetMode&lt;double&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Mature)]
+public struct Beta : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;Beta&gt;, SettableToProduct&lt;Beta&gt;, SettableToProduct&lt;Beta, Beta&gt;, Diffable, SettableToUniform, SettableToRatio&lt;Beta&gt;, SettableToRatio&lt;Beta, Beta&gt;, SettableToPower&lt;Beta&gt;, SettableToWeightedSum&lt;Beta&gt;, CanGetLogAverageOf&lt;Beta&gt;, CanGetLogAverageOfPower&lt;Beta&gt;, CanGetAverageLog&lt;Beta&gt;, CanGetLogNormalizer, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetMode&lt;double&gt;, CanGetProbLessThan</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Beta_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -166,7 +182,8 @@ there is no normalizer.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Beta(double trueCount, double falseCount)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;TrueCount&quot;, &quot;FalseCount&quot;})]
+public Beta(double trueCount, double falseCount)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -224,7 +241,8 @@ there is no normalizer.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double FalseCount</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double FalseCount</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -247,7 +265,8 @@ there is no normalizer.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double TrueCount</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double TrueCount</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -273,7 +292,8 @@ there is no normalizer.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -297,7 +317,8 @@ there is no normalizer.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public double Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -321,7 +342,8 @@ there is no normalizer.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double TotalCount { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public double TotalCount { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -461,6 +483,8 @@ if you want to assign the result to a Beta type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Beta_FromDerivatives_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.FromDerivatives*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_FromDerivatives_System_Double_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.FromDerivatives(System.Double,System.Double,System.Double,System.Boolean)">FromDerivatives(Double, Double, Double, Boolean)</h4>
   <div class="markdown level1 summary"><p>Construct a Beta distribution whose pdf has the given derivatives at a point.</p>
@@ -779,6 +803,8 @@ involves nonlinear optimization.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Beta_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_Beta_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.Beta)">GetLogAverageOf(Beta)</h4>
   <div class="markdown level1 summary"><p>The log of the integral of the product of this Beta and that Beta</p>
@@ -1295,7 +1321,8 @@ cannot be normalised</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Beta PointMass(double mean)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static Beta PointMass(double mean)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1452,7 +1479,8 @@ cannot be normalised</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double SampleFromMeanAndVariance(double mean, double variance)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;mean&quot;, &quot;variance&quot;})]
+public static double SampleFromMeanAndVariance(double mean, double variance)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1742,6 +1770,8 @@ No error is thrown in this case.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Beta_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Beta_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.Beta.Uniform">Uniform()</h4>
   <div class="markdown level1 summary"><p>Instantiates a uniform Beta distribution</p>
@@ -1749,7 +1779,8 @@ No error is thrown in this case.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Beta Uniform()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsUniform&quot;)]
+public static Beta Uniform()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2015,7 +2046,7 @@ two Beta distributions</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
@@ -2079,6 +2110,9 @@ two Beta distributions</p>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetProbLessThan.html">CanGetProbLessThan</a>
   </div>
 </article>
           </div>

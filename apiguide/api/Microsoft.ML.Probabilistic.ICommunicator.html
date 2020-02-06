@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface ICommunicator
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -167,7 +167,7 @@
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_ICommunicator_Allreduce_" data-uid="Microsoft.ML.Probabilistic.ICommunicator.Allreduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_ICommunicator_Allreduce__1___0_Func___0___0___0__" data-uid="Microsoft.ML.Probabilistic.ICommunicator.Allreduce``1(``0,Func{``0,``0,``0})">Allreduce&lt;T&gt;(T, Func&lt;T, T, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_ICommunicator_Allreduce__1___0_System_Func___0___0___0__" data-uid="Microsoft.ML.Probabilistic.ICommunicator.Allreduce``1(``0,System.Func{``0,``0,``0})">Allreduce&lt;T&gt;(T, Func&lt;T, T, T&gt;)</h4>
   <div class="markdown level1 summary"><p><code>Allreduce</code> is a collective algorithm that combines the values stored by each process into a<br>
 single value available to all processes. The values are combined in a user-defined way, specified via<br>
 a delegate. If <code>value1</code>, <code>value2</code>, ..., <code>valueN</code> are the values provided by the<br>
@@ -197,7 +197,7 @@ followed by a Broadcast&lt;T&gt;(ref T, int)</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;T, T, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;T, T, T&gt;</td>
         <td><span class="parametername">op</span></td>
         <td><p>The operation used to combine two values. This operation must be associative.</p>
 </td>
@@ -794,7 +794,7 @@ Other processes receive <code>null</code>.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_ICommunicator_Reduce_" data-uid="Microsoft.ML.Probabilistic.ICommunicator.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_ICommunicator_Reduce__1___0_Func___0___0___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.ICommunicator.Reduce``1(``0,Func{``0,``0,``0},System.Int32)">Reduce&lt;T&gt;(T, Func&lt;T, T, T&gt;, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_ICommunicator_Reduce__1___0_System_Func___0___0___0__System_Int32_" data-uid="Microsoft.ML.Probabilistic.ICommunicator.Reduce``1(``0,System.Func{``0,``0,``0},System.Int32)">Reduce&lt;T&gt;(T, Func&lt;T, T, T&gt;, Int32)</h4>
   <div class="markdown level1 summary"><p><code>Reduce</code> is a collective algorithm that combines the values stored by each process into a
 single value available at the designated <code data-dev-comment-type="paramref" class="paramref">root</code> process. The values are combined
 in a user-defined way, specified via a delegate. If <code>value1</code>, <code>value2</code>, ..., <code>valueN</code>
@@ -824,7 +824,7 @@ available to the <code data-dev-comment-type="paramref" class="paramref">root</c
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;T, T, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;T, T, T&gt;</td>
         <td><span class="parametername">op</span></td>
         <td><p>The operation used to combine two values. This operation must be associative.</p>
 </td>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Struct ConjugateDirichlet
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -90,7 +90,7 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</p>
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.html">ConjugateDirichlet</a>&gt;</div>
@@ -112,11 +112,26 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</p>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.html">ConjugateDirichlet</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct ConjugateDirichlet : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;ConjugateDirichlet&gt;, SettableToProduct&lt;ConjugateDirichlet&gt;, SettableToProduct&lt;ConjugateDirichlet, ConjugateDirichlet&gt;, Diffable, SettableToUniform, SettableToRatio&lt;ConjugateDirichlet&gt;, SettableToRatio&lt;ConjugateDirichlet, ConjugateDirichlet&gt;, SettableToPower&lt;ConjugateDirichlet&gt;, SettableToWeightedSum&lt;ConjugateDirichlet&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;ConjugateDirichlet&gt;, CanGetLogAverageOfPower&lt;ConjugateDirichlet&gt;, CanGetAverageLog&lt;ConjugateDirichlet&gt;, CanGetLogNormalizer</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Experimental)]
+public struct ConjugateDirichlet : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;ConjugateDirichlet&gt;, SettableToProduct&lt;ConjugateDirichlet&gt;, SettableToProduct&lt;ConjugateDirichlet, ConjugateDirichlet&gt;, Diffable, SettableToUniform, SettableToRatio&lt;ConjugateDirichlet&gt;, SettableToRatio&lt;ConjugateDirichlet, ConjugateDirichlet&gt;, SettableToPower&lt;ConjugateDirichlet&gt;, SettableToWeightedSum&lt;ConjugateDirichlet&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;ConjugateDirichlet&gt;, CanGetLogAverageOfPower&lt;ConjugateDirichlet&gt;, CanGetAverageLog&lt;ConjugateDirichlet&gt;, CanGetLogNormalizer</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -223,7 +238,8 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</code>.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double D</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double D</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -246,7 +262,8 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</code>.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double K</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double K</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -269,7 +286,8 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</code>.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Rate</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double Rate</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -292,7 +310,8 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</code>.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Shape</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double Shape</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -318,7 +337,8 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</code>.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -342,7 +362,8 @@ where B(x,D)=Gamma(x)^D/Gamma(D</em>x)</code>.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public double Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -430,6 +451,8 @@ if you want to assign the result to a Conjugate Dirichlet type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_FromLogMeanAndMeanLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.FromLogMeanAndMeanLog*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_FromLogMeanAndMeanLog_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.FromLogMeanAndMeanLog(System.Double,System.Double)">FromLogMeanAndMeanLog(Double, Double)</h4>
   <div class="markdown level1 summary"><p>Constructs a Conjugate Dirichlet distribution with the given log mean and mean logarithm.</p>
@@ -655,7 +678,8 @@ described in &quot;Estimating a Gamma distribution&quot; by T. Minka, 2002.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ConjugateDirichlet FromShapeAndRate(double shape, double rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Shape&quot;, &quot;Rate&quot;})]
+public static ConjugateDirichlet FromShapeAndRate(double shape, double rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -843,6 +867,8 @@ ln Gamma(x) \approx (x-.5)<em>ln(x) - x +.5</em>ln(2*pi)</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet)">GetLogAverageOf(ConjugateDirichlet)</h4>
   <div class="markdown level1 summary"><p>The log of the integral of the product of this Conjugate Dirichlet and that Conjugate Dirichlet</p>
@@ -1554,7 +1580,7 @@ and that Conjugate Dirichlet</p>
   <div class="markdown level1 remarks"><p><code>a.MaxDiff(b) == b.MaxDiff(a)</code></p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_Newton1DMaximise_" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.Newton1DMaximise*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_Newton1DMaximise_System_Double_Converter_System_Double_System_Double__Converter_System_Double_System_Double__Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.Newton1DMaximise(System.Double,Converter{System.Double,System.Double},Converter{System.Double,System.Double},Converter{System.Double,System.Double})">Newton1DMaximise(Double, Converter&lt;Double, Double&gt;, Converter&lt;Double, Double&gt;, Converter&lt;Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_Newton1DMaximise_System_Double_System_Converter_System_Double_System_Double__System_Converter_System_Double_System_Double__System_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.Newton1DMaximise(System.Double,System.Converter{System.Double,System.Double},System.Converter{System.Double,System.Double},System.Converter{System.Double,System.Double})">Newton1DMaximise(Double, Converter&lt;Double, Double&gt;, Converter&lt;Double, Double&gt;, Converter&lt;Double, Double&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1577,17 +1603,17 @@ and that Conjugate Dirichlet</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">f</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">dfxfunc</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">dhxfunc</span></td>
         <td></td>
       </tr>
@@ -1775,7 +1801,8 @@ and that Conjugate Dirichlet</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double SampleFromMeanAndVariance(double mean, double variance)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;mean&quot;, &quot;variance&quot;})]
+public static double SampleFromMeanAndVariance(double mean, double variance)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2207,6 +2234,8 @@ and that Conjugate Dirichlet</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_ConjugateDirichlet_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.ConjugateDirichlet.Uniform">Uniform()</h4>
   <div class="markdown level1 summary"><p>Create a uniform Conjugate Dirichlet distribution.</p>
@@ -2214,7 +2243,8 @@ and that Conjugate Dirichlet</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ConjugateDirichlet Uniform()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsUniform&quot;)]
+public static ConjugateDirichlet Uniform()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2478,7 +2508,7 @@ and that Conjugate Dirichlet</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>

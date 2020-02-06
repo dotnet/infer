@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class KernelFunction
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -102,11 +102,36 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunctionWithParams.html">IKernelFunctionWithParams</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunction.html">IKernelFunction</a></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Kernels.html">Microsoft.ML.Probabilistic.Distributions.Kernels</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class KernelFunction : object, IKernelFunctionWithParams, IKernelFunction</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+public abstract class KernelFunction : IKernelFunctionWithParams, IKernelFunction</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -120,7 +145,7 @@
     <pre><code class="lang-csharp hljs">protected KernelFunction()</code></pre>
   </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction__ctor_IList_System_String__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.#ctor(IList{System.String})">KernelFunction(IList&lt;String&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction__ctor_System_Collections_Generic_IList_System_String__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.#ctor(System.Collections.Generic.IList{System.String})">KernelFunction(IList&lt;String&gt;)</h4>
   <div class="markdown level1 summary"><p>Protected constructor - derived classes pass down their list
 of hyper-parameter names</p>
 </div>
@@ -140,19 +165,20 @@ of hyper-parameter names</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td><span class="parametername">hyperNames</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction__ctor_IList_System_String__System_Double___" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.#ctor(IList{System.String},System.Double[])">KernelFunction(IList&lt;String&gt;, Double[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction__ctor_System_Collections_Generic_IList_System_String__System_Double___" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.#ctor(System.Collections.Generic.IList{System.String},System.Double[])">KernelFunction(IList&lt;String&gt;, Double[])</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected KernelFunction(IList&lt;string&gt; hyperNames, double[] values)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;thetaNames&quot;, &quot;thetaValues&quot;})]
+protected KernelFunction(IList&lt;string&gt; hyperNames, double[] values)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -165,7 +191,7 @@ of hyper-parameter names</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td><span class="parametername">hyperNames</span></td>
         <td></td>
       </tr>
@@ -196,7 +222,7 @@ of hyper-parameter names</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -219,7 +245,7 @@ of hyper-parameter names</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -268,7 +294,7 @@ of hyper-parameter names</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -410,7 +436,7 @@ of hyper-parameter names</p>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Cholesky_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.Cholesky*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Cholesky_Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunction_Dictionary_System_Int32_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.Cholesky(Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunction,Dictionary{System.Int32,Microsoft.ML.Probabilistic.Math.Vector})">Cholesky(IKernelFunction, Dictionary&lt;Int32, Vector&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Cholesky_Microsoft_ML_Probabilistic_Distributions_Kernels_IKernelFunction_System_Collections_Generic_Dictionary_System_Int32_Microsoft_ML_Probabilistic_Math_Vector__" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.Cholesky(Microsoft.ML.Probabilistic.Distributions.Kernels.IKernelFunction,System.Collections.Generic.Dictionary{System.Int32,Microsoft.ML.Probabilistic.Math.Vector})">Cholesky(IKernelFunction, Dictionary&lt;Int32, Vector&gt;)</h4>
   <div class="markdown level1 summary"><p>Cholesky of Kernel matrix</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -435,7 +461,7 @@ of hyper-parameter names</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</td>
         <td><span class="parametername">xData</span></td>
         <td><p>Data with which to build the matrix</p>
 </td>
@@ -854,7 +880,7 @@ with respect to each vector, and with respect to the parameters</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Read_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.Read*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Read_StreamReader_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.Read(StreamReader)">Read(StreamReader)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Read_System_IO_StreamReader_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.Read(System.IO.StreamReader)">Read(StreamReader)</h4>
   <div class="markdown level1 summary"><p>Read the parameters in from a stream</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -873,7 +899,7 @@ with respect to each vector, and with respect to the parameters</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">StreamReader</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.streamreader">StreamReader</a></td>
         <td><span class="parametername">sr</span></td>
         <td><p>Stream reader</p>
 </td>
@@ -881,7 +907,7 @@ with respect to each vector, and with respect to the parameters</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Write_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.Write*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Write_StreamWriter_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.Write(StreamWriter)">Write(StreamWriter)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Kernels_KernelFunction_Write_System_IO_StreamWriter_" data-uid="Microsoft.ML.Probabilistic.Distributions.Kernels.KernelFunction.Write(System.IO.StreamWriter)">Write(StreamWriter)</h4>
   <div class="markdown level1 summary"><p>Writes the parameters out to a stream</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -900,7 +926,7 @@ with respect to each vector, and with respect to the parameters</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">StreamWriter</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.streamwriter">StreamWriter</a></td>
         <td><span class="parametername">sw</span></td>
         <td><p>Stream writer</p>
 </td>

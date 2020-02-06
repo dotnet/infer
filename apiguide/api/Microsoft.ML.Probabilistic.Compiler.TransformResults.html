@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class TransformResults
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,36 +91,35 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">TransformResults</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.html">Microsoft.ML.Probabilistic.Compiler</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class TransformResults : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class TransformResults</code></pre>
   </div>
   <h3 id="fields">Fields
   </h3>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_ErrorCount" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.ErrorCount">ErrorCount</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int ErrorCount</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h4 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_errorMap" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.errorMap">errorMap</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
@@ -138,29 +137,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>, <span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.TransformError.html">TransformError</a>&gt;&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_errorsAndWarnings" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.errorsAndWarnings">errorsAndWarnings</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;TransformError&gt; errorsAndWarnings</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.TransformError.html">TransformError</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.TransformError.html">TransformError</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -187,14 +164,17 @@
       </tr>
     </tbody>
   </table>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_WarningCount" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.WarningCount">WarningCount</h4>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_TransformResults_ErrorCount_" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.ErrorCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_ErrorCount" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.ErrorCount">ErrorCount</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int WarningCount</code></pre>
+    <pre><code class="lang-csharp hljs">public int ErrorCount { get; }</code></pre>
   </div>
-  <h5 class="fieldValue">Field Value</h5>
+  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -209,8 +189,29 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="properties">Properties
-  </h3>
+  <a id="Microsoft_ML_Probabilistic_Compiler_TransformResults_ErrorsAndWarnings_" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.ErrorsAndWarnings*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_ErrorsAndWarnings" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.ErrorsAndWarnings">ErrorsAndWarnings</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;TransformError&gt; ErrorsAndWarnings { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.TransformError.html">TransformError</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_TransformResults_IsSuccess_" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.IsSuccess*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_IsSuccess" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.IsSuccess">IsSuccess</h4>
   <div class="markdown level1 summary"></div>
@@ -230,6 +231,29 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_TransformResults_WarningCount_" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.WarningCount*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_WarningCount" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.WarningCount">WarningCount</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int WarningCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -271,7 +295,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.TransformError.html">TransformError</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.TransformError.html">TransformError</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -377,8 +401,10 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Compiler_TransformResults_TransformError_" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.TransformError*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_TransformError_System_String_System_Boolean_Exception_System_Object_System_Object_" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.TransformError(System.String,System.Boolean,Exception,System.Object,System.Object)">TransformError(String, Boolean, Exception, Object, Object)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_TransformResults_TransformError_System_String_System_Boolean_System_Exception_System_Object_System_Object_" data-uid="Microsoft.ML.Probabilistic.Compiler.TransformResults.TransformError(System.String,System.Boolean,System.Exception,System.Object,System.Object)">TransformError(String, Boolean, Exception, Object, Object)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -406,7 +432,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Exception</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception">Exception</a></td>
         <td><span class="parametername">exception</span></td>
         <td></td>
       </tr>

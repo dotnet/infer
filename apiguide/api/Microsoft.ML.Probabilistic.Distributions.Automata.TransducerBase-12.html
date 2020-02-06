@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class TransducerBase&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton, TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton, TPairDistribution, TThis&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -93,14 +93,39 @@
       <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Transducer-11.html">Transducer&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton, TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton, TThis&gt;</a></div>
       <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Transducer-6.html">Transducer&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton, TThis&gt;</a></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class TransducerBase&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton, TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton, TPairDistribution, TThis&gt; : object where TSrcSequence : class, IEnumerable&lt;TSrcElement&gt; where TSrcElementDistribution : class, IDistribution&lt;TSrcElement&gt;, CanGetLogAverageOf&lt;TSrcElementDistribution&gt;, SettableToProduct&lt;TSrcElementDistribution&gt;, SettableToWeightedSumExact&lt;TSrcElementDistribution&gt;, SettableToPartialUniform&lt;TSrcElementDistribution&gt;, Sampleable&lt;TSrcElement&gt;, new()
+    <pre><code class="lang-csharp hljs">public abstract class TransducerBase&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton, TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton, TPairDistribution, TThis&gt;
+    where TSrcSequence : class, IEnumerable&lt;TSrcElement&gt; where TSrcElementDistribution : IDistribution&lt;TSrcElement&gt;, CanGetLogAverageOf&lt;TSrcElementDistribution&gt;, SettableToProduct&lt;TSrcElementDistribution&gt;, SettableToWeightedSumExact&lt;TSrcElementDistribution&gt;, SettableToPartialUniform&lt;TSrcElementDistribution&gt;, Sampleable&lt;TSrcElement&gt;, new()
     where TSrcSequenceManipulator : ISequenceManipulator&lt;TSrcSequence, TSrcElement&gt;, new()
     where TSrcAutomaton : Automaton&lt;TSrcSequence, TSrcElement, TSrcElementDistribution, TSrcSequenceManipulator, TSrcAutomaton&gt;, new()
-    where TDestSequence : class, IEnumerable&lt;TDestElement&gt; where TDestElementDistribution : class, IDistribution&lt;TDestElement&gt;, CanGetLogAverageOf&lt;TDestElementDistribution&gt;, SettableToProduct&lt;TDestElementDistribution&gt;, SettableToWeightedSumExact&lt;TDestElementDistribution&gt;, SettableToPartialUniform&lt;TDestElementDistribution&gt;, Sampleable&lt;TDestElement&gt;, new()
+    where TDestSequence : class, IEnumerable&lt;TDestElement&gt; where TDestElementDistribution : IDistribution&lt;TDestElement&gt;, CanGetLogAverageOf&lt;TDestElementDistribution&gt;, SettableToProduct&lt;TDestElementDistribution&gt;, SettableToWeightedSumExact&lt;TDestElementDistribution&gt;, SettableToPartialUniform&lt;TDestElementDistribution&gt;, Sampleable&lt;TDestElement&gt;, new()
     where TDestSequenceManipulator : ISequenceManipulator&lt;TDestSequence, TDestElement&gt;, new()
     where TDestAutomaton : Automaton&lt;TDestSequence, TDestElement, TDestElementDistribution, TDestSequenceManipulator, TDestAutomaton&gt;, new()
     where TPairDistribution : PairDistributionBase&lt;TSrcElement, TSrcElementDistribution, TDestElement, TDestElementDistribution, TPairDistribution&gt;, new()
@@ -202,32 +227,6 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="properties">Properties
-  </h3>
-  <a id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_MaxStateCount_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.MaxStateCount*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_MaxStateCount" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.MaxStateCount">MaxStateCount</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the maximum number of states a transducer can have.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int MaxStateCount { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_Append_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.Append*"></a>
@@ -276,7 +275,7 @@ The resulting transducer is also known as the Cauchy product of two transducers.
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_AppendInPlace_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.AppendInPlace*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_AppendInPlace__11_System_Byte_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.AppendInPlace(`11,System.Byte)">AppendInPlace(TThis, Byte)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_AppendInPlace__11_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.AppendInPlace(`11,System.Int32)">AppendInPlace(TThis, Int32)</h4>
   <div class="markdown level1 summary"><p>Replaces the current transducer with a transducer <code>T'(a, b) = sum_{a1 a2 = a, b1 b2 = b} T(a1, b1) U(a2, b2)</code>,
 where <code>T(a1, b1)</code> is the current transducer and <code>U(a2, b2)</code> is a given transducer.
 The resulting transducer is also known as the Cauchy product of two transducers.</p>
@@ -284,7 +283,7 @@ The resulting transducer is also known as the Cauchy product of two transducers.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void AppendInPlace(TThis transducer, byte group = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public void AppendInPlace(TThis transducer, int group = 0)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -303,7 +302,7 @@ The resulting transducer is also known as the Cauchy product of two transducers.
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">group</span></td>
         <td><p>The group.</p>
 </td>
@@ -867,6 +866,10 @@ to the automaton representation of a projected sequence.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_ProjectSource__4__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The code of this method has a lot in common with the code of Automaton.SetToProduct.
+Unfortunately, it's not clear how to avoid the duplication in the current design.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_Repeat_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.Repeat*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_Repeat__11_System_Int32_System_Nullable_System_Int32__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.Repeat(`11,System.Int32,System.Nullable{System.Int32})">Repeat(TThis, Int32, Nullable&lt;Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a transducer <code>T'(a, b) = sum_{k=Kmin}^{Kmax} sum_{a1 a2 ... ak = a} sum_{b1 b2 ... bk = b} T(a1, b1)T(a2, b2)...T(ak, bk)</code>,
@@ -876,7 +879,7 @@ and the maximum number of factors in a sum term.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TThis Repeat(TThis transducer, int minTimes = 1, int? maxTimes = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static TThis Repeat(TThis transducer, int minTimes = 1, int? maxTimes = default(int? ))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1147,7 +1150,7 @@ are the supports of given element distributions.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_Sum_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.Sum*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_Sum_IEnumerable__11__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.Sum(IEnumerable{`11})">Sum(IEnumerable&lt;TThis&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_TransducerBase_12_Sum_System_Collections_Generic_IEnumerable__11__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.TransducerBase`12.Sum(System.Collections.Generic.IEnumerable{`11})">Sum(IEnumerable&lt;TThis&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a transducer <code>T(a, b) = sum_i Ti(a, b)</code>, where <code>Ti(a, b)</code> is an element of a given transducer collection.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1166,7 +1169,7 @@ are the supports of given element distributions.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TThis&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TThis&gt;</td>
         <td><span class="parametername">transducers</span></td>
         <td><p>The transducers to sum.</p>
 </td>

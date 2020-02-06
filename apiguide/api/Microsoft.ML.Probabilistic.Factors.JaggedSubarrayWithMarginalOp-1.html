@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class JaggedSubarrayWithMarginalOp&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -83,19 +83,44 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1" class="text-break">Class JaggedSubarrayWithMarginalOp&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_JaggedSubarray__1_IList___0__System_Int32_____">JaggedSubarray&lt;T&gt;(IList&lt;T&gt;, Int32[][])</a>, given random arguments to the function.</p>
-</div>
+  <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">JaggedSubarrayWithMarginalOp&lt;T&gt;</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class JaggedSubarrayWithMarginalOp&lt;T&gt; : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;JaggedSubarrayWithMarginal&lt;&gt;&quot;, new Type[]{}, Default = true)]
+[Quality(QualityBand.Preview)]
+public static class JaggedSubarrayWithMarginalOp&lt;T&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -117,11 +142,12 @@
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageConditional__1___0___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageConditional``1(``0,``0,``0)">ArrayAverageConditional&lt;ArrayType&gt;(ArrayType, ArrayType, ArrayType)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>array</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ArrayType ArrayAverageConditional&lt;ArrayType&gt;(ArrayType array, ArrayType to_marginal, ArrayType result)
+    <pre><code class="lang-csharp hljs">public static ArrayType ArrayAverageConditional&lt;ArrayType&gt;(ArrayType array, [SkipIfAllUniform] ArrayType to_marginal, ArrayType result)
     where ArrayType : SettableToRatio&lt;ArrayType&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -137,17 +163,20 @@
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">array</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">to_marginal</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>marginal</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -162,7 +191,8 @@
     <tbody>
       <tr>
         <td><span class="xref">ArrayType</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -182,8 +212,11 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageConditional__1___0___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>array</code> conditioned on the given values.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageConditional__3_IList_IList_System_Int32___IList___2____1_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageConditional``3(IList{IList{System.Int32}},IList{``2},``1)">ArrayAverageConditional&lt;DistributionType, ArrayType, ItemType&gt;(IList&lt;IList&lt;Int32&gt;&gt;, IList&lt;ItemType&gt;, ArrayType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageConditional__3_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IList___2____1_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageConditional``3(System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},System.Collections.Generic.IList{``2},``1)">ArrayAverageConditional&lt;DistributionType, ArrayType, ItemType&gt;(IList&lt;IList&lt;Int32&gt;&gt;, IList&lt;ItemType&gt;, ArrayType)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>array</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -203,13 +236,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
@@ -264,17 +297,17 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageConditional__3_IList_IList_System_Int32___IList___2____1__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageConditional__3_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IList___2____1__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>array</code> as the random arguments are varied. The formula is <code>proj[p(array) sum_(indices,items) p(indices,items) factor(items,array,indices,marginal)]/p(array)</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageLogarithm__3_IList___2__IList_IList_System_Int32_____1_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageLogarithm``3(IList{``2},IList{IList{System.Int32}},``1)">ArrayAverageLogarithm&lt;DistributionType, ArrayType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ArrayType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageLogarithm__3_System_Collections_Generic_IList___2__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____1_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageLogarithm``3(System.Collections.Generic.IList{``2},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},``1)">ArrayAverageLogarithm&lt;DistributionType, ArrayType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ArrayType)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>array</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ArrayType ArrayAverageLogarithm&lt;DistributionType, ArrayType, ItemType&gt;(IList&lt;ItemType&gt; items, IList&lt;IList&lt;int&gt;&gt; indices, ArrayType result)
+    <pre><code class="lang-csharp hljs">public static ArrayType ArrayAverageLogarithm&lt;DistributionType, ArrayType, ItemType&gt;([SkipIfAllUniform] IList&lt;ItemType&gt; items, IList&lt;IList&lt;int&gt;&gt; indices, ArrayType result)
     where DistributionType : SettableToUniform, SettableToProduct&lt;DistributionType&gt; where ArrayType : IList&lt;DistributionType&gt;, SettableToUniform where ItemType : IList&lt;DistributionType&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -288,13 +321,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -349,7 +382,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageLogarithm__3_IList___2__IList_IList_System_Int32_____1__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageLogarithm__3_System_Collections_Generic_IList___2__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____1__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>array</code>. Because the factor is deterministic, <code>items</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(indices) p(indices) log(sum_items p(items) factor(items,array,indices,marginal)))</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -369,7 +402,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageLogarithm__3_IList_IList_System_Int32___IList___2____1_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageLogarithm``3(IList{IList{System.Int32}},IList{``2},``1)">ArrayAverageLogarithm&lt;DistributionType, ArrayType, ItemType&gt;(IList&lt;IList&lt;Int32&gt;&gt;, IList&lt;ItemType&gt;, ArrayType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageLogarithm__3_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IList___2____1_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ArrayAverageLogarithm``3(System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},System.Collections.Generic.IList{``2},``1)">ArrayAverageLogarithm&lt;DistributionType, ArrayType, ItemType&gt;(IList&lt;IList&lt;Int32&gt;&gt;, IList&lt;ItemType&gt;, ArrayType)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>array</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -389,13 +422,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
@@ -450,11 +483,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageLogarithm__3_IList_IList_System_Int32___IList___2____1__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ArrayAverageLogarithm__3_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Collections_Generic_IList___2____1__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>array</code>. Because the factor is deterministic, <code>items</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(indices) p(indices) log(sum_items p(items) factor(items,array,indices,marginal)))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__1_IList___0__IList__0__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor``1(IList{``0},IList{`0},IList{IList{System.Int32}})">AverageLogFactor&lt;ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{`0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">AverageLogFactor&lt;ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -474,19 +507,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -525,11 +558,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__1_IList___0__IList__0__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_IList___0__IList___1__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor``2(IList{``0},IList{``1},IList{IList{System.Int32}})">AverageLogFactor&lt;DistributionType, ItemType&gt;(IList&lt;DistributionType&gt;, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor``2(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``1},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">AverageLogFactor&lt;DistributionType, ItemType&gt;(IList&lt;DistributionType&gt;, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -549,19 +582,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -605,11 +638,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_IList___0__IList___1__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_IList___1__IList___0__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor``2(IList{``1},IList{``0},IList{IList{System.Int32}})">AverageLogFactor&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor``2(System.Collections.Generic.IList{``1},System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">AverageLogFactor&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -629,19 +662,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -685,11 +718,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_IList___1__IList___0__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_IList___1__IList__0__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor``2(IList{``1},IList{`0},IList{IList{System.Int32}})">AverageLogFactor&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.AverageLogFactor``2(System.Collections.Generic.IList{``1},System.Collections.Generic.IList{`0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">AverageLogFactor&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -709,19 +742,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -765,17 +798,17 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_IList___1__IList__0__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_AverageLogFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>In Variational Message Passing, the evidence contribution of a deterministic factor is zero. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ItemsAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ItemsAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ItemsAverageConditional__3___2___0___0_IList_IList_System_Int32___System_Int32___2_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ItemsAverageConditional``3(``2,``0,``0,IList{IList{System.Int32}},System.Int32,``2)">ItemsAverageConditional&lt;ArrayType, DistributionType, ItemType&gt;(ItemType, ArrayType, ArrayType, IList&lt;IList&lt;Int32&gt;&gt;, Int32, ItemType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ItemsAverageConditional__3___2___0___0_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Int32___2_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ItemsAverageConditional``3(``2,``0,``0,System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},System.Int32,``2)">ItemsAverageConditional&lt;ArrayType, DistributionType, ItemType&gt;(ItemType, ArrayType, ArrayType, IList&lt;IList&lt;Int32&gt;&gt;, Int32, ItemType)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>items</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ItemType ItemsAverageConditional&lt;ArrayType, DistributionType, ItemType&gt;(ItemType items, ArrayType array, ArrayType to_marginal, IList&lt;IList&lt;int&gt;&gt; indices, int resultIndex, ItemType result)
+    <pre><code class="lang-csharp hljs">public static ItemType ItemsAverageConditional&lt;ArrayType, DistributionType, ItemType&gt;(ItemType items, ArrayType array, [SkipIfAllUniform] ArrayType to_marginal, IList&lt;IList&lt;int&gt;&gt; indices, int resultIndex, ItemType result)
     where ArrayType : IList&lt;DistributionType&gt; where DistributionType : SettableToProduct&lt;DistributionType&gt;, SettableToRatio&lt;DistributionType&gt; where ItemType : IList&lt;DistributionType&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -807,7 +840,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -868,17 +901,17 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ItemsAverageConditional__3___2___0___0_IList_IList_System_Int32___System_Int32___2__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ItemsAverageConditional__3___2___0___0_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Int32___2__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>items</code> as the random arguments are varied. The formula is <code>proj[p(items) sum_(array,indices) p(array,indices) factor(items,array,indices,marginal)]/p(items)</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ItemsAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ItemsAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ItemsAverageLogarithm__3_IList___0__IList_IList_System_Int32_____2_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ItemsAverageLogarithm``3(IList{``0},IList{IList{System.Int32}},``2)">ItemsAverageLogarithm&lt;DistributionType, ItemType, ResultType&gt;(IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ResultType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ItemsAverageLogarithm__3_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____2_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.ItemsAverageLogarithm``3(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},``2)">ItemsAverageLogarithm&lt;DistributionType, ItemType, ResultType&gt;(IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ResultType)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>items</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ResultType ItemsAverageLogarithm&lt;DistributionType, ItemType, ResultType&gt;(IList&lt;DistributionType&gt; array, IList&lt;IList&lt;int&gt;&gt; indices, ResultType result)
+    <pre><code class="lang-csharp hljs">public static ResultType ItemsAverageLogarithm&lt;DistributionType, ItemType, ResultType&gt;([SkipIfAllUniform] IList&lt;DistributionType&gt; array, IList&lt;IList&lt;int&gt;&gt; indices, ResultType result)
     where DistributionType : SettableTo&lt;DistributionType&gt; where ItemType : IList&lt;DistributionType&gt; where ResultType : IList&lt;ItemType&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -892,13 +925,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -953,7 +986,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ItemsAverageLogarithm__3_IList___0__IList_IList_System_Int32_____2__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_ItemsAverageLogarithm__3_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____2__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>items</code> as the random arguments are varied. The formula is <code>proj[sum_(array,indices) p(array,indices) factor(items,array,indices,marginal)]</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -973,7 +1006,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__1_IList___0__IList__0__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor``1(IList{``0},IList{`0},IList{IList{System.Int32}})">LogAverageFactor&lt;ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{`0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">LogAverageFactor&lt;ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -993,19 +1026,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -1044,11 +1077,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__1_IList___0__IList__0__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices,marginal))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_IList___0__IList___1__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor``2(IList{``0},IList{``1},IList{IList{System.Int32}})">LogAverageFactor&lt;DistributionType, ItemType&gt;(IList&lt;DistributionType&gt;, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor``2(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``1},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">LogAverageFactor&lt;DistributionType, ItemType&gt;(IList&lt;DistributionType&gt;, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1068,19 +1101,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -1124,11 +1157,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_IList___0__IList___1__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(array,items,indices) p(array,items,indices) factor(items,array,indices,marginal))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_IList___1__IList___0__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor``2(IList{``1},IList{``0},IList{IList{System.Int32}})">LogAverageFactor&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor``2(System.Collections.Generic.IList{``1},System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">LogAverageFactor&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1148,19 +1181,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -1204,11 +1237,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_IList___1__IList___0__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices,marginal))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_IList___1__IList__0__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor``2(IList{``1},IList{`0},IList{IList{System.Int32}})">LogAverageFactor&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogAverageFactor``2(System.Collections.Generic.IList{``1},System.Collections.Generic.IList{`0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">LogAverageFactor&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1228,19 +1261,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -1284,11 +1317,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_IList___1__IList__0__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogAverageFactor__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices,marginal))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__1_IList___0__IList__0__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio``1(IList{``0},IList{`0},IList{IList{System.Int32}})">LogEvidenceRatio&lt;ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{`0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">LogEvidenceRatio&lt;ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1308,19 +1341,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -1359,11 +1392,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__1_IList___0__IList__0__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__1_System_Collections_Generic_IList___0__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices,marginal) / sum_items p(items) messageTo(items))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__2_IList___0__IList___1__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio``2(IList{``0},IList{``1},IList{IList{System.Int32}})">LogEvidenceRatio&lt;DistributionType, ItemType&gt;(IList&lt;DistributionType&gt;, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__2_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio``2(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``1},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">LogEvidenceRatio&lt;DistributionType, ItemType&gt;(IList&lt;DistributionType&gt;, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1383,19 +1416,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -1439,11 +1472,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__2_IList___0__IList___1__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__2_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(array,items,indices) p(array,items,indices) factor(items,array,indices,marginal) / sum_items p(items) messageTo(items))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__2_IList___1__IList__0__IList_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio``2(IList{``1},IList{`0},IList{IList{System.Int32}})">LogEvidenceRatio&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio``2(System.Collections.Generic.IList{``1},System.Collections.Generic.IList{`0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}})">LogEvidenceRatio&lt;DistributionType, ItemType&gt;(IList&lt;ItemType&gt;, IList&lt;T&gt;, IList&lt;IList&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1463,19 +1496,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>Incoming message from <code>items</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -1519,11 +1552,11 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__2_IList___1__IList__0__IList_IList_System_Int32____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__2_System_Collections_Generic_IList___1__System_Collections_Generic_IList__0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices,marginal) / sum_items p(items) messageTo(items))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__3___1_IList___0__IList_IList_System_Int32_____1_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio``3(``1,IList{``0},IList{IList{System.Int32}},``1)">LogEvidenceRatio&lt;DistributionType, ItemArrayType, ItemType&gt;(ItemArrayType, IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ItemArrayType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__3___1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____1_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.LogEvidenceRatio``3(``1,System.Collections.Generic.IList{``0},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},``1)">LogEvidenceRatio&lt;DistributionType, ItemArrayType, ItemType&gt;(ItemArrayType, IList&lt;DistributionType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ItemArrayType)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1549,13 +1582,13 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;DistributionType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;DistributionType&gt;</td>
         <td><span class="parametername">array</span></td>
         <td><p>Incoming message from <code>array</code>.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Incoming message from <code>indices</code>.</p>
 </td>
@@ -1610,16 +1643,17 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__3___1_IList___0__IList_IList_System_Int32_____1__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_LogEvidenceRatio__3___1_System_Collections_Generic_IList___0__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____1__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(items,array,indices) p(items,array,indices) factor(items,array,indices,marginal) / sum_items p(items) messageTo(items))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalAverageConditional__3___0_IList___2__IList_IList_System_Int32_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalAverageConditional``3(``0,IList{``2},IList{IList{System.Int32}},``0)">MarginalAverageConditional&lt;ArrayType, DistributionType, ItemType&gt;(ArrayType, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ArrayType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalAverageConditional__3___0_System_Collections_Generic_IList___2__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalAverageConditional``3(``0,System.Collections.Generic.IList{``2},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},``0)">MarginalAverageConditional&lt;ArrayType, DistributionType, ItemType&gt;(ArrayType, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ArrayType)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ArrayType MarginalAverageConditional&lt;ArrayType, DistributionType, ItemType&gt;(ArrayType array, IList&lt;ItemType&gt; items, IList&lt;IList&lt;int&gt;&gt; indices, ArrayType result)
+    <pre><code class="lang-csharp hljs">[SkipIfAllUniform(new string[]{&quot;array&quot;, &quot;items&quot;})]
+public static ArrayType MarginalAverageConditional&lt;ArrayType, DistributionType, ItemType&gt;(ArrayType array, IList&lt;ItemType&gt; items, IList&lt;IList&lt;int&gt;&gt; indices, ArrayType result)
     where ArrayType : IList&lt;DistributionType&gt;, SettableTo&lt;ArrayType&gt; where DistributionType : SettableToProduct&lt;DistributionType&gt; where ItemType : IList&lt;DistributionType&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1638,12 +1672,12 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td></td>
       </tr>
@@ -1696,12 +1730,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalAverageConditional__4___0_IList___3__IList_IList_System_Int32_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalAverageConditional``4(``0,IList{``3},IList{IList{System.Int32}},``0)">MarginalAverageConditional&lt;ArrayType, DistributionType, ItemArrayType, ItemType&gt;(ArrayType, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ArrayType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalAverageConditional__4___0_System_Collections_Generic_IList___3__System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalAverageConditional``4(``0,System.Collections.Generic.IList{``3},System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},``0)">MarginalAverageConditional&lt;ArrayType, DistributionType, ItemArrayType, ItemType&gt;(ArrayType, IList&lt;ItemType&gt;, IList&lt;IList&lt;Int32&gt;&gt;, ArrayType)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ArrayType MarginalAverageConditional&lt;ArrayType, DistributionType, ItemArrayType, ItemType&gt;(ArrayType array, IList&lt;ItemType&gt; items, IList&lt;IList&lt;int&gt;&gt; indices, ArrayType result)
+    <pre><code class="lang-csharp hljs">[SkipIfAllUniform(new string[]{&quot;array&quot;, &quot;items&quot;})]
+public static ArrayType MarginalAverageConditional&lt;ArrayType, DistributionType, ItemArrayType, ItemType&gt;(ArrayType array, IList&lt;ItemType&gt; items, IList&lt;IList&lt;int&gt;&gt; indices, ArrayType result)
     where ArrayType : IList&lt;DistributionType&gt;, SettableTo&lt;ArrayType&gt; where DistributionType : HasPoint&lt;T&gt; where ItemType : IList&lt;T&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1720,12 +1755,12 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;ItemType&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;ItemType&gt;</td>
         <td><span class="parametername">items</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td></td>
       </tr>
@@ -1784,7 +1819,8 @@
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalAverageLogarithm__1___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalAverageLogarithm``1(``0,``0)">MarginalAverageLogarithm&lt;ArrayType&gt;(ArrayType, ArrayType)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>marginal</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1804,12 +1840,14 @@
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">array</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>array</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1824,7 +1862,8 @@
     <tbody>
       <tr>
         <td><span class="xref">ArrayType</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1839,10 +1878,14 @@
     <tbody>
       <tr>
         <td><span class="parametername">ArrayType</span></td>
-        <td></td>
+        <td><p>The type of the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalAverageLogarithm__1___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>marginal</code>. The formula is <code>exp(sum_(array) p(array) log(factor(items,array,indices,marginal)))</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalIncrementArray_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalIncrementArray*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalIncrementArray__1___0___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalIncrementArray``1(``0,``0,``0)">MarginalIncrementArray&lt;ArrayType&gt;(ArrayType, ArrayType, ArrayType)</h4>
   <div class="markdown level1 summary"></div>
@@ -1865,17 +1908,20 @@
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">array</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>array</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">to_array</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>array</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1890,7 +1936,8 @@
     <tbody>
       <tr>
         <td><span class="xref">ArrayType</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1910,8 +1957,27 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalIncrementArray__1___0___0___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">array</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalIncrementItems_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalIncrementItems*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalIncrementItems__3___2___2_IList_IList_System_Int32___System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalIncrementItems``3(``2,``2,IList{IList{System.Int32}},System.Int32,``0)">MarginalIncrementItems&lt;ArrayType, DistributionType, ItemType&gt;(ItemType, ItemType, IList&lt;IList&lt;Int32&gt;&gt;, Int32, ArrayType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalIncrementItems__3___2___2_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.JaggedSubarrayWithMarginalOp`1.MarginalIncrementItems``3(``2,``2,System.Collections.Generic.IList{System.Collections.Generic.IList{System.Int32}},System.Int32,``0)">MarginalIncrementItems&lt;ArrayType, DistributionType, ItemType&gt;(ItemType, ItemType, IList&lt;IList&lt;Int32&gt;&gt;, Int32, ArrayType)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1940,19 +2006,22 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>indices</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">resultIndex</span></td>
-        <td></td>
+        <td><p>Index of the <code>marginal</code> for which a message is desired.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">ArrayType</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1967,7 +2036,8 @@
     <tbody>
       <tr>
         <td><span class="xref">ArrayType</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1997,6 +2067,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_JaggedSubarrayWithMarginalOp_1_MarginalIncrementItems__3___2___2_System_Collections_Generic_IList_System_Collections_Generic_IList_System_Int32___System_Int32___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
 </article>
           </div>
           

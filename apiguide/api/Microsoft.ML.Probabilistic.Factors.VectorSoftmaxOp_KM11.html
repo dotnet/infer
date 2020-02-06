@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class VectorSoftmaxOp_KM11
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_VectorSoftmaxOp_KM11" data-uid="Microsoft.ML.Probabilistic.Factors.VectorSoftmaxOp_KM11" class="text-break">Class VectorSoftmaxOp_KM11
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -91,11 +91,38 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">VectorSoftmaxOp_KM11</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_VectorSoftmaxOp_KM11_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class VectorSoftmaxOp_KM11 : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(MMath), &quot;Softmax&quot;, new Type[]{typeof(Vector)})]
+[Quality(QualityBand.Preview)]
+[Buffers(new string[]{&quot;A&quot;})]
+public static class VectorSoftmaxOp_KM11</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Factors_VectorSoftmaxOp_KM11_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>This implementation uses the bound in Knowles and Minka (2011), followed by
@@ -404,13 +431,13 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_VectorSoftmaxOp_KM11_XAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorSoftmaxOp_KM11.XAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorSoftmaxOp_KM11_XAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorSoftmaxOp_KM11.XAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector)">XAverageLogarithm(Dirichlet, VectorGaussian, VectorGaussian, Vector)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_VectorSoftmaxOp_KM11_XAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.VectorSoftmaxOp_KM11.XAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.VectorGaussian,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Distributions.VectorGaussian)">XAverageLogarithm(Dirichlet, VectorGaussian, Vector, VectorGaussian)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>x</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static VectorGaussian XAverageLogarithm(Dirichlet softmax, VectorGaussian x, VectorGaussian to_x, Vector a)</code></pre>
+    <pre><code class="lang-csharp hljs">public static VectorGaussian XAverageLogarithm(Dirichlet softmax, VectorGaussian x, Vector a, VectorGaussian result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -435,15 +462,15 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
-        <td><span class="parametername">to_x</span></td>
-        <td><p>Previous outgoing message to <code>x</code>.</p>
-</td>
-      </tr>
-      <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
         <td><span class="parametername">a</span></td>
         <td><p>Buffer <code>a</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
 </td>
       </tr>
     </tbody>
@@ -459,12 +486,12 @@ nonconjugate VMP. This approach is linear in the dimension K.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussian.html">VectorGaussian</a></td>
-        <td><p>The outgoing VMP message to the <code>x</code> argument.</p>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorSoftmaxOp_KM11_XAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_VectorSoftmaxOp_KM11_XAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_VectorGaussian_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Distributions_VectorGaussian__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>x</code> with <code>softmax</code> integrated out. The formula is <code>sum_softmax p(softmax) factor(softmax,x)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>

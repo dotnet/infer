@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class PowerOp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_PowerOp" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp" class="text-break">Class PowerOp
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for <see cref="!:System.Math.Pow(double, double)"></see>, given random arguments to the function.</p>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.math.pow#System_Math_Pow_System_Double_System_Double_">Pow(Double, Double)</a>, given random arguments to the function.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -91,17 +91,282 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">PowerOp</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class PowerOp : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Math), &quot;Pow&quot;, new Type[]{typeof(double), typeof(double)})]
+[Quality(QualityBand.Experimental)]
+public static class PowerOp</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_FromMeanPowerAndMeanLog_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.FromMeanPowerAndMeanLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_FromMeanPowerAndMeanLog_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.FromMeanPowerAndMeanLog(System.Double,System.Double,System.Double)">FromMeanPowerAndMeanLog(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma FromMeanPowerAndMeanLog(double meanPower, double meanLog, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">meanPower</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">meanLog</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_GammaFromGammaPower_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.GammaFromGammaPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_GammaFromGammaPower_Microsoft_ML_Probabilistic_Distributions_GammaPower_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.GammaFromGammaPower(Microsoft.ML.Probabilistic.Distributions.GammaPower)">GammaFromGammaPower(GammaPower)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma GammaFromGammaPower(GammaPower message)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">message</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_GammaFromMeanAndMeanInverse_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.GammaFromMeanAndMeanInverse*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_GammaFromMeanAndMeanInverse_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.GammaFromMeanAndMeanInverse(System.Double,System.Double)">GammaFromMeanAndMeanInverse(Double, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma GammaFromMeanAndMeanInverse(double mean, double meanInverse)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">meanInverse</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_GammaPowerFromDifferentPower_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.GammaPowerFromDifferentPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_GammaPowerFromDifferentPower_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.GammaPowerFromDifferentPower(Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double)">GammaPowerFromDifferentPower(GammaPower, Double)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GammaPower GammaPowerFromDifferentPower(GammaPower message, double newPower)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">message</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">newPower</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.LogAverageFactor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_GammaPower_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.GammaPower,Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double)">LogAverageFactor(GammaPower, GammaPower, Double)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(GammaPower pow, GammaPower x, double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">pow</span></td>
+        <td><p>Incoming message from <code>pow</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Incoming message from <code>x</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_GammaPower_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(pow,x) p(pow,x) factor(pow,x,y))</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double)">PowAverageConditional(Gamma, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>pow</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -120,12 +385,14 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
         <td><span class="parametername">x</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>x</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">y</span></td>
-        <td></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -140,17 +407,112 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>pow</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>pow</code> as the random arguments are varied. The formula is <code>proj[p(pow) sum_(x) p(x) factor(pow,x,y)]/p(pow)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">x</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional(Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double)">PowAverageConditional(GammaPower, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma)">PowAverageConditional(Gamma, Double, Gamma)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>pow</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GammaPower PowAverageConditional(GammaPower x, double y)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Gamma PowAverageConditional(Gamma x, double y, Gamma result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Incoming message from <code>x</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>pow</code> as the random arguments are varied. The formula is <code>proj[p(pow) sum_(x) p(x) factor(pow,x,y)]/p(pow)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">x</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional(Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double,Microsoft.ML.Probabilistic.Distributions.GammaPower)">PowAverageConditional(GammaPower, Double, GammaPower)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>pow</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GammaPower PowAverageConditional(GammaPower x, double y, GammaPower result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -165,12 +527,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
         <td><span class="parametername">x</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>x</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">y</span></td>
-        <td></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -185,7 +555,27 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>pow</code> as the random arguments are varied. The formula is <code>proj[p(pow) sum_(x) p(x) factor(pow,x,y)]/p(pow)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">x</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -241,9 +631,78 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_Pareto_System_Double__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>pow</code> as the random arguments are varied. The formula is <code>proj[p(pow) sum_(x) p(x) factor(pow,x,y)]/p(pow)</code>.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageConditional(Microsoft.ML.Probabilistic.Distributions.TruncatedGamma,System.Double)">PowAverageConditional(TruncatedGamma, Double)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>pow</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma PowAverageConditional(TruncatedGamma x, double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Incoming message from <code>x</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p>The outgoing EP message to the <code>pow</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageConditional_Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>pow</code> as the random arguments are varied. The formula is <code>proj[p(pow) sum_(x) p(x) factor(pow,x,y)]/p(pow)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">x</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double)">PowAverageLogarithm(Gamma, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>pow</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -262,12 +721,14 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
         <td><span class="parametername">x</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>x</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">y</span></td>
-        <td></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -282,17 +743,38 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>pow</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>pow</code> as the random arguments are varied. The formula is <code>proj[sum_(x) p(x) factor(pow,x,y)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">x</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double)">PowAverageLogarithm(GammaPower, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.PowAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double,Microsoft.ML.Probabilistic.Distributions.GammaPower)">PowAverageLogarithm(GammaPower, Double, GammaPower)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>pow</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GammaPower PowAverageLogarithm(GammaPower x, double y)</code></pre>
+    <pre><code class="lang-csharp hljs">public static GammaPower PowAverageLogarithm(GammaPower x, double y, GammaPower result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -307,12 +789,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
         <td><span class="parametername">x</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>x</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">y</span></td>
-        <td></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -327,13 +817,268 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_PowAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>pow</code> as the random arguments are varied. The formula is <code>proj[sum_(x) p(x) factor(pow,x,y)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">x</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double,Microsoft.ML.Probabilistic.Distributions.Gamma)">XAverageConditional(Gamma, Gamma, Double, Gamma)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>x</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Gamma XAverageConditional(Gamma pow, Gamma x, double y, Gamma result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">pow</span></td>
+        <td><p>Incoming message from <code>pow</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Incoming message from <code>x</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_Microsoft_ML_Probabilistic_Distributions_Gamma__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>x</code> as the random arguments are varied. The formula is <code>proj[p(x) sum_(pow) p(pow) factor(pow,x,y)]/p(x)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">pow</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gamma,Microsoft.ML.Probabilistic.Distributions.TruncatedGamma,System.Double)">XAverageConditional(Gamma, TruncatedGamma, Double)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>x</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TruncatedGamma XAverageConditional(Gamma pow, TruncatedGamma x, double y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
+        <td><span class="parametername">pow</span></td>
+        <td><p>Incoming message from <code>pow</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Incoming message from <code>x</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.TruncatedGamma.html">TruncatedGamma</a></td>
+        <td><p>The outgoing EP message to the <code>x</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gamma_Microsoft_ML_Probabilistic_Distributions_TruncatedGamma_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>x</code> as the random arguments are varied. The formula is <code>proj[p(x) sum_(pow) p(pow) factor(pow,x,y)]/p(x)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">pow</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional(Microsoft.ML.Probabilistic.Distributions.GammaPower,Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double,Microsoft.ML.Probabilistic.Distributions.GammaPower)">XAverageConditional(GammaPower, GammaPower, Double, GammaPower)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>x</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GammaPower XAverageConditional(GammaPower pow, GammaPower x, double y, GammaPower result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">pow</span></td>
+        <td><p>Incoming message from <code>pow</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Incoming message from <code>x</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>x</code> as the random arguments are varied. The formula is <code>proj[p(x) sum_(pow) p(pow) factor(pow,x,y)]/p(x)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">pow</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional(Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double)">XAverageConditional(GammaPower, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>x</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -352,12 +1097,14 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
         <td><span class="parametername">pow</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>pow</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">y</span></td>
-        <td></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -372,57 +1119,27 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>x</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageConditional(Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double,Microsoft.ML.Probabilistic.Distributions.GammaPower)">XAverageConditional(GammaPower, Double, GammaPower)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GammaPower XAverageConditional(GammaPower pow, double y, GammaPower result)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageConditional_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>x</code> as the random arguments are varied. The formula is <code>proj[p(x) sum_(pow) p(pow) factor(pow,x,y)]/p(x)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
+        <th>Condition</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
-        <td><span class="parametername">pow</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">y</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
-        <td><span class="parametername">result</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
-        <td></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">pow</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -485,8 +1202,89 @@
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>x</code> as the random arguments are varied. The formula is <code>proj[p(x) sum_(pow) p(pow) factor(pow,x,y)]/p(x)</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageLogarithm*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_GammaPower_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.GammaPower,Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double,Microsoft.ML.Probabilistic.Distributions.GammaPower)">XAverageLogarithm(GammaPower, GammaPower, Double, GammaPower)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>x</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GammaPower XAverageLogarithm(GammaPower pow, GammaPower x, double y, GammaPower result)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">pow</span></td>
+        <td><p>Incoming message from <code>pow</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Incoming message from <code>x</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">result</span></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_GammaPower_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>x</code> with <code>pow</code> integrated out. The formula is <code>sum_pow p(pow) factor(pow,x,y)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">pow</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double)">XAverageLogarithm(GammaPower, Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>x</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -505,12 +1303,14 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
         <td><span class="parametername">pow</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>pow</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">y</span></td>
-        <td></td>
+        <td><p>Constant value for <code>y</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -525,57 +1325,27 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gamma.html">Gamma</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>x</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_Microsoft_ML_Probabilistic_Distributions_GammaPower_" data-uid="Microsoft.ML.Probabilistic.Factors.PowerOp.XAverageLogarithm(Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double,Microsoft.ML.Probabilistic.Distributions.GammaPower)">XAverageLogarithm(GammaPower, Double, GammaPower)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GammaPower XAverageLogarithm(GammaPower pow, double y, GammaPower result)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_PowerOp_XAverageLogarithm_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>x</code> with <code>pow</code> integrated out. The formula is <code>sum_pow p(pow) factor(pow,x,y)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
+        <th>Condition</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
-        <td><span class="parametername">pow</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">y</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
-        <td><span class="parametername">result</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
-        <td></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">pow</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>

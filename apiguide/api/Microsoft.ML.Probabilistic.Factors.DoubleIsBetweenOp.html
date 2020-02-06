@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DoubleIsBetweenOp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,11 +91,38 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">DoubleIsBetweenOp</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DoubleIsBetweenOp_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class DoubleIsBetweenOp : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;IsBetween&quot;, new Type[]{typeof(double), typeof(double), typeof(double)}, Default = true)]
+[Quality(QualityBand.Mature)]
+[Buffers(new string[]{&quot;logZ&quot;})]
+public static class DoubleIsBetweenOp</code></pre>
   </div>
   <h3 id="fields">Fields
   </h3>
@@ -122,6 +149,72 @@
       </tr>
     </tbody>
   </table>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DoubleIsBetweenOp_LargeMeanThreshold" data-uid="Microsoft.ML.Probabilistic.Factors.DoubleIsBetweenOp.LargeMeanThreshold">LargeMeanThreshold</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LargeMeanThreshold</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DoubleIsBetweenOp_LowPrecisionThreshold" data-uid="Microsoft.ML.Probabilistic.Factors.DoubleIsBetweenOp.LowPrecisionThreshold">LowPrecisionThreshold</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double LowPrecisionThreshold</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_DoubleIsBetweenOp_TraceAlpha" data-uid="Microsoft.ML.Probabilistic.Factors.DoubleIsBetweenOp.TraceAlpha">TraceAlpha</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TraceAlpha</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_DoubleIsBetweenOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DoubleIsBetweenOp.AverageLogFactor*"></a>
@@ -131,7 +224,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(bool isBetween, Gaussian X, double lowerBound, double upperBound, Gaussian to_X)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static double AverageLogFactor(bool isBetween, Gaussian X, double lowerBound, double upperBound, Gaussian to_X)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -343,7 +437,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Bernoulli IsBetweenAverageLogarithm(Gaussian X, Gaussian lowerBound, Gaussian upperBound)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Variational Message Passing does not support the IsBetween factor with Gaussian distributions, since the factor is not conjugate to the Gaussian.&quot;)]
+public static Bernoulli IsBetweenAverageLogarithm(Gaussian X, Gaussian lowerBound, Gaussian upperBound)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1081,7 +1176,9 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian LowerBoundAverageConditional(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound, double logZ)</code></pre>
+    <pre><code class="lang-csharp hljs">[SkipIfAllUniform(new string[]{&quot;X&quot;, &quot;lowerBound&quot;})]
+[SkipIfAllUniform(new string[]{&quot;X&quot;, &quot;upperBound&quot;})]
+public static Gaussian LowerBoundAverageConditional(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound, double logZ)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1334,7 +1431,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian LowerBoundAverageLogarithm()</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;VMP does not support truncation with stochastic bounds.&quot;)]
+public static Gaussian LowerBoundAverageLogarithm()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1362,7 +1460,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian LowerBoundAverageLogarithm(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Variational Message Passing does not support the IsBetween factor with Gaussian distributions, since the factor is not conjugate to the Gaussian.&quot;)]
+public static Gaussian LowerBoundAverageLogarithm(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1486,7 +1585,9 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian UpperBoundAverageConditional(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound, double logZ)</code></pre>
+    <pre><code class="lang-csharp hljs">[SkipIfAllUniform(new string[]{&quot;X&quot;, &quot;lowerBound&quot;})]
+[SkipIfAllUniform(new string[]{&quot;X&quot;, &quot;upperBound&quot;})]
+public static Gaussian UpperBoundAverageConditional(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound, double logZ)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1739,7 +1840,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian UpperBoundAverageLogarithm()</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;VMP does not support truncation with stochastic bounds.&quot;)]
+public static Gaussian UpperBoundAverageLogarithm()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1767,7 +1869,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian UpperBoundAverageLogarithm(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Variational Message Passing does not support the IsBetween factor with Gaussian distributions, since the factor is not conjugate to the Gaussian.&quot;)]
+public static Gaussian UpperBoundAverageLogarithm(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1831,7 +1934,10 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian XAverageConditional(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound, double logZ)</code></pre>
+    <pre><code class="lang-csharp hljs">[SkipIfAllUniform(new string[]{&quot;lowerBound&quot;, &quot;upperBound&quot;})]
+[SkipIfAllUniform(new string[]{&quot;X&quot;, &quot;lowerBound&quot;})]
+[SkipIfAllUniform(new string[]{&quot;X&quot;, &quot;upperBound&quot;})]
+public static Gaussian XAverageConditional(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound, double logZ)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2171,7 +2277,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian XAverageLogarithm(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Variational Message Passing does not support the IsBetween factor with Gaussian distributions, since the factor is not conjugate to the Gaussian.&quot;)]
+public static Gaussian XAverageLogarithm(Bernoulli isBetween, Gaussian X, Gaussian lowerBound, Gaussian upperBound)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2235,7 +2342,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian XAverageLogarithm(bool isBetween, Gaussian X, double lowerBound, double upperBound, Gaussian to_X)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Preview)]
+public static Gaussian XAverageLogarithm(bool isBetween, Gaussian X, double lowerBound, double upperBound, Gaussian to_X)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class SparseList&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -95,17 +95,37 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;T&gt;</div>
-    <div><span class="xref">IList</span>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;T&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable</a>&lt;T&gt;</div>
-    <div><span class="xref">IEnumerable</span>&lt;T&gt;</div>
-    <div><span class="xref">IList</span></div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ilist">IList</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.icollection">ICollection</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Collections.html">Microsoft.ML.Probabilistic.Collections</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SparseList&lt;T&gt; : object, ISparseList&lt;T&gt;, IList&lt;T&gt;, ISparseEnumerable&lt;T&gt;, IEnumerable&lt;T&gt;, IList, ICloneable</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+public class SparseList&lt;T&gt; : ISparseList&lt;T&gt;, IList&lt;T&gt;, ICollection&lt;T&gt;, ISparseEnumerable&lt;T&gt;, IEnumerable&lt;T&gt;, IList, ICollection, IEnumerable, ICloneable</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -221,7 +241,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1__ctor_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1__ctor_System_Int32__0_List_Microsoft_ML_Probabilistic_Collections_ValueAtIndex__0___" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.#ctor(System.Int32,`0,List{Microsoft.ML.Probabilistic.Collections.ValueAtIndex{`0}})">SparseList(Int32, T, List&lt;ValueAtIndex&lt;T&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1__ctor_System_Int32__0_System_Collections_Generic_List_Microsoft_ML_Probabilistic_Collections_ValueAtIndex__0___" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.#ctor(System.Int32,`0,System.Collections.Generic.List{Microsoft.ML.Probabilistic.Collections.ValueAtIndex{`0}})">SparseList(Int32, T, List&lt;ValueAtIndex&lt;T&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Constructs a sparse list of a given length and assigns all elements the given value, except
 for the specified list of sparse values. This list is stored internally as is
 so MUST be sorted by index and must not be modified externally after being passed in.</p>
@@ -254,7 +274,7 @@ so MUST be sorted by index and must not be modified externally after being passe
 </td>
       </tr>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ValueAtIndex-1.html">ValueAtIndex</a>&lt;T&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ValueAtIndex-1.html">ValueAtIndex</a>&lt;T&gt;&gt;</td>
         <td><span class="parametername">sortedSparseValues</span></td>
         <td><p>The list of sparse values, which must be sorted by index.</p>
 </td>
@@ -270,7 +290,8 @@ so MUST be sorted by index and must not be modified externally after being passe
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public T CommonValue { get; protected set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public T CommonValue { get; protected set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -434,7 +455,8 @@ This list is kept sorted by index to allow efficient operations on the sparse li
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;ValueAtIndex&lt;T&gt;&gt; SparseValues { get; protected set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public List&lt;ValueAtIndex&lt;T&gt;&gt; SparseValues { get; protected set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -446,7 +468,7 @@ This list is kept sorted by index to allow efficient operations on the sparse li
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ValueAtIndex-1.html">ValueAtIndex</a>&lt;T&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ValueAtIndex-1.html">ValueAtIndex</a>&lt;T&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -504,7 +526,7 @@ This list is kept sorted by index to allow efficient operations on the sparse li
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_All_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.All*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_All_Converter__0_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.All(Converter{`0,System.Boolean})">All(Converter&lt;T, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_All_System_Converter__0_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.All(System.Converter{`0,System.Boolean})">All(Converter&lt;T, Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Tests if all elements in the list satisfy the specified condition.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -523,7 +545,7 @@ This list is kept sorted by index to allow efficient operations on the sparse li
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td></td>
       </tr>
@@ -545,7 +567,7 @@ This list is kept sorted by index to allow efficient operations on the sparse li
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Any_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Any*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Any_Converter__0_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Any(Converter{`0,System.Boolean})">Any(Converter&lt;T, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Any_System_Converter__0_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Any(System.Converter{`0,System.Boolean})">Any(Converter&lt;T, Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Tests if any elements in the list satisfy the specified condition.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -564,7 +586,7 @@ This list is kept sorted by index to allow efficient operations on the sparse li
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td></td>
       </tr>
@@ -586,7 +608,7 @@ This list is kept sorted by index to allow efficient operations on the sparse li
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_CheckCompatible_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.CheckCompatible*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_CheckCompatible__1_IList___0__System_String_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.CheckCompatible``1(IList{``0},System.String)">CheckCompatible&lt;T2&gt;(IList&lt;T2&gt;, String)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_CheckCompatible__1_System_Collections_Generic_IList___0__System_String_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.CheckCompatible``1(System.Collections.Generic.IList{``0},System.String)">CheckCompatible&lt;T2&gt;(IList&lt;T2&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Checks that a given list is the same size as this list.
 Throws an exception if not with the given string</p>
 </div>
@@ -606,7 +628,7 @@ Throws an exception if not with the given string</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T2&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T2&gt;</td>
         <td><span class="parametername">that</span></td>
         <td><p>The list to check</p>
 </td>
@@ -758,7 +780,7 @@ to a specified value</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Copy_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Copy*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Copy_IList__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Copy(IList{`0})">Copy(IList&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Copy_System_Collections_Generic_IList__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Copy(System.Collections.Generic.IList{`0})">Copy(IList&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Creator a sparse list as a copy of another list (which may not be sparse)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -777,7 +799,7 @@ to a specified value</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
         <td><span class="parametername">that</span></td>
         <td><p>The source list - can be dense or sparse</p>
 </td>
@@ -876,6 +898,8 @@ in the target array</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_EqualsAll_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.EqualsAll*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_EqualsAll__0_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.EqualsAll(`0)">EqualsAll(T)</h4>
   <div class="markdown level1 summary"><p>Tests if all elements are equal to the given value.</p>
@@ -963,13 +987,14 @@ to the default value for the element type</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_FromSparseValues_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.FromSparseValues*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_FromSparseValues_System_Int32__0_List_Microsoft_ML_Probabilistic_Collections_ValueAtIndex__0___" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.FromSparseValues(System.Int32,`0,List{Microsoft.ML.Probabilistic.Collections.ValueAtIndex{`0}})">FromSparseValues(Int32, T, List&lt;ValueAtIndex&lt;T&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_FromSparseValues_System_Int32__0_System_Collections_Generic_List_Microsoft_ML_Probabilistic_Collections_ValueAtIndex__0___" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.FromSparseValues(System.Int32,`0,System.Collections.Generic.List{Microsoft.ML.Probabilistic.Collections.ValueAtIndex{`0}})">FromSparseValues(Int32, T, List&lt;ValueAtIndex&lt;T&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Constructs a sparse list from a sorted list of sparse elements.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static SparseList&lt;T&gt; FromSparseValues(int count, T commonValue, List&lt;ValueAtIndex&lt;T&gt;&gt; sortedSparseValues)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Count&quot;, &quot;CommonValue&quot;, &quot;SparseValues&quot;})]
+public static SparseList&lt;T&gt; FromSparseValues(int count, T commonValue, List&lt;ValueAtIndex&lt;T&gt;&gt; sortedSparseValues)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -994,7 +1019,7 @@ to the default value for the element type</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ValueAtIndex-1.html">ValueAtIndex</a>&lt;T&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ValueAtIndex-1.html">ValueAtIndex</a>&lt;T&gt;&gt;</td>
         <td><span class="parametername">sortedSparseValues</span></td>
         <td><p>Sorted list of sparse elements</p>
 </td>
@@ -1035,7 +1060,7 @@ to the default value for the element type</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerator</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1">IEnumerator</a>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1090,6 +1115,8 @@ to the default value for the element type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_GetSparseEnumerator_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.GetSparseEnumerator*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_GetSparseEnumerator" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.GetSparseEnumerator">GetSparseEnumerator()</h4>
   <div class="markdown level1 summary"><p>Gets a sparse enumerator</p>
@@ -1203,7 +1230,7 @@ Returns -1 if the value is not in the list</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_IndexOfAll_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.IndexOfAll*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_IndexOfAll_Converter__0_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.IndexOfAll(Converter{`0,System.Boolean})">IndexOfAll(Converter&lt;T, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_IndexOfAll_System_Converter__0_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.IndexOfAll(System.Converter{`0,System.Boolean})">IndexOfAll(Converter&lt;T, Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns an enumeration of the indices of all elements which satisfy the specified condition.
 Indices are returned in sorted order.</p>
 </div>
@@ -1223,7 +1250,7 @@ Indices are returned in sorted order.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td></td>
       </tr>
@@ -1239,7 +1266,7 @@ Indices are returned in sorted order.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1276,7 +1303,7 @@ Indices are returned in sorted order.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__1___0_Func___0__0___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``1(``0,Func{``0,`0,``0})">Reduce&lt;TRes&gt;(TRes, Func&lt;TRes, T, TRes&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__1___0_System_Func___0__0___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``1(``0,System.Func{``0,`0,``0})">Reduce&lt;TRes&gt;(TRes, Func&lt;TRes, T, TRes&gt;)</h4>
   <div class="markdown level1 summary"><p>Reduce method. Operates on this list</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1301,7 +1328,7 @@ Indices are returned in sorted order.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TRes, T, TRes&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TRes, T, TRes&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Reduction function taking partial result and current element</p>
 </td>
@@ -1338,11 +1365,11 @@ Indices are returned in sorted order.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__1___0_Func___0__0___0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__1___0_System_Func___0__0___0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method does not take advantage of this list's sparseness.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__1___0_Func___0__0___0__Func___0__0_System_Int32___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``1(``0,Func{``0,`0,``0},Func{``0,`0,System.Int32,``0})">Reduce&lt;TRes&gt;(TRes, Func&lt;TRes, T, TRes&gt;, Func&lt;TRes, T, Int32, TRes&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__1___0_System_Func___0__0___0__System_Func___0__0_System_Int32___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``1(``0,System.Func{``0,`0,``0},System.Func{``0,`0,System.Int32,``0})">Reduce&lt;TRes&gt;(TRes, Func&lt;TRes, T, TRes&gt;, Func&lt;TRes, T, Int32, TRes&gt;)</h4>
   <div class="markdown level1 summary"><p>Reduce method which can take advantage of sparse structure. Operates on this list</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1367,13 +1394,13 @@ Indices are returned in sorted order.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TRes, T, TRes&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TRes, T, TRes&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Reduction function taking partial result and current element</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TRes, T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, TRes&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;TRes, T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, TRes&gt;</td>
         <td><span class="parametername">repeatedFun</span></td>
         <td><p>Function which computes the reduction function applied multiple times</p>
 </td>
@@ -1410,87 +1437,11 @@ Indices are returned in sorted order.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__1___0_Func___0__0___0__Func___0__0_System_Int32___0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__1___0_System_Func___0__0___0__System_Func___0__0_System_Int32___0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method does not take advantage of this list's sparseness.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__2___0_IEnumerable___1__Func___0__0___1___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``2(``0,IEnumerable{``1},Func{``0,`0,``1,``0})">Reduce&lt;TRes, T2&gt;(TRes, IEnumerable&lt;T2&gt;, Func&lt;TRes, T, T2, TRes&gt;)</h4>
-  <div class="markdown level1 summary"><p>Reduce method. Operates on this list and another list.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TRes Reduce&lt;TRes, T2&gt;(TRes initial, IEnumerable&lt;T2&gt; that, Func&lt;TRes, T, T2, TRes&gt; fun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TRes</span></td>
-        <td><span class="parametername">initial</span></td>
-        <td><p>Initial value</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T2&gt;</td>
-        <td><span class="parametername">that</span></td>
-        <td><p>A second list</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Func</span>&lt;TRes, T, T2, TRes&gt;</td>
-        <td><span class="parametername">fun</span></td>
-        <td><p>Reduction function taking partial result, current element, and current element of <code data-dev-comment-type="paramref" class="paramref">that</code></p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TRes</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TRes</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="parametername">T2</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__2___0_IEnumerable___1__Func___0__0___1___0___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This method does not take advantage of this list's sparseness.</p>
-</div>
-  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__2___0_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__Func___0__0___1___0__Func___0__0___1_System_Int32___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``2(``0,Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``1},Func{``0,`0,``1,``0},Func{``0,`0,``1,System.Int32,``0})">Reduce&lt;TRes, T1&gt;(TRes, ISparseEnumerable&lt;T1&gt;, Func&lt;TRes, T, T1, TRes&gt;, Func&lt;TRes, T, T1, Int32, TRes&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__2___0_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__System_Func___0__0___1___0__System_Func___0__0___1_System_Int32___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``2(``0,Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``1},System.Func{``0,`0,``1,``0},System.Func{``0,`0,``1,System.Int32,``0})">Reduce&lt;TRes, T1&gt;(TRes, ISparseEnumerable&lt;T1&gt;, Func&lt;TRes, T, T1, TRes&gt;, Func&lt;TRes, T, T1, Int32, TRes&gt;)</h4>
   <div class="markdown level1 summary"><p>Reduce method which can take advantage of sparse structure. Operates on this list
 and another sparse list</p>
 </div>
@@ -1522,13 +1473,13 @@ and another sparse list</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TRes, T, T1, TRes&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;TRes, T, T1, TRes&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Reduction function taking partial result and current element</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TRes, T, T1, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, TRes&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-5">Func</a>&lt;TRes, T, T1, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, TRes&gt;</td>
         <td><span class="parametername">repeatedFun</span></td>
         <td><p>Function which computes the reduction function applied multiple times</p>
 </td>
@@ -1570,7 +1521,173 @@ and another sparse list</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__3___0_IList___1__IList___2__Func___0__0___1___2___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``3(``0,IList{``1},IList{``2},Func{``0,`0,``1,``2,``0})">Reduce&lt;TRes, T1, T2&gt;(TRes, IList&lt;T1&gt;, IList&lt;T2&gt;, Func&lt;TRes, T, T1, T2, TRes&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__2___0_System_Collections_Generic_IEnumerable___1__System_Func___0__0___1___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``2(``0,System.Collections.Generic.IEnumerable{``1},System.Func{``0,`0,``1,``0})">Reduce&lt;TRes, T2&gt;(TRes, IEnumerable&lt;T2&gt;, Func&lt;TRes, T, T2, TRes&gt;)</h4>
+  <div class="markdown level1 summary"><p>Reduce method. Operates on this list and another list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TRes Reduce&lt;TRes, T2&gt;(TRes initial, IEnumerable&lt;T2&gt; that, Func&lt;TRes, T, T2, TRes&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TRes</span></td>
+        <td><span class="parametername">initial</span></td>
+        <td><p>Initial value</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T2&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td><p>A second list</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;TRes, T, T2, TRes&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>Reduction function taking partial result, current element, and current element of <code data-dev-comment-type="paramref" class="paramref">that</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TRes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TRes</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__2___0_System_Collections_Generic_IEnumerable___1__System_Func___0__0___1___0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method does not take advantage of this list's sparseness.</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__3___0_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___2__System_Func___0__0___1___2___0__System_Func___0__0___1___2_System_Int32___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``3(``0,Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``1},Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``2},System.Func{``0,`0,``1,``2,``0},System.Func{``0,`0,``1,``2,System.Int32,``0})">Reduce&lt;TRes, T1, T2&gt;(TRes, ISparseEnumerable&lt;T1&gt;, ISparseEnumerable&lt;T2&gt;, Func&lt;TRes, T, T1, T2, TRes&gt;, Func&lt;TRes, T, T1, T2, Int32, TRes&gt;)</h4>
+  <div class="markdown level1 summary"><p>Reduce method which can take advantage of sparse structure. Operates on this list
+and two other sparse lists</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TRes Reduce&lt;TRes, T1, T2&gt;(TRes initial, ISparseEnumerable&lt;T1&gt; b, ISparseEnumerable&lt;T2&gt; c, Func&lt;TRes, T, T1, T2, TRes&gt; fun, Func&lt;TRes, T, T1, T2, int, TRes&gt; repeatedFun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TRes</span></td>
+        <td><span class="parametername">initial</span></td>
+        <td><p>Initial value</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable</a>&lt;T1&gt;</td>
+        <td><span class="parametername">b</span></td>
+        <td><p>A second sparse list</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable</a>&lt;T2&gt;</td>
+        <td><span class="parametername">c</span></td>
+        <td><p>A third sparse list</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-5">Func</a>&lt;TRes, T, T1, T2, TRes&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>Reduction function taking partial result and current element</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-6">Func</a>&lt;TRes, T, T1, T2, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, TRes&gt;</td>
+        <td><span class="parametername">repeatedFun</span></td>
+        <td><p>Function which computes the reduction function applied multiple times</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TRes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TRes</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__3___0_System_Collections_Generic_IList___1__System_Collections_Generic_IList___2__System_Func___0__0___1___2___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``3(``0,System.Collections.Generic.IList{``1},System.Collections.Generic.IList{``2},System.Func{``0,`0,``1,``2,``0})">Reduce&lt;TRes, T1, T2&gt;(TRes, IList&lt;T1&gt;, IList&lt;T2&gt;, Func&lt;TRes, T, T1, T2, TRes&gt;)</h4>
   <div class="markdown level1 summary"><p>Reduce method. Operates on this list and two other lists.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1595,19 +1712,19 @@ and another sparse list</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T1&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T1&gt;</td>
         <td><span class="parametername">a</span></td>
         <td><p>A second list</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;T2&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T2&gt;</td>
         <td><span class="parametername">b</span></td>
         <td><p>A third list</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TRes, T, T1, T2, TRes&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-5">Func</a>&lt;TRes, T, T1, T2, TRes&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Reduction function taking partial result, current element, and current element of <code data-dev-comment-type="paramref" class="paramref">a</code> and <code data-dev-comment-type="paramref" class="paramref">b</code></p>
 </td>
@@ -1652,99 +1769,9 @@ and another sparse list</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__3___0_IList___1__IList___2__Func___0__0___1___2___0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__3___0_System_Collections_Generic_IList___1__System_Collections_Generic_IList___2__System_Func___0__0___1___2___0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method does not take advantage of this list's sparseness.</p>
 </div>
-  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Reduce__3___0_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___2__Func___0__0___1___2___0__Func___0__0___1___2_System_Int32___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Reduce``3(``0,Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``1},Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``2},Func{``0,`0,``1,``2,``0},Func{``0,`0,``1,``2,System.Int32,``0})">Reduce&lt;TRes, T1, T2&gt;(TRes, ISparseEnumerable&lt;T1&gt;, ISparseEnumerable&lt;T2&gt;, Func&lt;TRes, T, T1, T2, TRes&gt;, Func&lt;TRes, T, T1, T2, Int32, TRes&gt;)</h4>
-  <div class="markdown level1 summary"><p>Reduce method which can take advantage of sparse structure. Operates on this list
-and two other sparse lists</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TRes Reduce&lt;TRes, T1, T2&gt;(TRes initial, ISparseEnumerable&lt;T1&gt; b, ISparseEnumerable&lt;T2&gt; c, Func&lt;TRes, T, T1, T2, TRes&gt; fun, Func&lt;TRes, T, T1, T2, int, TRes&gt; repeatedFun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TRes</span></td>
-        <td><span class="parametername">initial</span></td>
-        <td><p>Initial value</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable</a>&lt;T1&gt;</td>
-        <td><span class="parametername">b</span></td>
-        <td><p>A second sparse list</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable</a>&lt;T2&gt;</td>
-        <td><span class="parametername">c</span></td>
-        <td><p>A third sparse list</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Func</span>&lt;TRes, T, T1, T2, TRes&gt;</td>
-        <td><span class="parametername">fun</span></td>
-        <td><p>Reduction function taking partial result and current element</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Func</span>&lt;TRes, T, T1, T2, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, TRes&gt;</td>
-        <td><span class="parametername">repeatedFun</span></td>
-        <td><p>Function which computes the reduction function applied multiple times</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TRes</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TRes</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="parametername">T1</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="parametername">T2</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Remove_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Remove*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_Remove__0_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.Remove(`0)">Remove(T)</h4>
   <div class="markdown level1 summary"><p>Not implemented</p>
@@ -1840,95 +1867,6 @@ and two other sparse lists</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo(IEnumerable{`0})">SetTo(IEnumerable&lt;T&gt;)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetTo(IEnumerable&lt;T&gt; that)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
-        <td><span class="parametername">that</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_IList__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo(IList{`0})">SetTo(IList&lt;T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Copies values from another list.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetTo(IList&lt;T&gt; that)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
-        <td><span class="parametername">that</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_IList__0___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The source list can be dense, in which case
-default(T) is used as the common value.</p>
-</div>
-  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_IList__0___0_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo(IList{`0},`0)">SetTo(IList&lt;T&gt;, T)</h4>
-  <div class="markdown level1 summary"><p>Copies values from a list which must have the same size as this list,
-using the specified common value.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void SetTo(IList&lt;T&gt; dlist, T commonValue)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IList</span>&lt;T&gt;</td>
-        <td><span class="parametername">dlist</span></td>
-        <td><p>The list to copy from</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">T</span></td>
-        <td><span class="parametername">commonValue</span></td>
-        <td><p>Common value</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_Microsoft_ML_Probabilistic_Collections_SparseList__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo(Microsoft.ML.Probabilistic.Collections.SparseList{`0})">SetTo(SparseList&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Copies values from a sparse list to this sparse list.</p>
 </div>
@@ -1954,14 +1892,13 @@ using the specified common value.</p>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_IEnumerable___0__Func___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``1(IEnumerable{``0},Func{``0,`0})">SetToFunction&lt;T2&gt;(IEnumerable&lt;T2&gt;, Func&lt;T2, T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of a collection</p>
-</div>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo(System.Collections.Generic.IEnumerable{`0})">SetTo(IEnumerable&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T2&gt;(IEnumerable&lt;T2&gt; that, Func&lt;T2, T&gt; fun)</code></pre>
+    <pre><code class="lang-csharp hljs">public void SetTo(IEnumerable&lt;T&gt; that)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1974,54 +1911,78 @@ using the specified common value.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T2&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">that</span></td>
-        <td><p>The other list</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Func</span>&lt;T2, T&gt;</td>
-        <td><span class="parametername">fun</span></td>
-        <td><p>The function which maps from type T2 to type T</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 class="typeParameters">Type Parameters</h5>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_System_Collections_Generic_IList__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo(System.Collections.Generic.IList{`0})">SetTo(IList&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Copies values from another list.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetTo(IList&lt;T&gt; that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
+        <th>Type</th>
         <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">T2</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">that</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_IEnumerable___0__Func___0__0___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Assumes the lists are the same length</p>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_System_Collections_Generic_IList__0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The source list can be dense, in which case
+default(T) is used as the common value.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetTo_System_Collections_Generic_IList__0___0_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetTo(System.Collections.Generic.IList{`0},`0)">SetTo(IList&lt;T&gt;, T)</h4>
+  <div class="markdown level1 summary"><p>Copies values from a list which must have the same size as this list,
+using the specified common value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void SetTo(IList&lt;T&gt; dlist, T commonValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T&gt;</td>
+        <td><span class="parametername">dlist</span></td>
+        <td><p>The list to copy from</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">commonValue</span></td>
+        <td><p>Common value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__Func___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``1(Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``0},Func{``0,`0})">SetToFunction&lt;T2&gt;(ISparseEnumerable&lt;T2&gt;, Func&lt;T2, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__System_Func___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``1(Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``0},System.Func{``0,`0})">SetToFunction&lt;T2&gt;(ISparseEnumerable&lt;T2&gt;, Func&lt;T2, T&gt;)</h4>
   <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of a sparse collection</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2046,7 +2007,7 @@ using the specified common value.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;T2, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;T2, T&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The function which maps from type T2 to type T</p>
 </td>
@@ -2083,11 +2044,11 @@ using the specified common value.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__Func___0__0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__System_Func___0__0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Assumes the lists are the same length</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_SparseList___0__Func___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``1(Microsoft.ML.Probabilistic.Collections.SparseList{``0},Func{``0,`0})">SetToFunction&lt;T2&gt;(SparseList&lt;T2&gt;, Func&lt;T2, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_SparseList___0__System_Func___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``1(Microsoft.ML.Probabilistic.Collections.SparseList{``0},System.Func{``0,`0})">SetToFunction&lt;T2&gt;(SparseList&lt;T2&gt;, Func&lt;T2, T&gt;)</h4>
   <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of another sparse list</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2112,7 +2073,7 @@ using the specified common value.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;T2, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;T2, T&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The function which maps from type T2 to type T</p>
 </td>
@@ -2149,11 +2110,226 @@ using the specified common value.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_SparseList___0__Func___0__0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_Microsoft_ML_Probabilistic_Collections_SparseList___0__System_Func___0__0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Assumes the lists are the same length</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__2_IEnumerable___0__IEnumerable___1__Func___0___1__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``2(IEnumerable{``0},IEnumerable{``1},Func{``0,``1,`0})">SetToFunction&lt;T1, T2&gt;(IEnumerable&lt;T1&gt;, IEnumerable&lt;T2&gt;, Func&lt;T1, T2, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_System_Collections_Generic_IEnumerable___0__System_Func___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,`0})">SetToFunction&lt;T2&gt;(IEnumerable&lt;T2&gt;, Func&lt;T2, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of a collection</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T2&gt;(IEnumerable&lt;T2&gt; that, Func&lt;T2, T&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T2&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The other list</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;T2, T&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>The function which maps from type T2 to type T</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__1_System_Collections_Generic_IEnumerable___0__System_Func___0__0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Assumes the lists are the same length</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__2_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__System_Func___0___1__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``2(Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``0},Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``1},System.Func{``0,``1,`0})">SetToFunction&lt;T1, T2&gt;(ISparseEnumerable&lt;T1&gt;, ISparseEnumerable&lt;T2&gt;, Func&lt;T1, T2, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of two other sparse lists</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T1, T2&gt;(ISparseEnumerable&lt;T1&gt; a, ISparseEnumerable&lt;T2&gt; b, Func&lt;T1, T2, T&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable</a>&lt;T1&gt;</td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first list</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable</a>&lt;T2&gt;</td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second list</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;T1, T2, T&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>The function which maps two elements to an element of this list</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__2_Microsoft_ML_Probabilistic_Collections_SparseList___0__Microsoft_ML_Probabilistic_Collections_SparseList___1__System_Func___0___1__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``2(Microsoft.ML.Probabilistic.Collections.SparseList{``0},Microsoft.ML.Probabilistic.Collections.SparseList{``1},System.Func{``0,``1,`0})">SetToFunction&lt;T1, T2&gt;(SparseList&lt;T1&gt;, SparseList&lt;T2&gt;, Func&lt;T1, T2, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of two other sparse lists</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T1, T2&gt;(SparseList&lt;T1&gt; a, SparseList&lt;T2&gt; b, Func&lt;T1, T2, T&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T1&gt;</td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first list</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T2&gt;</td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second list</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;T1, T2, T&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>The function which maps two elements to an element of this list</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__2_Microsoft_ML_Probabilistic_Collections_SparseList___0__Microsoft_ML_Probabilistic_Collections_SparseList___1__System_Func___0___1__0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Assumes the lists are all the same length</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__2_System_Collections_Generic_IEnumerable___0__System_Collections_Generic_IEnumerable___1__System_Func___0___1__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``2(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``1,`0})">SetToFunction&lt;T1, T2&gt;(IEnumerable&lt;T1&gt;, IEnumerable&lt;T2&gt;, Func&lt;T1, T2, T&gt;)</h4>
   <div class="markdown level1 summary"><p>Sets the elements of this list to a function of the elements of two collections</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2172,19 +2348,19 @@ using the specified common value.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T1&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T1&gt;</td>
         <td><span class="parametername">a</span></td>
         <td><p>The first list</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T2&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T2&gt;</td>
         <td><span class="parametername">b</span></td>
         <td><p>The second list</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;T1, T2, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;T1, T2, T&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The function which maps the two elements of the other lists to an element of this list</p>
 </td>
@@ -2225,243 +2401,11 @@ using the specified common value.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__2_IEnumerable___0__IEnumerable___1__Func___0___1__0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__2_System_Collections_Generic_IEnumerable___0__System_Collections_Generic_IEnumerable___1__System_Func___0___1__0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Assumes the lists are the same length</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__2_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__Func___0___1__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``2(Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``0},Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``1},Func{``0,``1,`0})">SetToFunction&lt;T1, T2&gt;(ISparseEnumerable&lt;T1&gt;, ISparseEnumerable&lt;T2&gt;, Func&lt;T1, T2, T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of two other sparse lists</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T1, T2&gt;(ISparseEnumerable&lt;T1&gt; a, ISparseEnumerable&lt;T2&gt; b, Func&lt;T1, T2, T&gt; fun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable</a>&lt;T1&gt;</td>
-        <td><span class="parametername">a</span></td>
-        <td><p>The first list</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable</a>&lt;T2&gt;</td>
-        <td><span class="parametername">b</span></td>
-        <td><p>The second list</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Func</span>&lt;T1, T2, T&gt;</td>
-        <td><span class="parametername">fun</span></td>
-        <td><p>The function which maps two elements to an element of this list</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">T1</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="parametername">T2</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__2_Microsoft_ML_Probabilistic_Collections_SparseList___0__Microsoft_ML_Probabilistic_Collections_SparseList___1__Func___0___1__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``2(Microsoft.ML.Probabilistic.Collections.SparseList{``0},Microsoft.ML.Probabilistic.Collections.SparseList{``1},Func{``0,``1,`0})">SetToFunction&lt;T1, T2&gt;(SparseList&lt;T1&gt;, SparseList&lt;T2&gt;, Func&lt;T1, T2, T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of two other sparse lists</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T1, T2&gt;(SparseList&lt;T1&gt; a, SparseList&lt;T2&gt; b, Func&lt;T1, T2, T&gt; fun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T1&gt;</td>
-        <td><span class="parametername">a</span></td>
-        <td><p>The first list</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T2&gt;</td>
-        <td><span class="parametername">b</span></td>
-        <td><p>The second list</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Func</span>&lt;T1, T2, T&gt;</td>
-        <td><span class="parametername">fun</span></td>
-        <td><p>The function which maps two elements to an element of this list</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">T1</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="parametername">T2</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__2_Microsoft_ML_Probabilistic_Collections_SparseList___0__Microsoft_ML_Probabilistic_Collections_SparseList___1__Func___0___1__0___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Assumes the lists are all the same length</p>
-</div>
-  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__3_IEnumerable___0__IEnumerable___1__IEnumerable___2__Func___0___1___2__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``3(IEnumerable{``0},IEnumerable{``1},IEnumerable{``2},Func{``0,``1,``2,`0})">SetToFunction&lt;T1, T2, T3&gt;(IEnumerable&lt;T1&gt;, IEnumerable&lt;T2&gt;, IEnumerable&lt;T3&gt;, Func&lt;T1, T2, T3, T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of three sparse collections</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T1, T2, T3&gt;(IEnumerable&lt;T1&gt; a, IEnumerable&lt;T2&gt; b, IEnumerable&lt;T3&gt; c, Func&lt;T1, T2, T3, T&gt; fun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T1&gt;</td>
-        <td><span class="parametername">a</span></td>
-        <td><p>The first collection</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T2&gt;</td>
-        <td><span class="parametername">b</span></td>
-        <td><p>The second collection</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T3&gt;</td>
-        <td><span class="parametername">c</span></td>
-        <td><p>The third collection</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Func</span>&lt;T1, T2, T3, T&gt;</td>
-        <td><span class="parametername">fun</span></td>
-        <td><p>The function which maps three elements to an element of this list</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">T1</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="parametername">T2</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="parametername">T3</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__3_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___2__Func___0___1___2__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``3(Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``0},Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``1},Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``2},Func{``0,``1,``2,`0})">SetToFunction&lt;T1, T2, T3&gt;(ISparseEnumerable&lt;T1&gt;, ISparseEnumerable&lt;T2&gt;, ISparseEnumerable&lt;T3&gt;, Func&lt;T1, T2, T3, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__3_Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___0__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___1__Microsoft_ML_Probabilistic_Collections_ISparseEnumerable___2__System_Func___0___1___2__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``3(Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``0},Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``1},Microsoft.ML.Probabilistic.Collections.ISparseEnumerable{``2},System.Func{``0,``1,``2,`0})">SetToFunction&lt;T1, T2, T3&gt;(ISparseEnumerable&lt;T1&gt;, ISparseEnumerable&lt;T2&gt;, ISparseEnumerable&lt;T3&gt;, Func&lt;T1, T2, T3, T&gt;)</h4>
   <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of three sparse collections</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2498,7 +2442,7 @@ using the specified common value.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;T1, T2, T3, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;T1, T2, T3, T&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The function which maps three elements to an element of this list</p>
 </td>
@@ -2544,13 +2488,13 @@ using the specified common value.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__4_IEnumerable___0__IEnumerable___1__IEnumerable___2__IEnumerable___3__Func___0___1___2___3__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``4(IEnumerable{``0},IEnumerable{``1},IEnumerable{``2},IEnumerable{``3},Func{``0,``1,``2,``3,`0})">SetToFunction&lt;T1, T2, T3, T4&gt;(IEnumerable&lt;T1&gt;, IEnumerable&lt;T2&gt;, IEnumerable&lt;T3&gt;, IEnumerable&lt;T4&gt;, Func&lt;T1, T2, T3, T4, T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of four sparse collections</p>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__3_System_Collections_Generic_IEnumerable___0__System_Collections_Generic_IEnumerable___1__System_Collections_Generic_IEnumerable___2__System_Func___0___1___2__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``3(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Collections.Generic.IEnumerable{``2},System.Func{``0,``1,``2,`0})">SetToFunction&lt;T1, T2, T3&gt;(IEnumerable&lt;T1&gt;, IEnumerable&lt;T2&gt;, IEnumerable&lt;T3&gt;, Func&lt;T1, T2, T3, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of three sparse collections</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T1, T2, T3, T4&gt;(IEnumerable&lt;T1&gt; a, IEnumerable&lt;T2&gt; b, IEnumerable&lt;T3&gt; c, IEnumerable&lt;T4&gt; d, Func&lt;T1, T2, T3, T4, T&gt; fun)</code></pre>
+    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T1, T2, T3&gt;(IEnumerable&lt;T1&gt; a, IEnumerable&lt;T2&gt; b, IEnumerable&lt;T3&gt; c, Func&lt;T1, T2, T3, T&gt; fun)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2563,31 +2507,114 @@ using the specified common value.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T1&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T1&gt;</td>
         <td><span class="parametername">a</span></td>
         <td><p>The first collection</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T2&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T2&gt;</td>
         <td><span class="parametername">b</span></td>
         <td><p>The second collection</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T3&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T3&gt;</td>
         <td><span class="parametername">c</span></td>
         <td><p>The third collection</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T4&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;T1, T2, T3, T&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>The function which maps three elements to an element of this list</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.SparseList-1.html">SparseList</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__4_Microsoft_ML_Probabilistic_Collections_ISparseList___0__Microsoft_ML_Probabilistic_Collections_ISparseList___1__Microsoft_ML_Probabilistic_Collections_ISparseList___2__Microsoft_ML_Probabilistic_Collections_ISparseList___3__System_Func___0___1___2___3__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``4(Microsoft.ML.Probabilistic.Collections.ISparseList{``0},Microsoft.ML.Probabilistic.Collections.ISparseList{``1},Microsoft.ML.Probabilistic.Collections.ISparseList{``2},Microsoft.ML.Probabilistic.Collections.ISparseList{``3},System.Func{``0,``1,``2,``3,`0})">SetToFunction&lt;T1, T2, T3, T4&gt;(ISparseList&lt;T1&gt;, ISparseList&lt;T2&gt;, ISparseList&lt;T3&gt;, ISparseList&lt;T4&gt;, Func&lt;T1, T2, T3, T4, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of three other collections</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T1, T2, T3, T4&gt;(ISparseList&lt;T1&gt; a, ISparseList&lt;T2&gt; b, ISparseList&lt;T3&gt; c, ISparseList&lt;T4&gt; d, Func&lt;T1, T2, T3, T4, T&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;T1&gt;</td>
+        <td><span class="parametername">a</span></td>
+        <td><p>The first collection</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;T2&gt;</td>
+        <td><span class="parametername">b</span></td>
+        <td><p>The second collection</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;T3&gt;</td>
+        <td><span class="parametername">c</span></td>
+        <td><p>The third collection</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;T4&gt;</td>
         <td><span class="parametername">d</span></td>
         <td><p>The fourth collection</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;T1, T2, T3, T4, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-5">Func</a>&lt;T1, T2, T3, T4, T&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The function which maps four elements to an element of this list</p>
 </td>
@@ -2637,13 +2664,13 @@ using the specified common value.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__4_Microsoft_ML_Probabilistic_Collections_ISparseList___0__Microsoft_ML_Probabilistic_Collections_ISparseList___1__Microsoft_ML_Probabilistic_Collections_ISparseList___2__Microsoft_ML_Probabilistic_Collections_ISparseList___3__Func___0___1___2___3__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``4(Microsoft.ML.Probabilistic.Collections.ISparseList{``0},Microsoft.ML.Probabilistic.Collections.ISparseList{``1},Microsoft.ML.Probabilistic.Collections.ISparseList{``2},Microsoft.ML.Probabilistic.Collections.ISparseList{``3},Func{``0,``1,``2,``3,`0})">SetToFunction&lt;T1, T2, T3, T4&gt;(ISparseList&lt;T1&gt;, ISparseList&lt;T2&gt;, ISparseList&lt;T3&gt;, ISparseList&lt;T4&gt;, Func&lt;T1, T2, T3, T4, T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of three other collections</p>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunction__4_System_Collections_Generic_IEnumerable___0__System_Collections_Generic_IEnumerable___1__System_Collections_Generic_IEnumerable___2__System_Collections_Generic_IEnumerable___3__System_Func___0___1___2___3__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunction``4(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Collections.Generic.IEnumerable{``2},System.Collections.Generic.IEnumerable{``3},System.Func{``0,``1,``2,``3,`0})">SetToFunction&lt;T1, T2, T3, T4&gt;(IEnumerable&lt;T1&gt;, IEnumerable&lt;T2&gt;, IEnumerable&lt;T3&gt;, IEnumerable&lt;T4&gt;, Func&lt;T1, T2, T3, T4, T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of four sparse collections</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T1, T2, T3, T4&gt;(ISparseList&lt;T1&gt; a, ISparseList&lt;T2&gt; b, ISparseList&lt;T3&gt; c, ISparseList&lt;T4&gt; d, Func&lt;T1, T2, T3, T4, T&gt; fun)</code></pre>
+    <pre><code class="lang-csharp hljs">public SparseList&lt;T&gt; SetToFunction&lt;T1, T2, T3, T4&gt;(IEnumerable&lt;T1&gt; a, IEnumerable&lt;T2&gt; b, IEnumerable&lt;T3&gt; c, IEnumerable&lt;T4&gt; d, Func&lt;T1, T2, T3, T4, T&gt; fun)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2656,31 +2683,31 @@ using the specified common value.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;T1&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T1&gt;</td>
         <td><span class="parametername">a</span></td>
         <td><p>The first collection</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;T2&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T2&gt;</td>
         <td><span class="parametername">b</span></td>
         <td><p>The second collection</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;T3&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T3&gt;</td>
         <td><span class="parametername">c</span></td>
         <td><p>The third collection</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList</a>&lt;T4&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T4&gt;</td>
         <td><span class="parametername">d</span></td>
         <td><p>The fourth collection</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;T1, T2, T3, T4, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-5">Func</a>&lt;T1, T2, T3, T4, T&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The function which maps four elements to an element of this list</p>
 </td>
@@ -2730,7 +2757,7 @@ using the specified common value.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunctionInPlace_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunctionInPlace*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunctionInPlace__1_Microsoft_ML_Probabilistic_Collections_SparseList___0__Func__0___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunctionInPlace``1(Microsoft.ML.Probabilistic.Collections.SparseList{``0},Func{`0,``0,`0})">SetToFunctionInPlace&lt;T1&gt;(SparseList&lt;T1&gt;, Func&lt;T, T1, T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunctionInPlace__1_Microsoft_ML_Probabilistic_Collections_SparseList___0__System_Func__0___0__0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.SetToFunctionInPlace``1(Microsoft.ML.Probabilistic.Collections.SparseList{``0},System.Func{`0,``0,`0})">SetToFunctionInPlace&lt;T1&gt;(SparseList&lt;T1&gt;, Func&lt;T, T1, T&gt;)</h4>
   <div class="markdown level1 summary"><p>Sets the elements of this sparse list to a function of the elements of this sparse list and another sparse list
 x = fun(x,b)</p>
 </div>
@@ -2756,7 +2783,7 @@ x = fun(x,b)</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;T, T1, T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;T, T1, T&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The function which maps (T,T1) to T</p>
 </td>
@@ -2793,7 +2820,7 @@ x = fun(x,b)</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunctionInPlace__1_Microsoft_ML_Probabilistic_Collections_SparseList___0__Func__0___0__0___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_SetToFunctionInPlace__1_Microsoft_ML_Probabilistic_Collections_SparseList___0__System_Func__0___0__0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Assumes the lists are the same length</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_ToArray_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.ToArray*"></a>
@@ -2821,7 +2848,7 @@ x = fun(x,b)</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_ToArray_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.ToArray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_ToArray__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.ToArray``1(IList{``0})">ToArray&lt;T2&gt;(IList&lt;T2&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_ToArray__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.ToArray``1(System.Collections.Generic.IList{``0})">ToArray&lt;T2&gt;(IList&lt;T2&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates an array from the list</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2840,7 +2867,7 @@ x = fun(x,b)</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;T2&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;T2&gt;</td>
         <td><span class="parametername">that</span></td>
         <td></td>
       </tr>
@@ -2895,7 +2922,7 @@ x = fun(x,b)</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;T&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -2924,6 +2951,8 @@ x = fun(x,b)</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_ToString_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_ToString_System_String_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.ToString(System.String)">ToString(String)</h4>
   <div class="markdown level1 summary"><p>String representation of this list with a specified delimiter</p>
@@ -2965,24 +2994,491 @@ x = fun(x,b)</p>
       </tr>
     </tbody>
   </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_ICollection_CopyTo_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#ICollection#CopyTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_ICollection_CopyTo_System_Array_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">ICollection.CopyTo(Array, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ICollection.CopyTo(Array array, int index)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.array">Array</a></td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_ICollection_IsSynchronized_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#ICollection#IsSynchronized*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_ICollection_IsSynchronized" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#ICollection#IsSynchronized">ICollection.IsSynchronized</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool ICollection.IsSynchronized { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_ICollection_SyncRoot_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#ICollection#SyncRoot*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_ICollection_SyncRoot" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#ICollection#SyncRoot">ICollection.SyncRoot</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object ICollection.SyncRoot { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IEnumerable_GetEnumerator_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IEnumerable#GetEnumerator*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IEnumerable_GetEnumerator" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
+  <div class="markdown level1 summary"><p>Gets an enumerator which yields the list elements</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerator IEnumerable.GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerator">IEnumerator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_Add_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#Add*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_Add_System_Object_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#Add(System.Object)">IList.Add(Object)</h4>
+  <div class="markdown level1 summary"><p>Not implemented</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int IList.Add(object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_Contains_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#Contains*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_Contains_System_Object_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#Contains(System.Object)">IList.Contains(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IList.Contains(object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_IndexOf_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#IndexOf*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_IndexOf_System_Object_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#IndexOf(System.Object)">IList.IndexOf(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int IList.IndexOf(object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_Insert_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#Insert*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_Insert_System_Int32_System_Object_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#Insert(System.Int32,System.Object)">IList.Insert(Int32, Object)</h4>
+  <div class="markdown level1 summary"><p>Not implemented</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void IList.Insert(int index, object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_IsFixedSize_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#IsFixedSize*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_IsFixedSize" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#IsFixedSize">IList.IsFixedSize</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IList.IsFixedSize { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_Item_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#Item*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_Item_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#Item(System.Int32)">IList.Item[Int32]</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object IList.this[int index] { get; set; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">index</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_Remove_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#Remove*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_Collections_IList_Remove_System_Object_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#Collections#IList#Remove(System.Object)">IList.Remove(Object)</h4>
+  <div class="markdown level1 summary"><p>Not implemented</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void IList.Remove(object value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_ICloneable_Clone_" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#ICloneable#Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Collections_SparseList_1_System_ICloneable_Clone" data-uid="Microsoft.ML.Probabilistic.Collections.SparseList`1.System#ICloneable#Clone">ICloneable.Clone()</h4>
+  <div class="markdown level1 summary"><p>Clones this list - return as an object</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object ICloneable.Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">IList&lt;&gt;</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">System.Collections.Generic.IList&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">System.Collections.Generic.ICollection&lt;T&gt;</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseEnumerable-1.html">ISparseEnumerable&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">IEnumerable&lt;&gt;</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">System.Collections.Generic.IEnumerable&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">IList</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ilist">System.Collections.IList</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.icollection">System.Collections.ICollection</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">System.Collections.IEnumerable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_IEnumerable_System_Action___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action_System_Int32___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;Int32, T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_IEnumerable_System_Action_System_Int32___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable, Action&lt;Int32, T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Sum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_UInt32__">EnumerableExtensions.Sum&lt;TSource&gt;(IEnumerable&lt;TSource&gt;, Func&lt;TSource, UInt32&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Sum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_UInt64__">EnumerableExtensions.Sum&lt;TSource&gt;(IEnumerable&lt;TSource&gt;, Func&lt;TSource, UInt64&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ValueEquals__1_System_Collections_Generic_IEnumerable___0__System_Collections_Generic_IEnumerable___0__">EnumerableExtensions.ValueEquals&lt;T&gt;(IEnumerable&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOf__1_System_Collections_Generic_IEnumerable___0____0_">EnumerableExtensions.IndexOf&lt;T&gt;(IEnumerable&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOf__1_System_Collections_IEnumerable___0_">EnumerableExtensions.IndexOf&lt;T&gt;(IEnumerable, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindIndex__1_System_Collections_Generic_IEnumerable___0__System_Predicate___0__">EnumerableExtensions.FindIndex&lt;T&gt;(IEnumerable&lt;T&gt;, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindIndex__1_System_Collections_IEnumerable_System_Predicate___0__">EnumerableExtensions.FindIndex&lt;T&gt;(IEnumerable, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindAllIndex__1_System_Collections_Generic_IEnumerable___0__System_Predicate___0__">EnumerableExtensions.FindAllIndex&lt;T&gt;(IEnumerable&lt;T&gt;, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOfAll__1_System_Collections_Generic_IEnumerable___0____0_">EnumerableExtensions.IndexOfAll&lt;T&gt;(IEnumerable&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Skip__1_System_Collections_Generic_IEnumerable___0__System_Int32_System_Collections_Generic_List___0___">EnumerableExtensions.Skip&lt;T&gt;(IEnumerable&lt;T&gt;, Int32, out List&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_CopyTo__1_System_Collections_Generic_IEnumerable___0____0___System_Int32_">EnumerableExtensions.CopyTo&lt;T&gt;(IEnumerable&lt;T&gt;, T[], Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ToReadOnlyList__1_System_Collections_Generic_IEnumerable___0__">EnumerableExtensions.ToReadOnlyList&lt;T&gt;(IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_AddRange__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.AddRange&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_ContainsAll__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.ContainsAll&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_ContainsAny__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.ContainsAny&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableReduce__2_System_Collections_Generic_IEnumerable___0____1_System_Func___1___0___1__System_Func___1___0_System_Int32___1__">IEnumerableExensions.EnumerableReduce&lt;T, TRes&gt;(IEnumerable&lt;T&gt;, TRes, Func&lt;TRes, T, TRes&gt;, Func&lt;TRes, T, Int32, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableSum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_Double__">IEnumerableExensions.EnumerableSum&lt;T&gt;(IEnumerable&lt;T&gt;, Func&lt;T, Double&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__3_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___1__System_Func___0___1___2__">IEnumerableExensions.ListZip&lt;TFirst, TSecond, TResult&gt;(IList&lt;TFirst&gt;, IEnumerable&lt;TSecond&gt;, Func&lt;TFirst, TSecond, TResult&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__4_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___1__System_Collections_Generic_IEnumerable___2__System_Func___0___1___2___3__">IEnumerableExensions.ListZip&lt;TFirst, TSecond, TThird, TResult&gt;(IList&lt;TFirst&gt;, IEnumerable&lt;TSecond&gt;, IEnumerable&lt;TThird&gt;, Func&lt;TFirst, TSecond, TThird, TResult&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__5_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList___2__System_Collections_Generic_IList___3__System_Func___0___1___2___3___4__">IEnumerableExensions.ListZip&lt;TFirst, TSecond, TThird, TFourth, TResult&gt;(IList&lt;TFirst&gt;, IList&lt;TSecond&gt;, IList&lt;TThird&gt;, IList&lt;TFourth&gt;, Func&lt;TFirst, TSecond, TThird, TFourth, TResult&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_IsSparse__1_System_Collections_Generic_IList___0__">IListExtensions.IsSparse&lt;T&gt;(IList&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_ListSelect__2_System_Collections_Generic_IList___0__System_Func___0___1__">IListExtensions.ListSelect&lt;T, T2&gt;(IList&lt;T&gt;, Func&lt;T, T2&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_ListReduce__2_System_Collections_Generic_IList___0____1_System_Func___1___0___1__">IListExtensions.ListReduce&lt;T, TRes&gt;(IList&lt;T&gt;, TRes, Func&lt;TRes, T, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_ListReduce__3_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___1____2_System_Func___2___0___1___2__">IListExtensions.ListReduce&lt;T, T2, TRes&gt;(IList&lt;T&gt;, IEnumerable&lt;T2&gt;, TRes, Func&lt;TRes, T, T2, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_SetTo__1_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___0__">IListExtensions.SetTo&lt;T&gt;(IList&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_AsReadOnly__1_System_Collections_Generic_IList___0__">IListExtensions.AsReadOnly&lt;T&gt;(IList&lt;T&gt;)</a>
   </div>
 </article>
           </div>

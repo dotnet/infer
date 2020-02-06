@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace Microsoft.ML.Probabilistic.Collections
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -135,9 +135,6 @@
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.FuncExtensions.html">FuncExtensions</a></h4>
       <section><p>Provides extension methods for Func that support collection and sparse collections</p>
 </section>
-      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.HashedList-1.html">HashedList&lt;T&gt;</a></h4>
-      <section><p>Hash-indexed list.</p>
-</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html">IEnumerableExensions</a></h4>
       <section><p>Provides extension methods for IEnumerable that support sparse collections.</p>
 </section>
@@ -156,6 +153,9 @@
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ListComparer-1.html">ListComparer&lt;T&gt;</a></h4>
       <section><p>An equality comparer for IList that requires elements at the same index to match</p>
 </section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option.html">Option</a></h4>
+      <section><p>Helper static class with constructor methods for <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option&lt;T&gt;</a>.</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair.html">Pair</a></h4>
       <section><p>Represents a pair of elements.</p>
 </section>
@@ -166,7 +166,7 @@
       <section><p>A collection that provides efficient extraction of the minimum element.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyList-1.html">ReadOnlyList&lt;T&gt;</a></h4>
-      <section><p>A faster alternative to <see cref="!:ReadOnlyCollection&lt;T>"></see>
+      <section><p>A faster alternative to <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.objectmodel.readonlycollection-1">ReadOnlyCollection&lt;T&gt;</a>
 which allows calls to the underlying list to be inlined.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyWrapper-1.html">ReadOnlyWrapper&lt;T&gt;</a></h4>
@@ -182,9 +182,25 @@ which allows calls to the underlying list to be inlined.</p>
 </section>
     <h3 id="structs">Structs
   </h3>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option.NoneType.html">Option.NoneType</a></h4>
+      <section><p>Helper class to represent &quot;any absent value&quot; which can be converted
+into any <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option&lt;T&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option&lt;T&gt;</a></h4>
+      <section><p>Represents a value type that can be absent</p>
+</section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair&lt;T1, T2&gt;</a></h4>
       <section><p>Represent a pair of elements.
-Should be used instead of <see cref="!:Tuple&lt;T1,T2>"></see> when a value type is preferred, e.g. for performance reasons.</p>
+Should be used instead of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.tuple-2">Tuple&lt;T1,T2&gt;</a> when a value type is preferred, e.g. for performance reasons.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray&lt;T&gt;</a></h4>
+      <section><p>Represents a read only array.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArraySegment-1.html">ReadOnlyArraySegment&lt;T&gt;</a></h4>
+      <section><p>A version if <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.arraysegment-1">ArraySegment&lt;T&gt;</a> which can not be mutated.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArraySegmentEnumerator-1.html">ReadOnlyArraySegmentEnumerator&lt;T&gt;</a></h4>
+      <section><p>Enumerator for read only arrays and read only array segments.</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Set-1.EmptyStruct.html">Set&lt;T&gt;.EmptyStruct</a></h4>
       <section></section>
@@ -220,7 +236,7 @@ Should be used instead of <see cref="!:Tuple&lt;T1,T2>"></see> when a value type
       <section><p>Contract for sparse enumeration</p>
 </section>
       <h4><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ISparseList-1.html">ISparseList&lt;T&gt;</a></h4>
-      <section><p>Exposes sparse lists. Inherits from <see cref="!:IList&lt;T>"></see></p>
+      <section><p>Exposes sparse lists. Inherits from <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList&lt;T&gt;</a></p>
 </section>
     <h3 id="delegates">Delegates
   </h3>

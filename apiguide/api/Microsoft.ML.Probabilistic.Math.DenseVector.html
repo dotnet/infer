@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DenseVector
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -94,14 +94,19 @@
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.CanSetAllElementsTo-1.html">CanSetAllElementsTo</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToPower-1.html">SettableToPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursor.html">ICursor</a></div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
@@ -134,16 +139,34 @@
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FromArray_System_Double___Microsoft_ML_Probabilistic_Math_Sparsity_">Vector.FromArray(Double[], Sparsity)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FromList_IList_System_Double__">Vector.FromList(IList&lt;Double&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FromList_System_Collections_Generic_IList_System_Double__">Vector.FromList(IList&lt;Double&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FromArray_System_Int32_System_Double___System_Int32_Microsoft_ML_Probabilistic_Math_Sparsity_">Vector.FromArray(Int32, Double[], Int32, Sparsity)</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_System_Collections_Generic_IList_System_Double__Insert_System_Int32_System_Double_">Vector.IList&lt;Double&gt;.Insert(Int32, Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_System_Collections_Generic_IList_System_Double__RemoveAt_System_Int32_">Vector.IList&lt;Double&gt;.RemoveAt(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_System_Collections_Generic_ICollection_System_Double__Add_System_Double_">Vector.ICollection&lt;Double&gt;.Add(Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_System_Collections_Generic_ICollection_System_Double__Clear">Vector.ICollection&lt;Double&gt;.Clear()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_System_Collections_Generic_ICollection_System_Double__Remove_System_Double_">Vector.ICollection&lt;Double&gt;.Remove(Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_System_Collections_IEnumerable_GetEnumerator">Vector.IEnumerable.GetEnumerator()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_CheckCompatible_Microsoft_ML_Probabilistic_Math_Vector_System_String_">Vector.CheckCompatible(Vector, String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_IndexOfAll_Converter_System_Double_System_Boolean__">Vector.IndexOfAll(Converter&lt;Double, Boolean&gt;)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_IndexOfAll_System_Converter_System_Double_System_Boolean__">Vector.IndexOfAll(Converter&lt;Double, Boolean&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_InnerProduct_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">Vector.InnerProduct(Vector, Vector)</a>
@@ -163,12 +186,26 @@
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_ToString">Vector.ToString()</a>
     </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Math.html">Microsoft.ML.Probabilistic.Math</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Math_DenseVector_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class DenseVector : Vector, IReadOnlyList&lt;double&gt;, CanSetAllElementsTo&lt;double&gt;, SettableToPower&lt;Vector&gt;, SettableToProduct&lt;Vector&gt;, SettableToProduct&lt;Vector, Vector&gt;, SettableToWeightedSum&lt;Vector&gt;, ICursor, ICloneable, SettableTo&lt;Vector&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+public class DenseVector : Vector, IList&lt;double&gt;, ICollection&lt;double&gt;, IReadOnlyList&lt;double&gt;, IReadOnlyCollection&lt;double&gt;, IEnumerable&lt;double&gt;, IEnumerable, CanSetAllElementsTo&lt;double&gt;, SettableToPower&lt;Vector&gt;, SettableToProduct&lt;Vector&gt;, SettableToProduct&lt;Vector, Vector&gt;, SettableToWeightedSum&lt;Vector&gt;, ICursor, ICloneable, SettableTo&lt;Vector&gt;</code></pre>
   </div>
   <h3 id="fields">Fields
   </h3>
@@ -177,7 +214,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected readonly int count</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+protected readonly int count</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -199,7 +237,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected double[] data</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+protected double[] data</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -221,7 +260,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected int start</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+protected int start</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -342,7 +382,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double[] SourceArray { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public double[] SourceArray { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -366,7 +407,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Start { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public int Start { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -386,7 +428,7 @@
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_All_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.All*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_All_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.All(Converter{System.Double,System.Boolean})">All(Converter&lt;Double, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_All_System_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.All(System.Converter{System.Double,System.Boolean})">All(Converter&lt;Double, Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Tests if all elements in the vector satisfy the specified condition.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -405,7 +447,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td></td>
       </tr>
@@ -427,52 +469,9 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_All_Converter_System_Double_System_Boolean__">Vector.All(Converter&lt;Double, Boolean&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_All_System_Converter_System_Double_System_Boolean__">Vector.All(Converter&lt;Double, Boolean&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Any_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Any*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Any_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Any(Converter{System.Double,System.Boolean})">Any(Converter&lt;Double, Boolean&gt;)</h4>
-  <div class="markdown level1 summary"><p>Tests if any elements in the vector satisfy the specified condition.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override bool Any(Converter&lt;double, bool&gt; fun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
-        <td><span class="parametername">fun</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Any_Converter_System_Double_System_Boolean__">Vector.Any(Converter&lt;Double, Boolean&gt;)</a></div>
-  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Any_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Any*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Any_Microsoft_ML_Probabilistic_Math_DenseVector_Func_System_Double_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Any(Microsoft.ML.Probabilistic.Math.DenseVector,Func{System.Double,System.Double,System.Boolean})">Any(DenseVector, Func&lt;Double, Double, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Any_Microsoft_ML_Probabilistic_Math_DenseVector_System_Func_System_Double_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Any(Microsoft.ML.Probabilistic.Math.DenseVector,System.Func{System.Double,System.Double,System.Boolean})">Any(DenseVector, Func&lt;Double, Double, Boolean&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -495,7 +494,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td></td>
       </tr>
@@ -517,7 +516,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Any_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Any*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Any_Microsoft_ML_Probabilistic_Math_Vector_Func_System_Double_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Any(Microsoft.ML.Probabilistic.Math.Vector,Func{System.Double,System.Double,System.Boolean})">Any(Vector, Func&lt;Double, Double, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Any_Microsoft_ML_Probabilistic_Math_Vector_System_Func_System_Double_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Any(Microsoft.ML.Probabilistic.Math.Vector,System.Func{System.Double,System.Double,System.Boolean})">Any(Vector, Func&lt;Double, Double, Boolean&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -540,7 +539,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td></td>
       </tr>
@@ -562,7 +561,50 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Any_Microsoft_ML_Probabilistic_Math_Vector_Func_System_Double_System_Double_System_Boolean__">Vector.Any(Vector, Func&lt;Double, Double, Boolean&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Any_Microsoft_ML_Probabilistic_Math_Vector_System_Func_System_Double_System_Double_System_Boolean__">Vector.Any(Vector, Func&lt;Double, Double, Boolean&gt;)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Any_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Any*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Any_System_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Any(System.Converter{System.Double,System.Boolean})">Any(Converter&lt;Double, Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Tests if any elements in the vector satisfy the specified condition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Any(Converter&lt;double, bool&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Any_System_Converter_System_Double_System_Boolean__">Vector.Any(Converter&lt;Double, Boolean&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Append_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Append*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Append_Microsoft_ML_Probabilistic_Math_DenseVector_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Append(Microsoft.ML.Probabilistic.Math.DenseVector)">Append(DenseVector)</h4>
   <div class="markdown level1 summary"><p>Returns a new vector which appends a second dense vector to this dense vector</p>
@@ -889,7 +931,7 @@ in the target array</p>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_CopyTo_System_Double___System_Int32_">Vector.CopyTo(Double[], Int32)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_CountAll_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.CountAll*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_CountAll_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.CountAll(Converter{System.Double,System.Boolean})">CountAll(Converter&lt;Double, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_CountAll_System_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.CountAll(System.Converter{System.Double,System.Boolean})">CountAll(Converter&lt;Double, Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns the number of elements in the vector which satisfy a given condition.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -908,7 +950,7 @@ in the target array</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The condition for the elements to satisfy.</p>
 </td>
@@ -932,7 +974,7 @@ in the target array</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_CountAll_Converter_System_Double_System_Boolean__">Vector.CountAll(Converter&lt;Double, Boolean&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_CountAll_System_Converter_System_Double_System_Boolean__">Vector.CountAll(Converter&lt;Double, Boolean&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_CreateSourceArray_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.CreateSourceArray*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_CreateSourceArray_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.CreateSourceArray(System.Int32)">CreateSourceArray(Int32)</h4>
   <div class="markdown level1 summary"><p>Creates a source array with a given number of records</p>
@@ -1050,7 +1092,7 @@ in the target array</p>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_EqualsAll_System_Double_">Vector.EqualsAll(Double)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_FindAll_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FindAll*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_FindAll_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FindAll(Converter{System.Double,System.Boolean})">FindAll(Converter&lt;Double, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_FindAll_System_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FindAll(System.Converter{System.Double,System.Boolean})">FindAll(Converter&lt;Double, Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns an enumeration over the indices and values of all the elements which satisfy the specified condition.
 Indices are returned in sorted order.</p>
 </div>
@@ -1070,7 +1112,7 @@ Indices are returned in sorted order.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>A function to check if the condition is satisfied.</p>
 </td>
@@ -1087,16 +1129,16 @@ Indices are returned in sorted order.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ValueAtIndex-1.html">ValueAtIndex</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.ValueAtIndex-1.html">ValueAtIndex</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><p>An enumeration over the indices and values of all the elements which satisfy the specified condition.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FindAll_Converter_System_Double_System_Boolean__">Vector.FindAll(Converter&lt;Double, Boolean&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FindAll_System_Converter_System_Double_System_Boolean__">Vector.FindAll(Converter&lt;Double, Boolean&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_FindFirstIndex_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FindFirstIndex*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_FindFirstIndex_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FindFirstIndex(Converter{System.Double,System.Boolean})">FindFirstIndex(Converter&lt;Double, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_FindFirstIndex_System_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FindFirstIndex(System.Converter{System.Double,System.Boolean})">FindFirstIndex(Converter&lt;Double, Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns the index of the first element that satisfies a given condition.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1115,7 +1157,7 @@ Indices are returned in sorted order.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The condition for the element to satisfy.</p>
 </td>
@@ -1139,9 +1181,9 @@ Indices are returned in sorted order.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FindFirstIndex_Converter_System_Double_System_Boolean__">Vector.FindFirstIndex(Converter&lt;Double, Boolean&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FindFirstIndex_System_Converter_System_Double_System_Boolean__">Vector.FindFirstIndex(Converter&lt;Double, Boolean&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_FindLastIndex_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FindLastIndex*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_FindLastIndex_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FindLastIndex(Converter{System.Double,System.Boolean})">FindLastIndex(Converter&lt;Double, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_FindLastIndex_System_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FindLastIndex(System.Converter{System.Double,System.Boolean})">FindLastIndex(Converter&lt;Double, Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns the index of the last element that satisfies a given condition.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1160,7 +1202,7 @@ Indices are returned in sorted order.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The condition for the element to satisfy.</p>
 </td>
@@ -1184,7 +1226,7 @@ Indices are returned in sorted order.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FindLastIndex_Converter_System_Double_System_Boolean__">Vector.FindLastIndex(Converter&lt;Double, Boolean&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_FindLastIndex_System_Converter_System_Double_System_Boolean__">Vector.FindLastIndex(Converter&lt;Double, Boolean&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_FromArray_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FromArray*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_FromArray_System_Double___" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.FromArray(System.Double[])">FromArray(Double[])</h4>
   <div class="markdown level1 summary"><p>Constructs a dense vector from an array.</p>
@@ -1192,7 +1234,8 @@ Indices are returned in sorted order.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DenseVector FromArray(params double[] data)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;ToArray&quot;})]
+public static DenseVector FromArray(params double[] data)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1373,7 +1416,7 @@ Throws an exception if Data is null, start &lt; 0, or count &lt; 0.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1">IEnumerator</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -1821,118 +1864,6 @@ Returns -1 if the value is not in the array</p>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_IndexOfMinimum">Vector.IndexOfMinimum()</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_DenseVector_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner(Converter{System.Double,System.Double},Microsoft.ML.Probabilistic.Math.DenseVector,Converter{System.Double,System.Double})">Inner(Converter&lt;Double, Double&gt;, DenseVector, Converter&lt;Double, Double&gt;)</h4>
-  <div class="markdown level1 summary"><p>Returns the inner product of a function of this dense vector with a function of a second dense vector.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Inner(Converter&lt;double, double&gt; thisFun, DenseVector that, Converter&lt;double, double&gt; thatFun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">thisFun</span></td>
-        <td><p>Function to convert the elements of this vector</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
-        <td><span class="parametername">that</span></td>
-        <td><p>Second vector, which must have the same size as <code>this</code>.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">thatFun</span></td>
-        <td><p>Function to convert the elements of that vector</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Their inner product.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner(Converter{System.Double,System.Double},Microsoft.ML.Probabilistic.Math.Vector,Converter{System.Double,System.Double})">Inner(Converter&lt;Double, Double&gt;, Vector, Converter&lt;Double, Double&gt;)</h4>
-  <div class="markdown level1 summary"><p>Returns the inner product of a function of this vector with a function of a second vector.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override double Inner(Converter&lt;double, double&gt; thisFun, Vector that, Converter&lt;double, double&gt; thatFun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">thisFun</span></td>
-        <td><p>Function to convert the elements of this vector</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
-        <td><span class="parametername">that</span></td>
-        <td><p>Second vector, which must have the same size as <code>this</code>.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">thatFun</span></td>
-        <td><p>Function to convert the elements of that vector</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><p>Their inner product.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Inner_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Converter_System_Double_System_Double__">Vector.Inner(Converter&lt;Double, Double&gt;, Vector, Converter&lt;Double, Double&gt;)</a></div>
-  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_Microsoft_ML_Probabilistic_Math_DenseVector_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner(Microsoft.ML.Probabilistic.Math.DenseVector)">Inner(DenseVector)</h4>
   <div class="markdown level1 summary"><p>Returns the inner product of this dense vector with another dense vector.</p>
 </div>
@@ -1976,7 +1907,7 @@ Returns -1 if the value is not in the array</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_Microsoft_ML_Probabilistic_Math_DenseVector_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner(Microsoft.ML.Probabilistic.Math.DenseVector,Converter{System.Double,System.Double})">Inner(DenseVector, Converter&lt;Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_Microsoft_ML_Probabilistic_Math_DenseVector_System_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner(Microsoft.ML.Probabilistic.Math.DenseVector,System.Converter{System.Double,System.Double})">Inner(DenseVector, Converter&lt;Double, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns the inner product of this dense vector with a function of a second dense vector.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2001,7 +1932,7 @@ Returns -1 if the value is not in the array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Function to convert the elements of the second vector</p>
 </td>
@@ -2070,7 +2001,7 @@ Returns -1 if the value is not in the array</p>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Inner_Microsoft_ML_Probabilistic_Math_Vector_">Vector.Inner(Vector)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_Microsoft_ML_Probabilistic_Math_Vector_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner(Microsoft.ML.Probabilistic.Math.Vector,Converter{System.Double,System.Double})">Inner(Vector, Converter&lt;Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_Microsoft_ML_Probabilistic_Math_Vector_System_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner(Microsoft.ML.Probabilistic.Math.Vector,System.Converter{System.Double,System.Double})">Inner(Vector, Converter&lt;Double, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns the inner product of this vector with a function of a second vector.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2095,7 +2026,7 @@ Returns -1 if the value is not in the array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Function to convert the elements of the second vector</p>
 </td>
@@ -2119,7 +2050,119 @@ Returns -1 if the value is not in the array</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Inner_Microsoft_ML_Probabilistic_Math_Vector_Converter_System_Double_System_Double__">Vector.Inner(Vector, Converter&lt;Double, Double&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Inner_Microsoft_ML_Probabilistic_Math_Vector_System_Converter_System_Double_System_Double__">Vector.Inner(Vector, Converter&lt;Double, Double&gt;)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_System_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_DenseVector_System_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner(System.Converter{System.Double,System.Double},Microsoft.ML.Probabilistic.Math.DenseVector,System.Converter{System.Double,System.Double})">Inner(Converter&lt;Double, Double&gt;, DenseVector, Converter&lt;Double, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the inner product of a function of this dense vector with a function of a second dense vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Inner(Converter&lt;double, double&gt; thisFun, DenseVector that, Converter&lt;double, double&gt; thatFun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">thisFun</span></td>
+        <td><p>Function to convert the elements of this vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>Second vector, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">thatFun</span></td>
+        <td><p>Function to convert the elements of that vector</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Their inner product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Inner_System_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_Vector_System_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Inner(System.Converter{System.Double,System.Double},Microsoft.ML.Probabilistic.Math.Vector,System.Converter{System.Double,System.Double})">Inner(Converter&lt;Double, Double&gt;, Vector, Converter&lt;Double, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns the inner product of a function of this vector with a function of a second vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double Inner(Converter&lt;double, double&gt; thisFun, Vector that, Converter&lt;double, double&gt; thatFun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">thisFun</span></td>
+        <td><p>Function to convert the elements of this vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>Second vector, which must have the same size as <code>this</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">thatFun</span></td>
+        <td><p>Function to convert the elements of that vector</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>Their inner product.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Inner_System_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_Vector_System_Converter_System_Double_System_Double__">Vector.Inner(Converter&lt;Double, Double&gt;, Vector, Converter&lt;Double, Double&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_LessThan_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.LessThan*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_LessThan_Microsoft_ML_Probabilistic_Math_DenseVector_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.LessThan(Microsoft.ML.Probabilistic.Math.DenseVector)">LessThan(DenseVector)</h4>
   <div class="markdown level1 summary"><p>Tests if this dense vector is strictly less than a second dense vector.</p>
@@ -2440,7 +2483,7 @@ computed to high accuracy</p>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Max">Vector.Max()</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Max_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Max*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Max_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Max(Converter{System.Double,System.Double})">Max(Converter&lt;Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Max_System_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Max(System.Converter{System.Double,System.Double})">Max(Converter&lt;Double, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns the maximum of a function of the elements in the vector</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2459,7 +2502,7 @@ computed to high accuracy</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Conversion function</p>
 </td>
@@ -2482,7 +2525,7 @@ computed to high accuracy</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Max_Converter_System_Double_System_Double__">Vector.Max(Converter&lt;Double, Double&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Max_System_Converter_System_Double_System_Double__">Vector.Max(Converter&lt;Double, Double&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_MaxDiff_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.MaxDiff*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_MaxDiff_Microsoft_ML_Probabilistic_Math_DenseVector_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.MaxDiff(Microsoft.ML.Probabilistic.Math.DenseVector)">MaxDiff(DenseVector)</h4>
   <div class="markdown level1 summary"><p>Returns the maximum absolute difference between this dense vector and another dense vector.</p>
@@ -2744,7 +2787,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Min">Vector.Min()</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Min_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Min*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Min_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Min(Converter{System.Double,System.Double})">Min(Converter&lt;Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Min_System_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Min(System.Converter{System.Double,System.Double})">Min(Converter&lt;Double, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns the minimum of the elements in the vector</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2763,7 +2806,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Conversion function</p>
 </td>
@@ -2786,7 +2829,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Min_Converter_System_Double_System_Double__">Vector.Min(Converter&lt;Double, Double&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Min_System_Converter_System_Double_System_Double__">Vector.Min(Converter&lt;Double, Double&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Outer_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Outer*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Outer_Microsoft_ML_Probabilistic_Math_DenseVector_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Outer(Microsoft.ML.Probabilistic.Math.DenseVector)">Outer(DenseVector)</h4>
   <div class="markdown level1 summary"><p>Returns the outer product of this dense vector with another dense vector.</p>
@@ -3072,57 +3115,7 @@ receives the solution.
 Throws an exception if <code data-dev-comment-type="paramref" class="paramref">A</code> is singular.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_System_Double_Func_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce(System.Double,Func{System.Double,System.Double,System.Double})">Reduce(Double, Func&lt;Double, Double, Double&gt;)</h4>
-  <div class="markdown level1 summary"><p>Reduce method. Operates on this vector</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override double Reduce(double initial, Func&lt;double, double, double&gt; fun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">initial</span></td>
-        <td><p>Initial value</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">fun</span></td>
-        <td><p>Reduction function taking partial result and current element</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Reduce_System_Double_Func_System_Double_System_Double_System_Double__">Vector.Reduce(Double, Func&lt;Double, Double, Double&gt;)</a></div>
-  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_System_Double_Microsoft_ML_Probabilistic_Math_DenseVector_Func_System_Double_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce(System.Double,Microsoft.ML.Probabilistic.Math.DenseVector,Func{System.Double,System.Double,System.Double,System.Double})">Reduce(Double, DenseVector, Func&lt;Double, Double, Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_System_Double_Microsoft_ML_Probabilistic_Math_DenseVector_System_Func_System_Double_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce(System.Double,Microsoft.ML.Probabilistic.Math.DenseVector,System.Func{System.Double,System.Double,System.Double,System.Double})">Reduce(Double, DenseVector, Func&lt;Double, Double, Double, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Reduce method. Operates on this vector and that vector</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -3153,7 +3146,7 @@ Throws an exception if <code data-dev-comment-type="paramref" class="paramref">A
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Reduction function taking partial result, current element, and current element of <code data-dev-comment-type="paramref" class="paramref">that</code></p>
 </td>
@@ -3176,63 +3169,7 @@ Throws an exception if <code data-dev-comment-type="paramref" class="paramref">A
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_System_Double_Microsoft_ML_Probabilistic_Math_Vector_Func_System_Double_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce(System.Double,Microsoft.ML.Probabilistic.Math.Vector,Func{System.Double,System.Double,System.Double,System.Double})">Reduce(Double, Vector, Func&lt;Double, Double, Double, Double&gt;)</h4>
-  <div class="markdown level1 summary"><p>Reduce method. Operates on this dense vector and that dense vector</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override double Reduce(double initial, Vector that, Func&lt;double, double, double, double&gt; fun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">initial</span></td>
-        <td><p>Initial value</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
-        <td><span class="parametername">that</span></td>
-        <td><p>A second vector</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">fun</span></td>
-        <td><p>Reduction function taking partial result, current element, and current element of <code data-dev-comment-type="paramref" class="paramref">that</code></p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Reduce_System_Double_Microsoft_ML_Probabilistic_Math_Vector_Func_System_Double_System_Double_System_Double_System_Double__">Vector.Reduce(Double, Vector, Func&lt;Double, Double, Double, Double&gt;)</a></div>
-  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_System_Double_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Func_System_Double_System_Double_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce(System.Double,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Func{System.Double,System.Double,System.Double,System.Double,System.Double})">Reduce(Double, Vector, Vector, Func&lt;Double, Double, Double, Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_System_Double_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Func_System_Double_System_Double_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce(System.Double,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Func{System.Double,System.Double,System.Double,System.Double,System.Double})">Reduce(Double, Vector, Vector, Func&lt;Double, Double, Double, Double, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Reduce method. Operates on this vector and two other vectors</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -3269,7 +3206,7 @@ Throws an exception if <code data-dev-comment-type="paramref" class="paramref">A
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-5">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Reduction function</p>
 </td>
@@ -3292,7 +3229,113 @@ Throws an exception if <code data-dev-comment-type="paramref" class="paramref">A
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Reduce_System_Double_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Func_System_Double_System_Double_System_Double_System_Double_System_Double__">Vector.Reduce(Double, Vector, Vector, Func&lt;Double, Double, Double, Double, Double&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Reduce_System_Double_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Func_System_Double_System_Double_System_Double_System_Double_System_Double__">Vector.Reduce(Double, Vector, Vector, Func&lt;Double, Double, Double, Double, Double&gt;)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_System_Double_Microsoft_ML_Probabilistic_Math_Vector_System_Func_System_Double_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce(System.Double,Microsoft.ML.Probabilistic.Math.Vector,System.Func{System.Double,System.Double,System.Double,System.Double})">Reduce(Double, Vector, Func&lt;Double, Double, Double, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Reduce method. Operates on this dense vector and that dense vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double Reduce(double initial, Vector that, Func&lt;double, double, double, double&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">initial</span></td>
+        <td><p>Initial value</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>A second vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>Reduction function taking partial result, current element, and current element of <code data-dev-comment-type="paramref" class="paramref">that</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Reduce_System_Double_Microsoft_ML_Probabilistic_Math_Vector_System_Func_System_Double_System_Double_System_Double_System_Double__">Vector.Reduce(Double, Vector, Func&lt;Double, Double, Double, Double&gt;)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Reduce_System_Double_System_Func_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Reduce(System.Double,System.Func{System.Double,System.Double,System.Double})">Reduce(Double, Func&lt;Double, Double, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Reduce method. Operates on this vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double Reduce(double initial, Func&lt;double, double, double&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">initial</span></td>
+        <td><p>Initial value</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>Reduction function taking partial result and current element</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Reduce_System_Double_System_Func_System_Double_System_Double_System_Double__">Vector.Reduce(Double, Func&lt;Double, Double, Double&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_ReferenceClone_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.ReferenceClone*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_ReferenceClone" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.ReferenceClone">ReferenceClone()</h4>
   <div class="markdown level1 summary"><p>Creates a clone of this instance which references the source array</p>
@@ -3448,34 +3491,6 @@ This method is a synonym for SetToProduct(this, scale)</p>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_SetSubvector_System_Int32_Microsoft_ML_Probabilistic_Math_Vector_">Vector.SetSubvector(Int32, Vector)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SetTo_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetTo*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetTo_IEnumerable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetTo(IEnumerable{System.Double})">SetTo(IEnumerable&lt;Double&gt;)</h4>
-  <div class="markdown level1 summary"><p>Copies values from an Enumerable to this vector</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void SetTo(IEnumerable&lt;double&gt; that)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">that</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_SetTo_IEnumerable_System_Double__">Vector.SetTo(IEnumerable&lt;Double&gt;)</a></div>
-  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SetTo_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetTo*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetTo_Microsoft_ML_Probabilistic_Math_DenseVector_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetTo(Microsoft.ML.Probabilistic.Math.DenseVector)">SetTo(DenseVector)</h4>
   <div class="markdown level1 summary"><p>Copies values from a dense vector to this dense vector</p>
 </div>
@@ -3529,6 +3544,34 @@ This method is a synonym for SetToProduct(this, scale)</p>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_SetTo_Microsoft_ML_Probabilistic_Math_Vector_">Vector.SetTo(Vector)</a></div>
+  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SetTo_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetTo*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetTo_System_Collections_Generic_IEnumerable_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetTo(System.Collections.Generic.IEnumerable{System.Double})">SetTo(IEnumerable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Copies values from an Enumerable to this vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void SetTo(IEnumerable&lt;double&gt; that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">that</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_SetTo_System_Collections_Generic_IEnumerable_System_Double__">Vector.SetTo(IEnumerable&lt;Double&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SetTo_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetTo*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetTo_System_Double___" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetTo(System.Double[])">SetTo(Double[])</h4>
   <div class="markdown level1 summary"><p>Copies values from an array.</p>
@@ -3906,58 +3949,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
   <div class="markdown level1 remarks"><p>Assumes the vectors are compatible</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_DenseVector_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction(Microsoft.ML.Probabilistic.Math.DenseVector,Converter{System.Double,System.Double})">SetToFunction(DenseVector, Converter&lt;Double, Double&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sets the elements of this vector to a function of the elements of a given vector</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DenseVector SetToFunction(DenseVector that, Converter&lt;double, double&gt; fun)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
-        <td><span class="parametername">that</span></td>
-        <td><p>The given vector</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">fun</span></td>
-        <td><p>The function which maps doubles to doubles</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_DenseVector_Converter_System_Double_System_Double___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Assumes the vectors are compatible</p>
-</div>
-  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_DenseVector_Microsoft_ML_Probabilistic_Math_DenseVector_Func_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction(Microsoft.ML.Probabilistic.Math.DenseVector,Microsoft.ML.Probabilistic.Math.DenseVector,Func{System.Double,System.Double,System.Double})">SetToFunction(DenseVector, DenseVector, Func&lt;Double, Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_DenseVector_Microsoft_ML_Probabilistic_Math_DenseVector_System_Func_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction(Microsoft.ML.Probabilistic.Math.DenseVector,Microsoft.ML.Probabilistic.Math.DenseVector,System.Func{System.Double,System.Double,System.Double})">SetToFunction(DenseVector, DenseVector, Func&lt;Double, Double, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Sets the elements of this vector to a function of the elements of two vectors</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -3988,7 +3980,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The function which maps two doubles to a double</p>
 </td>
@@ -4010,17 +4002,17 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_DenseVector_Microsoft_ML_Probabilistic_Math_DenseVector_Func_System_Double_System_Double_System_Double___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_DenseVector_Microsoft_ML_Probabilistic_Math_DenseVector_System_Func_System_Double_System_Double_System_Double___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Assumes the vectors are compatible</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction(Microsoft.ML.Probabilistic.Math.Vector,Converter{System.Double,System.Double})">SetToFunction(Vector, Converter&lt;Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_DenseVector_System_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction(Microsoft.ML.Probabilistic.Math.DenseVector,System.Converter{System.Double,System.Double})">SetToFunction(DenseVector, Converter&lt;Double, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Sets the elements of this vector to a function of the elements of a given vector</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override Vector SetToFunction(Vector that, Converter&lt;double, double&gt; fun)</code></pre>
+    <pre><code class="lang-csharp hljs">public DenseVector SetToFunction(DenseVector that, Converter&lt;double, double&gt; fun)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4033,13 +4025,13 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
         <td><span class="parametername">that</span></td>
         <td><p>The given vector</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The function which maps doubles to doubles</p>
 </td>
@@ -4056,18 +4048,16 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_Converter_System_Double_System_Double__">Vector.SetToFunction(Vector, Converter&lt;Double, Double&gt;)</a></div>
-  <h5 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_Converter_System_Double_System_Double___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_DenseVector_System_Converter_System_Double_System_Double___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Assumes the vectors are compatible</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Func_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Func{System.Double,System.Double,System.Double})">SetToFunction(Vector, Vector, Func&lt;Double, Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Func_System_Double_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Func{System.Double,System.Double,System.Double})">SetToFunction(Vector, Vector, Func&lt;Double, Double, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Sets the elements of this vector to a function of the elements of two vectors</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -4098,7 +4088,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>The function which maps two doubles to a double</p>
 </td>
@@ -4121,8 +4111,61 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Func_System_Double_System_Double_System_Double__">Vector.SetToFunction(Vector, Vector, Func&lt;Double, Double, Double&gt;)</a></div>
-  <h5 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Func_System_Double_System_Double_System_Double___remarks">Remarks</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Func_System_Double_System_Double_System_Double__">Vector.SetToFunction(Vector, Vector, Func&lt;Double, Double, Double&gt;)</a></div>
+  <h5 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Func_System_Double_System_Double_System_Double___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Assumes the vectors are compatible</p>
+</div>
+  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_System_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToFunction(Microsoft.ML.Probabilistic.Math.Vector,System.Converter{System.Double,System.Double})">SetToFunction(Vector, Converter&lt;Double, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Sets the elements of this vector to a function of the elements of a given vector</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Vector SetToFunction(Vector that, Converter&lt;double, double&gt; fun)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The given vector</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">fun</span></td>
+        <td><p>The function which maps doubles to doubles</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_System_Converter_System_Double_System_Double__">Vector.SetToFunction(Vector, Converter&lt;Double, Double&gt;)</a></div>
+  <h5 id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToFunction_Microsoft_ML_Probabilistic_Math_Vector_System_Converter_System_Double_System_Double___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Assumes the vectors are compatible</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SetToLeastSquares_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SetToLeastSquares*"></a>
@@ -5246,7 +5289,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Sum">Vector.Sum()</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Sum_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Sum*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Sum_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Sum(Converter{System.Double,System.Double})">Sum(Converter&lt;Double, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Sum_System_Converter_System_Double_System_Double__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Sum(System.Converter{System.Double,System.Double})">Sum(Converter&lt;Double, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns the sum of a function of all elements.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -5265,7 +5308,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Conversion function</p>
 </td>
@@ -5288,9 +5331,9 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Sum_Converter_System_Double_System_Double__">Vector.Sum(Converter&lt;Double, Double&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Sum_System_Converter_System_Double_System_Double__">Vector.Sum(Converter&lt;Double, Double&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Sum_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Sum*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Sum_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_DenseVector_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Sum(Converter{System.Double,System.Double},Microsoft.ML.Probabilistic.Math.DenseVector,Converter{System.Double,System.Boolean})">Sum(Converter&lt;Double, Double&gt;, DenseVector, Converter&lt;Double, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Sum_System_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_DenseVector_System_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Sum(System.Converter{System.Double,System.Double},Microsoft.ML.Probabilistic.Math.DenseVector,System.Converter{System.Double,System.Boolean})">Sum(Converter&lt;Double, Double&gt;, DenseVector, Converter&lt;Double, Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns the sum of a function of this dense vector filtered by a function of a second dense vector.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -5309,7 +5352,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Function to convert the elements of this vector</p>
 </td>
@@ -5321,7 +5364,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">cond</span></td>
         <td><p>Function to convert the elements of that vector to give the filter condition</p>
 </td>
@@ -5345,7 +5388,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Sum_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Sum*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Sum_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Sum(Converter{System.Double,System.Double},Microsoft.ML.Probabilistic.Math.Vector,Converter{System.Double,System.Boolean})">Sum(Converter&lt;Double, Double&gt;, Vector, Converter&lt;Double, Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Sum_System_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_Vector_System_Converter_System_Double_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Sum(System.Converter{System.Double,System.Double},Microsoft.ML.Probabilistic.Math.Vector,System.Converter{System.Double,System.Boolean})">Sum(Converter&lt;Double, Double&gt;, Vector, Converter&lt;Double, Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Returns the sum of a function of this vector filtered by a function of a second vector.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -5364,7 +5407,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">fun</span></td>
         <td><p>Function to convert the elements of this vector</p>
 </td>
@@ -5376,7 +5419,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Converter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.converter-2">Converter</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">cond</span></td>
         <td><p>Function to convert the elements of that vector to give the filter condition</p>
 </td>
@@ -5400,7 +5443,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Sum_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Converter_System_Double_System_Boolean__">Vector.Sum(Converter&lt;Double, Double&gt;, Vector, Converter&lt;Double, Boolean&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_Sum_System_Converter_System_Double_System_Double__Microsoft_ML_Probabilistic_Math_Vector_System_Converter_System_Double_System_Boolean__">Vector.Sum(Converter&lt;Double, Double&gt;, Vector, Converter&lt;Double, Boolean&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_SumI_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SumI*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_SumI" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.SumI">SumI()</h4>
   <div class="markdown level1 summary"><p>Returns the sum of over zero-based index times element.</p>
@@ -5528,7 +5571,7 @@ If <code>this</code> and <code data-dev-comment-type="paramref" class="paramref"
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_ToString_System_String_System_String_">Vector.ToString(String, String)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_ToString_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.ToString*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_ToString_System_String_System_String_Func_System_Int32_System_String__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.ToString(System.String,System.String,Func{System.Int32,System.String})">ToString(String, String, Func&lt;Int32, String&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_ToString_System_String_System_String_System_Func_System_Int32_System_String__" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.ToString(System.String,System.String,System.Func{System.Int32,System.String})">ToString(String, String, Func&lt;Int32, String&gt;)</h4>
   <div class="markdown level1 summary"><p>String representation of vector with a specified format and delimiter
 and a function for converting integers to display strings.</p>
 </div>
@@ -5558,7 +5601,7 @@ and a function for converting integers to display strings.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td><span class="parametername">intToString</span></td>
         <td></td>
       </tr>
@@ -5580,7 +5623,7 @@ and a function for converting integers to display strings.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_ToString_System_String_System_String_Func_System_Int32_System_String__">Vector.ToString(String, String, Func&lt;Int32, String&gt;)</a></div>
+  <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_ToString_System_String_System_String_System_Func_System_Int32_System_String__">Vector.ToString(String, String, Func&lt;Int32, String&gt;)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_DenseVector_Zero_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Zero*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_Zero_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.Zero(System.Int32)">Zero(Int32)</h4>
   <div class="markdown level1 summary"><p>Create a dense vector of given length with elements all 0.0</p>
@@ -5623,9 +5666,50 @@ and a function for converting integers to display strings.</p>
       </tr>
     </tbody>
   </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Math_DenseVector_System_ICloneable_Clone_" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.System#ICloneable#Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Math_DenseVector_System_ICloneable_Clone" data-uid="Microsoft.ML.Probabilistic.Math.DenseVector.System#ICloneable#Clone">ICloneable.Clone()</h4>
+  <div class="markdown level1 summary"><p>Clones this vector - return as an object</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object ICloneable.Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">IReadOnlyList&lt;&gt;</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">System.Collections.Generic.IList&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">System.Collections.Generic.ICollection&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">System.Collections.Generic.IReadOnlyList&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">System.Collections.Generic.IReadOnlyCollection&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">System.Collections.Generic.IEnumerable&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.ienumerable">System.Collections.IEnumerable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.CanSetAllElementsTo-1.html">CanSetAllElementsTo&lt;T&gt;</a>
@@ -5646,10 +5730,107 @@ and a function for converting integers to display strings.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Collections.ICursor.html">ICursor</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo&lt;T&gt;</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_IEnumerable_System_Action___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action_System_Int32___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;Int32, T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ForEach__1_System_Collections_IEnumerable_System_Action_System_Int32___0__">EnumerableExtensions.ForEach&lt;T&gt;(IEnumerable, Action&lt;Int32, T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Sum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_UInt32__">EnumerableExtensions.Sum&lt;TSource&gt;(IEnumerable&lt;TSource&gt;, Func&lt;TSource, UInt32&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Sum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_UInt64__">EnumerableExtensions.Sum&lt;TSource&gt;(IEnumerable&lt;TSource&gt;, Func&lt;TSource, UInt64&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ValueEquals__1_System_Collections_Generic_IEnumerable___0__System_Collections_Generic_IEnumerable___0__">EnumerableExtensions.ValueEquals&lt;T&gt;(IEnumerable&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOf__1_System_Collections_Generic_IEnumerable___0____0_">EnumerableExtensions.IndexOf&lt;T&gt;(IEnumerable&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOf__1_System_Collections_IEnumerable___0_">EnumerableExtensions.IndexOf&lt;T&gt;(IEnumerable, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindIndex__1_System_Collections_Generic_IEnumerable___0__System_Predicate___0__">EnumerableExtensions.FindIndex&lt;T&gt;(IEnumerable&lt;T&gt;, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindIndex__1_System_Collections_IEnumerable_System_Predicate___0__">EnumerableExtensions.FindIndex&lt;T&gt;(IEnumerable, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_FindAllIndex__1_System_Collections_Generic_IEnumerable___0__System_Predicate___0__">EnumerableExtensions.FindAllIndex&lt;T&gt;(IEnumerable&lt;T&gt;, Predicate&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_IndexOfAll__1_System_Collections_Generic_IEnumerable___0____0_">EnumerableExtensions.IndexOfAll&lt;T&gt;(IEnumerable&lt;T&gt;, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_Skip__1_System_Collections_Generic_IEnumerable___0__System_Int32_System_Collections_Generic_List___0___">EnumerableExtensions.Skip&lt;T&gt;(IEnumerable&lt;T&gt;, Int32, out List&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_CopyTo__1_System_Collections_Generic_IEnumerable___0____0___System_Int32_">EnumerableExtensions.CopyTo&lt;T&gt;(IEnumerable&lt;T&gt;, T[], Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.EnumerableExtensions.html#Microsoft_ML_Probabilistic_Collections_EnumerableExtensions_ToReadOnlyList__1_System_Collections_Generic_IEnumerable___0__">EnumerableExtensions.ToReadOnlyList&lt;T&gt;(IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_AddRange__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.AddRange&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_ContainsAll__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.ContainsAll&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Collection.html#Microsoft_ML_Probabilistic_Collections_Collection_ContainsAny__1_System_Collections_Generic_ICollection___0__System_Collections_Generic_IEnumerable___0__">Collection.ContainsAny&lt;T&gt;(ICollection&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableReduce__2_System_Collections_Generic_IEnumerable___0____1_System_Func___1___0___1__System_Func___1___0_System_Int32___1__">IEnumerableExensions.EnumerableReduce&lt;T, TRes&gt;(IEnumerable&lt;T&gt;, TRes, Func&lt;TRes, T, TRes&gt;, Func&lt;TRes, T, Int32, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_EnumerableSum__1_System_Collections_Generic_IEnumerable___0__System_Func___0_System_Double__">IEnumerableExensions.EnumerableSum&lt;T&gt;(IEnumerable&lt;T&gt;, Func&lt;T, Double&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__3_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___1__System_Func___0___1___2__">IEnumerableExensions.ListZip&lt;TFirst, TSecond, TResult&gt;(IList&lt;TFirst&gt;, IEnumerable&lt;TSecond&gt;, Func&lt;TFirst, TSecond, TResult&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__4_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___1__System_Collections_Generic_IEnumerable___2__System_Func___0___1___2___3__">IEnumerableExensions.ListZip&lt;TFirst, TSecond, TThird, TResult&gt;(IList&lt;TFirst&gt;, IEnumerable&lt;TSecond&gt;, IEnumerable&lt;TThird&gt;, Func&lt;TFirst, TSecond, TThird, TResult&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IEnumerableExensions.html#Microsoft_ML_Probabilistic_Collections_IEnumerableExensions_ListZip__5_System_Collections_Generic_IList___0__System_Collections_Generic_IList___1__System_Collections_Generic_IList___2__System_Collections_Generic_IList___3__System_Func___0___1___2___3___4__">IEnumerableExensions.ListZip&lt;TFirst, TSecond, TThird, TFourth, TResult&gt;(IList&lt;TFirst&gt;, IList&lt;TSecond&gt;, IList&lt;TThird&gt;, IList&lt;TFourth&gt;, Func&lt;TFirst, TSecond, TThird, TFourth, TResult&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_IsSparse__1_System_Collections_Generic_IList___0__">IListExtensions.IsSparse&lt;T&gt;(IList&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_ListSelect__2_System_Collections_Generic_IList___0__System_Func___0___1__">IListExtensions.ListSelect&lt;T, T2&gt;(IList&lt;T&gt;, Func&lt;T, T2&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_ListReduce__2_System_Collections_Generic_IList___0____1_System_Func___1___0___1__">IListExtensions.ListReduce&lt;T, TRes&gt;(IList&lt;T&gt;, TRes, Func&lt;TRes, T, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_ListReduce__3_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___1____2_System_Func___2___0___1___2__">IListExtensions.ListReduce&lt;T, T2, TRes&gt;(IList&lt;T&gt;, IEnumerable&lt;T2&gt;, TRes, Func&lt;TRes, T, T2, TRes&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_ToVector_System_Collections_Generic_IList_System_Double__">IListExtensions.ToVector(IList&lt;Double&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_SetTo__1_System_Collections_Generic_IList___0__System_Collections_Generic_IEnumerable___0__">IListExtensions.SetTo&lt;T&gt;(IList&lt;T&gt;, IEnumerable&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_SetTo_System_Collections_Generic_IList_System_Double__System_Collections_Generic_IEnumerable_System_Double__">IListExtensions.SetTo(IList&lt;Double&gt;, IEnumerable&lt;Double&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Collections.IListExtensions.html#Microsoft_ML_Probabilistic_Collections_IListExtensions_AsReadOnly__1_System_Collections_Generic_IList___0__">IListExtensions.AsReadOnly&lt;T&gt;(IList&lt;T&gt;)</a>
   </div>
 </article>
           </div>

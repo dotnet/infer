@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Invoker
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,11 +91,35 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">Invoker</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.Reflection.html">Microsoft.ML.Probabilistic.Compiler.Reflection</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class Invoker : object</code></pre>
+    <pre><code class="lang-csharp hljs">public static class Invoker</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -186,7 +210,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GenericParameterCount_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GenericParameterCount*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GenericParameterCount_MethodBase_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GenericParameterCount(MethodBase)">GenericParameterCount(MethodBase)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GenericParameterCount_System_Reflection_MethodBase_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GenericParameterCount(System.Reflection.MethodBase)">GenericParameterCount(MethodBase)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -204,7 +228,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodBase</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a></td>
         <td><span class="parametername">method</span></td>
         <td></td>
       </tr>
@@ -226,7 +250,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GenericParameterCount_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GenericParameterCount*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GenericParameterCount_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GenericParameterCount(Type)">GenericParameterCount(Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GenericParameterCount_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GenericParameterCount(System.Type)">GenericParameterCount(Type)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -244,7 +268,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">type</span></td>
         <td></td>
       </tr>
@@ -266,67 +290,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetBestMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetBestMethod_MethodBase___Type_Type___Exception__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(MethodBase[],Type,Type[],Exception@)">GetBestMethod(MethodBase[], Type, Type[], out Exception)</h4>
-  <div class="markdown level1 summary"><p>Find the method which best matches the given arguments.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static MethodBase GetBestMethod(MethodBase[] methods, Type targetType, Type[] argTypes, out Exception exception)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">MethodBase</span>[]</td>
-        <td><span class="parametername">methods</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">Type</span></td>
-        <td><span class="parametername">targetType</span></td>
-        <td><p>The type of <code>this</code>, for instance methods.  If looking for a static method, use null.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Type</span>[]</td>
-        <td><span class="parametername">argTypes</span></td>
-        <td><p>Types.  argTypes.Length == number of method parameters.  argTypes[i] may be null to allow any type, or typeof(Nullable) to mean &quot;any nullable type&quot;.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Exception</span></td>
-        <td><span class="parametername">exception</span></td>
-        <td><p>Exception created on failure</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">MethodBase</span></td>
-        <td><p>A non-null MethodBase.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetBestMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetBestMethod_MethodBase___Type_Type___Microsoft_ML_Probabilistic_Compiler_Reflection_ConversionOptions_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding__Exception__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(MethodBase[],Type,Type[],Microsoft.ML.Probabilistic.Compiler.Reflection.ConversionOptions,Microsoft.ML.Probabilistic.Compiler.Reflection.Binding@,Exception@)">GetBestMethod(MethodBase[], Type, Type[], ConversionOptions, out Binding, out Exception)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetBestMethod_System_Reflection_MethodBase___System_Type_System_Type___Microsoft_ML_Probabilistic_Compiler_Reflection_ConversionOptions_Microsoft_ML_Probabilistic_Compiler_Reflection_Binding__System_Exception__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(System.Reflection.MethodBase[],System.Type,System.Type[],Microsoft.ML.Probabilistic.Compiler.Reflection.ConversionOptions,Microsoft.ML.Probabilistic.Compiler.Reflection.Binding@,System.Exception@)">GetBestMethod(MethodBase[], Type, Type[], ConversionOptions, out Binding, out Exception)</h4>
   <div class="markdown level1 summary"><p>Find the method which best matches the given arguments.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -345,19 +309,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodBase</span>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a>[]</td>
         <td><span class="parametername">methods</span></td>
         <td><p>Methods to search through</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">targetType</span></td>
         <td><p>The type of <code>this</code>, for instance methods.  If looking for a static method, use null.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>[]</td>
         <td><span class="parametername">argTypes</span></td>
         <td><p>Types.  argTypes.Length == number of method parameters.  argTypes[i] may be null to allow any type, or typeof(Nullable) to mean &quot;any nullable type&quot;.</p>
 </td>
@@ -375,7 +339,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Exception</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception">Exception</a></td>
         <td><span class="parametername">exception</span></td>
         <td><p>Exception created on failure</p>
 </td>
@@ -392,14 +356,116 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodBase</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a></td>
         <td><p>A non-null MethodBase.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td><p>The best matching type parameters did not satisfy the constraints of the generic method.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.missingmethodexception">MissingMethodException</a></td>
+        <td><p>No match was found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetBestMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetBestMethod_Type_System_String_BindingFlags_Type_Type___Exception__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(Type,System.String,BindingFlags,Type,Type[],Exception@)">GetBestMethod(Type, String, BindingFlags, Type, Type[], out Exception)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetBestMethod_System_Reflection_MethodBase___System_Type_System_Type___System_Exception__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(System.Reflection.MethodBase[],System.Type,System.Type[],System.Exception@)">GetBestMethod(MethodBase[], Type, Type[], out Exception)</h4>
+  <div class="markdown level1 summary"><p>Find the method which best matches the given arguments.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static MethodBase GetBestMethod(MethodBase[] methods, Type targetType, Type[] argTypes, out Exception exception)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a>[]</td>
+        <td><span class="parametername">methods</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">targetType</span></td>
+        <td><p>The type of <code>this</code>, for instance methods.  If looking for a static method, use null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>[]</td>
+        <td><span class="parametername">argTypes</span></td>
+        <td><p>Types.  argTypes.Length == number of method parameters.  argTypes[i] may be null to allow any type, or typeof(Nullable) to mean &quot;any nullable type&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception">Exception</a></td>
+        <td><span class="parametername">exception</span></td>
+        <td><p>Exception created on failure</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a></td>
+        <td><p>A non-null MethodBase.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td><p>The best matching type parameters did not satisfy the constraints of the generic method.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.missingmethodexception">MissingMethodException</a></td>
+        <td><p>No match was found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetBestMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetBestMethod_System_Type_System_String_System_Reflection_BindingFlags_System_Type_System_Type___System_Exception__" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetBestMethod(System.Type,System.String,System.Reflection.BindingFlags,System.Type,System.Type[],System.Exception@)">GetBestMethod(Type, String, BindingFlags, Type, Type[], out Exception)</h4>
   <div class="markdown level1 summary"><p>Find the method which best matches the given arguments.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -418,7 +484,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">type</span></td>
         <td></td>
       </tr>
@@ -428,24 +494,24 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">BindingFlags</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.bindingflags">BindingFlags</a></td>
         <td><span class="parametername">flags</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">targetType</span></td>
         <td><p>The type of <code>this</code>, for instance methods.  If looking for a static method, use null.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>[]</td>
         <td><span class="parametername">argTypes</span></td>
         <td><p>Types.  argTypes.Length == number of method parameters.  argTypes[i] may be null to allow any type, or typeof(Nullable) to mean &quot;any nullable type&quot;.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Exception</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.exception">Exception</a></td>
         <td><span class="parametername">exception</span></td>
         <td><p>Exception created on failure</p>
 </td>
@@ -462,8 +528,29 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodBase</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a></td>
         <td><p>null on failure.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td><p>The best matching type parameters did not satisfy the constraints of the generic method.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.missingmethodexception">MissingMethodException</a></td>
+        <td><p>No match was found.</p>
 </td>
       </tr>
     </tbody>
@@ -505,14 +592,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><p>The Type object.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetParameterTypes_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetParameterTypes*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetParameterTypes_MethodBase_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetParameterTypes(MethodBase)">GetParameterTypes(MethodBase)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_GetParameterTypes_System_Reflection_MethodBase_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.GetParameterTypes(System.Reflection.MethodBase)">GetParameterTypes(MethodBase)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -530,7 +617,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodBase</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a></td>
         <td><span class="parametername">method</span></td>
         <td></td>
       </tr>
@@ -546,7 +633,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>[]</td>
         <td></td>
       </tr>
     </tbody>
@@ -588,7 +675,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>[]</td>
         <td><p>An array of Type objects representing the types of the corresponding elements in args.</p>
 </td>
       </tr>
@@ -647,7 +734,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_HasAttribute_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.HasAttribute*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_HasAttribute_MemberInfo_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.HasAttribute(MemberInfo,Type)">HasAttribute(MemberInfo, Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_HasAttribute_System_Reflection_MemberInfo_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.HasAttribute(System.Reflection.MemberInfo,System.Type)">HasAttribute(MemberInfo, Type)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -665,12 +752,12 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MemberInfo</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.memberinfo">MemberInfo</a></td>
         <td><span class="parametername">member</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">attributeType</span></td>
         <td></td>
       </tr>
@@ -692,7 +779,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_Invoke_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.Invoke*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_Invoke_MethodBase_System_Object_System_Object___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.Invoke(MethodBase,System.Object,System.Object[])">Invoke(MethodBase, Object, Object[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_Invoke_System_Reflection_MethodBase_System_Object_System_Object___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.Invoke(System.Reflection.MethodBase,System.Object,System.Object[])">Invoke(MethodBase, Object, Object[])</h4>
   <div class="markdown level1 summary"><p>Invoke a generic method by inferring type parameters from the method arguments.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -711,7 +798,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodBase</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a></td>
         <td><span class="parametername">method</span></td>
         <td></td>
       </tr>
@@ -743,7 +830,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_Invoke_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.Invoke*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_Invoke_MethodBase___System_Object_System_Object___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.Invoke(MethodBase[],System.Object,System.Object[])">Invoke(MethodBase[], Object, Object[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_Invoke_System_Reflection_MethodBase___System_Object_System_Object___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.Invoke(System.Reflection.MethodBase[],System.Object,System.Object[])">Invoke(MethodBase[], Object, Object[])</h4>
   <div class="markdown level1 summary"><p>Invoke the method which best matches the argument types.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -762,7 +849,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodBase</span>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a>[]</td>
         <td><span class="parametername">methods</span></td>
         <td><p>A non-empty list of methods, exactly one of which will be invoked.  Can include both static and instance methods.</p>
 </td>
@@ -798,7 +885,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_InvokeMember_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeMember*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_InvokeMember_Type_System_String_BindingFlags_System_Object_System_Object___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeMember(Type,System.String,BindingFlags,System.Object,System.Object[])">InvokeMember(Type, String, BindingFlags, Object, Object[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_InvokeMember_System_Type_System_String_System_Reflection_BindingFlags_System_Object_System_Object___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeMember(System.Type,System.String,System.Reflection.BindingFlags,System.Object,System.Object[])">InvokeMember(Type, String, BindingFlags, Object, Object[])</h4>
   <div class="markdown level1 summary"><p>Invoke the member which best matches the argument types.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -817,7 +904,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">type</span></td>
         <td><p>The type defining the member.</p>
 </td>
@@ -829,7 +916,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">BindingFlags</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.bindingflags">BindingFlags</a></td>
         <td><span class="parametername">flags</span></td>
         <td></td>
       </tr>
@@ -865,7 +952,7 @@ null means get the member itself.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_InvokeMember_Type_System_String_BindingFlags_System_Object_System_Object____remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_InvokeMember_System_Type_System_String_System_Reflection_BindingFlags_System_Object_System_Object____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
     This routine is patterned after Type.InvokeMember.
     flags must specify Instance, Static, or both.
@@ -897,8 +984,27 @@ As a last resort, if the memberName is op_Equality or op_Inequality, then a defa
 is provided (as in C#).
 </p>
 </div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.missingmemberexception">MissingMemberException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_InvokeStatic_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_InvokeStatic_Type_System_String_System_Object___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(Type,System.String,System.Object[])">InvokeStatic(Type, String, Object[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_InvokeStatic_System_Type_System_String_System_Object___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.InvokeStatic(System.Type,System.String,System.Object[])">InvokeStatic(Type, String, Object[])</h4>
   <div class="markdown level1 summary"><p>Invoke the static member which best matches the argument types.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -917,7 +1023,7 @@ is provided (as in C#).
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">type</span></td>
         <td></td>
       </tr>
@@ -1479,7 +1585,7 @@ is provided (as in C#).
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_PrintTypes_" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.PrintTypes*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_PrintTypes_Type___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.PrintTypes(Type[])">PrintTypes(Type[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_Reflection_Invoker_PrintTypes_System_Type___" data-uid="Microsoft.ML.Probabilistic.Compiler.Reflection.Invoker.PrintTypes(System.Type[])">PrintTypes(Type[])</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1497,7 +1603,7 @@ is provided (as in C#).
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>[]</td>
         <td><span class="parametername">types</span></td>
         <td></td>
       </tr>
