@@ -206,8 +206,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         {
             if (!IsPointMass && Rate > double.MaxValue)
             {
-                Rate = Math.Pow(0, Power);
-                SetToPointMass();
+                Point = Math.Pow(0, Power);
             }
         }
 
@@ -451,15 +450,6 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
-        /// Sets this instance to a point mass. The location of the
-        /// point mass is the existing Rate parameter
-        /// </summary>
-        private void SetToPointMass()
-        {
-            Shape = Double.PositiveInfinity;
-        }
-
-        /// <summary>
         /// Sets/gets the instance as a point mass
         /// </summary>
         [IgnoreDataMember, System.Xml.Serialization.XmlIgnore]
@@ -472,7 +462,8 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             set
             {
-                SetToPointMass();
+                // Change this instance to a point mass.
+                Shape = Double.PositiveInfinity;
                 Rate = value;
             }
         }

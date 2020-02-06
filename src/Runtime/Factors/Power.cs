@@ -15,6 +15,35 @@ namespace Microsoft.ML.Probabilistic.Factors
     [Quality(QualityBand.Experimental)]
     public static class PowerOp
     {
+        public static Gamma GammaFromMeanAndMeanInverse(double mean, double meanInverse)
+        {
+            // mean = a/b
+            // meanInverse = b/(a-1)
+            // a = mean*meanInverse / (mean*meanInverse - 1)
+            // b = a/mean
+            double rate = meanInverse / (mean * meanInverse - 1);
+            double shape = mean * rate;
+            if (shape > double.MaxValue)
+                return Gamma.PointMass(mean);
+            else
+                return Gamma.FromShapeAndRate(shape, rate);
+        }
+
+        public static Gamma GammaFromGammaPower(GammaPower message)
+        {
+            if (message.Power == 1) return Gamma.FromShapeAndRate(message.Shape, message.Rate); // same as below, but faster
+            if (message.IsUniform()) return Gamma.Uniform();
+            message.GetMeanAndVariance(out double mean, out double variance);
+            return Gamma.FromMeanAndVariance(mean, variance);
+        }
+
+        public static Gamma FromMeanPowerAndMeanLog(double meanPower, double meanLog, double power)
+        {
+            // We want E[log(x)] = meanLog but this sets E[log(x^power)] = meanLog, so we scale meanLog
+            var gammaPower = GammaPower.FromMeanAndMeanLog(meanPower, meanLog * power, power);
+            return Gamma.FromShapeAndRate(gammaPower.Shape, gammaPower.Rate);
+        }
+
         // Gamma = TruncatedGamma ^ y  /////////////////////////////////////////////////////////
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(TruncatedGamma, double)"]/*'/>
@@ -33,18 +62,6 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
         }
 
-        public static Gamma GammaFromMeanAndMeanInverse(double mean, double meanInverse)
-        {
-            // mean = a/b
-            // meanInverse = b/(a-1)
-            // a = mean*meanInverse / (mean*meanInverse - 1)
-            // b = a/mean
-            double rate = meanInverse / (mean * meanInverse - 1);
-            double shape = mean * rate;
-            return Gamma.FromShapeAndRate(shape, rate);
-        }
-
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(Gamma, TruncatedGamma, double)"]/*'/>
         public static TruncatedGamma XAverageConditional([SkipIfUniform] Gamma pow, TruncatedGamma x, double y)
         {
             // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
@@ -58,7 +75,48 @@ namespace Microsoft.ML.Probabilistic.Factors
             var powMarginal = pow * toPow;
             // xMarginal2 is the exact distribution of pow^(1/y) where pow has distribution powMarginal
             GammaPower xMarginal2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
-            var xMarginal = new TruncatedGamma(GammaFromGammaPower(xMarginal2));
+            var xMarginal = new TruncatedGamma(GammaFromGammaPower(xMarginal2), x.LowerBound, x.UpperBound);
+            var result = xMarginal;
+            result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
+            return result;
+        }
+
+        // GammaPower = TruncatedGamma ^ y  /////////////////////////////////////////////////////////
+
+        public static GammaPower PowAverageConditional([SkipIfUniform] TruncatedGamma x, double y, GammaPower result)
+        {
+            if (result.Power == -1) y = -y;
+            else if (result.Power != 1) throw new ArgumentException($"result.Power ({result.Power}) is not 1 or -1", nameof(result));
+            double mean = x.GetMeanPower(y);
+            if (x.LowerBound > 0)
+            {
+                double meanInverse = x.GetMeanPower(-y);
+                Gamma result1 = GammaFromMeanAndMeanInverse(mean, meanInverse);
+                return GammaPower.FromShapeAndRate(result1.Shape, result1.Rate, result.Power);
+            }
+            else
+            {
+                double variance = x.GetMeanPower(2 * y) - mean * mean;
+                Gamma result1 = Gamma.FromMeanAndVariance(mean, variance);
+                return GammaPower.FromShapeAndRate(result1.Shape, result1.Rate, result.Power);
+            }
+        }
+
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(Gamma, TruncatedGamma, double)"]/*'/>
+        public static TruncatedGamma XAverageConditional([SkipIfUniform] Gamma pow, TruncatedGamma x, double y)
+        {
+            // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
+            if (pow.IsUniform()) return TruncatedGamma.Uniform();
+            // Factor is (x^y)^(pow.Shape/pow.Power - 1) * exp(-pow.Rate*(x^y)^1/pow.Power)
+            // =propto x^(pow.Shape/(pow.Power/y) - y) * exp(-pow.Rate*x^y/pow.Power)
+            // newShape/(pow.Power/y) - 1 = pow.Shape/(pow.Power/y) - y
+            // newShape = pow.Shape + (1-y)*(pow.Power/y)
+            double power = pow.Power / y;
+            var toPow = PowAverageConditional(x, y, pow);
+            var powMarginal = pow * toPow;
+            // xMarginal2 is the exact distribution of pow^(1/y) where pow has distribution powMarginal
+            GammaPower xMarginal2 = GammaPower.FromShapeAndRate(powMarginal.Shape, powMarginal.Rate, power);
+            var xMarginal = new TruncatedGamma(GammaFromGammaPower(xMarginal2), x.LowerBound, x.UpperBound);
             var result = xMarginal;
             result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
             return result;
@@ -90,14 +148,6 @@ namespace Microsoft.ML.Probabilistic.Factors
             Gamma xMarginal = GammaFromGammaPower(xMarginal2);
             result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
             return result;
-        }
-
-        public static Gamma GammaFromGammaPower(GammaPower message)
-        {
-            if (message.Power == 1) return Gamma.FromShapeAndRate(message.Shape, message.Rate); // same as below, but faster
-            if (message.IsUniform()) return Gamma.Uniform();
-            message.GetMeanAndVariance(out double mean, out double variance);
-            return Gamma.FromMeanAndVariance(mean, variance);
         }
 
         // GammaPower = GammaPower ^ y  /////////////////////////////////////////////////////////
@@ -139,13 +189,6 @@ namespace Microsoft.ML.Probabilistic.Factors
             GammaPower xMarginal = GammaPowerFromDifferentPower(xMarginal2, result.Power);
             result.SetToRatio(xMarginal, x, GammaProductOp_Laplace.ForceProper);
             return result;
-        }
-
-        public static Gamma FromMeanPowerAndMeanLog(double meanPower, double meanLog, double power)
-        {
-            // We want E[log(x)] = meanLog but this sets E[log(x^power)] = meanLog, so we scale meanLog
-            var gammaPower = GammaPower.FromMeanAndMeanLog(meanPower, meanLog * power, power);
-            return Gamma.FromShapeAndRate(gammaPower.Shape, gammaPower.Rate);
         }
 
         public static GammaPower GammaPowerFromDifferentPower(GammaPower message, double newPower)

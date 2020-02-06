@@ -39,7 +39,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
-        public void GammaPower_ReturnsShapeGreaterThan1()
+        public void TruncatedGammaPower_ReturnsGammaShapeGreaterThan1()
         {
             Variable<TruncatedGamma> xPriorVar = Variable.Observed(default(TruncatedGamma)).Named("xPrior");
             Variable<double> x = Variable<double>.Random(xPriorVar).Named("x");
@@ -58,12 +58,13 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Gamma yLike = Gamma.Uniform();
                 yLikeVar.ObservedValue = yLike;
                 power.ObservedValue = powerValue;
+                var xActual = engine.Infer<TruncatedGamma>(x);
                 var yActual = engine.Infer<Gamma>(y);
 
                 // Importance sampling
                 GammaEstimator xEstimator = new GammaEstimator();
                 GammaEstimator yEstimator = new GammaEstimator();
-                MeanVarianceAccumulator mva = new MeanVarianceAccumulator();
+                MeanVarianceAccumulator yExpectedInverse = new MeanVarianceAccumulator();
                 int nSamples = 1000000;
                 for (int i = 0; i < nSamples; i++)
                 {
@@ -73,13 +74,74 @@ namespace Microsoft.ML.Probabilistic.Tests
                     double weight = System.Math.Exp(logWeight);
                     xEstimator.Add(xSample, weight);
                     yEstimator.Add(ySample, weight);
-                    mva.Add(1/ySample, weight);
+                    yExpectedInverse.Add(1/ySample, weight);
                 }
                 Gamma xExpected = xEstimator.GetDistribution(new Gamma());
                 Gamma yExpected = yEstimator.GetDistribution(yLike);
                 double yActualMeanInverse = yActual.GetMeanPower(-1);
-                double meanInverseError = MMath.AbsDiff(mva.Mean, yActualMeanInverse, 1e-8);
-                Trace.WriteLine($"power = {powerValue}: y = {yActual}[E^-1={yActual.GetMeanPower(-1)}] should be {yExpected}[E^-1={mva.Mean}], error = {meanInverseError}");
+                double meanInverseError = MMath.AbsDiff(yExpectedInverse.Mean, yActualMeanInverse, 1e-8);
+                Trace.WriteLine($"power = {powerValue}:");
+                Trace.WriteLine($"  x = {xActual} should be {xExpected}");
+                Trace.WriteLine($"  y = {yActual}[E^-1={yActual.GetMeanPower(-1)}] should be {yExpected}[E^-1={yExpectedInverse.Mean}], E^-1 error = {meanInverseError}");
+                Assert.True(yActual.Shape > 1);
+                Assert.True(MMath.AbsDiff(yExpected.GetMean(), yActual.GetMean(), 1e-8) < 1);
+                Assert.True(meanInverseError < 1e-2);
+            }
+        }
+
+        [Fact]
+        public void TruncatedGammaPower_ReturnsGammaPowerShapeGreaterThan1()
+        {
+            var result = PowerOp.PowAverageConditional(new TruncatedGamma(0.4, 0.5, 1, double.PositiveInfinity), 0, GammaPower.PointMass(0, -1));
+            Assert.True(result.IsPointMass);
+            Assert.Equal(1.0, result.Point);
+
+            Variable<TruncatedGamma> xPriorVar = Variable.Observed(default(TruncatedGamma)).Named("xPrior");
+            Variable<double> x = Variable<double>.Random(xPriorVar).Named("x");
+            Variable<double> power = Variable.Observed(0.5).Named("power");
+            var y = x ^ power;
+            y.Name = nameof(y);
+            Variable<GammaPower> yLikeVar = Variable.Observed(default(GammaPower)).Named("yLike");
+            Variable.ConstrainEqualRandom(y, yLikeVar);
+            y.SetMarginalPrototype(yLikeVar);
+            InferenceEngine engine = new InferenceEngine();
+
+            foreach (var powerValue in linspace(1, 10, 10))
+            {
+                TruncatedGamma xPrior = new TruncatedGamma(Gamma.FromShapeAndRate(3, 3), 1, double.PositiveInfinity);
+                xPriorVar.ObservedValue = xPrior;
+                GammaPower yLike = GammaPower.Uniform(-1);
+                //GammaPower yLike = GammaPower.FromShapeAndRate(1, 0.5, -1);
+                yLikeVar.ObservedValue = yLike;
+                power.ObservedValue = powerValue;
+                var xActual = engine.Infer<TruncatedGamma>(x);
+                var yActual = engine.Infer<GammaPower>(y);
+
+                // Importance sampling
+                GammaEstimator xEstimator = new GammaEstimator();
+                GammaPowerEstimator yEstimator = new GammaPowerEstimator(yLike.Power);
+                MeanVarianceAccumulator yExpectedInverse = new MeanVarianceAccumulator();
+                MeanVarianceAccumulator yMva = new MeanVarianceAccumulator();
+                int nSamples = 1000000;
+                for (int i = 0; i < nSamples; i++)
+                {
+                    double xSample = xPrior.Sample();
+                    double ySample = System.Math.Pow(xSample, power.ObservedValue);
+                    double logWeight = yLike.GetLogProb(ySample);
+                    double weight = System.Math.Exp(logWeight);
+                    xEstimator.Add(xSample, weight);
+                    yEstimator.Add(ySample, weight);
+                    yExpectedInverse.Add(1 / ySample, weight);
+                    yMva.Add(ySample, weight);
+                }
+                Gamma xExpected = xEstimator.GetDistribution(new Gamma());
+                GammaPower yExpected = yEstimator.GetDistribution(yLike);
+                yExpected = GammaPower.FromMeanAndVariance(yMva.Mean, yMva.Variance, yLike.Power);
+                double yActualMeanInverse = yActual.GetMeanPower(-1);
+                double meanInverseError = MMath.AbsDiff(yExpectedInverse.Mean, yActualMeanInverse, 1e-8);
+                Trace.WriteLine($"power = {powerValue}:");
+                Trace.WriteLine($"  x = {xActual} should be {xExpected}");
+                Trace.WriteLine($"  y = {yActual}[E^-1={yActual.GetMeanPower(-1)}] should be {yExpected}[E^-1={yExpectedInverse.Mean}], error = {meanInverseError}");
                 Assert.True(yActual.Shape > 1);
                 Assert.True(MMath.AbsDiff(yExpected.GetMean(), yActual.GetMean(), 1e-8) < 1);
                 Assert.True(meanInverseError < 1e-2);
@@ -106,6 +168,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                 GammaPower yLike = GammaPower.Uniform(-1);
                 yLikeVar.ObservedValue = yLike;
                 power.ObservedValue = powerValue;
+                var xActual = engine.Infer<GammaPower>(x);
                 var yActual = engine.Infer<GammaPower>(y);
 
                 // Importance sampling
@@ -127,7 +190,9 @@ namespace Microsoft.ML.Probabilistic.Tests
                 Gamma yExpected = yEstimator.GetDistribution(new Gamma());
                 double yActualMeanInverse = yActual.GetMeanPower(-1);
                 double meanInverseError = MMath.AbsDiff(mva.Mean, yActualMeanInverse, 1e-8);
-                Trace.WriteLine($"power = {powerValue}: y = {yActual}[E^-1={yActualMeanInverse}] should be {yExpected}[E^-1={mva.Mean}], error = {meanInverseError}");
+                Trace.WriteLine($"power = {powerValue}:");
+                Trace.WriteLine($"  x = {xActual} should be {xExpected}");
+                Trace.WriteLine($"  y = {yActual}[E^-1={yActualMeanInverse}] should be {yExpected}[E^-1={mva.Mean}], error = {meanInverseError}");
                 Assert.True(yActual.Shape > 2);
                 Assert.True(MMath.AbsDiff(yExpected.GetMean(), yActual.GetMean(), 1e-8) < 1);
                 //Assert.True(meanInverseError < 10);

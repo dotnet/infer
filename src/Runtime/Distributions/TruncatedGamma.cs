@@ -543,6 +543,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                     return;
                 }
                 double m = this.Gamma.Shape / this.Gamma.Rate;
+                // Change of variables in the incomplete Gamma integral:
                 // t = x * Rate
                 // dt = dx * Rate
                 double Z1 = MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * UpperBound) - MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * LowerBound);

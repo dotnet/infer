@@ -681,12 +681,16 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <returns></returns>
         internal static double FindMaximum(double shape1, double shape2, double yRate, double rateRate)
         {
+            if(shape2 == 0)
+            {
+                return shape1 / rateRate;
+            }
             if (yRate < 0)
-                throw new ArgumentException("yRate < 0");
-            // f = shape1*log(rs) - shape2*log(rs+by) - br*rs
-            // df = shape1/rs - shape2/(rs + by) - br
-            // df=0 when shape1*(rs+by) - shape2*rs - br*rs*(rs+by) = 0
-            // -br*rs^2 + (shape1-shape2-br*by)*rs + shape1*by = 0
+                throw new ArgumentOutOfRangeException(nameof(yRate), yRate, "yRate < 0");
+            // f = shape1*log(x) - shape2*log(x+yRate) - x*rateRate
+            // df = shape1/x - shape2/(x + yrate) - rateRate
+            // df=0 when shape1*(x+yRate) - shape2*x - rateRate*x*(x+yRate) = 0
+            // -rateRate*x^2 + (shape1-shape2-rateRate*yRate)*x + shape1*yRate = 0
             double a = -rateRate;
             double b = shape1 - shape2 - yRate * rateRate;
             double c = shape1 * yRate;
