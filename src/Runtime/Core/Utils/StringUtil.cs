@@ -260,17 +260,17 @@ namespace Microsoft.ML.Probabilistic.Utilities
         }
 
         /// <summary>
-        /// Get a string of the form "typeName.methodName&lt;types&gt;".
+        /// Get a string of the form "typeName.methodName{types}".
         /// </summary>
         /// <param name="method"></param>
         /// <returns></returns>
         public static string MethodFullNameToString(MethodBase method)
         {
-            return TypeToString(method.DeclaringType) + "." + MethodNameToString(method);
+            return $"{TypeToString(method.DeclaringType)}.{MethodNameToString(method)}";
         }
 
         /// <summary>
-        /// Get a string of the form "methodName&lt;types&gt;"
+        /// Get a string of the form "methodName{types}"
         /// </summary>
         /// <param name="method"></param>
         /// <returns></returns>
@@ -279,10 +279,10 @@ namespace Microsoft.ML.Probabilistic.Utilities
             if (method.IsGenericMethod)
             {
                 StringBuilder s = new StringBuilder(method.Name);
-                s.Append("<");
+                s.Append("{");
                 Type[] typeArguments = method.GetGenericArguments();
                 AppendTypes(s, typeArguments);
-                s.Append(">");
+                s.Append("}");
                 return s.ToString();
             }
             else

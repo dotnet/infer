@@ -56,10 +56,10 @@ namespace Microsoft.ML.Probabilistic.Learners.BayesPointMachineClassifierInterna
 		/// <summary>Field backing the WeightPriors property</summary>
 		private DistributionStructArray<Gaussian,double> weightPriors;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_rep_B;
-		/// <summary>Buffer for ReplicateOp_Divide.Marginal<Gaussian></summary>
+		/// <summary>Buffer for <see cref="ReplicateOp_Divide.Marginal{Gaussian}"/>.</summary>
 		public DistributionStructArray<Gaussian,double> Weights_depth1_rep_B_toDef;
 		public DistributionRefArray<DistributionStructArray<Gaussian,double>,double[]> Weights_depth1_rep_F;
-		/// <summary>Buffer for ReplicateOp_Divide.UsesAverageConditional<Gaussian></summary>
+		/// <summary>Buffer for <see cref="ReplicateOp_Divide.UsesAverageConditional{Gaussian}"/>.</summary>
 		public DistributionStructArray<Gaussian,double> Weights_depth1_rep_F_marginal;
 		/// <summary>Message to marginal of 'Weights'</summary>
 		public DistributionStructArray<Gaussian,double> Weights_marginal_F;
