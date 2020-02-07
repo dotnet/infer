@@ -36,6 +36,27 @@ namespace Microsoft.ML.Probabilistic.Math
     /// </remarks>
     public static class MMath
     {
+        internal static uint NumericalPrecisionBits { get; private set; } = 53;
+
+        internal static void SetNumericalPrecision(uint value)
+        {
+            if (NumericalPrecisionBits != value)
+            {
+                if (double.IsNaN(value) || value <= 0)
+                    throw new ArgumentException(nameof(value));
+
+                var newSeries = new Series(value);
+                lock(precisionSettingLockObject)
+                {
+                    NumericalPrecisionBits = value;
+                    Series = newSeries;
+                }
+            }
+        }
+
+        static object precisionSettingLockObject = new object();
+        static Series Series { get; set; } = new Series(NumericalPrecisionBits);
+
         #region Bessel functions
 
         /// <summary>
@@ -745,11 +766,7 @@ namespace Microsoft.ML.Probabilistic.Math
                 // Use Taylor series at x=2
                 // Reference: https://dlmf.nist.gov/5.7#E3
                 double dx = x - 2;
-                double sum = 0;
-                for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
-                {
-                    sum = dx * (gammaTaylorCoefficients[i] + sum);
-                }
+                double sum = Series.GammaAt2.Evaluate(dx);
                 sum = dx * (1 + Digamma1 + sum);
                 result += sum;
                 return result;
@@ -802,39 +819,6 @@ namespace Microsoft.ML.Probabilistic.Math
             }
             else return (MMath.GammaLn(x + n) - MMath.GammaLn(x)) / n;
         }
-
-        /* Python code to generate this table (must not be indented):
-for k in range(2,26):
-		print("            %0.20g," % ((-1)**k*(zeta(k)-1)/k))
-         */
-        private static readonly double[] gammaTaylorCoefficients =
-        {
-            0.32246703342411320303,
-            -0.06735230105319810201,
-            0.020580808427784546416,
-            -0.0073855510286739856768,
-            0.0028905103307415229257,
-            -0.0011927539117032610189,
-            0.00050966952474304234172,
-            -0.00022315475845357938579,
-            9.945751278180853098e-05,
-            -4.4926236738133142046e-05,
-            2.0507212775670691067e-05,
-            -9.4394882752683967152e-06,
-            4.3748667899074873274e-06,
-            -2.0392157538013666132e-06,
-            9.551412130407419353e-07,
-            -4.4924691987645661855e-07,
-            2.1207184805554664645e-07,
-            -1.0043224823968100408e-07,
-            4.7698101693639803983e-08,
-            -2.2711094608943166813e-08,
-            1.0838659214896952939e-08,
-            -5.1834750419700474714e-09,
-            2.4836745438024780616e-09,
-            -1.1921401405860913615e-09,
-            5.7313672416788612175e-10,
-        };
 
         private static double[] DigammaLookup;
 
@@ -906,11 +890,7 @@ for k in range(2,26):
                     x++;
                 }
                 double dx = x - 2;
-                double sum2 = 0;
-                for (int i = gammaTaylorCoefficients.Length - 1; i >= 0; i--)
-                {
-                    sum2 = dx * (gammaTaylorCoefficients[i] * (i + 2) + sum2);
-                }
+                double sum2 = Series.DigammaAt2.Evaluate(dx);
                 result2 += sum2;
                 return result2;
             }
@@ -930,24 +910,10 @@ for k in range(2,26):
             double invX = 1 / x;
             result += Math.Log(x) - 0.5 * invX;
             double invX2 = invX * invX;
-            double sum = 0;
-            for (int i = c_digamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_digamma_series[i] + sum);
-            }
+            double sum = Series.DigammaAsymptotic.Evaluate(invX2);
             result -= sum;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the digamma function.
-        /// Each coefficient is B_{2j}/(2j) where B_{2j} are the Bernoulli numbers, starting from j=1
-        /// </summary>
-        private static readonly double[] c_digamma_series =
-        {
-            1.0/12, -1.0/120, 1.0/252, -1.0/240, 1.0/132,
-            -691.0/32760, 1.0/12, /* -3617.0/8160, 43867.0/14364, -174611.0/6600 */
-        };
 
         /// <summary>
         /// Evaluates Trigamma(x), the derivative of Digamma(x).
@@ -978,10 +944,10 @@ for k in range(2,26):
             const double c_trigamma_large = 8;
             const double c_trigamma_small = 1e-4;
 
-            /* Use Taylor series if argument <= small */
+            /* Shift the argument and use Taylor series at 1 if argument <= small */
             if (x <= c_trigamma_small)
             {
-                return (1.0 / (x * x) + Zeta2 + M2Zeta3 * x);
+                return (1.0 / (x * x) + Series.TrigammaAt1.Evaluate(x));
             }
 
             result = 0.0;
@@ -997,20 +963,10 @@ for k in range(2,26):
             // This expansion can be computed in Maple via asympt(Psi(1,x),x)
             double invX2 = 1 / (x * x);
             result += 0.5 * invX2;
-            double sum = 0;
-            for (int i = c_trigamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_trigamma_series[i] + sum);
-            }
+            double sum = Series.TrigammaAsymptotic.Evaluate(invX2);
             result += (1 + sum) / x;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the trigamma function.
-        /// Each coefficient is B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=1
-        /// </summary>
-        private static readonly double[] c_trigamma_series = { 1.0 / 6, -1.0 / 30, 1.0 / 42, -1.0 / 30, 5.0 / 66, -691.0 / 2730, 7.0 / 6, -3617.0 / 510 };
 
         /// <summary>
         ///  Evaluates Tetragamma, the forth derivative of logGamma(x)
@@ -1027,7 +983,7 @@ for k in range(2,26):
                          c_tetragamma_small = 1e-4;
             /* Use Taylor series if argument <= small */
             if (x < c_tetragamma_small)
-                return -2 / (x * x * x) + M2Zeta3 + 6 * Zeta4 * x;
+                return -2 / (x * x * x) + Series.TetragammaAt1.Evaluate(x);
             double result = 0;
             /* Reduce to Tetragamma(x+n) where ( X + N ) >= L */
             while (x < c_tetragamma_large)
@@ -1040,20 +996,10 @@ for k in range(2,26):
             // Milton Abramowitz and Irene A. Stegun, Handbook of Mathematical Functions, Section 6.4
             double invX2 = 1 / (x * x);
             result += -invX2 / x;
-            double sum = 0;
-            for (int i = c_tetragamma_series.Length - 1; i >= 0; i--)
-            {
-                sum = invX2 * (c_tetragamma_series[i] + sum);
-            }
+            double sum = Series.TetragammaAsymptotic.Evaluate(invX2);
             result += sum;
             return result;
         }
-
-        /// <summary>
-        /// Coefficients of de Moivre's expansion for the quadgamma function.
-        /// Each coefficient is -(2j+1) B_{2j} where B_{2j} are the Bernoulli numbers, starting from j=0
-        /// </summary>
-        private static readonly double[] c_tetragamma_series = { -1, -.5, +1 / 6.0, -1 / 6.0, +3 / 10.0, -5 / 6.0, 691.0 / 210, -35.0 / 2 };
 
         /// <summary>
         /// Computes the natural logarithm of the multivariate Gamma function.
@@ -1113,7 +1059,7 @@ for k in range(2,26):
         /// <returns></returns>
         public static double ChooseLn(double n, double k)
         {
-            if (k < 0 || k > n)
+            if (k <= -1 || k >= n+1)
                 return Double.NegativeInfinity;
             return GammaLn(n + 1) - GammaLn(k + 1) - GammaLn(n - k + 1);
         }
@@ -1236,7 +1182,16 @@ for k in range(2,26):
             if (a <= 20)
                 throw new Exception("a <= 20");
             double xOverAMinus1 = (x - a) / a;
-            double phi = xOverAMinus1 - MMath.Log1Plus(xOverAMinus1);
+            double phi;
+            if (Math.Abs(xOverAMinus1) < 1e-1)
+            {
+                double XMinusLog1PlusCoefficient(int n) => (n <= 1) ? 0.0 : (n % 2 == 0 ? 1.0 : -1.0) / n;
+                phi = new PowerSeries(XMinusLog1PlusCoefficient).Evaluate(xOverAMinus1);
+            }
+            else
+            {
+                phi = xOverAMinus1 - MMath.Log1Plus(xOverAMinus1);
+            }
             double y = a * phi;
             double z = Math.Sqrt(2 * phi);
             if (x <= a)
@@ -1489,23 +1444,12 @@ f = 1/gamma(x+1)-1
             else
             {
                 // the series is:  sum_{i=1}^inf B_{2i} / (2i*(2i-1)*x^(2i-1))
-                double sum = 0;
-                double term = 1.0 / x;
-                double delta = term * term;
-                for (int i = 0; i < c_gammaln_series.Length; i++)
-                {
-                    sum += c_gammaln_series[i] * term;
-                    term *= delta;
-                }
+                double invX = 1.0 / x;
+                double invX2 = invX * invX;
+                double sum = invX * Series.GammalnAsymptotic.Evaluate(invX2);
                 return sum;
             }
         }
-
-        private static double[] c_gammaln_series =
-        {
-            1.0 / (6 * 2), -1.0 / (30 * 4 * 3), 1.0 / (42 * 6 * 5), -1.0 / (30 * 8 * 7),
-            5.0/(66*10*9), -691.0/(2730*12*11), 7.0/(6*14*13)
-        };
 
         #endregion
 
@@ -3303,11 +3247,11 @@ rr = mpf('-0.99999824265582826');
         public static double Log1Plus(double x)
         {
             Assert.IsTrue(Double.IsNaN(x) || x >= -1);
-            if (x > -1e-3 && x < 2e-3)
+            if (x > -1e-3 && x < 6e-2)
             {
                 // use the Taylor series for log(1+x) around x=0
                 // Maple command: series(log(1+x),x);
-                return x * (1 - x * (0.5 - x * (1.0 / 3 - x * (0.25 - x * (1.0 / 5)))));
+                return Series.Log1Plus.Evaluate(x);
             }
             else
             {
@@ -3352,15 +3296,15 @@ rr = mpf('-0.99999824265582826');
         /// <param name="x">A non-positive real number: -Inf &lt;= x &lt;= 0, or NaN.</param>
         /// <returns>log(1-exp(x)), which is always &lt;= 0.</returns>
         /// <remarks>This function provides higher accuracy than a direct evaluation of <c>log(1-exp(x))</c>,
-        /// particularly when x &lt; -7.5 or x > -1e-5.</remarks>
+        /// particularly when x &lt; -5 or x > -1e-5.</remarks>
         public static double Log1MinusExp(double x)
         {
             if (x > 0)
                 throw new ArgumentException("x (" + x + ") > 0");
-            if (x < -7.5)
+            if (x < -3.5)
             {
-                double y = Math.Exp(x);
-                return -y * (1 + y * (0.5 + y * (1.0 / 3 + y * (0.25))));
+                double expx = Math.Exp(x);
+                return Series.Log1Minus.Evaluate(expx);
             }
             else
             {

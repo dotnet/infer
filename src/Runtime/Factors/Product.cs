@@ -314,7 +314,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (B.IsPointMass)
                 return AAverageConditional(Product, B.Point);
-            if (Product.IsUniform())
+            if (Product.IsUniform() || B.IsUniform())
                 return Gaussian.Uniform();
             double mA, vA;
             A.GetMeanAndVariance(out mA, out vA);

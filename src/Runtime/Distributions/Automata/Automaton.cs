@@ -2255,7 +2255,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             this.Data = builder.GetData();
             this.LogValueOverride = automaton.LogValueOverride;
-            this.PruneStatesWithLogEndWeightLessThan = automaton.LogValueOverride;
+            this.PruneStatesWithLogEndWeightLessThan = automaton.PruneStatesWithLogEndWeightLessThan;
         }
 
         #endregion
@@ -2276,7 +2276,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 return automaton2.IsZero() ? double.NegativeInfinity : 1;
             }
 
-            TThis theConverger = GetConverger(automaton1, automaton2);
+            TThis theConverger = GetConverger(new TThis[] {automaton1, automaton2});
             var automaton1conv = automaton1.Product(theConverger);
             var automaton2conv = automaton2.Product(theConverger);
 
@@ -2310,8 +2310,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Gets an automaton such that every given automaton, if multiplied by it, becomes normalizable.
         /// </summary>
         /// <param name="automata">The automata.</param>
+        /// <param name="decayWeight">The decay weight.</param>
         /// <returns>An automaton, product with which will make every given automaton normalizable.</returns>
-        public static TThis GetConverger(params TThis[] automata)
+        public static TThis GetConverger(TThis automata, double decayWeight = 0.99)
+        {
+            return GetConverger(new TThis[] {automata}, decayWeight);
+        }
+
+        /// <summary>
+            /// Gets an automaton such that every given automaton, if multiplied by it, becomes normalizable.
+            /// </summary>
+            /// <param name="automata">The automata.</param>
+            /// <param name="decayWeight">The decay weight.</param>
+            /// <returns>An automaton, product with which will make every given automaton normalizable.</returns>
+            public static TThis GetConverger(TThis[] automata, double decayWeight = 0.99)
         {
             // TODO: This method might not work in the presense of non-trivial loops.
 
@@ -2347,7 +2359,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             Weight transitionWeight = Weight.Product(
                 Weight.FromLogValue(-uniformDist.GetLogAverageOf(uniformDist)),
                 Weight.FromLogValue(-maxLogTransitionWeightSum),
-                Weight.FromValue(0.99));
+                Weight.FromValue(decayWeight));
             theConverger.Start.AddSelfTransition(uniformDist, transitionWeight);
             theConverger.Start.SetEndWeight(Weight.One);
 
@@ -2634,14 +2646,14 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// </summary>
         public class UnlimitedStatesComputation : IDisposable
         {
-            private readonly int originalMaxStateCount;
+            private readonly int originalThreadMaxStateCount;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="UnlimitedStatesComputation"/> class.
             /// </summary>
             public UnlimitedStatesComputation()
             {
-                originalMaxStateCount = threadMaxStateCountOverride;
+                this.originalThreadMaxStateCount = threadMaxStateCountOverride;
                 threadMaxStateCountOverride = int.MaxValue;
             }
 
@@ -2650,15 +2662,18 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// </summary>
             public void CheckStateCount(TThis automaton)
             {
-                if (automaton.States.Count > originalMaxStateCount)
+                var limit = this.originalThreadMaxStateCount != 0
+                    ? this.originalThreadMaxStateCount
+                    : maxStateCount;
+                if (automaton.States.Count > limit)
                 {
-                    throw new AutomatonTooLargeException(originalMaxStateCount);
+                    throw new AutomatonTooLargeException(limit);
                 }
             }
 
             public void Dispose()
             {
-                threadMaxStateCountOverride = originalMaxStateCount;
+                threadMaxStateCountOverride = this.originalThreadMaxStateCount;
             }
         }
         #endregion
@@ -2676,11 +2691,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         {
             var propertyMask = new BitVector32();
             var idx = 0;
-            propertyMask[1 << idx++] = true; // isEpsilonFree is alway known
+            propertyMask[1 << idx++] = true; // isEpsilonFree is always known
             propertyMask[1 << idx++] = this.Data.IsEpsilonFree;
             propertyMask[1 << idx++] = this.LogValueOverride.HasValue;
             propertyMask[1 << idx++] = this.PruneStatesWithLogEndWeightLessThan.HasValue;
-            propertyMask[1 << idx++] = true; // start state is alway serialized
+            propertyMask[1 << idx++] = true; // start state is always serialized
 
             writeInt32(propertyMask.Data);
 
@@ -2708,8 +2723,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// Reads an automaton from.
         /// </summary>
         /// <remarks>
-        /// Serializtion format is a bit unnatural, but we do it for compatiblity with old serialized data.
-        /// So we don't have to maintain 2 versions of derserialization
+        /// Serialization format is a bit unnatural, but we do it for compatibility with old serialized data.
+        /// So we don't have to maintain 2 versions of deserialization.
         /// </remarks>
         public static TThis Read(Func<double> readDouble, Func<int> readInt32, Func<TElementDistribution> readElementDistribution)
         {

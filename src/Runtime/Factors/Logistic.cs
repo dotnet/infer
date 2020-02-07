@@ -294,6 +294,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="LogisticOp"]/message_doc[@name="FalseMsg(Beta, Gaussian, Gaussian)"]/*'/>
         public static Gaussian FalseMsg([SkipIfUniform] Beta logistic, [Proper] Gaussian x, Gaussian falseMsg)
         {
+            if (x.IsUniform()) throw new ArgumentException("x is uniform", nameof(x));
             // falseMsg approximates sigma(-x)
             // logistic(sigma(x)) N(x;m,v)
             // = sigma(x)^(a-1) sigma(-x)^(b-1) N(x;m,v) 
