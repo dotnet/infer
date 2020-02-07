@@ -36,27 +36,6 @@ namespace Microsoft.ML.Probabilistic.Math
     /// </remarks>
     public static class MMath
     {
-        internal static uint NumericalPrecisionBits { get; private set; } = 53;
-
-        internal static void SetNumericalPrecision(uint value)
-        {
-            if (NumericalPrecisionBits != value)
-            {
-                if (double.IsNaN(value) || value <= 0)
-                    throw new ArgumentException(nameof(value));
-
-                var newSeries = new Series(value);
-                lock(precisionSettingLockObject)
-                {
-                    NumericalPrecisionBits = value;
-                    Series = newSeries;
-                }
-            }
-        }
-
-        static object precisionSettingLockObject = new object();
-        static Series Series { get; set; } = new Series(NumericalPrecisionBits);
-
         #region Bessel functions
 
         /// <summary>
@@ -766,7 +745,35 @@ namespace Microsoft.ML.Probabilistic.Math
                 // Use Taylor series at x=2
                 // Reference: https://dlmf.nist.gov/5.7#E3
                 double dx = x - 2;
-                double sum = Series.GammaAt2.Evaluate(dx);
+                double sum =
+                    // Truncated series 1: Gamma at 2
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    dx * (0.322467033424113218236207583323 +
+                    dx * (-0.0673523010531980951332460538371 +
+                    dx * (0.0205808084277845478790009241353 +
+                    dx * (-0.00738555102867398526627309729141 +
+                    dx * (0.00289051033074152328575298829849 +
+                    dx * (-0.00119275391170326097711393569283 +
+                    dx * (0.000509669524743042422335654813582 +
+                    dx * (-0.000223154758453579379761418803601 +
+                    dx * (0.0000994575127818085337145958900319 +
+                    dx * (-0.0000449262367381331417002075024064 +
+                    dx * (0.0000205072127756706915531665039783 +
+                    dx * (-0.00000943948827526839590398742510441 +
+                    dx * (0.00000437486678990748780418179322395 +
+                    dx * (-0.00000203921575380136623678190070967 +
+                    dx * (0.000000955141213040741983285717977295 +
+                    dx * (-0.000000449246919876456604329429033119 +
+                    dx * (0.000000212071848055546658692313590108 +
+                    dx * (-0.000000100432248239680996087208305005 +
+                    dx * (0.0000000476981016936398056576019341725 +
+                    dx * (-0.0000000227110946089431649103199811606 +
+                    dx * (0.0000000108386592148969540910749175797 +
+                    dx * (-0.00000000518347504197004665512124864706 +
+                    dx * (0.00000000248367454380247831718500866399 +
+                    dx * (-0.00000000119214014058609120744254820277 +
+                    dx * 5.73136724167886201333019485796e-10))))))))))))))))))))))))
+                    ;
                 sum = dx * (1 + Digamma1 + sum);
                 result += sum;
                 return result;
@@ -875,10 +882,15 @@ namespace Microsoft.ML.Probabilistic.Math
             // The threshold for applying de Moivre's expansion for the digamma function.
             const double c_digamma_small = 1e-6;
 
-            /* Use Taylor series if argument <= S */
+            /* Shift the argument and use Taylor series near 1 if argument <= S */
             if (x <= c_digamma_small)
             {
-                return (Digamma1 - 1 / x + Zeta2 * x);
+                return - 1 / x +
+                    // Truncated series 2: Digamma at 1
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    -0.577215664901532860606512090082 +
+                    x * 1.64493406684822643647241516665
+                    ;
             }
 
             if (x <= 2.5)
@@ -890,7 +902,35 @@ namespace Microsoft.ML.Probabilistic.Math
                     x++;
                 }
                 double dx = x - 2;
-                double sum2 = Series.DigammaAt2.Evaluate(dx);
+                double sum2 =
+                    // Truncated series 3: Digamma at 2
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    dx * (0.644934066848226436472415166646 +
+                    dx * (-0.202056903159594285399738161511 +
+                    dx * (0.0823232337111381915160036965412 +
+                    dx * (-0.0369277551433699263313654864570 +
+                    dx * (0.0173430619844491397145179297909 +
+                    dx * (-0.00834927738192282683979754984980 +
+                    dx * (0.00407735619794433937868523850865 +
+                    dx * (-0.00200839282608221441785276923241 +
+                    dx * (0.000994575127818085337145958900319 +
+                    dx * (-0.000494188604119464558702282526470 +
+                    dx * (0.000246086553308048298637998047740 +
+                    dx * (-0.000122713347578489146751836526357 +
+                    dx * (0.0000612481350587048292585451051353 +
+                    dx * (-0.0000305882363070204935517285106451 +
+                    dx * (0.0000152822594086518717325714876367 +
+                    dx * (-0.00000763719763789976227360029356303 +
+                    dx * (0.00000381729326499983985646164462194 +
+                    dx * (-0.00000190821271655393892565695779510 +
+                    dx * (0.000000953962033872796113152038683449 +
+                    dx * (-0.000000476932986787806463116719604373 +
+                    dx * (0.000000238450502727732990003648186753 +
+                    dx * (-0.000000119219925965311073067788718882 +
+                    dx * (0.0000000596081890512594796124402079358 +
+                    dx * (-0.0000000298035035146522801860637050694 +
+                    dx * 0.0000000149015548283650412346585066307))))))))))))))))))))))))
+                    ;
                 result2 += sum2;
                 return result2;
             }
@@ -910,7 +950,17 @@ namespace Microsoft.ML.Probabilistic.Math
             double invX = 1 / x;
             result += Math.Log(x) - 0.5 * invX;
             double invX2 = invX * invX;
-            double sum = Series.DigammaAsymptotic.Evaluate(invX2);
+            double sum =
+                // Truncated series 4: Digamma asymptotic
+                // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                invX2 * (1.0 / 12.0 +
+                invX2 * (-1.0 / 120.0 +
+                invX2 * (1.0 / 252.0 +
+                invX2 * (-1.0 / 240.0 +
+                invX2 * (1.0 / 132.0 +
+                invX2 * (-691.0 / 32760.0 +
+                invX2 * 1.0 / 12.0))))))
+                ;
             result -= sum;
             return result;
         }
@@ -947,7 +997,12 @@ namespace Microsoft.ML.Probabilistic.Math
             /* Shift the argument and use Taylor series at 1 if argument <= small */
             if (x <= c_trigamma_small)
             {
-                return (1.0 / (x * x) + Series.TrigammaAt1.Evaluate(x));
+                return 1.0 / (x * x) +
+                    // Truncated series 5: Trigamma at 1
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    1.64493406684822643647241516665 +
+                    x * -2.40411380631918857079947632302
+                    ;
             }
 
             result = 0.0;
@@ -963,7 +1018,18 @@ namespace Microsoft.ML.Probabilistic.Math
             // This expansion can be computed in Maple via asympt(Psi(1,x),x)
             double invX2 = 1 / (x * x);
             result += 0.5 * invX2;
-            double sum = Series.TrigammaAsymptotic.Evaluate(invX2);
+            double sum =
+                    // Truncated series 6: Trigamma asymptotic
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    invX2 * (1.0 / 6.0 +
+                    invX2 * (-1.0 / 30.0 +
+                    invX2 * (1.0 / 42.0 +
+                    invX2 * (-1.0 / 30.0 +
+                    invX2 * (5.0 / 66.0 +
+                    invX2 * (-691.0 / 2730.0 +
+                    invX2 * (7.0 / 6.0 +
+                    invX2 * -3617.0 / 510.0)))))))
+                    ;
             result += (1 + sum) / x;
             return result;
         }
@@ -983,7 +1049,12 @@ namespace Microsoft.ML.Probabilistic.Math
                          c_tetragamma_small = 1e-4;
             /* Use Taylor series if argument <= small */
             if (x < c_tetragamma_small)
-                return -2 / (x * x * x) + Series.TetragammaAt1.Evaluate(x);
+                return -2 / (x * x * x) +
+                    // Truncated series 7: Tetragamma at 1
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    -2.40411380631918857079947632302 +
+                    x * 6.49393940226682914909602217925
+                    ;
             double result = 0;
             /* Reduce to Tetragamma(x+n) where ( X + N ) >= L */
             while (x < c_tetragamma_large)
@@ -996,7 +1067,18 @@ namespace Microsoft.ML.Probabilistic.Math
             // Milton Abramowitz and Irene A. Stegun, Handbook of Mathematical Functions, Section 6.4
             double invX2 = 1 / (x * x);
             result += -invX2 / x;
-            double sum = Series.TetragammaAsymptotic.Evaluate(invX2);
+            double sum =
+                // Truncated series 8: Tetragamma asymptotic
+                // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                invX2 * (-1.0 +
+                invX2 * (-1.0 / 2.0 +
+                invX2 * (1.0 / 6.0 +
+                invX2 * (-1.0 / 6.0 +
+                invX2 * (3.0 / 10.0 +
+                invX2 * (-5.0 / 6.0 +
+                invX2 * (691.0 / 210.0 +
+                invX2 * -35.0 / 2.0)))))))
+                ;
             result += sum;
             return result;
         }
@@ -1185,8 +1267,15 @@ namespace Microsoft.ML.Probabilistic.Math
             double phi;
             if (Math.Abs(xOverAMinus1) < 1e-1)
             {
-                double XMinusLog1PlusCoefficient(int n) => (n <= 1) ? 0.0 : (n % 2 == 0 ? 1.0 : -1.0) / n;
-                phi = new PowerSeries(XMinusLog1PlusCoefficient).Evaluate(xOverAMinus1);
+                phi =
+                    // Truncated series 12: x - log(1 + x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    xOverAMinus1 * xOverAMinus1 * (1.0 / 2.0 +
+                    xOverAMinus1 * (-1.0 / 3.0 +
+                    xOverAMinus1 * (1.0 / 4.0 +
+                    xOverAMinus1 * (-1.0 / 5.0 +
+                    xOverAMinus1 * 1.0 / 6.0))))
+                    ;
             }
             else
             {
@@ -1329,40 +1418,28 @@ namespace Microsoft.ML.Probabilistic.Math
         {
             if (x > 0.3)
                 return 1 / MMath.Gamma(x + 1) - 1;
-            double sum = 0;
-            double term = x;
-            for (int i = 0; i < reciprocalFactorialMinus1Coeffs.Length; i++)
-            {
-                sum += reciprocalFactorialMinus1Coeffs[i] * term;
-                term *= x;
-            }
-            return sum;
-        }
 
-        /* using http://sagecell.sagemath.org/ (must not be indented)
-var('x');
-f = 1/gamma(x+1)-1
-[c[0].n(100) for c in f.taylor(x,0,16).coefficients()]
-         */
-        private static readonly double[] reciprocalFactorialMinus1Coeffs =
-        {
-            0.57721566490153286060651209008,
-            -0.65587807152025388107701951515,
-            -0.042002635034095235529003934875,
-            0.16653861138229148950170079510,
-            -0.042197734555544336748208301289,
-            -0.0096219715278769735621149216721,
-            0.0072189432466630995423950103404,
-            -0.0011651675918590651121139710839,
-            -0.00021524167411495097281572996312,
-            0.00012805028238811618615319862640,
-            -0.000020134854780788238655689391375,
-            -1.2504934821426706573453594884e-6,
-            1.1330272319816958823741296196e-6,
-            -2.0563384169776071034501526118e-7,
-            6.1160951044814158178625767024e-9,
-            5.0020076444692229300557063872e-9
-        };
+            return
+                // Truncated series 18: Reciprocal factorial minus 1
+                // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                x * (0.577215664901532860606512090082 +
+                x * (-0.655878071520253881077019515145 +
+                x * (-0.0420026350340952355290039348754 +
+                x * (0.166538611382291489501700795102 +
+                x * (-0.0421977345555443367482083012891 +
+                x * (-0.00962197152787697356211492167231 +
+                x * (0.00721894324666309954239501034044 +
+                x * (-0.00116516759185906511211397108402 +
+                x * (-0.000215241674114950972815729963027 +
+                x * (0.000128050282388116186153198626338 +
+                x * (-0.0000201348547807882386556893913662 +
+                x * (-0.00000125049348214267065734535945301 +
+                x * (0.00000113302723198169588237412961344 +
+                x * (-0.000000205633841697760710345015364430 +
+                x * (0.00000000611609510448141581786252410878 +
+                x * 0.00000000500200764446922293005568923640)))))))))))))))
+                ;
+        }
 
         /// <summary>
         /// Computes <c>x^a e^(-x)/Gamma(a)</c> to high accuracy.
@@ -1446,7 +1523,17 @@ f = 1/gamma(x+1)-1
                 // the series is:  sum_{i=1}^inf B_{2i} / (2i*(2i-1)*x^(2i-1))
                 double invX = 1.0 / x;
                 double invX2 = invX * invX;
-                double sum = invX * Series.GammalnAsymptotic.Evaluate(invX2);
+                double sum = invX * (
+                    // Truncated series 9: GammaLn asymptotic
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    1.0 / 12.0 +
+                    invX2 * (-1.0 / 360.0 +
+                    invX2 * (1.0 / 1260.0 +
+                    invX2 * (-1.0 / 1680.0 +
+                    invX2 * (1.0 / 1188.0 +
+                    invX2 * (-691.0 / 360360.0 +
+                    invX2 * 1.0 / 156.0)))))
+                    );
                 return sum;
             }
         }
@@ -1782,7 +1869,14 @@ f = 1/gamma(x+1)-1
                 // log(NormalCdf(x)) = log(1-NormalCdf(-x))
                 double y = NormalCdf(-x);
                 // log(1-y)
-                return -y * (1 + y * (0.5 + y * (1.0 / 3 + y * (0.25))));
+                return
+                    // Truncated series 11: log(1 - x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    y * (-1.0 +
+                    y * (-1.0 / 2.0 +
+                    y * (-1.0 / 3.0 +
+                    y * -1.0 / 4.0)))
+                    ;
             }
             else if (x >= large)
             {
@@ -1794,13 +1888,17 @@ f = 1/gamma(x+1)-1
                 double z = 1 / (x * x);
                 // asymptotic series for log(normcdf)
                 // Maple command: subs(x=-x,asympt(log(normcdf(-x)),x));
-                double s = z * (c_normcdfln_series[0] + z *
-                              (c_normcdfln_series[1] + z *
-                               (c_normcdfln_series[2] + z *
-                                (c_normcdfln_series[3] + z *
-                                 (c_normcdfln_series[4] + z *
-                                  (c_normcdfln_series[5] + z *
-                                   c_normcdfln_series[6]))))));
+                double s =
+                    // Truncated series 16: normcdfln asymptotic
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    z * (-1.0 +
+                    z * (5.0 / 2.0 +
+                    z * (-37.0 / 3.0 +
+                    z * (353.0 / 4.0 +
+                    z * (-4081.0 / 5.0 +
+                    z * (55205.0 / 6.0 +
+                    z * -854197.0 / 7.0))))))
+                    ;
                 return s - LnSqrt2PI - 0.5 * x * x - Math.Log(-x);
             }
         }
@@ -3114,7 +3212,14 @@ rr = mpf('-0.99999824265582826');
             if (x > 1e-4)
                 return 1 - Math.Sqrt(1 - x);
             else
-                return x * (1.0 / 2 + x * (1.0 / 8 + x * (1.0 / 16 + x * 5.0 / 128)));
+                return
+                    // Truncated series 17: 1 - sqrt(1 - x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * (1.0 / 2.0 +
+                    x * (1.0 / 8.0 +
+                    x * (1.0 / 16.0 +
+                    x * 5.0 / 128.0)))
+                    ;
         }
 
         /// <summary>
@@ -3251,7 +3356,22 @@ rr = mpf('-0.99999824265582826');
             {
                 // use the Taylor series for log(1+x) around x=0
                 // Maple command: series(log(1+x),x);
-                return Series.Log1Plus.Evaluate(x);
+                return
+                    // Truncated series 10: log(1 + x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * (1.0 +
+                    x * (-1.0 / 2.0 +
+                    x * (1.0 / 3.0 +
+                    x * (-1.0 / 4.0 +
+                    x * (1.0 / 5.0 +
+                    x * (-1.0 / 6.0 +
+                    x * (1.0 / 7.0 +
+                    x * (-1.0 / 8.0 +
+                    x * (1.0 / 9.0 +
+                    x * (-1.0 / 10.0 +
+                    x * (1.0 / 11.0 +
+                    x * -1.0 / 12.0)))))))))))
+                    ;
             }
             else
             {
@@ -3304,7 +3424,20 @@ rr = mpf('-0.99999824265582826');
             if (x < -3.5)
             {
                 double expx = Math.Exp(x);
-                return Series.Log1Minus.Evaluate(expx);
+                return
+                    // Truncated series 11: log(1 - x)
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    expx * (-1.0 +
+                    expx * (-1.0 / 2.0 +
+                    expx * (-1.0 / 3.0 +
+                    expx * (-1.0 / 4.0 +
+                    expx * (-1.0 / 5.0 +
+                    expx * (-1.0 / 6.0 +
+                    expx * (-1.0 / 7.0 +
+                    expx * (-1.0 / 8.0 +
+                    expx * (-1.0 / 9.0 +
+                    expx * -1.0 / 10.0)))))))))
+                    ;
             }
             else
             {
@@ -3325,7 +3458,14 @@ rr = mpf('-0.99999824265582826');
         {
             if (Math.Abs(x) < 2e-3)
             {
-                return x * (1 + x * (0.5 + x * (1.0 / 6 + x * (1.0 / 24))));
+                return
+                    // Truncated series 13: exp(x) - 1
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * (1.0 +
+                    x * (1.0 / 2.0 +
+                    x * (1.0 / 6.0 +
+                    x * 1.0 / 24.0)))
+                    ;
             }
             else
             {
@@ -3342,9 +3482,22 @@ rr = mpf('-0.99999824265582826');
         {
             if (Math.Abs(x) < 6e-1)
             {
-                return x * (1.0 / 6 + x * (1.0 / 24 + x * (1.0 / 120 + x * (1.0 / 720 +
-                    x * (1.0 / 5040 + x * (1.0 / 40320 + x * (1.0 / 362880 + x * (1.0 / 3628800 +
-                    x * (1.0 / 39916800 + x * (1.0 / 479001600 + x * (1.0 / 6227020800 + x * (1.0 / 87178291200))))))))))));
+                return
+                    // Truncated series 14: ((exp(x) - 1) / x - 1) / x - 0.5
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * (1.0 / 6.0 +
+                    x * (1.0 / 24.0 +
+                    x * (1.0 / 120.0 +
+                    x * (1.0 / 720.0 +
+                    x * (1.0 / 5040.0 +
+                    x * (1.0 / 40320.0 +
+                    x * (1.0 / 362880.0 +
+                    x * (1.0 / 3628800.0 +
+                    x * (1.0 / 39916800.0 +
+                    x * (1.0 / 479001600.0 +
+                    x * (1.0 / 6227020800.0 +
+                    x * 1.0 / 87178291200.0)))))))))))
+                    ;
             }
             else if (double.IsPositiveInfinity(x))
             {
@@ -3370,7 +3523,13 @@ rr = mpf('-0.99999824265582826');
         {
             if (x < 1e-3)
             {
-                return Math.Log(x) + x * (0.5 + x * (1.0 / 24 + x * (-1.0 / 2880)));
+                return Math.Log(x) +
+                    // Truncated series 15: log(exp(x) - 1) / x
+                    // Generated automatically by /src/Tools/GenerateSeries/GenerateSeries.py
+                    x * (1.0 / 2.0 +
+                    x * (1.0 / 24.0 +
+                    x * x * -1.0 / 2880.0))
+                    ;
             }
             else if (x > 50)
             {
@@ -4645,14 +4804,6 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// Zeta4 = pi^4/90 = polygamma(3,1)/6
         /// </summary>
         private const double Zeta4 = 1.0823232337111381915;
-
-        /// <summary>
-        /// Coefficients of the asymptotic expansion of NormalCdfLn.
-        /// </summary>
-        private static readonly double[] c_normcdfln_series =
-            {
-                -1, 5.0/2, -37.0/3, 353.0/4, -4081.0/5, 55205.0/6, -854197.0/7
-            };
 
         /// <summary>
         /// NormCdf(x)/NormPdf(x) for x = 0, -1, -2, -3, ..., -16

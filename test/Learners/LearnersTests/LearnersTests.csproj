@@ -41,6 +41,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU' OR '$(Configuration)|$(Platform)'=='ReleaseFull|AnyCPU' OR '$(Configuration)|$(Platform)'=='ReleaseCore|AnyCPU'">
     <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
     <Optimize>true</Optimize>
   </PropertyGroup>
 
