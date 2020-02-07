@@ -200,12 +200,12 @@ namespace Microsoft.ML.Probabilistic.Utilities
                     Array.Copy(typeArguments, parentTypeParameterCount, nestedTypeArguments, 0, nestedTypeArguments.Length);
                     typeArguments = nestedTypeArguments;
                 }
-                s.Append("&lt;");
+                s.Append("<");
                 Set<Type> constrained2 = constrained;
                 if (constrained2 == null) constrained2 = new Set<Type>();
                 constrained2.Add(type);
                 AppendTypes(s, typeArguments, showConstraints, constrained2);
-                s.Append("&gt;");
+                s.Append(">");
                 return s.ToString();
             }
             else if (type.IsArray)
@@ -260,6 +260,20 @@ namespace Microsoft.ML.Probabilistic.Utilities
         }
 
         /// <summary>
+        /// Get a string of the form "typeName.methodName&amp;lt;types&amp;gt;", suitable
+        /// for use as an XML element value.
+        /// </summary>
+        /// <param name="method">A method.</param>
+        /// <returns>A string.</returns>
+        public static string MethodFullNameToXmlString(MethodBase method) =>
+            // Note that '&' is not escaped, because
+            // this character will not appear in a
+            // method name.
+            MethodFullNameToString(method)
+                .Replace("<", "&lt;")
+                .Replace(">", "&gt;");
+
+        /// <summary>
         /// Get a string of the form "typeName.methodName&lt;types&gt;".
         /// </summary>
         /// <param name="method"></param>
@@ -279,10 +293,10 @@ namespace Microsoft.ML.Probabilistic.Utilities
             if (method.IsGenericMethod)
             {
                 StringBuilder s = new StringBuilder(method.Name);
-                s.Append("&lt;");
+                s.Append("<");
                 Type[] typeArguments = method.GetGenericArguments();
                 AppendTypes(s, typeArguments);
-                s.Append("&gt;");
+                s.Append(">");
                 return s.ToString();
             }
             else
