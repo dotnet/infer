@@ -10,10 +10,11 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOpBase"]/doc/*'/>
     [Quality(QualityBand.Preview)]
     public class VariablePointOpBase
     {
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp{T}"]/message_doc[@name="LogEvidenceRatio{TDist}(TDist, TDist, TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOpBase"]/message_doc[@name="LogEvidenceRatio{TDist}(TDist, TDist, TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
         public static double LogEvidenceRatio<TDist>(TDist use, TDist def, TDist to_marginal)
             where TDist : CanGetLogAverageOf<TDist>
@@ -22,7 +23,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return def.GetLogAverageOf(use) - use.GetLogAverageOf(to_marginal);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp{T}"]/message_doc[@name="MarginalAverageConditionalInit{TDist}(TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOpBase"]/message_doc[@name="MarginalAverageConditionalInit{TDist}(TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
         [Skip]
         public static TDist MarginalAverageConditionalInit<TDist>([IgnoreDependency] TDist def)
@@ -31,35 +32,35 @@ namespace Microsoft.ML.Probabilistic.Factors
             return (TDist)def.Clone();
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp{T}"]/message_doc[@name="UseAverageConditional{TDist}(TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOpBase"]/message_doc[@name="UseAverageConditional{TDist}(TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
         public static TDist UseAverageConditional<TDist>([IsReturned] TDist to_marginal)
         {
             return to_marginal;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp{T}"]/message_doc[@name="DefAverageConditional{TDist}(TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOpBase"]/message_doc[@name="DefAverageConditional{TDist}(TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
         public static TDist DefAverageConditional<TDist>([IsReturned] TDist to_marginal)
         {
             return to_marginal;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp{T}"]/message_doc[@name="AverageLogFactor()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOpBase"]/message_doc[@name="AverageLogFactor()"]/*'/>
         [Skip]
         public static double AverageLogFactor()
         {
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp{T}"]/message_doc[@name="UseAverageLogarithm{TDist}(TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOpBase"]/message_doc[@name="UseAverageLogarithm{TDist}(TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
         public static TDist UseAverageLogarithm<TDist>([IsReturned] TDist to_marginal)
         {
             return to_marginal;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp{T}"]/message_doc[@name="DefAverageLogarithm{TDist}(TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOpBase"]/message_doc[@name="DefAverageLogarithm{TDist}(TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
         public static TDist DefAverageLogarithm<TDist>([IsReturned] TDist to_marginal)
         {
@@ -94,11 +95,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
     }
 
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Mean{T}"]/doc/*'/>
     [FactorMethod(typeof(Factor), "VariablePoint<>", Default = false)]
     [Quality(QualityBand.Preview)]
     public class VariablePointOp_Mean<T> : VariablePointOpBase
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp{T}"]/message_doc[@name="MarginalAverageConditional{TDist}(TDist, TDist, TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Mean{T}"]/message_doc[@name="MarginalAverageConditional{TDist}(TDist, TDist, TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
         [SkipIfAllUniform]
         public static TDist MarginalAverageConditional<TDist>([NoInit] TDist use, TDist def, TDist result)
@@ -109,7 +111,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp{T}"]/message_doc[@name="MarginalAverageLogarithm{TDist}(TDist, TDist, TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Mean{T}"]/message_doc[@name="MarginalAverageLogarithm{TDist}(TDist, TDist, TDist)"]/*'/>
         /// <typeparam name="TDist">The type of the marginal of the variable.</typeparam>
         [SkipIfAllUniform]
         public static TDist MarginalAverageLogarithm<TDist>([NoInit] TDist use, TDist def, TDist result)
@@ -270,7 +272,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return buffer;
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Secant"]/message_doc[@name="MarginalAverageConditional{TDist}(TDist, TDist, TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Rprop"]/message_doc[@name="MarginalAverageConditional(Gaussian, Gaussian, RpropBufferData, Gaussian)"]/*'/>
         public static Gaussian MarginalAverageConditional([IgnoreDependency] Gaussian use, [IgnoreDependency] Gaussian def, [RequiredArgument] RpropBufferData buffer, Gaussian result)
         {
             result.Point = buffer.nextPoint;
@@ -320,7 +322,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return bufferTG;
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Secant"]/message_doc[@name="MarginalAverageConditional{TDist}(TDist, TDist, TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_RpropTruncatedGaussian"]/message_doc[@name="MarginalAverageConditional(TruncatedGaussian, TruncatedGaussian, RpropBufferData, TruncatedGaussian)"]/*'/>
         public static TruncatedGaussian MarginalAverageConditional([IgnoreDependency] TruncatedGaussian use, [IgnoreDependency] TruncatedGaussian def, [RequiredArgument] RpropBufferData bufferTG, TruncatedGaussian result)
         {
             result.Point = bufferTG.nextPoint;
@@ -389,7 +391,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return bufferTGa;
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Secant"]/message_doc[@name="MarginalAverageConditional{TDist}(TDist, TDist, TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_RpropTruncatedGamma"]/message_doc[@name="MarginalAverageConditional(TruncatedGamma, TruncatedGamma, RpropBufferData, TruncatedGamma)"]/*'/>
         public static TruncatedGamma MarginalAverageConditional([IgnoreDependency] TruncatedGamma use, [IgnoreDependency] TruncatedGamma def, [RequiredArgument] RpropBufferData bufferTGa, TruncatedGamma result)
         {
             if (VariablePointOp_RpropGamma.UseMean)
@@ -460,7 +462,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return buffer0;
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Secant"]/message_doc[@name="MarginalAverageConditional{TDist}(TDist, TDist, TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_RpropGamma"]/message_doc[@name="MarginalAverageConditional(Gamma, Gamma, RpropBufferData, Gamma)"]/*'/>
         public static Gamma MarginalAverageConditional([IgnoreDependency] Gamma use, [IgnoreDependency] Gamma def, [RequiredArgument] RpropBufferData buffer0, Gamma result)
         {
             if (UseMean)
@@ -513,7 +515,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return bufferBeta;
         }
 
-        // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_Secant"]/message_doc[@name="MarginalAverageConditional{TDist}(TDist, TDist, TDist)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="VariablePointOp_RpropBeta"]/message_doc[@name="MarginalAverageConditional(Beta, Beta, RpropBufferData, Beta)"]/*'/>
         public static Beta MarginalAverageConditional([IgnoreDependency] Beta use, [IgnoreDependency] Beta def, [RequiredArgument] RpropBufferData bufferBeta, Beta result)
         {
             result.Point = bufferBeta.nextPoint;

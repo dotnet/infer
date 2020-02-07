@@ -31,7 +31,7 @@ namespace Microsoft.ML.Probabilistic.Learners.Runners.MovieLens
         /// <summary>
         /// Converts raiting file.
         /// </summary>
-        /// /// <param name="reader">The input file reader.</param>
+        /// <param name="reader">The input file reader.</param>
         /// <param name="writer">The output file writer.</param>
         private static void ConvertRating(TextReader reader, TextWriter writer)
         {

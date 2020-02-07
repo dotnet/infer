@@ -17,6 +17,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     {
         // Gamma = TruncatedGamma ^ y  /////////////////////////////////////////////////////////
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(TruncatedGamma, double)"]/*'/>
         public static Gamma PowAverageConditional([SkipIfUniform] TruncatedGamma x, double y)
         {
             double mean = x.GetMeanPower(y);
@@ -43,6 +44,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gamma.FromShapeAndRate(shape, rate);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(Gamma, TruncatedGamma, double)"]/*'/>
         public static TruncatedGamma XAverageConditional([SkipIfUniform] Gamma pow, TruncatedGamma x, double y)
         {
             // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
@@ -64,12 +66,14 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         // Gamma = Gamma ^ y  /////////////////////////////////////////////////////////
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(Gamma, double, Gamma)"]/*'/>
         public static Gamma PowAverageConditional([SkipIfUniform] Gamma x, double y, Gamma result)
         {
             GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y);
             return GammaFromGammaPower(message);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(Gamma, Gamma, double, Gamma)"]/*'/>
         public static Gamma XAverageConditional([SkipIfUniform] Gamma pow, Gamma x, double y, Gamma result)
         {
             // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
@@ -98,6 +102,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         // GammaPower = GammaPower ^ y  /////////////////////////////////////////////////////////
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="LogAverageFactor(GammaPower, GammaPower, double)"]/*'/>
         public static double LogAverageFactor(GammaPower pow, GammaPower x, double y)
         {
             // GetLogAverageOf = 
@@ -110,12 +115,14 @@ namespace Microsoft.ML.Probabilistic.Factors
             return toPow.GetLogAverageOf(pow);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(GammaPower, double, GammaPower)"]/*'/>
         public static GammaPower PowAverageConditional([SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
             GammaPower message = GammaPower.FromShapeAndRate(x.Shape, x.Rate, y * x.Power);
             return GammaPowerFromDifferentPower(message, result.Power);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(GammaPower, GammaPower, double, GammaPower)"]/*'/>
         public static GammaPower XAverageConditional([SkipIfUniform] GammaPower pow, GammaPower x, double y, GammaPower result)
         {
             // message computed below should be uniform when pow is uniform, but may not due to roundoff error.
@@ -184,11 +191,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             }
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageLogarithm(GammaPower, double, GammaPower)"]/*'/>
         public static GammaPower PowAverageLogarithm([SkipIfUniform] GammaPower x, double y, GammaPower result)
         {
             return PowAverageConditional(x, y, result);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageLogarithm(GammaPower, GammaPower, double, GammaPower)"]/*'/>
         public static GammaPower XAverageLogarithm([SkipIfUniform] GammaPower pow, GammaPower x, double y, GammaPower result)
         {
             return XAverageConditional(pow, x, y, result);
@@ -196,11 +205,13 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         // GammaPower = Gamma ^ y //////////////////////////////////////////////////////////////
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageConditional(Gamma, double)"]/*'/>
         public static GammaPower PowAverageConditional([SkipIfUniform] Gamma x, double y)
         {
             return GammaPower.FromShapeAndRate(x.Shape, x.Rate, y);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageConditional(GammaPower, double)"]/*'/>
         public static Gamma XAverageConditional([SkipIfUniform] GammaPower pow, double y)
         {
             if (y != pow.Power)
@@ -208,11 +219,13 @@ namespace Microsoft.ML.Probabilistic.Factors
             return Gamma.FromShapeAndRate(pow.Shape + (1 - y), pow.Rate);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="PowAverageLogarithm(Gamma, double)"]/*'/>
         public static GammaPower PowAverageLogarithm([SkipIfUniform] Gamma x, double y)
         {
             return PowAverageConditional(x, y);
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PowerOp"]/message_doc[@name="XAverageLogarithm(GammaPower, double)"]/*'/>
         public static Gamma XAverageLogarithm([SkipIfUniform] GammaPower pow, double y)
         {
             return XAverageConditional(pow, y);

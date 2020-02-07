@@ -9,7 +9,7 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Microsoft.ML.Probabilistic.Math;
     using Microsoft.ML.Probabilistic.Factors.Attributes;
 
-    // /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MaxGaussianOp"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="MaxGaussianOp"]/doc/*'/>
     [FactorMethod(new string[] { "max", "a", "b" }, typeof(Math), "Max", typeof(double), typeof(double))]
     [Quality(QualityBand.Stable)]
     public static class MaxGaussianOp

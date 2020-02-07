@@ -414,7 +414,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableOp"]/message_doc[@name="LogEvidenceRatio()"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="DerivedVariableOp"]/message_doc[@name="LogEvidenceRatio{T}(T)"]/*'/>
         [Skip]
         public static double LogEvidenceRatio<T>(T use)
         {

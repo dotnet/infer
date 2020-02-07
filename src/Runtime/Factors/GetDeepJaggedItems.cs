@@ -11,14 +11,14 @@ namespace Microsoft.ML.Probabilistic.Factors
     using Attributes;
     using Utilities;
 
-    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/doc/*'/>
+    /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/doc/*'/>
     /// <typeparam name="T">The type of an item.</typeparam>
     [FactorMethod(typeof(Factor), "GetDeepJaggedItems<>", Default = true)]
     [Quality(QualityBand.Mature)]
     [Buffers("marginal")]
     public static class GetDeepJaggedItemsOp<T>
     {
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="LogAverageFactor(IList{T}, IList{T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="LogAverageFactor(IList{IList{IList{T}}}, IList{T}, IList{IList{IList{int}}})"]/*'/>
         public static double LogAverageFactor(IList<IList<IList<T>>> items, IList<T> array, IList<IList<IList<int>>> indices)
         {
             IEqualityComparer<T> equalityComparer = Utilities.Util.GetEqualityComparer<T>();
@@ -41,19 +41,19 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="LogEvidenceRatio(IList{T}, IList{T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="LogEvidenceRatio(IList{IList{IList{T}}}, IList{T}, IList{IList{IList{int}}})"]/*'/>
         public static double LogEvidenceRatio(IList<IList<IList<T>>> items, IList<T> array, IList<IList<IList<int>>> indices)
         {
             return LogAverageFactor(items, array, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="AverageLogFactor(IList{T}, IList{T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="AverageLogFactor(IList{IList{IList{T}}}, IList{T}, IList{IList{IList{int}}})"]/*'/>
         public static double AverageLogFactor(IList<IList<IList<T>>> items, IList<T> array, IList<IList<IList<int>>> indices)
         {
             return LogAverageFactor(items, array, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType}(IList{DistributionType}, IList{DistributionType}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="LogAverageFactor{ItemType, ItemType2,DistributionType}(IList{ItemType}, IList{DistributionType}, IList{IList{IList{int}}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
@@ -92,7 +92,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType}(IList{DistributionType}, IList{DistributionType})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="AverageLogFactor{ItemType, ItemType2, DistributionType}(IList{ItemType}, IList{DistributionType})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
@@ -105,7 +105,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType}(IList{T}, IList{DistributionType}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType}(IList{IList{IList{T}}}, IList{DistributionType}, IList{IList{IList{int}}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         public static double LogAverageFactor<DistributionType>(IList<IList<IList<T>>> items, IList<DistributionType> array, IList<IList<IList<int>>> indices)
             where DistributionType : HasPoint<T>, CanGetLogProb<T>
@@ -140,7 +140,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IList{T}, IList{DistributionType}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IList{IList{IList{T}}}, IList{DistributionType}, IList{IList{IList{int}}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         public static double LogEvidenceRatio<DistributionType>(IList<IList<IList<T>>> items, IList<DistributionType> array, IList<IList<IList<int>>> indices)
             where DistributionType : HasPoint<T>, CanGetLogProb<T>
@@ -148,7 +148,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return LogAverageFactor<DistributionType>(items, array, indices);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType}(IList{T}, IList{DistributionType})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType}(IList{IList{IList{T}}}, IList{DistributionType})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         [Skip]
         public static double AverageLogFactor<DistributionType>(IList<IList<IList<T>>> items, IList<DistributionType> array)
@@ -157,7 +157,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="LogAverageFactor{DistributionType}(IList{DistributionType}, IList{T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="LogAverageFactor{ItemType, ItemType2, DistributionType}(IList{ItemType}, IList{T}, IList{IList{IList{int}}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
@@ -187,7 +187,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IList{DistributionType}, IList{T}, IList{int})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{ItemType, ItemType2,DistributionType}(IList{ItemType}, IList{T}, IList{IList{IList{int}}})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
@@ -200,7 +200,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return 0.0;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="AverageLogFactor{DistributionType}(IList{DistributionType}, IList{T})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="AverageLogFactor{ItemType, ItemType2,DistributionType}(IList{ItemType}, IList{T})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
@@ -214,7 +214,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         }
 
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{DistributionType}(IList{DistributionType}, IList{DistributionType}, IList{int}, IList{DistributionType})"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="LogEvidenceRatio{ItemType, ItemType2,DistributionType}(IList{ItemType}, IList{DistributionType}, IList{IList{IList{int}}}, IList{ItemType})"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
@@ -260,7 +260,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return z;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="MarginalInit{ArrayType}(ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="MarginalInit{ArrayType}(ArrayType)"]/*'/>
         /// <typeparam name="ArrayType">The type of an array for the marginal.</typeparam>
         public static ArrayType MarginalInit<ArrayType>([SkipIfUniform] ArrayType array)
             where ArrayType : ICloneable
@@ -268,6 +268,9 @@ namespace Microsoft.ML.Probabilistic.Factors
             return (ArrayType)array.Clone();
         }
 
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="Marginal{ArrayType,DistributionType}(ArrayType,ArrayType,ArrayType)"]/*'/>
+        /// <typeparam name="ArrayType">The type of an array for the marginal.</typeparam>
+        /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         [SkipIfAllUniform("array", "to_array")]
         [MultiplyAll]
         public static ArrayType Marginal<ArrayType, DistributionType>(
@@ -284,7 +287,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="MarginalIncrement{ArrayType, DistributionType}(ArrayType, DistributionType, DistributionType, IList{int}, int)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="MarginalIncrement{ArrayType, ItemType, ItemType2, DistributionType}(ArrayType, ItemType, ItemType, IList{IList{IList{int}}}, int)"]/*'/>
         /// <typeparam name="ArrayType">The type of an array for the marginal.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
@@ -316,7 +319,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, DistributionType}(DistributionType, ArrayType, ArrayType, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="ItemsAverageConditional{ArrayType, ItemType, ItemType2, DistributionType}(ItemType, ArrayType, ArrayType, IList{IList{IList{int}}}, int, ItemType)"]/*'/>
         /// <typeparam name="ArrayType">The type of an array for the marginal.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
@@ -353,7 +356,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IList{DistributionType}, IList{int}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IList{ItemType}, IList{IList{IList{int}}}, ArrayType)"]/*'/>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
@@ -389,7 +392,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IList{T}, IList{int}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="ArrayAverageConditional{DistributionType, ArrayType}(IList{IList{IList{T}}}, IList{IList{IList{int}}}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the resulting array.</typeparam>
         public static ArrayType ArrayAverageConditional<DistributionType, ArrayType>(
@@ -423,7 +426,7 @@ namespace Microsoft.ML.Probabilistic.Factors
 
         //-- VMP -------------------------------------------------------------------------------------------------------------
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="ItemsAverageLogarithm{DistributionType}(IList{DistributionType}, IList{int}, int, DistributionType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="ItemsAverageLogarithm{ItemType, ItemType2, DistributionType}(IList{DistributionType}, IList{IList{IList{int}}}, int, ItemType)"]/*'/>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
@@ -451,7 +454,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return result;
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType}(IList{DistributionType}, IList{int}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="ArrayAverageLogarithm{ItemType, ItemType2, DistributionType, ArrayType}(IList{ItemType}, IList{IList{IList{int}}}, ArrayType)"]/*'/>
         /// <typeparam name="ItemType">The type of a sub-array.</typeparam>
         /// <typeparam name="ItemType2">The type of a sub-sub-array.</typeparam>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
@@ -466,7 +469,7 @@ namespace Microsoft.ML.Probabilistic.Factors
             return ArrayAverageConditional<ItemType, ItemType2, DistributionType, ArrayType>(items, indices, result);
         }
 
-        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetJaggedItemsOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType}(IList{T}, IList{int}, ArrayType)"]/*'/>
+        /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="GetDeepJaggedItemsOp{T}"]/message_doc[@name="ArrayAverageLogarithm{DistributionType, ArrayType}(IList{IList{IList{T}}}, IList{IList{IList{int}}}, ArrayType)"]/*'/>
         /// <typeparam name="DistributionType">The type of a distribution over array elements.</typeparam>
         /// <typeparam name="ArrayType">The type of the resulting array.</typeparam>
         public static ArrayType ArrayAverageLogarithm<DistributionType, ArrayType>(IList<IList<IList<T>>> items, IList<IList<IList<int>>> indices, ArrayType result)
