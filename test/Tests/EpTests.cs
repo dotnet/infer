@@ -1982,6 +1982,133 @@ namespace Microsoft.ML.Probabilistic.Tests
         }
 
         [Fact]
+        //[Trait("Category", "ModifiesGlobals")]
+        public void GammaPowerSumRRRTest()
+        {
+            Assert.True(PlusGammaOp.AAverageConditional(GammaPower.FromShapeAndRate(299, 2135, -1), GammaPower.FromShapeAndRate(2.01, 10, -1), GammaPower.FromShapeAndRate(12, 22, -1), GammaPower.Uniform(-1)).Shape > 2);
+            Assert.True(PlusGammaOp.AAverageConditional(GammaPower.Uniform(-1), GammaPower.FromShapeAndRate(2.0095439611576689, 43.241375394505766, -1), GammaPower.FromShapeAndRate(12, 11, -1), GammaPower.Uniform(-1)).IsUniform());
+
+            Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
+            IfBlock block = Variable.If(evidence);
+            Variable<GammaPower> bPriorVar = Variable.Observed(default(GammaPower)).Named("bPrior");
+            Variable<double> b = Variable<double>.Random(bPriorVar).Named("b");
+            Variable<GammaPower> aPriorVar = Variable.Observed(default(GammaPower)).Named("aPrior");
+            Variable<double> a = Variable<double>.Random(aPriorVar).Named("a");
+            Variable<double> product = (a + b).Named("product");
+            Variable<GammaPower> productPriorVar = Variable.Observed(default(GammaPower)).Named("productPrior");
+            Variable.ConstrainEqualRandom(product, productPriorVar);
+            block.CloseBlock();
+            InferenceEngine engine = new InferenceEngine();
+
+            var groundTruthArray = new[]
+            {
+                //((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.MaxValue, 1)),
+                // (GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndScale(9, 0.1, 1), GammaPower.PointMass(5.6183114927306835E-307, 1), 0.79850769622135)),
+                //((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1)),
+                // (GammaPower.PointMass(0, 1.0), GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1), double.NegativeInfinity)),
+                ((GammaPower.FromShapeAndRate(2.25, 0.625, -1), GammaPower.FromShapeAndRate(100000002, 100000001, -1), GammaPower.PointMass(5, -1)),
+                 (GammaPower.FromShapeAndRate(388689405.3673563, 388689405.50670177, -1.0), GammaPower.FromShapeAndRate(488689405.1173563, 488689405.88170177, -1.0), GammaPower.PointMass(5, -1), -4.80649551611576)),
+                ((GammaPower.FromShapeAndRate(2.25, 0.625, -1), GammaPower.FromShapeAndRate(100000002, 100000001, -1), GammaPower.PointMass(0, -1)),
+                 (GammaPower.PointMass(0, -1.0), GammaPower.PointMass(0, -1.0), GammaPower.PointMass(0, -1), double.NegativeInfinity)),
+                //((GammaPower.FromShapeAndRate(0.83228652924877289, 0.31928405884349487, -1), GammaPower.FromShapeAndRate(1.7184321234630087, 0.709692740551586, -1), GammaPower.FromShapeAndRate(491, 1583.0722891566263, -1)),
+                // (GammaPower.FromShapeAndRate(3.1727695744145481, 10.454478169320565, -1.0), GammaPower.FromShapeAndRate(2.469020042117986, 2.5421356314915293, -1.0), GammaPower.FromShapeAndRate(495.57371802470414, 1592.4685605878328, -1.0), -3.57744782716672)),
+                ((GammaPower.FromShapeAndRate(1, 1, 1), GammaPower.FromShapeAndRate(1, 1, 1), GammaPower.Uniform(1)),
+                 (GammaPower.FromShapeAndRate(1, 1, 1), GammaPower.FromShapeAndRate(1, 1, 1), new GammaPower(2, 1, 1), 0)),
+                ((GammaPower.FromShapeAndRate(1, 1, 1), GammaPower.FromShapeAndRate(1, 1, 1), GammaPower.FromShapeAndRate(10, 1, 1)),
+                 (GammaPower.FromShapeAndRate(2.2, 0.8, 1), GammaPower.FromShapeAndRate(2.2, 0.8, 1), GammaPower.FromShapeAndRate(11, 2, 1), -5.32133409609914)),
+                ((GammaPower.FromShapeAndRate(3, 1, -1), GammaPower.FromShapeAndRate(4, 1, -1), GammaPower.Uniform(-1)),
+                 (GammaPower.FromShapeAndRate(3, 1, -1), GammaPower.FromShapeAndRate(4, 1, -1), GammaPower.FromShapeAndRate(4.311275674659143, 2.7596322350392035, -1.0), 0)),
+                ((GammaPower.FromShapeAndRate(3, 1, -1), GammaPower.FromShapeAndRate(4, 1, -1), GammaPower.FromShapeAndRate(10, 1, -1)),
+                 (new GammaPower(10.17, 0.6812, -1), new GammaPower(10.7, 0.7072, -1), new GammaPower(17.04, 0.2038, -1), -5.80097480415528)),
+                //((GammaPower.FromShapeAndRate(2, 1, -1), GammaPower.FromShapeAndRate(2, 1, -1), GammaPower.Uniform(-1)),
+                // (GammaPower.FromShapeAndRate(2, 1, -1), GammaPower.FromShapeAndRate(2, 1, -1), new GammaPower(2, 2, -1), 0)),
+                //((GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.FromShapeAndRate(30, 1, -1)),
+                // (GammaPower.FromShapeAndRate(11.057594449558747, 2.0731054100295871, -1.0), GammaPower.FromShapeAndRate(11.213079710986863, 2.1031756133562678, -1.0), GammaPower.FromShapeAndRate(28.815751741667615, 1.0848182432207041, -1.0), -4.22210057295786)),
+                //((GammaPower.FromShapeAndRate(1, 1, 2), GammaPower.FromShapeAndRate(1, 1, 2), GammaPower.Uniform(2)),
+                // (GammaPower.FromShapeAndRate(1, 1, 2), GammaPower.FromShapeAndRate(1, 1, 2), GammaPower.FromShapeAndRate(0.16538410345846666, 0.219449497990138, 2.0), 0)),
+                //((GammaPower.FromShapeAndRate(1, 1, 2), GammaPower.FromShapeAndRate(1, 1, 2), GammaPower.FromShapeAndRate(30, 1, 2)),
+                // (GammaPower.FromShapeAndRate(8.72865708291647, 1.71734403810018, 2.0), GammaPower.FromShapeAndRate(8.5298603954575931, 1.6767026737490067, 2.0), GammaPower.FromShapeAndRate(25.831187278202215, 1.0852321896648485, 2.0), -14.5369973268808)),
+            };
+
+            //using (TestUtils.TemporarilyAllowGammaImproperProducts)
+            {
+                foreach (var groundTruth in groundTruthArray)
+                {
+                    var (bPrior, aPrior, productPrior) = groundTruth.Item1;
+                    var (bExpected, aExpected, productExpected, evExpected) = groundTruth.Item2;
+                    bPriorVar.ObservedValue = bPrior;
+                    aPriorVar.ObservedValue = aPrior;
+                    productPriorVar.ObservedValue = productPrior;
+
+                    GammaPower bActual = engine.Infer<GammaPower>(b);
+                    GammaPower aActual = engine.Infer<GammaPower>(a);
+                    GammaPower productActual = engine.Infer<GammaPower>(product);
+                    double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
+
+                    if (false)
+                    {
+                        // importance sampling
+                        Rand.Restart(0);
+                        double totalWeight = 0;
+                        GammaPowerEstimator bEstimator = new GammaPowerEstimator(bPrior.Power);
+                        GammaPowerEstimator aEstimator = new GammaPowerEstimator(aPrior.Power);
+                        GammaPowerEstimator productEstimator = new GammaPowerEstimator(productPrior.Power);
+                        MeanVarianceAccumulator bMva = new MeanVarianceAccumulator();
+                        MeanVarianceAccumulator aMva = new MeanVarianceAccumulator();
+                        MeanVarianceAccumulator productMva = new MeanVarianceAccumulator();
+                        int numIter = 10000000;
+                        for (int iter = 0; iter < numIter; iter++)
+                        {
+                            if (iter % 1000000 == 0) Trace.WriteLine($"iter = {iter}");
+                            double bSample = bPrior.Sample();
+                            double aSample = aPrior.Sample();
+                            if (productPrior.Rate > 1e100)
+                            {
+                                bSample = 0;
+                                aSample = 0;
+                            }
+                            double productSample = aSample + bSample;
+                            double logWeight = productPrior.GetLogProb(productSample);
+                            double weight = System.Math.Exp(logWeight);
+                            totalWeight += weight;
+                            bEstimator.Add(bSample, weight);
+                            aEstimator.Add(aSample, weight);
+                            productEstimator.Add(productSample, weight);
+                            bMva.Add(bSample, weight);
+                            aMva.Add(aSample, weight);
+                            productMva.Add(productSample, weight);
+                        }
+                        Trace.WriteLine($"totalWeight = {totalWeight}");
+                        evExpected = System.Math.Log(totalWeight / numIter);
+                        bExpected = bEstimator.GetDistribution(bPrior);
+                        aExpected = aEstimator.GetDistribution(aPrior);
+                        productExpected = productEstimator.GetDistribution(productPrior);
+                        bExpected = GammaPower.FromMeanAndVariance(bMva.Mean, bMva.Variance, bPrior.Power);
+                        aExpected = GammaPower.FromMeanAndVariance(aMva.Mean, aMva.Variance, aPrior.Power);
+                        productExpected = GammaPower.FromMeanAndVariance(productMva.Mean, productMva.Variance, productPrior.Power);
+                        Trace.WriteLine($"{Quoter.Quote(bExpected)}, {Quoter.Quote(aExpected)}, {Quoter.Quote(productExpected)}, {evExpected}");
+                    }
+                    double bError = bExpected.MaxDiff(bActual);
+                    double aError = aExpected.MaxDiff(aActual);
+                    double productError = productExpected.MaxDiff(productActual);
+                    double evError = MMath.AbsDiff(evExpected, evActual, 1e-6);
+                    bool trace = true;
+                    if (trace)
+                    {
+                        Trace.WriteLine($"b = {bActual} should be {bExpected}, error = {bError}");
+                        Trace.WriteLine($"a = {aActual}[variance={aActual.GetVariance()}] should be {aExpected}[variance={aExpected.GetVariance()}], error = {aError}");
+                        Trace.WriteLine($"product = {productActual} should be {productExpected}, error = {productError}");
+                        Trace.WriteLine($"evidence = {evActual} should be {evExpected}, error = {evError}");
+                    }
+                    Assert.True(bError < 10);
+                    Assert.True(aError < 2);
+                    Assert.True(productError < 9);
+                    Assert.True(evError < 0.3);
+                }
+            }
+        }
+
+        [Fact]
         public void GammaCCRTest()
         {
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
