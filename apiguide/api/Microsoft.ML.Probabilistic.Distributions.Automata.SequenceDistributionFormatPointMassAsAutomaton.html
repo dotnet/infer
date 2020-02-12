@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class SequenceDistributionFormatPointMassAsAutomaton
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -109,6 +109,27 @@ If the distribution is a point mass, applies the underlying automaton format to 
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.AutomatonBasedSequenceDistributionFormatBase.html#Microsoft_ML_Probabilistic_Distributions_Automata_AutomatonBasedSequenceDistributionFormatBase_ConvertToString__6___5_">AutomatonBasedSequenceDistributionFormatBase.ConvertToString&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TSequenceDistribution&gt;(TSequenceDistribution)</a>
     </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
@@ -156,7 +177,7 @@ then using the underlying automaton function format on that function.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected override string ConvertPointMassToString&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TSequenceDistribution&gt;(TSequenceDistribution sequenceDistribution)
-    where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : class, IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, Sampleable&lt;TElement&gt;, new()
+    where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, Sampleable&lt;TElement&gt;, new()
     where TSequenceManipulator : ISequenceManipulator&lt;TSequence, TElement&gt;, new()
     where TWeightFunction : Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction&gt;, new()
     where TSequenceDistribution : SequenceDistribution&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TWeightFunction, TSequenceDistribution&gt;, new()</code></pre>

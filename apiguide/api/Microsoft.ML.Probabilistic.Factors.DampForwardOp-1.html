@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DampForwardOp&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -83,18 +83,45 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1" class="text-break">Class DampForwardOp&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Damp.html#Microsoft_ML_Probabilistic_Factors_Damp_Forward__1___0_System_Double_">Forward&lt;T&gt;(T, Double)</a>, given random arguments to the function.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">DampForwardOp&lt;T&gt;</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class DampForwardOp&lt;T&gt; : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Damp), &quot;Forward&lt;&gt;&quot;, new Type[]{})]
+[Quality(QualityBand.Preview)]
+public static class DampForwardOp&lt;T&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -115,7 +142,8 @@
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1.AverageLogFactor">AverageLogFactor()</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -132,13 +160,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Zero.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(forward,value,stepsize))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_ForwardAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1.ForwardAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_ForwardAverageConditional__1___0_System_Double___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1.ForwardAverageConditional``1(``0,System.Double,``0)">ForwardAverageConditional&lt;Distribution&gt;(Distribution, Double, Distribution)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>forward</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -158,17 +191,20 @@
       <tr>
         <td><span class="xref">Distribution</span></td>
         <td><span class="parametername">value</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>value</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">stepsize</span></td>
-        <td></td>
+        <td><p>Constant value for <code>stepsize</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">Distribution</span></td>
         <td><span class="parametername">to_forward</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>forward</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -183,7 +219,8 @@
     <tbody>
       <tr>
         <td><span class="xref">Distribution</span></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>forward</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -199,6 +236,25 @@
       <tr>
         <td><span class="parametername">Distribution</span></td>
         <td><p>The type of the distribution over the damped variable.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_ForwardAverageConditional__1___0_System_Double___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>forward</code> as the random arguments are varied. The formula is <code>proj[p(forward) sum_(value) p(value) factor(forward,value,stepsize)]/p(forward)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">value</code> is not a proper distribution.</p>
 </td>
       </tr>
     </tbody>
@@ -272,7 +328,8 @@
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_LogEvidenceRatio" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1.LogEvidenceRatio">LogEvidenceRatio()</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -289,13 +346,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_LogEvidenceRatio_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(forward,value,stepsize))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_ValueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1.ValueAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_ValueAverageConditional__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1.ValueAverageConditional``1(``0)">ValueAverageConditional&lt;Distribution&gt;(Distribution)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>value</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -314,7 +376,8 @@
       <tr>
         <td><span class="xref">Distribution</span></td>
         <td><span class="parametername">forward</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>forward</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -329,7 +392,8 @@
     <tbody>
       <tr>
         <td><span class="xref">Distribution</span></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>value</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -349,9 +413,13 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_ValueAverageConditional__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>value</code> as the random arguments are varied. The formula is <code>proj[p(value) sum_(forward) p(forward) factor(forward,value,stepsize)]/p(value)</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_ValueAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1.ValueAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_ValueAverageLogarithm__1___0_" data-uid="Microsoft.ML.Probabilistic.Factors.DampForwardOp`1.ValueAverageLogarithm``1(``0)">ValueAverageLogarithm&lt;Distribution&gt;(Distribution)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>value</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -370,7 +438,8 @@
       <tr>
         <td><span class="xref">Distribution</span></td>
         <td><span class="parametername">forward</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>forward</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -385,7 +454,8 @@
     <tbody>
       <tr>
         <td><span class="xref">Distribution</span></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>value</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -405,6 +475,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_DampForwardOp_1_ValueAverageLogarithm__1___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>value</code> with <code>forward</code> integrated out. The formula is <code>sum_forward p(forward) factor(forward,value,stepsize)</code>.</p>
+</div>
 </article>
           </div>
           

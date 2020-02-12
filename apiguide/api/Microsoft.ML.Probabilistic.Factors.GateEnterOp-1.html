@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GateEnterOp&lt;T&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,11 +91,38 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">GateEnterOp&lt;T&gt;</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class GateEnterOp&lt;T&gt; : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Gate), &quot;Enter&lt;&gt;&quot;, new Type[]{null, typeof(bool), null})]
+[FactorMethod(typeof(Gate), &quot;Enter&lt;&gt;&quot;, new Type[]{null, typeof(int), null})]
+[Quality(QualityBand.Mature)]
+public static class GateEnterOp&lt;T&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -423,8 +450,9 @@
   <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(enter,selector,value))</code>.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_LogEvidenceRatio__1_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.LogEvidenceRatio``1(IList{``0})">LogEvidenceRatio&lt;TDist&gt;(IList&lt;TDist&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_LogEvidenceRatio__1_System_Collections_Generic_IList___0__" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.LogEvidenceRatio``1(System.Collections.Generic.IList{``0})">LogEvidenceRatio&lt;TDist&gt;(IList&lt;TDist&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -442,9 +470,10 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;TDist&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TDist&gt;</td>
         <td><span class="parametername">enter</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>enter</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -459,7 +488,8 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -478,6 +508,9 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_LogEvidenceRatio__1_System_Collections_Generic_IList___0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(enter) p(enter) factor(enter,selector,value) / sum_enter p(enter) messageTo(enter))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_SelectorAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.SelectorAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_SelectorAverageConditional_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.SelectorAverageConditional(Microsoft.ML.Probabilistic.Distributions.Discrete)">SelectorAverageConditional(Discrete)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>selector</code>.</p>
@@ -571,13 +604,13 @@
   <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>selector</code> conditioned on the given values.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.ValueAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageConditional__1_IList___0__Microsoft_ML_Probabilistic_Distributions_Discrete___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.ValueAverageConditional``1(IList{``0},Microsoft.ML.Probabilistic.Distributions.Discrete,``0,``0)">ValueAverageConditional&lt;TDist&gt;(IList&lt;TDist&gt;, Discrete, TDist, TDist)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageConditional__1_System_Collections_Generic_IList___0__Microsoft_ML_Probabilistic_Distributions_Discrete___0___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.ValueAverageConditional``1(System.Collections.Generic.IList{``0},Microsoft.ML.Probabilistic.Distributions.Discrete,``0,``0)">ValueAverageConditional&lt;TDist&gt;(IList&lt;TDist&gt;, Discrete, TDist, TDist)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>value</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TDist ValueAverageConditional&lt;TDist&gt;(IList&lt;TDist&gt; enter, Discrete selector, TDist value, TDist result)
+    <pre><code class="lang-csharp hljs">public static TDist ValueAverageConditional&lt;TDist&gt;([SkipIfAllUniform] IList&lt;TDist&gt; enter, Discrete selector, TDist value, TDist result)
     where TDist : IDistribution&lt;T&gt;, SettableToProduct&lt;TDist&gt;, SettableToRatio&lt;TDist&gt;, SettableToWeightedSum&lt;TDist&gt;, CanGetLogAverageOf&lt;TDist&gt;, SettableToPower&lt;TDist&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -591,7 +624,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;TDist&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TDist&gt;</td>
         <td><span class="parametername">enter</span></td>
         <td><p>Incoming message from <code>enter</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
@@ -648,7 +681,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageConditional__1_IList___0__Microsoft_ML_Probabilistic_Distributions_Discrete___0___0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageConditional__1_System_Collections_Generic_IList___0__Microsoft_ML_Probabilistic_Distributions_Discrete___0___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>value</code> as the random arguments are varied. The formula is <code>proj[p(value) sum_(enter,selector) p(enter,selector) factor(enter,selector,value)]/p(value)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -668,13 +701,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.ValueAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageConditional__1_IList___0__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.ValueAverageConditional``1(IList{``0},System.Int32,``0)">ValueAverageConditional&lt;TDist&gt;(IList&lt;TDist&gt;, Int32, TDist)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageConditional__1_System_Collections_Generic_IList___0__System_Int32___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.ValueAverageConditional``1(System.Collections.Generic.IList{``0},System.Int32,``0)">ValueAverageConditional&lt;TDist&gt;(IList&lt;TDist&gt;, Int32, TDist)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>value</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TDist ValueAverageConditional&lt;TDist&gt;(IList&lt;TDist&gt; enter, int selector, TDist result)
+    <pre><code class="lang-csharp hljs">public static TDist ValueAverageConditional&lt;TDist&gt;([SkipIfAllUniform] IList&lt;TDist&gt; enter, int selector, TDist result)
     where TDist : IDistribution&lt;T&gt;, SettableTo&lt;TDist&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -688,7 +721,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;TDist&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TDist&gt;</td>
         <td><span class="parametername">enter</span></td>
         <td><p>Incoming message from <code>enter</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
@@ -739,7 +772,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageConditional__1_IList___0__System_Int32___0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageConditional__1_System_Collections_Generic_IList___0__System_Int32___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>value</code> as the random arguments are varied. The formula is <code>proj[p(value) sum_(enter,selector) p(enter,selector) factor(enter,selector,value)]/p(value)</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>
@@ -759,13 +792,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.ValueAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageLogarithm__1_IList___0__Microsoft_ML_Probabilistic_Distributions_Discrete___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.ValueAverageLogarithm``1(IList{``0},Microsoft.ML.Probabilistic.Distributions.Discrete,``0)">ValueAverageLogarithm&lt;TDist&gt;(IList&lt;TDist&gt;, Discrete, TDist)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageLogarithm__1_System_Collections_Generic_IList___0__Microsoft_ML_Probabilistic_Distributions_Discrete___0_" data-uid="Microsoft.ML.Probabilistic.Factors.GateEnterOp`1.ValueAverageLogarithm``1(System.Collections.Generic.IList{``0},Microsoft.ML.Probabilistic.Distributions.Discrete,``0)">ValueAverageLogarithm&lt;TDist&gt;(IList&lt;TDist&gt;, Discrete, TDist)</h4>
   <div class="markdown level1 summary"><p>VMP message to <code>value</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TDist ValueAverageLogarithm&lt;TDist&gt;(IList&lt;TDist&gt; enter, Discrete selector, TDist result)
+    <pre><code class="lang-csharp hljs">public static TDist ValueAverageLogarithm&lt;TDist&gt;([SkipIfAllUniform] IList&lt;TDist&gt; enter, Discrete selector, TDist result)
     where TDist : IDistribution&lt;T&gt;, SettableToProduct&lt;TDist&gt;, SettableToPower&lt;TDist&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -779,7 +812,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;TDist&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;TDist&gt;</td>
         <td><span class="parametername">enter</span></td>
         <td><p>Incoming message from <code>enter</code>. Must be a proper distribution. If all elements are uniform, the result will be uniform.</p>
 </td>
@@ -830,7 +863,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageLogarithm__1_IList___0__Microsoft_ML_Probabilistic_Distributions_Discrete___0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GateEnterOp_1_ValueAverageLogarithm__1_System_Collections_Generic_IList___0__Microsoft_ML_Probabilistic_Distributions_Discrete___0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>value</code>. Because the factor is deterministic, <code>enter</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(selector) p(selector) log(sum_enter p(enter) factor(enter,selector,value)))</code>.</p>
 </div>
   <h5 class="exceptions">Exceptions</h5>

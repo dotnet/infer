@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Sparsity
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -92,11 +92,28 @@ deal with large dimensional distributions such as Discrete and Dirichlet distrib
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">Sparsity</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Math.html">Microsoft.ML.Probabilistic.Math</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Math_Sparsity_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Sparsity : object</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+public class Sparsity</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -107,7 +124,8 @@ deal with large dimensional distributions such as Discrete and Dirichlet distrib
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int CountTolerance { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public int CountTolerance { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -360,7 +378,8 @@ memory-wise. <a class="xref" href="Microsoft.ML.Probabilistic.Math.SparseVector.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Tolerance { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double Tolerance { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -465,6 +484,8 @@ memory-wise. <a class="xref" href="Microsoft.ML.Probabilistic.Math.SparseVector.
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_Sparsity_FromSpec_" data-uid="Microsoft.ML.Probabilistic.Math.Sparsity.FromSpec*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_Sparsity_FromSpec_Microsoft_ML_Probabilistic_Math_StorageType_System_Double_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Math.Sparsity.FromSpec(Microsoft.ML.Probabilistic.Math.StorageType,System.Double,System.Int32)">FromSpec(StorageType, Double, Int32)</h4>
   <div class="markdown level1 summary"><p>Static method to create a general sparsity specification</p>
@@ -472,7 +493,8 @@ memory-wise. <a class="xref" href="Microsoft.ML.Probabilistic.Math.SparseVector.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Sparsity FromSpec(StorageType storage, double tolerance, int countTolerance)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Storage&quot;, &quot;Tolerance&quot;, &quot;CountTolerance&quot;})]
+public static Sparsity FromSpec(StorageType storage, double tolerance, int countTolerance)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -542,6 +564,8 @@ memory-wise. <a class="xref" href="Microsoft.ML.Probabilistic.Math.SparseVector.
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Math_Sparsity_ToString_" data-uid="Microsoft.ML.Probabilistic.Math.Sparsity.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Math_Sparsity_ToString" data-uid="Microsoft.ML.Probabilistic.Math.Sparsity.ToString">ToString()</h4>
   <div class="markdown level1 summary"><p>Instance description</p>
@@ -566,6 +590,8 @@ memory-wise. <a class="xref" href="Microsoft.ML.Probabilistic.Math.SparseVector.
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <h3 id="operators">Operators
   </h3>
   <a id="Microsoft_ML_Probabilistic_Math_Sparsity_op_Equality_" data-uid="Microsoft.ML.Probabilistic.Math.Sparsity.op_Equality*"></a>

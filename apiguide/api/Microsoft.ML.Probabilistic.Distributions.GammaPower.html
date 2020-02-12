@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Struct GammaPower
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -89,7 +89,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a>&gt;</div>
@@ -110,12 +110,28 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOfPower-1.html">CanGetLogAverageOfPower</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct GammaPower : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;GammaPower&gt;, SettableToProduct&lt;GammaPower&gt;, SettableToProduct&lt;GammaPower, GammaPower&gt;, Diffable, SettableToUniform, SettableToRatio&lt;GammaPower&gt;, SettableToRatio&lt;GammaPower, GammaPower&gt;, SettableToPower&lt;GammaPower&gt;, SettableToWeightedSum&lt;GammaPower&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;GammaPower&gt;, CanGetLogAverageOfPower&lt;GammaPower&gt;, CanGetAverageLog&lt;GammaPower&gt;, CanGetLogNormalizer</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Experimental)]
+public struct GammaPower : IDistribution&lt;double&gt;, ICloneable, HasPoint&lt;double&gt;, CanGetLogProb&lt;double&gt;, SettableTo&lt;GammaPower&gt;, SettableToProduct&lt;GammaPower&gt;, SettableToProduct&lt;GammaPower, GammaPower&gt;, Diffable, SettableToUniform, SettableToRatio&lt;GammaPower&gt;, SettableToRatio&lt;GammaPower, GammaPower&gt;, SettableToPower&lt;GammaPower&gt;, SettableToWeightedSum&lt;GammaPower&gt;, Sampleable&lt;double&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;, CanSetMeanAndVariance&lt;double, double&gt;, CanGetLogAverageOf&lt;GammaPower&gt;, CanGetLogAverageOfPower&lt;GammaPower&gt;, CanGetAverageLog&lt;GammaPower&gt;, CanGetLogNormalizer, CanGetMode&lt;double&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -213,7 +229,8 @@ When a &lt;= 0 or b &lt;= 0 the <code>b^a/Gamma(a)/abs(c)</code> term is dropped
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Power</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double Power</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -236,7 +253,8 @@ When a &lt;= 0 or b &lt;= 0 the <code>b^a/Gamma(a)/abs(c)</code> term is dropped
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Rate</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double Rate</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -259,7 +277,8 @@ When a &lt;= 0 or b &lt;= 0 the <code>b^a/Gamma(a)/abs(c)</code> term is dropped
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Shape</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double Shape</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -285,7 +304,8 @@ When a &lt;= 0 or b &lt;= 0 the <code>b^a/Gamma(a)/abs(c)</code> term is dropped
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -309,7 +329,8 @@ When a &lt;= 0 or b &lt;= 0 the <code>b^a/Gamma(a)/abs(c)</code> term is dropped
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public double Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -397,6 +418,8 @@ if you want to assign the result to a GammaPower type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_FromGamma_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.FromGamma*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_FromGamma_Microsoft_ML_Probabilistic_Distributions_Gamma_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.FromGamma(Microsoft.ML.Probabilistic.Distributions.Gamma,System.Double)">FromGamma(Gamma, Double)</h4>
   <div class="markdown level1 summary"><p>Constructs a GammaPower distribution from a Gamma distribution.</p>
@@ -443,6 +466,68 @@ if you want to assign the result to a GammaPower type</p>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_FromMeanAndMeanLog_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.FromMeanAndMeanLog*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_FromMeanAndMeanLog_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.FromMeanAndMeanLog(System.Double,System.Double,System.Double)">FromMeanAndMeanLog(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Constructs a GammaPower distribution with the given mean and mean logarithm.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GammaPower FromMeanAndMeanLog(double mean, double meanLog, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">mean</span></td>
+        <td><p>Desired expected value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">meanLog</span></td>
+        <td><p>Desired expected logarithm.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td><p>Desired power.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><p>A new GammaPower distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_FromMeanAndMeanLog_System_Double_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This function is equivalent to maximum-likelihood estimation of a Gamma distribution
+from data given by sufficient statistics.
+This function is significantly slower than the other constructors since it
+involves nonlinear optimization. The algorithm is a generalized Newton iteration,
+described in &quot;Estimating a Gamma distribution&quot; by T. Minka, 2002.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_FromMeanAndVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.FromMeanAndVariance*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_FromMeanAndVariance_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.FromMeanAndVariance(System.Double,System.Double,System.Double)">FromMeanAndVariance(Double, Double, Double)</h4>
   <div class="markdown level1 summary"><p>Creates a new Gamma distribution from mean and variance</p>
@@ -504,7 +589,8 @@ if you want to assign the result to a GammaPower type</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GammaPower FromShapeAndRate(double shape, double rate, double power)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Shape&quot;, &quot;Rate&quot;, &quot;Power&quot;})]
+public static GammaPower FromShapeAndRate(double shape, double rate, double power)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -553,7 +639,7 @@ if you want to assign the result to a GammaPower type</p>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_FromShapeAndScale_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.FromShapeAndScale*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_FromShapeAndScale_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.FromShapeAndScale(System.Double,System.Double,System.Double)">FromShapeAndScale(Double, Double, Double)</h4>
-  <div class="markdown level1 summary"><p>Constructs a Gamma distribution with the given shape and scale parameters.</p>
+  <div class="markdown level1 summary"><p>Constructs a GammaPower distribution with the given shape and scale parameters.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -676,6 +762,8 @@ if you want to assign the result to a GammaPower type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_GammaPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.GammaPower)">GetLogAverageOf(GammaPower)</h4>
   <div class="markdown level1 summary"><p>The log of the integral of the product of this Gamma and that Gamma</p>
@@ -743,6 +831,47 @@ if you want to assign the result to a GammaPower type</p>
         <td><span class="parametername">that</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetLogMeanPower_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetLogMeanPower*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetLogMeanPower_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetLogMeanPower(System.Double)">GetLogMeanPower(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes log(E[x^power])</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetLogMeanPower(double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">power</span></td>
@@ -1021,6 +1150,169 @@ Thus if shape = 1 and rate = 0 the density is 1.</p>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetMode_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetMode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetMode" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetMode">GetMode()</h4>
+  <div class="markdown level1 summary"><p>Returns x where GetLogProb(x) is highest.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetMode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetMode_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetMode*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetMode_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetMode(System.Double,System.Double,System.Double)">GetMode(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Returns x where GetLogProb(x, shape, rate, power) is highest.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double GetMode(double shape, double rate, double power)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">shape</span></td>
+        <td><p>Shape parameter</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">rate</span></td>
+        <td><p>Rate parameter</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td><p>Power parameter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetProbLessThan_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetProbLessThan*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetProbLessThan_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetProbLessThan(System.Double)">GetProbLessThan(Double)</h4>
+  <div class="markdown level1 summary"><p>Compute the probability that a sample from this distribution is less than x.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetProbLessThan(double x)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Any real number.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The cumulative gamma distribution at <code data-dev-comment-type="paramref" class="paramref">x</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetQuantile_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetQuantile*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetQuantile_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetQuantile(System.Double)">GetQuantile(Double)</h4>
+  <div class="markdown level1 summary"><p>Returns the value x such that GetProbLessThan(x) == probability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetQuantile(double probability)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">probability</span></td>
+        <td><p>A real number in [0,1].</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetVariance_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetVariance*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_GetVariance" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.GetVariance">GetVariance()</h4>
   <div class="markdown level1 summary"><p>Get the variance</p>
@@ -1048,8 +1340,8 @@ Thus if shape = 1 and rate = 0 the density is 1.</p>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_IsProper_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.IsProper*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_IsProper" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.IsProper">IsProper()</h4>
-  <div class="markdown level1 summary"><p>Asks whether this Gamma instance is proper or not. A Gamma distribution
-is proper only if Shape &gt; 0 and Rate &gt; 0.</p>
+  <div class="markdown level1 summary"><p>Asks whether this GammaPower instance is proper or not. A GammaPower distribution
+is proper only if Shape &gt; 0 and 0 &lt; Rate &lt; infinity and Power is not infinite.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1073,14 +1365,14 @@ is proper only if Shape &gt; 0 and Rate &gt; 0.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_IsProper_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.IsProper*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_IsProper_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.IsProper(System.Double,System.Double)">IsProper(Double, Double)</h4>
-  <div class="markdown level1 summary"><p>Asks whether a Gamma distribution is proper or not. A Gamma distribution
-is proper only if Shape &gt; 0 and Rate &gt; 0.</p>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_IsProper_System_Double_System_Double_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.IsProper(System.Double,System.Double,System.Double)">IsProper(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Asks whether a GammaPower distribution is proper or not. A GammaPower distribution
+is proper only if Shape &gt; 0 and 0 &lt; Rate &lt; infinity and Power is not infinite.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool IsProper(double shape, double rate)</code></pre>
+    <pre><code class="lang-csharp hljs">public static bool IsProper(double shape, double rate, double power)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1095,13 +1387,19 @@ is proper only if Shape &gt; 0 and Rate &gt; 0.</p>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">shape</span></td>
-        <td><p>shape parameter for the Gamma</p>
+        <td><p>shape parameter</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">rate</span></td>
-        <td><p>rate parameter for the Gamma</p>
+        <td><p>rate parameter</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">power</span></td>
+        <td><p>power parameter</p>
 </td>
       </tr>
     </tbody>
@@ -1370,7 +1668,8 @@ is proper only if Shape &gt; 0 and Rate &gt; 0.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double SampleFromMeanAndVariance(double mean, double variance, double power)</code></pre>
+    <pre><code class="lang-csharp hljs">[ParameterNames(new string[]{&quot;sample&quot;, &quot;mean&quot;, &quot;variance&quot;, &quot;power&quot;})]
+public static double SampleFromMeanAndVariance(double mean, double variance, double power)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1739,6 +2038,8 @@ is proper only if Shape &gt; 0 and Rate &gt; 0.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_Uniform_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.Uniform(System.Double)">Uniform(Double)</h4>
   <div class="markdown level1 summary"><p>Create a uniform GammaPower distribution.</p>
@@ -1746,7 +2047,8 @@ is proper only if Shape &gt; 0 and Rate &gt; 0.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GammaPower Uniform(double power)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Power&quot;}, UseWhen = &quot;IsUniform&quot;)]
+public static GammaPower Uniform(double power)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1812,6 +2114,55 @@ is proper only if Shape &gt; 0 and Rate &gt; 0.</p>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
         <td><span class="parametername">denominator</span></td>
         <td><p>The denominator distribution.  Must have the same power parameter as <code data-dev-comment-type="paramref" class="paramref">numerator</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><p>Result. May not be proper.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_GammaPower_op_Division_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.op_Division*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GammaPower_op_Division_Microsoft_ML_Probabilistic_Distributions_GammaPower_System_Double_" data-uid="Microsoft.ML.Probabilistic.Distributions.GammaPower.op_Division(Microsoft.ML.Probabilistic.Distributions.GammaPower,System.Double)">Division(GammaPower, Double)</h4>
+  <div class="markdown level1 summary"><p>Creates a new GammaPower distribution corresponding to dividing every sample by a positive constant.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static GammaPower operator /(GammaPower numerator, double denominator)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GammaPower.html">GammaPower</a></td>
+        <td><span class="parametername">numerator</span></td>
+        <td><p>The numerator distribution</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">denominator</span></td>
+        <td><p>The denominator constant.</p>
 </td>
       </tr>
     </tbody>
@@ -2027,7 +2378,7 @@ is proper only if Shape &gt; 0 and Rate &gt; 0.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
@@ -2088,6 +2439,9 @@ is proper only if Shape &gt; 0 and Rate &gt; 0.</p>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode&lt;ModeType&gt;</a>
   </div>
 </article>
           </div>

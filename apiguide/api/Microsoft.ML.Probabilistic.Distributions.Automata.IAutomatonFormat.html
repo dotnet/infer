@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface IAutomatonFormat
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -102,7 +102,7 @@
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">string ConvertToString&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;(Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt; automaton)
-    where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : class, IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, new()
+    where TSequence : class, IEnumerable&lt;TElement&gt; where TElementDistribution : IDistribution&lt;TElement&gt;, SettableToProduct&lt;TElementDistribution&gt;, SettableToWeightedSumExact&lt;TElementDistribution&gt;, CanGetLogAverageOf&lt;TElementDistribution&gt;, SettableToPartialUniform&lt;TElementDistribution&gt;, new()
     where TSequenceManipulator : ISequenceManipulator&lt;TSequence, TElement&gt;, new()
     where TAutomaton : Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TAutomaton&gt;, new()</code></pre>
   </div>

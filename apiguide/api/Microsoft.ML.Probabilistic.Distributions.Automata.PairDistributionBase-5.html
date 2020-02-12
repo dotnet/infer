@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -95,12 +95,12 @@
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;TElement1, TElement2&gt;&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;TElement1, TElement2&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement1&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement2&gt;&gt;&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement1&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement2&gt;&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
-    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;TElement1, TElement2&gt;&gt;</div>
+    <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement1&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement2&gt;&gt;&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogAverageOf-1.html">CanGetLogAverageOf</a>&lt;TThis&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-1.html">SettableToProduct</a>&lt;TThis&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToProduct-2.html">SettableToProduct</a>&lt;TThis, TThis&gt;</div>
@@ -108,12 +108,33 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableToWeightedSum-1.html">SettableToWeightedSum</a>&lt;TThis&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToPartialUniform-1.html">SettableToPartialUniform</a>&lt;TThis&gt;</div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis&gt; : object, IDistribution&lt;Pair&lt;TElement1, TElement2&gt;&gt;, ICloneable, HasPoint&lt;Pair&lt;TElement1, TElement2&gt;&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;Pair&lt;TElement1, TElement2&gt;&gt;, CanGetLogAverageOf&lt;TThis&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, SettableToWeightedSumExact&lt;TThis&gt;, SettableToWeightedSum&lt;TThis&gt;, SettableToPartialUniform&lt;TThis&gt; where TElementDistribution1 : class, IDistribution&lt;TElement1&gt;, CanGetLogAverageOf&lt;TElementDistribution1&gt;, SettableToProduct&lt;TElementDistribution1&gt;, SettableToPartialUniform&lt;TElementDistribution1&gt;, new()
-    where TElementDistribution2 : class, IDistribution&lt;TElement2&gt;, CanGetLogAverageOf&lt;TElementDistribution2&gt;, SettableToProduct&lt;TElementDistribution2&gt;, SettableToPartialUniform&lt;TElementDistribution2&gt;, new()
+    <pre><code class="lang-csharp hljs">public abstract class PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis&gt; : IDistribution&lt;Pair&lt;Option&lt;TElement1&gt;, Option&lt;TElement2&gt;&gt;&gt;, ICloneable, HasPoint&lt;Pair&lt;Option&lt;TElement1&gt;, Option&lt;TElement2&gt;&gt;&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;Pair&lt;Option&lt;TElement1&gt;, Option&lt;TElement2&gt;&gt;&gt;, CanGetLogAverageOf&lt;TThis&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, SettableToWeightedSumExact&lt;TThis&gt;, SettableToWeightedSum&lt;TThis&gt;, SettableToPartialUniform&lt;TThis&gt; where TElementDistribution1 : IDistribution&lt;TElement1&gt;, CanGetLogAverageOf&lt;TElementDistribution1&gt;, SettableToProduct&lt;TElementDistribution1&gt;, SettableToPartialUniform&lt;TElementDistribution1&gt;, new()
+    where TElementDistribution2 : IDistribution&lt;TElement2&gt;, CanGetLogAverageOf&lt;TElementDistribution2&gt;, SettableToProduct&lt;TElementDistribution2&gt;, SettableToPartialUniform&lt;TElementDistribution2&gt;, new()
     where TThis : PairDistributionBase&lt;TElement1, TElementDistribution1, TElement2, TElementDistribution2, TThis&gt;, new()</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
@@ -173,7 +194,7 @@ setting pair distributions to <span class="xref">null</span>.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TElementDistribution1 First { get; protected set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Option&lt;TElementDistribution1&gt; First { get; protected set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -185,7 +206,7 @@ setting pair distributions to <span class="xref">null</span>.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TElementDistribution1</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution1&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -221,7 +242,7 @@ setting pair distributions to <span class="xref">null</span>.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual Pair&lt;TElement1, TElement2&gt; Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Pair&lt;Option&lt;TElement1&gt;, Option&lt;TElement2&gt;&gt; Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -233,7 +254,7 @@ setting pair distributions to <span class="xref">null</span>.
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;TElement1, TElement2&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement1&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement2&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -245,7 +266,7 @@ setting pair distributions to <span class="xref">null</span>.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TElementDistribution2 Second { get; protected set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Option&lt;TElementDistribution2&gt; Second { get; protected set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -257,7 +278,7 @@ setting pair distributions to <span class="xref">null</span>.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TElementDistribution2</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution2&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -290,13 +311,13 @@ setting pair distributions to <span class="xref">null</span>.
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromFirst_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.FromFirst*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromFirst__1_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.FromFirst(`1)">FromFirst(TElementDistribution1)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromFirst_Microsoft_ML_Probabilistic_Collections_Option__1__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.FromFirst(Microsoft.ML.Probabilistic.Collections.Option{`1})">FromFirst(Option&lt;TElementDistribution1&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a pair distribution for an epsilon output transducer transition.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TThis FromFirst(TElementDistribution1 first)</code></pre>
+    <pre><code class="lang-csharp hljs">public static TThis FromFirst(Option&lt;TElementDistribution1&gt; first)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -309,7 +330,7 @@ setting pair distributions to <span class="xref">null</span>.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TElementDistribution1</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution1&gt;</td>
         <td><span class="parametername">first</span></td>
         <td><p>The element distribution to weight the input element.</p>
 </td>
@@ -333,13 +354,13 @@ setting pair distributions to <span class="xref">null</span>.
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromFirstSecond_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.FromFirstSecond*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromFirstSecond__1__3_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.FromFirstSecond(`1,`3)">FromFirstSecond(TElementDistribution1, TElementDistribution2)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromFirstSecond_Microsoft_ML_Probabilistic_Collections_Option__1__Microsoft_ML_Probabilistic_Collections_Option__3__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.FromFirstSecond(Microsoft.ML.Probabilistic.Collections.Option{`1},Microsoft.ML.Probabilistic.Collections.Option{`3})">FromFirstSecond(Option&lt;TElementDistribution1&gt;, Option&lt;TElementDistribution2&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a pair distribution for a transducer transition.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TThis FromFirstSecond(TElementDistribution1 first, TElementDistribution2 second)</code></pre>
+    <pre><code class="lang-csharp hljs">public static TThis FromFirstSecond(Option&lt;TElementDistribution1&gt; first, Option&lt;TElementDistribution2&gt; second)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -352,13 +373,13 @@ setting pair distributions to <span class="xref">null</span>.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TElementDistribution1</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution1&gt;</td>
         <td><span class="parametername">first</span></td>
         <td><p>The element distribution to weight the input element.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">TElementDistribution2</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution2&gt;</td>
         <td><span class="parametername">second</span></td>
         <td><p>The element distribution to weight the output element.</p>
 </td>
@@ -381,18 +402,18 @@ setting pair distributions to <span class="xref">null</span>.
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromFirstSecond__1__3__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromFirstSecond_Microsoft_ML_Probabilistic_Collections_Option__1__Microsoft_ML_Probabilistic_Collections_Option__3___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>One of <code data-dev-comment-type="paramref" class="paramref">first</code> and <code data-dev-comment-type="paramref" class="paramref">second</code> can be <span class="xref">null</span>
 to encode an epsilon input or an epsilon output transducer transition, but not both.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromSecond_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.FromSecond*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromSecond__3_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.FromSecond(`3)">FromSecond(TElementDistribution2)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_FromSecond_Microsoft_ML_Probabilistic_Collections_Option__3__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.FromSecond(Microsoft.ML.Probabilistic.Collections.Option{`3})">FromSecond(Option&lt;TElementDistribution2&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a pair distribution for an epsilon input transducer transition.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TThis FromSecond(TElementDistribution2 second)</code></pre>
+    <pre><code class="lang-csharp hljs">public static TThis FromSecond(Option&lt;TElementDistribution2&gt; second)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -405,7 +426,7 @@ to encode an epsilon input or an epsilon output transducer transition, but not b
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TElementDistribution2</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution2&gt;</td>
         <td><span class="parametername">second</span></td>
         <td><p>The element distribution to weight the output element.</p>
 </td>
@@ -473,13 +494,13 @@ as a given one.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_GetLogProb_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.GetLogProb*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_GetLogProb_Microsoft_ML_Probabilistic_Collections_Pair__0__2__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.GetLogProb(Microsoft.ML.Probabilistic.Collections.Pair{`0,`2})">GetLogProb(Pair&lt;TElement1, TElement2&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_GetLogProb_Microsoft_ML_Probabilistic_Collections_Pair_Microsoft_ML_Probabilistic_Collections_Option__0__Microsoft_ML_Probabilistic_Collections_Option__2___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.GetLogProb(Microsoft.ML.Probabilistic.Collections.Pair{Microsoft.ML.Probabilistic.Collections.Option{`0},Microsoft.ML.Probabilistic.Collections.Option{`2}})">GetLogProb(Pair&lt;Option&lt;TElement1&gt;, Option&lt;TElement2&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Gets the logarithm of the probability of a given element pair under this distribution.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual double GetLogProb(Pair&lt;TElement1, TElement2&gt; pair)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual double GetLogProb(Pair&lt;Option&lt;TElement1&gt;, Option&lt;TElement2&gt;&gt; pair)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -492,7 +513,7 @@ as a given one.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;TElement1, TElement2&gt;</td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Pair-2.html">Pair</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement1&gt;, <a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElement2&gt;&gt;</td>
         <td><span class="parametername">pair</span></td>
         <td><p>The pair to get the probability for.</p>
 </td>
@@ -515,7 +536,7 @@ as a given one.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_GetLogProb_Microsoft_ML_Probabilistic_Collections_Pair__0__2___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_GetLogProb_Microsoft_ML_Probabilistic_Collections_Pair_Microsoft_ML_Probabilistic_Collections_Option__0__Microsoft_ML_Probabilistic_Collections_Option__2____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Not currently implemented.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_IsPartialUniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.IsPartialUniform*"></a>
@@ -615,14 +636,14 @@ as a given one.</p>
   <div class="markdown level1 remarks"><p>Not currently implemented.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_ProjectFirst_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.ProjectFirst*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_ProjectFirst__0__3__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.ProjectFirst(`0,`3@)">ProjectFirst(TElement1, out TElementDistribution2)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_ProjectFirst__0_Microsoft_ML_Probabilistic_Collections_Option__3___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.ProjectFirst(`0,Microsoft.ML.Probabilistic.Collections.Option{`3}@)">ProjectFirst(TElement1, out Option&lt;TElementDistribution2&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes <code>P(y) = R(x, y)</code>, where <code>R(x, y)</code> is the current pair distribution,
 and <code>x</code> is a given element.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual double ProjectFirst(TElement1 first, out TElementDistribution2 result)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual double ProjectFirst(TElement1 first, out Option&lt;TElementDistribution2&gt; result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -641,7 +662,7 @@ and <code>x</code> is a given element.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">TElementDistribution2</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution2&gt;</td>
         <td><span class="parametername">result</span></td>
         <td><p>The normalized projection result.</p>
 </td>
@@ -665,14 +686,14 @@ and <code>x</code> is a given element.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_ProjectFirst_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.ProjectFirst*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_ProjectFirst__1__3__" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.ProjectFirst(`1,`3@)">ProjectFirst(TElementDistribution1, out TElementDistribution2)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_PairDistributionBase_5_ProjectFirst__1_Microsoft_ML_Probabilistic_Collections_Option__3___" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.PairDistributionBase`5.ProjectFirst(`1,Microsoft.ML.Probabilistic.Collections.Option{`3}@)">ProjectFirst(TElementDistribution1, out Option&lt;TElementDistribution2&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes <code>P(y) = sum_x Q(x) R(x, y)</code>, where <code>R(x, y)</code> is the current pair distribution,
 and <code>Q(x)</code> is a given element distribution.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual double ProjectFirst(TElementDistribution1 first, out TElementDistribution2 result)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual double ProjectFirst(TElementDistribution1 first, out Option&lt;TElementDistribution2&gt; result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -691,7 +712,7 @@ and <code>Q(x)</code> is a given element distribution.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">TElementDistribution2</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.Option-1.html">Option</a>&lt;TElementDistribution2&gt;</td>
         <td><span class="parametername">result</span></td>
         <td><p>The normalized projection result.</p>
 </td>
@@ -868,12 +889,14 @@ and <code>Q(x)</code> is a given element distribution.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>

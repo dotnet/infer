@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class VectorGaussianMoments
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -94,7 +94,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogProb-1.html">CanGetLogProb</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.SettableTo-1.html">SettableTo</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a>&gt;</div>
@@ -117,11 +117,29 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetLogNormalizer.html">CanGetLogNormalizer</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.DenseVector.html">DenseVector</a>&gt;</div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class VectorGaussianMoments : object, IDistribution&lt;Vector&gt;, ICloneable, HasPoint&lt;Vector&gt;, CanGetLogProb&lt;Vector&gt;, SettableTo&lt;VectorGaussianMoments&gt;, SettableToProduct&lt;VectorGaussianMoments&gt;, SettableToProduct&lt;VectorGaussianMoments, VectorGaussianMoments&gt;, Diffable, SettableToUniform, SettableToRatio&lt;VectorGaussianMoments&gt;, SettableToRatio&lt;VectorGaussianMoments, VectorGaussianMoments&gt;, SettableToPower&lt;VectorGaussianMoments&gt;, SettableToWeightedSum&lt;VectorGaussianMoments&gt;, Sampleable&lt;Vector&gt;, CanGetMean&lt;DenseVector&gt;, CanGetVariance&lt;PositiveDefiniteMatrix&gt;, CanGetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanSetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanGetLogAverageOf&lt;VectorGaussianMoments&gt;, CanGetLogAverageOfPower&lt;VectorGaussianMoments&gt;, CanGetAverageLog&lt;VectorGaussianMoments&gt;, CanGetLogNormalizer, CanGetMode&lt;DenseVector&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Mature)]
+public class VectorGaussianMoments : IDistribution&lt;Vector&gt;, ICloneable, HasPoint&lt;Vector&gt;, CanGetLogProb&lt;Vector&gt;, SettableTo&lt;VectorGaussianMoments&gt;, SettableToProduct&lt;VectorGaussianMoments&gt;, SettableToProduct&lt;VectorGaussianMoments, VectorGaussianMoments&gt;, Diffable, SettableToUniform, SettableToRatio&lt;VectorGaussianMoments&gt;, SettableToRatio&lt;VectorGaussianMoments, VectorGaussianMoments&gt;, SettableToPower&lt;VectorGaussianMoments&gt;, SettableToWeightedSum&lt;VectorGaussianMoments&gt;, Sampleable&lt;Vector&gt;, CanGetMean&lt;DenseVector&gt;, CanGetVariance&lt;PositiveDefiniteMatrix&gt;, CanGetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanSetMeanAndVariance&lt;Vector, PositiveDefiniteMatrix&gt;, CanGetLogAverageOf&lt;VectorGaussianMoments&gt;, CanGetLogAverageOfPower&lt;VectorGaussianMoments&gt;, CanGetAverageLog&lt;VectorGaussianMoments&gt;, CanGetLogNormalizer, CanGetMode&lt;DenseVector&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -284,7 +302,8 @@ i.e. we drop the terms <code>|2*pi*v|^(-d/2)</code>.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Dimension { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public int Dimension { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -308,7 +327,8 @@ i.e. we drop the terms <code>|2*pi*v|^(-d/2)</code>.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -356,7 +376,8 @@ i.e. we drop the terms <code>|2*pi*v|^(-d/2)</code>.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Vector Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public Vector Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -509,6 +530,8 @@ if you want to assign the result to a VectorGaussian type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_FromMeanAndPrecision_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.FromMeanAndPrecision*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_FromMeanAndPrecision_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_PositiveDefiniteMatrix_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.FromMeanAndPrecision(Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.PositiveDefiniteMatrix)">FromMeanAndPrecision(Vector, PositiveDefiniteMatrix)</h4>
   <div class="markdown level1 summary"><p>Create a VectorGaussian with given mean and precision matrix.</p>
@@ -779,6 +802,8 @@ if you want to assign the result to a VectorGaussian type</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_GetLogAverageOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.GetLogAverageOf*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_GetLogAverageOf_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.GetLogAverageOf(Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments)">GetLogAverageOf(VectorGaussianMoments)</h4>
   <div class="markdown level1 summary"><p>Log-integral of the product of this VectorGaussian with that VectorGaussian</p>
@@ -1358,7 +1383,8 @@ and that VectorGaussian</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static VectorGaussianMoments PointMass(Vector mean)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static VectorGaussianMoments PointMass(Vector mean)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1676,36 +1702,6 @@ point mass is the existing mean vector</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.SetToProduct*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_SetToProduct_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.SetToProduct(Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">SetToProduct(VectorGaussianMoments, IList&lt;Gaussian&gt;)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetToProduct(VectorGaussianMoments vector, IList&lt;Gaussian&gt; array)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
-        <td><span class="parametername">vector</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
-        <td><span class="parametername">array</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.SetToProduct*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_SetToProduct_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.SetToProduct(Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments,Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments)">SetToProduct(VectorGaussianMoments, VectorGaussianMoments)</h4>
   <div class="markdown level1 summary"><p>Sets the parameters to represent the product of two VectorGaussians.</p>
 </div>
@@ -1741,6 +1737,36 @@ point mass is the existing mean vector</p>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_SetToProduct_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The result may not be proper. No error is thrown in this case.</p>
 </div>
+  <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_SetToProduct_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.SetToProduct*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_SetToProduct_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.SetToProduct(Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">SetToProduct(VectorGaussianMoments, IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToProduct(VectorGaussianMoments vector, IList&lt;Gaussian&gt; array)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.html">VectorGaussianMoments</a></td>
+        <td><span class="parametername">vector</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><span class="parametername">array</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_SetToRatio_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.SetToRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_SetToRatio_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.SetToRatio(Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments,Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments,System.Boolean)">SetToRatio(VectorGaussianMoments, VectorGaussianMoments, Boolean)</h4>
   <div class="markdown level1 summary"><p>Sets the parameters to represent the product of two VectorGaussians.</p>
@@ -1859,6 +1885,8 @@ point mass is the existing mean vector</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_VectorGaussianMoments_Uniform_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.VectorGaussianMoments.Uniform(System.Int32)">Uniform(Int32)</h4>
   <div class="markdown level1 summary"><p>Creates a uniform VectorGaussian of a given dimension</p>
@@ -1866,7 +1894,8 @@ point mass is the existing mean vector</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static VectorGaussianMoments Uniform(int dimension)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Dimension&quot;}, UseWhen = &quot;IsUniform&quot;)]
+public static VectorGaussianMoments Uniform(int dimension)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2146,7 +2175,7 @@ of a VectorGaussian mixture. The distribution type must implement <a class="xref
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>

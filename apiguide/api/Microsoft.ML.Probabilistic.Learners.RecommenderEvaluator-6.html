@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class RecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating, TPredictedRating, TPredictedRatingDist&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -92,11 +92,35 @@
     <div class="level1"><span class="xref">RecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating, TPredictedRating, TPredictedRatingDist&gt;</span></div>
       <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Learners.StarRatingRecommenderEvaluator-4.html">StarRatingRecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating&gt;</a></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating, TPredictedRating, TPredictedRatingDist&gt; : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class RecommenderEvaluator&lt;TInstanceSource, TUser, TItem, TGroundTruthRating, TPredictedRating, TPredictedRatingDist&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -165,6 +189,22 @@
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Learners.Mappings.IRecommenderEvaluatorMapping-4.html">IRecommenderEvaluatorMapping</a>&lt;TInstanceSource, TUser, TItem, TGroundTruthRating&gt;</td>
         <td><span class="parametername">mapping</span></td>
         <td><p>The mapping used for accessing data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></td>
+        <td><p>Thrown if the given mapping is null.</p>
 </td>
       </tr>
     </tbody>
@@ -242,7 +282,7 @@ it will be skipped.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TItem, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;&gt;</td>
         <td><p>The list of related items for every item in <code data-dev-comment-type="paramref" class="paramref">instanceSource</code>.</p>
 </td>
       </tr>
@@ -335,7 +375,7 @@ it will be skipped.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TUser&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TUser&gt;&gt;</td>
         <td><p>The list of related users for every user in <code data-dev-comment-type="paramref" class="paramref">instanceSource</code>.</p>
 </td>
       </tr>
@@ -358,7 +398,7 @@ it will be skipped.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_ItemRecommendationMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.ItemRecommendationMetric*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_ItemRecommendationMetric__0_IDictionary__1_IEnumerable__2___Func_IEnumerable_System_Double__IEnumerable_System_Double__System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.ItemRecommendationMetric(`0,IDictionary{`1,IEnumerable{`2}},Func{IEnumerable{System.Double},IEnumerable{System.Double},System.Double},Func{`3,System.Double})">ItemRecommendationMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TItem&gt;&gt;, Func&lt;IEnumerable&lt;Double&gt;, IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_ItemRecommendationMetric__0_System_Collections_Generic_IDictionary__1_System_Collections_Generic_IEnumerable__2___System_Func_System_Collections_Generic_IEnumerable_System_Double__System_Collections_Generic_IEnumerable_System_Double__System_Double__System_Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.ItemRecommendationMetric(`0,System.Collections.Generic.IDictionary{`1,System.Collections.Generic.IEnumerable{`2}},System.Func{System.Collections.Generic.IEnumerable{System.Double},System.Collections.Generic.IEnumerable{System.Double},System.Double},System.Func{`3,System.Double})">ItemRecommendationMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TItem&gt;&gt;, Func&lt;IEnumerable&lt;Double&gt;, IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the average across users of a given ranking metric for recommendation. Uses ratings to compute gains.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -383,21 +423,21 @@ it will be skipped.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>A mapping from a user to a list of recommended items.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">metric</span></td>
         <td><p>The ranking metric.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">ratingConverter</span></td>
-        <td><p>The function used to convert ratings to gains. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+        <td><p>The function used to convert ratings to gains. <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.convert.todouble#System_Convert_ToDouble_System_Object_">ToDouble(Object)</a> is used by default.</p>
 </td>
       </tr>
     </tbody>
@@ -419,7 +459,7 @@ it will be skipped.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_ItemRecommendationMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.ItemRecommendationMetric*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_ItemRecommendationMetric__0_IDictionary__1_IEnumerable__2___Func_IEnumerable_System_Double__System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.ItemRecommendationMetric(`0,IDictionary{`1,IEnumerable{`2}},Func{IEnumerable{System.Double},System.Double},Func{`3,System.Double})">ItemRecommendationMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TItem&gt;&gt;, Func&lt;IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_ItemRecommendationMetric__0_System_Collections_Generic_IDictionary__1_System_Collections_Generic_IEnumerable__2___System_Func_System_Collections_Generic_IEnumerable_System_Double__System_Double__System_Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.ItemRecommendationMetric(`0,System.Collections.Generic.IDictionary{`1,System.Collections.Generic.IEnumerable{`2}},System.Func{System.Collections.Generic.IEnumerable{System.Double},System.Double},System.Func{`3,System.Double})">ItemRecommendationMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TItem&gt;&gt;, Func&lt;IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the average across users of a given ranking metric for recommendation. Uses ratings to compute gains.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -444,21 +484,21 @@ it will be skipped.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>A mapping from a user to a list of recommended items.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">metric</span></td>
         <td><p>The ranking metric.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">ratingConverter</span></td>
-        <td><p>The function used to convert ratings to gains. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+        <td><p>The function used to convert ratings to gains. <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.convert.todouble#System_Convert_ToDouble_System_Object_">ToDouble(Object)</a> is used by default.</p>
 </td>
       </tr>
     </tbody>
@@ -480,7 +520,7 @@ it will be skipped.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RatingPredictionMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RatingPredictionMetric*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RatingPredictionMetric__0_IDictionary__1_IDictionary__2__4___Func__3__4_System_Double__Microsoft_ML_Probabilistic_Learners_RecommenderMetricAggregationMethod_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RatingPredictionMetric(`0,IDictionary{`1,IDictionary{`2,`4}},Func{`3,`4,System.Double},Microsoft.ML.Probabilistic.Learners.RecommenderMetricAggregationMethod)">RatingPredictionMetric(TInstanceSource, IDictionary&lt;TUser, IDictionary&lt;TItem, TPredictedRating&gt;&gt;, Func&lt;TGroundTruthRating, TPredictedRating, Double&gt;, RecommenderMetricAggregationMethod)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RatingPredictionMetric__0_System_Collections_Generic_IDictionary__1_System_Collections_Generic_IDictionary__2__4___System_Func__3__4_System_Double__Microsoft_ML_Probabilistic_Learners_RecommenderMetricAggregationMethod_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RatingPredictionMetric(`0,System.Collections.Generic.IDictionary{`1,System.Collections.Generic.IDictionary{`2,`4}},System.Func{`3,`4,System.Double},Microsoft.ML.Probabilistic.Learners.RecommenderMetricAggregationMethod)">RatingPredictionMetric(TInstanceSource, IDictionary&lt;TUser, IDictionary&lt;TItem, TPredictedRating&gt;&gt;, Func&lt;TGroundTruthRating, TPredictedRating, Double&gt;, RecommenderMetricAggregationMethod)</h4>
   <div class="markdown level1 summary"><p>Computes the average of a given data domain rating prediction metric by iterating firstly per-item and then per-user.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -505,13 +545,13 @@ it will be skipped.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IDictionary</span>&lt;TItem, TPredictedRating&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TItem, TPredictedRating&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>A sparse users-by-items matrix of predicted rating distributions.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TGroundTruthRating, TPredictedRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TGroundTruthRating, TPredictedRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">metric</span></td>
         <td><p>The data domain rating prediction metric to average.</p>
 </td>
@@ -541,7 +581,7 @@ it will be skipped.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RatingPredictionMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RatingPredictionMetric*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RatingPredictionMetric__0_IDictionary__1_IDictionary__2__5___Func__3__5_System_Double__Microsoft_ML_Probabilistic_Learners_RecommenderMetricAggregationMethod_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RatingPredictionMetric(`0,IDictionary{`1,IDictionary{`2,`5}},Func{`3,`5,System.Double},Microsoft.ML.Probabilistic.Learners.RecommenderMetricAggregationMethod)">RatingPredictionMetric(TInstanceSource, IDictionary&lt;TUser, IDictionary&lt;TItem, TPredictedRatingDist&gt;&gt;, Func&lt;TGroundTruthRating, TPredictedRatingDist, Double&gt;, RecommenderMetricAggregationMethod)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RatingPredictionMetric__0_System_Collections_Generic_IDictionary__1_System_Collections_Generic_IDictionary__2__5___System_Func__3__5_System_Double__Microsoft_ML_Probabilistic_Learners_RecommenderMetricAggregationMethod_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RatingPredictionMetric(`0,System.Collections.Generic.IDictionary{`1,System.Collections.Generic.IDictionary{`2,`5}},System.Func{`3,`5,System.Double},Microsoft.ML.Probabilistic.Learners.RecommenderMetricAggregationMethod)">RatingPredictionMetric(TInstanceSource, IDictionary&lt;TUser, IDictionary&lt;TItem, TPredictedRatingDist&gt;&gt;, Func&lt;TGroundTruthRating, TPredictedRatingDist, Double&gt;, RecommenderMetricAggregationMethod)</h4>
   <div class="markdown level1 summary"><p>Computes the average of a given data domain rating prediction metric by iterating firstly per-item and then per-user.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -566,13 +606,13 @@ it will be skipped.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IDictionary</span>&lt;TItem, TPredictedRatingDist&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TItem, TPredictedRatingDist&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>A sparse users-by-items matrix of predicted rating distributions.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TGroundTruthRating, TPredictedRatingDist, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TGroundTruthRating, TPredictedRatingDist, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">metric</span></td>
         <td><p>The data domain rating prediction metric to average.</p>
 </td>
@@ -663,7 +703,7 @@ it will be skipped.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;&gt;</td>
         <td><p>The list of recommended items for every user in <code data-dev-comment-type="paramref" class="paramref">instanceSource</code>.</p>
 </td>
       </tr>
@@ -686,7 +726,7 @@ it will be skipped.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedItemsMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedItemsMetric*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedItemsMetric__0_IDictionary__2_IEnumerable__2___System_Int32_Func_IEnumerable_System_Double__IEnumerable_System_Double__System_Double__Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedItemsMetric(`0,IDictionary{`2,IEnumerable{`2}},System.Int32,Func{IEnumerable{System.Double},IEnumerable{System.Double},System.Double},Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},Func{`3,System.Double})">RelatedItemsMetric(TInstanceSource, IDictionary&lt;TItem, IEnumerable&lt;TItem&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedItemsMetric__0_System_Collections_Generic_IDictionary__2_System_Collections_Generic_IEnumerable__2___System_Int32_System_Func_System_Collections_Generic_IEnumerable_System_Double__System_Collections_Generic_IEnumerable_System_Double__System_Double__System_Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__System_Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedItemsMetric(`0,System.Collections.Generic.IDictionary{`2,System.Collections.Generic.IEnumerable{`2}},System.Int32,System.Func{System.Collections.Generic.IEnumerable{System.Double},System.Collections.Generic.IEnumerable{System.Double},System.Double},System.Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},System.Func{`3,System.Double})">RelatedItemsMetric(TInstanceSource, IDictionary&lt;TItem, IEnumerable&lt;TItem&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the average of a given ranking metric over a set of ordered sequences of items.
 Gain for ranking is defined as the rating similarity between the items in the list and the query item.</p>
 </div>
@@ -712,7 +752,7 @@ Gain for ranking is defined as the rating similarity between the items in the li
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TItem, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>A mapping from an item to a list of predicted related items.</p>
 </td>
@@ -724,21 +764,21 @@ Gain for ranking is defined as the rating similarity between the items in the li
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">rankingMetric</span></td>
         <td><p>The ranking metric.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">ratingSimilarityFunc</span></td>
         <td><p>A method which computes the similarity between two rating vectors.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">ratingConverter</span></td>
-        <td><p>The function applied to ratings before computing similarity. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+        <td><p>The function applied to ratings before computing similarity. <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.convert.todouble#System_Convert_ToDouble_System_Object_">ToDouble(Object)</a> is used by default.</p>
 </td>
       </tr>
     </tbody>
@@ -760,7 +800,7 @@ Gain for ranking is defined as the rating similarity between the items in the li
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedItemsMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedItemsMetric*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedItemsMetric__0_IDictionary__2_IEnumerable__2___System_Int32_Func_IEnumerable_System_Double__System_Double__Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedItemsMetric(`0,IDictionary{`2,IEnumerable{`2}},System.Int32,Func{IEnumerable{System.Double},System.Double},Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},Func{`3,System.Double})">RelatedItemsMetric(TInstanceSource, IDictionary&lt;TItem, IEnumerable&lt;TItem&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedItemsMetric__0_System_Collections_Generic_IDictionary__2_System_Collections_Generic_IEnumerable__2___System_Int32_System_Func_System_Collections_Generic_IEnumerable_System_Double__System_Double__System_Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__System_Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedItemsMetric(`0,System.Collections.Generic.IDictionary{`2,System.Collections.Generic.IEnumerable{`2}},System.Int32,System.Func{System.Collections.Generic.IEnumerable{System.Double},System.Double},System.Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},System.Func{`3,System.Double})">RelatedItemsMetric(TInstanceSource, IDictionary&lt;TItem, IEnumerable&lt;TItem&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the average of a given ranking metric over a set of ordered sequences of items.
 Gain for ranking is defined as the rating similarity between the items in the list and the query item.</p>
 </div>
@@ -786,7 +826,7 @@ Gain for ranking is defined as the rating similarity between the items in the li
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TItem, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>A mapping from an item to a list of predicted related items.</p>
 </td>
@@ -798,21 +838,21 @@ Gain for ranking is defined as the rating similarity between the items in the li
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">rankingMetric</span></td>
         <td><p>The ranking metric.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">ratingSimilarityFunc</span></td>
         <td><p>A method which computes the similarity between two rating vectors.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">ratingConverter</span></td>
-        <td><p>The function applied to ratings before computing similarity. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+        <td><p>The function applied to ratings before computing similarity. <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.convert.todouble#System_Convert_ToDouble_System_Object_">ToDouble(Object)</a> is used by default.</p>
 </td>
       </tr>
     </tbody>
@@ -834,7 +874,7 @@ Gain for ranking is defined as the rating similarity between the items in the li
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedUsersMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedUsersMetric*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedUsersMetric__0_IDictionary__1_IEnumerable__1___System_Int32_Func_IEnumerable_System_Double__IEnumerable_System_Double__System_Double__Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedUsersMetric(`0,IDictionary{`1,IEnumerable{`1}},System.Int32,Func{IEnumerable{System.Double},IEnumerable{System.Double},System.Double},Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},Func{`3,System.Double})">RelatedUsersMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TUser&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedUsersMetric__0_System_Collections_Generic_IDictionary__1_System_Collections_Generic_IEnumerable__1___System_Int32_System_Func_System_Collections_Generic_IEnumerable_System_Double__System_Collections_Generic_IEnumerable_System_Double__System_Double__System_Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__System_Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedUsersMetric(`0,System.Collections.Generic.IDictionary{`1,System.Collections.Generic.IEnumerable{`1}},System.Int32,System.Func{System.Collections.Generic.IEnumerable{System.Double},System.Collections.Generic.IEnumerable{System.Double},System.Double},System.Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},System.Func{`3,System.Double})">RelatedUsersMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TUser&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the average of a given ranking metric over a set of ordered sequences of users.
 Gain for ranking is defined as the rating similarity between the users in the list and the query user.</p>
 </div>
@@ -860,7 +900,7 @@ Gain for ranking is defined as the rating similarity between the users in the li
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TUser&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TUser&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>A mapping from a user to a list of predicted related users.</p>
 </td>
@@ -872,21 +912,21 @@ Gain for ranking is defined as the rating similarity between the users in the li
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">rankingMetric</span></td>
         <td><p>The ranking metric.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">ratingSimilarityFunc</span></td>
         <td><p>A method which computes the similarity between two rating vectors.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">ratingConverter</span></td>
-        <td><p>The function applied to ratings before computing similarity. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+        <td><p>The function applied to ratings before computing similarity. <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.convert.todouble#System_Convert_ToDouble_System_Object_">ToDouble(Object)</a> is used by default.</p>
 </td>
       </tr>
     </tbody>
@@ -908,7 +948,7 @@ Gain for ranking is defined as the rating similarity between the users in the li
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedUsersMetric_" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedUsersMetric*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedUsersMetric__0_IDictionary__1_IEnumerable__1___System_Int32_Func_IEnumerable_System_Double__System_Double__Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedUsersMetric(`0,IDictionary{`1,IEnumerable{`1}},System.Int32,Func{IEnumerable{System.Double},System.Double},Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},Func{`3,System.Double})">RelatedUsersMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TUser&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_RecommenderEvaluator_6_RelatedUsersMetric__0_System_Collections_Generic_IDictionary__1_System_Collections_Generic_IEnumerable__1___System_Int32_System_Func_System_Collections_Generic_IEnumerable_System_Double__System_Double__System_Func_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_System_Double__System_Func__3_System_Double__" data-uid="Microsoft.ML.Probabilistic.Learners.RecommenderEvaluator`6.RelatedUsersMetric(`0,System.Collections.Generic.IDictionary{`1,System.Collections.Generic.IEnumerable{`1}},System.Int32,System.Func{System.Collections.Generic.IEnumerable{System.Double},System.Double},System.Func{Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,System.Double},System.Func{`3,System.Double})">RelatedUsersMetric(TInstanceSource, IDictionary&lt;TUser, IEnumerable&lt;TUser&gt;&gt;, Int32, Func&lt;IEnumerable&lt;Double&gt;, Double&gt;, Func&lt;Vector, Vector, Double&gt;, Func&lt;TGroundTruthRating, Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Computes the average of a given ranking metric over a set of ordered sequences of users.
 Gain for ranking is defined as the rating similarity between the users in the list and the query user.</p>
 </div>
@@ -934,7 +974,7 @@ Gain for ranking is defined as the rating similarity between the users in the li
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TUser&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TUser&gt;&gt;</td>
         <td><span class="parametername">predictions</span></td>
         <td><p>A mapping from a user to a list of predicted related users.</p>
 </td>
@@ -946,21 +986,21 @@ Gain for ranking is defined as the rating similarity between the users in the li
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">rankingMetric</span></td>
         <td><p>The ranking metric.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html">Vector</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">ratingSimilarityFunc</span></td>
         <td><p>A method which computes the similarity between two rating vectors.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;TGroundTruthRating, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">ratingConverter</span></td>
-        <td><p>The function applied to ratings before computing similarity. <see cref="!:Convert.ToDouble(object)"></see> is used by default.</p>
+        <td><p>The function applied to ratings before computing similarity. <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.convert.todouble#System_Convert_ToDouble_System_Object_">ToDouble(Object)</a> is used by default.</p>
 </td>
       </tr>
     </tbody>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GaussianProductOp_LaplaceProp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -152,12 +152,36 @@
     <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Factors.GaussianProductOpBase.html#Microsoft_ML_Probabilistic_Factors_GaussianProductOpBase_BAverageConditional_System_Double_System_Double_">GaussianProductOpBase.BAverageConditional(Double, Double)</a>
     </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class GaussianProductOp_LaplaceProp : GaussianProductOpEvidenceBase</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;Product&quot;, new Type[]{typeof(double), typeof(double)})]
+[FactorMethod(new string[]{&quot;A&quot;, &quot;Product&quot;, &quot;B&quot;}, typeof(Factor), &quot;Ratio&quot;, new Type[]{typeof(double), typeof(double)}, Default = true)]
+[Quality(QualityBand.Experimental)]
+public class GaussianProductOp_LaplaceProp : GaussianProductOpEvidenceBase</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>This class allows EP to process the product factor using Laplace Propagation with other variables marginalized out.</p>
@@ -186,7 +210,7 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">Product</span></td>
-        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>product</code>.</p>
 </td>
       </tr>
       <tr>
@@ -228,22 +252,6 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_AAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(product,b) p(product,b) factor(product,a,b)]/p(a)</code>.</p>
 </div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_LaplaceProp.BAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_LaplaceProp.BAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">BAverageConditional(Gaussian, Gaussian, Gaussian, Gaussian)</h4>
   <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
@@ -266,7 +274,7 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">Product</span></td>
-        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+        <td><p>Incoming message from <code>product</code>.</p>
 </td>
       </tr>
       <tr>
@@ -308,22 +316,6 @@
   <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_BAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(product,a) p(product,a) factor(product,a,b)]/p(b)</code>.</p>
 </div>
-  <h5 class="exceptions">Exceptions</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Condition</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
-        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_LaplaceProp.LogAverageFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_LaplaceProp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">LogAverageFactor(Gaussian, Gaussian, Gaussian, Gaussian)</h4>
   <div class="markdown level1 summary"><p>Evidence message for EP.</p>
@@ -331,7 +323,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_A)</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;Product&quot;, new Type[]{typeof(double), typeof(double)})]
+public static double LogAverageFactor(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_A)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -416,11 +409,13 @@
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_LaplaceProp.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_LaplaceProp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">LogEvidenceRatio(Gaussian, Gaussian, Gaussian, Gaussian, Gaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogEvidenceRatio(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_A, Gaussian to_product)</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;Product&quot;, new Type[]{typeof(double), typeof(double)})]
+public static double LogEvidenceRatio(Gaussian Product, Gaussian A, Gaussian B, Gaussian to_A, Gaussian to_product)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -435,27 +430,32 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">Product</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>product</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">to_A</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>A</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">to_product</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>product</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -470,13 +470,44 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(product,a,b) p(product,a,b) factor(product,a,b) / sum_product p(product) messageTo(product))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">Product</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_ProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_LaplaceProp.ProductAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_LaplaceProp.ProductAverageConditional(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">ProductAverageConditional(Gaussian, Gaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>product</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -495,12 +526,14 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -515,10 +548,14 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>product</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_ProductAverageConditional_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>product</code> as the random arguments are varied. The formula is <code>proj[p(product) sum_(a,b) p(a,b) factor(product,a,b)]/p(product)</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_ProductAverageConditional2_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_LaplaceProp.ProductAverageConditional2*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_GaussianProductOp_LaplaceProp_ProductAverageConditional2_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.GaussianProductOp_LaplaceProp.ProductAverageConditional2(Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian,Microsoft.ML.Probabilistic.Distributions.Gaussian)">ProductAverageConditional2(Gaussian, Gaussian, Gaussian, Gaussian)</h4>
   <div class="markdown level1 summary"></div>

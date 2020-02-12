@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Condensation
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -92,11 +92,35 @@ of an automaton graph.</p>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.Condensation</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.html">Microsoft.ML.Probabilistic.Distributions.Automata</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Condensation_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Condensation : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class Condensation</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -239,14 +263,14 @@ and ending in a given state. Ending weights are not taken into account.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Condensation_GetWeightToEnd_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Condensation.GetWeightToEnd*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Condensation_GetWeightToEnd_Microsoft_ML_Probabilistic_Distributions_Automata_Automaton__0__1__2__3__4__State_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Condensation.GetWeightToEnd(Microsoft.ML.Probabilistic.Distributions.Automata.Automaton{`0,`1,`2,`3,`4}.State)">GetWeightToEnd(Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.State)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_Automata_Automaton_5_Condensation_GetWeightToEnd_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton`5.Condensation.GetWeightToEnd(System.Int32)">GetWeightToEnd(Int32)</h4>
   <div class="markdown level1 summary"><p>Gets the total weight of all paths starting at a given state.
 Ending weights are taken into account.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Weight GetWeightToEnd(Automaton&lt;TSequence, TElement, TElementDistribution, TSequenceManipulator, TThis&gt;.State state)</code></pre>
+    <pre><code class="lang-csharp hljs">public Weight GetWeightToEnd(int stateIndex)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -259,9 +283,9 @@ Ending weights are taken into account.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Automaton-5.State.html">Automaton.State</a>&lt;&gt;</td>
-        <td><span class="parametername">state</span></td>
-        <td><p>The state.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">stateIndex</span></td>
+        <td><p>The state Index.</p>
 </td>
       </tr>
     </tbody>

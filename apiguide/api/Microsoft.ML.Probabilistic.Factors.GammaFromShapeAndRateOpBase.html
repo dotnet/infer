@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GammaFromShapeAndRateOpBase
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -94,11 +94,35 @@
       <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Laplace.html">GammaFromShapeAndRateOp_Laplace</a></div>
       <div class="level2"><a class="xref" href="Microsoft.ML.Probabilistic.Factors.GammaFromShapeAndRateOp_Slow.html">GammaFromShapeAndRateOp_Slow</a></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_GammaFromShapeAndRateOpBase_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class GammaFromShapeAndRateOpBase : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class GammaFromShapeAndRateOpBase</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -109,7 +133,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double AverageLogFactor(Gamma sample, Gamma shape, Gamma rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static double AverageLogFactor(Gamma sample, Gamma shape, Gamma rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -550,7 +575,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Gamma sample, Gamma shape, Gamma rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static double LogAverageFactor(Gamma sample, Gamma shape, Gamma rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -634,7 +660,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(Gamma sample, Gamma shape, double rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static double LogAverageFactor(Gamma sample, Gamma shape, double rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -787,7 +814,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(double sample, Gamma shape, Gamma rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static double LogAverageFactor(double sample, Gamma shape, Gamma rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -866,7 +894,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static double LogAverageFactor(double sample, Gamma shape, double rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static double LogAverageFactor(double sample, Gamma shape, double rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1230,7 +1259,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma RateAverageConditional(Gamma sample, Gamma shape)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static Gamma RateAverageConditional(Gamma sample, Gamma shape)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1616,7 +1646,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma SampleAverageConditional(Gamma shape, Gamma rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static Gamma SampleAverageConditional(Gamma shape, Gamma rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1689,7 +1720,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma SampleAverageConditional(Gamma shape, double rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static Gamma SampleAverageConditional(Gamma shape, double rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1835,7 +1867,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma SampleAverageLogarithm(Gamma shape, Gamma rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static Gamma SampleAverageLogarithm(Gamma shape, Gamma rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1908,7 +1941,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma SampleAverageLogarithm(Gamma shape, double rate)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static Gamma SampleAverageLogarithm(Gamma shape, double rate)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2096,7 +2130,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma ShapeAverageConditional(Gamma sample, Gamma shape, Gamma rate, Gamma result)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static Gamma ShapeAverageConditional(Gamma sample, Gamma shape, Gamma rate, Gamma result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2186,7 +2221,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma ShapeAverageConditional(Gamma sample, Gamma shape, double rate, Gamma result)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static Gamma ShapeAverageConditional(Gamma sample, Gamma shape, double rate, Gamma result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2271,7 +2307,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma ShapeAverageConditional(double sample, Gamma shape, Gamma rate, Gamma result)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static Gamma ShapeAverageConditional(double sample, Gamma shape, Gamma rate, Gamma result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2356,7 +2393,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma ShapeAverageConditional(double sample, Gamma shape, double rate, Gamma result)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Expectation Propagation does not support Gamma variables with stochastic shape&quot;)]
+public static Gamma ShapeAverageConditional(double sample, Gamma shape, double rate, Gamma result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2436,7 +2474,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gamma ShapeAverageLogarithm(Gamma sample, Gamma shape, Gamma rate, Gamma to_shape)</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+public static Gamma ShapeAverageLogarithm(Gamma sample, Gamma shape, Gamma rate, Gamma to_shape)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

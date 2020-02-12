@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface IRecommender&lt;TInstanceSource, TUser, TItem, TRating, TRatingDistribution, TFeatureSource&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -191,7 +191,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TItem&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -215,7 +215,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TUser&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TUser&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -271,7 +271,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TItem&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;</td>
         <td><p>The list of related items.</p>
 </td>
       </tr>
@@ -281,7 +281,7 @@ A feature source provides the features for the users and the items.
   <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html#Microsoft_ML_Probabilistic_Learners_IRecommender_6_ItemSubset">ItemSubset</a> will be returned.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedItems_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.GetRelatedItems*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedItems_IEnumerable__2__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.GetRelatedItems(IEnumerable{`2},System.Int32,`5)">GetRelatedItems(IEnumerable&lt;TItem&gt;, Int32, TFeatureSource)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedItems_System_Collections_Generic_IEnumerable__2__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.GetRelatedItems(System.Collections.Generic.IEnumerable{`2},System.Int32,`5)">GetRelatedItems(IEnumerable&lt;TItem&gt;, Int32, TFeatureSource)</h4>
   <div class="markdown level1 summary"><p>Returns a list of related items to each item in <code data-dev-comment-type="paramref" class="paramref">items</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -300,7 +300,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TItem&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;</td>
         <td><span class="parametername">items</span></td>
         <td><p>The list of items to find related items for.</p>
 </td>
@@ -329,13 +329,13 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TItem, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TItem, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;&gt;</td>
         <td><p>The list of related items for each item from <code data-dev-comment-type="paramref" class="paramref">items</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedItems_IEnumerable__2__System_Int32__5__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedItems_System_Collections_Generic_IEnumerable__2__System_Int32__5__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html#Microsoft_ML_Probabilistic_Learners_IRecommender_6_ItemSubset">ItemSubset</a> will be returned.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedUsers_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.GetRelatedUsers*"></a>
@@ -387,7 +387,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TUser&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TUser&gt;</td>
         <td><p>The list of related users.</p>
 </td>
       </tr>
@@ -397,7 +397,7 @@ A feature source provides the features for the users and the items.
   <div class="markdown level1 remarks"><p>Only users specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html#Microsoft_ML_Probabilistic_Learners_IRecommender_6_UserSubset">UserSubset</a> will be returned.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedUsers_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.GetRelatedUsers*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedUsers_IEnumerable__1__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.GetRelatedUsers(IEnumerable{`1},System.Int32,`5)">GetRelatedUsers(IEnumerable&lt;TUser&gt;, Int32, TFeatureSource)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedUsers_System_Collections_Generic_IEnumerable__1__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.GetRelatedUsers(System.Collections.Generic.IEnumerable{`1},System.Int32,`5)">GetRelatedUsers(IEnumerable&lt;TUser&gt;, Int32, TFeatureSource)</h4>
   <div class="markdown level1 summary"><p>Returns a list of related users to each user in <code data-dev-comment-type="paramref" class="paramref">users</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -416,7 +416,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TUser&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TUser&gt;</td>
         <td><span class="parametername">users</span></td>
         <td><p>The list of users to find related users for.</p>
 </td>
@@ -445,13 +445,13 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TUser&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TUser&gt;&gt;</td>
         <td><p>The list of related users for each user from <code data-dev-comment-type="paramref" class="paramref">users</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedUsers_IEnumerable__1__System_Int32__5__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_GetRelatedUsers_System_Collections_Generic_IEnumerable__1__System_Int32__5__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Only users specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html#Microsoft_ML_Probabilistic_Learners_IRecommender_6_UserSubset">UserSubset</a> will be returned.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_Predict_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.Predict*"></a>
@@ -497,7 +497,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IDictionary</span>&lt;TItem, TRating&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TItem, TRating&gt;&gt;</td>
         <td><p>The predicted ratings.</p>
 </td>
       </tr>
@@ -601,7 +601,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IDictionary</span>&lt;TItem, TRatingDistribution&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TItem, TRatingDistribution&gt;&gt;</td>
         <td><p>The distributions of the predicted ratings.</p>
 </td>
       </tr>
@@ -711,7 +711,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TItem&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;</td>
         <td><p>The list of recommended items.</p>
 </td>
       </tr>
@@ -721,7 +721,7 @@ A feature source provides the features for the users and the items.
   <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html#Microsoft_ML_Probabilistic_Learners_IRecommender_6_ItemSubset">ItemSubset</a> can be recommended.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_Recommend_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.Recommend*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_Recommend_IEnumerable__1__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.Recommend(IEnumerable{`1},System.Int32,`5)">Recommend(IEnumerable&lt;TUser&gt;, Int32, TFeatureSource)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_Recommend_System_Collections_Generic_IEnumerable__1__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.Recommend(System.Collections.Generic.IEnumerable{`1},System.Int32,`5)">Recommend(IEnumerable&lt;TUser&gt;, Int32, TFeatureSource)</h4>
   <div class="markdown level1 summary"><p>Recommends items to a given list of users.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -740,7 +740,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TUser&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TUser&gt;</td>
         <td><span class="parametername">users</span></td>
         <td><p>The list of users to recommend items to.</p>
 </td>
@@ -769,13 +769,13 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;TItem&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TItem&gt;&gt;</td>
         <td><p>The list of recommended items for every user from <code data-dev-comment-type="paramref" class="paramref">users</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_Recommend_IEnumerable__1__System_Int32__5__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_Recommend_System_Collections_Generic_IEnumerable__1__System_Int32__5__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html#Microsoft_ML_Probabilistic_Learners_IRecommender_6_ItemSubset">ItemSubset</a> can be recommended.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_RecommendDistribution_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.RecommendDistribution*"></a>
@@ -827,7 +827,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Tuple</span>&lt;TItem, TRatingDistribution&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.tuple-2">Tuple</a>&lt;TItem, TRatingDistribution&gt;&gt;</td>
         <td><p>The list of recommended items and their rating distributions.</p>
 </td>
       </tr>
@@ -837,7 +837,7 @@ A feature source provides the features for the users and the items.
   <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html#Microsoft_ML_Probabilistic_Learners_IRecommender_6_ItemSubset">ItemSubset</a> can be recommended.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_RecommendDistribution_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.RecommendDistribution*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_RecommendDistribution_IEnumerable__1__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.RecommendDistribution(IEnumerable{`1},System.Int32,`5)">RecommendDistribution(IEnumerable&lt;TUser&gt;, Int32, TFeatureSource)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_RecommendDistribution_System_Collections_Generic_IEnumerable__1__System_Int32__5_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.RecommendDistribution(System.Collections.Generic.IEnumerable{`1},System.Int32,`5)">RecommendDistribution(IEnumerable&lt;TUser&gt;, Int32, TFeatureSource)</h4>
   <div class="markdown level1 summary"><p>Recommends items with their rating distributions to a specified list of users.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -856,7 +856,7 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;TUser&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;TUser&gt;</td>
         <td><span class="parametername">users</span></td>
         <td><p>The list of users to recommend items to.</p>
 </td>
@@ -885,13 +885,13 @@ A feature source provides the features for the users and the items.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;TUser, <span class="xref">IEnumerable</span>&lt;<span class="xref">Tuple</span>&lt;TItem, TRatingDistribution&gt;&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.idictionary-2">IDictionary</a>&lt;TUser, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.tuple-2">Tuple</a>&lt;TItem, TRatingDistribution&gt;&gt;&gt;</td>
         <td><p>The list of recommended items and their rating distributions for every user from <code data-dev-comment-type="paramref" class="paramref">users</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_RecommendDistribution_IEnumerable__1__System_Int32__5__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_RecommendDistribution_System_Collections_Generic_IEnumerable__1__System_Int32__5__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Only items specified in <a class="xref" href="Microsoft.ML.Probabilistic.Learners.IRecommender-6.html#Microsoft_ML_Probabilistic_Learners_IRecommender_6_ItemSubset">ItemSubset</a> can be recommended.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Learners_IRecommender_6_Train_" data-uid="Microsoft.ML.Probabilistic.Learners.IRecommender`6.Train*"></a>
@@ -932,7 +932,7 @@ A feature source provides the features for the users and the items.
       <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Utilities.html#Microsoft_ML_Probabilistic_Learners_Utilities_Save_Microsoft_ML_Probabilistic_Learners_ILearner_System_String_">Utilities.Save(ILearner, String)</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Utilities.html#Microsoft_ML_Probabilistic_Learners_Utilities_Save_Microsoft_ML_Probabilistic_Learners_ILearner_Stream_IFormatter_">Utilities.Save(ILearner, Stream, IFormatter)</a>
+      <a class="xref" href="Microsoft.ML.Probabilistic.Learners.Utilities.html#Microsoft_ML_Probabilistic_Learners_Utilities_Save_Microsoft_ML_Probabilistic_Learners_ILearner_System_IO_Stream_System_Runtime_Serialization_IFormatter_">Utilities.Save(ILearner, Stream, IFormatter)</a>
   </div>
 </article>
           </div>

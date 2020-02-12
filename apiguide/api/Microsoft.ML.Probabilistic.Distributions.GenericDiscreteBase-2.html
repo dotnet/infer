@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class GenericDiscreteBase&lt;T, TThis&gt;
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -95,7 +95,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;T&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;T&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
@@ -114,11 +114,27 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetAverageLog-1.html">CanGetAverageLog</a>&lt;TThis&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;T&gt;</div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class GenericDiscreteBase&lt;T, TThis&gt; : object, IDistribution&lt;T&gt;, ICloneable, HasPoint&lt;T&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;T&gt;, SettableTo&lt;TThis&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, SettableToRatio&lt;TThis&gt;, SettableToRatio&lt;TThis, TThis&gt;, SettableToPower&lt;TThis&gt;, SettableToWeightedSumExact&lt;TThis&gt;, SettableToWeightedSum&lt;TThis&gt;, SettableToPartialUniform&lt;TThis&gt;, CanGetLogAverageOf&lt;TThis&gt;, CanGetLogAverageOfPower&lt;TThis&gt;, CanGetAverageLog&lt;TThis&gt;, Sampleable&lt;T&gt; where TThis : GenericDiscreteBase&lt;T, TThis&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">[DataContract]
+public abstract class GenericDiscreteBase&lt;T, TThis&gt; : IDistribution&lt;T&gt;, ICloneable, HasPoint&lt;T&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;T&gt;, SettableTo&lt;TThis&gt;, SettableToProduct&lt;TThis&gt;, SettableToProduct&lt;TThis, TThis&gt;, SettableToRatio&lt;TThis&gt;, SettableToRatio&lt;TThis, TThis&gt;, SettableToPower&lt;TThis&gt;, SettableToWeightedSumExact&lt;TThis&gt;, SettableToWeightedSum&lt;TThis&gt;, SettableToPartialUniform&lt;TThis&gt;, CanGetLogAverageOf&lt;TThis&gt;, CanGetLogAverageOfPower&lt;TThis&gt;, CanGetAverageLog&lt;TThis&gt;, Sampleable&lt;T&gt; where TThis : GenericDiscreteBase&lt;T, TThis&gt;, new()</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -191,7 +207,8 @@ all functionality.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected Discrete disc</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+protected Discrete disc</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -217,7 +234,8 @@ all functionality.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Dimension { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public int Dimension { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -264,7 +282,8 @@ all functionality.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -329,7 +348,8 @@ all functionality.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public T Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public T Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -521,6 +541,8 @@ all functionality.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.FromDiscrete*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_FromDiscrete_Microsoft_ML_Probabilistic_Distributions_Discrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.FromDiscrete(Microsoft.ML.Probabilistic.Distributions.Discrete)">FromDiscrete(Discrete)</h4>
   <div class="markdown level1 summary"><p>Creates a distribution using the probabilities from the given discrete distribution.</p>
@@ -610,7 +632,8 @@ all functionality.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TThis FromVector(Vector probs)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;GetWorkspace&quot;})]
+public static TThis FromVector(Vector probs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -715,6 +738,8 @@ all functionality.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetInternalDiscrete_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetInternalDiscrete*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_GetInternalDiscrete" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.GetInternalDiscrete">GetInternalDiscrete()</h4>
   <div class="markdown level1 summary"><p>Gets the internal discrete distribution that this distribution wraps.</p>
@@ -1078,7 +1103,8 @@ is invalid once this workspace is modified.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TThis PointMass(T value)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Point&quot;}, UseWhen = &quot;IsPointMass&quot;)]
+public static TThis PointMass(T value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1457,6 +1483,8 @@ fill in the resulting Vector, and then pass it to SetProbs.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_ToString__0_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.ToString(`0)">ToString(T)</h4>
   <div class="markdown level1 summary"><p>Implements a custom ToString() for items of type T.</p>
@@ -1591,7 +1619,8 @@ fill in the resulting Vector, and then pass it to SetProbs.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TThis Uniform()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsUniform&quot;)]
+public static TThis Uniform()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1705,7 +1734,7 @@ even.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformInRanges*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRanges_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformInRanges(IEnumerable{`0})">UniformInRanges(IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformInRanges_System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformInRanges(System.Collections.Generic.IEnumerable{`0})">UniformInRanges(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a Discrete distribution which is uniform over values in
 multiple ranges specified by pairs of start and end values. These pairs
 are specified as adjacent values in an enumerable whose length must therefore be
@@ -1727,7 +1756,7 @@ even.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">startEndPairs</span></td>
         <td><p>Sequence of start and end pairs</p>
 </td>
@@ -1794,7 +1823,7 @@ even.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformOver_" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformOver*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformOver_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformOver(IEnumerable{`0})">UniformOver(IEnumerable&lt;T&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_GenericDiscreteBase_2_UniformOver_System_Collections_Generic_IEnumerable__0__" data-uid="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase`2.UniformOver(System.Collections.Generic.IEnumerable{`0})">UniformOver(IEnumerable&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a Discrete distribution which is uniform over the specified set of values and zero elsewhere.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1813,7 +1842,7 @@ even.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;T&gt;</td>
         <td><span class="parametername">values</span></td>
         <td><p>The values.</p>
 </td>
@@ -1884,7 +1913,7 @@ even.</p>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>

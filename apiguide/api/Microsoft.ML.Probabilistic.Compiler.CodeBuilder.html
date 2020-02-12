@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class CodeBuilder
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -91,11 +91,35 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">CodeBuilder</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Compiler.html">Microsoft.ML.Probabilistic.Compiler</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Compiler.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class CodeBuilder : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class CodeBuilder</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -151,7 +175,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -300,7 +324,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_AnonMethodExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.AnonMethodExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_AnonMethodExpr_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.AnonMethodExpr(Type)">AnonMethodExpr(Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_AnonMethodExpr_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.AnonMethodExpr(System.Type)">AnonMethodExpr(Type)</h4>
   <div class="markdown level1 summary"><p>Creates an anonymous method expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -319,7 +343,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">delegateType</span></td>
         <td><p>The delegate type</p>
 </td>
@@ -362,55 +386,6 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IArrayCreateExpression.html">IArrayCreateExpression</a></td>
         <td><p>A new array create expression</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayCreateExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayCreateExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayCreateExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayCreateExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,IEnumerable{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression})">ArrayCreateExpr(IType, IEnumerable&lt;IExpression&gt;)</h4>
-  <div class="markdown level1 summary"><p>Creates an array expression</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IArrayCreateExpression ArrayCreateExpr(IType type, IEnumerable&lt;IExpression&gt; sizes)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IType.html">IType</a></td>
-        <td><span class="parametername">type</span></td>
-        <td><p>Element type of array</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
-        <td><span class="parametername">sizes</span></td>
-        <td><p>Sizes of each dimension</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IArrayCreateExpression.html">IArrayCreateExpression</a></td>
-        <td><p>Array expression</p>
 </td>
       </tr>
     </tbody>
@@ -465,13 +440,13 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayCreateExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayCreateExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayCreateExpr_Type_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayCreateExpr(Type,IEnumerable{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression})">ArrayCreateExpr(Type, IEnumerable&lt;IExpression&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayCreateExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_System_Collections_Generic_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayCreateExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,System.Collections.Generic.IEnumerable{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression})">ArrayCreateExpr(IType, IEnumerable&lt;IExpression&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates an array expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IArrayCreateExpression ArrayCreateExpr(Type type, IEnumerable&lt;IExpression&gt; sizes)</code></pre>
+    <pre><code class="lang-csharp hljs">public IArrayCreateExpression ArrayCreateExpr(IType type, IEnumerable&lt;IExpression&gt; sizes)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -484,13 +459,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IType.html">IType</a></td>
         <td><span class="parametername">type</span></td>
         <td><p>Element type of array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
         <td><span class="parametername">sizes</span></td>
         <td><p>Sizes of each dimension</p>
 </td>
@@ -514,7 +489,7 @@
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayCreateExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayCreateExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayCreateExpr_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayCreateExpr(Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">ArrayCreateExpr(Type, IExpression[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayCreateExpr_System_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayCreateExpr(System.Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">ArrayCreateExpr(Type, IExpression[])</h4>
   <div class="markdown level1 summary"><p>Creates an array expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -533,7 +508,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">type</span></td>
         <td><p>Element type of array</p>
 </td>
@@ -562,14 +537,14 @@
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayIndex_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayIndex*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayIndex_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayIndex(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,IEnumerable{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression})">ArrayIndex(IExpression, IEnumerable&lt;IExpression&gt;)</h4>
-  <div class="markdown level1 summary"><p>Creates an array index expression</p>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayCreateExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayCreateExpr*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayCreateExpr_System_Type_System_Collections_Generic_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayCreateExpr(System.Type,System.Collections.Generic.IEnumerable{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression})">ArrayCreateExpr(Type, IEnumerable&lt;IExpression&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates an array expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IArrayIndexerExpression ArrayIndex(IExpression array, IEnumerable&lt;IExpression&gt; indices)</code></pre>
+    <pre><code class="lang-csharp hljs">public IArrayCreateExpression ArrayCreateExpr(Type type, IEnumerable&lt;IExpression&gt; sizes)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -582,15 +557,15 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
-        <td><span class="parametername">array</span></td>
-        <td><p>The array expression</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>Element type of array</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
-        <td><span class="parametername">indices</span></td>
-        <td><p>The indices</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
+        <td><span class="parametername">sizes</span></td>
+        <td><p>Sizes of each dimension</p>
 </td>
       </tr>
     </tbody>
@@ -605,8 +580,8 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IArrayIndexerExpression.html">IArrayIndexerExpression</a></td>
-        <td><p>Array index expression</p>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IArrayCreateExpression.html">IArrayCreateExpression</a></td>
+        <td><p>Array expression</p>
 </td>
       </tr>
     </tbody>
@@ -638,6 +613,55 @@
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]</td>
+        <td><span class="parametername">indices</span></td>
+        <td><p>The indices</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IArrayIndexerExpression.html">IArrayIndexerExpression</a></td>
+        <td><p>Array index expression</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayIndex_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayIndex*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ArrayIndex_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Collections_Generic_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ArrayIndex(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Collections.Generic.IEnumerable{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression})">ArrayIndex(IExpression, IEnumerable&lt;IExpression&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates an array index expression</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IArrayIndexerExpression ArrayIndex(IExpression array, IEnumerable&lt;IExpression&gt; indices)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">array</span></td>
+        <td><p>The array expression</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>The indices</p>
 </td>
@@ -1269,7 +1293,7 @@ a given binary operator</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_CanCastExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.CanCastExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_CanCastExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.CanCastExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,Type)">CanCastExpr(IExpression, Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_CanCastExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.CanCastExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Type)">CanCastExpr(IExpression, Type)</h4>
   <div class="markdown level1 summary"><p>Creates an 'is' expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1294,7 +1318,7 @@ a given binary operator</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">t</span></td>
         <td><p>Type to test against</p>
 </td>
@@ -1435,7 +1459,7 @@ a given binary operator</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_CastExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.CastExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_CastExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.CastExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,Type)">CastExpr(IExpression, Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_CastExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.CastExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Type)">CastExpr(IExpression, Type)</h4>
   <div class="markdown level1 summary"><p>Creates a cast expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1460,7 +1484,7 @@ a given binary operator</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">t</span></td>
         <td><p>Type to cast it to</p>
 </td>
@@ -1897,7 +1921,7 @@ a given binary operator</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ConstructorRef_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ConstructorRef*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ConstructorRef_Type_Type___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ConstructorRef(Type,Type[])">ConstructorRef(Type, Type[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_ConstructorRef_System_Type_System_Type___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.ConstructorRef(System.Type,System.Type[])">ConstructorRef(Type, Type[])</h4>
   <div class="markdown level1 summary"><p>Creates a constructor reference</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1916,13 +1940,13 @@ a given binary operator</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">t</span></td>
         <td><p>Type</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>[]</td>
         <td><span class="parametername">types</span></td>
         <td><p>Parameter types for the constructor</p>
 </td>
@@ -2060,7 +2084,7 @@ a given binary operator</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_DefaultExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.DefaultExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_DefaultExpr_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.DefaultExpr(Type)">DefaultExpr(Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_DefaultExpr_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.DefaultExpr(System.Type)">DefaultExpr(Type)</h4>
   <div class="markdown level1 summary"><p>default(T) expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2079,7 +2103,7 @@ a given binary operator</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">type</span></td>
         <td></td>
       </tr>
@@ -2230,7 +2254,7 @@ a given binary operator</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_EventDecl_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.EventDecl*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_EventDecl_System_String_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMethodReference_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.EventDecl(System.String,Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodReference)">EventDecl(String, Type, IMethodReference)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_EventDecl_System_String_System_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IMethodReference_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.EventDecl(System.String,System.Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodReference)">EventDecl(String, Type, IMethodReference)</h4>
   <div class="markdown level1 summary"><p>Creates an event declaration</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2255,7 +2279,7 @@ a given binary operator</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">declaringType</span></td>
         <td><p>Type containing the event</p>
 </td>
@@ -2420,7 +2444,7 @@ a given binary operator</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
         <td><p>A new expression collection</p>
 </td>
       </tr>
@@ -2575,7 +2599,7 @@ a given binary operator</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_FieldDecl_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.FieldDecl*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_FieldDecl_System_String_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.FieldDecl(System.String,Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType)">FieldDecl(String, Type, IType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_FieldDecl_System_String_System_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.FieldDecl(System.String,System.Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType)">FieldDecl(String, Type, IType)</h4>
   <div class="markdown level1 summary"><p>Creates a new field declaration</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2600,7 +2624,7 @@ a given binary operator</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">type</span></td>
         <td><p>Code model type</p>
 </td>
@@ -2741,7 +2765,7 @@ a given binary operator</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_FieldRefExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.FieldRefExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_FieldRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_Type_System_String_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.FieldRefExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,Type,System.String)">FieldRefExpr(IExpression, Type, String)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_FieldRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Type_System_String_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.FieldRefExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Type,System.String)">FieldRefExpr(IExpression, Type, String)</h4>
   <div class="markdown level1 summary"><p>Creates a field reference expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2766,7 +2790,7 @@ a given binary operator</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">declaringType</span></td>
         <td><p>Declaring type</p>
 </td>
@@ -3129,7 +3153,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_GenericMethodDecl_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.GenericMethodDecl*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_GenericMethodDecl_Microsoft_ML_Probabilistic_Compiler_CodeModel_MethodVisibility_System_String_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IGenericParameter__Microsoft_ML_Probabilistic_Compiler_CodeModel_IParameterDeclaration___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.GenericMethodDecl(Microsoft.ML.Probabilistic.Compiler.CodeModel.MethodVisibility,System.String,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,IEnumerable{Microsoft.ML.Probabilistic.Compiler.CodeModel.IGenericParameter},Microsoft.ML.Probabilistic.Compiler.CodeModel.IParameterDeclaration[])">GenericMethodDecl(MethodVisibility, String, IType, IType, IEnumerable&lt;IGenericParameter&gt;, IParameterDeclaration[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_GenericMethodDecl_Microsoft_ML_Probabilistic_Compiler_CodeModel_MethodVisibility_System_String_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_System_Collections_Generic_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IGenericParameter__Microsoft_ML_Probabilistic_Compiler_CodeModel_IParameterDeclaration___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.GenericMethodDecl(Microsoft.ML.Probabilistic.Compiler.CodeModel.MethodVisibility,System.String,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,System.Collections.Generic.IEnumerable{Microsoft.ML.Probabilistic.Compiler.CodeModel.IGenericParameter},Microsoft.ML.Probabilistic.Compiler.CodeModel.IParameterDeclaration[])">GenericMethodDecl(MethodVisibility, String, IType, IType, IEnumerable&lt;IGenericParameter&gt;, IParameterDeclaration[])</h4>
   <div class="markdown level1 summary"><p>Create a generic method declaration</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -3172,7 +3196,7 @@ This is required because events can only be fired from the defining class</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IGenericParameter.html">IGenericParameter</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IGenericParameter.html">IGenericParameter</a>&gt;</td>
         <td><span class="parametername">genericParams</span></td>
         <td><p>Type parameters in order</p>
 </td>
@@ -3202,7 +3226,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_GenericMethodRef_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.GenericMethodRef*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_GenericMethodRef_MethodInfo_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.GenericMethodRef(MethodInfo)">GenericMethodRef(MethodInfo)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_GenericMethodRef_System_Reflection_MethodInfo_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.GenericMethodRef(System.Reflection.MethodInfo)">GenericMethodRef(MethodInfo)</h4>
   <div class="markdown level1 summary"><p>Creates a generic method reference</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -3221,7 +3245,7 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodInfo</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
         <td><span class="parametername">mi</span></td>
         <td><p>MethodInfo</p>
 </td>
@@ -3371,7 +3395,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_JaggedArrayIndex_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.JaggedArrayIndex*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_JaggedArrayIndex_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_IEnumerable_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.JaggedArrayIndex(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,IEnumerable{IEnumerable{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression}})">JaggedArrayIndex(IExpression, IEnumerable&lt;IEnumerable&lt;IExpression&gt;&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_JaggedArrayIndex_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Collections_Generic_IEnumerable_System_Collections_Generic_IEnumerable_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.JaggedArrayIndex(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression}})">JaggedArrayIndex(IExpression, IEnumerable&lt;IEnumerable&lt;IExpression&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates an expression for a jagged array index</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -3396,7 +3420,7 @@ This is required because events can only be fired from the defining class</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;&gt;</td>
         <td><span class="parametername">indices</span></td>
         <td><p>Loop variable declarations</p>
 </td>
@@ -3488,7 +3512,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MakeArrayType_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MakeArrayType*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MakeArrayType_Type_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MakeArrayType(Type,System.Int32)">MakeArrayType(Type, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MakeArrayType_System_Type_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MakeArrayType(System.Type,System.Int32)">MakeArrayType(Type, Int32)</h4>
   <div class="markdown level1 summary"><p>Creates an array type</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -3507,7 +3531,7 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">tp</span></td>
         <td><p>Element type</p>
 </td>
@@ -3530,14 +3554,14 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><p>Array type</p>
 </td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MakeJaggedArrayType_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MakeJaggedArrayType*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MakeJaggedArrayType_Type_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression____" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MakeJaggedArrayType(Type,IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[]})">MakeJaggedArrayType(Type, IList&lt;IExpression[]&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MakeJaggedArrayType_System_Type_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression____" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MakeJaggedArrayType(System.Type,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[]})">MakeJaggedArrayType(Type, IList&lt;IExpression[]&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a jagged array type</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -3556,13 +3580,13 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">elementType</span></td>
         <td><p>Element type</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]&gt;</td>
         <td><span class="parametername">sizes</span></td>
         <td><p>Expressions for sizes of the sub-arrays</p>
 </td>
@@ -3579,7 +3603,7 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><p>Jagged array type</p>
 </td>
       </tr>
@@ -3624,116 +3648,6 @@ This is required because events can only be fired from the defining class</p>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><p>An alphanumeric string, starting with a letter.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Method_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Method*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Method_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_Delegate_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Method(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,Delegate,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">Method(IExpression, Delegate, IExpression[])</h4>
-  <div class="markdown level1 summary"><p>Creates a call to a method</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IMethodInvokeExpression Method(IExpression target, Delegate d, params IExpression[] args)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
-        <td><span class="parametername">target</span></td>
-        <td><p>Instance for method call</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Delegate</span></td>
-        <td><span class="parametername">d</span></td>
-        <td><p>Delegate for the method</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]</td>
-        <td><span class="parametername">args</span></td>
-        <td><p>Argument expressions</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodInvokeExpression.html">IMethodInvokeExpression</a></td>
-        <td><p>The method invoke expression</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Method_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Method*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Method_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_MethodInfo_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Method(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,MethodInfo,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">Method(IExpression, MethodInfo, IExpression[])</h4>
-  <div class="markdown level1 summary"><p>Creates a call to a method</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IMethodInvokeExpression Method(IExpression target, MethodInfo mi, params IExpression[] args)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
-        <td><span class="parametername">target</span></td>
-        <td><p>Instance for method call</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">MethodInfo</span></td>
-        <td><span class="parametername">mi</span></td>
-        <td><p>Method info</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]</td>
-        <td><span class="parametername">args</span></td>
-        <td><p>Argument expressions</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodInvokeExpression.html">IMethodInvokeExpression</a></td>
-        <td><p>The method invoke expression</p>
 </td>
       </tr>
     </tbody>
@@ -3822,6 +3736,116 @@ This is required because events can only be fired from the defining class</p>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodReference.html">IMethodReference</a></td>
         <td><span class="parametername">imr</span></td>
         <td><p>Method reference</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]</td>
+        <td><span class="parametername">args</span></td>
+        <td><p>Argument expressions</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodInvokeExpression.html">IMethodInvokeExpression</a></td>
+        <td><p>The method invoke expression</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Method_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Method*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Method_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Delegate_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Method(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Delegate,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">Method(IExpression, Delegate, IExpression[])</h4>
+  <div class="markdown level1 summary"><p>Creates a call to a method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IMethodInvokeExpression Method(IExpression target, Delegate d, params IExpression[] args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Instance for method call</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.delegate">Delegate</a></td>
+        <td><span class="parametername">d</span></td>
+        <td><p>Delegate for the method</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]</td>
+        <td><span class="parametername">args</span></td>
+        <td><p>Argument expressions</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodInvokeExpression.html">IMethodInvokeExpression</a></td>
+        <td><p>The method invoke expression</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Method_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Method*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Method_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Reflection_MethodInfo_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Method(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Reflection.MethodInfo,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">Method(IExpression, MethodInfo, IExpression[])</h4>
+  <div class="markdown level1 summary"><p>Creates a call to a method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IMethodInvokeExpression Method(IExpression target, MethodInfo mi, params IExpression[] args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Instance for method call</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
+        <td><span class="parametername">mi</span></td>
+        <td><p>Method info</p>
 </td>
       </tr>
       <tr>
@@ -3941,7 +3965,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MethodDecl_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MethodDecl*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MethodDecl_Microsoft_ML_Probabilistic_Compiler_CodeModel_MethodVisibility_System_String_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_Microsoft_ML_Probabilistic_Compiler_CodeModel_IParameterDeclaration___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MethodDecl(Microsoft.ML.Probabilistic.Compiler.CodeModel.MethodVisibility,System.String,Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,Microsoft.ML.Probabilistic.Compiler.CodeModel.IParameterDeclaration[])">MethodDecl(MethodVisibility, String, Type, IType, IParameterDeclaration[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MethodDecl_Microsoft_ML_Probabilistic_Compiler_CodeModel_MethodVisibility_System_String_System_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_Microsoft_ML_Probabilistic_Compiler_CodeModel_IParameterDeclaration___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MethodDecl(Microsoft.ML.Probabilistic.Compiler.CodeModel.MethodVisibility,System.String,System.Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,Microsoft.ML.Probabilistic.Compiler.CodeModel.IParameterDeclaration[])">MethodDecl(MethodVisibility, String, Type, IType, IParameterDeclaration[])</h4>
   <div class="markdown level1 summary"><p>Create a method declaration</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -3972,7 +3996,7 @@ This is required because events can only be fired from the defining class</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">returnType</span></td>
         <td><p>Method's return type</p>
 </td>
@@ -4125,7 +4149,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MethodRef_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MethodRef*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MethodRef_MethodInfo_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MethodRef(MethodInfo)">MethodRef(MethodInfo)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_MethodRef_System_Reflection_MethodInfo_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.MethodRef(System.Reflection.MethodInfo)">MethodRef(MethodInfo)</h4>
   <div class="markdown level1 summary"><p>Creates a method reference</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -4144,7 +4168,7 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodInfo</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
         <td><span class="parametername">mi</span></td>
         <td><p>MethodInfo</p>
 </td>
@@ -4285,7 +4309,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NestedForStmt_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NestedForStmt*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NestedForStmt_IReadOnlyList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration__IReadOnlyList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__Microsoft_ML_Probabilistic_Compiler_CodeModel_IForStatement__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NestedForStmt(IReadOnlyList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration},IReadOnlyList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression},Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement@)">NestedForStmt(IReadOnlyList&lt;IVariableDeclaration&gt;, IReadOnlyList&lt;IExpression&gt;, out IForStatement)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NestedForStmt_System_Collections_Generic_IReadOnlyList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration__System_Collections_Generic_IReadOnlyList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__Microsoft_ML_Probabilistic_Compiler_CodeModel_IForStatement__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NestedForStmt(System.Collections.Generic.IReadOnlyList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration},System.Collections.Generic.IReadOnlyList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression},Microsoft.ML.Probabilistic.Compiler.CodeModel.IForStatement@)">NestedForStmt(IReadOnlyList&lt;IVariableDeclaration&gt;, IReadOnlyList&lt;IExpression&gt;, out IForStatement)</h4>
   <div class="markdown level1 summary"><p>Creates a nested for loop statement</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -4304,13 +4328,13 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>&gt;</td>
         <td><span class="parametername">indexVars</span></td>
         <td><p>Index variable declarations</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
         <td><span class="parametername">sizes</span></td>
         <td><p>Size expressions for each dimension</p>
 </td>
@@ -4340,7 +4364,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewJaggedArray_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewJaggedArray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewJaggedArray_ICollection_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement__Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration____IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression____System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewJaggedArray(ICollection{Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement},Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration,IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration[]},IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[]},System.Int32)">NewJaggedArray(ICollection&lt;IStatement&gt;, IVariableDeclaration, IList&lt;IVariableDeclaration[]&gt;, IList&lt;IExpression[]&gt;, Int32)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewJaggedArray_System_Collections_Generic_ICollection_Microsoft_ML_Probabilistic_Compiler_CodeModel_IStatement__Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration____System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression____System_Int32_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewJaggedArray(System.Collections.Generic.ICollection{Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement},Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration[]},System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[]},System.Int32)">NewJaggedArray(ICollection&lt;IStatement&gt;, IVariableDeclaration, IList&lt;IVariableDeclaration[]&gt;, IList&lt;IExpression[]&gt;, Int32)</h4>
   <div class="markdown level1 summary"><p>Creates a new jagged array, consisting of a declaration and a nested loop allocating the sub-arrays.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -4359,7 +4383,7 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">ICollection</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a>&gt;</td>
         <td><span class="parametername">addTo</span></td>
         <td></td>
       </tr>
@@ -4369,12 +4393,12 @@ This is required because events can only be fired from the defining class</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>[]&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>[]&gt;</td>
         <td><span class="parametername">indexVars</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]&gt;</td>
         <td><span class="parametername">sizes</span></td>
         <td></td>
       </tr>
@@ -4397,55 +4421,6 @@ This is required because events can only be fired from the defining class</p>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a></td>
         <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewObject_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewObject*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewObject_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewObject(Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression})">NewObject(IType, IList&lt;IExpression&gt;)</h4>
-  <div class="markdown level1 summary"><p>Creates object creation expression</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IObjectCreateExpression NewObject(IType t, IList&lt;IExpression&gt; iec)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IType.html">IType</a></td>
-        <td><span class="parametername">t</span></td>
-        <td><p>Type to create</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
-        <td><span class="parametername">iec</span></td>
-        <td><p>Exprssions for constructor parameters</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IObjectCreateExpression.html">IObjectCreateExpression</a></td>
-        <td><p>Object create expression</p>
-</td>
       </tr>
     </tbody>
   </table>
@@ -4499,13 +4474,13 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewObject_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewObject*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewObject_Type_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewObject(Type,IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression})">NewObject(Type, IList&lt;IExpression&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewObject_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewObject(Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression})">NewObject(IType, IList&lt;IExpression&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates object creation expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IObjectCreateExpression NewObject(Type t, IList&lt;IExpression&gt; iec)</code></pre>
+    <pre><code class="lang-csharp hljs">public IObjectCreateExpression NewObject(IType t, IList&lt;IExpression&gt; iec)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -4518,13 +4493,13 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IType.html">IType</a></td>
         <td><span class="parametername">t</span></td>
         <td><p>Type to create</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
         <td><span class="parametername">iec</span></td>
         <td><p>Exprssions for constructor parameters</p>
 </td>
@@ -4548,7 +4523,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewObject_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewObject*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewObject_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewObject(Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">NewObject(Type, IExpression[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewObject_System_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewObject(System.Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">NewObject(Type, IExpression[])</h4>
   <div class="markdown level1 summary"><p>Creates object creation expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -4567,7 +4542,7 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">t</span></td>
         <td><p>Type to create</p>
 </td>
@@ -4576,6 +4551,55 @@ This is required because events can only be fired from the defining class</p>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]</td>
         <td><span class="parametername">args</span></td>
         <td><p>Expressions for constructor parameters</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IObjectCreateExpression.html">IObjectCreateExpression</a></td>
+        <td><p>Object create expression</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewObject_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewObject*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_NewObject_System_Type_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.NewObject(System.Type,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression})">NewObject(Type, IList&lt;IExpression&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates object creation expression</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IObjectCreateExpression NewObject(Type t, IList&lt;IExpression&gt; iec)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">t</span></td>
+        <td><p>Type to create</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>&gt;</td>
+        <td><span class="parametername">iec</span></td>
+        <td><p>Exprssions for constructor parameters</p>
 </td>
       </tr>
     </tbody>
@@ -4714,7 +4738,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Param_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Param*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Param_System_String_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Param(System.String,Type)">Param(String, Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_Param_System_String_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.Param(System.String,System.Type)">Param(String, Type)</h4>
   <div class="markdown level1 summary"><p>Creates a parameter declaration</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -4739,7 +4763,7 @@ This is required because events can only be fired from the defining class</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">type</span></td>
         <td><p>Type of parameter</p>
 </td>
@@ -4881,7 +4905,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropDecl_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropDecl*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropDecl_System_String_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_Microsoft_ML_Probabilistic_Compiler_CodeModel_MethodVisibility_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropDecl(System.String,Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,Microsoft.ML.Probabilistic.Compiler.CodeModel.MethodVisibility)">PropDecl(String, Type, IType, MethodVisibility)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropDecl_System_String_System_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_Microsoft_ML_Probabilistic_Compiler_CodeModel_MethodVisibility_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropDecl(System.String,System.Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,Microsoft.ML.Probabilistic.Compiler.CodeModel.MethodVisibility)">PropDecl(String, Type, IType, MethodVisibility)</h4>
   <div class="markdown level1 summary"><p>Creates a property declaration with an empty get method and no set method</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -4906,7 +4930,7 @@ This is required because events can only be fired from the defining class</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">propertyType</span></td>
         <td><p>Type of the property</p>
 </td>
@@ -4942,7 +4966,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropDecl_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropDecl*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropDecl_System_String_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_Microsoft_ML_Probabilistic_Compiler_CodeModel_MethodVisibility_Microsoft_ML_Probabilistic_Compiler_CodeModel_MethodVisibility_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropDecl(System.String,Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,Microsoft.ML.Probabilistic.Compiler.CodeModel.MethodVisibility,Microsoft.ML.Probabilistic.Compiler.CodeModel.MethodVisibility,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression@)">PropDecl(String, Type, IType, MethodVisibility, MethodVisibility, out IExpression)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropDecl_System_String_System_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_Microsoft_ML_Probabilistic_Compiler_CodeModel_MethodVisibility_Microsoft_ML_Probabilistic_Compiler_CodeModel_MethodVisibility_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropDecl(System.String,System.Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,Microsoft.ML.Probabilistic.Compiler.CodeModel.MethodVisibility,Microsoft.ML.Probabilistic.Compiler.CodeModel.MethodVisibility,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression@)">PropDecl(String, Type, IType, MethodVisibility, MethodVisibility, out IExpression)</h4>
   <div class="markdown level1 summary"><p>Creates a property declaration with an empty get method and set method</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -4967,7 +4991,7 @@ This is required because events can only be fired from the defining class</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">propertyType</span></td>
         <td><p>Type of the property</p>
 </td>
@@ -5139,7 +5163,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropRefExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropRefExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_Type_System_String_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropRefExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,Type,System.String)">PropRefExpr(IExpression, Type, String)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Type_System_String_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropRefExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Type,System.String)">PropRefExpr(IExpression, Type, String)</h4>
   <div class="markdown level1 summary"><p>Creates a property reference expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -5164,7 +5188,7 @@ This is required because events can only be fired from the defining class</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">declaringType</span></td>
         <td><p>Declaring type</p>
 </td>
@@ -5194,7 +5218,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropRefExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropRefExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_Type_System_String_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropRefExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,Type,System.String,Type)">PropRefExpr(IExpression, Type, String, Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_PropRefExpr_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression_System_Type_System_String_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.PropRefExpr(Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression,System.Type,System.String,System.Type)">PropRefExpr(IExpression, Type, String, Type)</h4>
   <div class="markdown level1 summary"><p>Creates a property reference expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -5219,7 +5243,7 @@ This is required because events can only be fired from the defining class</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">declaringType</span></td>
         <td><p>Declaring type</p>
 </td>
@@ -5231,7 +5255,7 @@ This is required because events can only be fired from the defining class</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">propType</span></td>
         <td><p>Property type</p>
 </td>
@@ -5647,7 +5671,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_Delegate_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod(Delegate,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticGenericMethod(Delegate, IExpression[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_System_Delegate_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod(System.Delegate,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticGenericMethod(Delegate, IExpression[])</h4>
   <div class="markdown level1 summary"><p>Creates a call to a static generic method</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -5666,7 +5690,7 @@ This is required because events can only be fired from the defining class</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Delegate</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.delegate">Delegate</a></td>
         <td><span class="parametername">d</span></td>
         <td><p>The delegate</p>
 </td>
@@ -5696,7 +5720,7 @@ This is required because events can only be fired from the defining class</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_Delegate_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType___Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod(Delegate,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType[],Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticGenericMethod(Delegate, IType[], IExpression[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_System_Delegate_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType___Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod(System.Delegate,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType[],Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticGenericMethod(Delegate, IType[], IExpression[])</h4>
   <div class="markdown level1 summary"><p>Creates a call to a static generic method by replacing the type arguments in the method referred to by the delegate
 with the specified arguments.  This allows the method to be referred to statically even when the generic arguments
 are not known at compile-time.  By convention, the type arguments of the delegate method should be object or the highest
@@ -5718,7 +5742,7 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Delegate</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.delegate">Delegate</a></td>
         <td><span class="parametername">d</span></td>
         <td><p>Delegate</p>
 </td>
@@ -5754,7 +5778,7 @@ level class which satisifies the type constraints.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_Delegate_Type___Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod(Delegate,Type[],Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticGenericMethod(Delegate, Type[], IExpression[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_System_Delegate_System_Type___Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod(System.Delegate,System.Type[],Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticGenericMethod(Delegate, Type[], IExpression[])</h4>
   <div class="markdown level1 summary"><p>Creates a call to a static generic method by replacing the type arguments in the method referred to by the delegate
 with the specified arguments.  This allows the method to be referred to statically even when the generic arguments
 are not known at compile-time.  By convention, the type arguments of the delegate method should be object or the highest
@@ -5776,13 +5800,13 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Delegate</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.delegate">Delegate</a></td>
         <td><span class="parametername">d</span></td>
         <td><p>Delegate</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>[]</td>
         <td><span class="parametername">replacementGenericArgs</span></td>
         <td><p>Replacement generic arguments</p>
 </td>
@@ -5812,7 +5836,7 @@ level class which satisifies the type constraints.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_MethodInfo_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod(MethodInfo,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticGenericMethod(MethodInfo, IExpression[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticGenericMethod_System_Reflection_MethodInfo_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticGenericMethod(System.Reflection.MethodInfo,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticGenericMethod(MethodInfo, IExpression[])</h4>
   <div class="markdown level1 summary"><p>Creates a call to a static generic method</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -5831,107 +5855,9 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodInfo</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
         <td><span class="parametername">mi</span></td>
         <td><p>The MethodInfo</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]</td>
-        <td><span class="parametername">args</span></td>
-        <td><p>Argument expressions</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodInvokeExpression.html">IMethodInvokeExpression</a></td>
-        <td><p>The method invoke expression</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticMethod*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticMethod_Delegate_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticMethod(Delegate,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticMethod(Delegate, IExpression[])</h4>
-  <div class="markdown level1 summary"><p>Creates a call to a static method</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IMethodInvokeExpression StaticMethod(Delegate d, params IExpression[] args)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Delegate</span></td>
-        <td><span class="parametername">d</span></td>
-        <td><p>Delegate for the method</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]</td>
-        <td><span class="parametername">args</span></td>
-        <td><p>Argument expressions</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodInvokeExpression.html">IMethodInvokeExpression</a></td>
-        <td><p>The method invoke expression</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticMethod*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticMethod_MethodInfo_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticMethod(MethodInfo,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticMethod(MethodInfo, IExpression[])</h4>
-  <div class="markdown level1 summary"><p>Creates a call to a static method</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IMethodInvokeExpression StaticMethod(MethodInfo mi, params IExpression[] args)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">MethodInfo</span></td>
-        <td><span class="parametername">mi</span></td>
-        <td><p>MethodInfo instance</p>
 </td>
       </tr>
       <tr>
@@ -6007,8 +5933,106 @@ level class which satisifies the type constraints.</p>
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticMethod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticMethod_System_Delegate_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticMethod(System.Delegate,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticMethod(Delegate, IExpression[])</h4>
+  <div class="markdown level1 summary"><p>Creates a call to a static method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IMethodInvokeExpression StaticMethod(Delegate d, params IExpression[] args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.delegate">Delegate</a></td>
+        <td><span class="parametername">d</span></td>
+        <td><p>Delegate for the method</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]</td>
+        <td><span class="parametername">args</span></td>
+        <td><p>Argument expressions</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodInvokeExpression.html">IMethodInvokeExpression</a></td>
+        <td><p>The method invoke expression</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticMethod_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticMethod*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticMethod_System_Reflection_MethodInfo_Microsoft_ML_Probabilistic_Compiler_CodeModel_IExpression___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticMethod(System.Reflection.MethodInfo,Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression[])">StaticMethod(MethodInfo, IExpression[])</h4>
+  <div class="markdown level1 summary"><p>Creates a call to a static method</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IMethodInvokeExpression StaticMethod(MethodInfo mi, params IExpression[] args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodinfo">MethodInfo</a></td>
+        <td><span class="parametername">mi</span></td>
+        <td><p>MethodInfo instance</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IExpression.html">IExpression</a>[]</td>
+        <td><span class="parametername">args</span></td>
+        <td><p>Argument expressions</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IMethodInvokeExpression.html">IMethodInvokeExpression</a></td>
+        <td><p>The method invoke expression</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticPropRefExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticPropRefExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticPropRefExpr_Type_System_String_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticPropRefExpr(Type,System.String)">StaticPropRefExpr(Type, String)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_StaticPropRefExpr_System_Type_System_String_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.StaticPropRefExpr(System.Type,System.String)">StaticPropRefExpr(Type, String)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -6026,7 +6050,7 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">declaringType</span></td>
         <td></td>
       </tr>
@@ -6071,7 +6095,7 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IStatement.html">IStatement</a>&gt;</td>
         <td><p>A new statement collection</p>
 </td>
       </tr>
@@ -6230,7 +6254,7 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodBase</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a></td>
         <td><p>Returns MethodBase if conversion is successful, null otherwise</p>
 </td>
       </tr>
@@ -6273,7 +6297,7 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">MethodBase</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.reflection.methodbase">MethodBase</a></td>
         <td><p>Returns MethodBase if conversion is successful, throws an exception otherwise</p>
 </td>
       </tr>
@@ -6315,7 +6339,7 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -6506,7 +6530,7 @@ level class which satisifies the type constraints.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRef_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRef*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRef_System_String_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRef(System.String,Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType)">TypeRef(String, Type, IType)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRef_System_String_System_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRef(System.String,System.Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType)">TypeRef(String, Type, IType)</h4>
   <div class="markdown level1 summary"><p>Creates a type reference</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -6531,7 +6555,7 @@ level class which satisifies the type constraints.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">t</span></td>
         <td><p>Type</p>
 </td>
@@ -6561,7 +6585,7 @@ level class which satisifies the type constraints.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRef_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRef*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRef_System_String_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRef(System.String,Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType[])">TypeRef(String, Type, IType, IType[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRef_System_String_System_Type_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType_Microsoft_ML_Probabilistic_Compiler_CodeModel_IType___" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRef(System.String,System.Type,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType,Microsoft.ML.Probabilistic.Compiler.CodeModel.IType[])">TypeRef(String, Type, IType, IType[])</h4>
   <div class="markdown level1 summary"><p>Creates a type reference</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -6586,7 +6610,7 @@ level class which satisifies the type constraints.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">t</span></td>
         <td><p>Type</p>
 </td>
@@ -6622,7 +6646,7 @@ level class which satisifies the type constraints.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRef_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRef*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRef_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRef(Type)">TypeRef(Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRef_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRef(System.Type)">TypeRef(Type)</h4>
   <div class="markdown level1 summary"><p>Creates a type reference</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -6641,7 +6665,7 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">t</span></td>
         <td><p>The dotNET type</p>
 </td>
@@ -6664,7 +6688,7 @@ level class which satisifies the type constraints.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRefArray_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRefArray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRefArray_IList_Type__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRefArray(IList{Type})">TypeRefArray(IList&lt;Type&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRefArray_System_Collections_Generic_IList_System_Type__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRefArray(System.Collections.Generic.IList{System.Type})">TypeRefArray(IList&lt;Type&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates an array of type references</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -6683,7 +6707,7 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<span class="xref">Type</span>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
         <td><span class="parametername">types</span></td>
         <td><p>List of types</p>
 </td>
@@ -6775,7 +6799,7 @@ level class which satisifies the type constraints.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRefExpr_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRefExpr*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRefExpr_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRefExpr(Type)">TypeRefExpr(Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_TypeRefExpr_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.TypeRefExpr(System.Type)">TypeRefExpr(Type)</h4>
   <div class="markdown level1 summary"><p>Create a type reference expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -6794,7 +6818,7 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">type</span></td>
         <td><p>A type</p>
 </td>
@@ -6990,7 +7014,7 @@ level class which satisifies the type constraints.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_VarDecl_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.VarDecl*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_VarDecl_System_String_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.VarDecl(System.String,Type)">VarDecl(String, Type)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_VarDecl_System_String_System_Type_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.VarDecl(System.String,System.Type)">VarDecl(String, Type)</h4>
   <div class="markdown level1 summary"><p>Creates a variable declaration</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -7015,7 +7039,7 @@ level class which satisifies the type constraints.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Type</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">tp</span></td>
         <td><p>Type of variable</p>
 </td>
@@ -7218,7 +7242,7 @@ level class which satisifies the type constraints.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_VarRefExprArray_" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.VarRefExprArray*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_VarRefExprArray_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.VarRefExprArray(IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration})">VarRefExprArray(IList&lt;IVariableDeclaration&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Compiler_CodeBuilder_VarRefExprArray_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Compiler_CodeModel_IVariableDeclaration__" data-uid="Microsoft.ML.Probabilistic.Compiler.CodeBuilder.VarRefExprArray(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration})">VarRefExprArray(IList&lt;IVariableDeclaration&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates an array of variable reference expressions</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -7237,7 +7261,7 @@ level class which satisifies the type constraints.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Compiler.CodeModel.IVariableDeclaration.html">IVariableDeclaration</a>&gt;</td>
         <td><span class="parametername">ivr</span></td>
         <td><p>A list of variable declarations</p>
 </td>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class SoftmaxOp_KM11_LBFGS_Sparse
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse" class="text-break">Class SoftmaxOp_KM11_LBFGS_Sparse
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.MMath.html#Microsoft_ML_Probabilistic_Math_MMath_Softmax_System_Collections_Generic_IList_System_Double__">Softmax(IList&lt;Double&gt;)</a>, given random arguments to the function.
 This implementation uses the bound in Knowles and Minka (2011), followed by
 optimization using LBFGS. This approach is linear in the dimension K.</p>
 </div>
@@ -93,16 +93,43 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">SoftmaxOp_KM11_LBFGS_Sparse</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class SoftmaxOp_KM11_LBFGS_Sparse : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(MMath), &quot;Softmax&quot;, new Type[]{typeof(IList&lt;double&gt;)})]
+[Quality(QualityBand.Preview)]
+[Buffers(new string[]{&quot;A&quot;})]
+public static class SoftmaxOp_KM11_LBFGS_Sparse</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_A_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.A*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_A_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.A(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{System.Double})">A(IList&lt;Gaussian&gt;, IList&lt;Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_A_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_System_Double__" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.A(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Collections.Generic.IList{System.Double})">A(IList&lt;Gaussian&gt;, IList&lt;Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Update the buffer 'A'</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -121,13 +148,13 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">x</span></td>
         <td><p>Incoming message from 'x'. Must be a proper distribution.  If any element is uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">a</span></td>
         <td><p>Buffer 'a'.</p>
 </td>
@@ -144,13 +171,13 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><p>New value of buffer 'A'</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_A_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_System_Double___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_A_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_System_Double___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </p>
 </div>
@@ -171,7 +198,7 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_AInit_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.AInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_AInit_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.AInit(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">AInit(IList&lt;Gaussian&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_AInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.AInit(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">AInit(IList&lt;Gaussian&gt;)</h4>
   <div class="markdown level1 summary"><p>Initialise the buffer 'A'</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -190,7 +217,7 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">x</span></td>
         <td><p>Incoming message from 'x'.</p>
 </td>
@@ -207,18 +234,18 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><p>Initial value of buffer 'A'</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_AInit_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_AInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
 </p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.AverageLogFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_AverageLogFactor__1___0_IList_System_Double__Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.AverageLogFactor``1(``0,IList{System.Double},Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">AverageLogFactor&lt;GaussianList&gt;(GaussianList, IList&lt;Double&gt;, Dirichlet, Dirichlet)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_AverageLogFactor__1___0_System_Collections_Generic_IList_System_Double__Microsoft_ML_Probabilistic_Distributions_Dirichlet_Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.AverageLogFactor``1(``0,System.Collections.Generic.IList{System.Double},Microsoft.ML.Probabilistic.Distributions.Dirichlet,Microsoft.ML.Probabilistic.Distributions.Dirichlet)">AverageLogFactor&lt;GaussianList&gt;(GaussianList, IList&lt;Double&gt;, Dirichlet, Dirichlet)</h4>
   <div class="markdown level1 summary"><p>Evidence message for VMP</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -243,7 +270,7 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">a</span></td>
         <td></td>
       </tr>
@@ -290,7 +317,7 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_GradientAndValueAtPoint_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.GradientAndValueAtPoint*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_GradientAndValueAtPoint_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector___" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.GradientAndValueAtPoint(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{System.Double},Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector[])">GradientAndValueAtPoint(IList&lt;Gaussian&gt;, IList&lt;Double&gt;, Vector, Vector, Vector, Vector[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_GradientAndValueAtPoint_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_System_Double__Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector___" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.GradientAndValueAtPoint(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Collections.Generic.IList{System.Double},Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector,Microsoft.ML.Probabilistic.Math.Vector[])">GradientAndValueAtPoint(IList&lt;Gaussian&gt;, IList&lt;Double&gt;, Vector, Vector, Vector, Vector[])</h4>
   <div class="markdown level1 summary"><p>Function to evaluate this factor's KL divergence contribution, and gradient (if grad is not null).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -309,12 +336,12 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">prior</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">a</span></td>
         <td><p>Variational parameter vector a</p>
 </td>
@@ -362,13 +389,13 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_SoftmaxAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.SoftmaxAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_SoftmaxAverageLogarithm__1___0_IList_System_Double__Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.SoftmaxAverageLogarithm``1(``0,IList{System.Double},Microsoft.ML.Probabilistic.Distributions.Dirichlet)">SoftmaxAverageLogarithm&lt;GaussianList&gt;(GaussianList, IList&lt;Double&gt;, Dirichlet)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_SoftmaxAverageLogarithm__1___0_System_Collections_Generic_IList_System_Double__Microsoft_ML_Probabilistic_Distributions_Dirichlet_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.SoftmaxAverageLogarithm``1(``0,System.Collections.Generic.IList{System.Double},Microsoft.ML.Probabilistic.Distributions.Dirichlet)">SoftmaxAverageLogarithm&lt;GaussianList&gt;(GaussianList, IList&lt;Double&gt;, Dirichlet)</h4>
   <div class="markdown level1 summary"><p>VMP message to 'softmax'</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dirichlet SoftmaxAverageLogarithm&lt;GaussianList&gt;(GaussianList x, IList&lt;double&gt; a, Dirichlet result)
+    <pre><code class="lang-csharp hljs">public static Dirichlet SoftmaxAverageLogarithm&lt;GaussianList&gt;([SkipIfAllUniform] GaussianList x, IList&lt;double&gt; a, Dirichlet result)
     where GaussianList : IList&lt;Gaussian&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -388,7 +415,7 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">a</span></td>
         <td><p>Buffer 'a'.</p>
 </td>
@@ -432,7 +459,7 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_SoftmaxAverageLogarithm__1___0_IList_System_Double__Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_SoftmaxAverageLogarithm__1___0_System_Collections_Generic_IList_System_Double__Microsoft_ML_Probabilistic_Distributions_Dirichlet__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
     The outgoing message is a distribution matching the moments of &apos;softmax&apos; as the random arguments are varied.
     The formula is <code>proj[sum_(x) p(x) factor(softmax,x)]</code>.
@@ -455,13 +482,13 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_XAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.XAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_XAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Dirichlet_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_System_Double____0_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.XAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Dirichlet,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{System.Double},``0)">XAverageLogarithm&lt;GaussianList&gt;(Dirichlet, IList&lt;Gaussian&gt;, IList&lt;Double&gt;, GaussianList)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_XAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Dirichlet_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_System_Double____0_" data-uid="Microsoft.ML.Probabilistic.Factors.SoftmaxOp_KM11_LBFGS_Sparse.XAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Dirichlet,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Collections.Generic.IList{System.Double},``0)">XAverageLogarithm&lt;GaussianList&gt;(Dirichlet, IList&lt;Gaussian&gt;, IList&lt;Double&gt;, GaussianList)</h4>
   <div class="markdown level1 summary"><p>VMP message to 'x'</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GaussianList XAverageLogarithm&lt;GaussianList&gt;(Dirichlet softmax, IList&lt;Gaussian&gt; x, IList&lt;double&gt; a, GaussianList result)
+    <pre><code class="lang-csharp hljs">public static GaussianList XAverageLogarithm&lt;GaussianList&gt;(Dirichlet softmax, [SkipIfAllUniform] IList&lt;Gaussian&gt; x, IList&lt;double&gt; a, GaussianList result)
     where GaussianList : IList&lt;Gaussian&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -481,13 +508,13 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">x</span></td>
         <td><p>Incoming message from 'x'. Must be a proper distribution.  If all elements are uniform, the result will be uniform.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">a</span></td>
         <td><p>Buffer 'a'.</p>
 </td>
@@ -531,7 +558,7 @@ optimization using LBFGS. This approach is linear in the dimension K.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_XAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Dirichlet_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_System_Double____0__remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_SoftmaxOp_KM11_LBFGS_Sparse_XAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Dirichlet_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_System_Double____0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>
     The outgoing message is the factor viewed as a function of &apos;x&apos; with &apos;softmax&apos; integrated out.
     The formula is <code>sum_softmax p(softmax) factor(softmax,x)</code>.

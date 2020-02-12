@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class MatchboxRecommenderSettings
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -96,16 +96,68 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Learners.ISettings.html">ISettings</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICustomSerializable.html">ICustomSerializable</a></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class MatchboxRecommenderSettings : object, ISettings, ICustomSerializable</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+public class MatchboxRecommenderSettings : ISettings, ICustomSerializable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings__ctor_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings__ctor_BinaryReader_Func_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.#ctor(BinaryReader,Func{System.Boolean})">MatchboxRecommenderSettings(BinaryReader, Func&lt;Boolean&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings__ctor_System_Func_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.#ctor(System.Func{System.Boolean})">MatchboxRecommenderSettings(Func&lt;Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.html">MatchboxRecommenderSettings</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MatchboxRecommenderSettings(Func&lt;bool&gt; isTrained)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><span class="parametername">isTrained</span></td>
+        <td><p>Indicates whether the Matchbox recommender is trained.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings__ctor_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.#ctor*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings__ctor_System_IO_BinaryReader_System_Func_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.#ctor(System.IO.BinaryReader,System.Func{System.Boolean})">MatchboxRecommenderSettings(BinaryReader, Func&lt;Boolean&gt;)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.html">MatchboxRecommenderSettings</a> class
 from a reader of a binary stream.</p>
 </div>
@@ -125,40 +177,13 @@ from a reader of a binary stream.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">BinaryReader</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binaryreader">BinaryReader</a></td>
         <td><span class="parametername">reader</span></td>
         <td><p>The binary reader to read the settings of the Matchbox recommender from.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
-        <td><span class="parametername">isTrained</span></td>
-        <td><p>Indicates whether the Matchbox recommender is trained.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings__ctor_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings__ctor_Func_System_Boolean__" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.#ctor(Func{System.Boolean})">MatchboxRecommenderSettings(Func&lt;Boolean&gt;)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.html">MatchboxRecommenderSettings</a> class.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MatchboxRecommenderSettings(Func&lt;bool&gt; isTrained)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
         <td><span class="parametername">isTrained</span></td>
         <td><p>Indicates whether the Matchbox recommender is trained.</p>
 </td>
@@ -218,7 +243,7 @@ from a reader of a binary stream.</p>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings_SaveForwardCompatible_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.SaveForwardCompatible*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings_SaveForwardCompatible_BinaryWriter_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.SaveForwardCompatible(BinaryWriter)">SaveForwardCompatible(BinaryWriter)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderSettings_SaveForwardCompatible_System_IO_BinaryWriter_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderSettings.SaveForwardCompatible(System.IO.BinaryWriter)">SaveForwardCompatible(BinaryWriter)</h4>
   <div class="markdown level1 summary"><p>Saves the settings of the Matchbox recommender using the specified writer to a binary stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -237,7 +262,7 @@ from a reader of a binary stream.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">BinaryWriter</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binarywriter">BinaryWriter</a></td>
         <td><span class="parametername">writer</span></td>
         <td><p>The writer to save the settings to.</p>
 </td>

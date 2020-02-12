@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class InnerProductArrayOp
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp" class="text-break">Class InnerProductArrayOp
   </h1>
-  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Math.Vector.html#Microsoft_ML_Probabilistic_Math_Vector_InnerProduct_Microsoft_ML_Probabilistic_Math_Vector_Microsoft_ML_Probabilistic_Math_Vector_">InnerProduct(Vector, Vector)</a>, given random arguments to the function.</p>
+  <div class="markdown level0 summary"><p>Provides outgoing messages for <a class="xref" href="Microsoft.ML.Probabilistic.Factors.Factor.html#Microsoft_ML_Probabilistic_Factors_Factor_InnerProduct_System_Double___System_Double___">InnerProduct(Double[], Double[])</a>, given random arguments to the function.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -91,21 +91,49 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">InnerProductArrayOp</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Factors.html">Microsoft.ML.Probabilistic.Factors</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class InnerProductArrayOp : object</code></pre>
+    <pre><code class="lang-csharp hljs">[FactorMethod(typeof(Factor), &quot;InnerProduct&quot;, new Type[]{typeof(double[]), typeof(double[])})]
+[Quality(QualityBand.Experimental)]
+public static class InnerProductArrayOp</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">AAverageConditional&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">AAverageConditional&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GaussianList AAverageConditional&lt;GaussianList&gt;(Gaussian innerProduct, IList&lt;Gaussian&gt; B, GaussianList result)
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A InnerProduct factor between two Gaussian arrays is not yet implemented for Expectation Propagation.  Try using Variational Message Passing.&quot;)]
+public static GaussianList AAverageConditional&lt;GaussianList&gt;(Gaussian innerProduct, IList&lt;Gaussian&gt; B, GaussianList result)
     where GaussianList : IList&lt;Gaussian&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -121,17 +149,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -146,7 +177,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -165,9 +197,29 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(innerProduct,b) p(innerProduct,b) factor(innerProduct,a,b)]/p(a)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___Microsoft_ML_Probabilistic_Distributions_Gaussian___0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[],Microsoft.ML.Probabilistic.Distributions.Gaussian,``0)">AAverageConditional&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, Double[], Gaussian, GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___Microsoft_ML_Probabilistic_Distributions_Gaussian___0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[],Microsoft.ML.Probabilistic.Distributions.Gaussian,``0)">AAverageConditional&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, Double[], Gaussian, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -187,27 +239,32 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">to_innerProduct</span></td>
-        <td></td>
+        <td><p>Outgoing message to <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -222,7 +279,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -241,13 +299,34 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___Microsoft_ML_Probabilistic_Distributions_Gaussian___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>a</code> as the random arguments are varied. The formula is <code>proj[p(a) sum_(innerProduct) p(innerProduct) factor(innerProduct,a,b)]/p(a)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">innerProduct</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageConditional*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional__1_System_Double_System_Double_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageConditional``1(System.Double,System.Double[],``0)">AAverageConditional&lt;GaussianList&gt;(Double, Double[], GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>EP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GaussianList AAverageConditional&lt;GaussianList&gt;(double innerProduct, double[] B, GaussianList result)
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A InnerProduct factor with fixed output is not yet implemented for Expectation Propagation.&quot;)]
+public static GaussianList AAverageConditional&lt;GaussianList&gt;(double innerProduct, double[] B, GaussianList result)
     where GaussianList : IList&lt;Gaussian&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -263,17 +342,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Constant value for <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -288,7 +370,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -307,9 +390,13 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageConditional__1_System_Double_System_Double_____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>a</code> conditioned on the given values.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">AAverageLogarithm&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">AAverageLogarithm&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -329,22 +416,26 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">to_A</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>A</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -359,7 +450,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>a</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -378,9 +470,34 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>a</code>. Because the factor is deterministic, <code>innerProduct</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(b) p(b) log(sum_innerProduct p(innerProduct) factor(innerProduct,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">innerProduct</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[],``0)">AAverageLogarithm&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, Double[], GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[],``0)">AAverageLogarithm&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, Double[], GaussianList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>a</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -400,22 +517,26 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">to_A</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>A</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -430,7 +551,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>a</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -449,13 +571,38 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double_____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>a</code> with <code>innerProduct</code> integrated out. The formula is <code>sum_innerProduct p(innerProduct) factor(innerProduct,a,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">innerProduct</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AAverageLogarithm__1_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AAverageLogarithm``1(System.Double)">AAverageLogarithm&lt;GaussianList&gt;(Double)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GaussianList AAverageLogarithm&lt;GaussianList&gt;(double innerProduct)
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Variational Message Passing does not support a InnerProduct factor with fixed output.&quot;)]
+public static GaussianList AAverageLogarithm&lt;GaussianList&gt;(double innerProduct)
     where GaussianList : IList&lt;Gaussian&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -507,7 +654,8 @@
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AverageLogFactor" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AverageLogFactor">AverageLogFactor()</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -524,13 +672,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Zero.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AverageLogFactor_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(innerProduct,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AverageLogFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AverageLogFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AverageLogFactor_System_Double_System_Double___System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.AverageLogFactor(System.Double,System.Double[],System.Double[])">AverageLogFactor(Double, Double[], Double[])</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for VMP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -549,17 +702,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Constant value for <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -574,17 +730,23 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Zero.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_AverageLogFactor_System_Double_System_Double___System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(innerProduct,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for VMP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">BAverageConditional&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">BAverageConditional&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GaussianList BAverageConditional&lt;GaussianList&gt;(Gaussian innerProduct, IList&lt;Gaussian&gt; A, GaussianList result)
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A InnerProduct factor between two Gaussian arrays is not yet implemented for Expectation Propagation.  Try using Variational Message Passing.&quot;)]
+public static GaussianList BAverageConditional&lt;GaussianList&gt;(Gaussian innerProduct, IList&lt;Gaussian&gt; A, GaussianList result)
     where GaussianList : IList&lt;Gaussian&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -600,17 +762,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -625,7 +790,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -644,9 +810,29 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(innerProduct,a) p(innerProduct,a) factor(innerProduct,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_Gaussian___0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double[],IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.Gaussian,``0)">BAverageConditional&lt;GaussianList&gt;(Gaussian, Double[], IList&lt;Gaussian&gt;, Gaussian, GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_Gaussian___0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageConditional``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double[],System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.Gaussian,``0)">BAverageConditional&lt;GaussianList&gt;(Gaussian, Double[], IList&lt;Gaussian&gt;, Gaussian, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -666,27 +852,32 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">to_innerProduct</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -701,7 +892,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -720,13 +912,39 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_Gaussian___0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>b</code> as the random arguments are varied. The formula is <code>proj[p(b) sum_(innerProduct) p(innerProduct) factor(innerProduct,a,b)]/p(b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">innerProduct</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional__1_System_Double_System_Double___0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageConditional``1(System.Double,System.Double,``0)">BAverageConditional&lt;GaussianList&gt;(Double, Double, GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional__1_System_Double_System_Double_____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageConditional``1(System.Double,System.Double[],``0)">BAverageConditional&lt;GaussianList&gt;(Double, Double[], GaussianList)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>b</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static GaussianList BAverageConditional&lt;GaussianList&gt;(double innerProduct, double A, GaussianList result)
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A InnerProduct factor with fixed output is not yet implemented for Expectation Propagation.&quot;)]
+public static GaussianList BAverageConditional&lt;GaussianList&gt;(double innerProduct, double[] A, GaussianList result)
     where GaussianList : IList&lt;Gaussian&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -742,17 +960,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Constant value for <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -767,7 +988,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -786,13 +1008,18 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageConditional__1_System_Double_System_Double_____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> conditioned on the given values.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageLogarithm*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm_System_Double_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageLogarithm(System.Double)">BAverageLogarithm(Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IList&lt;Gaussian&gt; BAverageLogarithm(double innerProduct)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;Variational Message Passing does not support a InnerProduct factor with fixed output.&quot;)]
+public static IList&lt;Gaussian&gt; BAverageLogarithm(double innerProduct)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -807,7 +1034,8 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Constant value for <code>innerProduct</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -821,14 +1049,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
-        <td></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> conditioned on the given values.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">BAverageLogarithm&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">BAverageLogarithm&lt;GaussianList&gt;(Gaussian, IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -848,22 +1081,26 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">to_B</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>B</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -878,7 +1115,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -897,9 +1135,39 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the exponential of the average log-factor value, where the average is over all arguments except <code>b</code>. Because the factor is deterministic, <code>innerProduct</code> is integrated out before taking the logarithm. The formula is <code>exp(sum_(a) p(a) log(sum_innerProduct p(innerProduct) factor(innerProduct,a,b)))</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">innerProduct</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double[],IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">BAverageLogarithm&lt;GaussianList&gt;(Gaussian, Double[], IList&lt;Gaussian&gt;, GaussianList)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.BAverageLogarithm``1(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double[],System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},``0)">BAverageLogarithm&lt;GaussianList&gt;(Gaussian, Double[], IList&lt;Gaussian&gt;, GaussianList)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>b</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -919,22 +1187,26 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>. Must be a proper distribution. If uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">GaussianList</span></td>
         <td><span class="parametername">to_B</span></td>
-        <td></td>
+        <td><p>Previous outgoing message to <code>B</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -949,7 +1221,8 @@
     <tbody>
       <tr>
         <td><span class="xref">GaussianList</span></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>b</code> argument.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -968,13 +1241,39 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_BAverageLogarithm__1_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian____0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is the factor viewed as a function of <code>b</code> with <code>innerProduct</code> integrated out. The formula is <code>sum_innerProduct p(innerProduct) factor(innerProduct,a,b)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">innerProduct</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageConditional(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">InnerProductAverageConditional(IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageConditional(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">InnerProductAverageConditional(IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>innerProduct</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Gaussian InnerProductAverageConditional(IList&lt;Gaussian&gt; A, IList&lt;Gaussian&gt; B, IList&lt;Gaussian&gt; result)</code></pre>
+    <pre><code class="lang-csharp hljs">[NotSupported(&quot;A InnerProduct factor between two Gaussian arrays is not yet implemented for Expectation Propagation.  Try using Variational Message Passing.&quot;)]
+public static Gaussian InnerProductAverageConditional(IList&lt;Gaussian&gt; A, IList&lt;Gaussian&gt; B, IList&lt;Gaussian&gt; result)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -987,19 +1286,22 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1014,13 +1316,39 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>innerProduct</code> as the random arguments are varied. The formula is <code>proj[p(innerProduct) sum_(a,b) p(a,b) factor(innerProduct,a,b)]/p(innerProduct)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageConditional(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">InnerProductAverageConditional(IList&lt;Gaussian&gt;, Double[])</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageConditional(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">InnerProductAverageConditional(IList&lt;Gaussian&gt;, Double[])</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>innerProduct</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1037,14 +1365,16 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1059,13 +1389,34 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>innerProduct</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>innerProduct</code> as the random arguments are varied. The formula is <code>proj[p(innerProduct) sum_(a) p(a) factor(innerProduct,a,b)]/p(innerProduct)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageConditional*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_System_Double___IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageConditional(System.Double[],IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">InnerProductAverageConditional(Double[], IList&lt;Gaussian&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageConditional(System.Double[],System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">InnerProductAverageConditional(Double[], IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>EP message to <code>innerProduct</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1084,12 +1435,14 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1104,13 +1457,34 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td></td>
+        <td><p>The outgoing EP message to the <code>innerProduct</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageConditional_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>innerProduct</code> as the random arguments are varied. The formula is <code>proj[p(innerProduct) sum_(b) p(b) factor(innerProduct,a,b)]/p(innerProduct)</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithm(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.Gaussian)">InnerProductAverageLogarithm(IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, Gaussian)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_Gaussian_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithm(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},Microsoft.ML.Probabilistic.Distributions.Gaussian)">InnerProductAverageLogarithm(IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;, Gaussian)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>innerProduct</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1127,19 +1501,22 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">result</span></td>
-        <td></td>
+        <td><p>Modified to contain the outgoing message.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1154,13 +1531,39 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">result</code></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__Microsoft_ML_Probabilistic_Distributions_Gaussian__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>innerProduct</code> as the random arguments are varied. The formula is <code>proj[sum_(a,b) p(a,b) factor(innerProduct,a,b)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithm(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">InnerProductAverageLogarithm(IList&lt;Gaussian&gt;, Double[])</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithm(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">InnerProductAverageLogarithm(IList&lt;Gaussian&gt;, Double[])</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>innerProduct</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1177,14 +1580,16 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1199,13 +1604,34 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>innerProduct</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>innerProduct</code> as the random arguments are varied. The formula is <code>proj[sum_(a) p(a) factor(innerProduct,a,b)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">A</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithm*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_System_Double___IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithm(System.Double[],IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">InnerProductAverageLogarithm(Double[], IList&lt;Gaussian&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithm(System.Double[],System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">InnerProductAverageLogarithm(Double[], IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>VMP message to <code>innerProduct</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1224,12 +1650,14 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>. Must be a proper distribution. If any element is uniform, the result will be uniform.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1244,12 +1672,32 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
-        <td></td>
+        <td><p>The outgoing VMP message to the <code>innerProduct</code> argument.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithm_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The outgoing message is a distribution matching the moments of <code>innerProduct</code> as the random arguments are varied. The formula is <code>proj[sum_(b) p(b) factor(innerProduct,a,b)]</code>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Factors.ImproperMessageException.html">ImproperMessageException</a></td>
+        <td><p><code data-dev-comment-type="paramref" class="paramref">B</code> is not a proper distribution.</p>
+</td>
       </tr>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithmInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithmInit(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">InnerProductAverageLogarithmInit(IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithmInit(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">InnerProductAverageLogarithmInit(IList&lt;Gaussian&gt;, IList&lt;Gaussian&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1267,14 +1715,16 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1293,8 +1743,11 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithmInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithmInit(IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">InnerProductAverageLogarithmInit(IList&lt;Gaussian&gt;, Double[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithmInit(System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">InnerProductAverageLogarithmInit(IList&lt;Gaussian&gt;, Double[])</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1312,14 +1765,16 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1338,8 +1793,11 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithmInit*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_System_Double___IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithmInit(System.Double[],IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">InnerProductAverageLogarithmInit(Double[], IList&lt;Gaussian&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.InnerProductAverageLogarithmInit(System.Double[],System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">InnerProductAverageLogarithmInit(Double[], IList&lt;Gaussian&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1359,12 +1817,14 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1383,9 +1843,13 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_InnerProductAverageLogarithmInit_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">LogAverageFactor(Gaussian, IList&lt;Gaussian&gt;, Double[])</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">LogAverageFactor(Gaussian, IList&lt;Gaussian&gt;, Double[])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1404,17 +1868,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1429,13 +1896,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(innerProduct,a) p(innerProduct,a) factor(innerProduct,a,b))</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double[],IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogAverageFactor(Gaussian, Double[], IList&lt;Gaussian&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double[],System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogAverageFactor(Gaussian, Double[], IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1454,17 +1926,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1479,13 +1954,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(innerProduct,b) p(innerProduct,b) factor(innerProduct,a,b))</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_System_Double_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor(System.Double,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">LogAverageFactor(Double, IList&lt;Gaussian&gt;, Double[])</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_System_Double_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor(System.Double,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">LogAverageFactor(Double, IList&lt;Gaussian&gt;, Double[])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1504,17 +1984,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Constant value for <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1529,13 +2012,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_System_Double_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a) p(a) factor(innerProduct,a,b))</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_System_Double_System_Double___IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor(System.Double,System.Double[],IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogAverageFactor(Double, Double[], IList&lt;Gaussian&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_System_Double_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor(System.Double,System.Double[],System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogAverageFactor(Double, Double[], IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1554,17 +2042,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Constant value for <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1579,13 +2070,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_System_Double_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(b) p(b) factor(innerProduct,a,b))</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_System_Double_System_Double___System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogAverageFactor(System.Double,System.Double[],System.Double[])">LogAverageFactor(Double, Double[], Double[])</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1604,17 +2100,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Constant value for <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1629,13 +2128,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's average value across the given argument distributions.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogAverageFactor_System_Double_System_Double___System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(innerProduct,a,b))</code>.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Gaussian,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">LogEvidenceRatio(Gaussian, IList&lt;Gaussian&gt;, Double[])</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">LogEvidenceRatio(Gaussian, IList&lt;Gaussian&gt;, Double[])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1654,17 +2158,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1679,13 +2186,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(innerProduct,a) p(innerProduct,a) factor(innerProduct,a,b) / sum_innerProduct p(innerProduct) messageTo(innerProduct))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double[],IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogEvidenceRatio(Gaussian, Double[], IList&lt;Gaussian&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio(Microsoft.ML.Probabilistic.Distributions.Gaussian,System.Double[],System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogEvidenceRatio(Gaussian, Double[], IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1704,17 +2216,20 @@
       <tr>
         <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1729,13 +2244,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_Microsoft_ML_Probabilistic_Distributions_Gaussian_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(innerProduct,b) p(innerProduct,b) factor(innerProduct,a,b) / sum_innerProduct p(innerProduct) messageTo(innerProduct))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_System_Double_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio(System.Double,IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">LogEvidenceRatio(Double, IList&lt;Gaussian&gt;, Double[])</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_System_Double_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio(System.Double,System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian},System.Double[])">LogEvidenceRatio(Double, IList&lt;Gaussian&gt;, Double[])</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1754,17 +2274,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Constant value for <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1779,13 +2302,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_System_Double_System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(a) p(a) factor(innerProduct,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_System_Double_System_Double___IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio(System.Double,System.Double[],IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogEvidenceRatio(Double, Double[], IList&lt;Gaussian&gt;)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_System_Double_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian__" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio(System.Double,System.Double[],System.Collections.Generic.IList{Microsoft.ML.Probabilistic.Distributions.Gaussian})">LogEvidenceRatio(Double, Double[], IList&lt;Gaussian&gt;)</h4>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1804,17 +2332,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Constant value for <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
-        <td><span class="xref">IList</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ilist-1">IList</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Gaussian.html">Gaussian</a>&gt;</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Incoming message from <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1829,13 +2360,18 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_System_Double_System_Double___System_Collections_Generic_IList_Microsoft_ML_Probabilistic_Distributions_Gaussian___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(sum_(b) p(b) factor(innerProduct,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
   <a id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_System_Double_System_Double___System_Double___" data-uid="Microsoft.ML.Probabilistic.Factors.InnerProductArrayOp.LogEvidenceRatio(System.Double,System.Double[],System.Double[])">LogEvidenceRatio(Double, Double[], Double[])</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Evidence message for EP.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -1854,17 +2390,20 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">innerProduct</span></td>
-        <td></td>
+        <td><p>Constant value for <code>innerProduct</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">A</span></td>
-        <td></td>
+        <td><p>Constant value for <code>a</code>.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>[]</td>
         <td><span class="parametername">B</span></td>
-        <td></td>
+        <td><p>Constant value for <code>b</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -1879,10 +2418,14 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><p>Logarithm of the factor's contribution the EP model evidence.</p>
+</td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_ML_Probabilistic_Factors_InnerProductArrayOp_LogEvidenceRatio_System_Double_System_Double___System_Double____remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The formula for the result is <code>log(factor(innerProduct,a,b))</code>. Adding up these values across all factors and variables gives the log-evidence estimate for EP.</p>
+</div>
 </article>
           </div>
           

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Struct Binomial
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -89,7 +89,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
@@ -109,11 +109,32 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetVariance-1.html">CanGetVariance</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMeanAndVarianceOut-2.html">CanGetMeanAndVarianceOut</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Binomial_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct Binomial : IDistribution&lt;int&gt;, ICloneable, HasPoint&lt;int&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;int&gt;, SettableTo&lt;Binomial&gt;, SettableToProduct&lt;Binomial&gt;, SettableToProduct&lt;Binomial, Binomial&gt;, SettableToRatio&lt;Binomial&gt;, SettableToRatio&lt;Binomial, Binomial&gt;, SettableToPower&lt;Binomial&gt;, SettableToWeightedSum&lt;Binomial&gt;, CanGetLogAverageOf&lt;Binomial&gt;, CanGetLogAverageOfPower&lt;Binomial&gt;, CanGetAverageLog&lt;Binomial&gt;, Sampleable&lt;int&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+[DataContract]
+[Quality(QualityBand.Experimental)]
+public struct Binomial : IDistribution&lt;int&gt;, ICloneable, HasPoint&lt;int&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;int&gt;, SettableTo&lt;Binomial&gt;, SettableToProduct&lt;Binomial&gt;, SettableToProduct&lt;Binomial, Binomial&gt;, SettableToRatio&lt;Binomial&gt;, SettableToRatio&lt;Binomial, Binomial&gt;, SettableToPower&lt;Binomial&gt;, SettableToWeightedSum&lt;Binomial&gt;, CanGetLogAverageOf&lt;Binomial&gt;, CanGetLogAverageOfPower&lt;Binomial&gt;, CanGetAverageLog&lt;Binomial&gt;, Sampleable&lt;int&gt;, CanGetMean&lt;double&gt;, CanGetVariance&lt;double&gt;, CanGetMeanAndVarianceOut&lt;double, double&gt;</code></pre>
   </div>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_Binomial_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The formula for the distribution is <code>p(x) = n!/(n-x)!/x! p^x (1-p)^(n-x)</code>.
@@ -162,7 +183,8 @@ This family is closed under multiplication, while the standard Binomial is not.<
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double A</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double A</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -184,7 +206,8 @@ This family is closed under multiplication, while the standard Binomial is not.<
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double B</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double B</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -206,7 +229,8 @@ This family is closed under multiplication, while the standard Binomial is not.<
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double LogOdds</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double LogOdds</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -228,7 +252,8 @@ This family is closed under multiplication, while the standard Binomial is not.<
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int TrialCount</code></pre>
+    <pre><code class="lang-csharp hljs">[DataMember]
+public int TrialCount</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -253,7 +278,8 @@ This family is closed under multiplication, while the standard Binomial is not.<
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPointMass { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsPointMass { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -276,7 +302,8 @@ This family is closed under multiplication, while the standard Binomial is not.<
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Point { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public int Point { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -370,7 +397,8 @@ This family is closed under multiplication, while the standard Binomial is not.<
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Binomial FromNatural(int trialCount, double logOdds, double a = null, double b = null)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;TrialCount&quot;, &quot;LogOdds&quot;, &quot;A&quot;, &quot;B&quot;})]
+public static Binomial FromNatural(int trialCount, double logOdds, double a = 1, double b = 1)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1024,6 +1052,8 @@ This family is closed under multiplication, while the standard Binomial is not.<
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_Binomial_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.Binomial.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_Binomial_Uniform_System_Int32_" data-uid="Microsoft.ML.Probabilistic.Distributions.Binomial.Uniform(System.Int32)">Uniform(Int32)</h4>
   <div class="markdown level1 summary"></div>
@@ -1069,7 +1099,7 @@ This family is closed under multiplication, while the standard Binomial is not.<
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>

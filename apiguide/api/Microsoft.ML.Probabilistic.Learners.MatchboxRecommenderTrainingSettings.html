@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class MatchboxRecommenderTrainingSettings
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -96,11 +96,36 @@ Cannot be set after training.</p>
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Learners.ICustomSerializable.html">ICustomSerializable</a></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Learners.html">Microsoft.ML.Probabilistic.Learners</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.Learners.Recommender.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class MatchboxRecommenderTrainingSettings : object, ICustomSerializable</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+public class MatchboxRecommenderTrainingSettings : ICustomSerializable</code></pre>
   </div>
   <h3 id="fields">Fields
   </h3>
@@ -110,7 +135,7 @@ Cannot be set after training.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int BatchCountDefault = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const int BatchCountDefault = 1</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -133,7 +158,7 @@ Cannot be set after training.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int IterationCountDefault = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const int IterationCountDefault = 20</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -156,7 +181,7 @@ Cannot be set after training.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int TraitCountDefault = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const int TraitCountDefault = 4</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -179,7 +204,7 @@ Cannot be set after training.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const bool UseItemFeaturesDefault = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const bool UseItemFeaturesDefault = false</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -202,7 +227,7 @@ Cannot be set after training.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const bool UseSharedUserThresholdsDefault = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const bool UseSharedUserThresholdsDefault = false</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -225,7 +250,7 @@ Cannot be set after training.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const bool UseUserFeaturesDefault = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const bool UseUserFeaturesDefault = false</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -415,7 +440,7 @@ Cannot be set after training.</p>
   <h3 id="methods">Methods
   </h3>
   <a id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_SaveForwardCompatible_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.SaveForwardCompatible*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_SaveForwardCompatible_BinaryWriter_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.SaveForwardCompatible(BinaryWriter)">SaveForwardCompatible(BinaryWriter)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Learners_MatchboxRecommenderTrainingSettings_SaveForwardCompatible_System_IO_BinaryWriter_" data-uid="Microsoft.ML.Probabilistic.Learners.MatchboxRecommenderTrainingSettings.SaveForwardCompatible(System.IO.BinaryWriter)">SaveForwardCompatible(BinaryWriter)</h4>
   <div class="markdown level1 summary"><p>Saves the training settings of the Matchbox recommender using the specified writer to a binary stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -434,7 +459,7 @@ Cannot be set after training.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">BinaryWriter</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.binarywriter">BinaryWriter</a></td>
         <td><span class="parametername">writer</span></td>
         <td><p>The writer to save the training settings to.</p>
 </td>

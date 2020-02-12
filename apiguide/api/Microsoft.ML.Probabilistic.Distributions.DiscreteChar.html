@@ -5,12 +5,12 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class DiscreteChar
+    <title>Struct DiscreteChar
    | Infer.NET API Guide </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class DiscreteChar
+    <meta name="title" content="Struct DiscreteChar
    | Infer.NET API Guide ">
-    <meta name="generator" content="docfx 2.38.0.0">
+    <meta name="generator" content="docfx 2.48.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -81,20 +81,15 @@
             <article class="content wrap" id="_content" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar">
   
   
-  <h1 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar" class="text-break">Class DiscreteChar
+  <h1 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar" class="text-break">Struct DiscreteChar
   </h1>
   <div class="markdown level0 summary"><p>Represents a distribution over characters.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">DiscreteChar</span></div>
-  </div>
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
-    <div><span class="xref">ICloneable</span></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">ICloneable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Math.Diffable.html">Diffable</a></div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.SettableToUniform.html">SettableToUniform</a></div>
@@ -114,40 +109,61 @@
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanGetMode-1.html">CanGetMode</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Sampleable-1.html">Sampleable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
     <div><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.iserializable">ISerializable</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.html">Microsoft.ML.Probabilistic.Distributions</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.ML.Probabilistic.dll</h6>
   <h5 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class DiscreteChar : object, IDistribution&lt;char&gt;, ICloneable, HasPoint&lt;char&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;char&gt;, SettableTo&lt;DiscreteChar&gt;, SettableToProduct&lt;DiscreteChar&gt;, SettableToProduct&lt;DiscreteChar, DiscreteChar&gt;, SettableToRatio&lt;DiscreteChar&gt;, SettableToRatio&lt;DiscreteChar, DiscreteChar&gt;, SettableToPower&lt;DiscreteChar&gt;, SettableToWeightedSumExact&lt;DiscreteChar&gt;, SettableToWeightedSum&lt;DiscreteChar&gt;, SettableToPartialUniform&lt;DiscreteChar&gt;, CanGetLogAverageOf&lt;DiscreteChar&gt;, CanGetLogAverageOfPower&lt;DiscreteChar&gt;, CanGetAverageLog&lt;DiscreteChar&gt;, CanGetMode&lt;char&gt;, Sampleable&lt;char&gt;, CanEnumerateSupport&lt;char&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">[Quality(QualityBand.Experimental)]
+[Serializable]
+public struct DiscreteChar : IDistribution&lt;char&gt;, ICloneable, HasPoint&lt;char&gt;, Diffable, SettableToUniform, CanGetLogProb&lt;char&gt;, SettableTo&lt;DiscreteChar&gt;, SettableToProduct&lt;DiscreteChar&gt;, SettableToProduct&lt;DiscreteChar, DiscreteChar&gt;, SettableToRatio&lt;DiscreteChar&gt;, SettableToRatio&lt;DiscreteChar, DiscreteChar&gt;, SettableToPower&lt;DiscreteChar&gt;, SettableToWeightedSumExact&lt;DiscreteChar&gt;, SettableToWeightedSum&lt;DiscreteChar&gt;, SettableToPartialUniform&lt;DiscreteChar&gt;, CanGetLogAverageOf&lt;DiscreteChar&gt;, CanGetLogAverageOfPower&lt;DiscreteChar&gt;, CanGetAverageLog&lt;DiscreteChar&gt;, CanGetMode&lt;char&gt;, Sampleable&lt;char&gt;, CanEnumerateSupport&lt;char&gt;, ISerializable, IEquatable&lt;DiscreteChar&gt;</code></pre>
   </div>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>This is an optimized version of an earlier version of this class.
-It doesn't use <a class="xref" href="Microsoft.ML.Probabilistic.Math.PiecewiseVector.html">PiecewiseVector</a> and <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.GenericDiscreteBase-2.html">GenericDiscreteBase&lt;T, TThis&gt;</a>,
-tries to avoid non-inlineable calls at all costs,
-and assumes that the number of constant-probability character ranges is small (1-10).</p>
-</div>
-  <h3 id="constructors">Constructors
+  <h3 id="fields">Fields
   </h3>
-  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar__ctor_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.#ctor*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar__ctor" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.#ctor">DiscreteChar()</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a> class
-by setting it to a uniform distribution.</p>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_CharRangeEndExclusive" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharRangeEndExclusive">CharRangeEndExclusive</h4>
+  <div class="markdown level1 summary"><p>The (exclusive) end of the character range.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DiscreteChar()</code></pre>
+    <pre><code class="lang-csharp hljs">public const int CharRangeEndExclusive = 65536</code></pre>
   </div>
-  <h3 id="fields">Fields
-  </h3>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_LetterCharacterRanges" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.LetterCharacterRanges">LetterCharacterRanges</h4>
   <div class="markdown level1 summary"><p>Ranges of letters (for <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Letter">Letter()</a>).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string LetterCharacterRanges = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const string LetterCharacterRanges = &quot;AZ&#192;&#214;&#216;&#222;az&#223;&#246;&#248;&#255;&quot;</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -170,7 +186,7 @@ by setting it to a uniform distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string LowerCaseCharacterRanges = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const string LowerCaseCharacterRanges = &quot;az&#223;&#246;&#248;&#255;&quot;</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -193,7 +209,7 @@ by setting it to a uniform distribution.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string MixedCaseCharacterRanges = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const string MixedCaseCharacterRanges = &quot;&quot;</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -222,7 +238,7 @@ and allow characters in such ranges to be considered either lower or upper case.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string OnlyLowerCaseCharacterRanges = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const string OnlyLowerCaseCharacterRanges = &quot;az&#223;&#246;&#248;&#255;&quot;</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -245,7 +261,7 @@ and allow characters in such ranges to be considered either lower or upper case.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string OnlyUpperCaseCharacterRanges = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const string OnlyUpperCaseCharacterRanges = &quot;AZ&#192;&#214;&#216;&#222;&quot;</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -268,7 +284,7 @@ and allow characters in such ranges to be considered either lower or upper case.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string UpperCaseCharacterRanges = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const string UpperCaseCharacterRanges = &quot;AZ&#192;&#214;&#216;&#222;&quot;</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -295,6 +311,29 @@ and allow characters in such ranges to be considered either lower or upper case.
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public bool IsDigit { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_IsInitialized_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.IsInitialized*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_IsInitialized" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.IsInitialized">IsInitialized</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsInitialized { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -522,14 +561,14 @@ and allow characters in such ranges to be considered either lower or upper case.
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_ProbabilityOutsideRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.ProbabilityOutsideRanges*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_ProbabilityOutsideRanges" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.ProbabilityOutsideRanges">ProbabilityOutsideRanges</h4>
-  <div class="markdown level1 summary"><p>Gets the probability assigned to characters outside ranges returned by <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_DiscreteChar_GetRanges">GetRanges()</a>.</p>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Ranges_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Ranges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Ranges" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Ranges">Ranges</h4>
+  <div class="markdown level1 summary"><p>Gets an array of character ranges with associated probabilities.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double ProbabilityOutsideRanges { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ReadOnlyArray&lt;DiscreteChar.CharRange&gt; Ranges { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -541,8 +580,9 @@ and allow characters in such ranges to be considered either lower or upper case.
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Collections.ReadOnlyArray-1.html">ReadOnlyArray</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharRange.html">DiscreteChar.CharRange</a>&gt;</td>
+        <td><p>An array of character ranges with associated probabilities.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -574,7 +614,7 @@ and allow characters in such ranges to be considered either lower or upper case.
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_AppendRegex_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.AppendRegex*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_AppendRegex_StringBuilder_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.AppendRegex(StringBuilder,System.Boolean)">AppendRegex(StringBuilder, Boolean)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_AppendRegex_System_Text_StringBuilder_System_Boolean_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.AppendRegex(System.Text.StringBuilder,System.Boolean)">AppendRegex(StringBuilder, Boolean)</h4>
   <div class="markdown level1 summary"><p>Appends a regex expression that represents this character to the supplied string builder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -593,7 +633,7 @@ and allow characters in such ranges to be considered either lower or upper case.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">StringBuilder</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.stringbuilder">StringBuilder</a></td>
         <td><span class="parametername">stringBuilder</span></td>
         <td><p>The string builder to append to</p>
 </td>
@@ -607,9 +647,8 @@ and allow characters in such ranges to be considered either lower or upper case.
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_AppendToString_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.AppendToString*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_AppendToString_StringBuilder_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.AppendToString(StringBuilder)">AppendToString(StringBuilder)</h4>
-  <div class="markdown level1 summary"><p>Appends the ToString() for this distribution to the supplied string builder.</p>
-</div>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_AppendToString_System_Text_StringBuilder_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.AppendToString(System.Text.StringBuilder)">AppendToString(StringBuilder)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -626,10 +665,9 @@ and allow characters in such ranges to be considered either lower or upper case.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">StringBuilder</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.text.stringbuilder">StringBuilder</a></td>
         <td><span class="parametername">stringBuilder</span></td>
-        <td><p>The string builder to append to</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -690,13 +728,14 @@ i.e. that are not 'in' this distribution.</p>
 e.g. not a letter or not a word character.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Create_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Create*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Create_System_Double_IEnumerable_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_CharRange__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Create(System.Double,IEnumerable{Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharRange})">Create(Double, IEnumerable&lt;DiscreteChar.CharRange&gt;)</h4>
-  <div class="markdown level1 summary"><p>Creates a distribution given a list of constant probability character ranges and the probability of characters outside those ranges.</p>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Create_System_Collections_Generic_IEnumerable_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_CharRange__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Create(System.Collections.Generic.IEnumerable{Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharRange})">Create(IEnumerable&lt;DiscreteChar.CharRange&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution given a list of constant probability character ranges.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar Create(double probabilityOutsideRanges, IEnumerable&lt;DiscreteChar.CharRange&gt; ranges)</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(new string[]{&quot;Ranges&quot;})]
+public static DiscreteChar Create(IEnumerable&lt;DiscreteChar.CharRange&gt; ranges)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -709,13 +748,7 @@ e.g. not a letter or not a word character.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">probabilityOutsideRanges</span></td>
-        <td><p>The probability of characters outside the given ranges.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharRange.html">DiscreteChar.CharRange</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharRange.html">DiscreteChar.CharRange</a>&gt;</td>
         <td><span class="parametername">ranges</span></td>
         <td><p>The constant-probability character ranges.</p>
 </td>
@@ -738,7 +771,7 @@ e.g. not a letter or not a word character.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Create_System_Double_IEnumerable_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_CharRange___remarks">Remarks</h5>
+  <h5 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Create_System_Collections_Generic_IEnumerable_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_CharRange___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The probabilities do not need to be normalized. The character ranges do not need to be sorted.</p>
 </div>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Digit_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Digit*"></a>
@@ -748,7 +781,8 @@ e.g. not a letter or not a word character.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar Digit()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsDigit&quot;)]
+public static DiscreteChar Digit()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -785,8 +819,51 @@ e.g. not a letter or not a word character.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
         <td><p>The character values with non-zero mass.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Equals_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Equals*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Equals_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Equals(Microsoft.ML.Probabilistic.Distributions.DiscreteChar)">Equals(DiscreteChar)</h4>
+  <div class="markdown level1 summary"><p>Checks if <code data-dev-comment-type="paramref" class="paramref">that</code> equals to this distribution (i.e. represents the same distribution over characters).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(DiscreteChar that)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
+        <td><span class="parametername">that</span></td>
+        <td><p>The object to compare this distribution with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><span class="xref">true</span> if this distribution is equal to <code data-dev-comment-type="paramref" class="paramref">that</code>, false otherwise.</p>
 </td>
       </tr>
     </tbody>
@@ -834,6 +911,8 @@ e.g. not a letter or not a word character.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.equals#System_ValueType_Equals_System_Object_">ValueType.Equals(Object)</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_FromVector_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.FromVector*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_FromVector_Microsoft_ML_Probabilistic_Math_PiecewiseVector_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.FromVector(Microsoft.ML.Probabilistic.Math.PiecewiseVector)">FromVector(PiecewiseVector)</h4>
   <div class="markdown level1 summary"><p>Creates a point character from a vector of (unnormalized) character probabilities.</p>
@@ -991,6 +1070,8 @@ e.g. not a letter or not a word character.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.gethashcode#System_ValueType_GetHashCode">ValueType.GetHashCode()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_GetImpliedCharClasses_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.GetImpliedCharClasses*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_GetImpliedCharClasses_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_CharClasses_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.GetImpliedCharClasses(Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharClasses)">GetImpliedCharClasses(DiscreteChar.CharClasses)</h4>
   <div class="markdown level1 summary"></div>
@@ -1220,34 +1301,6 @@ e.g. not a letter or not a word character.</p>
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_GetRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.GetRanges*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_GetRanges" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.GetRanges">GetRanges()</h4>
-  <div class="markdown level1 summary"><p>Gets an array of character ranges with associated probabilities.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DiscreteChar.CharRange[] GetRanges()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.CharRange.html">DiscreteChar.CharRange</a>[]</td>
-        <td><p>An array of character ranges with associated probabilities.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_GetRanges_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>See <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html#Microsoft_ML_Probabilistic_Distributions_DiscreteChar_ProbabilityOutsideRanges">ProbabilityOutsideRanges</a> for the probability of characters not covered by the returned ranges.</p>
-</div>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_InRange_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.InRange*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_InRange_System_Char_System_Char_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.InRange(System.Char,System.Char)">InRange(Char, Char)</h4>
   <div class="markdown level1 summary"><p>Creates a uniform distribution over characters in a given range.</p>
@@ -1298,51 +1351,6 @@ e.g. not a letter or not a word character.</p>
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_InRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.InRanges*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_InRanges_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.InRanges(IEnumerable{System.Char})">InRanges(IEnumerable&lt;Char&gt;)</h4>
-  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over values in
-multiple ranges specified by pairs of start and end values. These pairs
-are specified as adjacent values in a sequence whose length must therefore be even.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar InRanges(IEnumerable&lt;char&gt; startEndPairs)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
-        <td><span class="parametername">startEndPairs</span></td>
-        <td><p>The sequence of range starts and ends.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
-        <td><p>The created distribution.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_InRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.InRanges*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_InRanges_System_Char___" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.InRanges(System.Char[])">InRanges(Char[])</h4>
   <div class="markdown level1 summary"><p>Creates a distribution which is uniform over values in
 multiple ranges specified by pairs of start and end values. These pairs
@@ -1367,6 +1375,51 @@ are specified as adjacent values in an array whose length must therefore be even
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>[]</td>
         <td><span class="parametername">startEndPairs</span></td>
         <td><p>The array of range starts and ends.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_InRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.InRanges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_InRanges_System_Collections_Generic_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.InRanges(System.Collections.Generic.IEnumerable{System.Char})">InRanges(IEnumerable&lt;Char&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over values in
+multiple ranges specified by pairs of start and end values. These pairs
+are specified as adjacent values in a sequence whose length must therefore be even.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DiscreteChar InRanges(IEnumerable&lt;char&gt; startEndPairs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
+        <td><span class="parametername">startEndPairs</span></td>
+        <td><p>The sequence of range starts and ends.</p>
 </td>
       </tr>
     </tbody>
@@ -1445,7 +1498,8 @@ are specified as adjacent values in an array whose length must therefore be even
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar Letter()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsLetter&quot;)]
+public static DiscreteChar Letter()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1470,7 +1524,8 @@ are specified as adjacent values in an array whose length must therefore be even
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar LetterOrDigit()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsLetterOrDigit&quot;)]
+public static DiscreteChar LetterOrDigit()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1495,7 +1550,8 @@ are specified as adjacent values in an array whose length must therefore be even
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar Lower()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsLower&quot;)]
+public static DiscreteChar Lower()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1582,13 +1638,13 @@ are specified as adjacent values in an array whose length must therefore be even
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_OneOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.OneOf*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_OneOf_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.OneOf(IEnumerable{System.Char})">OneOf(IEnumerable&lt;Char&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_OneOf_System_Char___" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.OneOf(System.Char[])">OneOf(Char[])</h4>
   <div class="markdown level1 summary"><p>Creates a distribution which is uniform over the specified set of characters.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar OneOf(IEnumerable&lt;char&gt; chars)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DiscreteChar OneOf(params char[] chars)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1601,7 +1657,7 @@ are specified as adjacent values in an array whose length must therefore be even
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>[]</td>
         <td><span class="parametername">chars</span></td>
         <td><p>The characters.</p>
 </td>
@@ -1625,13 +1681,13 @@ are specified as adjacent values in an array whose length must therefore be even
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_OneOf_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.OneOf*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_OneOf_System_Char___" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.OneOf(System.Char[])">OneOf(Char[])</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_OneOf_System_Collections_Generic_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.OneOf(System.Collections.Generic.IEnumerable{System.Char})">OneOf(IEnumerable&lt;Char&gt;)</h4>
   <div class="markdown level1 summary"><p>Creates a distribution which is uniform over the specified set of characters.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar OneOf(params char[] chars)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DiscreteChar OneOf(IEnumerable&lt;char&gt; chars)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1644,7 +1700,7 @@ are specified as adjacent values in an array whose length must therefore be even
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>[]</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
         <td><span class="parametername">chars</span></td>
         <td><p>The characters.</p>
 </td>
@@ -1711,7 +1767,7 @@ are specified as adjacent values in an array whose length must therefore be even
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Read_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Read*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Read_Func_System_Int32__Func_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Read(Func{System.Int32},Func{System.Double})">Read(Func&lt;Int32&gt;, Func&lt;Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Read_System_Func_System_Int32__System_Func_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Read(System.Func{System.Int32},System.Func{System.Double})">Read(Func&lt;Int32&gt;, Func&lt;Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Reads a discrete character.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1730,12 +1786,12 @@ are specified as adjacent values in an array whose length must therefore be even
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">readInt32</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">readDouble</span></td>
         <td></td>
       </tr>
@@ -1993,6 +2049,51 @@ are specified as adjacent values in an array whose length must therefore be even
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.SetToSum*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_SetToSum_Microsoft_ML_Probabilistic_Distributions_Automata_Weight_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Microsoft_ML_Probabilistic_Distributions_Automata_Weight_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.SetToSum(Microsoft.ML.Probabilistic.Distributions.Automata.Weight,Microsoft.ML.Probabilistic.Distributions.DiscreteChar,Microsoft.ML.Probabilistic.Distributions.Automata.Weight,Microsoft.ML.Probabilistic.Distributions.DiscreteChar)">SetToSum(Weight, DiscreteChar, Weight, DiscreteChar)</h4>
+  <div class="markdown level1 summary"><p>Sets this distribution to a weighted sum of a given pair of distributions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetToSum(Weight weight1, DiscreteChar distribution1, Weight weight2, DiscreteChar distribution2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a></td>
+        <td><span class="parametername">weight1</span></td>
+        <td><p>The weight of the first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
+        <td><span class="parametername">distribution1</span></td>
+        <td><p>The first distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.Automata.Weight.html">Weight</a></td>
+        <td><span class="parametername">weight2</span></td>
+        <td><p>The weight of the second distribution.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
+        <td><span class="parametername">distribution2</span></td>
+        <td><p>The second distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_SetToSum_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.SetToSum*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_SetToSum_System_Double_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_System_Double_Microsoft_ML_Probabilistic_Distributions_DiscreteChar_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.SetToSum(System.Double,Microsoft.ML.Probabilistic.Distributions.DiscreteChar,System.Double,Microsoft.ML.Probabilistic.Distributions.DiscreteChar)">SetToSum(Double, DiscreteChar, Double, DiscreteChar)</h4>
   <div class="markdown level1 summary"><p>Sets this distribution to a weighted sum of a given pair of distributions.</p>
 </div>
@@ -2138,6 +2239,8 @@ are specified as adjacent values in an array whose length must therefore be even
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetype.tostring#System_ValueType_ToString">ValueType.ToString()</a></div>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Uniform_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Uniform*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Uniform" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Uniform">Uniform()</h4>
   <div class="markdown level1 summary"><p>Creates a uniform distribution over characters.</p>
@@ -2145,7 +2248,8 @@ are specified as adjacent values in an array whose length must therefore be even
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar Uniform()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsUniform&quot;)]
+public static DiscreteChar Uniform()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2213,51 +2317,6 @@ are specified as adjacent values in an array whose length must therefore be even
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_UniformInRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.UniformInRanges*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_UniformInRanges_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.UniformInRanges(IEnumerable{System.Char})">UniformInRanges(IEnumerable&lt;Char&gt;)</h4>
-  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over values in
-multiple ranges specified by pairs of start and end values. These pairs
-are specified as adjacent values in a sequence whose length must therefore be even.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar UniformInRanges(IEnumerable&lt;char&gt; startEndPairs)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
-        <td><span class="parametername">startEndPairs</span></td>
-        <td><p>The sequence of range starts and ends.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
-        <td><p>The created distribution.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_UniformInRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.UniformInRanges*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_UniformInRanges_System_Char___" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.UniformInRanges(System.Char[])">UniformInRanges(Char[])</h4>
   <div class="markdown level1 summary"><p>Creates a distribution which is uniform over values in
 multiple ranges specified by pairs of start and end values. These pairs
@@ -2302,14 +2361,16 @@ are specified as adjacent values in an array whose length must therefore be even
       </tr>
     </tbody>
   </table>
-  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_UniformOver_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.UniformOver*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_UniformOver_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.UniformOver(IEnumerable{System.Char})">UniformOver(IEnumerable&lt;Char&gt;)</h4>
-  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over the specified set of characters.</p>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_UniformInRanges_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.UniformInRanges*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_UniformInRanges_System_Collections_Generic_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.UniformInRanges(System.Collections.Generic.IEnumerable{System.Char})">UniformInRanges(IEnumerable&lt;Char&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over values in
+multiple ranges specified by pairs of start and end values. These pairs
+are specified as adjacent values in a sequence whose length must therefore be even.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar UniformOver(IEnumerable&lt;char&gt; chars)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DiscreteChar UniformInRanges(IEnumerable&lt;char&gt; startEndPairs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2322,9 +2383,9 @@ are specified as adjacent values in an array whose length must therefore be even
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
-        <td><span class="parametername">chars</span></td>
-        <td><p>The characters.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
+        <td><span class="parametername">startEndPairs</span></td>
+        <td><p>The sequence of range starts and ends.</p>
 </td>
       </tr>
     </tbody>
@@ -2388,6 +2449,49 @@ are specified as adjacent values in an array whose length must therefore be even
       </tr>
     </tbody>
   </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_UniformOver_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.UniformOver*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_UniformOver_System_Collections_Generic_IEnumerable_System_Char__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.UniformOver(System.Collections.Generic.IEnumerable{System.Char})">UniformOver(IEnumerable&lt;Char&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a distribution which is uniform over the specified set of characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DiscreteChar UniformOver(IEnumerable&lt;char&gt; chars)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>&gt;</td>
+        <td><span class="parametername">chars</span></td>
+        <td><p>The characters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.html">DiscreteChar</a></td>
+        <td><p>The created distribution.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Upper_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Upper*"></a>
   <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Upper" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Upper">Upper()</h4>
   <div class="markdown level1 summary"><p>Creates a uniform distribution over uppercase letters.</p>
@@ -2395,7 +2499,8 @@ are specified as adjacent values in an array whose length must therefore be even
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar Upper()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsUpper&quot;)]
+public static DiscreteChar Upper()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2445,7 +2550,8 @@ are specified as adjacent values in an array whose length must therefore be even
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DiscreteChar WordChar()</code></pre>
+    <pre><code class="lang-csharp hljs">[Construction(UseWhen = &quot;IsWordChar&quot;)]
+public static DiscreteChar WordChar()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2464,7 +2570,7 @@ are specified as adjacent values in an array whose length must therefore be even
     </tbody>
   </table>
   <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Write_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Write*"></a>
-  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Write_Action_System_Int32__Action_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Write(Action{System.Int32},Action{System.Double})">Write(Action&lt;Int32&gt;, Action&lt;Double&gt;)</h4>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_Write_System_Action_System_Int32__System_Action_System_Double__" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.Write(System.Action{System.Int32},System.Action{System.Double})">Write(Action&lt;Int32&gt;, Action&lt;Double&gt;)</h4>
   <div class="markdown level1 summary"><p>Writes a discrete character.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2483,13 +2589,70 @@ are specified as adjacent values in an array whose length must therefore be even
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">writeInt32</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">writeDouble</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_System_ICloneable_Clone_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.System#ICloneable#Clone*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_System_ICloneable_Clone" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.System#ICloneable#Clone">ICloneable.Clone()</h4>
+  <div class="markdown level1 summary"><p>Creates a copy of this distribution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">object ICloneable.Clone()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><p>The created copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_System_Runtime_Serialization_ISerializable_GetObjectData_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.System#Runtime#Serialization#ISerializable#GetObjectData*"></a>
+  <h4 id="Microsoft_ML_Probabilistic_Distributions_DiscreteChar_System_Runtime_Serialization_ISerializable_GetObjectData_System_Runtime_Serialization_SerializationInfo_System_Runtime_Serialization_StreamingContext_" data-uid="Microsoft.ML.Probabilistic.Distributions.DiscreteChar.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">ISerializable.GetObjectData(SerializationInfo, StreamingContext)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.serializationinfo">SerializationInfo</a></td>
+        <td><span class="parametername">info</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.streamingcontext">StreamingContext</a></td>
+        <td><span class="parametername">context</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -2499,7 +2662,7 @@ are specified as adjacent values in an array whose length must therefore be even
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.IDistribution-1.html">IDistribution&lt;T&gt;</a>
   </div>
   <div>
-      <span class="xref">ICloneable</span>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.icloneable">System.ICloneable</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.HasPoint-1.html">HasPoint&lt;T&gt;</a>
@@ -2557,6 +2720,12 @@ are specified as adjacent values in an array whose length must therefore be even
   </div>
   <div>
       <a class="xref" href="Microsoft.ML.Probabilistic.Distributions.CanEnumerateSupport-1.html">CanEnumerateSupport&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.runtime.serialization.iserializable">System.Runtime.Serialization.ISerializable</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
   </div>
 </article>
           </div>
