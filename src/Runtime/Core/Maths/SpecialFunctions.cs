@@ -4243,22 +4243,24 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static int IndexOfMinimum<T>(IList<T> list)
+        public static int IndexOfMinimum<T>(IEnumerable<T> list)
             where T : IComparable<T>
         {
-            if (list.Count == 0)
+            IEnumerator<T> iter = list.GetEnumerator();
+            if (!iter.MoveNext())
                 return -1;
-            T min = list[0];
-            int pos = 0;
-            for (int i = 1; i < list.Count; i++)
+            T min = iter.Current;
+            int indexOfMinimum = 0;
+            for(int i = 1; iter.MoveNext(); i++)
             {
-                if (min.CompareTo(list[i]) > 0)
+                T item = iter.Current;
+                if (min.CompareTo(item) > 0)
                 {
-                    min = list[i];
-                    pos = i;
+                    min = item;
+                    indexOfMinimum = i;
                 }
             }
-            return pos;
+            return indexOfMinimum;
         }
 
         /// <summary>
@@ -4267,22 +4269,24 @@ else if (m < 20.0 - 60.0/11.0 * s) {
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static int IndexOfMaximum<T>(IList<T> list)
+        public static int IndexOfMaximum<T>(IEnumerable<T> list)
             where T : IComparable<T>
         {
-            if (list.Count == 0)
+            IEnumerator<T> iter = list.GetEnumerator();
+            if (!iter.MoveNext())
                 return -1;
-            T max = list[0];
-            int pos = 0;
-            for (int i = 1; i < list.Count; i++)
+            T max = iter.Current;
+            int indexOfMaximum = 0;
+            for (int i = 1; iter.MoveNext(); i++)
             {
-                if (max.CompareTo(list[i]) < 0)
+                T item = iter.Current;
+                if (max.CompareTo(item) < 0)
                 {
-                    max = list[i];
-                    pos = i;
+                    max = item;
+                    indexOfMaximum = i;
                 }
             }
-            return pos;
+            return indexOfMaximum;
         }
 
         /// <summary>
