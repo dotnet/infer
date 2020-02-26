@@ -63,7 +63,7 @@ With appropriate _symmetry-breaking_, using the multi-class model with 2 classes
 
 ### Source code
 
-The Infer.NET code for the previously described classification models lives in the `Learners/ClassifierModels` project. The project uses the Infer.NET compiler to generate dedicated training and prediction algorithms from the models.
+The Infer.NET code for the previously described classification models lives in the [`Learners/ClassifierModels`](https://github.com/dotnet/infer/tree/master/src/Learners/ClassifierModels) project. The project uses the Infer.NET compiler to generate dedicated training and prediction algorithms from the models.
 
 ### References
 

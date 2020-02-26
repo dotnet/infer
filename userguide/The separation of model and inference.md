@@ -81,7 +81,7 @@ var noise = Variable.GammaFromShapeAndRate(2, 2);
 
 If the model code had been mingled with the inference code, this would have been much trickier. Putting all the above together, here are the results of running our second model using all three algorithms:
 
-| Expectation Propagation | Variational Message Passing | Gibbs Sampling |
+|| Expectation Propagation | Variational Message Passing | Gibbs Sampling |
 |------------------------------------------------------------------------|
 | **AverageTime mean** | 16.02 | 16.02 | 16.03 |
 | **AverageTime standard deviation** | 1.00 | 0.77 | 0.89 |
