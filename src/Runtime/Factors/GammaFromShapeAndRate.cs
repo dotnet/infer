@@ -536,9 +536,27 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double x = sample.Point;
                 double shape2 = shape + rate.Shape;
                 double xrr = x + rate.Rate;
-                double dlogf = (shape - 1) / x - shape2 / xrr;
-                double ddlogf = -(shape - 1) / (x * x) + shape2 / (xrr * xrr);
-                return Gamma.FromDerivatives(x, dlogf, ddlogf, GammaFromShapeAndRateOp.ForceProper);
+                if (x == 0)
+                {
+                    if (shape == 1)
+                    {
+                        double dlogf = -shape2 / xrr;
+                        double ddlogf = shape2 / (xrr * xrr);
+                        return Gamma.FromDerivatives(x, dlogf, ddlogf, GammaFromShapeAndRateOp.ForceProper);
+                    }
+                    else
+                    {
+                        // a = -x*x*ddLogP
+                        // b = a / x - dLogP
+                        return Gamma.FromShapeAndRate(shape, shape2 / xrr);
+                    }
+                }
+                else
+                {
+                    double dlogf = (shape - 1) / x - shape2 / xrr;
+                    double ddlogf = -(shape - 1) / (x * x) + shape2 / (xrr * xrr);
+                    return Gamma.FromDerivatives(x, dlogf, ddlogf, GammaFromShapeAndRateOp.ForceProper);
+                }
             }
             double sampleMean, sampleVariance;
             if (sample.Rate == 0)
@@ -681,7 +699,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <returns></returns>
         internal static double FindMaximum(double shape1, double shape2, double yRate, double rateRate)
         {
-            if(shape2 == 0)
+            if (shape2 == 0)
             {
                 return shape1 / rateRate;
             }
@@ -718,11 +736,11 @@ namespace Microsoft.ML.Probabilistic.Factors
             // compute the derivative wrt log(rs)
             double sum = r0 + yRate;
             double p = r0 / sum;
-            double df = shape1 - shape2*p - rateRate*r0;
+            double df = shape1 - shape2 * p - rateRate * r0;
             if (Math.Abs(df) > 1)
             {
                 // take a Newton step for extra accuracy
-                double ddf = shape2*p*(p-1) - rateRate*r0;
+                double ddf = shape2 * p * (p - 1) - rateRate * r0;
                 r0 *= Math.Exp(-df / ddf);
             }
             if (double.IsNaN(r0))
@@ -818,7 +836,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                 {
                     if (hasInflection)
                         rmax = r * 1.1;  // restart closer to the stationary point
-                    else 
+                    else
                         throw new Exception("rmax < r");
                 }
                 if (MMath.AreEqual(rmax, r))
@@ -912,12 +930,19 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // dlogf = s/r - (s+xs-1)/(r+xr)
                 // ddlogf = -s/r^2 + (s+xs-1)/(r+xr)^2
                 r = rate.Point;
-                double v = 1 / r;
                 double r2 = r + sample.Rate;
-                double v2 = 1 / r2;
-                double dlogf = shape * v - shape2 * v2;
-                double ddlogf = -shape * v * v + shape2 * v2 * v2;
-                return Gamma.FromDerivatives(r, dlogf, ddlogf, GammaFromShapeAndRateOp.ForceProper);
+                if (r == 0)
+                {
+                    // a = -r*r*ddLogP
+                    // b = a / r - dLogP
+                    return Gamma.FromShapeAndRate(shape + 1, shape2 / r2);
+                }
+                else
+                {
+                    double dlogf = shape / r - shape2 / r2;
+                    double ddlogf = -shape / (r * r) + shape2 / (r2 * r2);
+                    return Gamma.FromDerivatives(r, dlogf, ddlogf, GammaFromShapeAndRateOp.ForceProper);
+                }
             }
             double shape1 = shape + rate.Shape;
             double rateMean, rateVariance;
@@ -1047,8 +1072,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 double p = r / (r + y.Rate);
                 double p2 = p * p;
                 double shape2 = GammaFromShapeAndRateOp_Slow.AddShapesMinus1(y.Shape, shape);
-                double dlogf = shape  - shape2 * p;
-                double ddlogf = -shape  + shape2 * p2;
+                double dlogf = shape - shape2 * p;
+                double ddlogf = -shape + shape2 * p2;
                 double dddlogf = 2 * shape - 2 * shape2 * p * p2;
                 double d4logf = -6 * shape + 6 * shape2 * p2 * p2;
                 return new double[] { dlogf, ddlogf, dddlogf, d4logf };

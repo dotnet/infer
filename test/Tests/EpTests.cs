@@ -1985,7 +1985,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         //[Trait("Category", "ModifiesGlobals")]
         public void GammaPowerSumRRRTest()
         {
-            Assert.True(PlusGammaOp.AAverageConditional(GammaPower.FromShapeAndRate(299, 2135, -1), GammaPower.FromShapeAndRate(2.01, 10, -1), GammaPower.FromShapeAndRate(12, 22, -1), GammaPower.Uniform(-1)).Shape > 2);
+            //Assert.True(PlusGammaOp.AAverageConditional(GammaPower.FromShapeAndRate(299, 2135, -1), GammaPower.FromShapeAndRate(2.01, 10, -1), GammaPower.FromShapeAndRate(12, 22, -1), GammaPower.Uniform(-1)).Shape > 2);
             Assert.True(PlusGammaOp.AAverageConditional(GammaPower.Uniform(-1), GammaPower.FromShapeAndRate(2.0095439611576689, 43.241375394505766, -1), GammaPower.FromShapeAndRate(12, 11, -1), GammaPower.Uniform(-1)).IsUniform());
 
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
@@ -2002,6 +2002,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var groundTruthArray = new[]
             {
+                ((GammaPower.FromShapeAndRate(12, 22, -1), GammaPower.FromShapeAndRate(2.01, 10, -1), GammaPower.FromShapeAndRate(299, 2135, -1)),
+                 (GammaPower.FromShapeAndRate(12.4019151884055, 23.487535138993064, -1.0), GammaPower.FromShapeAndRate(47.605465737960976, 236.41203334327037, -1.0), GammaPower.FromShapeAndRate(303.94717779788243, 2160.7976040127091, -1.0), -2.26178042225837)),
                 //((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.MaxValue, 1)),
                 // (GammaPower.PointMass(0, 1.0), GammaPower.FromShapeAndScale(9, 0.1, 1), GammaPower.PointMass(5.6183114927306835E-307, 1), 0.79850769622135)),
                 //((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.PositiveInfinity, 1)),
