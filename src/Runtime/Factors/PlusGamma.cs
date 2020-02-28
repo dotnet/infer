@@ -27,50 +27,36 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="AAverageConditional(GammaPower, GammaPower)"]/*'/>
         public static GammaPower AAverageConditional([SkipIfUniform] GammaPower sum, [SkipIfUniform] GammaPower a, [SkipIfUniform] GammaPower b, GammaPower result)
         {
-            bool method2 = true;
-            bool method1 = true;
-            if(method2 && sum.Power == 1)
+            if (sum.IsUniform()) return sum;
+            sum.GetMeanAndVariance(out double sumMean, out double sumVariance);
+            b.GetMeanAndVariance(out double bMean, out double bVariance);
+            double rMean = Math.Max(0, sumMean - bMean);
+            double rVariance = sumVariance + bVariance;
+            double aVariance = a.GetVariance();
+            if (rVariance > aVariance)
             {
-                GetGammaMomentDerivs(a, out double mean, out double dmean, out double ddmean, out double variance, out double dvariance, out double ddvariance);
-                mean += b.GetMean();
-                variance += b.GetVariance();
-                GetGammaDerivs(mean, dmean, ddmean, variance, dvariance, ddvariance, out double ds, out double dds, out double dr, out double ddr);
-                GetDerivLogZ(sum, GammaPower.FromMeanAndVariance(mean, variance, sum.Power), ds, dds, dr, ddr, out double dlogZ, out double ddlogZ);
-                return GammaPowerFromDerivLogZ(a, dlogZ, ddlogZ);
-            }
-            else if (method2 && sum.Power == -1)
-            {
-                GetInverseGammaMomentDerivs(a, out double mean, out double dmean, out double ddmean, out double variance, out double dvariance, out double ddvariance);
-                mean += b.GetMean();
-                variance += b.GetVariance();
-                GetInverseGammaDerivs(mean, dmean, ddmean, variance, dvariance, ddvariance, out double ds, out double dds, out double dr, out double ddr);
-                if (sum.IsPointMass && sum.Point == 0) return GammaPower.PointMass(0, a.Power);
-                GetDerivLogZ(sum, GammaPower.FromMeanAndVariance(mean, variance, sum.Power), ds, dds, dr, ddr, out double dlogZ, out double ddlogZ);
-                return GammaPowerFromDerivLogZ(a, dlogZ, ddlogZ);
-            }
-            else if (method1)
-            {
-                sum.GetMeanAndVariance(out double sumMean, out double sumVariance);
-                b.GetMeanAndVariance(out double bMean, out double bVariance);
-                double mean = Math.Max(0, sumMean - bMean);
-                double variance = sumVariance + bVariance;
-                return GammaPower.FromMeanAndVariance(mean, variance, result.Power);
-            }
-            else
-            {
-                GammaPower toSum = SumAverageConditional(a, b, sum);
-                GammaPower sumMarginal = sum * toSum;
-                if (sumMarginal.IsUniform())
+                if (sum.Power == 1)
                 {
-                    result.SetToUniform();
-                    return result;
+                    GetGammaMomentDerivs(a, out double mean, out double dmean, out double ddmean, out double variance, out double dvariance, out double ddvariance);
+                    mean += b.GetMean();
+                    variance += b.GetVariance();
+                    GetGammaDerivs(mean, dmean, ddmean, variance, dvariance, ddvariance, out double ds, out double dds, out double dr, out double ddr);
+                    GetDerivLogZ(sum, GammaPower.FromMeanAndVariance(mean, variance, sum.Power), ds, dds, dr, ddr, out double dlogZ, out double ddlogZ);
+                    return GammaPowerFromDerivLogZ(a, dlogZ, ddlogZ);
                 }
-                sumMarginal.GetMeanAndVariance(out double sumMean, out double sumVariance);
-                b.GetMeanAndVariance(out double bMean, out double bVariance);
-                double mean = Math.Max(0, sumMean - bMean);
-                double variance = sumVariance + bVariance;
-                return GammaPower.FromMeanAndVariance(mean, variance, result.Power) / a;
+                else if (sum.Power == -1)
+                {
+                    GetInverseGammaMomentDerivs(a, out double mean, out double dmean, out double ddmean, out double variance, out double dvariance, out double ddvariance);
+                    mean += b.GetMean();
+                    variance += b.GetVariance();
+                    if (variance > double.MaxValue) throw new NotSupportedException();
+                    GetInverseGammaDerivs(mean, dmean, ddmean, variance, dvariance, ddvariance, out double ds, out double dds, out double dr, out double ddr);
+                    if (sum.IsPointMass && sum.Point == 0) return GammaPower.PointMass(0, a.Power);
+                    GetDerivLogZ(sum, GammaPower.FromMeanAndVariance(mean, variance, sum.Power), ds, dds, dr, ddr, out double dlogZ, out double ddlogZ);
+                    return GammaPowerFromDerivLogZ(a, dlogZ, ddlogZ);
+                }
             }
+            return GammaPower.FromMeanAndVariance(rMean, rVariance, result.Power);
         }
 
         public static GammaPower GammaPowerFromDerivLogZ(GammaPower a, double dlogZ, double ddlogZ)
@@ -81,7 +67,8 @@ namespace Microsoft.ML.Probabilistic.Factors
                 GetPosteriorMeanAndVariance(Gamma.FromShapeAndRate(a.Shape, a.Rate), dlogZ, ddlogZ, out double iaMean, out double iaVariance);
                 Gamma ia = Gamma.FromMeanAndVariance(iaMean, iaVariance);
                 return GammaPower.FromShapeAndRate(ia.Shape, ia.Rate, a.Power) / a;
-            } else
+            }
+            else
             {
                 double alpha = -a.Rate * dlogZ;
                 // dalpha/dr = -dlogZ - r*ddlogZ
@@ -141,12 +128,18 @@ namespace Microsoft.ML.Probabilistic.Factors
         {
             if (sum.Power != toSum.Power) throw new ArgumentException($"sum.Power ({sum.Power}) != toSum.Power ({toSum.Power})");
             if (toSum.IsPointMass) throw new NotSupportedException();
+            if(toSum.IsUniform())
+            {
+                dlogZ = 0;
+                ddlogZ = 0;
+                return;
+            }
             if (sum.IsPointMass)
             {
                 // Z = toSum.GetLogProb(sum.Point)
                 // log(Z) = (toSum.Shape/toSum.Power - 1)*log(sum.Point) - toSum.Rate*sum.Point^(1/toSum.Power) + toSum.Shape*log(toSum.Rate) - GammaLn(toSum.Shape)
                 if (sum.Point == 0) throw new NotSupportedException();
-                double logSumOverPower = Math.Log(sum.Point)/toSum.Power;
+                double logSumOverPower = Math.Log(sum.Point) / toSum.Power;
                 double powSum = Math.Exp(logSumOverPower);
                 double logRate = Math.Log(toSum.Rate);
                 double digammaShape = MMath.Digamma(toSum.Shape);
@@ -178,7 +171,7 @@ namespace Microsoft.ML.Probabilistic.Factors
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="BAverageConditional(GammaPower, GammaPower)"]/*'/>
         public static GammaPower BAverageConditional([SkipIfUniform] GammaPower sum, [SkipIfUniform] GammaPower a, [SkipIfUniform] GammaPower b, GammaPower result)
         {
-            return AAverageConditional(sum, a, b, result);
+            return AAverageConditional(sum, b, a, result);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="LogEvidenceRatio(GammaPower, GammaPower, GammaPower)"]/*'/>
