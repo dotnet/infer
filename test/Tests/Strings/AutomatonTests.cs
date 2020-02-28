@@ -929,12 +929,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton1 = StringAutomaton.FromData(
                 new StringAutomaton.DataContainer(
                     0,
-                    new[]
-                    {
+                    ImmutableArray.Create(
                         new StringAutomaton.StateData(0, 1, Weight.One),
-                        new StringAutomaton.StateData(1, 0, Weight.One),
-                    },
-                    new[] { new StringAutomaton.Transition(DiscreteChar.PointMass('a'), Weight.One, 1) },
+                        new StringAutomaton.StateData(1, 0, Weight.One)),
+                    ImmutableArray.Create(
+                        new StringAutomaton.Transition(DiscreteChar.PointMass('a'), Weight.One, 1)),
                     isEpsilonFree: true,
                     usesGroups: false,
                     isDeterminized: null,
@@ -947,8 +946,8 @@ namespace Microsoft.ML.Probabilistic.Tests
             var automaton2 = StringAutomaton.FromData(
                 new StringAutomaton.DataContainer(
                     0,
-                    new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
-                    Array.Empty<StringAutomaton.Transition>(),
+                    ImmutableArray.Create(new StringAutomaton.StateData(0, 0, Weight.Zero)),
+                    ImmutableArray<StringAutomaton.Transition>.Empty,
                     isEpsilonFree: true,
                     usesGroups: false,
                     isDeterminized: true,
@@ -960,8 +959,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        Array.Empty<StringAutomaton.StateData>(),
-                        Array.Empty<StringAutomaton.Transition>(),
+                        ImmutableArray<StringAutomaton.StateData>.Empty,
+                        ImmutableArray<StringAutomaton.Transition>.Empty,
                         isEpsilonFree: true,
                         usesGroups: false,
                         isDeterminized: false,
@@ -972,8 +971,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        new[] { new StringAutomaton.StateData(0, 0, Weight.Zero) },
-                        Array.Empty<StringAutomaton.Transition>(),
+                        ImmutableArray.Create(new StringAutomaton.StateData(0, 0, Weight.Zero)),
+                        ImmutableArray<StringAutomaton.Transition>.Empty,
                         isEpsilonFree: false,
                         usesGroups: false,
                         isDeterminized: null,
@@ -984,8 +983,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        new[] { new StringAutomaton.StateData(0, 1, Weight.Zero) },
-                        new[] { new StringAutomaton.Transition(Option.None, Weight.One, 1) },
+                        ImmutableArray.Create(new StringAutomaton.StateData(0, 1, Weight.Zero)),
+                        ImmutableArray.Create(new StringAutomaton.Transition(Option.None, Weight.One, 1)),
                         isEpsilonFree: false,
                         usesGroups: false,
                         isDeterminized: null,
@@ -996,8 +995,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                 () => StringAutomaton.FromData(
                     new StringAutomaton.DataContainer(
                         0,
-                        new[] { new StringAutomaton.StateData(0, 1, Weight.One) },
-                        new[] { new StringAutomaton.Transition(Option.None, Weight.One, 2) },
+                        ImmutableArray.Create(new StringAutomaton.StateData(0, 1, Weight.One)),
+                        ImmutableArray.Create(new StringAutomaton.Transition(Option.None, Weight.One, 2)),
                         true,
                         false,
                         isDeterminized: null,

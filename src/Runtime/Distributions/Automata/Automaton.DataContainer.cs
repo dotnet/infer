@@ -32,13 +32,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// All automaton states.
             /// </summary>
-            public readonly ReadOnlyArray<StateData> States;
+            public readonly ImmutableArray<StateData> States;
 
             /// <summary>
             /// All automaton transitions. Transitions for the same state are stored as a contiguous block
             /// inside this array.
             /// </summary>
-            public readonly ReadOnlyArray<Transition> Transitions;
+            public readonly ImmutableArray<Transition> Transitions;
 
             /// <summary>
             /// Gets value indicating whether this automaton is epsilon-free.
@@ -79,8 +79,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             [Construction("StartStateIndex", "States", "Transitions", "IsEpsilonFree", "UsesGroups", "IsDeterminized", "IsZero")]
             public DataContainer(
                 int startStateIndex,
-                ReadOnlyArray<StateData> states,
-                ReadOnlyArray<Transition> transitions,
+                ImmutableArray<StateData> states,
+                ImmutableArray<Transition> transitions,
                 bool isEpsilonFree,
                 bool usesGroups,
                 bool? isDeterminized,
@@ -165,8 +165,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 this.flags = (Flags)info.GetValue(nameof(this.flags), typeof(Flags));
                 this.StartStateIndex = (int)info.GetValue(nameof(this.StartStateIndex), typeof(int));
-                this.States = (StateData[])info.GetValue(nameof(this.States), typeof(StateData[]));
-                this.Transitions = (Transition[])info.GetValue(nameof(this.Transitions), typeof(Transition[]));
+                this.States = ((StateData[])info.GetValue(nameof(this.States), typeof(StateData[]))).ToImmutableArray();
+                this.Transitions = ((Transition[])info.GetValue(nameof(this.Transitions), typeof(Transition[]))).ToImmutableArray();
 
                 if (!IsConsistent())
                 {

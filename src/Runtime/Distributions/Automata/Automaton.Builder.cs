@@ -397,11 +397,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 var hasEpsilonTransitions = false;
                 var usesGroups = false;
-                var resultStates = new StateData[this.states.Count];
-                var resultTransitions = new Transition[this.transitions.Count - this.numRemovedTransitions];
+                var resultStates = ImmutableArray.CreateBuilder<StateData>(this.states.Count);
+                var resultTransitions = ImmutableArray.CreateBuilder<Transition>(this.transitions.Count - this.numRemovedTransitions);
                 var nextResultTransitionIndex = 0;
 
-                for (var i = 0; i < resultStates.Length; ++i)
+                for (var i = 0; i < resultStates.Count; ++i)
                 {
                     var firstResultTransitionIndex = nextResultTransitionIndex;
                     var transitionIndex = this.states[i].FirstTransitionIndex;
@@ -410,7 +410,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         var node = this.transitions[transitionIndex];
                         var transition = node.Transition;
                         Debug.Assert(
-                            transition.DestinationStateIndex < resultStates.Length,
+                            transition.DestinationStateIndex < resultStates.Count,
                             "Destination indexes must be in valid range");
                         resultTransitions[nextResultTransitionIndex] = transition;
                         ++nextResultTransitionIndex;
@@ -427,13 +427,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 Debug.Assert(
-                    nextResultTransitionIndex == resultTransitions.Length,
+                    nextResultTransitionIndex == resultTransitions.Count,
                     "number of copied transitions must match result array size");
 
                 return new DataContainer(
                     this.StartStateIndex,
-                    resultStates,
-                    resultTransitions,
+                    resultStates.ToImmutable(),
+                    resultTransitions.ToImmutable(),
                     !hasEpsilonTransitions,
                     usesGroups,
                     isDeterminized,
