@@ -252,7 +252,7 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public static ImmutableArray<T> Create<T>(T elem1, T elem2)
         {
-            var builder = new ImmutableArray<T>.Builder(1) {[0] = elem1, [1] = elem2};
+            var builder = new ImmutableArray<T>.Builder(2) {[0] = elem1, [1] = elem2};
             return builder.MoveToImmutable();
         }
 
