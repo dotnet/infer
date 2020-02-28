@@ -211,7 +211,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
         public char Point
         {
             get => this.Data.Point ?? throw new InvalidOperationException();
-            set => this.Data = StorageCache.GetPointMass(value, default);
+            set => this.Data = StorageCache.GetPointMass(value, null);
         }
 
         /// <summary>
@@ -1543,7 +1543,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 StorageCache.GetPointMass(point, ranges);
 
             public static Storage CreatePoint(char point) =>
-                StorageCache.GetPointMass(point, default);
+                StorageCache.GetPointMass(point, null);
 
             public static Storage CreateUniformInRanges(
                 IEnumerable<char> startEndPairs,
@@ -1906,14 +1906,14 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 PointMasses = new Storage[CharRangeEndExclusive];
             }
 
-            public static Storage GetPointMass(char point, ImmutableArray<CharRange> ranges)
+            public static Storage GetPointMass(char point, ImmutableArray<CharRange>? ranges)
             {
                 if (PointMasses[point] == null)
                 {
                     PointMasses[point] = Storage.CreateUncached(
-                        ranges == default
-                            ? ImmutableArray.Create(new CharRange(point, point + 1, Weight.One))
-                            : ranges,
+                        ranges.HasValue
+                            ? ranges.Value
+                            : ImmutableArray.Create(new CharRange(point, point + 1, Weight.One)),
                         point);
                 }
 

@@ -335,7 +335,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 public WeightedStateSet(int stateIndex)
                 {
-                    this.weightedStates = default;
+                    this.weightedStates = default(ImmutableArray<WeightedState>);
                     this.singleStateIndex = stateIndex;
                 }
 
@@ -346,7 +346,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     if (weightedStates.Count == 1)
                     {
                         Debug.Assert(weightedStates[0].Weight == Weight.One);
-                        this.weightedStates = default;
+                        this.weightedStates = default(ImmutableArray<WeightedState>);
                         this.singleStateIndex = weightedStates[0].Index;
                     }
                     else
@@ -357,12 +357,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 }
 
                 public int Count =>
-                    (this.weightedStates == default)
+                    (this.weightedStates == default(ImmutableArray<WeightedState>))
                         ? 1
                         : this.weightedStates.Count;
 
                 public WeightedState this[int index] =>
-                    (this.weightedStates == default)
+                    (this.weightedStates == default(ImmutableArray<WeightedState>))
                         ? new WeightedState(this.singleStateIndex, Weight.One)
                         : this.weightedStates[index];
 
