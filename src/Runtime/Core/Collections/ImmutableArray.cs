@@ -94,14 +94,10 @@ namespace Microsoft.ML.Probabilistic.Collections
 
         public struct Builder
         {
-            private bool dirty;
             private T[] array;
 
-            public Builder(int size)
-            {
-                this.dirty = false;
+            public Builder(int size) =>
                 this.array = new T[size];
-            }
 
             public T this[int index]
             {
@@ -111,15 +107,11 @@ namespace Microsoft.ML.Probabilistic.Collections
 
             public int Count => this.array.Length;
 
-            public ImmutableArray<T> ToImmutable()
+            public ImmutableArray<T> MoveToImmutable()
             {
-                if (dirty)
-                {
-                    throw new NotImplementedException("ToImmutable() can be called only once at the moment");
-                }
-
-                dirty = true;
-                return new ImmutableArray<T>(this.array);
+                var result = new ImmutableArray<T>(this.array);
+                this.array = Array.Empty<T>();
+                return result;
             }
         }
     }
@@ -259,13 +251,13 @@ namespace Microsoft.ML.Probabilistic.Collections
         public static ImmutableArray<T> Create<T>(T elem)
         {
             var builder = new ImmutableArray<T>.Builder(1) {[0] = elem};
-            return builder.ToImmutable();
+            return builder.MoveToImmutable();
         }
 
         public static ImmutableArray<T> Create<T>(T elem1, T elem2)
         {
             var builder = new ImmutableArray<T>.Builder(1) {[0] = elem1, [1] = elem2};
-            return builder.ToImmutable();
+            return builder.MoveToImmutable();
         }
 
         /// <summary>

@@ -432,8 +432,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 return new DataContainer(
                     this.StartStateIndex,
-                    resultStates.ToImmutable(),
-                    resultTransitions.ToImmutable(),
+                    resultStates.MoveToImmutable(),
+                    resultTransitions.MoveToImmutable(),
                     !hasEpsilonTransitions,
                     usesGroups,
                     isDeterminized,
