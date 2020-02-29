@@ -88,7 +88,7 @@ namespace Microsoft.ML.Probabilistic.Collections
         public static bool operator !=(ImmutableArray<T> left, ImmutableArray<T> right) =>
             left.array != right.array;
 
-        public struct Builder
+        public class Builder
         {
             private T[] array;
 
