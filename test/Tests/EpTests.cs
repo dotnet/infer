@@ -1965,7 +1965,7 @@ namespace Microsoft.ML.Probabilistic.Tests
                     double aError = aExpected.MaxDiff(aActual);
                     double productError = productExpected.MaxDiff(productActual);
                     double evError = MMath.AbsDiff(evExpected, evActual, 1e-6);
-                    bool trace = false;
+                    bool trace = true;
                     if (trace)
                     {
                         Trace.WriteLine($"b = {bActual} should be {bExpected}, error = {bError}");
@@ -1981,13 +1981,75 @@ namespace Microsoft.ML.Probabilistic.Tests
             }
         }
 
+        internal static void TestLogEvidence()
+        {
+            LogEvidenceScale(new GammaPower(100, 5.0 / 100, -1), new GammaPower(100, 2.0 / 100, -1), new GammaPower(100, 3.0 / 100, -1), 0.2);
+        }
+
+        internal static void LogEvidenceShift(GammaPower sum, GammaPower a, GammaPower b)
+        {
+            double logz100 = PlusGammaOp.LogAverageFactor(GammaPower.FromShapeAndRate(sum.Shape-1, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape, b.Rate, b.Power));
+            double logz010 = PlusGammaOp.LogAverageFactor(GammaPower.FromShapeAndRate(sum.Shape, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape-1, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape, b.Rate, b.Power));
+            double logz001 = PlusGammaOp.LogAverageFactor(GammaPower.FromShapeAndRate(sum.Shape, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape-1, b.Rate, b.Power));
+            double lhs = logz100 + System.Math.Log(sum.Rate / (sum.Shape - 1));
+            double rhs1 = logz010 + System.Math.Log(a.Rate / (a.Shape - 1));
+            double rhs2 = logz001 + System.Math.Log(b.Rate / (b.Shape - 1));
+            Trace.WriteLine($"lhs = {lhs} rhs = {MMath.LogSumExp(rhs1, rhs2)}");
+        }
+
+        internal static void LogEvidenceScale(GammaPower sum, GammaPower a, GammaPower b, double scale)
+        {
+            double logZ = LogEvidenceBrute(sum, a, b);
+            double logZ2 = System.Math.Log(scale) + LogEvidenceBrute(GammaPower.FromShapeAndRate(sum.Shape, scale * sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape, scale * a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape, scale * b.Rate, b.Power));
+            Trace.WriteLine($"logZ = {logZ} {logZ2}");
+        }
+
+        internal static double LogEvidenceBrute(GammaPower sumPrior, GammaPower aPrior, GammaPower bPrior)
+        {
+            double totalWeight = 0;
+            int numIter = 1000000;
+            for (int iter = 0; iter < numIter; iter++)
+            {
+                if (iter % 1000000 == 0) Trace.WriteLine($"iter = {iter}");
+                double bSample = bPrior.Sample();
+                double aSample = aPrior.Sample();
+                if (sumPrior.Rate > 1e100)
+                {
+                    bSample = 0;
+                    aSample = 0;
+                }
+                double sumSample = aSample + bSample;
+                double logWeight = sumPrior.GetLogProb(sumSample);
+                double weight = System.Math.Exp(logWeight);
+                totalWeight += weight;
+            }
+            Trace.WriteLine($"totalWeight = {totalWeight}");
+            return System.Math.Log(totalWeight / numIter);
+        }
+
+        internal static double LogEvidenceIncrementBShape(GammaPower sum, GammaPower a, GammaPower b)
+        {
+            const double threshold = 0;
+            if (b.Shape > threshold)
+            {
+                //return PlusGammaOp.LogAverageFactor(sum, a, b);
+                return LogEvidenceBrute(sum, a, b);
+            }
+            double logz100 = LogEvidenceIncrementBShape(GammaPower.FromShapeAndRate(sum.Shape - 1, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape + 1, b.Rate, b.Power));
+            double logz010 = LogEvidenceIncrementBShape(GammaPower.FromShapeAndRate(sum.Shape, sum.Rate, sum.Power), GammaPower.FromShapeAndRate(a.Shape - 1, a.Rate, a.Power), GammaPower.FromShapeAndRate(b.Shape + 1, b.Rate, b.Power));
+            double lhs = logz100 + System.Math.Log(sum.Rate / (sum.Shape - 1));
+            double rhs1 = logz010 + System.Math.Log(a.Rate / (a.Shape - 1));
+            double rhs2 = System.Math.Log(b.Rate / b.Shape);
+            return MMath.LogDifferenceOfExp(lhs, rhs1) - rhs2;
+        }
+
         [Fact]
         //[Trait("Category", "ModifiesGlobals")]
         public void GammaPowerSumRRRTest()
         {
             //Assert.True(PlusGammaOp.AAverageConditional(GammaPower.FromShapeAndRate(299, 2135, -1), GammaPower.FromShapeAndRate(2.01, 10, -1), GammaPower.FromShapeAndRate(12, 22, -1), GammaPower.Uniform(-1)).Shape > 2);
             //Assert.True(PlusGammaOp.AAverageConditional(GammaPower.Uniform(-1), GammaPower.FromShapeAndRate(2.0095439611576689, 43.241375394505766, -1), GammaPower.FromShapeAndRate(12, 11, -1), GammaPower.Uniform(-1)).IsUniform());
-            Assert.False(double.IsNaN(PlusGammaOp.BAverageConditional(new GammaPower(287, 0.002132, -1), new GammaPower(1.943, 1.714, -1), new GammaPower(12, 0.09091, -1), GammaPower.Uniform(-1)).Shape));
+            //Assert.False(double.IsNaN(PlusGammaOp.BAverageConditional(new GammaPower(287, 0.002132, -1), new GammaPower(1.943, 1.714, -1), new GammaPower(12, 0.09091, -1), GammaPower.Uniform(-1)).Shape));
 
             Variable<bool> evidence = Variable.Bernoulli(0.5).Named("evidence");
             IfBlock block = Variable.If(evidence);
@@ -2003,6 +2065,8 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var groundTruthArray = new[]
             {
+                //((new GammaPower(12, 0.09091, -1), new GammaPower(1.943, 1.714, -1), new GammaPower(287, 0.002132, -1)),
+                // (GammaPower.FromShapeAndRate(23.445316648707465, 25.094880573396285, -1.0), GammaPower.FromShapeAndRate(6.291922598211336, 2.6711637040924909, -1.0), GammaPower.FromShapeAndRate(297.59289156399706, 481.31323394825631, -1.0), -0.517002984399292)),
                 //((GammaPower.FromShapeAndRate(12, 22, -1), GammaPower.FromShapeAndRate(2.01, 10, -1), GammaPower.FromShapeAndRate(299, 2135, -1)),
                 // (GammaPower.FromShapeAndRate(12.4019151884055, 23.487535138993064, -1.0), GammaPower.FromShapeAndRate(47.605465737960976, 236.41203334327037, -1.0), GammaPower.FromShapeAndRate(303.94717779788243, 2160.7976040127091, -1.0), -2.26178042225837)),
                 //((GammaPower.FromShapeAndRate(1, 2, 1), GammaPower.FromShapeAndRate(10, 10, 1), GammaPower.FromShapeAndRate(101, double.MaxValue, 1)),
@@ -2013,16 +2077,16 @@ namespace Microsoft.ML.Probabilistic.Tests
                 // (GammaPower.FromShapeAndRate(1599999864.8654146, 6399999443.0866585, -1.0), GammaPower.FromShapeAndRate(488689405.117356, 488689405.88170129, -1.0), GammaPower.FromShapeAndRate(double.PositiveInfinity, 5.0, -1.0), -4.80649551611576)),
                 //((GammaPower.FromShapeAndRate(2.25, 0.625, -1), GammaPower.FromShapeAndRate(100000002, 100000001, -1), GammaPower.PointMass(0, -1)),
                 // (GammaPower.FromShapeAndRate(5.25, 0.625, -1.0), GammaPower.PointMass(0, -1.0), GammaPower.PointMass(0, -1), double.NegativeInfinity)),
-                //((GammaPower.FromShapeAndRate(0.83228652924877289, 0.31928405884349487, -1), GammaPower.FromShapeAndRate(1.7184321234630087, 0.709692740551586, -1), GammaPower.FromShapeAndRate(491, 1583.0722891566263, -1)),
-                // (GammaPower.FromShapeAndRate(3.1727695744145481, 10.454478169320565, -1.0), GammaPower.FromShapeAndRate(2.469020042117986, 2.5421356314915293, -1.0), GammaPower.FromShapeAndRate(495.57371802470414, 1592.4685605878328, -1.0), -3.57744782716672)),
+                ((GammaPower.FromShapeAndRate(0.83228652924877289, 0.31928405884349487, -1), GammaPower.FromShapeAndRate(1.7184321234630087, 0.709692740551586, -1), GammaPower.FromShapeAndRate(491, 1583.0722891566263, -1)),
+                 (GammaPower.FromShapeAndRate(5.6062357530254419, 8.7330355320375, -1.0), GammaPower.FromShapeAndRate(3.7704064465114597, 3.6618414405426956, -1.0), GammaPower.FromShapeAndRate(493.79911104976264, 1585.67297686381, -1.0), -2.62514943790608)),
                 //((GammaPower.FromShapeAndRate(1, 1, 1), GammaPower.FromShapeAndRate(1, 1, 1), GammaPower.Uniform(1)),
                 // (GammaPower.FromShapeAndRate(1, 1, 1), GammaPower.FromShapeAndRate(1, 1, 1), new GammaPower(2, 1, 1), 0)),
                 //((GammaPower.FromShapeAndRate(1, 1, 1), GammaPower.FromShapeAndRate(1, 1, 1), GammaPower.FromShapeAndRate(10, 1, 1)),
                 // (GammaPower.FromShapeAndRate(2.2, 0.8, 1), GammaPower.FromShapeAndRate(2.2, 0.8, 1), GammaPower.FromShapeAndRate(11, 2, 1), -5.32133409609914)),
                 //((GammaPower.FromShapeAndRate(3, 1, -1), GammaPower.FromShapeAndRate(4, 1, -1), GammaPower.Uniform(-1)),
                 // (GammaPower.FromShapeAndRate(3, 1, -1), GammaPower.FromShapeAndRate(4, 1, -1), GammaPower.FromShapeAndRate(4.311275674659143, 2.7596322350392035, -1.0), 0)),
-                ((GammaPower.FromShapeAndRate(3, 1, -1), GammaPower.FromShapeAndRate(4, 1, -1), GammaPower.FromShapeAndRate(10, 1, -1)),
-                 (new GammaPower(10.17, 0.6812, -1), new GammaPower(10.7, 0.7072, -1), new GammaPower(17.04, 0.2038, -1), -5.80097480415528)),
+                //((GammaPower.FromShapeAndRate(3, 1, -1), GammaPower.FromShapeAndRate(4, 1, -1), GammaPower.FromShapeAndRate(10, 1, -1)),
+                // (new GammaPower(10.17, 0.6812, -1), new GammaPower(10.7, 0.7072, -1), new GammaPower(17.04, 0.2038, -1), -5.80097480415528)),
                 //((GammaPower.FromShapeAndRate(2, 1, -1), GammaPower.FromShapeAndRate(2, 1, -1), GammaPower.Uniform(-1)),
                 // (GammaPower.FromShapeAndRate(2, 1, -1), GammaPower.FromShapeAndRate(2, 1, -1), new GammaPower(2, 2, -1), 0)),
                 //((GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.FromShapeAndRate(1, 1, -1), GammaPower.FromShapeAndRate(30, 1, -1)),
@@ -2048,7 +2112,10 @@ namespace Microsoft.ML.Probabilistic.Tests
                     GammaPower sumActual = engine.Infer<GammaPower>(sum);
                     double evActual = engine.Infer<Bernoulli>(evidence).LogOdds;
 
-                    if (false)
+                    double logZ = LogEvidenceIncrementBShape(sumPrior, aPrior, bPrior);
+                    Trace.WriteLine($"LogZ = {logZ}");
+
+                    if (true)
                     {
                         // importance sampling
                         Rand.Restart(0);

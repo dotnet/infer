@@ -82,6 +82,7 @@ namespace TestApp
             watch.Start();
 
             new EpTests().GammaPowerSumRRRTest();
+            //EpTests.TestLogEvidence();
 
             if (false)
             {

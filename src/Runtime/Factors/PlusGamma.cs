@@ -75,11 +75,22 @@ namespace Microsoft.ML.Probabilistic.Factors
                 // beta = -r * dalpha/dr
                 double beta = a.Rate * dlogZ + a.Rate * a.Rate * ddlogZ;
                 Gamma prior = Gamma.FromShapeAndRate(a.Shape, a.Rate);
+                // ia is the marginal of a^(1/a.Power)
                 Gamma ia = GaussianOp.GammaFromAlphaBeta(prior, alpha, beta, true) * prior;
                 return GammaPower.FromShapeAndRate(ia.Shape, ia.Rate, a.Power) / a;
             }
         }
 
+        /// <summary>
+        /// Gets first and second derivatives of the moments with respect to the rate parameter of the distribution.
+        /// </summary>
+        /// <param name="gammaPower"></param>
+        /// <param name="mean"></param>
+        /// <param name="dmean"></param>
+        /// <param name="ddmean"></param>
+        /// <param name="variance"></param>
+        /// <param name="dvariance"></param>
+        /// <param name="ddvariance"></param>
         public static void GetInverseGammaMomentDerivs(GammaPower gammaPower, out double mean, out double dmean, out double ddmean, out double variance, out double dvariance, out double ddvariance)
         {
             if (gammaPower.Power != -1) throw new ArgumentException();
@@ -172,6 +183,12 @@ namespace Microsoft.ML.Probabilistic.Factors
         public static GammaPower BAverageConditional([SkipIfUniform] GammaPower sum, [SkipIfUniform] GammaPower a, [SkipIfUniform] GammaPower b, GammaPower result)
         {
             return AAverageConditional(sum, b, a, result);
+        }
+
+        public static double LogAverageFactor([SkipIfUniform] GammaPower sum, [SkipIfUniform] GammaPower a, [SkipIfUniform] GammaPower b)
+        {
+            GammaPower toSum = SumAverageConditional(a, b, sum);
+            return toSum.GetLogAverageOf(sum);
         }
 
         /// <include file='FactorDocs.xml' path='factor_docs/message_op_class[@name="PlusGammaOp"]/message_doc[@name="LogEvidenceRatio(GammaPower, GammaPower, GammaPower)"]/*'/>
