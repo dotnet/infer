@@ -202,6 +202,7 @@ namespace Microsoft.ML.Probabilistic.Tests
         [Fact]
         public void GammaPowerPowerTest()
         {
+            Assert.True(PowerOp.PowAverageConditional(new TruncatedGamma(5.196e+48, 5.567e-50, 1, double.PositiveInfinity), 0.0016132617913803061, GammaPower.Uniform(-1)).IsProper());
             Assert.True(PowerOp.PowAverageConditional(new TruncatedGamma(23.14, 0.06354, 1, double.PositiveInfinity), 1.5543122344752203E-15, GammaPower.Uniform(-1)).IsProper());
             Assert.False(double.IsNaN(PowerOp.GammaPowerFromDifferentPower(new GammaPower(1.333, 1.5, 1), 0.01).Shape));
             Assert.True(PowerOp.XAverageConditional(new GammaPower(7, 0.1111, -1), new GammaPower(16.19, 0.06154, 1), 2.2204460492503136E-16, GammaPower.Uniform(1)).IsProper());

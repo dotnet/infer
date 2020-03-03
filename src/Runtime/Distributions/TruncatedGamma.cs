@@ -29,7 +29,7 @@ namespace Microsoft.ML.Probabilistic.Distributions
                                       Sampleable<double>, SettableToWeightedSum<TruncatedGamma>,
                                       CanGetMean<double>, CanGetVariance<double>, CanGetMeanAndVarianceOut<double, double>,
                                       CanGetLogNormalizer, CanGetLogAverageOf<TruncatedGamma>, CanGetLogAverageOfPower<TruncatedGamma>,
-                                      CanGetAverageLog<TruncatedGamma>
+                                      CanGetAverageLog<TruncatedGamma>, CanGetMode<double>
     {
         /// <summary>
         /// Untruncated Gamma
@@ -565,6 +565,15 @@ namespace Microsoft.ML.Probabilistic.Distributions
         }
 
         /// <summary>
+        /// Get the mode (highest density point) of this distribution
+        /// </summary>
+        /// <returns></returns>
+        public double GetMode()
+        {
+            return Math.Min(Math.Max(this.Gamma.GetMode(), this.LowerBound), this.UpperBound);
+        }
+
+        /// <summary>
         /// Computes E[x^power]
         /// </summary>
         /// <returns></returns>
@@ -580,21 +589,25 @@ namespace Microsoft.ML.Probabilistic.Distributions
             }
             else
             {
-                double Z = GetNormalizer();
+                double logZ = GetLogNormalizer();
+                if(logZ < double.MinValue)
+                {
+                    return Math.Pow(GetMode(), power);
+                }
                 double shapePlusPower = this.Gamma.Shape + power;
-                double Z1;
+                double logZ1;
                 bool regularized = shapePlusPower >= 1;
                 if (regularized)
                 {
-                    Z1 = Math.Exp(MMath.GammaLn(shapePlusPower) - MMath.GammaLn(this.Gamma.Shape)) * 
-                        (MMath.GammaLower(shapePlusPower, this.Gamma.Rate * UpperBound) - MMath.GammaLower(shapePlusPower, this.Gamma.Rate * LowerBound));
+                    logZ1 = (MMath.GammaLn(shapePlusPower) - MMath.GammaLn(this.Gamma.Shape)) * 
+                        Math.Log(MMath.GammaLower(shapePlusPower, this.Gamma.Rate * UpperBound) - MMath.GammaLower(shapePlusPower, this.Gamma.Rate * LowerBound));
                 }
                 else
                 {
-                    Z1 = Math.Exp(- MMath.GammaLn(this.Gamma.Shape)) * 
-                        (MMath.GammaUpper(shapePlusPower, this.Gamma.Rate * LowerBound, regularized) - MMath.GammaUpper(shapePlusPower, this.Gamma.Rate * UpperBound, regularized));
+                    logZ1 = - MMath.GammaLn(this.Gamma.Shape) * 
+                        Math.Log(MMath.GammaUpper(shapePlusPower, this.Gamma.Rate * LowerBound, regularized) - MMath.GammaUpper(shapePlusPower, this.Gamma.Rate * UpperBound, regularized));
                 }
-                return Math.Pow(this.Gamma.Rate, -power) * Z1 / Z;
+                return Math.Exp(-power*Math.Log(this.Gamma.Rate) + logZ1 - logZ);
             }
         }
 
