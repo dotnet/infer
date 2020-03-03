@@ -2212,6 +2212,7 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder[4].AddTransition(DiscreteChar.UniformOver('i', 'j'), Weight.FromValue(1), 5);
             builder[4].AddTransition(DiscreteChar.UniformOver('k', 'l'), Weight.FromValue(1), 5);
 
+            builder[0].SetEndWeight(Weight.FromValue(1));
             builder[1].SetEndWeight(Weight.FromValue(1));
             builder[3].SetEndWeight(Weight.FromValue(1));
             builder[5].SetEndWeight(Weight.FromValue(1));
@@ -2221,6 +2222,7 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var expectedSupport = new HashSet<string>
             {
+                "",
                 "a", "b", 
                 "ce", "cf",
                 "cgi", "cgj", "cgk", "cgl",

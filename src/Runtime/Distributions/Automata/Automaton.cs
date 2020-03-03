@@ -2570,18 +2570,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             var prefix = new List<TElement>();
             var stack = new Stack<StateEnumerationState>();
 
-            if (this.Start.CanEnd)
+            var current = default(StateEnumerationState);
+            TryMoveTo(this.Data.StartStateIndex);
+            if (this.States[current.StateIndex].CanEnd)
             {
-                yield return SequenceManipulator.ToSequence(Enumerable.Empty<TElement>());
+                yield return SequenceManipulator.ToSequence(prefix);
             }
-
-            var startState = this.Data.States[this.Data.StartStateIndex];
-            var current = new StateEnumerationState
-            {
-                StateIndex = this.Data.StartStateIndex,
-                TransitionIndex = startState.FirstTransitionIndex - 1,
-                RemainingTransitionsCount = startState.TransitionsCount,
-            };
 
             while (true)
             {
@@ -2667,34 +2661,28 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     return false;
                 }
 
-                var state =this.Data.States[index];
+                var state = this.Data.States[index];
 
-                // Fastpath: if we move forward and current state has 0 elements left to traverse,
-                // we can omit the backtracking logic entirely
+                
                 if (index >= current.StateIndex &&
                     current.ElementEnumerator == null &&
                     current.RemainingTransitionsCount == 0)
                 {
+                    // Fastpath: if we move forward and current state has 0 elements left to traverse,
+                    // we can omit the backtracking logic entirely
                     visited[current.StateIndex] = false;
-
-                    current = new StateEnumerationState
-                    {
-                        StateIndex = index,
-                        TransitionIndex = state.FirstTransitionIndex - 1,
-                        RemainingTransitionsCount = state.TransitionsCount,
-                        PrefixLength = prefix.Count,
-                    };
-
-                    return true;
                 }
-
-                stack.Push(current);
-                if (index <= current.StateIndex)
+                else
                 {
-                    // Tracking the visited states only on backward transitions is enough for
-                    // loop detection. By not setting "visited" to true for forward transitions
-                    // we can backtrack with less overhead in simple cases
-                    visited[current.StateIndex] = true;
+                    // Slowpath: Store information needed for backtracking
+                    stack.Push(current);
+                    if (index <= current.StateIndex)
+                    {
+                        // Tracking the visited states only on backward transitions is enough for
+                        // loop detection. By not setting "visited" to true for forward transitions
+                        // we can backtrack with less overhead in simple cases
+                        visited[current.StateIndex] = true;
+                    }
                 }
 
                 current = new StateEnumerationState
