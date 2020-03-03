@@ -397,6 +397,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
                 var hasEpsilonTransitions = false;
                 var usesGroups = false;
+                var hasSelfLoops = false;
+                var hasOnlyForwardTransitions = true;
                 var resultStates = ImmutableArray.CreateBuilder<StateData>(this.states.Count);
                 var resultTransitions = ImmutableArray.CreateBuilder<Transition>(this.transitions.Count - this.numRemovedTransitions);
                 var nextResultTransitionIndex = 0;
@@ -418,6 +420,15 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         usesGroups = usesGroups || (transition.Group != 0);
 
                         transitionIndex = node.Next;
+
+                        if (transition.DestinationStateIndex == i)
+                        {
+                            hasSelfLoops = true;
+                        }
+                        else if (transition.DestinationStateIndex < i)
+                        {
+                            hasOnlyForwardTransitions = false;
+                        }
                     }
 
                     resultStates[i] = new StateData(
@@ -430,6 +441,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     nextResultTransitionIndex == resultTransitions.Count,
                     "number of copied transitions must match result array size");
 
+                // Detect two very common automata shapes
+                var isEnumerable =
+                    hasSelfLoops ? false :
+                    hasOnlyForwardTransitions ? true :
+                    (bool?)null;
+
                 return new DataContainer(
                     this.StartStateIndex,
                     resultStates.MoveToImmutable(),
@@ -437,7 +454,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     !hasEpsilonTransitions,
                     usesGroups,
                     isDeterminized,
-                    isZero: null);
+                    isZero: null,
+                    isEnumerable: isEnumerable);
             }
 
             #endregion

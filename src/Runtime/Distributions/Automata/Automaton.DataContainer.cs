@@ -7,7 +7,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
     using System;
     using System.Diagnostics;
     using System.Runtime.Serialization;
-    
+
     using Microsoft.ML.Probabilistic.Collections;
     using Microsoft.ML.Probabilistic.Serialization;
 
@@ -28,7 +28,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Index of start state of automaton.
             /// </summary>
             public readonly int StartStateIndex;
-            
+
             /// <summary>
             /// All automaton states.
             /// </summary>
@@ -43,12 +43,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// <summary>
             /// Gets value indicating whether this automaton is epsilon-free.
             /// </summary>
-            public bool IsEpsilonFree => (this.flags & Flags.IsEpsilonFree) != 0;
+            public bool IsEpsilonFree => this.flags.HasFlag(Flags.IsEpsilonFree);
 
             /// <summary>
             /// Get value indicating whether this automaton uses groups.
             /// </summary>
-            public bool UsesGroups => (this.flags & Flags.UsesGroups) != 0;
+            public bool UsesGroups => this.flags.HasFlag(Flags.UsesGroups);
 
             /// <summary>
             /// Gets value indicating whether this automaton is determinized
@@ -58,8 +58,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// False value means that this automaton can not be determinized
             /// </remarks>
             public bool? IsDeterminized =>
-                (this.flags & Flags.DeterminizationStateKnown) != 0
-                    ? (this.flags & Flags.IsDeterminized) != 0
+                this.flags.HasFlag(Flags.DeterminizationStateKnown)
+                    ? this.flags.HasFlag(Flags.IsDeterminized)
                     : (bool?)null;
 
             /// <summary>
@@ -69,14 +69,19 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             /// Null value means that this property is unknown.
             /// </remarks>
             public bool? IsZero =>
-                ((this.flags & Flags.IsZeroStateKnown) != 0)
-                    ? (this.flags & Flags.IsZero) != 0
+                this.flags.HasFlag(Flags.IsZeroStateKnown)
+                    ? this.flags.HasFlag(Flags.IsZero)
+                    : (bool?)null;
+
+            public bool? IsEnumerable =>
+                this.flags.HasFlag(Flags.IsEnumerableStateKnown)
+                    ? this.flags.HasFlag(Flags.IsEnumerable)
                     : (bool?)null;
 
             /// <summary>
             /// Initializes instance of <see cref="DataContainer"/>.
             /// </summary>
-            [Construction("StartStateIndex", "States", "Transitions", "IsEpsilonFree", "UsesGroups", "IsDeterminized", "IsZero")]
+            [Construction("StartStateIndex", "States", "Transitions", "IsEpsilonFree", "UsesGroups", "IsDeterminized", "IsZero", "IsEnumerable")]
             public DataContainer(
                 int startStateIndex,
                 ImmutableArray<StateData> states,
@@ -84,7 +89,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 bool isEpsilonFree,
                 bool usesGroups,
                 bool? isDeterminized,
-                bool? isZero)
+                bool? isZero,
+                bool? isEnumerable)
             {
                 this.flags =
                     (isEpsilonFree ? Flags.IsEpsilonFree : 0) |
@@ -92,7 +98,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     (isDeterminized.HasValue ? Flags.DeterminizationStateKnown : 0) |
                     (isDeterminized == true ? Flags.IsDeterminized : 0) |
                     (isZero.HasValue ? Flags.IsZeroStateKnown : 0) |
-                    (isZero == true ? Flags.IsZero : 0);
+                    (isZero == true ? Flags.IsZero : 0) |
+                    (isEnumerable.HasValue ? Flags.IsEnumerableStateKnown : 0) |
+                    (isEnumerable == true ? Flags.IsEnumerable : 0);
                 this.StartStateIndex = startStateIndex;
                 this.States = states;
                 this.Transitions = transitions;
@@ -100,11 +108,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
 
             public DataContainer With(
                 bool? isDeterminized = null,
-                bool? isZero= null)
+                bool? isZero = null,
+                bool? isEnumerable = null)
             {
                 // Can't overwrite known properties
                 Debug.Assert(isDeterminized.HasValue != this.IsDeterminized.HasValue || isDeterminized == this.IsDeterminized);
                 Debug.Assert(isZero.HasValue != this.IsZero.HasValue || isZero == this.IsZero);
+                Debug.Assert(isEnumerable.HasValue != this.IsEnumerable.HasValue || isEnumerable == this.IsEnumerable);
 
                 return new DataContainer(
                     this.StartStateIndex,
@@ -113,7 +123,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     this.IsEpsilonFree,
                     this.UsesGroups,
                     isDeterminized ?? this.IsDeterminized,
-                    isZero ?? this.IsZero);
+                    isZero ?? this.IsZero,
+                    isEnumerable ?? this.IsEnumerable);
             }
 
             /// <summary>
@@ -194,6 +205,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 IsDeterminized = 0x8,
                 IsZeroStateKnown = 0x10,
                 IsZero = 0x20,
+                IsEnumerableStateKnown = 0x40,
+                IsEnumerable = 0x80,
             }
         }
     }

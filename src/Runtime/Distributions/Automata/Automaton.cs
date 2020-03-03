@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1652,7 +1652,8 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 isEpsilonFree: true,
                 usesGroups: false,
                 isDeterminized: true,
-                isZero: true);
+                isZero: true,
+                isEnumerable: true);
         }
 
         /// <summary>
@@ -2016,32 +2017,21 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>The sequences in the support of this automaton</returns>
         public IEnumerable<TSequence> EnumerateSupport(int maxCount = 1000000, bool tryDeterminize = true)
         {
-            if (tryDeterminize && this is StringAutomaton)
+            int idx = 0;
+            foreach (var seq in this.EnumerateSupportInternal(tryDeterminize))
             {
-                this.TryDeterminize();
-            }
-
-            // Lazily return sequences until the count is exceeded.
-            var enumeration = this.EnumerateSupport(
-                new Stack<TElement>(),
-                new ArrayDictionary<bool>(),
-                this.Start.Index);
-
-            if (!tryDeterminize) enumeration = enumeration.Distinct();
-            var result = enumeration.Select(
-                (seq, idx) =>
+                if (seq == null)
                 {
-                    if (idx < maxCount)
-                    {
-                        return seq;
-                    }
-                    else
-                    {
-                        throw new AutomatonEnumerationCountException(maxCount);
-                    }
-                });
+                    throw new NotSupportedException("Infinite loops cannot be enumerated");
+                }
 
-            return result;
+                if (++idx > maxCount)
+                {
+                    throw new AutomatonEnumerationCountException(maxCount);
+                }
+
+                yield return seq;
+            }
         }
 
         /// <summary>
@@ -2054,16 +2044,20 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         /// <returns>True if successful, false otherwise</returns>
         public bool TryEnumerateSupport(int maxCount, out IEnumerable<TSequence> result, bool tryDeterminize = true)
         {
-            if (tryDeterminize && this is StringAutomaton)
+            var limitedResult = new List<TSequence>();
+            foreach (var seq in this.EnumerateSupportInternal(tryDeterminize))
             {
-                this.TryDeterminize();
+                if (seq == null || limitedResult.Count >= maxCount)
+                {
+                    result = null;
+                    return false;
+                }
+
+                limitedResult.Add(seq);
             }
 
-
-            result = this.EnumerateSupport(new Stack<TElement>(), new ArrayDictionary<bool>(), this.Start.Index);
-            if (!tryDeterminize) result = result.Distinct();
-            result = result.Take(maxCount + 1).ToList();
-            return result.Count() <= maxCount;
+            result = limitedResult;
+            return true;
         }
 
         /// <summary>
@@ -2523,72 +2517,190 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             automaton.PruneStatesWithLogEndWeightLessThan = dummy;
         }
 
+        private IEnumerable<TSequence> EnumerateSupportInternal(bool tryDeterminize)
+        {
+            var isEnumerable = this.Data.IsEnumerable;
+            if (isEnumerable != null && isEnumerable.Value == false)
+            {
+                // This automaton is definitely not enumerable
+                return new TSequence[] { null };
+            }
+
+            if (tryDeterminize && this is StringAutomaton)
+            {
+                this.TryDeterminize();
+            }
+
+            var enumeration = this.EnumerateSupportInternalWithDuplicates();
+            if (!tryDeterminize)
+            {
+                enumeration = enumeration.Distinct();
+            }
+
+            return enumeration;
+        }
+
+        private struct StateEnumerationState
+        {
+            public int StateIndex;
+            public int PrefixLength;
+            public int TransitionIndex;
+            public int TransitionsCount;
+            public IEnumerator<TElement> ElementEnumerator;
+        }
+
         /// <summary>
         /// Recursively enumerate support of this automaton
         /// </summary>
-        /// <param name="prefix">The prefix at this point</param>
-        /// <param name="visitedStates">The states visited at this point</param>
-        /// <param name="stateIndex">The index of the next state to process</param>
-        /// <returns>The strings supporting this automaton</returns>
-        private IEnumerable<TSequence> EnumerateSupport(Stack<TElement> prefix, ArrayDictionary<bool> visitedStates, int stateIndex)
+        /// <returns>
+        /// The sequences supporting this automaton. Sequences may be non-distinct if
+        /// automaton is not determinized. A `null` value in enumeration means that
+        /// an infinite loop was reached. (public `EnumerateSupport()` / `TryEnumerateSupport()`
+        /// methods handle this differently.
+        /// </returns>
+        private IEnumerable<TSequence> EnumerateSupportInternalWithDuplicates()
         {
-            if (visitedStates.ContainsKey(stateIndex) && visitedStates[stateIndex])
+            var visited = new bool[this.States.Count];
+            var prefix = new List<TElement>();
+            var stack = new Stack<StateEnumerationState>();
+
+            if (this.Start.CanEnd)
             {
-                throw new NotSupportedException("Infinite loops cannot be enumerated");
+                yield return SequenceManipulator.ToSequence(Enumerable.Empty<TElement>());
             }
 
-            var currentState = this.States[stateIndex];
-            if (currentState.CanEnd)
+            var startState = this.Data.States[this.Data.StartStateIndex];
+            var current = new StateEnumerationState
             {
-                yield return SequenceManipulator.ToSequence(prefix.Reverse());
-            }
+                StateIndex = this.Data.StartStateIndex,
+                TransitionIndex = startState.FirstTransitionIndex - 1,
+                TransitionsCount = startState.TransitionsCount,
+            };
 
-            visitedStates[stateIndex] = true;
-            foreach (var transition in currentState.Transitions)
+            while (true)
             {
-                if (transition.Weight.IsZero)
+                // Backtrack while needed
+                while (current.ElementEnumerator == null && current.TransitionsCount == 0)
                 {
-                    continue;
-                }
-
-                if (transition.IsEpsilon)
-                {
-                    foreach (var support in this.EnumerateSupport(prefix, visitedStates, transition.DestinationStateIndex))
+                    if (stack.Count == 0)
                     {
-                        yield return support;
-                    }
-                }
-                else if (transition.ElementDistribution.Value.IsPointMass)
-                {
-                    prefix.Push(transition.ElementDistribution.Value.Point);
-                    foreach (var support in this.EnumerateSupport(prefix, visitedStates, transition.DestinationStateIndex))
-                    {
-                        yield return support;
-                    }
-
-                    prefix.Pop();
-                }
-                else
-                {
-                    if (!(transition.ElementDistribution.Value is CanEnumerateSupport<TElement> supportEnumerator))
-                    {
-                        throw new NotImplementedException("Only point mass element distributions or distributions for which we can enumerate support are currently implemented");
-                    }
-
-                    foreach (var elt in supportEnumerator.EnumerateSupport())
-                    {
-                        prefix.Push(elt);
-                        foreach (var support in this.EnumerateSupport(prefix, visitedStates, transition.DestinationStateIndex))
+                        // Nowhere to backtrack, enumerated everything
+                        if (this.Data.IsEnumerable == null)
                         {
-                            yield return support;
+                            this.Data = this.Data.With(isEnumerable: true);
                         }
 
-                        prefix.Pop();
+                        yield break;
                     }
+
+                    visited[current.StateIndex] = false;
+                    current = stack.Pop();
+                    prefix.RemoveRange(current.PrefixLength, prefix.Count - current.PrefixLength);
+                }
+
+                if (current.ElementEnumerator != null)
+                {
+                    // Advance to next element in current transition
+                    prefix.Add(current.ElementEnumerator.Current);
+                    if (!current.ElementEnumerator.MoveNext())
+                    {
+                        // Element done, move to next transition
+                        current.ElementEnumerator = null;
+                    }
+                }
+                else if (current.TransitionsCount != 0)
+                {
+                    // Advance to next transition
+                    ++current.TransitionIndex;
+                    --current.TransitionsCount;
+
+                    var transition = this.Data.Transitions[current.TransitionIndex];
+
+                    if (!transition.IsEpsilon)
+                    {
+                        // Add next element to sequence
+                        var elementDistribution = transition.ElementDistribution.Value;
+                        if (!(transition.ElementDistribution.Value is CanEnumerateSupport<TElement> supportEnumerator))
+                        {
+                            throw new NotImplementedException(
+                                "Only point mass element distributions or distributions for which we can enumerate support are currently implemented");
+                        }
+
+                        var enumerator = supportEnumerator.EnumerateSupport().GetEnumerator();
+                        if (enumerator.MoveNext())
+                        {
+                            prefix.Add(enumerator.Current);
+                            if (enumerator.MoveNext())
+                            {
+                                current.ElementEnumerator = enumerator;
+                            }
+                        }
+                    }
+                }
+
+                if (!TryMoveTo(this.Data.Transitions[current.TransitionIndex].DestinationStateIndex))
+                {
+                    // Found a loop, signal that automaton is not enumerable
+                    this.Data = this.Data.With(isEnumerable: false);
+                    yield return null;
+                    yield break;
+                }
+
+                if (this.States[current.StateIndex].CanEnd)
+                {
+                    yield return SequenceManipulator.ToSequence(prefix);
                 }
             }
 
-            visitedStates[stateIndex] = false;
+            // Return false if loop was encountered
+            bool TryMoveTo(int index)
+            {
+                if (visited[index])
+                {
+                    // Loop encountered
+                    return false;
+                }
+
+                var state =this.Data.States[index];
+
+                // Fastpath: if we move forward and current state has 0 elements left to traverse,
+                // we can omit the backtracking logic entirely
+                if (index >= current.StateIndex &&
+                    current.ElementEnumerator == null &&
+                    current.TransitionsCount == 0)
+                {
+                    visited[current.StateIndex] = false;
+
+                    current = new StateEnumerationState
+                    {
+                        StateIndex = index,
+                        TransitionIndex = state.FirstTransitionIndex - 1,
+                        TransitionsCount = state.TransitionsCount,
+                        PrefixLength = prefix.Count,
+                    };
+
+                    return true;
+                }
+
+                stack.Push(current);
+                if (index <= current.StateIndex)
+                {
+                    // Tracking the visited states only on backward transitions is enough for
+                    // loop detection. By not setting "visited" to true for forward transitions
+                    // we can backtrack with less overhead in simple cases
+                    visited[current.StateIndex] = true;
+                }
+
+                current = new StateEnumerationState
+                {
+                    StateIndex = index,
+                    TransitionIndex = state.FirstTransitionIndex - 1,
+                    TransitionsCount = state.TransitionsCount,
+                    PrefixLength = prefix.Count,
+                };
+
+                return true;
+            }
         }
 
         /// <summary>
