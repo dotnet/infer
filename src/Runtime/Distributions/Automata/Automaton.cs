@@ -2517,6 +2517,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             automaton.PruneStatesWithLogEndWeightLessThan = dummy;
         }
 
+        /// <summary>
+        /// Enumerate support of this automaton
+        /// </summary>
         private IEnumerable<TSequence> EnumerateSupportInternal(bool tryDeterminize)
         {
             var isEnumerable = this.Data.IsEnumerable;
@@ -2540,6 +2543,9 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             return enumeration;
         }
 
+        /// <summary>
+        /// Stores information needed for backtracking during support enumeration.
+        /// </summary>
         private struct StateEnumerationState
         {
             public int StateIndex;
@@ -2550,13 +2556,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
         }
 
         /// <summary>
-        /// Recursively enumerate support of this automaton
+        /// Enumerate support of this automaton without elemination of duplicate elements
         /// </summary>
         /// <returns>
         /// The sequences supporting this automaton. Sequences may be non-distinct if
         /// automaton is not determinized. A `null` value in enumeration means that
-        /// an infinite loop was reached. (public `EnumerateSupport()` / `TryEnumerateSupport()`
-        /// methods handle this differently.
+        /// an infinite loop was reached. Public `EnumerateSupport()` / `TryEnumerateSupport()`
+        /// methods handle null value differently.
         /// </returns>
         private IEnumerable<TSequence> EnumerateSupportInternalWithDuplicates()
         {
