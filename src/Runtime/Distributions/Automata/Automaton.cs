@@ -2551,12 +2551,12 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             public int StateIndex;
             public int PrefixLength;
             public int TransitionIndex;
-            public int TransitionsCount;
+            public int RemainingTransitionsCount;
             public IEnumerator<TElement> ElementEnumerator;
         }
 
         /// <summary>
-        /// Enumerate support of this automaton without elemination of duplicate elements
+        /// Enumerate support of this automaton without elimination of duplicate elements
         /// </summary>
         /// <returns>
         /// The sequences supporting this automaton. Sequences may be non-distinct if
@@ -2580,13 +2580,13 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
             {
                 StateIndex = this.Data.StartStateIndex,
                 TransitionIndex = startState.FirstTransitionIndex - 1,
-                TransitionsCount = startState.TransitionsCount,
+                RemainingTransitionsCount = startState.TransitionsCount,
             };
 
             while (true)
             {
                 // Backtrack while needed
-                while (current.ElementEnumerator == null && current.TransitionsCount == 0)
+                while (current.ElementEnumerator == null && current.RemainingTransitionsCount == 0)
                 {
                     if (stack.Count == 0)
                     {
@@ -2614,11 +2614,11 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                         current.ElementEnumerator = null;
                     }
                 }
-                else if (current.TransitionsCount != 0)
+                else if (current.RemainingTransitionsCount != 0)
                 {
                     // Advance to next transition
                     ++current.TransitionIndex;
-                    --current.TransitionsCount;
+                    --current.RemainingTransitionsCount;
 
                     var transition = this.Data.Transitions[current.TransitionIndex];
 
@@ -2673,7 +2673,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 // we can omit the backtracking logic entirely
                 if (index >= current.StateIndex &&
                     current.ElementEnumerator == null &&
-                    current.TransitionsCount == 0)
+                    current.RemainingTransitionsCount == 0)
                 {
                     visited[current.StateIndex] = false;
 
@@ -2681,7 +2681,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                     {
                         StateIndex = index,
                         TransitionIndex = state.FirstTransitionIndex - 1,
-                        TransitionsCount = state.TransitionsCount,
+                        RemainingTransitionsCount = state.TransitionsCount,
                         PrefixLength = prefix.Count,
                     };
 
@@ -2701,7 +2701,7 @@ namespace Microsoft.ML.Probabilistic.Distributions.Automata
                 {
                     StateIndex = index,
                     TransitionIndex = state.FirstTransitionIndex - 1,
-                    TransitionsCount = state.TransitionsCount,
+                    RemainingTransitionsCount = state.TransitionsCount,
                     PrefixLength = prefix.Count,
                 };
 
