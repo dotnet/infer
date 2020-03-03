@@ -17,11 +17,14 @@ namespace Microsoft.ML.Probabilistic.Factors
     {
         public static Gamma GammaFromMeanAndMeanInverse(double mean, double meanInverse)
         {
+            if (mean < 0) throw new ArgumentOutOfRangeException(nameof(mean), mean, "mean < 0");
+            if (meanInverse < 0) throw new ArgumentOutOfRangeException(nameof(meanInverse), meanInverse, "meanInverse < 0");
             // mean = a/b
             // meanInverse = b/(a-1)
             // a = mean*meanInverse / (mean*meanInverse - 1)
             // b = a/mean
             double rate = meanInverse / (mean * meanInverse - 1);
+            if (rate < 0 || rate > double.MaxValue) return Gamma.PointMass(mean);
             double shape = mean * rate;
             if (shape > double.MaxValue)
                 return Gamma.PointMass(mean);

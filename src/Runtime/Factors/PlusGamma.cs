@@ -49,7 +49,7 @@ namespace Microsoft.ML.Probabilistic.Factors
                     GetInverseGammaMomentDerivs(a, out double mean, out double dmean, out double ddmean, out double variance, out double dvariance, out double ddvariance);
                     mean += b.GetMean();
                     variance += b.GetVariance();
-                    if (variance > double.MaxValue) throw new NotSupportedException();
+                    if (variance > double.MaxValue) return GammaPower.Uniform(a.Power); //throw new NotSupportedException();
                     GetInverseGammaDerivs(mean, dmean, ddmean, variance, dvariance, ddvariance, out double ds, out double dds, out double dr, out double ddr);
                     if (sum.IsPointMass && sum.Point == 0) return GammaPower.PointMass(0, a.Power);
                     GetDerivLogZ(sum, GammaPower.FromMeanAndVariance(mean, variance, sum.Power), ds, dds, dr, ddr, out double dlogZ, out double ddlogZ);
