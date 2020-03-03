@@ -259,9 +259,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
         /// <returns></returns>
         public double GetNormalizer()
         {
-            if (IsProper())
+            if (IsProper() && !IsPointMass)
             {
-                return this.Gamma.GetProbLessThan(UpperBound) - this.Gamma.GetProbLessThan(LowerBound);
+                // Equivalent but less accurate:
+                //return this.Gamma.GetProbLessThan(UpperBound) - this.Gamma.GetProbLessThan(LowerBound);
+                return GammaLowerDiff(this.Gamma.Shape, this.Gamma.Rate * UpperBound, this.Gamma.Rate * LowerBound);
             }
             else
             {
@@ -501,11 +503,11 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 double Z = GetNormalizer();
                 if (Z == 0)
                 {
-                    double mean = this.Gamma.GetMean();
+                    double mean = this.Gamma.GetMode();
                     return Math.Min(UpperBound, Math.Max(LowerBound, mean));
                 }
                 // if Z is not zero, then Z1 cannot be zero.
-                double Z1 = MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * UpperBound) - MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * LowerBound);
+                double Z1 = GammaLowerDiff(this.Gamma.Shape + 1, this.Gamma.Rate * UpperBound, this.Gamma.Rate * LowerBound);
                 double sum = this.Gamma.Shape / this.Gamma.Rate * Z1;
                 return sum / Z;
             }
@@ -546,9 +548,9 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 // Change of variables in the incomplete Gamma integral:
                 // t = x * Rate
                 // dt = dx * Rate
-                double Z1 = MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * UpperBound) - MMath.GammaLower(this.Gamma.Shape + 1, this.Gamma.Rate * LowerBound);
+                double Z1 = GammaLowerDiff(this.Gamma.Shape + 1, this.Gamma.Rate * UpperBound, this.Gamma.Rate * LowerBound);
                 mean = m * Z1 / Z;
-                double sum2 = m * (this.Gamma.Shape + 1) / this.Gamma.Rate * (MMath.GammaLower(this.Gamma.Shape + 2, this.Gamma.Rate * UpperBound) - MMath.GammaLower(this.Gamma.Shape + 2, this.Gamma.Rate * LowerBound));
+                double sum2 = m * (this.Gamma.Shape + 1) / this.Gamma.Rate * GammaLowerDiff(this.Gamma.Shape + 2, this.Gamma.Rate * UpperBound, this.Gamma.Rate * LowerBound);
                 variance = sum2 / Z - mean * mean;
             }
         }
@@ -599,15 +601,35 @@ namespace Microsoft.ML.Probabilistic.Distributions
                 bool regularized = shapePlusPower >= 1;
                 if (regularized)
                 {
-                    logZ1 = (MMath.GammaLn(shapePlusPower) - MMath.GammaLn(this.Gamma.Shape)) * 
-                        Math.Log(MMath.GammaLower(shapePlusPower, this.Gamma.Rate * UpperBound) - MMath.GammaLower(shapePlusPower, this.Gamma.Rate * LowerBound));
+                    logZ1 = (MMath.GammaLn(shapePlusPower) - MMath.GammaLn(this.Gamma.Shape)) + 
+                        Math.Log(GammaLowerDiff(shapePlusPower, this.Gamma.Rate * UpperBound, this.Gamma.Rate * LowerBound, regularized));
                 }
                 else
                 {
-                    logZ1 = - MMath.GammaLn(this.Gamma.Shape) * 
-                        Math.Log(MMath.GammaUpper(shapePlusPower, this.Gamma.Rate * LowerBound, regularized) - MMath.GammaUpper(shapePlusPower, this.Gamma.Rate * UpperBound, regularized));
+                    logZ1 = - MMath.GammaLn(this.Gamma.Shape) + 
+                        Math.Log(GammaLowerDiff(shapePlusPower, this.Gamma.Rate * UpperBound, this.Gamma.Rate * LowerBound, regularized));
                 }
                 return Math.Exp(-power*Math.Log(this.Gamma.Rate) + logZ1 - logZ);
+            }
+        }
+
+        /// <summary>
+        /// Computes GammaLower(a, x) - GammaLower(a, y) to high accuracy.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="regularized"></param>
+        /// <returns></returns>
+        public static double GammaLowerDiff(double a, double x, double y, bool regularized = true)
+        {
+            if (!regularized || Math.Min(x,y) > 4 * a)
+            {
+                return MMath.GammaUpper(a, y, regularized) - MMath.GammaUpper(a, x, regularized);
+            }
+            else
+            {
+                return MMath.GammaLower(a, x) - MMath.GammaLower(a, y);
             }
         }
 
