@@ -937,7 +937,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                     isEpsilonFree: true,
                     usesGroups: false,
                     isDeterminized: null,
-                    isZero: null));
+                    isZero: null,
+                    isEnumerable: null));
 
             StringInferenceTestUtilities.TestValue(automaton1, 1.0, string.Empty, "a");
             StringInferenceTestUtilities.TestValue(automaton1, 0.0, "b");
@@ -951,7 +952,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                     isEpsilonFree: true,
                     usesGroups: false,
                     isDeterminized: true,
-                    isZero: true));
+                    isZero: true,
+                    isEnumerable: true));
             Assert.True(automaton2.IsZero());
 
             // Bad start state index
@@ -964,7 +966,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                         isEpsilonFree: true,
                         usesGroups: false,
                         isDeterminized: false,
-                        isZero: true)));
+                        isZero: true,
+                        isEnumerable: false)));
 
             // automaton is actually epsilon-free, but data says that it is
             Assert.Throws<ArgumentException>(
@@ -976,7 +979,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                         isEpsilonFree: false,
                         usesGroups: false,
                         isDeterminized: null,
-                        isZero: null)));
+                        isZero: null,
+                        isEnumerable: null)));
 
             // automaton is not epsilon-free
             Assert.Throws<ArgumentException>(
@@ -988,7 +992,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                         isEpsilonFree: false,
                         usesGroups: false,
                         isDeterminized: null,
-                        isZero: null)));
+                        isZero: null,
+                        isEnumerable: null)));
 
             // Incorrect transition index
             Assert.Throws<ArgumentException>(
@@ -1000,7 +1005,8 @@ namespace Microsoft.ML.Probabilistic.Tests
                         true,
                         false,
                         isDeterminized: null,
-                        isZero: null)));
+                        isZero: null,
+                        isEnumerable: null)));
         }
 
         #region ToString tests
@@ -2202,9 +2208,11 @@ namespace Microsoft.ML.Probabilistic.Tests
             builder[0].AddTransition(DiscreteChar.UniformOver('c', 'd'), Weight.FromValue(1), 2);
             builder[2].AddTransition(DiscreteChar.UniformOver('e', 'f'), Weight.FromValue(1), 3);
             builder[2].AddTransition(DiscreteChar.UniformOver('g', 'h'), Weight.FromValue(1), 4);
+            builder[2].AddEpsilonTransition(Weight.FromValue(1), 4);
             builder[4].AddTransition(DiscreteChar.UniformOver('i', 'j'), Weight.FromValue(1), 5);
             builder[4].AddTransition(DiscreteChar.UniformOver('k', 'l'), Weight.FromValue(1), 5);
 
+            builder[0].SetEndWeight(Weight.FromValue(1));
             builder[1].SetEndWeight(Weight.FromValue(1));
             builder[3].SetEndWeight(Weight.FromValue(1));
             builder[5].SetEndWeight(Weight.FromValue(1));
@@ -2214,18 +2222,59 @@ namespace Microsoft.ML.Probabilistic.Tests
 
             var expectedSupport = new HashSet<string>
             {
+                "",
                 "a", "b", 
                 "ce", "cf",
                 "cgi", "cgj", "cgk", "cgl",
                 "chi", "chj", "chk", "chl",
+                "ci", "cj", "ck", "cl",
                 "de", "df",
                 "dgi", "dgj", "dgk", "dgl",
-                "dhi", "dhj", "dhk", "dhl"
+                "dhi", "dhj", "dhk", "dhl",
+                "di", "dj", "dk", "dl"
             };
 
-            var caclulatedSupport = new HashSet<string>(automaton.EnumerateSupport());
+            var calculatedSupport1= new HashSet<string>(automaton.EnumerateSupport(tryDeterminize: false));
+            Assert.True(calculatedSupport1.SetEquals(expectedSupport));
 
-            Assert.True(caclulatedSupport.SetEquals(expectedSupport));
+            var calculatedSupport2 = new HashSet<string>(automaton.EnumerateSupport(tryDeterminize: true));
+            Assert.True(calculatedSupport2.SetEquals(expectedSupport));
+        }
+
+        /// <summary>
+        /// Tests enumeration of support.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void EnumerateSupportThrowsOnLoop()
+        {
+            var builder = new StringAutomaton.Builder();
+            builder.Start
+                .AddTransition('a', Weight.One)
+                .AddTransition('a', Weight.One, 0)
+                .SetEndWeight(Weight.One);
+
+            var automaton = builder.GetAutomaton();
+
+            Assert.Throws<NotSupportedException>(() => automaton.EnumerateSupport().ToList());
+        }
+
+        /// <summary>
+        /// Tests enumeration of support.
+        /// </summary>
+        [Fact]
+        [Trait("Category", "StringInference")]
+        public void TryEnumerateSupportReturnsFalseOnLoop()
+        {
+            var builder = new StringAutomaton.Builder();
+            builder.Start
+                .AddTransition('a', Weight.One)
+                .AddTransition('a', Weight.One, 0)
+                .SetEndWeight(Weight.One);
+
+            var automaton = builder.GetAutomaton();
+
+            Assert.False(automaton.TryEnumerateSupport(Int32.MaxValue, out _));
         }
 
         [Trait("Category", "BadTest")] // Performance tests which look for exact timings are likely to fail on the build machine
